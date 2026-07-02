@@ -1,0 +1,142 @@
+# Builds Prepper Pad installers for every supported platform.
+# macOS is the verified platform; the rest compile here and await
+# verification on real hardware (see README "Estado por plataforma").
+name: build
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  macos:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Build native engines
+        run: |
+          brew install cmake
+          ./scripts/build_native_macos.sh
+      - run: flutter pub get
+      - run: flutter test
+      - name: Package DMG
+        run: ./scripts/package_macos.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PrepperPad-macos
+          path: dist/PrepperPad.dmg
+
+  linux:
+    strategy:
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            arch: x64
+          - runner: ubuntu-24.04-arm   # Raspberry Pi / ARM64
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: System deps (Flutter Linux + engines)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libgtk-3-dev cmake \
+            libzstd1 liblzma5 zstd
+      - name: Build llama-server
+        run: |
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp
+          cmake -S llama.cpp -B llama.cpp/build \
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF
+          cmake --build llama.cpp/build --target llama-server -j4
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build linux --release
+      - name: Assemble bundle
+        run: |
+          OUT=dist/prepper-pad-linux-${{ matrix.arch }}
+          mkdir -p "$OUT"
+          cp -r build/linux/*/release/bundle/* "$OUT/"
+          mkdir -p "$OUT/bin"
+          cp llama.cpp/build/bin/llama-server "$OUT/bin/"
+          tar -C dist -czf dist/prepper-pad-linux-${{ matrix.arch }}.tar.gz \
+            "prepper-pad-linux-${{ matrix.arch }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PrepperPad-linux-${{ matrix.arch }}
+          path: dist/*.tar.gz
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Build llama-server
+        run: |
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp
+          cmake -S llama.cpp -B llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF
+          cmake --build llama.cpp/build --target llama-server --config Release -j4
+      - name: Fetch zstd + lzma DLLs
+        run: |
+          vcpkg install zstd:x64-windows liblzma:x64-windows
+      - run: flutter pub get
+      - run: flutter build windows --release
+      - name: Assemble bundle
+        shell: bash
+        run: |
+          OUT=dist/prepper-pad-windows-x64
+          mkdir -p "$OUT/bin"
+          cp -r build/windows/x64/runner/Release/* "$OUT/"
+          cp llama.cpp/build/bin/Release/llama-server.exe "$OUT/bin/" || \
+            cp llama.cpp/build/bin/llama-server.exe "$OUT/bin/"
+          cp "$VCPKG_INSTALLATION_ROOT"/installed/x64-windows/bin/zstd.dll "$OUT/libzstd.dll"
+          cp "$VCPKG_INSTALLATION_ROOT"/installed/x64-windows/bin/liblzma.dll "$OUT/liblzma.dll"
+          7z a dist/prepper-pad-windows-x64.zip "./$OUT/*"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PrepperPad-windows
+          path: dist/*.zip
+
+  android:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter pub get
+      # Note: the AI module requires a llama-server binary per ABI; on Android
+      # the chat module is disabled until the JNI build lands (see README).
+      - run: flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PrepperPad-android
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+  release:
+    needs: [macos, linux, windows, android]
+    runs-on: ubuntu-24.04
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/**/PrepperPad.dmg
+            artifacts/**/*.tar.gz
+            artifacts/**/*.zip
+            artifacts/**/*.apk

@@ -1,0 +1,19 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+
+# macOS
+**/Pods/
+**/.symlinks/
+**/xcuserdata/
+.DS_Store
+
+# Native artifacts bundled at build time (fetched/compiled by scripts)
+native/out/
+
+# Test fixture is intentionally committed (small mini-Wikipedia ZIM)
+!test/fixtures/mini.zim

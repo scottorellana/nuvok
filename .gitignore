@@ -17,3 +17,6 @@ native/out/
 
 # Test fixture is intentionally committed (small mini-Wikipedia ZIM)
 !test/fixtures/mini.zim
+
+# Build artifacts
+dist/

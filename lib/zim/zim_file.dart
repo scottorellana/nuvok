@@ -1,6 +1,7 @@
 // Pure-Dart reader for the ZIM file format (openzim.org), the container used
 // by Kiwix for offline Wikipedia and friends. Cluster decompression is
 // delegated to native zstd/lzma via FFI (see zim_native.dart).
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
@@ -163,7 +164,22 @@ class ZimFile {
     return raf.read(len);
   }
 
-  Future<Uint8List> _read(int pos, int len) => _readAt(_raf, pos, len);
+  // Reads are serialized: a RandomAccessFile forbids overlapping async
+  // operations, and the content server handles concurrent HTTP requests.
+  Future<void> _readLock = Future.value();
+
+  Future<Uint8List> _read(int pos, int len) {
+    final prev = _readLock;
+    final completer = Completer<void>();
+    _readLock = completer.future;
+    return prev.then((_) async {
+      try {
+        return await _readAt(_raf, pos, len);
+      } finally {
+        completer.complete();
+      }
+    });
+  }
 
   // -- Entries ---------------------------------------------------------------
 
@@ -312,6 +328,42 @@ class ZimFile {
     final b = await _read(header.clusterPtrPos + c * 8, 8);
     return ByteData.sublistView(b).getUint64(0, Endian.little);
   }
+
+  /// For blobs stored in UNCOMPRESSED clusters (how ZIM stores video/audio),
+  /// returns the absolute file offset and length so callers can stream byte
+  /// ranges straight from disk without loading the blob into memory.
+  /// Returns null when the cluster is compressed (use [contentOf] instead).
+  Future<({int offset, int length, String mimeType})?> blobLocation(
+      ZimEntry entry) async {
+    final resolved = await resolveRedirect(entry);
+    if (resolved.clusterNumber < 0) return null;
+    final start = await _clusterPtr(resolved.clusterNumber);
+    final info = (await _read(start, 1))[0];
+    final compression = info & 0x0F;
+    if (compression != 0 && compression != 1) return null;
+    final extended = (info & 0x10) != 0;
+    final offSize = extended ? 8 : 4;
+    final b = resolved.blobNumber;
+    final offsetsBytes = await _read(start + 1, (b + 2) * offSize);
+    final d = ByteData.sublistView(offsetsBytes);
+    int readOff(int i) => extended
+        ? d.getUint64(i * 8, Endian.little)
+        : d.getUint32(i * 4, Endian.little);
+    final blobStart = readOff(b);
+    final blobEnd = readOff(b + 1);
+    final mime = resolved.mimeTypeIndex < mimeTypes.length
+        ? mimeTypes[resolved.mimeTypeIndex]
+        : 'application/octet-stream';
+    return (
+      offset: start + 1 + blobStart,
+      length: blobEnd - blobStart,
+      mimeType: mime,
+    );
+  }
+
+  /// Reads an arbitrary byte range from the file (used by the content server
+  /// to stream media).
+  Future<Uint8List> readRange(int offset, int length) => _read(offset, length);
 
   Future<_DecompressedCluster> _cluster(int c) async {
     final cached = _clusterCache.remove(c);

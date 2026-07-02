@@ -1,20 +1,36 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 import '../../zim/zim_file.dart';
+import 'zim_web_reader_page.dart';
 
-class ZimReaderPage extends StatefulWidget {
+/// Chooses the best reader for the platform: the native WebView reader
+/// (video/audio/JS) where available, or the lightweight pure-Flutter
+/// renderer on Linux/Raspberry Pi where no stable WebView exists yet.
+class ZimReaderPage extends StatelessWidget {
   const ZimReaderPage({super.key, required this.path});
   final String path;
 
   @override
-  State<ZimReaderPage> createState() => _ZimReaderPageState();
+  Widget build(BuildContext context) {
+    if (Platform.isLinux) return ZimClassicReaderPage(path: path);
+    return ZimWebReaderPage(path: path);
+  }
 }
 
-class _ZimReaderPageState extends State<ZimReaderPage> {
+class ZimClassicReaderPage extends StatefulWidget {
+  const ZimClassicReaderPage({super.key, required this.path});
+  final String path;
+
+  @override
+  State<ZimClassicReaderPage> createState() => _ZimClassicReaderPageState();
+}
+
+class _ZimClassicReaderPageState extends State<ZimClassicReaderPage> {
   ZimFile? _zim;
   String? _error;
   String? _bookTitle;

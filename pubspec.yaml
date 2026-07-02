@@ -13,6 +13,7 @@ dependencies:
   xml: ^6.5.0
   markdown: ^7.2.0
   flutter_widget_from_html_core: ^0.15.2
+  flutter_inappwebview: ^6.1.5
   flutter_map: ^7.0.2
   latlong2: ^0.9.1
   vector_map_tiles: ^8.0.0

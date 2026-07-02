@@ -49,13 +49,16 @@ class _HomeShellState extends State<HomeShell> {
     (Icons.inventory_2_outlined, Icons.inventory_2, 'Depósito'),
   ];
 
-  final _pages = const [
-    LibraryPage(),
-    AiPage(),
-    MapsPage(),
-    NotesPage(),
-    DepotPage(),
-  ];
+  int _depotInitialTab = 0;
+
+  List<Widget> get _pages => [
+        const LibraryPage(),
+        const AiPage(),
+        const MapsPage(),
+        const NotesPage(),
+        // Keyed so switching the starter-tab target rebuilds the Depot.
+        DepotPage(key: ValueKey(_depotInitialTab), initialTab: _depotInitialTab),
+      ];
 
   @override
   void initState() {
@@ -77,18 +80,22 @@ class _HomeShellState extends State<HomeShell> {
             'PrepperPad de tu usuario. Todo lo que descargues ahí '
             '(Wikipedia, mapas, modelos de IA) funciona sin internet y '
             'puede copiarse a otros dispositivos por USB.\n\n'
-            'Para empezar, ve al Depósito y descarga contenido — o copia '
-            'archivos .zim, .pmtiles o .gguf que ya tengas dentro de la '
-            'carpeta PrepperPad.',
+            'Te recomendamos empezar por el Paquete inicial: manuales de '
+            'primeros auxilios y supervivencia en tu idioma, listos para '
+            'usar sin conexión.',
           ),
         ),
         actions: [
-          FilledButton(
+          FilledButton.icon(
             onPressed: () {
               Navigator.of(context).pop();
-              setState(() => _index = 4); // Depósito
+              setState(() {
+                _index = 4; // Depósito
+                _depotInitialTab = 0; // Esenciales
+              });
             },
-            child: const Text('Ir al Depósito'),
+            icon: const Icon(Icons.medical_services, size: 18),
+            label: const Text('Ver Paquete inicial'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

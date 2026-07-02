@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import '../../core/prepper_library.dart';
 import 'download_manager.dart';
 import 'kiwix_catalog.dart';
+import 'starter_pack.dart';
 
 class DepotPage extends StatefulWidget {
-  const DepotPage({super.key});
+  const DepotPage({super.key, this.initialTab = 0});
+  final int initialTab;
 
   @override
   State<DepotPage> createState() => _DepotPageState();
@@ -16,7 +18,8 @@ class DepotPage extends StatefulWidget {
 
 class _DepotPageState extends State<DepotPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabs = TabController(length: 4, vsync: this);
+  late final TabController _tabs =
+      TabController(length: 5, vsync: this, initialIndex: widget.initialTab);
 
   @override
   void dispose() {
@@ -31,7 +34,9 @@ class _DepotPageState extends State<DepotPage>
         title: const Text('Depósito'),
         bottom: TabBar(
           controller: _tabs,
+          isScrollable: true,
           tabs: const [
+            Tab(text: 'Esenciales', icon: Icon(Icons.medical_services, size: 18)),
             Tab(text: 'Biblioteca', icon: Icon(Icons.menu_book, size: 18)),
             Tab(text: 'Modelos IA', icon: Icon(Icons.psychology, size: 18)),
             Tab(text: 'Mapas', icon: Icon(Icons.map, size: 18)),
@@ -42,12 +47,185 @@ class _DepotPageState extends State<DepotPage>
       body: TabBarView(
         controller: _tabs,
         children: const [
+          _StarterPackTab(),
           _ZimCatalogTab(),
           _ModelsTab(),
           _MapsHelpTab(),
           _DownloadsTab(),
         ],
       ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Starter pack: first-aid + survival manuals matched to the user's language
+// ---------------------------------------------------------------------------
+
+class _StarterPackTab extends StatefulWidget {
+  const _StarterPackTab();
+
+  @override
+  State<_StarterPackTab> createState() => _StarterPackTabState();
+}
+
+class _StarterPackTabState extends State<_StarterPackTab>
+    with AutomaticKeepAliveClientMixin {
+  List<StarterCandidate>? _candidates;
+  String? _error;
+  bool _loading = false;
+  late String _lang = StarterPack.systemLang();
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    _resolve();
+  }
+
+  Future<void> _resolve() async {
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      final c = await StarterPack.resolve(lang: _lang);
+      if (mounted) setState(() => _candidates = c);
+    } catch (e) {
+      if (mounted) {
+        setState(() => _error =
+            'Estos manuales se descargan una vez con internet. Sin conexión '
+            'no se pueden obtener ahora, pero lo que ya tengas descargado '
+            'sigue disponible.');
+      }
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  void _downloadAll() {
+    for (final c in _candidates ?? <StarterCandidate>[]) {
+      final fileName = Uri.parse(c.result.url).pathSegments.last;
+      DownloadManager.instance.enqueue(
+        c.result.url,
+        '${PrepperLibrary.instance.zimDir.path}/$fileName',
+        totalBytes: c.result.sizeBytes,
+      );
+    }
+    setState(() {});
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Descargas encoladas — mira la pestaña "Descargas"'),
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text('Paquete inicial de emergencia',
+                        style: Theme.of(context).textTheme.titleMedium),
+                  ),
+                  DropdownButton<String>(
+                    value: _lang,
+                    items: const [
+                      DropdownMenuItem(value: 'spa', child: Text('Español')),
+                      DropdownMenuItem(value: 'eng', child: Text('English')),
+                      DropdownMenuItem(value: 'fra', child: Text('Français')),
+                      DropdownMenuItem(value: 'por', child: Text('Português')),
+                    ],
+                    onChanged: (v) {
+                      if (v != null) {
+                        setState(() => _lang = v);
+                        _resolve();
+                      }
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Manuales de primeros auxilios y supervivencia en el idioma '
+                'seleccionado. Descárgalos una vez y quedan disponibles para '
+                'siempre sin internet.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: _loading
+              ? const Center(child: CircularProgressIndicator())
+              : _error != null
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.cloud_off, size: 56),
+                            const SizedBox(height: 12),
+                            Text(_error!, textAlign: TextAlign.center),
+                            const SizedBox(height: 12),
+                            FilledButton(
+                              onPressed: _resolve,
+                              child: const Text('Reintentar'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : ListView(
+                      padding: const EdgeInsets.all(12),
+                      children: [
+                        for (final c in _candidates ?? <StarterCandidate>[])
+                          Card(
+                            child: ListTile(
+                              leading: const Icon(Icons.health_and_safety,
+                                  size: 32),
+                              title: Text(c.item.category),
+                              subtitle: Text(
+                                '${c.item.description}\n'
+                                '${c.result.title}'
+                                '${c.result.sizeBytes != null ? ' · ${humanSize(c.result.sizeBytes!)}' : ''}',
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              isThreeLine: true,
+                              trailing: _DownloadButton(
+                                url: c.result.url,
+                                destPath:
+                                    '${PrepperLibrary.instance.zimDir.path}/${Uri.parse(c.result.url).pathSegments.last}',
+                                totalBytes: c.result.sizeBytes,
+                              ),
+                            ),
+                          ),
+                        if ((_candidates ?? []).isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: FilledButton.icon(
+                              onPressed: _downloadAll,
+                              icon: const Icon(Icons.download),
+                              label: const Text('Descargar todo el paquete'),
+                            ),
+                          ),
+                      ],
+                    ),
+        ),
+      ],
     );
   }
 }

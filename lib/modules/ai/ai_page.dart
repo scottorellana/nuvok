@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../core/prepper_library.dart';
+import 'library_retriever.dart';
 import 'llama_server.dart';
 
 class ChatMessage {
-  ChatMessage(this.role, this.text);
+  ChatMessage(this.role, this.text, {this.sources = const []});
   final String role; // 'user' | 'assistant'
   String text;
+  List<RetrievedSource> sources;
 }
 
 class AiPage extends StatefulWidget {
@@ -26,6 +28,7 @@ class _AiPageState extends State<AiPage> {
   List<File> _models = [];
   String? _selectedModel;
   bool _generating = false;
+  bool _useLibrary = true; // ground answers in the offline library
 
   @override
   void initState() {
@@ -100,16 +103,35 @@ class _AiPageState extends State<AiPage> {
       _generating = true;
     });
     _scrollToEnd();
+
+    // When grounding is on, retrieve evidence from the installed ZIMs and
+    // build a system prompt that lists those sources and requires citations.
+    List<RetrievedSource> sources = const [];
+    String systemPrompt =
+        'Eres el asistente de Prepper Pad, una app de conocimiento offline. '
+        'Responde de forma útil y concisa en el idioma del usuario.';
+    if (_useLibrary && PrepperLibrary.instance.listZims().isNotEmpty) {
+      setState(() => _messages.last.text = '🔎 Buscando en la biblioteca…');
+      try {
+        sources = await LibraryRetriever.retrieve(text);
+      } catch (_) {}
+      if (sources.isNotEmpty) {
+        systemPrompt = LibraryRetriever.buildGroundedSystemPrompt(sources);
+      }
+      if (mounted) {
+        setState(() {
+          _messages.last
+            ..text = ''
+            ..sources = sources;
+        });
+      }
+    }
+
     try {
       final history = [
-        {
-          'role': 'system',
-          'content':
-              'Eres el asistente de Prepper Pad, una app de conocimiento '
-                  'offline. Responde de forma útil y concisa en el idioma '
-                  'del usuario.'
-        },
-        for (final m in _messages.where((m) => m.text.isNotEmpty))
+        {'role': 'system', 'content': systemPrompt},
+        for (final m in _messages.where(
+            (m) => m.role == 'user' || m.text.isNotEmpty))
           {'role': m.role, 'content': m.text},
       ];
       await for (final token in _server.chat(history)) {
@@ -140,6 +162,17 @@ class _AiPageState extends State<AiPage> {
       appBar: AppBar(
         title: const Text('Asistente IA'),
         actions: [
+          Row(
+            children: [
+              const Icon(Icons.menu_book_outlined, size: 18),
+              const SizedBox(width: 4),
+              const Text('Biblioteca'),
+              Switch(
+                value: _useLibrary,
+                onChanged: (v) => setState(() => _useLibrary = v),
+              ),
+            ],
+          ),
           IconButton(
             tooltip: 'Actualizar modelos',
             icon: const Icon(Icons.refresh),
@@ -305,18 +338,60 @@ class _Bubble extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        constraints: const BoxConstraints(maxWidth: 640),
-        decoration: BoxDecoration(
-          color:
-              isUser ? scheme.primaryContainer : scheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: SelectableText(
-          message.text.isEmpty ? '…' : message.text,
-        ),
+      child: Column(
+        crossAxisAlignment:
+            isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            constraints: const BoxConstraints(maxWidth: 640),
+            decoration: BoxDecoration(
+              color: isUser
+                  ? scheme.primaryContainer
+                  : scheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: SelectableText(message.text.isEmpty ? '…' : message.text),
+          ),
+          if (message.sources.isNotEmpty)
+            Container(
+              constraints: const BoxConstraints(maxWidth: 640),
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, bottom: 2),
+                    child: Text('Fuentes de la biblioteca:',
+                        style: Theme.of(context).textTheme.labelSmall),
+                  ),
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 4,
+                    children: [
+                      for (var i = 0; i < message.sources.length; i++)
+                        Chip(
+                          visualDensity: VisualDensity.compact,
+                          avatar: CircleAvatar(
+                            backgroundColor: scheme.primary,
+                            child: Text('${i + 1}',
+                                style: TextStyle(
+                                    fontSize: 11,
+                                    color: scheme.onPrimary)),
+                          ),
+                          label: Text(
+                            '${message.sources[i].title} · '
+                            '${message.sources[i].book}',
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+        ],
       ),
     );
   }

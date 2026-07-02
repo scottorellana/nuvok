@@ -114,6 +114,22 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+      # The ZIM reader decompresses clusters with zstd via FFI; Android ships
+      # no usable system libzstd, so we build it per ABI and bundle it in
+      # jniLibs (DynamicLibrary.open('libzstd.so') finds it automatically).
+      - name: Build libzstd for Android ABIs
+        run: |
+          git clone --depth 1 --branch v1.5.7 https://github.com/facebook/zstd
+          for ABI in arm64-v8a armeabi-v7a x86_64; do
+            cmake -S zstd/build/cmake -B zstd/out/$ABI \
+              -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_LATEST_HOME/build/cmake/android.toolchain.cmake" \
+              -DANDROID_ABI=$ABI -DANDROID_PLATFORM=android-21 \
+              -DZSTD_BUILD_PROGRAMS=OFF -DZSTD_BUILD_STATIC=OFF \
+              -DZSTD_BUILD_SHARED=ON -DCMAKE_BUILD_TYPE=Release
+            cmake --build zstd/out/$ABI -j4
+            mkdir -p android/app/src/main/jniLibs/$ABI
+            cp zstd/out/$ABI/lib/libzstd.so android/app/src/main/jniLibs/$ABI/
+          done
       - run: flutter pub get
       # Note: the AI module requires a llama-server binary per ABI; on Android
       # the chat module is disabled until the JNI build lands (see README).

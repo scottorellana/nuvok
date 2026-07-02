@@ -3,6 +3,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
+
 class PrepperLibrary {
   PrepperLibrary(this.root);
 
@@ -10,12 +12,28 @@ class PrepperLibrary {
 
   static PrepperLibrary? _instance;
 
-  static PrepperLibrary get instance {
-    if (_instance != null) return _instance!;
+  /// Must be called once before [instance] (see main). On desktop the
+  /// library lives in the user's home folder so it's easy to find and copy
+  /// by USB; on Android it lives in the app's external files dir, visible
+  /// when the device is plugged into a computer.
+  static Future<void> init() async {
+    if (_instance != null) return;
+    if (Platform.isAndroid) {
+      final base = await getExternalStorageDirectory() ??
+          await getApplicationDocumentsDirectory();
+      _instance = PrepperLibrary(Directory('${base.path}/PrepperPad'));
+      return;
+    }
     final home = Platform.environment['HOME'] ??
         Platform.environment['USERPROFILE'] ??
         Directory.current.path;
     _instance = PrepperLibrary(Directory('$home/PrepperPad'));
+  }
+
+  static PrepperLibrary get instance {
+    if (_instance == null) {
+      throw StateError('PrepperLibrary.init() no fue llamado');
+    }
     return _instance!;
   }
 

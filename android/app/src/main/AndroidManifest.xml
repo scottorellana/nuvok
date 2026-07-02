@@ -1,8 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- INTERNET también cubre el loopback (127.0.0.1): sin él la app no
+         puede hablar con su propio servidor interno de contenido ni
+         descargar del Depósito. El uso offline no requiere red externa. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="prepper_pad"
+        android:label="Prepper Pad"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:networkSecurityConfig="@xml/network_security_config">
         <activity
             android:name=".MainActivity"
             android:exported="true"

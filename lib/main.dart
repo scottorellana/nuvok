@@ -8,6 +8,7 @@ import 'modules/ai/llama_server.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await PrepperLibrary.init();
   final firstRun = !PrepperLibrary.instance.existedBefore;
   await PrepperLibrary.instance.ensure();
   runApp(PrepperPadApp(firstRun: firstRun));

@@ -75,18 +75,19 @@ class _ZimReaderPageState extends State<ZimReaderPage> {
           }
         }
       }
-      if (blob == null) {
+      final found = blob;
+      if (found == null) {
         _showSnack('No se encontró: $fullPath');
         return;
       }
-      if (!blob.mimeType.startsWith('text/html')) {
-        _showSnack('Tipo de contenido no legible: ${blob.mimeType}');
+      if (!found.mimeType.startsWith('text/html')) {
+        _showSnack('Tipo de contenido no legible: ${found.mimeType}');
         return;
       }
       if (pushHistory && _currentPath != null) _history.add(_currentPath!);
       setState(() {
         _currentPath = fullPath;
-        _html = utf8.decode(blob.data, allowMalformed: true);
+        _html = utf8.decode(found.data, allowMalformed: true);
         _suggestions = [];
         _searchController.clear();
       });

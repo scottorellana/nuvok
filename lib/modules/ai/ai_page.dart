@@ -62,6 +62,7 @@ class _AiPageState extends State<AiPage> {
     if (path == null) return;
     final size = File(path).lengthSync();
     final free = await LlamaServer.freeRamBytes();
+    if (!mounted) return;
     if (free != null && size > free * 0.8) {
       final proceed = await showDialog<bool>(
         context: context,
@@ -153,7 +154,8 @@ class _AiPageState extends State<AiPage> {
               children: [
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    value: _selectedModel,
+                    key: ValueKey(_selectedModel),
+                    initialValue: _selectedModel,
                     isDense: true,
                     decoration: const InputDecoration(
                       labelText: 'Modelo',
@@ -308,7 +310,8 @@ class _Bubble extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         constraints: const BoxConstraints(maxWidth: 640),
         decoration: BoxDecoration(
-          color: isUser ? scheme.primaryContainer : scheme.surfaceVariant,
+          color:
+              isUser ? scheme.primaryContainer : scheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(14),
         ),
         child: SelectableText(

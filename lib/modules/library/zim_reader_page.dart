@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
+import '../../zim/zim_content_server.dart';
 import '../../zim/zim_file.dart';
 import 'zim_web_reader_page.dart';
 
@@ -56,7 +57,11 @@ class _ZimClassicReaderPageState extends State<ZimClassicReaderPage> {
   void dispose() {
     _debounce?.cancel();
     _searchController.dispose();
-    _zim?.close();
+    final zim = _zim;
+    if (zim != null) {
+      ZimContentServer.instance.release(zim);
+      zim.close();
+    }
     super.dispose();
   }
 
@@ -65,6 +70,9 @@ class _ZimClassicReaderPageState extends State<ZimClassicReaderPage> {
       final zim = await ZimFile.open(widget.path);
       _zim = zim;
       _bookTitle = await zim.metadata('Title');
+      // The content server lets "Ver en el navegador" play videos on
+      // platforms without an embedded WebView (Linux/Raspberry Pi).
+      await ZimContentServer.instance.serve(zim);
       final main = await zim.mainPage();
       if (main != null) {
         await _navigateTo(main.fullPath, pushHistory: false);
@@ -72,6 +80,26 @@ class _ZimClassicReaderPageState extends State<ZimClassicReaderPage> {
       if (mounted) setState(() {});
     } catch (e) {
       if (mounted) setState(() => _error = e.toString());
+    }
+  }
+
+  /// Opens the current article in the system browser, where video and audio
+  /// play natively. Content still comes from the internal offline server.
+  Future<void> _openInBrowser() async {
+    final zim = _zim;
+    final path = _currentPath;
+    if (zim == null || path == null) return;
+    final url = ZimContentServer.instance.urlFor(zim, path).toString();
+    try {
+      if (Platform.isLinux) {
+        await Process.run('xdg-open', [url]);
+      } else if (Platform.isMacOS) {
+        await Process.run('open', [url]);
+      } else if (Platform.isWindows) {
+        await Process.run('cmd', ['/c', 'start', '', url]);
+      }
+    } catch (_) {
+      _showSnack('No se pudo abrir el navegador');
     }
   }
 
@@ -186,6 +214,11 @@ class _ZimClassicReaderPageState extends State<ZimClassicReaderPage> {
         }),
         title: Text(_bookTitle ?? 'Lectura'),
         actions: [
+          IconButton(
+            tooltip: 'Ver con videos en el navegador',
+            icon: const Icon(Icons.ondemand_video_outlined),
+            onPressed: _openInBrowser,
+          ),
           IconButton(
             tooltip: 'Página principal',
             icon: const Icon(Icons.home_outlined),

@@ -1,12 +1,47 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_map_tiles_pmtiles/vector_map_tiles_pmtiles.dart';
+import 'package:vector_tile_renderer/vector_tile_renderer.dart' as vtr;
 
 import '../../core/prepper_library.dart';
+
+/// Loads the bundled Protomaps light v4 style and simplifies its text-field
+/// expressions: the upstream theme uses experimental `pgf:` glyph expressions
+/// that the Flutter renderer cannot evaluate, which silently drops all map
+/// labels. Spanish names are preferred, falling back to the local name.
+Future<vtr.Theme> loadMapTheme() async {
+  final raw = await rootBundle.loadString('assets/map_theme_light_v4.json');
+  final style = jsonDecode(raw) as Map<String, dynamic>;
+  for (final layer in (style['layers'] as List).cast<Map<String, dynamic>>()) {
+    final layout = layer['layout'] as Map<String, dynamic>?;
+    if (layout != null && layout.containsKey('text-field')) {
+      layout['text-field'] = [
+        'coalesce',
+        ['get', 'name:es'],
+        ['get', 'name'],
+      ];
+    }
+  }
+  return vtr.ThemeReader().read(style);
+}
+
+/// Cache directory for rendered tiles, keyed by the map file's identity
+/// (name + size + mtime). If the .pmtiles file is replaced or was copied
+/// mid-write and later fixed, a fresh cache is used automatically, so stale
+/// or corrupt tiles can never survive a file change.
+Directory tileCacheDirFor(File mapFile) {
+  final stat = mapFile.statSync();
+  final name = mapFile.uri.pathSegments.last.replaceAll('.pmtiles', '');
+  final key = '$name-${stat.size}-${stat.modified.millisecondsSinceEpoch}';
+  return Directory(
+      '${PrepperLibrary.instance.root.path}/.tilecache/$key');
+}
 
 class MapsPage extends StatefulWidget {
   const MapsPage({super.key});
@@ -19,20 +54,33 @@ class _MapsPageState extends State<MapsPage> {
   List<File> _regions = [];
   File? _selected;
   PmTilesVectorTileProvider? _provider;
+  vtr.Theme? _theme;
   String? _error;
   bool _loading = false;
 
   @override
   void initState() {
     super.initState();
+    loadMapTheme().then((t) {
+      if (mounted) setState(() => _theme = t);
+    });
     _refresh();
   }
 
-  void _refresh() {
+  void _refresh({bool clearCache = false}) {
+    if (clearCache) {
+      final cacheRoot =
+          Directory('${PrepperLibrary.instance.root.path}/.tilecache');
+      try {
+        if (cacheRoot.existsSync()) cacheRoot.deleteSync(recursive: true);
+      } catch (_) {}
+    }
     setState(() {
       _regions = PrepperLibrary.instance.listMaps();
-      if (_regions.isNotEmpty && _selected == null) {
-        _openRegion(_regions.first);
+      final current = _selected;
+      if (_regions.isNotEmpty &&
+          (current == null || clearCache)) {
+        _openRegion(current ?? _regions.first);
       }
     });
   }
@@ -79,9 +127,9 @@ class _MapsPageState extends State<MapsPage> {
               ),
             ),
           IconButton(
-            tooltip: 'Actualizar',
+            tooltip: 'Actualizar (limpia la caché de tiles)',
             icon: const Icon(Icons.refresh),
-            onPressed: _refresh,
+            onPressed: () => _refresh(clearCache: true),
           ),
         ],
       ),
@@ -89,20 +137,25 @@ class _MapsPageState extends State<MapsPage> {
           ? _EmptyMaps(dir: PrepperLibrary.instance.mapsDir.path)
           : _error != null
               ? Center(child: Text(_error!))
-              : _loading || _provider == null
+              : _loading || _provider == null || _theme == null
                   ? const Center(child: CircularProgressIndicator())
                   : FlutterMap(
                       options: const MapOptions(
-                        initialCenter: LatLng(19.43, -99.13),
-                        initialZoom: 5,
+                        // Centered on Honduras by default; the map pans to
+                        // wherever the loaded region covers.
+                        initialCenter: LatLng(14.75, -86.25),
+                        initialZoom: 7,
                       ),
                       children: [
                         VectorTileLayer(
-                          theme: ProtomapsThemes.lightV3(),
+                          // build.protomaps.com serves basemap schema v4.
+                          theme: _theme!,
                           tileProviders: TileProviders({
                             'protomaps': _provider!,
                           }),
                           maximumZoom: 15,
+                          cacheFolder: () async =>
+                              tileCacheDirFor(_selected!),
                         ),
                       ],
                     ),

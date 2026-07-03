@@ -6,6 +6,9 @@
     <!-- GPS para "mi ubicación" en el mapa offline. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- Prepper Mesh: recibir multicast UDP en la LAN requiere MulticastLock. -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <application
         android:label="Prepper Pad"
         android:name="${applicationName}"

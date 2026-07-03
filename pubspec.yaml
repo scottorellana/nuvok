@@ -24,6 +24,8 @@ dependencies:
   vector_tile_renderer: ^5.1.0
   vector_tile: ^2.0.1
   collection: ^1.18.0
+  cryptography: ^2.7.0
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

@@ -42,10 +42,34 @@ class LanTransport implements MeshTransport {
     );
     socket.broadcastEnabled = true;
     socket.multicastLoopback = true;
+    // Join the group on EVERY interface, not just the default one. This is
+    // what lets two devices find each other on real WiFi AND two app
+    // instances find each other over loopback on one machine (the default
+    // interface alone skips loopback, so same-host peers wouldn't see each
+    // other).
+    var joinedAny = false;
     try {
-      socket.joinMulticast(_group);
+      final interfaces = await NetworkInterface.list(
+        includeLoopback: true,
+        type: InternetAddressType.IPv4,
+      );
+      for (final iface in interfaces) {
+        try {
+          socket.joinMulticast(_group, iface);
+          joinedAny = true;
+        } catch (_) {
+          // This interface refused the join; others may still work.
+        }
+      }
     } catch (_) {
-      // Some networks/interfaces refuse multicast; broadcast still works.
+      // Enumerating interfaces failed; fall through to the default join.
+    }
+    if (!joinedAny) {
+      try {
+        socket.joinMulticast(_group);
+      } catch (_) {
+        // No multicast at all; the broadcast fallback still carries traffic.
+      }
     }
     socket.listen((event) {
       if (event != RawSocketEvent.read) return;

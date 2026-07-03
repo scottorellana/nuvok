@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../core/prepper_library.dart';
+import 'emergency_retriever.dart';
 import 'library_retriever.dart';
 import 'llama_server.dart';
 
@@ -29,6 +30,7 @@ class _AiPageState extends State<AiPage> {
   String? _selectedModel;
   bool _generating = false;
   bool _useLibrary = true; // ground answers in the offline library
+  bool _emergencyMode = false; // guides-first grounding + strict fallback
 
   @override
   void initState() {
@@ -106,11 +108,28 @@ class _AiPageState extends State<AiPage> {
 
     // When grounding is on, retrieve evidence from the installed ZIMs and
     // build a system prompt that lists those sources and requires citations.
+    // Emergency mode retrieves from the bundled guides FIRST.
     List<RetrievedSource> sources = const [];
     String systemPrompt =
         'Eres el asistente de Prepper Pad, una app de conocimiento offline. '
         'Responde de forma útil y concisa en el idioma del usuario.';
-    if (_useLibrary && PrepperLibrary.instance.listZims().isNotEmpty) {
+    if (_emergencyMode) {
+      setState(() => _messages.last.text = '🚨 Buscando en las guías…');
+      try {
+        sources = await EmergencyRetriever.retrieve(text);
+      } catch (_) {}
+      if (sources.isNotEmpty) {
+        systemPrompt =
+            EmergencyRetriever.buildEmergencySystemPrompt(sources);
+      }
+      if (mounted) {
+        setState(() {
+          _messages.last
+            ..text = ''
+            ..sources = sources;
+        });
+      }
+    } else if (_useLibrary && PrepperLibrary.instance.listZims().isNotEmpty) {
       setState(() => _messages.last.text = '🔎 Buscando en la biblioteca…');
       try {
         sources = await LibraryRetriever.retrieve(text);
@@ -138,11 +157,28 @@ class _AiPageState extends State<AiPage> {
         setState(() => _messages.last.text += token);
         _scrollToEnd();
       }
+      // A model that answered nothing helps nobody in an emergency: fall
+      // back to the raw guide.
+      if (_emergencyMode && _messages.last.text.trim().isEmpty) {
+        final strict = await EmergencyRetriever.strictAnswer(text);
+        if (strict != null) setState(() => _messages.last.text = strict);
+      }
     } catch (e) {
-      setState(() {
-        _messages.last.text =
-            _messages.last.text.isEmpty ? '⚠️ $e' : _messages.last.text;
-      });
+      // No local model (Android today) or it crashed: in emergency mode the
+      // guides answer directly — no generation, no hallucination, no delay.
+      if (_emergencyMode) {
+        final strict = await EmergencyRetriever.strictAnswer(text);
+        setState(() {
+          _messages.last.text = strict ??
+              '⚠️ Sin IA local y sin guía que coincida. Abre la pestaña '
+                  'Emergencia y busca ahí. ($e)';
+        });
+      } else {
+        setState(() {
+          _messages.last.text =
+              _messages.last.text.isEmpty ? '⚠️ $e' : _messages.last.text;
+        });
+      }
     } finally {
       setState(() => _generating = false);
     }
@@ -164,6 +200,20 @@ class _AiPageState extends State<AiPage> {
         actions: [
           Row(
             children: [
+              Icon(Icons.emergency,
+                  size: 18, color: _emergencyMode ? Colors.red : null),
+              const SizedBox(width: 4),
+              Text('Emergencia',
+                  style: TextStyle(
+                      color: _emergencyMode ? Colors.red : null,
+                      fontWeight:
+                          _emergencyMode ? FontWeight.bold : null)),
+              Switch(
+                value: _emergencyMode,
+                activeTrackColor: Colors.red,
+                onChanged: (v) => setState(() => _emergencyMode = v),
+              ),
+              const SizedBox(width: 8),
               const Icon(Icons.menu_book_outlined, size: 18),
               const SizedBox(width: 4),
               const Text('Biblioteca'),

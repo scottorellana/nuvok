@@ -39,3 +39,5 @@ flutter:
   assets:
     - assets/map_theme_light_v4.json
     - assets/map_catalog.json
+    - assets/emergency_guides/es/
+    - assets/emergency_guides/en/

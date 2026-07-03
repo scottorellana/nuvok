@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/prepper_library.dart';
 import '../../zim/zim_file.dart';
+import '../depot/download_manager.dart';
 import 'zim_reader_page.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -25,11 +26,31 @@ class _ZimCardInfo {
 
 class _LibraryPageState extends State<LibraryPage> {
   List<_ZimCardInfo>? _zims;
+  int _lastDoneDownloads = -1;
 
   @override
   void initState() {
     super.initState();
     _load();
+    // Refresh automatically when the Depot finishes a download, so a book
+    // that just arrived opens without hunting for the refresh button.
+    DownloadManager.instance.addListener(_onDownloadsChanged);
+  }
+
+  @override
+  void dispose() {
+    DownloadManager.instance.removeListener(_onDownloadsChanged);
+    super.dispose();
+  }
+
+  void _onDownloadsChanged() {
+    final done = DownloadManager.instance.tasks
+        .where((t) => t.status == DownloadStatus.done)
+        .length;
+    if (done != _lastDoneDownloads) {
+      _lastDoneDownloads = done;
+      if (mounted) _load();
+    }
   }
 
   Future<void> _load() async {

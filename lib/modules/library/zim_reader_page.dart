@@ -200,7 +200,30 @@ class _ZimClassicReaderPageState extends State<ZimClassicReaderPage> {
     if (_error != null) {
       return Scaffold(
         appBar: AppBar(),
-        body: Center(child: Text('No se pudo abrir el archivo:\n$_error')),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('No se pudo abrir el archivo:\n$_error',
+                  textAlign: TextAlign.center),
+              const SizedBox(height: 8),
+              const Text(
+                'Si el libro se estaba descargando, espera a que termine '
+                'la descarga y reintenta.',
+                style: TextStyle(color: Colors.grey, fontSize: 13),
+              ),
+              const SizedBox(height: 12),
+              FilledButton.icon(
+                onPressed: () {
+                  setState(() => _error = null);
+                  _open();
+                },
+                icon: const Icon(Icons.refresh),
+                label: const Text('Reintentar'),
+              ),
+            ],
+          ),
+        ),
       );
     }
     return Scaffold(

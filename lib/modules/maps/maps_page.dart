@@ -84,6 +84,7 @@ class _MapsPageState extends State<MapsPage> {
   };
   List<MapPoi> _pois = [];
   bool _loadingPois = false;
+  Timer? _poiDebounce;
 
   // User overlays (custom points + tactical layers).
   final _overlays = OverlayStore.instance;
@@ -107,6 +108,7 @@ class _MapsPageState extends State<MapsPage> {
   @override
   void dispose() {
     _posSub?.cancel();
+    _poiDebounce?.cancel();
     super.dispose();
   }
 
@@ -217,6 +219,21 @@ class _MapsPageState extends State<MapsPage> {
     } finally {
       if (mounted) setState(() => _routing = false);
     }
+  }
+
+  /// Auto-loads POIs once the map settles at city zoom (>= 13), so hospitals,
+  /// pharmacies and stores appear without opening any panel. Debounced to
+  /// avoid re-reading tiles on every frame of a pan/zoom.
+  void _schedulePoiLoad(double zoom) {
+    _poiDebounce?.cancel();
+    if (zoom < 13) {
+      if (_pois.isNotEmpty) setState(() => _pois = []);
+      return;
+    }
+    _poiDebounce = Timer(const Duration(milliseconds: 600), () {
+      if (!mounted) return;
+      _loadPois();
+    });
   }
 
   /// Loads POIs (hospitals, pharmacies, …) for the current viewport.
@@ -347,9 +364,13 @@ class _MapsPageState extends State<MapsPage> {
     }
   }
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      endDrawer: _regions.isEmpty ? null : _buildLayersDrawer(),
       appBar: AppBar(
         title: const Text('Mapas offline'),
         actions: [
@@ -378,7 +399,9 @@ class _MapsPageState extends State<MapsPage> {
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: const Icon(Icons.layers),
             ),
-            onPressed: _regions.isEmpty ? null : _openLayersPanel,
+            onPressed: _regions.isEmpty
+                ? null
+                : () => _scaffoldKey.currentState?.openEndDrawer(),
           ),
           IconButton(
             tooltip: 'Actualizar (limpia la caché de tiles)',
@@ -481,6 +504,7 @@ class _MapsPageState extends State<MapsPage> {
                               if (hasGesture && _following) {
                                 setState(() => _following = false);
                               }
+                              _schedulePoiLoad(pos.zoom);
                             },
                           ),
                           children: [
@@ -777,26 +801,26 @@ class _MapsPageState extends State<MapsPage> {
       ? '${m.toStringAsFixed(0)} m'
       : '${(m / 1000).toStringAsFixed(1)} km';
 
-  void _openLayersPanel() {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setSheet) {
-          void toggleCat(PoiCategory c, bool on) {
-            setSheet(() {
-              if (on) {
-                _activeCategories.add(c);
-              } else {
-                _activeCategories.remove(c);
-              }
-            });
-            setState(() {});
-          }
+  Widget _buildLayersDrawer() {
+    return Drawer(
+      child: SafeArea(
+        child: StatefulBuilder(
+          builder: (context, setSheet) {
+            void toggleCat(PoiCategory c, bool on) {
+              setSheet(() {
+                if (on) {
+                  _activeCategories.add(c);
+                } else {
+                  _activeCategories.remove(c);
+                }
+              });
+              setState(() {});
+            }
 
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
-              child: Column(
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+                child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -873,11 +897,12 @@ class _MapsPageState extends State<MapsPage> {
                     Text('${_overlays.overlays.length} elementos guardados',
                         style: Theme.of(context).textTheme.bodySmall),
                   ],
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

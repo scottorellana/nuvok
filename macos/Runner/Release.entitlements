@@ -14,5 +14,8 @@
 	<!-- GPS/location for the offline map ("mi ubicación"). -->
 	<key>com.apple.security.personal-information.location</key>
 	<true/>
+	<!-- Prepper Mesh (BLE transport): access to the Bluetooth radio. -->
+	<key>com.apple.security.device.bluetooth</key>
+	<true/>
 </dict>
 </plist>

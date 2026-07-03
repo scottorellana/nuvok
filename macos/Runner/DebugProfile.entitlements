@@ -12,5 +12,8 @@
 	<true/>
 	<key>com.apple.security.personal-information.location</key>
 	<true/>
+	<!-- Prepper Mesh (BLE transport): acceso al radio Bluetooth. -->
+	<key>com.apple.security.device.bluetooth</key>
+	<true/>
 </dict>
 </plist>

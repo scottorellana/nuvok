@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../core/prepper_library.dart';
 import '../maps/location_service.dart';
+import 'ble_transport.dart';
 import 'lan_transport.dart';
 import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
@@ -16,6 +17,7 @@ import 'mesh_router.dart';
 import 'mesh_store.dart';
 import 'mesh_transport.dart';
 import 'position_store.dart';
+import 'wifi_direct_transport.dart';
 
 class MeshService {
   MeshService._();
@@ -88,6 +90,20 @@ class MeshService {
           if (MeshChannel.fromJson(j) case final MeshChannel c) c,
       ];
 
+  /// Transports wired in by default: LAN always, plus BLE and WiFi Direct on
+  /// platforms where their adapters report available. Each transport
+  /// self-degrades to a no-op if its hardware is missing, so including them is
+  /// always safe. Kept as a method (not a constant) so availability is checked
+  /// freshly every time the mesh starts.
+  static List<MeshTransport> defaultTransports() {
+    final list = <MeshTransport>[LanTransport()];
+    final ble = BleTransport();
+    if (ble.available) list.add(ble);
+    final wifi = WifiDirectTransport();
+    if (wifi.available) list.add(wifi);
+    return list;
+  }
+
   void _saveChannels() {
     store.saveChannels([
       for (final c in _router?.channels ?? _channelsFromDisk()) c.toJson(),
@@ -101,7 +117,7 @@ class MeshService {
     if (id == null) return; // UI must onboard first
     final router = MeshRouter(
       deviceId: id.id,
-      transports: _transportsOverride ?? [LanTransport()],
+      transports: _transportsOverride ?? defaultTransports(),
       channels: _channelsFromDisk(),
       store: store,
     );

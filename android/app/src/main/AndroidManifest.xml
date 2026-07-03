@@ -3,12 +3,26 @@
          puede hablar con su propio servidor interno de contenido ni
          descargar del Depósito. El uso offline no requiere red externa. -->
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- GPS para "mi ubicación" en el mapa offline. -->
+    <!-- GPS para "mi ubicación" en el mapa offline + escaneo BLE (Android). -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <!-- Prepper Mesh: recibir multicast UDP en la LAN requiere MulticastLock. -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- Prepper Mesh (BLE transport): descubrir y conectar radios Bluetooth
+         para chat offline sin router. -->
+    <uses-permission android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30"/>
+    <!-- Android 12+ (API 31) reemplaza los dos anteriores por estos: -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <!-- Prepper Mesh (WiFi Direct transport): P2P sin infraestructura. -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- Declara que la app solo funciona con BLE (no Bluetooth Classic) para
+         que Google Play filtre dispositivos sin él. -->
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
     <application
         android:label="Prepper Pad"
         android:name="${applicationName}"

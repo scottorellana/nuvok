@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🎒 Prepper Pad — Instalador Local</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%238C9E5E'/%3E%3Cpath d='M30 35h40v40a5 5 0 0 1-5 5H35a5 5 0 0 1-5-5z' fill='none' stroke='%2310130b' stroke-width='4'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="installer.css" />
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-big">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#10130b" stroke-width="2.5">
+        <path d="M7 8h10v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z" stroke-linejoin="round"/>
+        <path d="M9 8V6a3 3 0 0 1 6 0v2" stroke-linecap="round"/>
+        <line x1="7" y1="12" x2="17" y2="12"/>
+      </svg>
+    </div>
+    <h1>Prepper Pad — Instalador Local</h1>
+    <p>Descarga e instala en cualquier dispositivo de tu red</p>
+    <div class="server-status">
+      <span class="dot"></span>
+      Servidor activo
+    </div>
+  </div>
+
+  <!-- Device detection banner -->
+  <div class="device-banner" id="device-banner">
+    <div class="detected">
+      <span class="os-icon">📱</span>Detectando dispositivo...
+    </div>
+    <div class="hint">El instalador correcto para tu plataforma aparecerá marcado</div>
+  </div>
+
+  <!-- Installers section -->
+  <div class="section">
+    <div class="section-title">
+      📦 Instaladores
+      <span class="badge" id="installer-count"></span>
+    </div>
+    <div class="download-list" id="installers">
+      <div class="loading">Cargando instaladores disponibles...</div>
+    </div>
+  </div>
+
+  <!-- Content packages section -->
+  <div class="section">
+    <div class="section-title">
+      📚 Paquetes de Contenido
+      <span class="badge">offline</span>
+    </div>
+    <p style="color: var(--ink-dim); font-size: 0.9rem; margin-bottom: 16px;">
+      Descarga estos paquetes y cópialos a la carpeta <code>PrepperPad/</code> del dispositivo instalado.
+      Una vez descargados, funcionan 100% sin internet.
+    </p>
+    <div class="content-grid" id="content">
+      <div class="loading">Cargando paquetes...</div>
+    </div>
+  </div>
+
+  <!-- QR section for sharing URL -->
+  <div class="qr-section">
+    <h3>📲 Comparte este servidor</h3>
+    <p>Escanea este código desde otro dispositivo para abrir esta página</p>
+    <div id="qr-code" class="qr-placeholder">
+      <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="none" stroke="#ccc" stroke-width="3"/></svg>
+    </div>
+    <p style="margin-top:16px; font-family:monospace; color:var(--olive-bright);" id="server-url"></p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>🎒 Prepper Pad · Servidor de instalación local<br>
+    Este servidor solo es accesible desde tu red local (LAN)</p>
+  </div>
+
+</div>
+
+<script src="installer.js"></script>
+</body>
+</html>

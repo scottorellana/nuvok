@@ -1,0 +1,12 @@
+{
+  "name": "prepper-pad-installer-server",
+  "version": "1.0.0",
+  "description": "Local LAN installer server for Prepper Pad — serves installers and content packages to any device on the network",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js --dev"
+  },
+  "dependencies": {}
+}

@@ -109,10 +109,49 @@ jobs:
           cp "$VCPKG_INSTALLATION_ROOT"/installed/x64-windows/bin/zstd.dll "$OUT/libzstd.dll"
           cp "$VCPKG_INSTALLATION_ROOT"/installed/x64-windows/bin/liblzma.dll "$OUT/liblzma.dll"
           7z a dist/prepper-pad-windows-x64.zip "./$OUT/*"
+
+      - name: Create MSI installer
+        shell: pwsh
+        run: |
+          # Download and install Inno Setup
+          choco install innosetup -y --no-progress
+          # Generate Inno Setup script
+          @"
+          [Setup]
+          AppName=Prepper Pad
+          AppVersion=0.2.0
+          AppPublisher=Prepper Pad
+          AppPublisherURL=https://prepperpad.app
+          DefaultDirName={pf}\Prepper Pad
+          DefaultGroupName=Prepper Pad
+          UninstallDisplayIcon={app}\prepper_pad.exe
+          Compression=lzma2
+          SolidCompression=yes
+          OutputDir=dist
+          OutputBaseFilename=PrepperPad-Setup
+          ArchitecturesAllowed=x64
+          ArchitecturesInstallIn64BitMode=x64
+          DisableProgramGroupPage=yes
+          PrivilegesRequired=lowest
+
+          [Files]
+          Source: "dist\prepper-pad-windows-x64\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs
+
+          [Icons]
+          Name: "{group}\Prepper Pad"; Filename: "{app}\prepper_pad.exe"
+          Name: "{userdesktop}\Prepper Pad"; Filename: "{app}\prepper_pad.exe"; Tasks: desktopicon
+
+          [Tasks]
+          Name: "desktopicon"; Description: "Create a desktop icon"; GroupDescription: "Additional icons:"
+          "@ | Out-File -Encoding utf8 installer.iss
+          iscc installer.iss
+
       - uses: actions/upload-artifact@v4
         with:
           name: PrepperPad-windows
-          path: dist/*.zip
+          path: |
+            dist/*.zip
+            dist/*.exe
 
   android:
     runs-on: ubuntu-24.04
@@ -169,4 +208,5 @@ jobs:
             artifacts/**/PrepperPad.dmg
             artifacts/**/*.tar.gz
             artifacts/**/*.zip
+            artifacts/**/*.exe
             artifacts/**/*.apk

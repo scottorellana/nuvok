@@ -1,0 +1,15 @@
+{
+  "comment": "Catálogo de regiones para el instalador de mapas. bbox = minLon,minLat,maxLon,maxLat (WGS84). En escritorio con el binario pmtiles disponible se extraen directo del build diario de Protomaps; si una región trae 'url', se descarga de ahí en cualquier plataforma. Datos © OpenStreetMap contributors (ODbL).",
+  "regions": [
+    {"id": "honduras", "name": "Honduras", "flag": "🇭🇳", "sizeMB": 218, "bbox": "-89.36,12.98,-83.13,17.42"},
+    {"id": "el-salvador", "name": "El Salvador", "flag": "🇸🇻", "sizeMB": 95, "bbox": "-90.20,12.98,-87.65,14.46"},
+    {"id": "guatemala", "name": "Guatemala", "flag": "🇬🇹", "sizeMB": 180, "bbox": "-92.30,13.70,-88.20,17.85"},
+    {"id": "nicaragua", "name": "Nicaragua", "flag": "🇳🇮", "sizeMB": 130, "bbox": "-87.70,10.70,-82.60,15.05"},
+    {"id": "costa-rica", "name": "Costa Rica", "flag": "🇨🇷", "sizeMB": 150, "bbox": "-86.00,8.00,-82.50,11.25"},
+    {"id": "panama", "name": "Panamá", "flag": "🇵🇦", "sizeMB": 120, "bbox": "-83.10,7.10,-77.10,9.70"},
+    {"id": "belize", "name": "Belice", "flag": "🇧🇿", "sizeMB": 40, "bbox": "-89.30,15.85,-87.75,18.50"},
+    {"id": "mexico", "name": "México", "flag": "🇲🇽", "sizeMB": 1500, "bbox": "-118.40,14.53,-86.70,32.72"},
+    {"id": "espana", "name": "España", "flag": "🇪🇸", "sizeMB": 900, "bbox": "-9.40,35.90,4.40,43.85"},
+    {"id": "colombia", "name": "Colombia", "flag": "🇨🇴", "sizeMB": 500, "bbox": "-79.10,-4.30,-66.80,12.60"}
+  ]
+}

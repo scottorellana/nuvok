@@ -13,6 +13,8 @@ import 'package:vector_tile_renderer/vector_tile_renderer.dart' as vtr;
 
 import '../../core/prepper_library.dart';
 import 'location_service.dart';
+import 'map_overlays.dart';
+import 'poi_extractor.dart';
 
 /// Loads the bundled Protomaps light v4 style and simplifies its text-field
 /// expressions: the upstream theme uses experimental `pgf:` glyph expressions
@@ -69,11 +71,31 @@ class _MapsPageState extends State<MapsPage> {
   bool _locating = false; // a fix is in progress
   LatLng? _destination; // "where to go" marker set by tapping the map
 
+  // POIs from the map data.
+  final Set<PoiCategory> _activeCategories = {
+    PoiCategory.health,
+    PoiCategory.pharmacy,
+    PoiCategory.food,
+    PoiCategory.fuel,
+  };
+  List<MapPoi> _pois = [];
+  bool _loadingPois = false;
+
+  // User overlays (custom points + tactical layers).
+  final _overlays = OverlayStore.instance;
+  bool _showOverlays = true;
+  // Draw mode: when set, taps add vertices to a new area/line overlay.
+  OverlayKind? _drawKind;
+  final List<LatLng> _drawPoints = [];
+
   @override
   void initState() {
     super.initState();
     loadMapTheme().then((t) {
       if (mounted) setState(() => _theme = t);
+    });
+    _overlays.load().then((_) {
+      if (mounted) setState(() {});
     });
     _refresh();
   }
@@ -123,9 +145,14 @@ class _MapsPageState extends State<MapsPage> {
     }
   }
 
-  /// Tapping the map marks a destination; we then show distance + bearing
-  /// from the device to it. Tapping the same spot again clears it.
+  /// Tap behavior depends on the mode:
+  /// - draw mode: add a vertex to the area/line being drawn
+  /// - normal: mark/clear a destination for "where to go"
   void _onMapTap(LatLng point) {
+    if (_drawKind != null) {
+      setState(() => _drawPoints.add(point));
+      return;
+    }
     setState(() {
       if (_destination != null &&
           LocationService.distanceMeters(_destination!.latitude,
@@ -135,6 +162,99 @@ class _MapsPageState extends State<MapsPage> {
       } else {
         _destination = point;
       }
+    });
+  }
+
+  /// Loads POIs (hospitals, pharmacies, …) for the current viewport.
+  Future<void> _loadPois() async {
+    final provider = _provider;
+    if (provider == null || _activeCategories.isEmpty) {
+      setState(() => _pois = []);
+      return;
+    }
+    setState(() => _loadingPois = true);
+    try {
+      final camera = _map.camera;
+      final bounds = camera.visibleBounds;
+      final pois = await PoiExtractor.extract(
+        provider: provider,
+        bounds: bounds,
+        zoom: camera.zoom.round(),
+        categories: _activeCategories,
+      );
+      if (mounted) setState(() => _pois = pois);
+    } catch (_) {
+      // Ignore — POIs are best-effort.
+    } finally {
+      if (mounted) setState(() => _loadingPois = false);
+    }
+  }
+
+  /// Adds a custom point overlay (shelter, water, meeting point, …) at [point].
+  Future<void> _addCustomPoint(LatLng point) async {
+    final result = await showModalBottomSheet<(OverlayKind, String?)>(
+      context: context,
+      builder: (context) => _AddPointSheet(point: point),
+    );
+    if (result == null) return;
+    await _overlays.add(MapOverlay(
+      id: DateTime.now().microsecondsSinceEpoch.toString(),
+      kind: result.$1,
+      points: [point],
+      name: result.$2,
+    ));
+    if (mounted) setState(() {});
+  }
+
+  /// Starts drawing an area (zone) or line (route). Taps then add vertices.
+  void _startDraw(OverlayKind kind) {
+    setState(() {
+      _drawKind = kind;
+      _drawPoints.clear();
+      _destination = null;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Dibujando ${kind.label}: toca el mapa para agregar '
+          'puntos, luego pulsa ✓'),
+      duration: const Duration(seconds: 3),
+    ));
+  }
+
+  Future<void> _finishDraw() async {
+    final kind = _drawKind;
+    final minPts = kind != null && kind.isArea ? 3 : 2;
+    if (kind == null || _drawPoints.length < minPts) {
+      setState(() {
+        _drawKind = null;
+        _drawPoints.clear();
+      });
+      return;
+    }
+    int? danger;
+    if (kind == OverlayKind.riskZone) {
+      danger = await showDialog<int>(
+        context: context,
+        builder: (context) => _DangerLevelDialog(),
+      );
+    }
+    await _overlays.add(MapOverlay(
+      id: DateTime.now().microsecondsSinceEpoch.toString(),
+      kind: kind,
+      points: List.of(_drawPoints),
+      dangerLevel: danger,
+    ));
+    if (mounted) {
+      setState(() {
+        _drawKind = null;
+        _drawPoints.clear();
+      });
+    }
+  }
+
+  void _cancelDraw() {
+    setState(() {
+      _drawKind = null;
+      _drawPoints.clear();
     });
   }
 
@@ -198,6 +318,15 @@ class _MapsPageState extends State<MapsPage> {
               ),
             ),
           IconButton(
+            tooltip: 'Capas: POIs y capas tácticas',
+            icon: Badge(
+              isLabelVisible: _loadingPois,
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: const Icon(Icons.layers),
+            ),
+            onPressed: _regions.isEmpty ? null : _openLayersPanel,
+          ),
+          IconButton(
             tooltip: 'Actualizar (limpia la caché de tiles)',
             icon: const Icon(Icons.refresh),
             onPressed: () => _refresh(clearCache: true),
@@ -206,7 +335,27 @@ class _MapsPageState extends State<MapsPage> {
       ),
       floatingActionButton: _regions.isEmpty || _error != null
           ? null
-          : Column(
+          : _drawKind != null
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    FloatingActionButton.small(
+                      heroTag: 'cancelDraw',
+                      tooltip: 'Cancelar',
+                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      onPressed: _cancelDraw,
+                      child: const Icon(Icons.close),
+                    ),
+                    const SizedBox(height: 8),
+                    FloatingActionButton(
+                      heroTag: 'finishDraw',
+                      tooltip: 'Terminar',
+                      onPressed: _finishDraw,
+                      child: const Icon(Icons.check),
+                    ),
+                  ],
+                )
+              : Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (_me != null)
@@ -255,6 +404,9 @@ class _MapsPageState extends State<MapsPage> {
                             initialCenter: const LatLng(14.75, -86.25),
                             initialZoom: 7,
                             onTap: (_, point) => _onMapTap(point),
+                            onLongPress: (_, point) {
+                              if (_drawKind == null) _addCustomPoint(point);
+                            },
                             // Any manual gesture drops follow mode so the map
                             // doesn't fight the user.
                             onPositionChanged: (pos, hasGesture) {
@@ -274,6 +426,40 @@ class _MapsPageState extends State<MapsPage> {
                               cacheFolder: () async =>
                                   tileCacheDirFor(_selected!),
                             ),
+                            // Tactical zones (safe / risk polygons).
+                            if (_showOverlays)
+                              PolygonLayer(
+                                polygons: [
+                                  for (final o in _overlays.overlays)
+                                    if (o.kind.isArea)
+                                      Polygon(
+                                        points: o.points,
+                                        color: _overlayColor(o)
+                                            .withValues(alpha: 0.22),
+                                        borderColor: _overlayColor(o),
+                                        borderStrokeWidth: 2,
+                                      ),
+                                ],
+                              ),
+                            // Evacuation routes + the polygon/line being drawn.
+                            if (_showOverlays)
+                              PolylineLayer(
+                                polylines: [
+                                  for (final o in _overlays.overlays)
+                                    if (o.kind.isLine)
+                                      Polyline(
+                                        points: o.points,
+                                        strokeWidth: 4,
+                                        color: _overlayColor(o),
+                                      ),
+                                  if (_drawKind != null && _drawPoints.length > 1)
+                                    Polyline(
+                                      points: _drawPoints,
+                                      strokeWidth: 3,
+                                      color: Colors.orange,
+                                    ),
+                                ],
+                              ),
                             // Straight line from me to the destination.
                             if (_me != null && _destination != null)
                               PolylineLayer(
@@ -305,6 +491,51 @@ class _MapsPageState extends State<MapsPage> {
                                         Colors.blue.withValues(alpha: 0.4),
                                     borderStrokeWidth: 1,
                                   ),
+                                ],
+                              ),
+                            // POI markers from the map data.
+                            MarkerLayer(
+                              markers: [
+                                for (final p in _pois)
+                                  Marker(
+                                    point: p.location,
+                                    width: 30,
+                                    height: 30,
+                                    child: GestureDetector(
+                                      onTap: () => _showPoiInfo(p),
+                                      child: _PoiPin(category: p.category),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            // Custom point overlays (shelter, water, …).
+                            if (_showOverlays)
+                              MarkerLayer(
+                                markers: [
+                                  for (final o in _overlays.overlays)
+                                    if (o.kind.isPoint)
+                                      Marker(
+                                        point: o.anchor,
+                                        width: 34,
+                                        height: 34,
+                                        child: GestureDetector(
+                                          onTap: () => _showOverlayInfo(o),
+                                          child: _OverlayPin(overlay: o),
+                                        ),
+                                      ),
+                                  // Vertices being drawn.
+                                  for (final v in _drawPoints)
+                                    Marker(
+                                      point: v,
+                                      width: 14,
+                                      height: 14,
+                                      child: const DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          color: Colors.orange,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                    ),
                                 ],
                               ),
                             MarkerLayer(
@@ -342,8 +573,455 @@ class _MapsPageState extends State<MapsPage> {
                               destination: _destination,
                             ),
                           ),
+                        if (_drawKind != null)
+                          Positioned(
+                            left: 12,
+                            right: 12,
+                            top: 12,
+                            child: Card(
+                              color: Colors.orange.shade100,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Text(
+                                  'Dibujando ${_drawKind!.label} · '
+                                  '${_drawPoints.length} puntos. Toca el mapa '
+                                  'para agregar, ✓ para terminar.',
+                                  style: const TextStyle(color: Colors.black87),
+                                ),
+                              ),
+                            ),
+                          ),
                       ],
                     ),
+    );
+  }
+
+  Color _overlayColor(MapOverlay o) {
+    switch (o.kind) {
+      case OverlayKind.safeZone:
+        return Colors.green;
+      case OverlayKind.riskZone:
+        // Deeper red with higher danger level.
+        return Color.lerp(Colors.orange, Colors.red.shade900,
+            ((o.dangerLevel ?? 3) - 1) / 4)!;
+      case OverlayKind.evacuationRoute:
+        return Colors.deepPurple;
+      case OverlayKind.shelter:
+        return Colors.brown;
+      case OverlayKind.water:
+        return Colors.lightBlue;
+      case OverlayKind.meetingPoint:
+        return Colors.teal;
+      case OverlayKind.resource:
+        return Colors.indigo;
+      case OverlayKind.customPoint:
+        return Colors.blueGrey;
+    }
+  }
+
+  void _showPoiInfo(MapPoi p) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(children: [
+              _PoiPin(category: p.category),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(p.name ?? poiCategoryLabel(p.category),
+                    style: Theme.of(context).textTheme.titleMedium),
+              ),
+            ]),
+            const SizedBox(height: 6),
+            Text('${poiCategoryLabel(p.category)} · ${p.kind}'),
+            const SizedBox(height: 4),
+            Text(
+                '${p.location.latitude.toStringAsFixed(5)}, '
+                '${p.location.longitude.toStringAsFixed(5)}',
+                style: Theme.of(context).textTheme.bodySmall),
+            if (_me != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                'A ${_fmtKm(LocationService.distanceMeters(_me!.latitude, _me!.longitude, p.location.latitude, p.location.longitude))} '
+                'de tu ubicación',
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showOverlayInfo(MapOverlay o) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(o.name ?? o.kind.label,
+                style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 4),
+            Text(o.kind.label +
+                (o.dangerLevel != null
+                    ? ' · peligrosidad ${o.dangerLevel}/5'
+                    : '')),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton.icon(
+                icon: const Icon(Icons.delete_outline, color: Colors.red),
+                label: const Text('Eliminar',
+                    style: TextStyle(color: Colors.red)),
+                onPressed: () async {
+                  await _overlays.remove(o.id);
+                  if (context.mounted) Navigator.pop(context);
+                  if (mounted) setState(() {});
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _fmtKm(double m) => m < 1000
+      ? '${m.toStringAsFixed(0)} m'
+      : '${(m / 1000).toStringAsFixed(1)} km';
+
+  void _openLayersPanel() {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setSheet) {
+          void toggleCat(PoiCategory c, bool on) {
+            setSheet(() {
+              if (on) {
+                _activeCategories.add(c);
+              } else {
+                _activeCategories.remove(c);
+              }
+            });
+            setState(() {});
+          }
+
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text('Puntos de interés del mapa',
+                            style: Theme.of(context).textTheme.titleMedium),
+                      ),
+                      FilledButton.tonalIcon(
+                        icon: _loadingPois
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child:
+                                    CircularProgressIndicator(strokeWidth: 2))
+                            : const Icon(Icons.search, size: 18),
+                        label: const Text('Buscar aquí'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _loadPois();
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      for (final c in PoiCategory.values)
+                        FilterChip(
+                          avatar: Icon(poiCategoryIcon(c),
+                              size: 18, color: poiCategoryColor(c)),
+                          label: Text(poiCategoryLabel(c)),
+                          selected: _activeCategories.contains(c),
+                          onSelected: (v) => toggleCat(c, v),
+                        ),
+                    ],
+                  ),
+                  const Divider(height: 28),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text('Capas tácticas',
+                            style: Theme.of(context).textTheme.titleMedium),
+                      ),
+                      Switch(
+                        value: _showOverlays,
+                        onChanged: (v) {
+                          setSheet(() => _showOverlays = v);
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
+                  const Text(
+                    'Mantén pulsado el mapa para agregar un punto '
+                    '(refugio, agua, reunión). O dibuja un área o ruta:',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  const SizedBox(height: 10),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      _drawButton(OverlayKind.safeZone, Icons.shield_outlined),
+                      _drawButton(OverlayKind.riskZone, Icons.warning_amber),
+                      _drawButton(
+                          OverlayKind.evacuationRoute, Icons.route_outlined),
+                    ],
+                  ),
+                  if (_overlays.overlays.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Text('${_overlays.overlays.length} elementos guardados',
+                        style: Theme.of(context).textTheme.bodySmall),
+                  ],
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _drawButton(OverlayKind kind, IconData icon) {
+    return OutlinedButton.icon(
+      icon: Icon(icon, size: 18),
+      label: Text(kind.label),
+      onPressed: () {
+        Navigator.pop(context);
+        _startDraw(kind);
+      },
+    );
+  }
+}
+
+/// Colored map pin for an auto-detected POI category.
+class _PoiPin extends StatelessWidget {
+  const _PoiPin({required this.category});
+  final PoiCategory category;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: poiCategoryColor(category),
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 2),
+        boxShadow: const [BoxShadow(color: Colors.black38, blurRadius: 3)],
+      ),
+      child: Icon(poiCategoryIcon(category), size: 16, color: Colors.white),
+    );
+  }
+}
+
+/// Pin for a user-created custom point overlay.
+class _OverlayPin extends StatelessWidget {
+  const _OverlayPin({required this.overlay});
+  final MapOverlay overlay;
+
+  IconData get _icon {
+    switch (overlay.kind) {
+      case OverlayKind.shelter:
+        return Icons.home_outlined;
+      case OverlayKind.water:
+        return Icons.water_drop;
+      case OverlayKind.meetingPoint:
+        return Icons.groups;
+      case OverlayKind.resource:
+        return Icons.inventory_2_outlined;
+      default:
+        return Icons.push_pin;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Color color;
+    switch (overlay.kind) {
+      case OverlayKind.shelter:
+        color = Colors.brown;
+        break;
+      case OverlayKind.water:
+        color = Colors.lightBlue;
+        break;
+      case OverlayKind.meetingPoint:
+        color = Colors.teal;
+        break;
+      case OverlayKind.resource:
+        color = Colors.indigo;
+        break;
+      default:
+        color = Colors.blueGrey;
+    }
+    return Container(
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 2),
+        boxShadow: const [BoxShadow(color: Colors.black38, blurRadius: 3)],
+      ),
+      child: Icon(_icon, size: 18, color: Colors.white),
+    );
+  }
+}
+
+String poiCategoryLabel(PoiCategory c) {
+  switch (c) {
+    case PoiCategory.health:
+      return 'Hospitales';
+    case PoiCategory.pharmacy:
+      return 'Farmacias';
+    case PoiCategory.fuel:
+      return 'Combustible';
+    case PoiCategory.food:
+      return 'Tiendas';
+    case PoiCategory.safety:
+      return 'Seguridad';
+    case PoiCategory.water:
+      return 'Agua';
+  }
+}
+
+IconData poiCategoryIcon(PoiCategory c) {
+  switch (c) {
+    case PoiCategory.health:
+      return Icons.local_hospital;
+    case PoiCategory.pharmacy:
+      return Icons.local_pharmacy;
+    case PoiCategory.fuel:
+      return Icons.local_gas_station;
+    case PoiCategory.food:
+      return Icons.storefront;
+    case PoiCategory.safety:
+      return Icons.local_police;
+    case PoiCategory.water:
+      return Icons.water_drop;
+  }
+}
+
+Color poiCategoryColor(PoiCategory c) {
+  switch (c) {
+    case PoiCategory.health:
+      return Colors.red.shade700;
+    case PoiCategory.pharmacy:
+      return Colors.green.shade700;
+    case PoiCategory.fuel:
+      return Colors.orange.shade800;
+    case PoiCategory.food:
+      return Colors.blue.shade700;
+    case PoiCategory.safety:
+      return Colors.indigo;
+    case PoiCategory.water:
+      return Colors.cyan.shade700;
+  }
+}
+
+/// Bottom sheet to pick the kind of custom point to drop.
+class _AddPointSheet extends StatelessWidget {
+  const _AddPointSheet({required this.point});
+  final LatLng point;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = TextEditingController();
+    OverlayKind selected = OverlayKind.customPoint;
+    return StatefulBuilder(
+      builder: (context, setSheet) => Padding(
+        padding: EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 20,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Agregar punto',
+                style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              children: [
+                for (final k in [
+                  OverlayKind.shelter,
+                  OverlayKind.water,
+                  OverlayKind.meetingPoint,
+                  OverlayKind.resource,
+                  OverlayKind.customPoint,
+                ])
+                  ChoiceChip(
+                    label: Text(k.label),
+                    selected: selected == k,
+                    onSelected: (_) => setSheet(() => selected = k),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: controller,
+              decoration: const InputDecoration(
+                labelText: 'Nombre (opcional)',
+                border: OutlineInputBorder(),
+                isDense: true,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: FilledButton(
+                onPressed: () => Navigator.pop(context, (
+                  selected,
+                  controller.text.trim().isEmpty ? null : controller.text.trim()
+                )),
+                child: const Text('Agregar'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Dialog to pick a danger level (1..5) when drawing a risk zone.
+class _DangerLevelDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Nivel de peligrosidad'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (var i = 1; i <= 5; i++)
+            ListTile(
+              leading: Icon(Icons.warning_amber,
+                  color: Color.lerp(
+                      Colors.orange, Colors.red.shade900, (i - 1) / 4)),
+              title: Text('Nivel $i${i == 5 ? ' (máximo)' : ''}'),
+              onTap: () => Navigator.pop(context, i),
+            ),
+        ],
+      ),
     );
   }
 }

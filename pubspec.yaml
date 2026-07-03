@@ -22,6 +22,7 @@ dependencies:
   vector_map_tiles: ^8.0.0
   vector_map_tiles_pmtiles: ^1.5.0
   vector_tile_renderer: ^5.1.0
+  vector_tile: ^2.0.1
 
 dev_dependencies:
   flutter_test:

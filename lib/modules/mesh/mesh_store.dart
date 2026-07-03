@@ -14,6 +14,23 @@ class MeshStore {
 
   File _messagesFile(String channelId) => File('$dirPath/$channelId.jsonl');
   File get _outboxFile => File('$dirPath/outbox.json');
+  File get _channelsFile => File('$dirPath/channels.json');
+
+  void saveChannels(List<Map<String, dynamic>> channels) {
+    try {
+      _channelsFile.writeAsStringSync(jsonEncode(channels));
+    } catch (_) {}
+  }
+
+  List<Map<String, dynamic>> loadChannels() {
+    try {
+      if (!_channelsFile.existsSync()) return [];
+      final list = jsonDecode(_channelsFile.readAsStringSync()) as List;
+      return [for (final e in list) (e as Map).cast<String, dynamic>()];
+    } catch (_) {
+      return [];
+    }
+  }
 
   void appendMessage(String channelId, Map<String, dynamic> record) {
     try {

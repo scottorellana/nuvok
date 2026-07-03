@@ -1,0 +1,137 @@
+import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:prepper_pad/modules/mesh/mesh_channel.dart';
+import 'package:prepper_pad/modules/mesh/mesh_envelope.dart';
+import 'package:prepper_pad/modules/mesh/mesh_identity.dart';
+import 'package:prepper_pad/modules/mesh/mesh_router.dart';
+import 'package:prepper_pad/modules/mesh/mesh_service.dart';
+import 'package:prepper_pad/modules/mesh/mesh_store.dart';
+import 'package:prepper_pad/modules/mesh/mesh_transport.dart';
+import 'package:prepper_pad/modules/mesh/position_store.dart';
+
+class FakeTransport implements MeshTransport {
+  final sent = <Uint8List>[];
+  final _incoming = StreamController<Uint8List>.broadcast();
+  @override
+  String get name => 'fake';
+  @override
+  Future<void> start() async {}
+  @override
+  Future<void> stop() async {}
+  @override
+  Future<void> send(Uint8List datagram) async => sent.add(datagram);
+  @override
+  Stream<Uint8List> get onData => _incoming.stream;
+  void inject(Uint8List d) => _incoming.add(d);
+}
+
+void main() {
+  late Directory tmp;
+  late FakeTransport transport;
+  late MeshService service;
+
+  setUp(() async {
+    tmp = Directory.systemTemp.createTempSync('mesh_service');
+    transport = FakeTransport();
+    service = MeshService.forTest(
+      dirPath: tmp.path,
+      transports: [transport],
+      identity: MeshIdentity.create('Mi Tablet'),
+    );
+    await service.start();
+  });
+
+  tearDown(() async {
+    await service.stop();
+    tmp.deleteSync(recursive: true);
+  });
+
+  test('al arrancar difunde un beacon de presencia', () {
+    expect(transport.sent, isNotEmpty);
+    final env = MeshEnvelope.decode(transport.sent.first)!;
+    expect(env.type, MeshType.beacon);
+    expect(env.senderName, 'Mi Tablet');
+    expect(env.channelId, MeshChannel.emergency.id);
+  });
+
+  test('sendChat persiste el mensaje propio y lo emite localmente', () async {
+    final ch = MeshChannel.create('Familia');
+    await service.joinChannel(ch);
+    final events = <MeshEvent>[];
+    service.events.listen(events.add);
+    await service.sendChat(ch, 'hola familia');
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    expect(events.any((e) => e.payload['text'] == 'hola familia'), isTrue);
+    final persisted = MeshStore(tmp.path).loadMessages(ch.id);
+    expect(persisted, hasLength(1));
+    expect(persisted.first['text'], 'hola familia');
+    expect(persisted.first['_name'], 'Mi Tablet');
+  });
+
+  test('canales unidos sobreviven reinicio del servicio', () async {
+    final ch = MeshChannel.create('Vecinos');
+    await service.joinChannel(ch);
+    await service.stop();
+    await service.start();
+    expect(service.channels.map((c) => c.id), contains(ch.id));
+  });
+
+  test('posición entrante alimenta el PositionStore', () async {
+    final ch = MeshChannel.create('Familia');
+    await service.joinChannel(ch);
+    final env = MeshEnvelope(
+      msgId: MeshEnvelope.newMsgId(),
+      channelId: ch.id,
+      senderId: 'cccccccccccccccc',
+      senderName: 'Hermano',
+      type: MeshType.position,
+      hopLimit: 3,
+      timestampMs: DateTime.now().millisecondsSinceEpoch,
+      payload: await sealPayload({'lat': 15.51, 'lon': -88.02}, ch),
+    );
+    transport.inject(env.encode());
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+    final peers = PositionStore.instance.recent();
+    expect(peers.any((p) => p.name == 'Hermano' && p.lat == 15.51), isTrue);
+  });
+
+  test('SOS entrante queda marcado y sosCancel lo limpia', () async {
+    final sos = MeshEnvelope(
+      msgId: MeshEnvelope.newMsgId(),
+      channelId: MeshChannel.emergency.id,
+      senderId: 'dddddddddddddddd',
+      senderName: 'Vecina',
+      type: MeshType.sos,
+      hopLimit: 5,
+      timestampMs: DateTime.now().millisecondsSinceEpoch,
+      payload: await sealPayload(
+          {'lat': 15.49, 'lon': -88.01, 'note': 'atrapada'},
+          MeshChannel.emergency),
+    );
+    transport.inject(sos.encode());
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+    var peer = PositionStore.instance.peers.value['dddddddddddddddd'];
+    expect(peer, isNotNull);
+    expect(peer!.isSos, isTrue);
+    expect(peer.sosNote, 'atrapada');
+
+    final cancel = MeshEnvelope(
+      msgId: MeshEnvelope.newMsgId(),
+      channelId: MeshChannel.emergency.id,
+      senderId: 'dddddddddddddddd',
+      senderName: 'Vecina',
+      type: MeshType.sosCancel,
+      hopLimit: 5,
+      timestampMs: DateTime.now().millisecondsSinceEpoch,
+      payload:
+          await sealPayload({'ok': true}, MeshChannel.emergency),
+    );
+    transport.inject(cancel.encode());
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+    peer = PositionStore.instance.peers.value['dddddddddddddddd'];
+    expect(peer!.isSos, isFalse);
+  });
+}

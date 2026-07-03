@@ -12,8 +12,11 @@ import 'package:vector_map_tiles_pmtiles/vector_map_tiles_pmtiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart' as vtr;
 
 import '../../core/prepper_library.dart';
+import '../mesh/position_store.dart';
 import 'location_service.dart';
+import 'map_focus.dart';
 import 'map_overlays.dart';
+import 'place_search.dart';
 import 'poi_extractor.dart';
 import 'roads_router.dart';
 
@@ -104,10 +107,29 @@ class _MapsPageState extends State<MapsPage> {
       if (mounted) setState(() {});
     });
     _refresh();
+    // Mesh teammates / SOS positions repaint the map as they arrive.
+    PositionStore.instance.peers.addListener(_onPeersChanged);
+    // "Show this on the map" requests from the SOS alert or other modules.
+    MapFocus.request.addListener(_onFocusRequest);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _onFocusRequest());
+  }
+
+  void _onPeersChanged() {
+    if (mounted) setState(() {});
+  }
+
+  void _onFocusRequest() {
+    final target = MapFocus.request.value;
+    if (target == null || !mounted) return;
+    MapFocus.request.value = null;
+    setState(() => _following = false);
+    _map.move(target, 15);
   }
 
   @override
   void dispose() {
+    PositionStore.instance.peers.removeListener(_onPeersChanged);
+    MapFocus.request.removeListener(_onFocusRequest);
     _posSub?.cancel();
     _poiDebounce?.cancel();
     super.dispose();
@@ -241,6 +263,37 @@ class _MapsPageState extends State<MapsPage> {
     } finally {
       if (mounted) setState(() => _routing = false);
     }
+  }
+
+  /// "Llévame a…": search places/POIs/overlays by name; picking one marks it
+  /// as destination, centers the camera and traces the street route.
+  Future<void> _openSearch() async {
+    final provider = _provider;
+    final file = _selected;
+    if (provider == null || file == null) return;
+    final me = _me != null ? LatLng(_me!.latitude, _me!.longitude) : null;
+    final target = await showDialog<(String, LatLng)>(
+      context: context,
+      builder: (context) => _PlaceSearchDialog(
+        provider: provider,
+        cacheKey: '${file.path}:${file.statSync().size}',
+        pois: _pois,
+        overlays: _overlays.overlays,
+        near: me,
+      ),
+    );
+    if (target == null || !mounted) return;
+    setState(() {
+      _destination = target.$2;
+      _route = null;
+      _routeMeters = null;
+      _following = false;
+    });
+    _map.move(target.$2, 15);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Destino: ${target.$1} — trazando ruta…'),
+        duration: const Duration(seconds: 2)));
+    await _computeRoute();
   }
 
   void _toggleProfile() {
@@ -425,6 +478,12 @@ class _MapsPageState extends State<MapsPage> {
                 },
               ),
             ),
+          IconButton(
+            tooltip: 'Buscar lugar y llevarme ahí',
+            icon: const Icon(Icons.search),
+            onPressed:
+                _regions.isEmpty || _provider == null ? null : _openSearch,
+          ),
           IconButton(
             tooltip: 'Capas: POIs y capas tácticas',
             icon: Badge(
@@ -687,6 +746,41 @@ class _MapsPageState extends State<MapsPage> {
                                     ),
                                 ],
                               ),
+                            // Mesh teammates and SOS alerts heard offline.
+                            MarkerLayer(
+                              markers: [
+                                for (final p
+                                    in PositionStore.instance.recent())
+                                  Marker(
+                                    point: LatLng(p.lat, p.lon),
+                                    width: p.isSos ? 46 : 34,
+                                    height: p.isSos ? 46 : 34,
+                                    child: Tooltip(
+                                      message: p.isSos
+                                          ? 'SOS: ${p.name} '
+                                              '${p.sosNote ?? ''}'
+                                          : p.name,
+                                      child: p.isSos
+                                          ? const Icon(Icons.sos,
+                                              color: Colors.red, size: 44)
+                                          : CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.teal.shade700,
+                                              child: Text(
+                                                p.name.isEmpty
+                                                    ? '?'
+                                                    : p.name[0]
+                                                        .toUpperCase(),
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                    ),
+                                  ),
+                              ],
+                            ),
                             MarkerLayer(
                               markers: [
                                 if (_destination != null)
@@ -1328,6 +1422,163 @@ class _EmptyMaps extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Search dialog: builds the offline place index on first open (with a
+/// progress note), merges places + loaded POIs + named overlays, and returns
+/// the chosen (name, location).
+class _PlaceSearchDialog extends StatefulWidget {
+  const _PlaceSearchDialog({
+    required this.provider,
+    required this.cacheKey,
+    required this.pois,
+    required this.overlays,
+    this.near,
+  });
+
+  final PmTilesVectorTileProvider provider;
+  final String cacheKey;
+  final List<MapPoi> pois;
+  final List<MapOverlay> overlays;
+  final LatLng? near;
+
+  @override
+  State<_PlaceSearchDialog> createState() => _PlaceSearchDialogState();
+}
+
+class _PlaceSearchDialogState extends State<_PlaceSearchDialog> {
+  PlaceIndex? _index;
+  String _query = '';
+  final _ctrl = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    PlaceIndex.forProvider(widget.provider, widget.cacheKey).then((idx) {
+      if (mounted) setState(() => _index = idx);
+    });
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  List<(String, String, LatLng)> _results() {
+    final q = _query.trim();
+    if (q.length < 2) return const [];
+    final out = <(String, String, LatLng)>[];
+    final ql = q.toLowerCase();
+    // User's own named points first — they outrank everything.
+    for (final o in widget.overlays) {
+      final name = o.name;
+      if (name != null && name.toLowerCase().contains(ql)) {
+        out.add((name, o.kind.label, o.anchor));
+      }
+    }
+    // POIs currently loaded around the viewport (hospitals, pharmacies…).
+    for (final p in widget.pois) {
+      final name = p.name;
+      if (name != null && name.toLowerCase().contains(ql)) {
+        out.add((name, p.kind, p.location));
+      }
+    }
+    // Cities and towns from the map itself.
+    final idx = _index;
+    if (idx != null) {
+      for (final e in idx.search(q, near: widget.near)) {
+        out.add((e.name, _kindEs(e.kind), e.location));
+      }
+    }
+    return out.take(30).toList();
+  }
+
+  static String _kindEs(String kind) {
+    switch (kind) {
+      case 'locality':
+        return 'ciudad/pueblo';
+      case 'region':
+        return 'departamento';
+      case 'neighbourhood':
+        return 'colonia/barrio';
+      default:
+        return kind;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final results = _results();
+    return Dialog(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 520, maxHeight: 560),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _ctrl,
+                autofocus: true,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.search),
+                  hintText: '¿A dónde vamos? (ciudad, hospital, tu punto…)',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                ),
+                onChanged: (v) => setState(() => _query = v),
+              ),
+              const SizedBox(height: 8),
+              if (_index == null)
+                const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2)),
+                      SizedBox(width: 10),
+                      Text('Indexando lugares del mapa…',
+                          style: TextStyle(color: Colors.grey)),
+                    ],
+                  ),
+                ),
+              Flexible(
+                child: results.isEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Text(
+                          _query.trim().length < 2
+                              ? 'Escribe al menos 2 letras.'
+                              : 'Sin resultados en este mapa.',
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: results.length,
+                        itemBuilder: (context, i) {
+                          final (name, kind, loc) = results[i];
+                          return ListTile(
+                            dense: true,
+                            leading: const Icon(Icons.place),
+                            title: Text(name),
+                            subtitle: Text(kind),
+                            onTap: () =>
+                                Navigator.of(context).pop((name, loc)),
+                          );
+                        },
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -102,6 +102,13 @@ class MeshRouter {
     await _sendAll(bytes);
   }
 
+  /// Sends immediately on every transport, skipping the outbox — for
+  /// presence beacons, which only matter live.
+  Future<void> sendNow(MeshEnvelope env) async {
+    _markSeen(env.msgId);
+    await _sendAll(env.encode());
+  }
+
   /// Drains the store-and-forward queue (call when a peer appears).
   Future<void> flushOutbox() async {
     if (!hasPeers || _outbox.isEmpty) return;

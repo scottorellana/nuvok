@@ -5,7 +5,6 @@
 // multicast; we acquire it via a tiny MethodChannel.
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 

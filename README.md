@@ -12,11 +12,13 @@ servidor Docker: se instala con doble clic en cualquier dispositivo.
 
 | Módulo | Qué hace | Formato |
 |---|---|---|
+| 🚨 Emergencia | Guías propias de primeros auxilios (RCP, hemorragias, atragantamiento…) con búsqueda por síntoma, ES/EN | embebido |
 | 📖 Biblioteca | Wikipedia, guías médicas y libros offline | `.zim` (Kiwix) |
-| 🧠 Asistente IA | Chat con modelos locales (llama.cpp + Metal/GPU) | `.gguf` |
-| 🗺️ Mapas | Mapas regionales offline | `.pmtiles` (Protomaps) |
+| 🧠 Asistente IA | Chat con modelos locales (llama.cpp + Metal/GPU) + modo Emergencia | `.gguf` |
+| 🗺️ Mapas | Mapas offline con GPS, ruteo por calles (respeta accesos), POIs y "llévame a…" | `.pmtiles` (Protomaps) |
+| 📡 Comunicación | Mesh sin internet (WiFi): chat cifrado por canal, SOS y posiciones del grupo; LoRa a futuro | — |
 | 📝 Notas | Notas markdown locales | `.md` |
-| 📦 Depósito | Catálogo para descargar contenido (solo aquí se usa internet) | — |
+| 📦 Depósito | Catálogo para descargar contenido y mapas (solo aquí se usa internet) | — |
 
 ## La biblioteca portable
 
@@ -27,6 +29,7 @@ PrepperPad/
 ├── zim/      ← biblioteca (.zim)
 ├── maps/     ← mapas (.pmtiles)
 ├── models/   ← modelos IA (.gguf)
+├── mesh/     ← identidad, canales e historial de Comunicación
 └── notes/    ← tus notas (.md)
 ```
 

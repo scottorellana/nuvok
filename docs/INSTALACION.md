@@ -150,12 +150,55 @@ PrepperPad/
 
 ---
 
+## 🚨 Emergencia (primeros auxilios sin internet)
+
+La primera pestaña. Botones grandes por tema (RCP, atragantamiento,
+hemorragia, quemaduras, infarto/ACV…) y un buscador: escribe lo que pasa
+("no respira", "sangrado", "culebra") y te lleva a la guía correcta.
+Disponible en español e inglés, sin descargar nada. **No sustituye atención
+médica profesional** — busca ayuda siempre que puedas.
+
+## 📡 Comunicación sin internet (Prepper Mesh)
+
+Chatea, comparte tu posición y lanza un **SOS** entre dispositivos Prepper
+Pad cercanos, usando la **misma red WiFi** o el hotspot de una tablet — sin
+internet ni servidores.
+
+1. Abre **Comunicación** y ponle un nombre a tu dispositivo ("Tablet de Ana").
+2. **Crear** un canal para tu grupo (ej. "Familia") → muestra un **código QR**
+   y un código de texto.
+3. En los otros dispositivos: **Unirse** y pega ese código. Listo: los
+   mensajes del canal van cifrados (solo quien tiene el código los lee).
+4. **SOS**: el botón rojo difunde tu posición y una nota a **todos** los
+   dispositivos cercanos (aunque no estén en tu canal), cada minuto, hasta
+   que pulses "Estoy a salvo". Al receptor le aparece una alerta a pantalla
+   completa con "Ver en mapa".
+5. **Compartir mi posición**: el interruptor pone a tu grupo en tu mapa
+   offline.
+
+> Todo esto funciona hoy por WiFi/hotspot. La integración con radios **LoRa**
+> (para alcance de kilómetros sin ninguna red) está en el plan y se venderá
+> como accesorio.
+
+## 🗺️ Llévame a un lugar + instalar mapas
+
+- En **Mapas**, toca 🔍 y escribe una ciudad, un hospital o uno de tus
+  puntos: el mapa te lleva ahí y traza la ruta por calles. El botón 🚗/🚶
+  cambia entre ir en vehículo o a pie; la ruta evita calles privadas y
+  respeta el sentido de las vías.
+- Para **instalar mapas nuevos**: **Depósito → Mapas**. En computadora, cada
+  país se instala con un toque; en cualquier dispositivo puedes descargar por
+  URL o importar un archivo `.pmtiles` (USB/tarjeta SD).
+
+---
+
 ## ❓ Problemas frecuentes
 
 | Problema | Solución |
 |---|---|
 | macOS dice "no se puede abrir" | Clic derecho → Abrir (solo la primera vez) |
-| Un libro aparece "dañado o incompleto" | La copia/descarga se interrumpió — vuelve a copiarlo o descargarlo |
+| Un libro aparece "dañado o incompleto" | La copia/descarga se interrumpió — espera a que termine y pulsa **Reintentar** en el lector, o vuelve a copiarlo |
+| No se ven los demás en Comunicación | Deben estar en la **misma red WiFi** o conectados al hotspot de uno; en Android acepta el permiso de red local |
 | El mapa se ve raro o vacío | Botón ⟳ del módulo Mapas (limpia la caché) |
 | La IA dice "memoria ajustada" | Cierra otras apps o usa un modelo más pequeño |
 | Video no reproduce en Linux/Pi | Usa el botón ▶️ "Ver con videos en el navegador" |

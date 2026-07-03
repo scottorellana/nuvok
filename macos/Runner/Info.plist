@@ -33,5 +33,9 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Prepper Pad usa tu ubicación para mostrarte en el mapa offline y calcular distancias.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Prepper Pad usa tu ubicación para mostrarte en el mapa offline y calcular distancias.</string>
 </dict>
 </plist>

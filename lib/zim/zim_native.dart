@@ -54,6 +54,10 @@ DynamicLibrary _openZstd() {
     final exeDir = File(Platform.resolvedExecutable).parent.path;
     final candidates = [
       '$exeDir/../Frameworks/libzstd.1.dylib',
+      // Relative to the working directory — how CI and `flutter test` find
+      // the freshly built dylib (cwd is the repo root during tests).
+      'native/out/macos/libzstd.1.dylib',
+      '${Directory.current.path}/native/out/macos/libzstd.1.dylib',
       '${Platform.environment['HOME']}/prepper-pad/native/out/macos/libzstd.1.dylib',
       '${Platform.environment['HOME']}/development/zstd/lib/libzstd.dylib',
       'libzstd.1.dylib',

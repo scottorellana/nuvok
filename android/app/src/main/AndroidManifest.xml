@@ -3,6 +3,9 @@
          puede hablar con su propio servidor interno de contenido ni
          descargar del Depósito. El uso offline no requiere red externa. -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- GPS para "mi ubicación" en el mapa offline. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <application
         android:label="Prepper Pad"
         android:name="${applicationName}"

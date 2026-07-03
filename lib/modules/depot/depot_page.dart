@@ -453,6 +453,7 @@ class _MapsInstallTab extends StatefulWidget {
 class _MapsInstallTabState extends State<_MapsInstallTab> {
   List<MapRegion> _regions = [];
   bool _loading = true;
+  String _filter = '';
   // Region id currently being extracted → last progress line.
   final Map<String, String> _extracting = {};
   final _manager = DownloadManager.instance;
@@ -568,6 +569,17 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
   Widget build(BuildContext context) {
     if (_loading) return const Center(child: CircularProgressIndicator());
     final canExtract = MapExtractor.available;
+
+    // Filter by name, then group by continent preserving catalog order.
+    final q = _filter.trim().toLowerCase();
+    final shown = q.isEmpty
+        ? _regions
+        : _regions.where((r) => r.name.toLowerCase().contains(q)).toList();
+    final groups = <String, List<MapRegion>>{};
+    for (final r in shown) {
+      groups.putIfAbsent(r.group, () => []).add(r);
+    }
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -577,10 +589,17 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
               child: Text('Instalar mapas offline',
                   style: Theme.of(context).textTheme.titleLarge),
             ),
+            if (canExtract)
+              OutlinedButton.icon(
+                onPressed: _customRegion,
+                icon: const Icon(Icons.public, size: 18),
+                label: const Text('Región personalizada'),
+              ),
+            const SizedBox(width: 8),
             OutlinedButton.icon(
               onPressed: _importLocal,
               icon: const Icon(Icons.folder_open, size: 18),
-              label: const Text('Importar archivo'),
+              label: const Text('Importar'),
             ),
             const SizedBox(width: 8),
             OutlinedButton.icon(
@@ -593,62 +612,45 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
         const SizedBox(height: 4),
         Text(
           canExtract
-              ? 'Un toque y listo: la región se recorta del mapa mundial '
-                  'de Protomaps (requiere internet solo para instalar).'
+              ? 'Elige un país (un toque y se recorta del mapa mundial de '
+                  'Protomaps) o usa "Región personalizada" para cualquier '
+                  'área del mundo. Solo se usa internet al instalar.'
               : 'En este dispositivo: descarga por URL directa o importa '
                   'un .pmtiles (USB, tarjeta SD). En una computadora con '
-                  'la herramienta pmtiles, cada región se instala con un '
+                  'la herramienta pmtiles, cualquier país se instala con un '
                   'toque.',
           style: const TextStyle(color: Colors.grey, fontSize: 13),
         ),
         const SizedBox(height: 12),
-        for (final r in _regions)
-          Card(
-            child: ListTile(
-              leading: Text(r.flag, style: const TextStyle(fontSize: 28)),
-              title: Text(r.name),
-              subtitle: Text(
-                _extracting.containsKey(r.id)
-                    ? _extracting[r.id]!
-                    : r.installed
-                        ? 'Instalado ✓'
-                        : '~${r.sizeMB} MB',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              trailing: r.installed
-                  ? const Icon(Icons.check_circle, color: Colors.green)
-                  : _extracting.containsKey(r.id)
-                      ? const SizedBox(
-                          width: 22,
-                          height: 22,
-                          child:
-                              CircularProgressIndicator(strokeWidth: 2))
-                      : r.url != null
-                          ? FilledButton.icon(
-                              onPressed: () {
-                                _manager.enqueue(r.url!,
-                                    '${PrepperLibrary.instance.mapsDir.path}/${r.fileName}');
-                                setState(() {});
-                              },
-                              icon: const Icon(Icons.download, size: 18),
-                              label: const Text('Descargar'),
-                            )
-                          : canExtract && r.bbox != null
-                              ? FilledButton.icon(
-                                  onPressed: () => _extract(r),
-                                  icon: const Icon(Icons.download,
-                                      size: 18),
-                                  label: const Text('Instalar'),
-                                )
-                              : const Tooltip(
-                                  message:
-                                      'Usa "Por URL" o "Importar archivo" '
-                                      'en este dispositivo',
-                                  child: Icon(Icons.info_outline),
-                                ),
-            ),
+        TextField(
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.search),
+            hintText: 'Buscar país (ej: España, México, Japón…)',
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            isDense: true,
           ),
+          onChanged: (v) => setState(() => _filter = v),
+        ),
+        const SizedBox(height: 8),
+        if (shown.isEmpty)
+          const Padding(
+            padding: EdgeInsets.all(24),
+            child: Text('Sin coincidencias. Prueba "Región personalizada" '
+                'para cualquier zona del mundo.',
+                style: TextStyle(color: Colors.grey)),
+          ),
+        for (final entry in groups.entries) ...[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 12, 4, 4),
+            child: Text(entry.key,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.primary)),
+          ),
+          for (final r in entry.value) _regionCard(r, canExtract),
+        ],
         const SizedBox(height: 12),
         Text(
           'Carpeta de mapas: ${PrepperLibrary.instance.mapsDir.path}\n'
@@ -658,6 +660,130 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
         ),
       ],
     );
+  }
+
+  Widget _regionCard(MapRegion r, bool canExtract) {
+    final zoomNote = r.maxZoom != null ? ' · detalle medio' : '';
+    return Card(
+      child: ListTile(
+        leading: Text(r.flag, style: const TextStyle(fontSize: 28)),
+        title: Text(r.name),
+        subtitle: Text(
+          _extracting.containsKey(r.id)
+              ? _extracting[r.id]!
+              : r.installed
+                  ? 'Instalado ✓'
+                  : '~${r.sizeMB} MB$zoomNote',
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+        trailing: r.installed
+            ? const Icon(Icons.check_circle, color: Colors.green)
+            : _extracting.containsKey(r.id)
+                ? const SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CircularProgressIndicator(strokeWidth: 2))
+                : r.url != null
+                    ? FilledButton.icon(
+                        onPressed: () {
+                          _manager.enqueue(r.url!,
+                              '${PrepperLibrary.instance.mapsDir.path}/${r.fileName}');
+                          setState(() {});
+                        },
+                        icon: const Icon(Icons.download, size: 18),
+                        label: const Text('Descargar'),
+                      )
+                    : canExtract && r.bbox != null
+                        ? FilledButton.icon(
+                            onPressed: () => _extract(r),
+                            icon: const Icon(Icons.download, size: 18),
+                            label: const Text('Instalar'),
+                          )
+                        : const Tooltip(
+                            message: 'Usa "Por URL" o "Importar" en este '
+                                'dispositivo',
+                            child: Icon(Icons.info_outline),
+                          ),
+      ),
+    );
+  }
+
+  /// Lets the user extract ANY area of the world by bounding box.
+  Future<void> _customRegion() async {
+    final nameCtrl = TextEditingController();
+    final bboxCtrl = TextEditingController();
+    final region = await showDialog<MapRegion>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Región personalizada'),
+        content: SizedBox(
+          width: 520,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameCtrl,
+                decoration: const InputDecoration(
+                    labelText: 'Nombre (ej: Mi ciudad, Región X)'),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: bboxCtrl,
+                decoration: const InputDecoration(
+                  labelText: 'Área: oesteLon,surLat,esteLon,norteLat',
+                  hintText: '-89.36,12.98,-83.13,17.42',
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Consejo: en bboxfinder.com dibujas un rectángulo en el '
+                  'mapa y te da esos 4 números. Cuanto más grande el área, '
+                  'más pesa y tarda.',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancelar')),
+          FilledButton(
+            onPressed: () {
+              final name = nameCtrl.text.trim();
+              final bbox = bboxCtrl.text.trim();
+              final parts = bbox.split(',');
+              final valid = parts.length == 4 &&
+                  parts.every((p) => double.tryParse(p.trim()) != null);
+              if (name.isEmpty || !valid) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Escribe un nombre y 4 números separados '
+                        'por comas.')));
+                return;
+              }
+              final id = 'custom-${name.toLowerCase().replaceAll(
+                  RegExp(r'[^a-z0-9]+'), '-')}';
+              Navigator.pop(
+                  context,
+                  MapRegion(
+                    id: id,
+                    name: name,
+                    flag: '📍',
+                    group: 'Personalizadas',
+                    sizeMB: 0,
+                    bbox: parts.map((p) => p.trim()).join(','),
+                  ));
+            },
+            child: const Text('Instalar'),
+          ),
+        ],
+      ),
+    );
+    if (region != null) await _extract(region);
   }
 }
 

@@ -17,16 +17,20 @@ class MapRegion {
     required this.name,
     required this.flag,
     required this.sizeMB,
+    this.group = 'Otros',
     this.bbox,
     this.url,
+    this.maxZoom,
   });
 
   final String id;
   final String name;
   final String flag;
+  final String group; // continent/region for grouping in the UI
   final int sizeMB;
   final String? bbox; // minLon,minLat,maxLon,maxLat
   final String? url; // direct .pmtiles download when hosted somewhere
+  final int? maxZoom; // cap zoom for large regions so they stay downloadable
 
   String get fileName => '$id.pmtiles';
 
@@ -48,9 +52,11 @@ class MapCatalog {
           id: r['id'] as String,
           name: r['name'] as String,
           flag: r['flag'] as String? ?? '🗺️',
+          group: r['group'] as String? ?? 'Otros',
           sizeMB: (r['sizeMB'] as num?)?.toInt() ?? 0,
           bbox: r['bbox'] as String?,
           url: r['url'] as String?,
+          maxZoom: (r['maxZoom'] as num?)?.toInt(),
         ),
     ];
     return _cached!;
@@ -78,24 +84,39 @@ class MapExtractor {
 
   static bool get available => binaryPath() != null;
 
-  /// Latest daily build file name (e.g. 20260702.pmtiles).
+  static const _buildHost = 'https://build.protomaps.com';
+
+  /// Most recent daily build file name (e.g. 20260703.pmtiles). Protomaps
+  /// no longer publishes a builds.json index, so we probe by date: today's
+  /// build, then walk back day by day until one answers. A HEAD-style range
+  /// request (first byte only) is enough to know a build exists.
   static Future<String?> latestBuild() async {
+    final now = DateTime.now().toUtc();
+    for (var back = 0; back < 10; back++) {
+      final d = now.subtract(Duration(days: back));
+      final name = '${d.year.toString().padLeft(4, '0')}'
+          '${d.month.toString().padLeft(2, '0')}'
+          '${d.day.toString().padLeft(2, '0')}.pmtiles';
+      if (await _buildExists(name)) return name;
+    }
+    return null;
+  }
+
+  static Future<bool> _buildExists(String name) async {
+    HttpClient? client;
     try {
-      final client = HttpClient();
-      final req = await client
-          .getUrl(Uri.parse('https://build.protomaps.com/builds.json'));
+      client = HttpClient()..connectionTimeout = const Duration(seconds: 15);
+      final req = await client.getUrl(Uri.parse('$_buildHost/$name'));
+      // Ask for just the first byte: cheap existence check with no download.
+      req.headers.set(HttpHeaders.rangeHeader, 'bytes=0-0');
       final res = await req.close();
-      final body = await res.transform(utf8.decoder).join();
-      client.close();
-      final builds = (jsonDecode(body) as List).cast<Map<String, dynamic>>();
-      final keys = [
-        for (final b in builds)
-          if ((b['key'] as String?)?.endsWith('.pmtiles') ?? false)
-            b['key'] as String,
-      ]..sort();
-      return keys.isEmpty ? null : keys.last;
+      await res.drain<void>();
+      // 206 = range served (exists); 200 = full (exists); 404 = missing.
+      return res.statusCode == 206 || res.statusCode == 200;
     } catch (_) {
-      return null;
+      return false;
+    } finally {
+      client?.close();
     }
   }
 
@@ -109,21 +130,27 @@ class MapExtractor {
       yield 'error: extracción no disponible en este dispositivo';
       return;
     }
-    yield 'Buscando el build más reciente…';
+    yield 'Buscando el mapa mundial más reciente…';
     final build = await latestBuild();
     if (build == null) {
-      yield 'error: no se pudo consultar build.protomaps.com (¿hay internet?)';
+      yield 'error: no hay conexión a build.protomaps.com. Revisa tu '
+          'internet (si funciona, quizá el firewall bloquea la descarga). '
+          'Como alternativa usa "Por URL" o "Importar archivo".';
       return;
     }
     final dest =
         '${PrepperLibrary.instance.mapsDir.path}/${region.fileName}';
     final part = '$dest.part';
-    yield 'Extrayendo ${region.name} de $build (esto tarda unos minutos)…';
+    yield 'Extrayendo ${region.name} del mapa mundial ($build)… '
+        'esto tarda unos minutos según el tamaño de la región.';
     final process = await Process.start(bin, [
       'extract',
-      'https://build.protomaps.com/$build',
+      '$_buildHost/$build',
       part,
       '--bbox=$bbox',
+      // Large regions cap the zoom so the file stays a sane size; street
+      // detail (z15) is kept for small ones.
+      if (region.maxZoom != null) '--maxzoom=${region.maxZoom}',
     ]);
     final buffer = StringBuffer();
     await for (final chunk in StreamGroup2.merge([

@@ -18,6 +18,7 @@ enum OverlayKind {
   meetingPoint,
   resource,
   customPoint,
+  barrier, // gate/portón — routing cuts edges near it
   // Tactical areas / lines
   safeZone, // polygon
   riskZone, // polygon (has dangerLevel)
@@ -41,6 +42,8 @@ extension OverlayKindInfo on OverlayKind {
         return 'Recurso';
       case OverlayKind.customPoint:
         return 'Punto';
+      case OverlayKind.barrier:
+        return 'Portón/Barrera';
       case OverlayKind.safeZone:
         return 'Zona segura';
       case OverlayKind.riskZone:

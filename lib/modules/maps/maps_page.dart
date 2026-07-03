@@ -74,6 +74,7 @@ class _MapsPageState extends State<MapsPage> {
   List<LatLng>? _route; // street-following route to the destination
   double? _routeMeters;
   bool _routing = false;
+  RouteProfile _profile = RouteProfile.vehicle;
 
   // POIs from the map data.
   final Set<PoiCategory> _activeCategories = {
@@ -196,11 +197,24 @@ class _MapsPageState extends State<MapsPage> {
     }
     setState(() => _routing = true);
     try {
+      // Gates and risk zones the user marked constrain the route.
+      final restrictions = RouteRestrictions(
+        barriers: [
+          for (final o in _overlays.overlays)
+            if (o.kind == OverlayKind.barrier) o.anchor,
+        ],
+        riskZones: [
+          for (final o in _overlays.overlays)
+            if (o.kind == OverlayKind.riskZone) o.points,
+        ],
+      );
       final outcome = await RoadRouter.route(
         provider: provider,
         origin: origin,
         destination: dest,
         zoom: _map.camera.zoom.round(),
+        profile: _profile,
+        restrictions: restrictions,
       );
       if (!mounted) return;
       if (outcome.status != RouteStatus.ok) {
@@ -212,6 +226,14 @@ class _MapsPageState extends State<MapsPage> {
         });
         return;
       }
+      if (!outcome.result!.restricted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.orange.shade800,
+          content: const Text('⚠️ Sin ruta limpia: esta ruta puede cruzar '
+              'calles privadas, portones o zonas de riesgo.'),
+          duration: const Duration(seconds: 5),
+        ));
+      }
       setState(() {
         _route = outcome.result!.path;
         _routeMeters = outcome.result!.distanceMeters;
@@ -219,6 +241,17 @@ class _MapsPageState extends State<MapsPage> {
     } finally {
       if (mounted) setState(() => _routing = false);
     }
+  }
+
+  void _toggleProfile() {
+    setState(() {
+      _profile = _profile == RouteProfile.vehicle
+          ? RouteProfile.walk
+          : RouteProfile.vehicle;
+      // A profile change invalidates the current route.
+      _route = null;
+      _routeMeters = null;
+    });
   }
 
   /// Auto-loads POIs once the map settles at city zoom (>= 13), so hospitals,
@@ -435,6 +468,19 @@ class _MapsPageState extends State<MapsPage> {
               : Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                if (_destination != null)
+                  FloatingActionButton.small(
+                    heroTag: 'profile',
+                    tooltip: _profile == RouteProfile.vehicle
+                        ? 'Ruta en vehículo (tocar para ir a pie)'
+                        : 'Ruta a pie (tocar para vehículo)',
+                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    onPressed: _toggleProfile,
+                    child: Icon(_profile == RouteProfile.vehicle
+                        ? Icons.directions_car
+                        : Icons.directions_walk),
+                  ),
+                if (_destination != null) const SizedBox(height: 8),
                 if (_destination != null)
                   FloatingActionButton.extended(
                     heroTag: 'route',
@@ -675,6 +721,9 @@ class _MapsPageState extends State<MapsPage> {
                               me: _me!,
                               destination: _destination,
                               routeMeters: _routeMeters,
+                              profileEmoji: _profile == RouteProfile.vehicle
+                                  ? '🚗'
+                                  : '🚶',
                             ),
                           ),
                         if (_drawKind != null)
@@ -720,6 +769,8 @@ class _MapsPageState extends State<MapsPage> {
         return Colors.indigo;
       case OverlayKind.customPoint:
         return Colors.blueGrey;
+      case OverlayKind.barrier:
+        return Colors.red.shade900;
     }
   }
 
@@ -953,6 +1004,8 @@ class _OverlayPin extends StatelessWidget {
         return Icons.groups;
       case OverlayKind.resource:
         return Icons.inventory_2_outlined;
+      case OverlayKind.barrier:
+        return Icons.block;
       default:
         return Icons.push_pin;
     }
@@ -973,6 +1026,9 @@ class _OverlayPin extends StatelessWidget {
         break;
       case OverlayKind.resource:
         color = Colors.indigo;
+        break;
+      case OverlayKind.barrier:
+        color = Colors.red.shade900;
         break;
       default:
         color = Colors.blueGrey;
@@ -1072,6 +1128,7 @@ class _AddPointSheet extends StatelessWidget {
                   OverlayKind.water,
                   OverlayKind.meetingPoint,
                   OverlayKind.resource,
+                  OverlayKind.barrier,
                   OverlayKind.customPoint,
                 ])
                   ChoiceChip(
@@ -1158,10 +1215,14 @@ class _MyLocationDot extends StatelessWidget {
 /// destination is marked, the straight-line distance and compass bearing.
 class _LocationReadout extends StatelessWidget {
   const _LocationReadout(
-      {required this.me, this.destination, this.routeMeters});
+      {required this.me,
+      this.destination,
+      this.routeMeters,
+      this.profileEmoji = '🚗'});
   final Position me;
   final LatLng? destination;
   final double? routeMeters;
+  final String profileEmoji;
 
   String _fmtDistance(double m) {
     if (m < 1000) return '${m.toStringAsFixed(0)} m';
@@ -1187,7 +1248,8 @@ class _LocationReadout extends StatelessWidget {
           '${_compass(brg)} (${brg.toStringAsFixed(0)}°)';
       if (routeMeters != null) {
         destLine =
-            'Ruta por calles: ${_fmtDistance(routeMeters!)} · $destLine';
+            '$profileEmoji Ruta por calles: ${_fmtDistance(routeMeters!)} · '
+            '$destLine';
       }
     }
     return Card(

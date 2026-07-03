@@ -5,6 +5,11 @@
 // run A*. No routing server, no extra downloads — it works anywhere the user
 // has a map. Quality is limited by the road detail in the tiles (good in
 // cities); it is not turn-by-turn voice navigation.
+//
+// Access rules: Protomaps tiles carry `access` (private/no), `oneway` and
+// `kind_detail`, so routes avoid private streets and one-way violations like
+// mainstream navigators do. Gates aren't in the basemap, so user-marked
+// barrier points cut nearby edges, and user risk zones penalize crossing.
 import 'dart:math' as math;
 
 import 'package:collection/collection.dart';
@@ -13,10 +18,39 @@ import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile/vector_tile.dart';
 
+enum RouteProfile { vehicle, walk }
+
+/// User-defined obstacles the route must respect: barrier points (gates)
+/// cut nearby edges; risk-zone polygons multiply edge cost so the route
+/// goes around them unless there is no alternative.
+class RouteRestrictions {
+  const RouteRestrictions({this.barriers = const [], this.riskZones = const []});
+  final List<LatLng> barriers;
+  final List<List<LatLng>> riskZones;
+
+  bool get isEmpty => barriers.isEmpty && riskZones.isEmpty;
+}
+
+/// Road attributes read from the tile that drive the per-profile rules.
+class EdgeAttrs {
+  const EdgeAttrs({this.kindDetail, this.access, this.oneway = false});
+  final String? kindDetail;
+  final String? access;
+  final bool oneway;
+}
+
 class RouteResult {
-  RouteResult({required this.path, required this.distanceMeters});
+  RouteResult({
+    required this.path,
+    required this.distanceMeters,
+    this.restricted = true,
+  });
   final List<LatLng> path;
   final double distanceMeters;
+
+  /// False when the route came from the unrestricted fallback and may cross
+  /// private streets, barriers or risk zones.
+  final bool restricted;
 }
 
 enum RouteStatus { ok, noRoadsNearby, noPath, tooFar }
@@ -46,15 +80,85 @@ class RoadRouter {
   // tiles merge into the same graph node.
   static const int _coordDecimals = 5;
 
+  // Private streets are allowed only this close to the origin/destination:
+  // you can leave your own gated community and enter the destination's, but
+  // never cut through a third one.
+  static const double _privateGraceMeters = 400;
+
+  // A user-marked gate/barrier cuts any edge passing within this distance.
+  static const double _barrierCutMeters = 15;
+
+  // Crossing a user risk zone costs this many times the real distance.
+  static const double _riskZoneMultiplier = 10;
+
+  /// Cost multiplier for an edge under [profile], or null if the edge must
+  /// not be used at all. Private access is handled separately (grace radius).
+  static double? edgeMultiplier(EdgeAttrs a, RouteProfile profile) {
+    final access = a.access;
+    if (access == 'private' || access == 'no') return null;
+    final kd = a.kindDetail;
+    if (profile == RouteProfile.vehicle) {
+      const forbidden = {
+        'footway', 'steps', 'path', 'pedestrian', 'sidewalk', 'crossing',
+        'cycleway',
+      };
+      if (forbidden.contains(kd)) return null;
+      if (kd == 'track') return 3.0;
+    }
+    return 1.0;
+  }
+
+  /// Whether the reverse direction of a one-way road is forbidden.
+  static bool onewayBlocksReverse(EdgeAttrs a, RouteProfile profile) =>
+      profile == RouteProfile.vehicle && a.oneway;
+
+  /// True if segment a-b passes within [_barrierCutMeters] of any barrier
+  /// (checked at both endpoints and the midpoint — segments are short).
+  static bool nearAnyBarrier(LatLng a, LatLng b, List<LatLng> barriers) {
+    if (barriers.isEmpty) return false;
+    final mid = LatLng(
+        (a.latitude + b.latitude) / 2, (a.longitude + b.longitude) / 2);
+    for (final barrier in barriers) {
+      if (_haversine(a, barrier) < _barrierCutMeters ||
+          _haversine(b, barrier) < _barrierCutMeters ||
+          _haversine(mid, barrier) < _barrierCutMeters) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// Ray-casting point-in-polygon over every risk zone.
+  static bool insideAnyZone(LatLng p, List<List<LatLng>> zones) {
+    for (final zone in zones) {
+      if (zone.length < 3) continue;
+      var inside = false;
+      for (var i = 0, j = zone.length - 1; i < zone.length; j = i++) {
+        final yi = zone[i].latitude, xi = zone[i].longitude;
+        final yj = zone[j].latitude, xj = zone[j].longitude;
+        final intersects = ((yi > p.latitude) != (yj > p.latitude)) &&
+            (p.longitude <
+                (xj - xi) * (p.latitude - yi) / (yj - yi) + xi);
+        if (intersects) inside = !inside;
+      }
+      if (inside) return true;
+    }
+    return false;
+  }
+
   /// Computes a street-following route from [origin] to [destination] using
-  /// the roads in [provider]. [zoom] should be the current map zoom; routing
-  /// reads tiles at a road-rich zoom (>=14).
+  /// the roads in [provider]. Applies [profile] rules and [restrictions];
+  /// if no compliant route exists, retries unrestricted and marks the result
+  /// with `restricted: false` so the UI can warn.
   static Future<RouteOutcome> route({
     required VectorTileProvider provider,
     required LatLng origin,
     required LatLng destination,
     int zoom = 14,
     int maxTiles = 80,
+    RouteProfile profile = RouteProfile.vehicle,
+    RouteRestrictions restrictions = const RouteRestrictions(),
+    bool ignoreRestrictions = false,
   }) async {
     final z = zoom.clamp(13, provider.maximumZoom);
 
@@ -93,6 +197,22 @@ class RoadRouter {
             if (layer.name != 'roads') continue;
             final extent = layer.extent.toDouble();
             for (final f in layer.features) {
+              final attrs = _attrsOf(f);
+              double? mult;
+              if (ignoreRestrictions) {
+                mult = 1.0;
+              } else {
+                if (attrs.access == 'private' || attrs.access == 'no') {
+                  // Grace: private streets are usable only near the ends of
+                  // the trip (your own colonia / the destination's).
+                  mult = null; // decided per-segment below
+                } else {
+                  mult = edgeMultiplier(attrs, profile);
+                  if (mult == null) continue; // forbidden kind for profile
+                }
+              }
+              final directed = !ignoreRestrictions &&
+                  onewayBlocksReverse(attrs, profile);
               final lines = _lineStrings(f);
               for (final line in lines) {
                 final pts = line
@@ -100,7 +220,31 @@ class RoadRouter {
                         tx, ty, z, c[0].toDouble(), c[1].toDouble(), extent))
                     .toList();
                 for (var i = 0; i + 1 < pts.length; i++) {
-                  _addEdge(graph, nodePos, pts[i], pts[i + 1]);
+                  final a = pts[i], b = pts[i + 1];
+                  var m = mult;
+                  if (m == null) {
+                    // Private/no access: allowed only within the grace
+                    // radius of origin or destination.
+                    final nearEnds =
+                        _haversine(a, origin) < _privateGraceMeters ||
+                            _haversine(a, destination) < _privateGraceMeters ||
+                            _haversine(b, origin) < _privateGraceMeters ||
+                            _haversine(b, destination) < _privateGraceMeters;
+                    if (!nearEnds) continue;
+                    m = 1.0;
+                  }
+                  if (!ignoreRestrictions &&
+                      nearAnyBarrier(a, b, restrictions.barriers)) {
+                    continue; // a marked gate cuts this edge
+                  }
+                  if (!ignoreRestrictions && restrictions.riskZones.isNotEmpty) {
+                    final mid = LatLng((a.latitude + b.latitude) / 2,
+                        (a.longitude + b.longitude) / 2);
+                    if (insideAnyZone(mid, restrictions.riskZones)) {
+                      m *= _riskZoneMultiplier;
+                    }
+                  }
+                  _addEdge(graph, nodePos, a, b, m, bidirectional: !directed);
                 }
               }
             }
@@ -111,13 +255,20 @@ class RoadRouter {
       }
     }
 
-    if (nodePos.isEmpty) return RouteOutcome(RouteStatus.noRoadsNearby);
+    if (nodePos.isEmpty) {
+      return _fallbackOrStatus(RouteStatus.noRoadsNearby,
+          provider: provider, origin: origin, destination: destination,
+          zoom: zoom, maxTiles: maxTiles, profile: profile,
+          restrictions: restrictions, alreadyUnrestricted: ignoreRestrictions);
+    }
 
     // Protomaps road tiles are drawn, not noded for routing: roads that cross
     // at an intersection often don't share a vertex, and segments are clipped
     // at tile edges. Stitch the graph by connecting any two nodes within a
     // few metres, which reconnects intersections and tile boundaries.
-    _stitch(graph, nodePos);
+    // Stitch links also respect marked barriers so a gate can't be bridged.
+    _stitch(graph, nodePos,
+        barriers: ignoreRestrictions ? const [] : restrictions.barriers);
 
     // Connect synthetic start/goal nodes to the K nearest road nodes, so the
     // search can enter the network from several points — robust against the
@@ -129,17 +280,29 @@ class RoadRouter {
     final nearStart = _kNearest(nodePos, origin, 8, exclude: {start, goal});
     final nearGoal = _kNearest(nodePos, destination, 8, exclude: {start, goal});
     if (nearStart.isEmpty || nearGoal.isEmpty) {
-      return RouteOutcome(RouteStatus.noRoadsNearby);
+      return _fallbackOrStatus(RouteStatus.noRoadsNearby,
+          provider: provider, origin: origin, destination: destination,
+          zoom: zoom, maxTiles: maxTiles, profile: profile,
+          restrictions: restrictions, alreadyUnrestricted: ignoreRestrictions);
     }
     for (final k in nearStart) {
-      graph.putIfAbsent(start, () => []).add(_Edge(k, _haversine(origin, nodePos[k]!)));
+      graph
+          .putIfAbsent(start, () => [])
+          .add(_Edge(k, _haversine(origin, nodePos[k]!)));
     }
     for (final k in nearGoal) {
-      graph.putIfAbsent(k, () => []).add(_Edge(goal, _haversine(nodePos[k]!, destination)));
+      graph
+          .putIfAbsent(k, () => [])
+          .add(_Edge(goal, _haversine(nodePos[k]!, destination)));
     }
 
     final path = _aStar(graph, nodePos, start, goal, destination);
-    if (path == null) return RouteOutcome(RouteStatus.noPath);
+    if (path == null) {
+      return _fallbackOrStatus(RouteStatus.noPath,
+          provider: provider, origin: origin, destination: destination,
+          zoom: zoom, maxTiles: maxTiles, profile: profile,
+          restrictions: restrictions, alreadyUnrestricted: ignoreRestrictions);
+    }
 
     // The path already begins at the exact origin and ends at the exact
     // destination (synthetic nodes), connecting them to the road network.
@@ -149,7 +312,60 @@ class RoadRouter {
       dist += _haversine(full[i], full[i + 1]);
     }
     return RouteOutcome(
-        RouteStatus.ok, RouteResult(path: full, distanceMeters: dist));
+        RouteStatus.ok,
+        RouteResult(
+            path: full,
+            distanceMeters: dist,
+            restricted: !ignoreRestrictions));
+  }
+
+  /// When a restricted search fails, retry once without restrictions so an
+  /// emergency user still gets *a* route (marked `restricted:false`).
+  static Future<RouteOutcome> _fallbackOrStatus(
+    RouteStatus status, {
+    required VectorTileProvider provider,
+    required LatLng origin,
+    required LatLng destination,
+    required int zoom,
+    required int maxTiles,
+    required RouteProfile profile,
+    required RouteRestrictions restrictions,
+    required bool alreadyUnrestricted,
+  }) async {
+    // Nothing to relax, or we already relaxed: report the failure as-is.
+    if (alreadyUnrestricted) return RouteOutcome(status);
+    return route(
+      provider: provider,
+      origin: origin,
+      destination: destination,
+      zoom: zoom,
+      maxTiles: maxTiles,
+      profile: profile,
+      restrictions: restrictions,
+      ignoreRestrictions: true,
+    );
+  }
+
+  /// Reads the routing-relevant properties of a road feature.
+  static EdgeAttrs _attrsOf(VectorTileFeature f) {
+    try {
+      final props = f.decodeProperties();
+      final kd = props['kind_detail']?.dartStringValue ??
+          props['kind']?.dartStringValue;
+      final access = props['access']?.dartStringValue;
+      final ow = props['oneway'];
+      final owStr = ow?.dartStringValue;
+      final owInt = ow?.dartIntValue?.toInt();
+      final owBool = ow?.dartBoolValue;
+      final oneway = owBool == true ||
+          owInt == 1 ||
+          owStr == 'yes' ||
+          owStr == '1' ||
+          owStr == 'true';
+      return EdgeAttrs(kindDetail: kd, access: access, oneway: oneway);
+    } catch (_) {
+      return const EdgeAttrs();
+    }
   }
 
   // Nodes closer than this are treated as the same junction and linked.
@@ -157,9 +373,11 @@ class RoadRouter {
 
   /// Connects graph nodes that are within [_stitchMeters] of each other using
   /// a spatial hash grid, so crossing roads and tile-boundary fragments join
-  /// into a routable network.
-  static void _stitch(
-      Map<String, List<_Edge>> graph, Map<String, LatLng> nodePos) {
+  /// into a routable network. Links near a marked barrier are not created —
+  /// otherwise the stitch would bridge right across a gate.
+  static void _stitch(Map<String, List<_Edge>> graph,
+      Map<String, LatLng> nodePos,
+      {List<LatLng> barriers = const []}) {
     // Grid cell ~ stitch distance. 0.0002° ≈ 22 m in latitude.
     const cell = 0.0002;
     final buckets = <String, List<String>>{};
@@ -177,8 +395,9 @@ class RoadRouter {
         for (var dj = -1; dj <= 1; dj++) {
           for (final other in buckets['${ci + di}:${cj + dj}'] ?? const []) {
             if (other == k) continue;
-            final d = _haversine(p, nodePos[other]!);
-            if (d <= _stitchMeters) {
+            final q = nodePos[other]!;
+            final d = _haversine(p, q);
+            if (d <= _stitchMeters && !nearAnyBarrier(p, q, barriers)) {
               graph.putIfAbsent(k, () => []).add(_Edge(other, d));
             }
           }
@@ -188,15 +407,18 @@ class RoadRouter {
   }
 
   static void _addEdge(Map<String, List<_Edge>> graph,
-      Map<String, LatLng> nodePos, LatLng a, LatLng b) {
+      Map<String, LatLng> nodePos, LatLng a, LatLng b, double multiplier,
+      {bool bidirectional = true}) {
     final ka = _key(a);
     final kb = _key(b);
     if (ka == kb) return;
     nodePos.putIfAbsent(ka, () => a);
     nodePos.putIfAbsent(kb, () => b);
-    final w = _haversine(a, b);
+    final w = _haversine(a, b) * multiplier;
     graph.putIfAbsent(ka, () => []).add(_Edge(kb, w));
-    graph.putIfAbsent(kb, () => []).add(_Edge(ka, w)); // roads are two-way
+    if (bidirectional) {
+      graph.putIfAbsent(kb, () => []).add(_Edge(ka, w));
+    }
   }
 
   static List<String>? _aStar(
@@ -242,8 +464,7 @@ class RoadRouter {
 
   /// The [k] graph nodes closest to [p] (within a sane radius), used to wire
   /// synthetic start/goal nodes into the network from several entry points.
-  static List<String> _kNearest(
-      Map<String, LatLng> nodePos, LatLng p, int k,
+  static List<String> _kNearest(Map<String, LatLng> nodePos, LatLng p, int k,
       {required Set<String> exclude}) {
     final scored = <MapEntry<String, double>>[];
     for (final e in nodePos.entries) {

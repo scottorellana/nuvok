@@ -25,6 +25,7 @@ dependencies:
   vector_tile: ^2.0.1
   collection: ^1.18.0
   cryptography: ^2.7.0
+  crypto: ^3.0.3
   qr_flutter: ^4.1.0
 
 dev_dependencies:

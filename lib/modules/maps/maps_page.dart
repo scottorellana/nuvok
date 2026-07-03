@@ -15,6 +15,7 @@ import '../../core/prepper_library.dart';
 import 'location_service.dart';
 import 'map_overlays.dart';
 import 'poi_extractor.dart';
+import 'roads_router.dart';
 
 /// Loads the bundled Protomaps light v4 style and simplifies its text-field
 /// expressions: the upstream theme uses experimental `pgf:` glyph expressions
@@ -70,6 +71,9 @@ class _MapsPageState extends State<MapsPage> {
   bool _following = false; // keep the map centered on the device
   bool _locating = false; // a fix is in progress
   LatLng? _destination; // "where to go" marker set by tapping the map
+  List<LatLng>? _route; // street-following route to the destination
+  double? _routeMeters;
+  bool _routing = false;
 
   // POIs from the map data.
   final Set<PoiCategory> _activeCategories = {
@@ -154,6 +158,9 @@ class _MapsPageState extends State<MapsPage> {
       return;
     }
     setState(() {
+      // Any change to the destination invalidates the current route.
+      _route = null;
+      _routeMeters = null;
       if (_destination != null &&
           LocationService.distanceMeters(_destination!.latitude,
                   _destination!.longitude, point.latitude, point.longitude) <
@@ -163,6 +170,53 @@ class _MapsPageState extends State<MapsPage> {
         _destination = point;
       }
     });
+  }
+
+  /// Computes a street-following route from the device (GPS) to the marked
+  /// destination, over the roads in the loaded .pmtiles.
+  Future<void> _computeRoute() async {
+    final provider = _provider;
+    final dest = _destination;
+    if (provider == null || dest == null) return;
+    // Origin: current GPS fix, or get one now.
+    LatLng? origin = _me != null ? LatLng(_me!.latitude, _me!.longitude) : null;
+    if (origin == null) {
+      final res = await LocationService.current();
+      if (!mounted) return;
+      if (!res.isOk) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Para trazar la ruta necesito tu ubicación. '
+                '${res.message}')));
+        return;
+      }
+      _me = res.position;
+      origin = LatLng(res.position!.latitude, res.position!.longitude);
+    }
+    setState(() => _routing = true);
+    try {
+      final outcome = await RoadRouter.route(
+        provider: provider,
+        origin: origin,
+        destination: dest,
+        zoom: _map.camera.zoom.round(),
+      );
+      if (!mounted) return;
+      if (outcome.status != RouteStatus.ok) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(outcome.message)));
+        setState(() {
+          _route = null;
+          _routeMeters = null;
+        });
+        return;
+      }
+      setState(() {
+        _route = outcome.result!.path;
+        _routeMeters = outcome.result!.distanceMeters;
+      });
+    } finally {
+      if (mounted) setState(() => _routing = false);
+    }
   }
 
   /// Loads POIs (hospitals, pharmacies, …) for the current viewport.
@@ -358,6 +412,20 @@ class _MapsPageState extends State<MapsPage> {
               : Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                if (_destination != null)
+                  FloatingActionButton.extended(
+                    heroTag: 'route',
+                    tooltip: 'Trazar ruta por calles hasta el destino',
+                    onPressed: _routing ? null : _computeRoute,
+                    icon: _routing
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2))
+                        : const Icon(Icons.directions),
+                    label: Text(_route != null ? 'Recalcular' : 'Ruta'),
+                  ),
+                if (_destination != null) const SizedBox(height: 8),
                 if (_me != null)
                   FloatingActionButton.small(
                     heroTag: 'follow',
@@ -460,8 +528,19 @@ class _MapsPageState extends State<MapsPage> {
                                     ),
                                 ],
                               ),
-                            // Straight line from me to the destination.
-                            if (_me != null && _destination != null)
+                            // Route to the destination: the street-following
+                            // route when computed, else a straight guide line.
+                            if (_route != null)
+                              PolylineLayer(
+                                polylines: [
+                                  Polyline(
+                                    points: _route!,
+                                    strokeWidth: 5,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ],
+                              )
+                            else if (_me != null && _destination != null)
                               PolylineLayer(
                                 polylines: [
                                   Polyline(
@@ -473,7 +552,7 @@ class _MapsPageState extends State<MapsPage> {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withValues(alpha: 0.7),
+                                        .withValues(alpha: 0.5),
                                   ),
                                 ],
                               ),
@@ -571,6 +650,7 @@ class _MapsPageState extends State<MapsPage> {
                             child: _LocationReadout(
                               me: _me!,
                               destination: _destination,
+                              routeMeters: _routeMeters,
                             ),
                           ),
                         if (_drawKind != null)
@@ -1052,9 +1132,11 @@ class _MyLocationDot extends StatelessWidget {
 /// Bottom overlay showing exact coordinates, GPS accuracy and, when a
 /// destination is marked, the straight-line distance and compass bearing.
 class _LocationReadout extends StatelessWidget {
-  const _LocationReadout({required this.me, this.destination});
+  const _LocationReadout(
+      {required this.me, this.destination, this.routeMeters});
   final Position me;
   final LatLng? destination;
+  final double? routeMeters;
 
   String _fmtDistance(double m) {
     if (m < 1000) return '${m.toStringAsFixed(0)} m';
@@ -1078,6 +1160,10 @@ class _LocationReadout extends StatelessWidget {
           destination!.latitude, destination!.longitude);
       destLine = 'Destino: ${_fmtDistance(dist)} hacia el '
           '${_compass(brg)} (${brg.toStringAsFixed(0)}°)';
+      if (routeMeters != null) {
+        destLine =
+            'Ruta por calles: ${_fmtDistance(routeMeters!)} · $destLine';
+      }
     }
     return Card(
       color: scheme.surface.withValues(alpha: 0.92),

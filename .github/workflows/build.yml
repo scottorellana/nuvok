@@ -80,7 +80,8 @@ jobs:
     # Pinned to 2022: windows-latest ships VS 2026 whose MSVC turns the
     # deprecated <experimental/coroutine> header (used by
     # flutter_inappwebview_windows) into a hard error, and a newer CMake that
-    # trips CMP0175 in the native build. windows-2022's toolchain builds both.
+    # trips CMP0175 in the native build. windows-2022's toolchain builds both,
+    # verified green — so it's a required platform now.
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4

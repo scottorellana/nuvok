@@ -77,11 +77,11 @@ jobs:
           path: dist/*.tar.gz
 
   windows:
-    runs-on: windows-latest
-    # Windows native engines (llama.cpp + vcpkg lzma) are the least-proven
-    # part of the toolchain; don't let them block the macOS/Android/Linux
-    # release. The .zip still publishes when this job succeeds.
-    continue-on-error: true
+    # Pinned to 2022: windows-latest ships VS 2026 whose MSVC turns the
+    # deprecated <experimental/coroutine> header (used by
+    # flutter_inappwebview_windows) into a hard error, and a newer CMake that
+    # trips CMP0175 in the native build. windows-2022's toolchain builds both.
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2

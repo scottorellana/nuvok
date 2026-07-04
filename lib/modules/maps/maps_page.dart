@@ -12,8 +12,13 @@ import 'package:vector_map_tiles_pmtiles/vector_map_tiles_pmtiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart' as vtr;
 
 import '../../core/prepper_library.dart';
+import '../depot/map_catalog.dart';
 import '../mesh/position_store.dart';
+import 'composite_tile_provider.dart';
+import 'download_from_here.dart';
+import 'hybrid_tile_provider.dart';
 import 'location_service.dart';
+import 'map_coverage.dart';
 import 'map_focus.dart';
 import 'map_overlays.dart';
 import 'place_search.dart';
@@ -62,11 +67,15 @@ class MapsPage extends StatefulWidget {
 class _MapsPageState extends State<MapsPage> {
   final MapController _map = MapController();
   List<File> _regions = [];
-  File? _selected;
-  PmTilesVectorTileProvider? _provider;
+  // Multiple sources: all installed .pmtiles load as one virtual surface.
+  CompositeTileProvider? _composite;
+  VectorTileProvider? _provider; // composite or hybrid wrapper
+  List<MapCoverage> _coverages = []; // for drawing download outlines
   vtr.Theme? _theme;
   String? _error;
   bool _loading = false;
+  // Hybrid mode toggle: fill gaps with online tiles when available.
+  bool _hybridMode = false;
 
   // GPS state.
   Position? _me; // last known device position
@@ -269,14 +278,18 @@ class _MapsPageState extends State<MapsPage> {
   /// as destination, centers the camera and traces the street route.
   Future<void> _openSearch() async {
     final provider = _provider;
-    final file = _selected;
-    if (provider == null || file == null) return;
+    if (provider == null || _regions.isEmpty) return;
+    // Build a cache key from all loaded map files so the place index is
+    // shared across sessions with the same map set.
+    final cacheKey = _regions
+        .map((f) => '${f.uri.pathSegments.last}:${f.statSync().size}')
+        .join('|');
     final me = _me != null ? LatLng(_me!.latitude, _me!.longitude) : null;
     final target = await showDialog<(String, LatLng)>(
       context: context,
       builder: (context) => _PlaceSearchDialog(
         provider: provider,
-        cacheKey: '${file.path}:${file.statSync().size}',
+        cacheKey: cacheKey,
         pois: _pois,
         overlays: _overlays.overlays,
         near: me,
@@ -425,28 +438,166 @@ class _MapsPageState extends State<MapsPage> {
     }
     setState(() {
       _regions = PrepperLibrary.instance.listMaps();
-      final current = _selected;
-      if (_regions.isNotEmpty &&
-          (current == null || clearCache)) {
-        _openRegion(current ?? _regions.first);
-      }
     });
+    // Load all installed maps as a single composite surface.
+    if (_regions.isNotEmpty) {
+      _loadAllRegions();
+    } else {
+      setState(() {
+        _composite = null;
+        _provider = null;
+        _coverages = [];
+      });
+    }
   }
 
-  Future<void> _openRegion(File f) async {
+  /// Loads every installed .pmtiles into a CompositeTileProvider so the user
+  /// sees all downloaded regions as one continuous map surface — no need to
+  /// switch between regions manually.
+  Future<void> _loadAllRegions() async {
     setState(() {
-      _selected = f;
-      _provider = null;
       _error = null;
       _loading = true;
     });
     try {
-      final provider = await PmTilesVectorTileProvider.fromSource(f.path);
-      if (mounted) setState(() => _provider = provider);
+      final providers = <PmTilesVectorTileProvider>[];
+      final coverages = <MapCoverage>[];
+      for (final f in _regions) {
+        try {
+          final p = await PmTilesVectorTileProvider.fromSource(f.path);
+          providers.add(p);
+        } catch (_) {
+          // Skip corrupt/incomplete files — don't fail everything.
+        }
+      }
+      // Read coverage metadata for the download-area outlines.
+      coverages.addAll(await MapCoverageReader.readAll(_regions));
+      if (!mounted) return;
+      final composite = CompositeTileProvider.fromProviders(providers);
+      setState(() {
+        _composite = composite;
+        _coverages = coverages;
+        _provider = _buildProvider(composite);
+        _loading = false;
+      });
     } catch (e) {
-      if (mounted) setState(() => _error = 'No se pudo abrir la región: $e');
-    } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted) {
+        setState(() {
+          _error = 'No se pudieron cargar los mapas: $e';
+          _loading = false;
+        });
+      }
+    }
+  }
+
+  /// Builds the active tile provider: composite-only or hybrid (with online
+  /// fallback) depending on the user's toggle.
+  VectorTileProvider _buildProvider(CompositeTileProvider composite) {
+    if (_hybridMode && !composite.isEmpty) {
+      final online = NetworkVectorTileProvider(
+        urlTemplate: kOnlineFallbackUrl,
+        type: TileProviderType.vector,
+      );
+      return HybridTileProvider(composite, online);
+    }
+    return composite;
+  }
+
+  /// Toggles hybrid mode and rebuilds the provider.
+  void _toggleHybrid() {
+    setState(() {
+      _hybridMode = !_hybridMode;
+      if (_composite != null) {
+        _provider = _buildProvider(_composite!);
+      }
+    });
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(_hybridMode
+          ? 'Modo híbrido: rellenando huecos con internet cuando haya.'
+          : 'Solo offline: sin datos externos.'),
+      duration: const Duration(seconds: 2),
+    ));
+  }
+
+  /// "Descargar desde aquí": takes the current map center, asks for a radius,
+  /// and extracts that area from the Protomaps daily build — same as Google
+  /// Maps' offline download flow. Desktop-only (needs pmtiles CLI).
+  Future<void> _downloadFromHere() async {
+    final center = _map.camera.center;
+    // Check if already covered.
+    if (isAlreadyCovered(center, _coverages)) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Esta área ya está descargada.'),
+      ));
+      return;
+    }
+    // Ask the user for a radius.
+    final radius = await showDialog<double>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Descargar área desde aquí'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Centro: ${center.latitude.toStringAsFixed(3)}, '
+                '${center.longitude.toStringAsFixed(3)}'),
+            const SizedBox(height: 12),
+            const Text('¿Qué tan grande?'),
+          ],
+        ),
+        actionsAlignment: MainAxisAlignment.start,
+        actions: [
+          Wrap(
+            alignment: WrapAlignment.spaceEvenly,
+            spacing: 8,
+            runSpacing: 4,
+            children: [
+              for (final (label, km) in kDownloadRadiusOptions)
+                TextButton(
+                  onPressed: () => Navigator.pop(context, km),
+                  child: Text(label),
+                ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancelar'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+    if (radius == null || !mounted) return;
+
+    // Create a region for the selected area and extract it.
+    final region = regionFromCenter(center, radius);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Descargando ${region.name}…'),
+      duration: const Duration(seconds: 3),
+    ));
+    String? lastLine;
+    await for (final line in MapExtractor.extract(region)) {
+      if (!mounted) return;
+      lastLine = line;
+    }
+    if (!mounted) return;
+    if (lastLine != null && lastLine.startsWith('error')) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('❌ $lastLine'),
+        duration: const Duration(seconds: 5),
+      ));
+    } else {
+      // Reload to pick up the new map file.
+      _refresh(clearCache: true);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('✅ ${region.name} instalado.'),
+        duration: const Duration(seconds: 3),
+      ));
     }
   }
 
@@ -458,25 +609,40 @@ class _MapsPageState extends State<MapsPage> {
       key: _scaffoldKey,
       endDrawer: _regions.isEmpty ? null : _buildLayersDrawer(),
       appBar: AppBar(
-        title: const Text('Mapas offline'),
-        actions: [
-          if (_regions.length > 1)
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: DropdownButton<String>(
-                value: _selected?.path,
-                underline: const SizedBox.shrink(),
-                items: [
-                  for (final f in _regions)
-                    DropdownMenuItem(
-                      value: f.path,
-                      child: Text(f.uri.pathSegments.last),
-                    ),
-                ],
-                onChanged: (path) {
-                  if (path != null) _openRegion(File(path));
-                },
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Mapas offline'),
+            if (_regions.length > 1)
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Chip(
+                  visualDensity: VisualDensity.compact,
+                  label: Text('${_regions.length} regiones'),
+                  avatar: const Icon(Icons.layers, size: 16),
+                ),
               ),
+          ],
+        ),
+        actions: [
+          // Download area from current map center (desktop with pmtiles CLI).
+          if (MapExtractor.available && _provider != null)
+            IconButton(
+              tooltip: 'Descargar área desde aquí',
+              icon: const Icon(Icons.add_circle_outline),
+              onPressed: () => _downloadFromHere(),
+            ),
+          // Hybrid mode toggle: fill gaps with online tiles.
+          if (_provider != null)
+            IconButton(
+              tooltip: _hybridMode
+                  ? 'Modo híbrido ON (tocar para solo offline)'
+                  : 'Solo offline (tocar para modo híbrido)',
+              icon: Icon(_hybridMode ? Icons.cloud : Icons.cloud_off),
+              color: _hybridMode
+                  ? Theme.of(context).colorScheme.primary
+                  : null,
+              onPressed: _toggleHybrid,
             ),
           IconButton(
             tooltip: 'Buscar lugar y llevarme ahí',
@@ -620,9 +786,23 @@ class _MapsPageState extends State<MapsPage> {
                                 'protomaps': _provider!,
                               }),
                               maximumZoom: 15,
-                              cacheFolder: () async =>
-                                  tileCacheDirFor(_selected!),
+                              cacheFolder: () async => Directory(
+                                  '${PrepperLibrary.instance.root.path}/.tilecache/composite'),
                             ),
+                            // Downloaded-area outlines (subtle blue rectangles).
+                            if (_coverages.isNotEmpty)
+                              PolygonLayer(
+                                polygons: [
+                                  for (final c in _coverages)
+                                    Polygon(
+                                      points: c.polygon,
+                                      color: Colors.blue.withValues(alpha: 0.05),
+                                      borderColor:
+                                          Colors.blue.withValues(alpha: 0.3),
+                                      borderStrokeWidth: 1,
+                                    ),
+                                ],
+                              ),
                             // Tactical zones (safe / risk polygons).
                             if (_showOverlays)
                               PolygonLayer(
@@ -1440,7 +1620,7 @@ class _PlaceSearchDialog extends StatefulWidget {
     this.near,
   });
 
-  final PmTilesVectorTileProvider provider;
+  final VectorTileProvider provider;
   final String cacheKey;
   final List<MapPoi> pois;
   final List<MapOverlay> overlays;

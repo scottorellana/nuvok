@@ -196,6 +196,15 @@ class MeshService {
     _saveChannels();
   }
 
+  /// msgIds of chat messages we sent, awaiting delivery confirmation.
+  final Map<int, DateTime> _pendingAcks = {};
+
+  /// msgIds confirmed as delivered (keyed by msgId → timestamp).
+  final Set<int> _confirmedAcks = {};
+
+  /// Notifier for UI to observe ACK changes (for ✓✓ display).
+  final ValueNotifier<int> ackTick = ValueNotifier(0);
+
   Future<void> sendChat(MeshChannel channel, String text) async {
     final router = _router;
     final id = identity;
@@ -209,11 +218,16 @@ class MeshService {
       '_type': MeshType.chat.name,
       '_ts': env.timestampMs,
     });
+    // Track for ACK: this message is awaiting confirmation.
+    _pendingAcks[env.msgId] = DateTime.now();
     _events.add(
         MeshEvent(envelope: env, channel: channel, payload: payload));
     await router.broadcast(env);
     queuedCount.value = router.outboxCount;
   }
+
+  /// Checks if a chat message [msgId] was acknowledged by a peer.
+  bool isDelivered(int msgId) => _confirmedAcks.contains(msgId);
 
   /// SOS: broadcast position+note on the open emergency channel now and
   /// every minute until cancelled. Reaches every Prepper Pad in range,
@@ -308,9 +322,35 @@ class MeshService {
         PositionStore.instance.clearSos(e.envelope.senderId);
         break;
       case MeshType.chat:
+        // Send an ACK back so the sender knows the message was delivered.
+        _sendAck(e);
+        break;
       case MeshType.ack:
+        // Mark the original message as delivered.
+        final ackedId = (e.payload['ack'] as num?)?.toInt();
+        if (ackedId != null && _pendingAcks.containsKey(ackedId)) {
+          _pendingAcks.remove(ackedId);
+          _confirmedAcks.add(ackedId);
+          ackTick.value++;
+        }
+        break;
       case MeshType.beacon:
         break;
     }
+  }
+
+  /// Sends an ACK for a received chat message, confirming delivery.
+  Future<void> _sendAck(MeshEvent original) async {
+    final router = _router;
+    final id = identity;
+    if (id == null || router == null) return;
+    // ACKs go on the same channel as the original message.
+    final ackEnv = await _envelope(
+      original.channel,
+      MeshType.ack,
+      {'ack': original.envelope.msgId},
+      hopLimit: 1, // ACKs don't need to travel far
+    );
+    await router.sendNow(ackEnv);
   }
 }

@@ -15,6 +15,8 @@ import 'modules/mesh/mesh_page.dart';
 import 'modules/mesh/mesh_router.dart';
 import 'modules/mesh/mesh_service.dart';
 import 'modules/notes/notes_page.dart';
+import 'modules/prep/checklist_page.dart';
+import 'modules/tools/tools_page.dart';
 
 class PrepperPadApp extends StatelessWidget {
   const PrepperPadApp({super.key, required this.firstRun});
@@ -56,6 +58,8 @@ class _HomeShellState extends State<HomeShell> {
     (Icons.psychology_outlined, Icons.psychology, 'Asistente IA'),
     (Icons.map_outlined, Icons.map, 'Mapas'),
     (Icons.cell_tower_outlined, Icons.cell_tower, 'Comunicación'),
+    (Icons.checklist_outlined, Icons.checklist, 'Preparación'),
+    (Icons.flashlight_on_outlined, Icons.flashlight_on, 'Herramientas'),
     (Icons.edit_note_outlined, Icons.edit_note, 'Notas'),
     (Icons.inventory_2_outlined, Icons.inventory_2, 'Depósito'),
   ];
@@ -70,6 +74,8 @@ class _HomeShellState extends State<HomeShell> {
         const AiPage(),
         const MapsPage(),
         const MeshPage(),
+        const ChecklistPage(),
+        const ToolsPage(),
         const NotesPage(),
         // Keyed so switching the starter-tab target rebuilds the Depot.
         DepotPage(key: ValueKey(_depotInitialTab), initialTab: _depotInitialTab),
@@ -178,7 +184,7 @@ class _HomeShellState extends State<HomeShell> {
             onPressed: () {
               Navigator.of(context).pop();
               setState(() {
-                _index = 6; // Depósito
+                _index = 8; // Depósito
                 _depotInitialTab = 0; // Esenciales
               });
             },

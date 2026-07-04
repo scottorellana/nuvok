@@ -2,9 +2,11 @@
 // symptom search ("no respira" → RCP) and a large-type reader. Works with
 // zero downloads and zero internet — this tab is why the product exists.
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:markdown/markdown.dart' as md;
 
+import 'emergency_directory.dart';
 import 'emergency_guides.dart';
 
 class EmergencyPage extends StatefulWidget {
@@ -20,6 +22,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
   List<EmergencyGuide> _shown = [];
   final _searchCtrl = TextEditingController();
   bool _loading = true;
+  bool _emergencyMode = false; // giant-button panic mode
 
   @override
   void initState() {
@@ -91,10 +94,18 @@ class _EmergencyPageState extends State<EmergencyPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_emergencyMode) return _buildPanicMode(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Guías de Emergencia'),
         actions: [
+          FilledButton.icon(
+            onPressed: () => setState(() => _emergencyMode = true),
+            icon: const Icon(Icons.warning, size: 18),
+            label: const Text('MODO EMERGENCIA'),
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+          ),
+          const SizedBox(width: 8),
           SegmentedButton<String>(
             segments: const [
               ButtonSegment(value: 'es', label: Text('ES')),
@@ -113,8 +124,12 @@ class _EmergencyPageState extends State<EmergencyPage> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
+                // Emergency phone directory
+                _buildEmergencyDirectory(),
+                // Quick-access emergency buttons (4 most critical)
+                _buildQuickAccess(),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   child: TextField(
                     controller: _searchCtrl,
                     autofocus: false,
@@ -215,6 +230,221 @@ class _EmergencyPageState extends State<EmergencyPage> {
             ),
     );
   }
+
+  /// Quick-access row with the 4 most critical emergencies.
+  Widget _buildQuickAccess() {
+    final criticalIds = _lang == 'es'
+        ? ['rcp_adulto', 'atragantamiento', 'hemorragia_severa', 'shock']
+        : ['rcp_adulto', 'atragantamiento', 'hemorragia_severa', 'shock'];
+    final quickGuides = criticalIds.map((id) {
+      return _all.where((g) => g.id == id).firstOrNull;
+    }).whereType<EmergencyGuide>().toList();
+
+    if (quickGuides.isEmpty) return const SizedBox.shrink();
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              _lang == 'es' ? 'Acceso rápido:' : 'Quick access:',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            ),
+          ),
+          for (final g in quickGuides)
+            Padding(
+              padding: const EdgeInsets.only(left: 6),
+              child: ActionChip(
+                label: Text(_shortLabel(g.id, _lang)),
+                avatar: Icon(_iconFor(g.id), size: 18, color: Colors.red.shade300),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                      builder: (_) => _GuideReader(guide: g)),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  String _shortLabel(String id, String lang) {
+    final es = lang == 'es';
+    if (id.startsWith('rcp')) return es ? 'RCP' : 'CPR';
+    if (id.contains('atragant')) return es ? 'Atraganta' : 'Choking';
+    if (id.contains('hemorragia')) return es ? 'Sangrado' : 'Bleeding';
+    if (id.contains('shock')) return 'Shock';
+    return id;
+  }
+
+  String? _selectedCountry;
+
+  Widget _buildEmergencyDirectory() {
+    final countries = emergencyDirectory.where((c) => c.countryCode != '*').toList();
+    final current = emergencyNumbersFor(_selectedCountry);
+
+    return ExpansionTile(
+      leading: Icon(Icons.phone_in_talk, color: Colors.red.shade300),
+      title: Text(
+        _lang == 'es' ? 'Teléfonos de emergencia' : 'Emergency numbers',
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text('${current.flag} ${current.countryName}'),
+      children: [
+        // Country selector
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: DropdownButton<String>(
+            value: _selectedCountry,
+            hint: Text(_lang == 'es'
+                ? 'Selecciona tu país'
+                : 'Select your country'),
+            isExpanded: true,
+            items: [
+              for (final c in countries)
+                DropdownMenuItem(
+                  value: c.countryCode,
+                  child: Text('${c.flag} ${c.countryName}'),
+                ),
+            ],
+            onChanged: (v) => setState(() => _selectedCountry = v),
+          ),
+        ),
+        // Service numbers
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          child: Column(
+            children: [
+              for (final s in current.services)
+                ListTile(
+                  dense: true,
+                  leading: Icon(_iconForService(s.name), size: 24,
+                      color: Theme.of(context).colorScheme.primary),
+                  title: Text(s.name),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        s.number,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      IconButton(
+                        icon: const Icon(Icons.phone, size: 20),
+                        color: Colors.green,
+                        tooltip: _lang == 'es' ? 'Llamar' : 'Call',
+                        onPressed: () {
+                          // Copy number to clipboard — the app can't dial
+                          // directly on all platforms, but the user can paste.
+                          final number = s.number.replaceAll(RegExp(r'[^0-9+]'), '');
+                          Clipboard.setData(ClipboardData(text: number));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(_lang == 'es'
+                                ? 'Número copiado: $number — pégalo en el teléfono'
+                                : 'Number copied: $number')));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  IconData _iconForService(String name) {
+    final n = name.toLowerCase();
+    if (n.contains('bomber')) return Icons.local_fire_department;
+    if (n.contains('polic')) return Icons.local_police;
+    if (n.contains('cruz roja') || n.contains('red cross')) return Icons.health_and_safety;
+    if (n.contains('médic') || n.contains('medical')) return Icons.medical_services;
+    if (n.contains('civil') || n.contains('riesgo') || n.contains('desastre')) return Icons.warehouse;
+    if (n.contains('suicid') || n.contains('poison') || n.contains('envenen')) return Icons.warning;
+    return Icons.phone;
+  }
+
+  /// Full-screen panic mode: giant buttons for the most common emergencies,
+  /// high contrast, accessible with trembling hands.
+  Widget _buildPanicMode(BuildContext context) {
+    final es = _lang == 'es';
+    final entries = <_PanicButton>[
+      _PanicButton(
+        icon: Icons.monitor_heart,
+        label: es ? 'NO RESPIRA\n(RCP)' : 'NOT BREATHING\n(CPR)',
+        color: Colors.red,
+        ids: ['rcp_adulto', 'rcp_nino_bebe'],
+      ),
+      _PanicButton(
+        icon: Icons.air,
+        label: es ? 'ATRAGANTADO' : 'CHOKING',
+        color: Colors.orange.shade800,
+        ids: ['atragantamiento'],
+      ),
+      _PanicButton(
+        icon: Icons.water_drop,
+        label: es ? 'SANGRADO\nFUERTE' : 'SEVERE\nBLEEDING',
+        color: Colors.red.shade700,
+        ids: ['hemorragia_severa'],
+      ),
+      _PanicButton(
+        icon: Icons.local_fire_department,
+        label: es ? 'QUEMADURA' : 'BURN',
+        color: Colors.deepOrange,
+        ids: ['quemaduras'],
+      ),
+      _PanicButton(
+        icon: Icons.personal_injury,
+        label: es ? 'FRACTURA\n/ GOLPE' : 'FRACTURE\n/ INJURY',
+        color: Colors.brown,
+        ids: ['fracturas_inmovilizacion', 'trauma_cabeza_columna'],
+      ),
+      _PanicButton(
+        icon: Icons.favorite,
+        label: es ? 'INFARTO\n/ DERRAME' : 'HEART\nATTACK',
+        color: Colors.red.shade900,
+        ids: ['infarto_acv'],
+      ),
+    ];
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text(
+          es ? '🚨 EMERGENCIA — toca lo que pasa' : '🚨 EMERGENCY — tap what\'s wrong',
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.close, color: Colors.white),
+            onPressed: () => setState(() => _emergencyMode = false),
+            tooltip: es ? 'Salir' : 'Exit',
+          ),
+        ],
+      ),
+      body: GridView.count(
+        crossAxisCount: 2,
+        childAspectRatio: 1.1,
+        padding: const EdgeInsets.all(8),
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+        children: [
+          for (final b in entries)
+            _PanicButtonWidget(
+              button: b,
+              guides: _all,
+              lang: _lang,
+            ),
+        ],
+      ),
+    );
+  }
 }
 
 class _GuideReader extends StatelessWidget {
@@ -235,6 +465,93 @@ class _GuideReader extends StatelessWidget {
                   extensionSet: md.ExtensionSet.gitHubFlavored),
               textStyle: const TextStyle(fontSize: 17, height: 1.45),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Panic mode — giant buttons for emergencies
+// ─────────────────────────────────────────────────────────────────────────────
+
+class _PanicButton {
+  const _PanicButton({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.ids,
+  });
+  final IconData icon;
+  final String label;
+  final Color color;
+  final List<String> ids; // guide ids to try in order
+}
+
+class _PanicButtonWidget extends StatelessWidget {
+  const _PanicButtonWidget({
+    required this.button,
+    required this.guides,
+    required this.lang,
+  });
+  final _PanicButton button;
+  final List<EmergencyGuide> guides;
+  final String lang;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: button.color,
+      borderRadius: BorderRadius.circular(20),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20),
+        onTap: () {
+          // Find the first matching guide
+          EmergencyGuide? match;
+          for (final id in button.ids) {
+            match = guides.where((g) => g.id == id).firstOrNull;
+            if (match != null) break;
+          }
+          // Fallback: search by keywords in the label
+          if (match == null) {
+            final words = button.label
+                .replaceAll('\n', ' ')
+                .toLowerCase()
+                .split(' ');
+            for (final g in guides) {
+              if (words.any((w) => g.keywords.any((k) => k.contains(w)))) {
+                match = g;
+                break;
+              }
+            }
+          }
+          if (match != null) {
+            Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => _GuideReader(guide: match!),
+              ),
+            );
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(button.icon, size: 56, color: Colors.white),
+              const SizedBox(height: 8),
+              Text(
+                button.label,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                  height: 1.1,
+                ),
+              ),
+            ],
           ),
         ),
       ),

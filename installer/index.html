@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Instalar Prepper Pad</title>
+<style>
+  :root {
+    --olive: #8C9E5E; --olive-bright: #b3c77a;
+    --bg: #14170F; --card: #232819; --ink: #ECEFE3; --dim: #a7ac97;
+    --line: #333a26; --red: #d5432f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6;
+    padding: 24px; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  header { text-align: center; padding: 20px 0 8px; }
+  .logo { font-size: 3rem; }
+  h1 { font-size: 1.7rem; letter-spacing: -.02em; margin-top: 6px; }
+  .sub { color: var(--dim); margin-top: 6px; }
+  .private { display:inline-block; margin-top:12px; font-size:.8rem; color:var(--olive-bright);
+    background: rgba(140,158,94,.12); border:1px solid var(--line); padding:5px 12px; border-radius:999px; }
+
+  .primary {
+    background: var(--card); border: 2px solid var(--olive); border-radius: 18px;
+    padding: 26px; margin: 26px 0 18px; text-align: center;
+  }
+  .primary .os { font-size: .82rem; color: var(--dim); text-transform: uppercase; letter-spacing:.1em; }
+  .primary h2 { font-size: 1.4rem; margin: 4px 0 14px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; background: var(--olive);
+    color: #10130b; font-weight: 700; padding: 15px 30px; border-radius: 999px;
+    font-size: 1.1rem; text-decoration: none; transition: background .15s;
+  }
+  .btn:hover { background: var(--olive-bright); }
+  .btn.small { padding: 10px 18px; font-size: .95rem; background: transparent;
+    color: var(--ink); border: 1.5px solid var(--line); }
+  .btn.small:hover { border-color: var(--olive); }
+  .steps { margin-top: 16px; color: var(--dim); font-size: .92rem; text-align: left;
+    max-width: 460px; margin-left:auto; margin-right:auto; }
+  .steps li { margin: 4px 0; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+  @media (max-width: 620px){ .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .card .name { font-weight: 600; }
+  .card .meta { color: var(--dim); font-size: .84rem; }
+
+  .qr { text-align: center; margin: 30px 0 10px; }
+  .qr svg { width: 190px; height: 190px; background: #fff; padding: 12px; border-radius: 14px; }
+  .url { font-family: ui-monospace, Menlo, monospace; font-size: 1.05rem; color: var(--olive-bright);
+    margin-top: 12px; word-break: break-all; }
+  .hint { color: var(--dim); font-size: .9rem; margin-top: 6px; }
+  footer { text-align:center; color: var(--dim); font-size: .8rem; margin-top: 30px; line-height:1.5; }
+  .warn { background: rgba(213,67,47,.1); border:1px solid rgba(213,67,47,.3); border-radius:12px;
+    padding:12px 16px; margin-top:14px; font-size:.88rem; color:#f0a99e; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">🎒</div>
+    <h1>Instalar Prepper Pad</h1>
+    <p class="sub">Descarga e instala la app en este dispositivo.</p>
+    <div class="private">🔒 Servidor local privado — solo en tu red</div>
+  </header>
+
+  <!-- OS-detected primary download -->
+  <div class="primary" id="primary">
+    <div class="os" id="os-label">Detectando tu dispositivo…</div>
+    <h2 id="os-title">…</h2>
+    <a class="btn" id="primary-btn" href="#">Descargar</a>
+    <ul class="steps" id="steps"></ul>
+  </div>
+
+  <!-- All builds -->
+  <div class="grid">
+    <div class="card">
+      <div>
+        <div class="name">🍎 macOS</div>
+        <div class="meta">Apple Silicon · {{DMG_SIZE}}</div>
+      </div>
+      <a class="btn small" href="/PrepperPad.dmg" download>.dmg</a>
+    </div>
+    <div class="card">
+      <div>
+        <div class="name">🤖 Android</div>
+        <div class="meta">Tablet / teléfono · {{APK_SIZE}}</div>
+      </div>
+      <a class="btn small" href="/prepper-pad.apk" download>.apk</a>
+    </div>
+  </div>
+
+  <!-- QR to open on another device -->
+  <div class="qr">
+    <div style="color:var(--dim); font-size:.9rem; margin-bottom:10px;">
+      Escanea desde tu teléfono o tablet para abrir esta página ahí:
+    </div>
+    {{QR_SVG}}
+    <div class="url">{{LAN_URL}}</div>
+    <div class="hint">Deben estar en la misma red WiFi.</div>
+  </div>
+
+  <footer>
+    Prepper Pad · Instalador local. Para Windows y Linux, usa la página de
+    Releases privada del proyecto.<br>
+    Conocimiento offline que salva vidas.
+  </footer>
+</div>
+
+<script>
+  // Detect the visitor's OS and highlight the matching download.
+  (function () {
+    const ua = navigator.userAgent;
+    const isAndroid = /Android/i.test(ua);
+    const isMac = /Macintosh|Mac OS X/i.test(ua) && !/iPhone|iPad/i.test(ua);
+    const isiOS = /iPhone|iPad|iPod/i.test(ua);
+    const isWin = /Windows/i.test(ua);
+    const label = document.getElementById('os-label');
+    const title = document.getElementById('os-title');
+    const btn = document.getElementById('primary-btn');
+    const steps = document.getElementById('steps');
+
+    function set(os, name, href, text, stepList) {
+      label.textContent = os;
+      title.textContent = name;
+      btn.textContent = text;
+      btn.href = href;
+      steps.innerHTML = stepList.map(s => '<li>' + s + '</li>').join('');
+    }
+
+    if (isAndroid) {
+      set('Tu dispositivo: Android', 'Prepper Pad para Android',
+        '/prepper-pad.apk', '⬇ Descargar APK (63 MB)',
+        ['1. Toca Descargar y abre el archivo .apk.',
+         '2. Si te lo pide, permite "instalar apps desconocidas".',
+         '3. Toca Instalar. Listo.']);
+    } else if (isMac) {
+      set('Tu dispositivo: Mac', 'Prepper Pad para macOS',
+        '/PrepperPad.dmg', '⬇ Descargar .dmg (32 MB)',
+        ['1. Abre el .dmg y arrastra Prepper Pad a Aplicaciones.',
+         '2. La primera vez: clic derecho → Abrir (app sin firmar de Apple).']);
+    } else if (isiOS) {
+      set('Tu dispositivo: iPhone/iPad', 'iOS aún no disponible',
+        '#', 'No disponible por ahora',
+        ['iOS requiere una cuenta de desarrollador de Apple.',
+         'Usa una tablet Android o una Mac por ahora.']);
+      btn.style.opacity = '.5'; btn.style.pointerEvents = 'none';
+    } else if (isWin) {
+      set('Tu dispositivo: Windows', 'Windows desde Releases',
+        '#', 'Ver instrucciones',
+        ['El instalador de Windows se genera en la CI del proyecto.',
+         'Descárgalo de la página de Releases privada.']);
+      btn.style.opacity = '.5'; btn.style.pointerEvents = 'none';
+    } else {
+      set('Dispositivo no reconocido', 'Elige tu descarga abajo',
+        '#', 'Ver opciones', ['Usa los botones .dmg o .apk según tu equipo.']);
+      btn.style.opacity = '.5'; btn.style.pointerEvents = 'none';
+    }
+  })();
+</script>
+</body>
+</html>

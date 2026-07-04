@@ -1,11 +1,12 @@
 // Tools page — quick survival tools accessible from the nav rail.
-// Groups battery saver, flashlight, compass, whistle, and future tools.
+// Groups battery saver, flashlight, compass, whistle, GPS track, and future tools.
 import 'package:flutter/material.dart';
 
 import 'battery_saver.dart';
 import 'compass.dart';
 import 'flashlight.dart';
 import 'whistle.dart';
+import '../maps/gpx_recorder.dart';
 
 class ToolsPage extends StatelessWidget {
   const ToolsPage({super.key});

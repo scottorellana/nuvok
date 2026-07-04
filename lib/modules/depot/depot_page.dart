@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_selector/file_selector.dart';
@@ -805,6 +806,133 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
         content: Text('Descargando $name — mira la pestaña Descargas')));
   }
 
+  /// Lists and downloads maps from the Prepper Pad server running on the same
+  /// WiFi (installer-server). No internet needed — this is how a phone/tablet
+  /// gets maps that a nearby computer prepared. Works even where on-device
+  /// extraction isn't available (Android has no pmtiles CLI).
+  Future<void> _localServerMaps() async {
+    final saved =
+        PrepperLibrary.instance.settings['localMapServer'] as String?;
+    final ctrl = TextEditingController(text: saved ?? 'http://');
+    final base = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Servidor local de mapas'),
+        content: SizedBox(
+          width: 480,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Escribe la dirección que muestra el instalador de Prepper '
+                'Pad en la computadora de tu red (misma WiFi). Descarga '
+                'mapas sin internet.',
+                style: TextStyle(fontSize: 13, color: Colors.grey),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: ctrl,
+                autofocus: true,
+                keyboardType: TextInputType.url,
+                decoration: const InputDecoration(
+                  labelText: 'http://192.168.x.x:8848',
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancelar')),
+          FilledButton(
+              onPressed: () => Navigator.pop(context, ctrl.text.trim()),
+              child: const Text('Conectar')),
+        ],
+      ),
+    );
+    if (base == null || base.isEmpty || base == 'http://' || !mounted) return;
+    final baseUrl = base.replaceAll(RegExp(r'/+$'), '');
+    await PrepperLibrary.instance.saveSetting('localMapServer', baseUrl);
+
+    List<dynamic> maps;
+    try {
+      final client = HttpClient()
+        ..connectionTimeout = const Duration(seconds: 8);
+      final req = await client.getUrl(Uri.parse('$baseUrl/api/content'));
+      final res = await req.close().timeout(const Duration(seconds: 8));
+      final body = await res.transform(utf8.decoder).join();
+      client.close();
+      final list = jsonDecode(body) as List<dynamic>;
+      maps = [
+        for (final e in list)
+          if ((e as Map)['type'] == 'maps') e,
+      ];
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('No se pudo conectar a $baseUrl. '
+                '¿Están en la misma WiFi y el servidor encendido?')));
+      }
+      return;
+    }
+    if (!mounted) return;
+    if (maps.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'El servidor no tiene mapas. Extrae uno en la computadora '
+              'primero (queda en la carpeta PrepperPad/maps).')));
+      return;
+    }
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Mapas en el servidor'),
+        content: SizedBox(
+          width: 480,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final m in maps)
+                ListTile(
+                  leading: const Text('🗺️', style: TextStyle(fontSize: 22)),
+                  title: Text((m as Map)['name'] as String),
+                  subtitle: Text(_fmtBytes((m['size'] as num?)?.toInt() ?? 0)),
+                  trailing: const Icon(Icons.download),
+                  onTap: () {
+                    final name = m['name'] as String;
+                    final url = '$baseUrl${m['url']}';
+                    _manager.enqueue(url,
+                        '${PrepperLibrary.instance.mapsDir.path}/$name');
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            'Descargando $name — mira la pestaña Descargas')));
+                  },
+                ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cerrar')),
+        ],
+      ),
+    );
+  }
+
+  static String _fmtBytes(int bytes) {
+    const units = ['B', 'KB', 'MB', 'GB'];
+    var size = bytes.toDouble();
+    var u = 0;
+    while (size >= 1024 && u < units.length - 1) {
+      size /= 1024;
+      u++;
+    }
+    return '${size.toStringAsFixed(size < 10 && u > 0 ? 1 : 0)} ${units[u]}';
+  }
+
   Future<void> _importLocal() async {
     const typeGroup =
         XTypeGroup(label: 'Mapas PMTiles', extensions: ['pmtiles']);
@@ -848,11 +976,20 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        Row(
+        Text('Instalar mapas offline',
+            style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 8),
+        // Wrap (not Row) so the actions never overflow on a narrow phone.
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
           children: [
-            Expanded(
-              child: Text('Instalar mapas offline',
-                  style: Theme.of(context).textTheme.titleLarge),
+            // The key path for phones/tablets: pull ready maps from the
+            // Prepper Pad server on the same WiFi — no internet, one tap.
+            FilledButton.tonalIcon(
+              onPressed: _localServerMaps,
+              icon: const Icon(Icons.lan, size: 18),
+              label: const Text('Servidor local'),
             ),
             if (canExtract)
               OutlinedButton.icon(
@@ -860,13 +997,11 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
                 icon: const Icon(Icons.public, size: 18),
                 label: const Text('Región personalizada'),
               ),
-            const SizedBox(width: 8),
             OutlinedButton.icon(
               onPressed: _importLocal,
               icon: const Icon(Icons.folder_open, size: 18),
               label: const Text('Importar'),
             ),
-            const SizedBox(width: 8),
             OutlinedButton.icon(
               onPressed: () => _downloadUrl(),
               icon: const Icon(Icons.link, size: 18),
@@ -880,10 +1015,10 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
               ? 'Elige un país (un toque y se recorta del mapa mundial de '
                   'Protomaps) o usa "Región personalizada" para cualquier '
                   'área del mundo. Solo se usa internet al instalar.'
-              : 'En este dispositivo: descarga por URL directa o importa '
-                  'un .pmtiles (USB, tarjeta SD). En una computadora con '
-                  'la herramienta pmtiles, cualquier país se instala con un '
-                  'toque.',
+              : 'En este dispositivo no se recortan mapas. Usa "Servidor '
+                  'local" para bajar los mapas listos desde una computadora '
+                  'con Prepper Pad en tu WiFi (sin internet), o "Por URL" / '
+                  '"Importar" un .pmtiles.',
           style: const TextStyle(color: Colors.grey, fontSize: 13),
         ),
         const SizedBox(height: 12),

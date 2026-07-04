@@ -246,31 +246,47 @@ class _HomeShellState extends State<HomeShell> {
       child: Scaffold(
         body: Row(
           children: [
-            NavigationRail(
-              selectedIndex: _index,
-              onDestinationSelected: (i) => setState(() => _index = i),
-              labelType: NavigationRailLabelType.all,
-              leading: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Column(
-                  children: [
-                    Icon(Icons.backpack,
-                        size: 34, color: Theme.of(context).colorScheme.primary),
-                    const SizedBox(height: 4),
-                    Text('Prepper\nPad',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.labelSmall),
-                  ],
+            // The rail has 9 destinations + header; on a short window it must
+            // SCROLL, otherwise the last items (Notas, Depósito) get clipped
+            // and become unreachable. Fill the height when it fits.
+            LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints:
+                      BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: NavigationRail(
+                      selectedIndex: _index,
+                      onDestinationSelected: (i) =>
+                          setState(() => _index = i),
+                      labelType: NavigationRailLabelType.all,
+                      leading: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Column(
+                          children: [
+                            Icon(Icons.backpack,
+                                size: 34,
+                                color: Theme.of(context).colorScheme.primary),
+                            const SizedBox(height: 4),
+                            Text('Prepper\nPad',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.labelSmall),
+                          ],
+                        ),
+                      ),
+                      destinations: [
+                        for (final (icon, selectedIcon, label)
+                            in _destinations)
+                          NavigationRailDestination(
+                            icon: Icon(icon),
+                            selectedIcon: Icon(selectedIcon),
+                            label: Text(label),
+                          ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              destinations: [
-                for (final (icon, selectedIcon, label) in _destinations)
-                  NavigationRailDestination(
-                    icon: Icon(icon),
-                    selectedIcon: Icon(selectedIcon),
-                    label: Text(label),
-                  ),
-              ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
             Expanded(

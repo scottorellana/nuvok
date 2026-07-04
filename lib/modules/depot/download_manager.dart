@@ -61,6 +61,21 @@ class DownloadManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Returns the active (queued or downloading) task for [url], or null.
+  DownloadTask? taskFor(String url) {
+    for (final t in tasks) {
+      if (t.url == url &&
+          (t.status == DownloadStatus.queued ||
+              t.status == DownloadStatus.downloading)) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  /// True if [url] is currently queued or downloading.
+  bool isDownloading(String url) => taskFor(url) != null;
+
   Future<void> _pump() async {
     if (_running) return;
     _running = true;

@@ -99,12 +99,23 @@ class CuratedModel {
     required this.description,
     required this.url,
     required this.approxBytes,
+    this.minRamGb,
+    this.languages = const ['EN'],
+    this.tags = const [],
+    this.recommended = false,
   });
 
   final String name;
   final String description;
   final String url;
   final int approxBytes;
+  final int? minRamGb;
+  final List<String> languages;
+  final List<String> tags;
+  final bool recommended;
+
+  /// Filename extracted from the HuggingFace URL.
+  String get fileName => Uri.parse(url).pathSegments.last;
 }
 
 const curatedModels = <CuratedModel>[
@@ -116,6 +127,21 @@ const curatedModels = <CuratedModel>[
     url:
         'https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-Q4_K_M.gguf',
     approxBytes: 2020000000,
+    minRamGb: 4,
+    languages: ['EN', 'ES'],
+    tags: ['Rápido', 'Baja RAM'],
+  ),
+  CuratedModel(
+    name: 'Qwen2.5 0.5B Instruct (Q4_K_M)',
+    description:
+        'Ultraligero — cabe en cualquier dispositivo, incluso tablets '
+        'antiguas. Calidad limitada pero siempre disponible.',
+    url:
+        'https://huggingface.co/bartowski/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/Qwen2.5-0.5B-Instruct-Q4_K_M.gguf',
+    approxBytes: 442000000,
+    minRamGb: 1,
+    languages: ['EN', 'ES', 'ZH'],
+    tags: ['Ultraligero'],
   ),
   CuratedModel(
     name: 'Qwen2.5 7B Instruct (Q4_K_M)',
@@ -125,6 +151,10 @@ const curatedModels = <CuratedModel>[
     url:
         'https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/resolve/main/Qwen2.5-7B-Instruct-Q4_K_M.gguf',
     approxBytes: 4680000000,
+    minRamGb: 8,
+    languages: ['EN', 'ES', 'ZH', 'FR', 'DE'],
+    tags: ['Recomendado', 'Multilingüe'],
+    recommended: true,
   ),
   CuratedModel(
     name: 'Qwen2.5 14B Instruct (Q4_K_M)',
@@ -134,5 +164,20 @@ const curatedModels = <CuratedModel>[
     url:
         'https://huggingface.co/bartowski/Qwen2.5-14B-Instruct-GGUF/resolve/main/Qwen2.5-14B-Instruct-Q4_K_M.gguf',
     approxBytes: 8990000000,
+    minRamGb: 16,
+    languages: ['EN', 'ES', 'ZH', 'FR', 'DE'],
+    tags: ['Alta calidad'],
+  ),
+  CuratedModel(
+    name: 'Llama 3.2 1B Instruct (Q4_K_M)',
+    description:
+        'Compacto y capaz — el punto dulce para tablets Android. '
+        'Razona bien en español e inglés con solo 1GB.',
+    url:
+        'https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_K_M.gguf',
+    approxBytes: 808000000,
+    minRamGb: 2,
+    languages: ['EN', 'ES'],
+    tags: ['Tablet'],
   ),
 ];

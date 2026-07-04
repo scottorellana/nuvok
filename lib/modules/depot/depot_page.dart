@@ -400,40 +400,292 @@ class _CatalogTile extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------------
-// Curated AI models
+// Curated AI models — with install detection and rich metadata
 // ---------------------------------------------------------------------------
 
-class _ModelsTab extends StatelessWidget {
+class _ModelsTab extends StatefulWidget {
   const _ModelsTab();
 
   @override
+  State<_ModelsTab> createState() => _ModelsTabState();
+}
+
+class _ModelsTabState extends State<_ModelsTab> {
+  final _manager = DownloadManager.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _manager.addListener(_onChanged);
+  }
+
+  @override
+  void dispose() {
+    _manager.removeListener(_onChanged);
+    super.dispose();
+  }
+
+  void _onChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final installedFiles = PrepperLibrary.instance.listModels();
+    final installedNames = installedFiles.map((f) => f.path.split('/').last).toSet();
+
     return ListView(
       padding: const EdgeInsets.all(12),
       children: [
-        const Padding(
-          padding: EdgeInsets.all(8),
-          child: Text(
-            'Modelos seleccionados para hardware modesto. Una vez '
-            'descargados funcionan 100% sin internet.',
-          ),
-        ),
-        for (final m in curatedModels)
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.psychology_outlined),
-              title: Text(m.name),
-              subtitle:
-                  Text('${m.description}\n~${humanSize(m.approxBytes)}'),
-              isThreeLine: true,
-              trailing: _DownloadButton(
-                url: m.url,
-                destPath:
-                    '${PrepperLibrary.instance.modelsDir.path}/${Uri.parse(m.url).pathSegments.last}',
-                totalBytes: null,
-              ),
+        Card(
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                const Icon(Icons.psychology, size: 32),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    'Modelos de IA descargables',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                if (installedFiles.isNotEmpty)
+                  Chip(
+                    label: Text('${installedFiles.length} instalados'),
+                    avatar: const Icon(Icons.check_circle, size: 18),
+                  ),
+              ],
             ),
           ),
+        ),
+        const SizedBox(height: 4),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(
+            'Estos modelos se ejecutan localmente en tu dispositivo. '
+            'Una vez descargados, funcionan 100% sin internet. '
+            'Elige según la RAM disponible:',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
+        const SizedBox(height: 8),
+        for (final m in curatedModels)
+          _ModelCard(
+            model: m,
+            isInstalled: installedNames.contains(m.fileName),
+            isDownloading: _manager.isDownloading(m.url),
+          ),
+      ],
+    );
+  }
+}
+
+class _ModelCard extends StatelessWidget {
+  const _ModelCard({
+    required this.model,
+    required this.isInstalled,
+    required this.isDownloading,
+  });
+
+  final CuratedModel model;
+  final bool isInstalled;
+  final bool isDownloading;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final destPath =
+        '${PrepperLibrary.instance.modelsDir.path}/${model.fileName}';
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.psychology_outlined,
+                    color: model.recommended
+                        ? theme.colorScheme.primary
+                        : null),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    model.name,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                if (model.recommended)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '★ Recomendado',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onPrimaryContainer,
+                      ),
+                    ),
+                  ),
+                if (isInstalled)
+                  Container(
+                    margin: const EdgeInsets.only(left: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.check_circle, size: 14, color: Colors.green),
+                        SizedBox(width: 4),
+                        Text('Instalado', style: TextStyle(fontSize: 11, color: Colors.green, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(model.description, style: theme.textTheme.bodyMedium),
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 6,
+              runSpacing: 4,
+              children: [
+                _InfoChip(
+                  icon: Icons.memory,
+                  label: '~${humanSize(model.approxBytes)}',
+                ),
+                if (model.minRamGb != null)
+                  _InfoChip(
+                    icon: Icons.developer_board,
+                    label: '${model.minRamGb}GB RAM min.',
+                  ),
+                _InfoChip(
+                  icon: Icons.language,
+                  label: model.languages.join(', '),
+                ),
+                for (final tag in model.tags)
+                  _InfoChip(label: tag, color: theme.colorScheme.secondaryContainer),
+              ],
+            ),
+            const SizedBox(height: 12),
+            if (isInstalled)
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.chat),
+                  label: const Text('Abrir en Asistente IA'),
+                ),
+              )
+            else if (isDownloading)
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: _DownloadProgress(url: model.url),
+              )
+            else
+              SizedBox(
+                width: double.infinity,
+                child: _DownloadButton(
+                  url: model.url,
+                  destPath: destPath,
+                  totalBytes: model.approxBytes,
+                  label: 'Descargar',
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InfoChip extends StatelessWidget {
+  const _InfoChip({this.icon, required this.label, this.color});
+  final IconData? icon;
+  final String label;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: color ?? Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Theme.of(context).dividerColor.withValues(alpha: 0.3)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 14, color: Theme.of(context).hintColor),
+            const SizedBox(width: 4),
+          ],
+          Text(label, style: const TextStyle(fontSize: 12)),
+        ],
+      ),
+    );
+  }
+}
+
+class _DownloadProgress extends StatelessWidget {
+  const _DownloadProgress({required this.url});
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    final task = DownloadManager.instance.taskFor(url);
+    if (task == null) return const SizedBox.shrink();
+    final pct = task.totalBytes != null && task.totalBytes! > 0
+        ? (task.received / task.totalBytes! * 100).clamp(0, 100)
+        : null;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const SizedBox(
+              width: 16, height: 16,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              pct != null
+                  ? 'Descargando… ${pct.toStringAsFixed(0)}%'
+                  : 'Descargando… ${humanSize(task.received)}',
+              style: const TextStyle(fontSize: 13),
+            ),
+            const Spacer(),
+            Text(
+              task.totalBytes != null
+                  ? '${humanSize(task.received)} / ${humanSize(task.totalBytes!)}'
+                  : humanSize(task.received),
+              style: TextStyle(fontSize: 12, color: Theme.of(context).hintColor),
+            ),
+          ],
+        ),
+        if (pct != null) ...[
+          const SizedBox(height: 6),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: pct / 100,
+              minHeight: 6,
+            ),
+          ),
+        ],
       ],
     );
   }
@@ -877,11 +1129,13 @@ class _DownloadButton extends StatefulWidget {
     required this.url,
     required this.destPath,
     this.totalBytes,
+    this.label,
   });
 
   final String url;
   final String destPath;
   final int? totalBytes;
+  final String? label;
 
   @override
   State<_DownloadButton> createState() => _DownloadButtonState();
@@ -916,6 +1170,13 @@ class _DownloadButtonState extends State<_DownloadButton> {
         .where((t) => t.destPath == widget.destPath)
         .lastOrNull;
     if (task != null && task.status == DownloadStatus.downloading) {
+      // Full-width button variant shows progress inline
+      if (widget.label != null) {
+        return SizedBox(
+          width: double.infinity,
+          child: LinearProgressIndicator(value: task.progress, minHeight: 6),
+        );
+      }
       return SizedBox(
         width: 32,
         height: 32,
@@ -923,16 +1184,39 @@ class _DownloadButtonState extends State<_DownloadButton> {
       );
     }
     if (task != null && task.status == DownloadStatus.queued) {
+      if (widget.label != null) {
+        return SizedBox(
+          width: double.infinity,
+          child: FilledButton.tonalIcon(
+            onPressed: null,
+            icon: const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+            label: const Text('En cola…'),
+          ),
+        );
+      }
       return const Icon(Icons.schedule);
+    }
+
+    void startDownload() => _manager.enqueue(
+      widget.url,
+      widget.destPath,
+      totalBytes: widget.totalBytes,
+    );
+
+    if (widget.label != null) {
+      return SizedBox(
+        width: double.infinity,
+        child: FilledButton.icon(
+          onPressed: startDownload,
+          icon: const Icon(Icons.download),
+          label: Text(widget.label!),
+        ),
+      );
     }
     return IconButton(
       tooltip: 'Descargar',
       icon: const Icon(Icons.download),
-      onPressed: () => _manager.enqueue(
-        widget.url,
-        widget.destPath,
-        totalBytes: widget.totalBytes,
-      ),
+      onPressed: startDownload,
     );
   }
 }

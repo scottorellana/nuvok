@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎒 Prepper Pad — Demo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%238C9E5E'/%3E%3Cpath d='M30 35h40v40a5 5 0 0 1-5 5H35a5 5 0 0 1-5-5z' fill='none' stroke='%2310130b' stroke-width='4'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #0f120a;
+  --surface: #1a1f12;
+  --surface-2: #242b18;
+  --olive: #8C9E5E;
+  --olive-bright: #A8C277;
+  --ink: #e8f0d8;
+  --ink-dim: #8a9070;
+  --accent: #5eb89e;
+  --danger: #e85d5d;
+  --warn: #e8b85d;
+  --radius: 12px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #1a2f10, #0f120a);
+  padding: 60px 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba(140,158,94,0.2);
+}
+.hero-logo {
+  width: 80px; height: 80px;
+  background: var(--olive);
+  border-radius: 20px;
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+}
+.hero h1 { font-size: 2.2rem; margin-bottom: 8px; }
+.hero p { color: var(--ink-dim); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+.hero .badges { margin-top: 16px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.hero .badge {
+  padding: 4px 12px;
+  background: rgba(140,158,94,0.15);
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: var(--olive-bright);
+}
+
+/* Layout */
+.container { max-width: 960px; margin: 0 auto; padding: 40px 20px; }
+.section { margin-bottom: 48px; }
+.section h2 { font-size: 1.5rem; margin-bottom: 16px; border-bottom: 2px solid var(--surface); padding-bottom: 8px; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.feature-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.feature-card:hover { transform: translateY(-4px); background: var(--surface-2); }
+.feature-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.feature-card h3 { font-size: 1rem; margin-bottom: 6px; }
+.feature-card p { font-size: 0.85rem; color: var(--ink-dim); }
+
+/* Guide tabs */
+.guide-tabs {
+  display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.guide-tab {
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.guide-tab:hover { color: var(--ink); }
+.guide-tab.active {
+  background: rgba(140,158,94,0.15);
+  border-color: var(--olive);
+  color: var(--olive-bright);
+}
+
+/* Guide content */
+.guide-content {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 32px;
+  min-height: 400px;
+}
+.guide-content h1 { font-size: 1.6rem; margin-bottom: 8px; }
+.guide-content h2 { font-size: 1.2rem; margin: 24px 0 12px; border: none; padding: 0; }
+.guide-content h3 { font-size: 1.05rem; margin: 16px 0 8px; color: var(--olive-bright); }
+.guide-content p { margin-bottom: 12px; color: var(--ink); }
+.guide-content ul, .guide-content ol { margin: 8px 0 16px 20px; }
+.guide-content li { margin-bottom: 4px; }
+.guide-content strong { color: var(--olive-bright); }
+.guide-content blockquote {
+  border-left: 3px solid var(--danger);
+  padding: 8px 16px;
+  margin: 12px 0;
+  background: rgba(232,93,93,0.08);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.9rem;
+}
+.guide-content code {
+  background: var(--bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: var(--olive-bright);
+}
+.guide-content pre {
+  background: var(--bg);
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 12px 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+.guide-content pre code { background: none; padding: 0; }
+.guide-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.9rem;
+}
+.guide-content th {
+  background: var(--surface-2);
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 2px solid var(--olive);
+  font-size: 0.85rem;
+}
+.guide-content td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(140,158,94,0.1);
+}
+.guide-content td:first-child { color: var(--olive-bright); font-weight: 500; }
+.guide-content hr { border: none; border-top: 1px solid var(--surface-2); margin: 24px 0; }
+
+/* Animated CPR diagram */
+.diagram-card {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 16px 0;
+  text-align: center;
+}
+.diagram-card h4 { color: var(--olive-bright); margin-bottom: 16px; }
+.cpr-animation {
+  position: relative;
+  width: 200px; height: 200px;
+  margin: 0 auto;
+}
+.cpr-chest {
+  position: absolute; top: 60px; left: 50px;
+  width: 100px; height: 80px;
+  background: linear-gradient(180deg, #d4a574, #b8895a);
+  border-radius: 8px;
+}
+.cpr-hands {
+  position: absolute; top: 40px; left: 85px;
+  width: 30px; height: 30px;
+  background: #f4d4a8;
+  border-radius: 50%;
+  animation: cpr-compress 0.6s ease-in-out infinite;
+}
+@keyframes cpr-compress {
+  0%, 100% { top: 40px; }
+  50% { top: 52px; }
+}
+.cpr-label {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  font-size: 0.75rem; color: var(--accent);
+  white-space: nowrap;
+}
+.cpr-depth {
+  position: absolute; top: 150px; left: 50%; transform: translateX(-50%);
+  font-size: 0.8rem; color: var(--warn);
+}
+
+/* Heimlich animation */
+.heimlich-container {
+  display: flex; justify-content: center; gap: 4px; align-items: flex-end;
+  height: 180px; padding: 20px 0;
+}
+.heimlich-victim {
+  width: 40px; height: 120px;
+  background: linear-gradient(180deg, #d4a574, #b8895a);
+  border-radius: 20px 20px 4px 4px;
+  position: relative;
+}
+.heimlich-victim::before {
+  content: ''; position: absolute; top: -20px; left: 5px;
+  width: 30px; height: 30px; background: #d4a574; border-radius: 50%;
+}
+.heimlich-arms {
+  position: absolute; top: 50px; left: -8px;
+  width: 56px; height: 12px;
+}
+.heimlich-arms::before {
+  content: ''; position: absolute; left: 0; top: 0;
+  width: 30px; height: 10px; background: #f4d4a8; border-radius: 4px;
+  animation: heimlich-thrust 1s ease-in-out infinite;
+}
+@keyframes heimlich-thrust {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(8px); }
+}
+.heimlich-arrow {
+  position: absolute; top: 55px; left: -20px;
+  font-size: 0.7rem; color: var(--danger);
+  animation: arrow-pulse 1s ease-in-out infinite;
+}
+@keyframes arrow-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Tourniquet diagram */
+.tourniquet-svg { max-width: 100%; height: auto; }
+
+/* Burn chart */
+.burn-chart { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 16px 0; }
+.burn-cell { padding: 12px; border-radius: 8px; text-align: center; font-size: 0.8rem; }
+.burn-1 { background: rgba(232,184,93,0.2); border: 1px solid var(--warn); }
+.burn-2 { background: rgba(232,140,93,0.2); border: 1px solid #e88c5d; }
+.burn-3 { background: rgba(232,93,93,0.2); border: 1px solid var(--danger); }
+.burn-4 { background: rgba(60,60,60,0.5); border: 1px solid #555; }
+.burn-cell strong { display: block; font-size: 1.1rem; margin-bottom: 4px; }
+
+/* Triage flowchart */
+.triage-flow {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 0;
+}
+.triage-node {
+  padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+}
+.triage-red { background: #e85d5d; color: #fff; }
+.triage-orange { background: #e8905d; color: #fff; }
+.triage-yellow { background: #e8d45d; color: #333; }
+.triage-green { background: #5de890; color: #333; }
+.triage-black { background: #444; color: #aaa; }
+.triage-arrow { font-size: 1.2rem; color: var(--ink-dim); }
+
+/* Footer */
+.footer { text-align: center; padding: 40px 20px; color: var(--ink-dim); font-size: 0.85rem; border-top: 1px solid var(--surface); }
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 1.6rem; }
+  .features { grid-template-columns: 1fr 1fr; }
+  .burn-chart { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#10130b" stroke-width="2.5" width="40" height="40">
+      <path d="M7 8h10v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z" stroke-linejoin="round"/>
+      <path d="M9 8V6a3 3 0 0 1 6 0v2" stroke-linecap="round"/>
+      <line x1="7" y1="12" x2="17" y2="12"/>
+    </svg>
+  </div>
+  <h1>🎒 Prepper Pad</h1>
+  <p>Tu tableta de supervivencia offline. Primeros auxilios, mapas sin internet, chat mesh y biblioteca completa — todo en tu dispositivo, sin depender de nada.</p>
+  <div class="badges">
+    <span class="badge">📡 100% Offline</span>
+    <span class="badge">🆘 SOS Mesh</span>
+    <span class="badge">🗺️ Mapas sin internet</span>
+    <span class="badge">📖 Biblioteca completa</span>
+    <span class="badge">🧠 IA local</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Features -->
+  <div class="section">
+    <h2>⚙️ Funciones principales</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🆘</div>
+        <h3>Modo Emergencia</h3>
+        <p>Botones gigantes para RCP, atragantamiento, hemorragia. Acceso inmediato bajo presión.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📡</div>
+        <h3>Chat Mesh</h3>
+        <p>Comunicación sin internet via WiFi, Bluetooth y LoRa. Mensajes con confirmación de entrega.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🗺️</div>
+        <h3>Mapas Offline</h3>
+        <p>Navegación con mapas descargados. GPS, rutas A*, POIs y overlays personalizados.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📖</div>
+        <h3>Biblioteca</h3>
+        <p>Wikipedia completa offline (ZIM). Artículos sin conexión, búsqueda instantánea.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔦</div>
+        <h3>Herramientas</h3>
+        <p>Linterna SOS en código Morse, brújula, silbato de emergencia y metrónomo.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>IA Local</h3>
+        <p>Asistente de IA que corre en tu dispositivo. Funciona sin internet.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Checklist</h3>
+        <p>Lista de preparación familiar con vencimientos y alertas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📍</div>
+        <h3>Ubicación</h3>
+        <p>Comparte tu posición con el grupo en el mapa. SOS con coordenadas GPS.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guides -->
+  <div class="section">
+    <h2>📚 Guías de primeros auxilios</h2>
+    <p style="color: var(--ink-dim); margin-bottom: 16px;">
+      Guías con diagramas animados, tablas de referencia rápida y procedimientos paso a paso.
+      En la app real, cada guía incluye animaciones interactivas.
+    </p>
+    <div class="guide-tabs" id="guide-tabs"></div>
+    <div class="guide-content" id="guide-content"></div>
+  </div>
+
+  <!-- Triage -->
+  <div class="section">
+    <h2>🚨 Sistema de triaje</h2>
+    <div class="diagram-card">
+      <h4>START — Árbol de decisión para múltiples víctimas</h4>
+      <div class="triage-flow">
+        <div class="triage-node triiage-question" style="background:var(--surface-2);">¿Puede caminar?</div>
+        <div class="triage-arrow">↙️ NO &nbsp;&nbsp;&nbsp; ↘️ SÍ</div>
+        <div style="display:flex; gap:32px;">
+          <div style="display:flex; flex-direction:column; gap:8px; align-items:center;">
+            <div class="triage-node triage-green">🟢 VERDE — Leve</div>
+            <div style="font-size:0.8rem;color:var(--ink-dim);">Puede esperar</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px; align-items:center;">
+            <div class="triage-node" style="background:var(--surface-2);">¿Respira?</div>
+            <div class="triage-arrow">↙️ NO &nbsp;&nbsp; ↘️ SÍ</div>
+            <div style="display:flex; gap:16px;">
+              <div style="display:flex;flex-direction:column;gap:4px;align-items:center;">
+                <div style="font-size:0.75rem;color:var(--ink-dim);">Tras abrir vía aérea</div>
+                <div class="triage-node triage-red">🔴 ROJO</div>
+                <div class="triage-node triage-black">⚫ NEGRO</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;align-items:center;">
+                <div class="triage-node triage-orange">🟠 NARANJA</div>
+                <div style="font-size:0.75rem;color:var(--ink-dim);">Hemorragia severa</div>
+                <div class="triage-node triage-yellow">🟡 AMARILLO</div>
+                <div style="font-size:0.75rem;color:var(--ink-dim);">Estable</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="section">
+    <h2>📊 Estado del proyecto</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon" style="font-size:2rem;">164</div>
+        <h3>Tests</h3>
+        <p>Todos pasando, 0 fallos</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="font-size:2rem;">0</div>
+        <h3>Issues</h3>
+        <p>Flutter analyze limpio</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="font-size:2rem;">16</div>
+        <h3>Guías</h3>
+        <p>ES + EN, con diagramas</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="font-size:2rem;">3</div>
+        <h3>Transportes</h3>
+        <p>WiFi, BLE, LoRa</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>🎒 Prepper Pad v0.2.1+ · App offline-first de supervivencia<br>
+  Instalador: <code>http://[IP-LOCAL]:8848</code> · Demo: <code>http://[IP-LOCAL]:8849</code><br>
+  <br>Esta demo es solo para visualización. La app completa funciona offline en tu dispositivo.</p>
+</div>
+
+<script>
+// ── Guide data (simplified for web demo) ──
+const guides = {
+  rcp: {
+    title: 'RCP en adultos',
+    icon: '❤️',
+    html: `
+      <h1>❤️ RCP en adultos</h1>
+      <blockquote>⚠️ Esta guía no sustituye atención médica profesional ni un curso práctico presencial.</blockquote>
+
+      <h2>Cuándo sospecharlo</h2>
+      <table>
+        <tr><th>Señal</th><th>Detalle</th></tr>
+        <tr><td>🔇 No responde</td><td>No reacciona al grito ni al sacudir los hombros</td></tr>
+        <tr><td>😶 No respira normal</td><td>No respira o solo "boquea" (jadeos espaciados = paro)</td></tr>
+        <tr><td>👽 Color gris/morado</td><td>Piel, labios o uñas azulados o pálidos</td></tr>
+        <tr><td>💥 Colapso súbito</td><td>Se desplomó, casi ahogado, o descarga eléctrica</td></tr>
+      </table>
+
+      <p><strong>Si no responde y no respira normal: tiene un paro cardíaco. Cada minuto sin RCP baja su probabilidad de sobrevivir ~10%. Empieza YA.</strong></p>
+
+      <div class="diagram-card">
+        <h4>Compresión torácica — Ritmo 100-120 BPM</h4>
+        <div class="cpr-animation">
+          <div class="cpr-label">🤲 Talón de la mano</div>
+          <div class="cpr-hands"></div>
+          <div class="cpr-chest"></div>
+          <div class="cpr-depth">⬇️ 5-6 cm de profundidad</div>
+        </div>
+        <p style="margin-top:12px;font-size:0.85rem;color:var(--ink-dim);">
+          Brazos rectos · Peso del cuerpo · Permitir rebote completo del pecho
+        </p>
+      </div>
+
+      <h2>Qué NO hacer</h2>
+      <table>
+        <tr><th>❌ Error</th><th>✅ Correcto</th></tr>
+        <tr><td>Buscar pulso (se pierde tiempo)</td><td>Si no responde y no respira → RCP YA</td></tr>
+        <tr><td>Echar agua, abofetear, esperar</td><td>Iniciar compresiones inmediatamente</td></tr>
+        <tr><td>Interrumpir compresiones >10s</td><td>Solo pausar para ventilaciones o DEA</td></tr>
+        <tr><td>Miedo a romper costillas</td><td>Preferible costilla rota a muerte</td></tr>
+      </table>
+
+      <h2>Ciclo 30:2</h2>
+      <pre><code>┌─────────────────────────────────────────┐
+│  30 compresiones  →  2 soplos  →  repetir │
+│  Sin parar hasta que:                     │
+│  • La persona respire, tosa o se mueva    │
+│  • Alguien te reemplace                    │
+│  • Llegue ayuda profesional                │
+│  • Estés agotado por completo              │
+└─────────────────────────────────────────┘</code></pre>
+
+      <h2>Parámetros correctos</h2>
+      <table>
+        <tr><th>Parámetro</th><th>Valor</th></tr>
+        <tr><td>Profundidad</td><td>5 a 6 cm (un tercio del pecho)</td></tr>
+        <tr><td>Ritmo</td><td>100 a 120 por minuto</td></tr>
+        <tr><td>Técnica</td><td>Peso del cuerpo, brazos rectos</td></tr>
+        <tr><td>Rebote</td><td>Deja que el pecho suba COMPLETO</td></tr>
+      </table>
+
+      <blockquote>💡 El ritmo de "Stayin' Alive" de Bee Gees = exactamente 100-120 BPM</blockquote>
+
+      <h2>Cronograma de supervivencia</h2>
+      <pre><code>Minuto 0:  Paro cardíaco → 100% probabilidad con RCP
+Minuto 1:  Sin RCP → ~90% probabilidad
+Minuto 3:  Sin RCP → ~70% probabilidad
+Minuto 5:  Sin RCP → ~50% probabilidad
+Minuto 10: Sin RCP → ~0% probabilidad
+           CON RCP + DEA en <5min: hasta 70% supervivencia</code></pre>
+    `
+  },
+
+  atragantamiento: {
+    title: 'Atragantamiento',
+    icon: '😤',
+    html: `
+      <h1>😤 Atragantamiento</h1>
+      <blockquote>⚠️ Esta guía no sustituye atención médica profesional.</blockquote>
+
+      <h2>¿Está realmente atragantado?</h2>
+      <table>
+        <tr><th>Señal</th><th>¿Atragantado?</th><th>Acción</th></tr>
+        <tr><td>🗣️ Puede hablar o toser fuerte</td><td>❌ No completo</td><td>Animar a toser. NO golpear todavía</td></tr>
+        <tr><td>🤐 No puede hablar, silbido agudo</td><td>⚠️ Sí, parcial</td><td>Prepararse para actuar</td></tr>
+        <tr><td>😰 Se lleva manos al cuello</td><td>🚨 SÍ, universal</td><td>Actuar YA</td></tr>
+        <tr><td>🔵 Cara azulada, no puede toser</td><td>🚨 SÍ, total</td><td>Actuar YA</td></tr>
+      </table>
+
+      <div class="diagram-card">
+        <h4>Maniobra de Heimlich — Empujón hacia ADENTRO y ARRIBA</h4>
+        <div class="heimlich-container">
+          <div class="heimlich-victim">
+            <div class="heimlich-arms"></div>
+            <div class="heimlich-arrow">⬅️</div>
+          </div>
+        </div>
+        <p style="margin-top:8px;font-size:0.85rem;color:var(--ink-dim);">
+          Puño arriba del ombligo · Otra mano sobre el puño · Empujar fuerte
+        </p>
+      </div>
+
+      <h2>Procedimiento completo</h2>
+      <pre><code>Paso 1: Confirma — "¿Te estás ahogando?"
+Paso 2: Posición — Detrás, pecho con una mano, inclinar ADELANTE
+Paso 3: 5 golpes en la espalda (entre omóplatos)
+         → Mirar boca tras cada golpe
+Paso 4: 5 compresiones abdominales (Heimlich)
+         → Puño arriba del ombligo, jalar ADENTRO y ARRIBA
+Paso 5: Alternar 5 y 5 hasta que:
+         ✓ Objeto sale, O
+         ✓ Persona se desmaya → RCP</code></pre>
+
+      <h2>Bebés (menos de 1 año)</h2>
+      <table>
+        <tr><th>Paso</th><th>Acción</th></tr>
+        <tr><td>1️⃣</td><td>Posición boca abajo sobre tu antebrazo, cabeza MÁS BAJA</td></tr>
+        <tr><td>2️⃣</td><td>5 golpes en espalda con talón de la mano</td></tr>
+        <tr><td>3️⃣</td><td>Girar boca arriba, cabeza más baja</td></tr>
+        <tr><td>4️⃣</td><td>5 compresiones en pecho con DOS DEDOS</td></tr>
+      </table>
+      <blockquote>⚠️ NUNCA compresiones abdominales (Heimlich) a un bebé — dañan sus órganos</blockquote>
+
+      <h2>Si estás SOLO y te atragantas TÚ</h2>
+      <ol>
+        <li>Puño arriba del ombligo, jala hacia arriba</li>
+        <li>Si no funciona: deja caer tu abdomen contra el respaldo de una silla</li>
+        <li>Repetir con fuerza hasta despejar</li>
+      </ol>
+    `
+  },
+
+  hemorragia: {
+    title: 'Hemorragia severa',
+    icon: '🩸',
+    html: `
+      <h1>🩸 Hemorragia severa</h1>
+      <blockquote>⚠️ Una persona puede morir desangrada en menos de 5 minutos. Detener el sangrado es lo más urgente después de que respire.</blockquote>
+
+      <h2>Evaluación rápida</h2>
+      <table>
+        <tr><th>Tipo de sangrado</th><th>¿Peligroso?</th><th>Acción</th></tr>
+        <tr><td>Sale a chorros o pulsa (arteria)</td><td>🚨 Mortal en minutos</td><td>Presión inmediata</td></tr>
+        <tr><td>Fluye continuamente, empapa ropa</td><td>🚨 Severo</td><td>Presión inmediata</td></tr>
+        <tr><td>Gotea poco, coagula solo</td><td>⚠️ Menor</td><td>Lavar y vendar</td></tr>
+      </table>
+
+      <h2>Escalada de tratamiento</h2>
+      <pre><code>Paso 1: PROTECCIÓN — Guantes o bolsa plástica
+Paso 2: DESCUBRIR — Corta ropa, necesitas VER
+Paso 3: PRESIÓN DIRECTA FUERTE ← (detiene 90%)
+         · Gasa/trapo sobre el punto que sangra
+         · Presiona con TODO tu peso
+         · Mínimo 10 minutos SIN levantar a mirar
+         · Si empapa → otro trapo ENCIMA
+Paso 4: ELEVAR — Subir la extremidad
+Paso 5: EMPAQUETAR — Para cuello, ingle, axila
+         · Meter gasa DENTRO del hueco
+Paso 6: TORNIQUETE — Solo brazos y piernas
+         · Tela 4-5 cm, 5-8 cm arriba de la herida
+         · Nudo → palo → GIRAR hasta parar
+         · ANOTAR LA HORA</code></pre>
+
+      <h2>Torniquete — detalle</h2>
+      <table>
+        <tr><th>Parámetro</th><th>Valor</th></tr>
+        <tr><td>Material</td><td>Tela 4-5 cm de ancho (corbata, camiseta enrollada)</td></tr>
+        <tr><td>NUNCA</td><td>Alambre, cuerda fina, cinturón delgado</td></tr>
+        <tr><td>Ubicación</td><td>5-8 cm arriba de la herida</td></tr>
+        <tr><td>Evitar</td><td>Sobre articulaciones (codo, rodilla)</td></tr>
+        <tr><td>Objetivo</td><td>Sangrado PARE por completo</td></tr>
+        <tr><td>Hora</td><td>Anotar en torniquete o frente de la persona</td></tr>
+      </table>
+
+      <h2>Tabla de shock</h2>
+      <table>
+        <tr><th>Fase</th><th>Señales</th><th>Acción</th></tr>
+        <tr><td>Compensado</td><td>Ansiedad, piel fría</td><td>Detener sangrado, acostar</td></tr>
+        <tr><td>Progresivo</td><td>Palidez, sudor, sed, pulso rápido</td><td>Piernas elevadas, abrigar</td></tr>
+        <tr><td>Grave</td><td>Confusión, pulso débil, labios azulados</td><td>Traslado URGENTE</td></tr>
+      </table>
+    `
+  },
+
+  quemaduras: {
+    title: 'Quemaduras',
+    icon: '🔥',
+    html: `
+      <h1>🔥 Quemaduras</h1>
+      <blockquote>⚠️ Esta guía no sustituye atención médica profesional.</blockquote>
+
+      <h2>Clasificación de severidad</h2>
+      <div class="burn-chart">
+        <div class="burn-cell burn-1">
+          <strong>1er grado</strong>
+          Rojo, seco<br>Sin ampollas<br>Duele
+        </div>
+        <div class="burn-cell burn-2">
+          <strong>2do grado</strong>
+          Ampollas<br>Húmeda, roja<br>Duele MUCHO
+        </div>
+        <div class="burn-cell burn-3">
+          <strong>3er grado</strong>
+          Blanca/carbonizada<br>No duele<br>Nervios muertos
+        </div>
+        <div class="burn-cell burn-4">
+          <strong>4to grado</strong>
+          Hueso/músculo<br>visible<br>CRÍTICO
+        </div>
+      </div>
+
+      <h2>Qué hacer INMEDIATAMENTE</h2>
+      <pre><code>1. DETENER — Alejar del calor/electricidad/químico
+2. ENFRIAR — Agua tibia/fría corriente 15-20 min
+              (NO hielo directo, NO agua helada)
+3. QUITAR — Ropa/joyería (cortar lo pegado, no arrancar)
+4. CUBRIR — Gasa estéril o tela limpia, suelta
+            (NO algodón, NO cremas, NO manteca)
+5. ALIVIO — Analgésico (paracetamol/ibuprofeno)</code></pre>
+
+      <h2>Lo que NUNCA debes poner</h2>
+      <table>
+        <tr><th>❌ NO uses</th><th>Por qué</th></tr>
+        <tr><td>Hielo directo</td><td>Congela el tejido, más daño</td></tr>
+        <tr><td>Pasta dental</td><td>Irrita y atrapa calor</td></tr>
+        <tr><td>Manteca/aceite</td><td>Atrapa calor, causa infección</td></tr>
+        <tr><td>Algodón</td><td>Se pega a la herida</td></tr>
+      </table>
+
+      <h2>¿Cuándo ir URGENTE al hospital?</h2>
+      <ul>
+        <li><strong>Quemadura 3er grado cualquiera</strong> — Riesgo de shock e infección</li>
+        <li><strong>2do grado mayor que la palma de la mano</strong> — Riesgo de deshidratación</li>
+        <li><strong>Cara, manos, pies, genitales, articulaciones</strong></li>
+        <li><strong>Quemadura circular</strong> (rodea extremidad) — Puede cortar circulación</li>
+        <li><strong>Química o eléctrica</strong> — Daño interno invisible</li>
+      </ul>
+    `
+  },
+
+  triaje: {
+    title: 'Triaje multi-víctima',
+    icon: '🚨',
+    html: `
+      <h1>🚨 Triaje — ¿A quién atender primero?</h1>
+      <blockquote>Método START simplificado para emergencias con muchos heridos y pocos rescatistas.</blockquote>
+
+      <h2>Árbol de decisión</h2>
+      <pre><code>                        ¿Camina y habla?
+                       /                \\
+                     SÍ                 NO
+                     │                  │
+                  🟢 VERDE           ¿Respira?
+                  (Puede esperar)    /        \\
+                                   SÍ         NO
+                                   │          │
+                              ¿Sangra mucho?  Abrir vía aérea
+                              /         \\       inclinando cabeza
+                            SÍ          NO      ¿Respira ahora?
+                            │           │      /          \\
+                        🟠 NARANJA   🟡 AMARILLO  SÍ          NO
+                        (Hemorragia) (Estable)    │            │
+                                              ¿Tiene pulso?     │
+                                              /          \\      NO
+                                            SÍ           NO     │
+                                         🟠 NARANJA    ⚫ NEGRO  │
+                                                                      │
+                                                    🔴 ROJO
+                                                  (RCP AHORA)</code></pre>
+
+      <h2>Categorías</h2>
+      <table>
+        <tr><th>Color</th><th>Estado</th><th>Acción</th></tr>
+        <tr><td>🔴 ROJO</td><td>Crítico, puede sobrevivir con ayuda inmediata</td><td>Atender PRIMERO</td></tr>
+        <tr><td>🟠 NARANJA</td><td>Grave, necesita ayuda pero puede esperar 1h</td><td>Detener hemorragia</td></tr>
+        <tr><td>🟡 AMARILLO</td><td>Estable, puede esperar horas</td><td>Inmovilizar, observar</td></tr>
+        <tr><td>🟢 VERDE</td><td>Leve, camina</td><td>Auto-atención</td></tr>
+        <tr><td>⚫ NEGRO</td><td>No responde tras abrir vía aérea</td><td>Priorizar a los vivos</td></tr>
+      </table>
+
+      <h2>Protocolo en 60 segundos</h2>
+      <table>
+        <tr><th>Paso</th><th>Tiempo</th><th>Acción</th></tr>
+        <tr><td>1</td><td>0-10s</td><td>Gritar: "¿Quién puede caminar?" → VERDE</td></tr>
+        <tr><td>2</td><td>10-30s</td><td>A los que quedan: ¿respiran? Los que no → abrir vía aérea</td></tr>
+        <tr><td>3</td><td>30-50s</td><td>Los que respiran: ¿sangran mucho? → NARANJA</td></tr>
+        <tr><td>4</td><td>50-60s</td><td>Los demás → AMARILLO. Los que no respiran → NEGRO</td></tr>
+      </table>
+
+      <blockquote>💡 El objetivo NO es salvar a todos. Es salvar a los MÁS que puedas.</blockquote>
+    `
+  }
+};
+
+// ── Render guide tabs ──
+const tabsEl = document.getElementById('guide-tabs');
+const contentEl = document.getElementById('guide-content');
+
+Object.entries(guides).forEach(([key, guide], i) => {
+  const tab = document.createElement('div');
+  tab.className = 'guide-tab' + (i === 0 ? ' active' : '');
+  tab.textContent = `${guide.icon} ${guide.title}`;
+  tab.onclick = () => {
+    document.querySelectorAll('.guide-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    contentEl.innerHTML = guide.html;
+  };
+  tabsEl.appendChild(tab);
+});
+
+// Load first guide
+contentEl.innerHTML = Object.values(guides)[0].html;
+</script>
+
+</body>
+</html>

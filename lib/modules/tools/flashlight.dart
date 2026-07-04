@@ -197,51 +197,78 @@ class _FlashlightScreenState extends State<FlashlightScreen> {
     // Full-screen white for "on" mode, blinking for SOS
     final showWhite = mode == FlashlightMode.on ||
         (mode == FlashlightMode.sos && _uiOn && !_controller.available);
+    final iconColor = showWhite ? Colors.black54 : Colors.white54;
 
-    return GestureDetector(
-      onTap: () {
-        // Cycle through modes on tap
-        final next = switch (mode) {
-          FlashlightMode.off => FlashlightMode.on,
-          FlashlightMode.on => FlashlightMode.sos,
-          FlashlightMode.sos => FlashlightMode.off,
-        };
-        _controller.setMode(next);
-        if (next == FlashlightMode.sos && !_controller.available) {
-          _startUiSos();
-        }
-      },
-      child: Scaffold(
-        backgroundColor: showWhite ? Colors.white : Colors.black,
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              if (mode == FlashlightMode.sos)
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 60),
-                  child: Text(
-                    'SOS ●●● ──── ●●●',
+    return Scaffold(
+      backgroundColor: showWhite ? Colors.white : Colors.black,
+      body: Stack(
+        children: [
+          // Full-screen tap target: cycles modes. Sits below the back
+          // button in the stack so it never swallows that tap. Bottom hints
+          // are positioned (not a full-height Column) so they can never
+          // overflow on a short window.
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: () {
+                final next = switch (mode) {
+                  FlashlightMode.off => FlashlightMode.on,
+                  FlashlightMode.on => FlashlightMode.sos,
+                  FlashlightMode.sos => FlashlightMode.off,
+                };
+                _controller.setMode(next);
+                if (next == FlashlightMode.sos && !_controller.available) {
+                  _startUiSos();
+                }
+              },
+              child: const SizedBox.expand(),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 40,
+            child: IgnorePointer(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (mode == FlashlightMode.sos)
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Text(
+                        'SOS ●●● ──── ●●●',
+                        style: TextStyle(
+                          color: Colors.white54,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  Text(
+                    mode == FlashlightMode.on
+                        ? 'Toca para SOS'
+                        : 'Toca para apagar',
                     style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                      color: showWhite ? Colors.black54 : Colors.white54,
+                      fontSize: 16,
                     ),
                   ),
-                ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 60),
-                child: Text(
-                  mode == FlashlightMode.on ? 'Toca para SOS' : 'Toca para apagar',
-                  style: TextStyle(
-                    color: showWhite ? Colors.black54 : Colors.white54,
-                    fontSize: 16,
-                  ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+          // Always-visible way back, regardless of mode — the full-screen
+          // tap-to-cycle gesture must never be the only way out of a page.
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(4),
+              child: IconButton(
+                icon: Icon(Icons.arrow_back, color: iconColor),
+                tooltip: 'Volver',
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

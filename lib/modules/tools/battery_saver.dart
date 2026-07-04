@@ -1,15 +1,21 @@
-// Battery Saver Mode — maximizes device battery life during emergencies
-// by disabling non-essential services and reducing screen consumption.
-// Reads the REAL battery level via battery_plus (works offline on Android,
-// macOS, Windows and Linux) — in a survival app a fake percentage is worse
-// than none, since it gives false confidence.
+// Battery Saver Mode — extends the device's runtime in an emergency by
+// turning off the things THIS app actually controls and that actually drain
+// the battery. Everything it does is fully reversible: turning the saver off
+// restores the exact previous state (screen brightness, mesh radios, the AI
+// server), so the user is never left in a mode they can't undo.
+//
+// It deliberately does NOT pretend to toggle the system WiFi/Bluetooth or the
+// OS screen-timeout — a normal app cannot do those on modern Android/macOS,
+// so offering switches for them would be fake controls. For those, the page
+// shows honest guidance instead.
 import 'dart:async';
 import 'package:battery_plus/battery_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 
 import '../../core/prepper_library.dart';
+import '../ai/llama_server.dart';
+import '../mesh/mesh_service.dart';
 
 class BatterySaverController extends ChangeNotifier {
   BatterySaverController._();
@@ -26,26 +32,22 @@ class BatterySaverController extends ChangeNotifier {
   bool get isLow =>
       batteryKnown && !isCharging && _batteryLevel <= lowBatteryThreshold;
 
-  // Settings
-  bool _disableWifi = false;
-  bool get disableWifi => _disableWifi;
-  
-  bool _disableBluetooth = false;
-  bool get disableBluetooth => _disableBluetooth;
-  
-  bool _reduceScreenBrightness = true;
-  bool get reduceScreenBrightness => _reduceScreenBrightness;
-  
-  bool _disableAnimations = true;
-  bool get disableAnimations => _disableAnimations;
-  
-  bool _disableBackgroundSync = true;
-  bool get disableBackgroundSync => _disableBackgroundSync;
-  
-  int _screenTimeout = 30;
-  int get screenTimeout => _screenTimeout;
+  // ── User preferences: which measures the saver applies ────────────────
+  bool _reduceBrightness = true;
+  bool get reduceBrightness => _reduceBrightness;
 
-  // Battery stats — read from the real device battery.
+  bool _pauseMesh = true;
+  bool get pauseMesh => _pauseMesh;
+
+  bool _pauseAi = true;
+  bool get pauseAi => _pauseAi;
+
+  // ── Remembered prior state, so revert is exact ────────────────────────
+  double? _savedBrightness; // brightness before we dimmed it
+  bool _meshWasRunning = false; // to restart mesh only if it was on
+  String? _aiModelToRestore; // model to reload if we stopped the AI
+
+  // ── Battery stats (real, via battery_plus) ────────────────────────────
   final Battery _battery = Battery();
   int _batteryLevel = -1; // -1 until the first real read completes
   int get batteryLevel => _batteryLevel;
@@ -56,15 +58,12 @@ class BatterySaverController extends ChangeNotifier {
   bool get isCharging =>
       _batteryState == 'charging' || _batteryState == 'full';
 
-  Timer? _batteryMonitor;
+  Timer? _ambientMonitor;
   StreamSubscription<BatteryState>? _stateSub;
 
-  Timer? _ambientMonitor;
-
-  /// Reads the battery once, loads saved settings, and starts listening. Safe
-  /// to call from app start so the level and preferences are ready. Keeps a
-  /// low-frequency refresh running always so the global low-battery banner
-  /// stays accurate even when the saver is off.
+  /// Reads the battery once, loads saved preferences, and starts listening.
+  /// Safe to call from app start; keeps a low-frequency refresh running always
+  /// so the global low-battery banner stays accurate.
   Future<void> init() async {
     _loadSettings();
     await _refreshBattery();
@@ -79,27 +78,20 @@ class BatterySaverController extends ChangeNotifier {
   void _loadSettings() {
     final s = PrepperLibrary.instance.settings['batterySaver'];
     if (s is Map) {
-      _disableWifi = s['disableWifi'] as bool? ?? _disableWifi;
-      _disableBluetooth = s['disableBluetooth'] as bool? ?? _disableBluetooth;
-      _reduceScreenBrightness =
-          s['reduceScreenBrightness'] as bool? ?? _reduceScreenBrightness;
-      _disableAnimations =
-          s['disableAnimations'] as bool? ?? _disableAnimations;
-      _disableBackgroundSync =
-          s['disableBackgroundSync'] as bool? ?? _disableBackgroundSync;
-      _screenTimeout = (s['screenTimeout'] as num?)?.toInt() ?? _screenTimeout;
+      _reduceBrightness = s['reduceBrightness'] as bool? ?? _reduceBrightness;
+      _pauseMesh = s['pauseMesh'] as bool? ?? _pauseMesh;
+      _pauseAi = s['pauseAi'] as bool? ?? _pauseAi;
     }
   }
 
   void _saveSettings() {
-    // Fire-and-forget; persistence must never block the UI.
+    // Fire-and-forget; persistence must never block the UI. Note we persist
+    // only the PREFERENCES, never the enabled state — a saver left "on"
+    // across restarts could otherwise strand the device dimmed.
     PrepperLibrary.instance.saveSetting('batterySaver', {
-      'disableWifi': _disableWifi,
-      'disableBluetooth': _disableBluetooth,
-      'reduceScreenBrightness': _reduceScreenBrightness,
-      'disableAnimations': _disableAnimations,
-      'disableBackgroundSync': _disableBackgroundSync,
-      'screenTimeout': _screenTimeout,
+      'reduceBrightness': _reduceBrightness,
+      'pauseMesh': _pauseMesh,
+      'pauseAi': _pauseAi,
     });
   }
 
@@ -112,45 +104,46 @@ class BatterySaverController extends ChangeNotifier {
       } catch (_) {}
       notifyListeners();
     } catch (_) {
-      // Desktop VM or unsupported platform — leave level as unknown (-1)
+      // Desktop VM or unsupported platform — leave level unknown (-1)
       // rather than lying with a fake number.
     }
   }
 
-  void toggle() {
+  /// Master switch. Turning it on applies every enabled measure; turning it
+  /// off reverts ALL of them to exactly how they were before.
+  Future<void> toggle() async {
     _enabled = !_enabled;
+    notifyListeners(); // reflect the switch immediately
     if (_enabled) {
-      _activate();
+      await _activate();
     } else {
-      _deactivate();
+      await _deactivate();
     }
     notifyListeners();
   }
 
-  double? _savedBrightness; // to restore on deactivate
-
-  void _activate() {
-    // Disable animations
-    if (_disableAnimations) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    }
-
-    // Really lower screen brightness (biggest battery drain). Remember the
-    // current value so we can restore it exactly on deactivate.
-    if (_reduceScreenBrightness) {
-      _lowerBrightness();
-    }
-
-    // Start battery monitoring
-    _startMonitoring();
+  Future<void> _activate() async {
+    if (_reduceBrightness) await _lowerBrightness();
+    if (_pauseMesh) await _stopMesh();
+    if (_pauseAi) await _stopAi();
   }
 
+  Future<void> _deactivate() async {
+    // Always attempt to revert everything, regardless of current prefs, so a
+    // measure that was applied can never be left stuck.
+    await _restoreBrightness();
+    await _restoreMesh();
+    await _restoreAi();
+  }
+
+  // ── Brightness ────────────────────────────────────────────────────────
   Future<void> _lowerBrightness() async {
+    if (_savedBrightness != null) return; // already dimmed; don't re-save
     try {
       _savedBrightness = await ScreenBrightness().application;
       await ScreenBrightness().setApplicationScreenBrightness(0.25);
     } catch (_) {
-      // Platform without brightness control (some desktops) — no-op.
+      _savedBrightness = null; // platform without brightness control — no-op
     }
   }
 
@@ -166,108 +159,130 @@ class BatterySaverController extends ChangeNotifier {
     } catch (_) {}
   }
 
-  void _deactivate() {
-    // Restore UI
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: SystemUiOverlay.values);
-    _restoreBrightness();
-    _stopMonitoring();
+  // ── Mesh radios (WiFi multicast + BLE + WiFi Direct) ──────────────────
+  Future<void> _stopMesh() async {
+    _meshWasRunning = MeshService.instance.running.value;
+    if (_meshWasRunning) {
+      try {
+        await MeshService.instance.stop();
+      } catch (_) {}
+    }
   }
 
-  void _startMonitoring() {
-    _refreshBattery();
-    _batteryMonitor =
-        Timer.periodic(const Duration(seconds: 30), (_) => _refreshBattery());
+  Future<void> _restoreMesh() async {
+    if (_meshWasRunning) {
+      _meshWasRunning = false;
+      try {
+        await MeshService.instance.start();
+      } catch (_) {}
+    }
   }
 
-  void _stopMonitoring() {
-    _batteryMonitor?.cancel();
-    _batteryMonitor = null;
+  // ── Local AI server (llama.cpp) ───────────────────────────────────────
+  Future<void> _stopAi() async {
+    if (LlamaServer.instance.status == LlamaStatus.running ||
+        LlamaServer.instance.status == LlamaStatus.starting) {
+      _aiModelToRestore = LlamaServer.instance.modelPath;
+      try {
+        await LlamaServer.instance.stop();
+      } catch (_) {}
+    }
   }
 
-  void setDisableWifi(bool v) {
-    _disableWifi = v;
-    _saveSettings();
-    notifyListeners();
+  Future<void> _restoreAi() async {
+    final model = _aiModelToRestore;
+    _aiModelToRestore = null;
+    if (model != null) {
+      try {
+        await LlamaServer.instance.start(model);
+      } catch (_) {}
+    }
   }
 
-  void setDisableBluetooth(bool v) {
-    _disableBluetooth = v;
-    _saveSettings();
-    notifyListeners();
-  }
-
-  void setReduceScreenBrightness(bool v) {
-    _reduceScreenBrightness = v;
-    // Apply/undo live if the saver is already on.
+  // ── Preference setters (apply/undo live if the saver is already on) ────
+  Future<void> setReduceBrightness(bool v) async {
+    _reduceBrightness = v;
     if (_enabled) {
       if (v) {
-        _lowerBrightness();
+        await _lowerBrightness();
       } else {
-        _restoreBrightness();
+        await _restoreBrightness();
       }
     }
     _saveSettings();
     notifyListeners();
   }
 
-  void setDisableAnimations(bool v) {
-    _disableAnimations = v;
+  Future<void> setPauseMesh(bool v) async {
+    _pauseMesh = v;
+    if (_enabled) {
+      if (v) {
+        await _stopMesh();
+      } else {
+        await _restoreMesh();
+      }
+    }
     _saveSettings();
     notifyListeners();
   }
 
-  void setDisableBackgroundSync(bool v) {
-    _disableBackgroundSync = v;
-    _saveSettings();
-    notifyListeners();
-  }
-
-  void setScreenTimeout(int seconds) {
-    _screenTimeout = seconds.clamp(10, 300);
+  Future<void> setPauseAi(bool v) async {
+    _pauseAi = v;
+    if (_enabled) {
+      if (v) {
+        await _stopAi();
+      } else {
+        await _restoreAi();
+      }
+    }
     _saveSettings();
     notifyListeners();
   }
 
   @override
   void dispose() {
-    _stopMonitoring();
     _ambientMonitor?.cancel();
     _stateSub?.cancel();
     super.dispose();
   }
 }
 
-/// Battery saver settings UI
+/// Battery saver settings UI. Has a Scaffold+AppBar (back button), a clear
+/// master ON/OFF, only real reversible measures, and honest guidance for the
+/// things an app can't toggle itself.
 class BatterySaverPage extends StatelessWidget {
   const BatterySaverPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: BatterySaverController.instance,
-      builder: (context, _) {
-        final ctrl = BatterySaverController.instance;
-
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Modo Ahorro Batería'),
-            backgroundColor: Colors.green.shade900,
-            foregroundColor: Colors.white,
-          ),
-          body: ListView(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Modo Ahorro Batería'),
+        backgroundColor: Colors.green.shade900,
+        foregroundColor: Colors.white,
+      ),
+      body: ListenableBuilder(
+        listenable: BatterySaverController.instance,
+        builder: (context, _) {
+          final ctrl = BatterySaverController.instance;
+          return ListView(
             children: [
-              // Status card
+              // Master status + toggle
               Container(
                 margin: const EdgeInsets.all(16),
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: ctrl.enabled ? Colors.green.shade800 : Colors.grey.shade800,
+                  color: ctrl.enabled
+                      ? Colors.green.shade800
+                      : Colors.grey.shade800,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
                   children: [
                     Icon(
-                      ctrl.enabled ? Icons.battery_saver : Icons.battery_full,
+                      ctrl.enabled
+                          ? Icons.battery_saver
+                          : Icons.battery_full,
                       color: Colors.white,
                       size: 48,
                     ),
@@ -278,12 +293,15 @@ class BatterySaverPage extends StatelessWidget {
                         children: [
                           Text(
                             ctrl.enabled ? 'MODO ACTIVO' : 'MODO INACTIVO',
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
                           ),
                           Text(
                             ctrl.enabled
-                              ? 'Batería optimizada para emergencias'
-                              : 'Actívalo para maximizar autonomía',
+                                ? 'Toca el interruptor para volver a lo normal'
+                                : 'Actívalo para maximizar autonomía',
                             style: const TextStyle(color: Colors.white70),
                           ),
                         ],
@@ -298,9 +316,27 @@ class BatterySaverPage extends StatelessWidget {
                 ),
               ),
 
-              // Real battery indicator.
+              // Big explicit revert button while active — impossible to miss.
+              if (ctrl.enabled)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: () => ctrl.toggle(),
+                      icon: const Icon(Icons.restart_alt),
+                      label: const Text('Desactivar y restaurar todo'),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Colors.green.shade700,
+                        minimumSize: const Size.fromHeight(52),
+                      ),
+                    ),
+                  ),
+                ),
+
+              // Real battery level.
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
                     Icon(
@@ -325,64 +361,44 @@ class BatterySaverPage extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 16),
               const Divider(),
               const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text('CONFIGURACIÓN', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
+                child: Text('QUÉ APAGA EL AHORRO',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               ),
 
               SwitchListTile(
-                title: const Text('Reducir brillo de pantalla'),
-                subtitle: const Text('Disminuye consumo visual'),
-                value: ctrl.reduceScreenBrightness,
-                onChanged: (v) => ctrl.setReduceScreenBrightness(v),
+                secondary: const Icon(Icons.brightness_6),
+                title: const Text('Bajar brillo de pantalla'),
+                subtitle: const Text(
+                    'La pantalla es el mayor consumo. Se restaura al desactivar.'),
+                value: ctrl.reduceBrightness,
+                onChanged: (v) => ctrl.setReduceBrightness(v),
               ),
-
               SwitchListTile(
-                title: const Text('Desactivar animaciones'),
-                subtitle: const Text('Reduce procesamiento UI'),
-                value: ctrl.disableAnimations,
-                onChanged: (v) => ctrl.setDisableAnimations(v),
+                secondary: const Icon(Icons.cell_tower),
+                title: const Text('Pausar radios de comunicación'),
+                subtitle: const Text(
+                    'Apaga el mesh (WiFi/Bluetooth de la app). OJO: no '
+                    'recibirás SOS de otros mientras esté pausado.'),
+                value: ctrl.pauseMesh,
+                onChanged: (v) => ctrl.setPauseMesh(v),
               ),
-
               SwitchListTile(
-                title: const Text('Sincronización en background'),
-                subtitle: const Text('Evita actualizaciones automáticas'),
-                value: ctrl.disableBackgroundSync,
-                onChanged: (v) => ctrl.setDisableBackgroundSync(v),
+                secondary: const Icon(Icons.psychology),
+                title: const Text('Pausar asistente de IA'),
+                subtitle: const Text(
+                    'Detiene el modelo local (gran consumo). Se reinicia al '
+                    'desactivar el ahorro si estaba activo.'),
+                value: ctrl.pauseAi,
+                onChanged: (v) => ctrl.setPauseAi(v),
               ),
 
-              SwitchListTile(
-                title: const Text('WiFi'),
-                subtitle: const Text('Desactivar completamente'),
-                value: ctrl.disableWifi,
-                onChanged: (v) => ctrl.setDisableWifi(v),
-              ),
+              const SizedBox(height: 16),
 
-              SwitchListTile(
-                title: const Text('Bluetooth'),
-                subtitle: const Text('Desactivar mesh/LAN/BLE'),
-                value: ctrl.disableBluetooth,
-                onChanged: (v) => ctrl.setDisableBluetooth(v),
-              ),
-
-              ListTile(
-                title: const Text('Tiempo de pantalla'),
-                subtitle: Text('${ctrl.screenTimeout} segundos'),
-                trailing: Slider(
-                  value: ctrl.screenTimeout.toDouble(),
-                  min: 10,
-                  max: 300,
-                  divisions: 29,
-                  label: '${ctrl.screenTimeout}s',
-                  onChanged: (v) => ctrl.setScreenTimeout(v.round()),
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // Tips
+              // Honest guidance for what the app can't toggle itself.
               Container(
                 margin: const EdgeInsets.all(16),
                 padding: const EdgeInsets.all(16),
@@ -397,22 +413,23 @@ class BatterySaverPage extends StatelessWidget {
                       children: [
                         Icon(Icons.lightbulb, color: Colors.amber),
                         SizedBox(width: 8),
-                        Text('Tips de ahorro', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text('Para ahorrar aún más (desde ajustes del sistema)',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ],
                     ),
                     const SizedBox(height: 12),
+                    _tip('Activa el modo avión si no necesitas señal'),
+                    _tip('Reduce el tiempo de apagado de pantalla'),
+                    _tip('Cierra otras apps en segundo plano'),
                     _tip('Usa la linterna solo cuando sea necesario'),
-                    _tip('Desactiva el GPS cuando no lo necesites'),
-                    _tip('Cierra todas las apps en background'),
-                    _tip('Usa el modo avión si no hay señal'),
-                    _tip('Mantén la pantalla en negro'),
+                    _tip('Desactiva el GPS cuando no lo uses'),
                   ],
                 ),
               ),
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -420,6 +437,7 @@ class BatterySaverPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(Icons.check_circle, color: Colors.green, size: 16),
           const SizedBox(width: 8),

@@ -139,8 +139,20 @@ class MeshService {
       });
       // Iniciar timer de cleanup de ACKs
       _startAckCleanupTimer();
+      // Retransmit unacked chats every few seconds so a lost datagram is
+      // resent until the peer confirms — reliable delivery over lossy WiFi.
+      _retryTimer?.cancel();
+      _retryTimer = Timer.periodic(
+          const Duration(seconds: 3), (_) => _retryUnacked());
       running.value = true;
       await _sendBeacon();
+      // Discovery burst: fire a few quick beacons so a peer that's already
+      // nearby is found in ~1s instead of waiting up to a full 15s cycle.
+      for (final ms in const [400, 1200, 3000, 6000]) {
+        Timer(Duration(milliseconds: ms), () {
+          if (running.value) _sendBeacon();
+        });
+      }
     } finally {
       _starting = false;
     }
@@ -151,7 +163,9 @@ class MeshService {
     _sosTimer?.cancel();
     _positionTimer?.cancel();
     _ackCleanupTimer?.cancel();
-    _beaconTimer = _sosTimer = _positionTimer = _ackCleanupTimer = null;
+    _retryTimer?.cancel();
+    _beaconTimer = _sosTimer = _positionTimer = _ackCleanupTimer =
+        _retryTimer = null;
     await _eventsSub?.cancel();
     _eventsSub = null;
     await _router?.stop();
@@ -215,10 +229,17 @@ class MeshService {
     _saveChannels();
   }
 
-  /// msgIds of chat messages we sent, awaiting delivery confirmation.
-  final Map<int, DateTime> _pendingAcks = {};
+  /// Chat messages we sent that are still awaiting a delivery ACK. Keeps the
+  /// full envelope so we can RETRANSMIT it — UDP over WiFi loses packets, so
+  /// "sent once" is not "delivered". We resend until a peer ACKs or we hit the
+  /// attempt cap.
+  final Map<int, _PendingChat> _pendingAcks = {};
 
-  /// msgIds confirmed as delivered (keyed by msgId → timestamp).
+  /// Total sends (initial + retransmits) before we give up on an ACK. The
+  /// message still shows a single ✓ (sent) if never confirmed.
+  static const int maxChatSends = 5;
+
+  /// msgIds confirmed as delivered.
   final Set<int> _confirmedAcks = {};
 
   /// Notifier for UI to observe ACK changes (for ✓✓ display).
@@ -227,13 +248,16 @@ class MeshService {
   /// Timer para cleanup de ACKs expirados.
   Timer? _ackCleanupTimer;
 
+  /// Timer that retransmits unacknowledged chats.
+  Timer? _retryTimer;
+
   /// Limpia ACKs pendientes que expiraron (más de 5 minutos sin confirmar).
   /// Llamado periódicamente para evitar memoria usada por mensajes perdidos.
   void _cleanupExpiredAcks() {
     final expired = <int>[];
     final cutoff = DateTime.now().subtract(const Duration(minutes: 5));
     for (final entry in _pendingAcks.entries) {
-      if (entry.value.isBefore(cutoff)) {
+      if (entry.value.firstSent.isBefore(cutoff)) {
         expired.add(entry.key);
       }
     }
@@ -254,6 +278,25 @@ class MeshService {
       (_) => _cleanupExpiredAcks(),
     );
   }
+
+  /// Retransmits every chat still awaiting an ACK, up to [maxChatSends] total
+  /// sends each. This is what makes delivery reliable over lossy WiFi: a
+  /// dropped datagram is simply resent a few seconds later until the peer
+  /// confirms receipt.
+  Future<void> _retryUnacked() async {
+    final router = _router;
+    if (router == null || _pendingAcks.isEmpty) return;
+    for (final pending in _pendingAcks.values.toList()) {
+      if (pending.sends >= maxChatSends) continue;
+      pending.sends++;
+      pending.lastSent = DateTime.now();
+      await router.sendNow(pending.env); // immediate, ungated re-send
+    }
+  }
+
+  /// Test hook: run one retransmit pass synchronously.
+  @visibleForTesting
+  Future<void> retryUnackedForTest() => _retryUnacked();
 
   /// Mantiene presencia activa cuando la app vuelve a primer plano.
   /// Llamado desde el lifecycle de la app.
@@ -277,8 +320,9 @@ class MeshService {
       '_ts': env.timestampMs,
       '_msgId': env.msgId, // lets the UI show ✓ (enviado) / ✓✓ (entregado)
     });
-    // Track for ACK: this message is awaiting confirmation.
-    _pendingAcks[env.msgId] = DateTime.now();
+    // Track for ACK + retransmit: keep the envelope so we can resend it until
+    // a peer confirms receipt (UDP over WiFi drops packets).
+    _pendingAcks[env.msgId] = _PendingChat(env);
     _events.add(MeshEvent(envelope: env, channel: channel, payload: payload));
     await router.broadcast(env);
     queuedCount.value = router.outboxCount;
@@ -428,4 +472,18 @@ class MeshService {
     );
     await router.sendNow(ackEnv);
   }
+}
+
+/// A chat we sent that's still awaiting a delivery ACK. Holds the envelope so
+/// it can be retransmitted, plus how many times we've sent it.
+class _PendingChat {
+  _PendingChat(this.env)
+      : firstSent = DateTime.now(),
+        lastSent = DateTime.now(),
+        sends = 1; // the initial broadcast counts as the first send
+
+  final MeshEnvelope env;
+  final DateTime firstSent;
+  DateTime lastSent;
+  int sends;
 }

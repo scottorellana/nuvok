@@ -114,6 +114,58 @@ void main() {
     expect(peers.any((p) => p.name == 'Hermano' && p.lat == 15.51), isTrue);
   });
 
+  test('un chat sin ACK se reenvía; con ACK deja de reenviarse', () async {
+    final ch = MeshChannel.create('Familia');
+    await service.joinChannel(ch);
+    transport.sent.clear();
+    await service.sendChat(ch, 'importante');
+    final chatEnv = transport.sent
+        .map((b) => MeshEnvelope.decode(b)!)
+        .firstWhere((e) => e.type == MeshType.chat);
+    final afterSend = transport.sent.length;
+
+    // Sin ACK, un pase de reintento reenvía el chat (contra pérdida de UDP).
+    await service.retryUnackedForTest();
+    expect(transport.sent.length, greaterThan(afterSend),
+        reason: 'un chat sin confirmar debe reenviarse');
+
+    // Llega el ACK de un peer → entregado.
+    final ack = MeshEnvelope(
+      msgId: MeshEnvelope.newMsgId(),
+      channelId: ch.id,
+      senderId: 'cccccccccccccccc',
+      senderName: 'Peer',
+      type: MeshType.ack,
+      hopLimit: 1,
+      timestampMs: DateTime.now().millisecondsSinceEpoch,
+      payload: await sealPayload({'ack': chatEnv.msgId}, ch),
+    );
+    transport.inject(ack.encode());
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    expect(service.isDelivered(chatEnv.msgId), isTrue);
+
+    // Ya entregado → no se reenvía más.
+    final beforeFinal = transport.sent.length;
+    await service.retryUnackedForTest();
+    expect(transport.sent.length, beforeFinal,
+        reason: 'ya confirmado, no debe reenviarse');
+  });
+
+  test('el reenvío se detiene tras el máximo de intentos', () async {
+    final ch = MeshChannel.create('Familia');
+    await service.joinChannel(ch);
+    transport.sent.clear();
+    await service.sendChat(ch, 'x');
+    for (var i = 0; i < 20; i++) {
+      await service.retryUnackedForTest();
+    }
+    final chats = transport.sent
+        .where((b) => MeshEnvelope.decode(b)!.type == MeshType.chat)
+        .length;
+    expect(chats, lessThanOrEqualTo(MeshService.maxChatSends),
+        reason: 'no debe reenviar para siempre');
+  });
+
   test('SOS entrante queda marcado y sosCancel lo limpia', () async {
     final sos = MeshEnvelope(
       msgId: MeshEnvelope.newMsgId(),

@@ -110,31 +110,38 @@ class MeshService {
     ]);
   }
 
+  bool _starting = false;
+
   Future<void> start() async {
-    if (running.value) return;
-    identity ??= MeshIdentity.load(dirPath);
-    final id = identity;
-    if (id == null) return; // UI must onboard first
-    final router = MeshRouter(
-      deviceId: id.id,
-      transports: _transportsOverride ?? defaultTransports(),
-      channels: _channelsFromDisk(),
-      store: store,
-    );
-    _router = router;
-    await router.start();
-    _eventsSub = router.events.listen((e) {
-      _events.add(e);
-      _onEvent(e);
-    });
-    _beaconTimer = Timer.periodic(const Duration(seconds: 15), (_) {
-      _sendBeacon();
-      peerCount.value = router.peers.length;
-      queuedCount.value = router.outboxCount;
-      router.flushOutbox();
-    });
-    running.value = true;
-    await _sendBeacon();
+    if (running.value || _starting) return;
+    _starting = true;
+    try {
+      identity ??= MeshIdentity.load(dirPath);
+      final id = identity;
+      if (id == null) return; // UI must onboard first
+      final router = MeshRouter(
+        deviceId: id.id,
+        transports: _transportsOverride ?? defaultTransports(),
+        channels: _channelsFromDisk(),
+        store: store,
+      );
+      _router = router;
+      await router.start();
+      _eventsSub = router.events.listen((e) {
+        _events.add(e);
+        _onEvent(e);
+      });
+      _beaconTimer = Timer.periodic(const Duration(seconds: 15), (_) {
+        _sendBeacon();
+        peerCount.value = router.peers.length;
+        queuedCount.value = router.outboxCount;
+        router.flushOutbox();
+      });
+      running.value = true;
+      await _sendBeacon();
+    } finally {
+      _starting = false;
+    }
   }
 
   Future<void> stop() async {

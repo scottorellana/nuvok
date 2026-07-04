@@ -18,7 +18,10 @@ class MeshStore {
 
   void saveChannels(List<Map<String, dynamic>> channels) {
     try {
-      _channelsFile.writeAsStringSync(jsonEncode(channels));
+      // Atomic write via temp + rename to prevent corruption on crash.
+      final tmp = File('${_channelsFile.path}.tmp');
+      tmp.writeAsStringSync(jsonEncode(channels));
+      tmp.renameSync(_channelsFile.path);
     } catch (_) {}
   }
 
@@ -47,11 +50,18 @@ class MeshStore {
       if (!f.existsSync()) return [];
       final lines = f.readAsLinesSync();
       final start = lines.length > limit ? lines.length - limit : 0;
-      return [
-        for (final line in lines.sublist(start))
-          if (line.trim().isNotEmpty)
-            (jsonDecode(line) as Map).cast<String, dynamic>(),
-      ];
+      // Tolerate a corrupted/truncated last line (crash mid-append):
+      // skip lines that fail to parse instead of losing all history.
+      final result = <Map<String, dynamic>>[];
+      for (final line in lines.sublist(start)) {
+        if (line.trim().isEmpty) continue;
+        try {
+          result.add((jsonDecode(line) as Map).cast<String, dynamic>());
+        } catch (_) {
+          // Skip corrupt line (likely truncated by crash).
+        }
+      }
+      return result;
     } catch (_) {
       return [];
     }
@@ -59,8 +69,11 @@ class MeshStore {
 
   void saveOutbox(List<Uint8List> datagrams) {
     try {
-      _outboxFile.writeAsStringSync(
+      // Atomic write via temp + rename.
+      final tmp = File('${_outboxFile.path}.tmp');
+      tmp.writeAsStringSync(
           jsonEncode([for (final d in datagrams) base64.encode(d)]));
+      tmp.renameSync(_outboxFile.path);
     } catch (_) {}
   }
 

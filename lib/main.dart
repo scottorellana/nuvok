@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'app.dart';
 import 'core/prepper_library.dart';
 import 'modules/ai/llama_server.dart';
+import 'modules/mesh/mesh_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,12 +36,14 @@ class _AppLifecycleCleanupState extends State<AppLifecycleCleanup>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     LlamaServer.instance.stop();
+    MeshService.instance.stop();
     super.dispose();
   }
 
   @override
   Future<AppExitResponse> didRequestAppExit() async {
     await LlamaServer.instance.stop();
+    await MeshService.instance.stop();
     return AppExitResponse.exit;
   }
 

@@ -34,12 +34,19 @@ class LanTransport implements MeshTransport {
     } catch (_) {
       // Not Android (or the channel isn't there) — fine.
     }
-    final socket = await RawDatagramSocket.bind(
-      InternetAddress.anyIPv4,
-      port,
-      reuseAddress: true,
-      reusePort: !Platform.isAndroid && !Platform.isWindows,
-    );
+    RawDatagramSocket socket;
+    try {
+      socket = await RawDatagramSocket.bind(
+        InternetAddress.anyIPv4,
+        port,
+        reuseAddress: true,
+        reusePort: !Platform.isAndroid && !Platform.isWindows,
+      );
+    } catch (e) {
+      // Port may be in use by another instance or the OS may block
+      // multicast. Fail gracefully — the mesh runs on other transports.
+      return;
+    }
     socket.broadcastEnabled = true;
     socket.multicastLoopback = true;
     // Join the group on EVERY interface, not just the default one. This is

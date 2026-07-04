@@ -176,7 +176,11 @@ class OverlayStore {
       'type': 'FeatureCollection',
       'features': overlays.map((o) => o.toFeature()).toList(),
     };
-    await _file.writeAsString(const JsonEncoder.withIndent('  ').convert(fc));
+    // Atomic write: write to temp file then rename, so a crash mid-write
+    // never corrupts the existing overlays file.
+    final tmp = File('${_file.path}.tmp');
+    await tmp.writeAsString(const JsonEncoder.withIndent('  ').convert(fc));
+    await tmp.rename(_file.path);
   }
 
   Future<void> add(MapOverlay o) async {

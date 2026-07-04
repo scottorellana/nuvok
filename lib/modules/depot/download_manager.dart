@@ -153,6 +153,10 @@ class DownloadManager extends ChangeNotifier {
       task.status = DownloadStatus.error;
       task.error = 'Sin conexión — la descarga se reanudará donde quedó';
       notifyListeners();
+    } on FileSystemException catch (e) {
+      task.status = DownloadStatus.error;
+      task.error = 'Error de archivo: ${e.message}';
+      notifyListeners();
     } catch (e) {
       task.status = DownloadStatus.error;
       task.error = e.toString();
@@ -163,6 +167,9 @@ class DownloadManager extends ChangeNotifier {
   }
 
   Future<void> _finish(DownloadTask task) async {
+    // Ensure the destination directory exists (it may have been deleted).
+    final dir = task.destPath.substring(0, task.destPath.lastIndexOf('/'));
+    await Directory(dir).create(recursive: true);
     await task.partFile.rename(task.destPath);
     task.status = DownloadStatus.done;
     task.received = File(task.destPath).lengthSync();

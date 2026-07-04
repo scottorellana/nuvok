@@ -1,20 +1,14 @@
-// Flashlight / SOS light — toggles the device torch on/off, or activates
-// an SOS Morse code pattern (...---...) using the camera flash.
+// Flashlight / SOS light — toggles the device torch (camera LED) on/off, or
+// blinks an SOS Morse pattern (...---...) with it.
 //
-// On platforms without torch access (desktop), shows a full-screen white
-// screen as a fallback "flashlight" that's surprisingly useful in the dark.
-//
-// Platform note: torch control requires the torch_light or camera plugin on
-// mobile. On desktop we fall back to screen brightness. The torch state is
-// managed here so the UI is identical across platforms.
+// Real LED via torch_light on phones that have a flash. On any device WITHOUT
+// an LED (laptops, tablets/phones without flash), it falls back to a
+// full-screen pure-white "flashlight" that blinks the same SOS — so the tool
+// is useful everywhere, which is the whole point in an emergency.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// MethodChannel for torch control (native Android/macOS code not yet wired,
-// but the interface is here for future integration).
-const _torchChannel = MethodChannel('prepper/torch');
+import 'package:torch_light/torch_light.dart';
 
 enum FlashlightMode { off, on, sos }
 
@@ -25,6 +19,8 @@ class FlashlightController extends ChangeNotifier {
   FlashlightMode _mode = FlashlightMode.off;
   FlashlightMode get mode => _mode;
 
+  // Whether a real camera LED torch is present. When false, the UI uses the
+  // white-screen fallback for both steady light and SOS.
   bool _available = false;
   bool get available => _available;
 
@@ -48,8 +44,10 @@ class FlashlightController extends ChangeNotifier {
 
   Future<void> checkAvailable() async {
     try {
-      _available = await _torchChannel.invokeMethod('isAvailable') ?? false;
+      _available = await TorchLight.isTorchAvailable();
     } catch (_) {
+      // No LED (desktop, or a phone/tablet without flash) — the white-screen
+      // fallback takes over.
       _available = false;
     }
     notifyListeners();
@@ -86,10 +84,17 @@ class FlashlightController extends ChangeNotifier {
   }
 
   void _setTorch(bool on) {
+    if (!_available) return; // no LED — the white-screen fallback handles it
     try {
-      _torchChannel.invokeMethod('toggle', {'on': on});
+      if (on) {
+        TorchLight.enableTorch();
+      } else {
+        TorchLight.disableTorch();
+      }
     } catch (_) {
-      // No native torch on this platform — screen fallback handles it.
+      // Torch became unavailable mid-use — degrade to the screen fallback.
+      _available = false;
+      notifyListeners();
     }
   }
 
@@ -117,14 +122,22 @@ class _FlashlightScreenState extends State<FlashlightScreen> {
   @override
   void initState() {
     super.initState();
+    // Rebuild whenever the controller's mode/availability changes, otherwise
+    // tapping to turn on/off wouldn't repaint the screen.
+    _controller.addListener(_onControllerChange);
     if (!_controller.available) {
       _startUiSos();
     }
     _controller.checkAvailable();
   }
 
+  void _onControllerChange() {
+    if (mounted) setState(() {});
+  }
+
   @override
   void dispose() {
+    _controller.removeListener(_onControllerChange);
     _uiSosTimer?.cancel();
     _controller.setMode(FlashlightMode.off);
     super.dispose();
@@ -158,8 +171,26 @@ class _FlashlightScreenState extends State<FlashlightScreen> {
     if (mode == FlashlightMode.off) {
       return Scaffold(
         backgroundColor: Colors.black,
-        appBar: AppBar(title: const Text('Linterna'), backgroundColor: Colors.black),
-        body: const Center(child: Text('Linterna apagada', style: TextStyle(color: Colors.white54))),
+        appBar: AppBar(
+            title: const Text('Linterna'),
+            backgroundColor: Colors.black),
+        body: GestureDetector(
+          onTap: () => _controller.setMode(FlashlightMode.on),
+          child: Container(
+            color: Colors.black,
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(Icons.flashlight_on,
+                    color: Colors.white54, size: 64),
+                SizedBox(height: 16),
+                Text('Toca para encender',
+                    style: TextStyle(color: Colors.white54, fontSize: 18)),
+              ],
+            ),
+          ),
+        ),
       );
     }
 

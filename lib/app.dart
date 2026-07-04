@@ -17,6 +17,7 @@ import 'modules/mesh/mesh_router.dart';
 import 'modules/mesh/mesh_service.dart';
 import 'modules/notes/notes_page.dart';
 import 'modules/prep/checklist_page.dart';
+import 'modules/tools/battery_saver.dart';
 import 'modules/tools/tools_page.dart';
 
 class PrepperPadApp extends StatelessWidget {
@@ -236,11 +237,70 @@ class _HomeShellState extends State<HomeShell> {
             ),
             const VerticalDivider(thickness: 1, width: 1),
             Expanded(
-              child: IndexedStack(index: _index, children: _pages),
+              child: Column(
+                children: [
+                  _LowBatteryBanner(
+                    onOpenSaver: () => setState(() => _index = 6), // Herramientas
+                  ),
+                  Expanded(
+                    child: IndexedStack(index: _index, children: _pages),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+/// A thin red bar that appears app-wide when the real battery is low and not
+/// charging, nudging the user to open the battery saver — in an emergency,
+/// running out of charge unnoticed is a real risk.
+class _LowBatteryBanner extends StatelessWidget {
+  const _LowBatteryBanner({required this.onOpenSaver});
+  final VoidCallback onOpenSaver;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: BatterySaverController.instance,
+      builder: (context, _) {
+        final b = BatterySaverController.instance;
+        if (!b.isLow || b.enabled) return const SizedBox.shrink();
+        return Material(
+          color: Colors.red.shade900,
+          child: InkWell(
+            onTap: onOpenSaver,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Row(
+                children: [
+                  const Icon(Icons.battery_alert,
+                      color: Colors.white, size: 20),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'Batería baja (${b.batteryLevel}%). '
+                      'Activa el ahorro para durar más.',
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: onOpenSaver,
+                    style: TextButton.styleFrom(
+                        foregroundColor: Colors.white),
+                    child: const Text('ABRIR'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

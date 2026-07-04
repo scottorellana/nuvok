@@ -7,13 +7,24 @@ import 'dart:async';
 import 'package:battery_plus/battery_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:screen_brightness/screen_brightness.dart';
+
+import '../../core/prepper_library.dart';
 
 class BatterySaverController extends ChangeNotifier {
   BatterySaverController._();
   static final BatterySaverController instance = BatterySaverController._();
 
+  // Below this the app nudges the user to turn the saver on.
+  static const int lowBatteryThreshold = 15;
+
   bool _enabled = false;
   bool get enabled => _enabled;
+
+  /// True when the battery is known, low and not charging — drives the global
+  /// low-battery warning banner.
+  bool get isLow =>
+      batteryKnown && !isCharging && _batteryLevel <= lowBatteryThreshold;
 
   // Settings
   bool _disableWifi = false;
@@ -48,13 +59,47 @@ class BatterySaverController extends ChangeNotifier {
   Timer? _batteryMonitor;
   StreamSubscription<BatteryState>? _stateSub;
 
-  /// Reads the battery once and starts listening. Safe to call from app start
-  /// so the level is available even before the saver is toggled on.
+  Timer? _ambientMonitor;
+
+  /// Reads the battery once, loads saved settings, and starts listening. Safe
+  /// to call from app start so the level and preferences are ready. Keeps a
+  /// low-frequency refresh running always so the global low-battery banner
+  /// stays accurate even when the saver is off.
   Future<void> init() async {
+    _loadSettings();
     await _refreshBattery();
     _stateSub ??= _battery.onBatteryStateChanged.listen((s) {
       _batteryState = s.name;
       _refreshBattery();
+    });
+    _ambientMonitor ??= Timer.periodic(
+        const Duration(minutes: 1), (_) => _refreshBattery());
+  }
+
+  void _loadSettings() {
+    final s = PrepperLibrary.instance.settings['batterySaver'];
+    if (s is Map) {
+      _disableWifi = s['disableWifi'] as bool? ?? _disableWifi;
+      _disableBluetooth = s['disableBluetooth'] as bool? ?? _disableBluetooth;
+      _reduceScreenBrightness =
+          s['reduceScreenBrightness'] as bool? ?? _reduceScreenBrightness;
+      _disableAnimations =
+          s['disableAnimations'] as bool? ?? _disableAnimations;
+      _disableBackgroundSync =
+          s['disableBackgroundSync'] as bool? ?? _disableBackgroundSync;
+      _screenTimeout = (s['screenTimeout'] as num?)?.toInt() ?? _screenTimeout;
+    }
+  }
+
+  void _saveSettings() {
+    // Fire-and-forget; persistence must never block the UI.
+    PrepperLibrary.instance.saveSetting('batterySaver', {
+      'disableWifi': _disableWifi,
+      'disableBluetooth': _disableBluetooth,
+      'reduceScreenBrightness': _reduceScreenBrightness,
+      'disableAnimations': _disableAnimations,
+      'disableBackgroundSync': _disableBackgroundSync,
+      'screenTimeout': _screenTimeout,
     });
   }
 
@@ -82,24 +127,49 @@ class BatterySaverController extends ChangeNotifier {
     notifyListeners();
   }
 
+  double? _savedBrightness; // to restore on deactivate
+
   void _activate() {
     // Disable animations
     if (_disableAnimations) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     }
 
-    // Reduce screen timeout
+    // Really lower screen brightness (biggest battery drain). Remember the
+    // current value so we can restore it exactly on deactivate.
     if (_reduceScreenBrightness) {
-      // Note: Actual brightness control requires platform channels
+      _lowerBrightness();
     }
 
     // Start battery monitoring
     _startMonitoring();
   }
 
+  Future<void> _lowerBrightness() async {
+    try {
+      _savedBrightness = await ScreenBrightness().application;
+      await ScreenBrightness().setApplicationScreenBrightness(0.25);
+    } catch (_) {
+      // Platform without brightness control (some desktops) — no-op.
+    }
+  }
+
+  Future<void> _restoreBrightness() async {
+    final saved = _savedBrightness;
+    _savedBrightness = null;
+    try {
+      if (saved != null) {
+        await ScreenBrightness().setApplicationScreenBrightness(saved);
+      } else {
+        await ScreenBrightness().resetApplicationScreenBrightness();
+      }
+    } catch (_) {}
+  }
+
   void _deactivate() {
     // Restore UI
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: SystemUiOverlay.values);
+    _restoreBrightness();
     _stopMonitoring();
   }
 
@@ -116,37 +186,52 @@ class BatterySaverController extends ChangeNotifier {
 
   void setDisableWifi(bool v) {
     _disableWifi = v;
+    _saveSettings();
     notifyListeners();
   }
 
   void setDisableBluetooth(bool v) {
     _disableBluetooth = v;
+    _saveSettings();
     notifyListeners();
   }
 
   void setReduceScreenBrightness(bool v) {
     _reduceScreenBrightness = v;
+    // Apply/undo live if the saver is already on.
+    if (_enabled) {
+      if (v) {
+        _lowerBrightness();
+      } else {
+        _restoreBrightness();
+      }
+    }
+    _saveSettings();
     notifyListeners();
   }
 
   void setDisableAnimations(bool v) {
     _disableAnimations = v;
+    _saveSettings();
     notifyListeners();
   }
 
   void setDisableBackgroundSync(bool v) {
     _disableBackgroundSync = v;
+    _saveSettings();
     notifyListeners();
   }
 
   void setScreenTimeout(int seconds) {
     _screenTimeout = seconds.clamp(10, 300);
+    _saveSettings();
     notifyListeners();
   }
 
   @override
   void dispose() {
     _stopMonitoring();
+    _ambientMonitor?.cancel();
     _stateSub?.cancel();
     super.dispose();
   }

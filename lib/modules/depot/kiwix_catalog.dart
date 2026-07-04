@@ -119,18 +119,81 @@ class CuratedModel {
 }
 
 const curatedModels = <CuratedModel>[
+  // ═══════════════════════════════════════════════════════════
+  //  Gemma — optimizados para Android con poca RAM
+  // ═══════════════════════════════════════════════════════════
+
   CuratedModel(
-    name: 'Llama 3.2 3B Instruct (Q4_K_M)',
+    name: 'Gemma 3 1B IT (Q4_0) — Android',
     description:
-        'Ligero y rápido — ideal para equipos con poca RAM o Raspberry Pi 5. '
-        'Buen español.',
+        'El más liviano de Google Gemma. Diseñado para móviles y tablets '
+        'con 2GB de RAM. Arranca rápido y responde en segundos. '
+        'Optimizado con Q4_0 para máximo rendimiento en ARM.',
     url:
-        'https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-Q4_K_M.gguf',
-    approxBytes: 2020000000,
-    minRamGb: 4,
+        'https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF/resolve/main/google_gemma-3-1b-it-Q4_0.gguf',
+    approxBytes: 722000000,
+    minRamGb: 2,
     languages: ['EN', 'ES'],
-    tags: ['Rápido', 'Baja RAM'],
+    tags: ['★ Android', 'Ultraligero', 'Gemma'],
   ),
+  CuratedModel(
+    name: 'Gemma 3 1B IT (Q4_K_M)',
+    description:
+        'Gemma 3 1B con cuantización Q4_K_M — mejor calidad que Q4_0 '
+        'con apenas 80MB más. Ideal para tablets con 3-4GB de RAM. '
+        'Multilingüe, buen español.',
+    url:
+        'https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF/resolve/main/google_gemma-3-1b-it-Q4_K_M.gguf',
+    approxBytes: 806000000,
+    minRamGb: 2,
+    languages: ['EN', 'ES', 'JA', 'KO'],
+    tags: ['★ Android', 'Gemma'],
+  ),
+  CuratedModel(
+    name: 'Gemma 2 2B IT (Q4_K_M)',
+    description:
+        'Doble de capacidad que Gemma 1B con mejor razonamiento. '
+        'Cabe en tablets modernas (4GB+ RAM). Excelente español. '
+        'El punto dulce calidad/tamaño para Android.',
+    url:
+        'https://huggingface.co/bartowski/gemma-2-2b-it-GGUF/resolve/main/gemma-2-2b-it-Q4_K_M.gguf',
+    approxBytes: 1709000000,
+    minRamGb: 4,
+    languages: ['EN', 'ES', 'JA', 'KO', 'ZH'],
+    tags: ['★ Android', 'Recomendado', 'Gemma'],
+    recommended: true,
+  ),
+  CuratedModel(
+    name: 'Gemma 3 4B IT (Q3_K_M) — Android',
+    description:
+        'Modelo de 4B con cuantización agresiva Q3 para caber en tablets '
+        'con 5-6GB de RAM. Mejor razonamiento que los de 2B. '
+        'Google lo recomienda para uso móvil.',
+    url:
+        'https://huggingface.co/bartowski/google_gemma-3-4b-it-GGUF/resolve/main/google_gemma-3-4b-it-Q3_K_M.gguf',
+    approxBytes: 2098000000,
+    minRamGb: 5,
+    languages: ['EN', 'ES', 'JA', 'KO'],
+    tags: ['★ Android', 'Gemma'],
+  ),
+  CuratedModel(
+    name: 'Gemma 3 4B IT (Q4_K_M)',
+    description:
+        'Gemma 3 4B con mejor calidad de cuantización. Para tablets '
+        'con 6-8GB de RAM. Multimodal: puede procesar imágenes '
+        'además de texto (cuando el backend lo soporte).',
+    url:
+        'https://huggingface.co/bartowski/google_gemma-3-4b-it-GGUF/resolve/main/google_gemma-3-4b-it-Q4_K_M.gguf',
+    approxBytes: 2490000000,
+    minRamGb: 6,
+    languages: ['EN', 'ES', 'JA', 'KO'],
+    tags: ['Gemma', 'Multimodal'],
+  ),
+
+  // ═══════════════════════════════════════════════════════════
+  //  Llama & Qwen — para desktop / tablets potentes
+  // ═══════════════════════════════════════════════════════════
+
   CuratedModel(
     name: 'Qwen2.5 0.5B Instruct (Q4_K_M)',
     description:
@@ -141,32 +204,7 @@ const curatedModels = <CuratedModel>[
     approxBytes: 442000000,
     minRamGb: 1,
     languages: ['EN', 'ES', 'ZH'],
-    tags: ['Ultraligero'],
-  ),
-  CuratedModel(
-    name: 'Qwen2.5 7B Instruct (Q4_K_M)',
-    description:
-        'Equilibrio calidad/velocidad para Mac con 16-18GB de RAM. '
-        'Multilingüe sólido.',
-    url:
-        'https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/resolve/main/Qwen2.5-7B-Instruct-Q4_K_M.gguf',
-    approxBytes: 4680000000,
-    minRamGb: 8,
-    languages: ['EN', 'ES', 'ZH', 'FR', 'DE'],
-    tags: ['Recomendado', 'Multilingüe'],
-    recommended: true,
-  ),
-  CuratedModel(
-    name: 'Qwen2.5 14B Instruct (Q4_K_M)',
-    description:
-        'Mayor calidad de razonamiento. Requiere ~10GB de RAM libre — '
-        'úsalo con pocas apps abiertas.',
-    url:
-        'https://huggingface.co/bartowski/Qwen2.5-14B-Instruct-GGUF/resolve/main/Qwen2.5-14B-Instruct-Q4_K_M.gguf',
-    approxBytes: 8990000000,
-    minRamGb: 16,
-    languages: ['EN', 'ES', 'ZH', 'FR', 'DE'],
-    tags: ['Alta calidad'],
+    tags: ['Ultraligero', 'Qwen'],
   ),
   CuratedModel(
     name: 'Llama 3.2 1B Instruct (Q4_K_M)',
@@ -178,6 +216,42 @@ const curatedModels = <CuratedModel>[
     approxBytes: 808000000,
     minRamGb: 2,
     languages: ['EN', 'ES'],
-    tags: ['Tablet'],
+    tags: ['Tablet', 'Llama'],
+  ),
+  CuratedModel(
+    name: 'Llama 3.2 3B Instruct (Q4_K_M)',
+    description:
+        'Ligero y rápido — ideal para equipos con poca RAM o Raspberry Pi 5. '
+        'Buen español.',
+    url:
+        'https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-Q4_K_M.gguf',
+    approxBytes: 2020000000,
+    minRamGb: 4,
+    languages: ['EN', 'ES'],
+    tags: ['Rápido', 'Baja RAM', 'Llama'],
+  ),
+  CuratedModel(
+    name: 'Qwen2.5 7B Instruct (Q4_K_M)',
+    description:
+        'Equilibrio calidad/velocidad para Mac con 16-18GB de RAM. '
+        'Multilingüe sólido.',
+    url:
+        'https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/resolve/main/Qwen2.5-7B-Instruct-Q4_K_M.gguf',
+    approxBytes: 4680000000,
+    minRamGb: 8,
+    languages: ['EN', 'ES', 'ZH', 'FR', 'DE'],
+    tags: ['Multilingüe', 'Qwen'],
+  ),
+  CuratedModel(
+    name: 'Qwen2.5 14B Instruct (Q4_K_M)',
+    description:
+        'Mayor calidad de razonamiento. Requiere ~10GB de RAM libre — '
+        'úsalo con pocas apps abiertas.',
+    url:
+        'https://huggingface.co/bartowski/Qwen2.5-14B-Instruct-GGUF/resolve/main/Qwen2.5-14B-Instruct-Q4_K_M.gguf',
+    approxBytes: 8990000000,
+    minRamGb: 16,
+    languages: ['EN', 'ES', 'ZH', 'FR', 'DE'],
+    tags: ['Alta calidad', 'Qwen'],
   ),
 ];

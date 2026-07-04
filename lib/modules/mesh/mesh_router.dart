@@ -81,6 +81,7 @@ class MeshRouter {
     for (final t in _transports) {
       await t.stop();
     }
+    await _events.close();
     store.saveOutbox(_outbox);
   }
 

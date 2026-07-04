@@ -101,29 +101,58 @@ class EmergencyGuides {
 
   /// Ranked search: exact keyword 10, partial keyword 5, title hit 8/4,
   /// body hit 1 per occurrence (capped). Empty query → all by priority.
+  /// Keywords have MUCH higher weight than body matches.
+  /// Ignores common Spanish stopwords like "se", "el", "la", "un", etc.
   static List<EmergencyGuide> search(
       List<EmergencyGuide> all, String query) {
     final q = _norm(query);
     if (q.isEmpty) return List.of(all);
-    final terms = q.split(RegExp(r'\s+')).where((t) => t.length > 1).toList();
+    
+    // Filter out common stopwords that cause noise
+    // Filter out common stopwords that cause noise (use normalized versions)
+    const stopwords = {'se', 'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 
+                       'de', 'del', 'al', 'en', 'por', 'para', 'con', 'sin', 'sobre',
+                       'y', 'o', 'u', 'e', 'i', 'a', 'que', 'es', 'son', 'esta',
+                       'le', 'les', 'me', 'te', 'nos', 'os', 'mi', 'su', 'yo', 
+                       'ella', 'ellos', 'ellas', 'nosotros', 'vosotros',
+                       'lo', 'si', 'no', 'mas', 'muy', 'ya', 'todo', 'toda', 'todos',
+                       'todas', 'este', 'estos', 'estas', 'ese', 'esa', 'esos',
+                       'esas', 'aquel', 'aquella', 'aquellos', 'aquellas', 'como', 
+                       'cuando', 'donde', 'porque', 'pero', 'aunque', 'mientras'};
+    
+    final terms = q.split(RegExp(r'\s+'))
+        .where((t) => t.length > 1 && !stopwords.contains(t))
+        .toList();
     if (terms.isEmpty) return List.of(all);
     final scored = <(EmergencyGuide, int)>[];
     for (final g in all) {
       var score = 0;
       final title = _norm(g.title);
-      final body = _norm(g.body);
+      // Keywords matching is MORE IMPORTANT than body matching
       for (final t in terms) {
         for (final k in g.keywords) {
           final kn = _norm(k);
+          // Exact keyword match = highest score
           if (kn == t) {
-            score += 10;
+            score += 50;
+          } else if (kn.startsWith(t) || t.startsWith(kn)) {
+            score += 25;
           } else if (kn.contains(t) || t.contains(kn)) {
-            score += 5;
+            score += 10;
           }
         }
-        if (title.contains(t)) score += title.startsWith(t) ? 8 : 4;
+        // Title match is important
+        if (title.startsWith(t)) {
+          score += 20;
+        } else if (title.contains(t)) {
+          score += 10;
+        }
+      }
+      // Body matches are a minor bonus, not primary
+      final body = _norm(g.body);
+      for (final t in terms) {
         final hits = t.allMatches(body).length;
-        score += hits > 5 ? 5 : hits;
+        if (hits > 0 && hits <= 3) score += hits;
       }
       if (score > 0) scored.add((g, score));
     }

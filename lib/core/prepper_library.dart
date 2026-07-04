@@ -77,10 +77,19 @@ class PrepperLibrary {
       _settingsLoaded = true;
       try {
         if (settingsFile.existsSync()) {
-          _settings =
-              jsonDecode(settingsFile.readAsStringSync()) as Map<String, dynamic>;
+          final content = settingsFile.readAsStringSync();
+          if (content.isNotEmpty) {
+            _settings = jsonDecode(content) as Map<String, dynamic>;
+          }
         }
+      } on FormatException catch (_) {
+        // JSON corrupto: resetear a defaults
+        _settings = {};
+      } on FileSystemException {
+        // Sin acceso al archivo: defaults silenciosos
+        _settings = {};
       } catch (_) {
+        // Cualquier otro error: defaults seguros
         _settings = {};
       }
     }

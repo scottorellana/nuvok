@@ -1,9 +1,11 @@
 // Tools page — quick survival tools accessible from the nav rail.
-// Groups flashlight, compass, and future tools in one place.
+// Groups battery saver, flashlight, compass, whistle, and future tools.
 import 'package:flutter/material.dart';
 
+import 'battery_saver.dart';
 import 'compass.dart';
 import 'flashlight.dart';
+import 'whistle.dart';
 
 class ToolsPage extends StatelessWidget {
   const ToolsPage({super.key});
@@ -15,6 +17,115 @@ class ToolsPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // Battery saver — shows the REAL battery level and opens the saver.
+          ListenableBuilder(
+            listenable: BatterySaverController.instance,
+            builder: (context, _) {
+              final b = BatterySaverController.instance;
+              final low = b.batteryKnown && b.batteryLevel <= 20;
+              return Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            b.isCharging
+                                ? Icons.battery_charging_full
+                                : Icons.battery_saver,
+                            size: 32,
+                            color: low ? Colors.red : null,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              b.batteryKnown
+                                  ? 'Batería: ${b.batteryLevel}%'
+                                      '${b.isCharging ? ' · cargando' : ''}'
+                                  : 'Ahorro de batería',
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          FilledButton.icon(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => const BatterySaverPage(),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.battery_saver),
+                            label: const Text('Abrir'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        low
+                            ? '⚠️ Batería baja. Activa el ahorro para durar más.'
+                            : 'Maximiza la autonomía en una emergencia: reduce '
+                                'consumo y desactiva servicios no esenciales.',
+                        style: TextStyle(
+                            color: low
+                                ? Colors.red
+                                : Theme.of(context).hintColor),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 16),
+          // Whistle - NEW
+          Card(
+            color: Colors.red.shade50,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.sports_score, size: 32, color: Colors.red),
+                      const SizedBox(width: 12),
+                      const Expanded(
+                        child: Text(
+                          'Silbato de Emergencia',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      FilledButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => const WhistleScreen(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.play_arrow),
+                        label: const Text('Activar'),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Silbato digital de alta frecuencia (3kHz) audible a larga '
+                    'distancia. Incluye modo pulsado y flash de pantalla.',
+                    style: TextStyle(color: Theme.of(context).hintColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
           // Flashlight
           Card(
             child: Padding(

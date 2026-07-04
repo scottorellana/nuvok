@@ -6,12 +6,16 @@ import 'app.dart';
 import 'core/prepper_library.dart';
 import 'modules/ai/llama_server.dart';
 import 'modules/mesh/mesh_service.dart';
+import 'modules/tools/battery_saver.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrepperLibrary.init();
   final firstRun = !PrepperLibrary.instance.existedBefore;
   await PrepperLibrary.instance.ensure();
+  // Start reading the real battery early so the level is ready when the user
+  // opens Herramientas — non-blocking, failures are swallowed inside.
+  BatterySaverController.instance.init();
   runApp(PrepperPadApp(firstRun: firstRun));
 }
 
@@ -38,6 +42,14 @@ class _AppLifecycleCleanupState extends State<AppLifecycleCleanup>
     LlamaServer.instance.stop();
     MeshService.instance.stop();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // Re-establish mesh presence when app comes to foreground
+      MeshService.instance.onAppResumed();
+    }
   }
 
   @override

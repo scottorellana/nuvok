@@ -138,6 +138,8 @@ class MeshService {
         queuedCount.value = router.outboxCount;
         router.flushOutbox();
       });
+      // Iniciar timer de cleanup de ACKs
+      _startAckCleanupTimer();
       running.value = true;
       await _sendBeacon();
     } finally {
@@ -149,7 +151,8 @@ class MeshService {
     _beaconTimer?.cancel();
     _sosTimer?.cancel();
     _positionTimer?.cancel();
-    _beaconTimer = _sosTimer = _positionTimer = null;
+    _ackCleanupTimer?.cancel();
+    _beaconTimer = _sosTimer = _positionTimer = _ackCleanupTimer = null;
     await _eventsSub?.cancel();
     _eventsSub = null;
     await _router?.stop();
@@ -205,6 +208,45 @@ class MeshService {
 
   /// Notifier for UI to observe ACK changes (for ✓✓ display).
   final ValueNotifier<int> ackTick = ValueNotifier(0);
+
+  /// Timer para cleanup de ACKs expirados.
+  Timer? _ackCleanupTimer;
+
+  /// Limpia ACKs pendientes que expiraron (más de 5 minutos sin confirmar).
+  /// Llamado periódicamente para evitar memoria usada por mensajes perdidos.
+  void _cleanupExpiredAcks() {
+    final expired = <int>[];
+    final cutoff = DateTime.now().subtract(const Duration(minutes: 5));
+    for (final entry in _pendingAcks.entries) {
+      if (entry.value.isBefore(cutoff)) {
+        expired.add(entry.key);
+      }
+    }
+    for (final id in expired) {
+      _pendingAcks.remove(id);
+      // Not confirmed = shown as "enviado" sin ✓✓
+    }
+    if (expired.isNotEmpty) {
+      ackTick.value++; // Refresh UI
+    }
+  }
+
+  /// Inicia el timer de cleanup de ACKs (llamado en start()).
+  void _startAckCleanupTimer() {
+    _ackCleanupTimer?.cancel();
+    _ackCleanupTimer = Timer.periodic(
+      const Duration(minutes: 1),
+      (_) => _cleanupExpiredAcks(),
+    );
+  }
+
+  /// Mantiene presencia activa cuando la app vuelve a primer plano.
+  /// Llamado desde el lifecycle de la app.
+  Future<void> onAppResumed() async {
+    if (!running.value) return;
+    await _sendBeacon();
+    peerCount.value = _router?.peers.length ?? 0;
+  }
 
   Future<void> sendChat(MeshChannel channel, String text) async {
     final router = _router;

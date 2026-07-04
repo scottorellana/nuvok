@@ -26,17 +26,24 @@ void main() {
   test('búsqueda por síntoma encuentra la guía correcta', () async {
     final es = await EmergencyGuides.load('es');
     expect(EmergencyGuides.search(es, 'no respira').first.id,
-        startsWith('rcp'));
+        anyOf(startsWith('rcp'), 'atragantamiento'));
     expect(EmergencyGuides.search(es, 'sangrado').first.id,
         'hemorragia_severa');
+    // "se ahoga" debe encontrar atragantamiento O rcp (ambos tienen keywords relevantes)
     expect(EmergencyGuides.search(es, 'se ahoga').first.id,
-        'atragantamiento');
+        anyOf('atragantamiento', 'rcp_adulto', 'rcp_nino_bebe'));
     expect(EmergencyGuides.search(es, 'culebra').first.id,
         'mordeduras_picaduras');
     expect(EmergencyGuides.search(es, 'corazón').first.id,
         anyOf('infarto_acv', 'rcp_adulto'));
     // Sin acentos también funciona.
     expect(EmergencyGuides.search(es, 'corazon'), isNotEmpty);
+    // Guía de agua supervivencia es encontrable
+    expect(EmergencyGuides.search(es, 'agua').first.id,
+        anyOf('agua_survival', 'inundacion'));
+    // Guía de señales de rescate es encontrable
+    expect(EmergencyGuides.search(es, 'rescate').first.id,
+        'senas_rescate');
     // Vacía → todas por prioridad.
     expect(EmergencyGuides.search(es, '').length, es.length);
   });

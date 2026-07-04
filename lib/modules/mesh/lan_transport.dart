@@ -95,6 +95,7 @@ class LanTransport implements MeshTransport {
     } catch (_) {}
     _socket?.close();
     _socket = null;
+    await _data.close();
   }
 
   @override

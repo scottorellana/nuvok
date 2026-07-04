@@ -321,7 +321,20 @@ class _EmergencyPageState extends State<EmergencyPage> {
                   dense: true,
                   leading: Icon(_iconForService(s.name), size: 24,
                       color: Theme.of(context).colorScheme.primary),
-                  title: Text(s.name),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(s.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+                      if (s.description != null)
+                        Text(
+                          s.description!,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Theme.of(context).hintColor,
+                          ),
+                        ),
+                    ],
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

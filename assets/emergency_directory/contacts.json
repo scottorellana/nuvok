@@ -1,0 +1,169 @@
+{
+  "countries": [
+    {
+      "code": "HN",
+      "name": "Honduras",
+      "emergency_number": "911",
+      "ambulance": "195",
+      "fire": "198",
+      "police": "911",
+      "civil_protection": "226-5100",
+      "red_cross": "2237-2000",
+      "emergency_services": [
+        {"name": "Cuerpo de Bomberos", "phone": "198"},
+        {"name": "Cruz Roja Hondureña", "phone": "195"},
+        {"name": "Policía Nacional", "phone": "911"},
+        {"name": "COPECO", "phone": "226-5100"}
+      ]
+    },
+    {
+      "code": "US",
+      "name": "Estados Unidos",
+      "emergency_number": "911",
+      "ambulance": "911",
+      "fire": "911",
+      "police": "911",
+      "red_cross": "1-800-733-2767",
+      "emergency_services": [
+        {"name": "Emergency Services", "phone": "911"},
+        {"name": "Poison Control", "phone": "1-800-222-1222"},
+        {"name": "American Red Cross", "phone": "1-800-733-2767"}
+      ]
+    },
+    {
+      "code": "MX",
+      "name": "México",
+      "emergency_number": "911",
+      "ambulance": "911",
+      "fire": "911",
+      "police": "911",
+      "civil_protection": "088",
+      "red_cross": "065",
+      "emergency_services": [
+        {"name": "Servicios de Emergencia", "phone": "911"},
+        {"name": "Cruz Roja", "phone": "065"},
+        {"name": "Protección Civil", "phone": "088"}
+      ]
+    },
+    {
+      "code": "GT",
+      "name": "Guatemala",
+      "emergency_number": "110",
+      "ambulance": "122",
+      "fire": "123",
+      "police": "110",
+      "civil_protection": "1555",
+      "red_cross": "1250",
+      "emergency_services": [
+        {"name": "Policía Nacional Civil", "phone": "110"},
+        {"name": "Cruz Roja Guatemalteca", "phone": "1250"},
+        {"name": "CONRED", "phone": "1555"}
+      ]
+    },
+    {
+      "code": "SV",
+      "name": "El Salvador",
+      "emergency_number": "911",
+      "ambulance": "132",
+      "fire": "913",
+      "police": "911",
+      "civil_protection": "2281-6600",
+      "red_cross": "2223-0000",
+      "emergency_services": [
+        {"name": "Policía Nacional Civil", "phone": "911"},
+        {"name": "Cruz Roja Salvadoreña", "phone": "132"},
+        {"name": "Protección Civil", "phone": "2281-6600"}
+      ]
+    },
+    {
+      "code": "NI",
+      "name": "Nicaragua",
+      "emergency_number": "118",
+      "ambulance": "118",
+      "fire": "115",
+      "police": "118",
+      "civil_protection": "2253-5183",
+      "red_cross": "2266-5611",
+      "emergency_services": [
+        {"name": "Policía Nacional", "phone": "118"},
+        {"name": "Cruz Roja Nicaragüense", "phone": "118"},
+        {"name": "SINAPRED", "phone": "2253-5183"}
+      ]
+    },
+    {
+      "code": "CR",
+      "name": "Costa Rica",
+      "emergency_number": "911",
+      "ambulance": "911",
+      "fire": "911",
+      "police": "911",
+      "civil_protection": "2586-8600",
+      "red_cross": "2216-5610",
+      "emergency_services": [
+        {"name": "Emergency Services", "phone": "911"},
+        {"name": "Cruz Roja Costarricense", "phone": "2216-5610"},
+        {"name": "Comisión Nacional de Emergencias", "phone": "2586-8600"}
+      ]
+    },
+    {
+      "code": "PA",
+      "name": "Panamá",
+      "emergency_number": "911",
+      "ambulance": "911",
+      "fire": "911",
+      "police": "911",
+      "civil_protection": "520-4401",
+      "red_cross": "225-0255",
+      "emergency_services": [
+        {"name": "Servicios de Emergencia", "phone": "911"},
+        {"name": "Cruz Roja Panameña", "phone": "225-0255"},
+        {"name": "Sistema Nacional de Protección Civil", "phone": "520-4401"}
+      ]
+    },
+    {
+      "code": "CO",
+      "name": "Colombia",
+      "emergency_number": "123",
+      "ambulance": "123",
+      "fire": "119",
+      "police": "123",
+      "civil_protection": "144",
+      "red_cross": "137",
+      "emergency_services": [
+        {"name": "Policía Nacional", "phone": "123"},
+        {"name": "Cruz Roja Colombiana", "phone": "137"},
+        {"name": "Unidad Nacional para la Gestión del Riesgo", "phone": "144"}
+      ]
+    },
+    {
+      "code": "DO",
+      "name": "República Dominicana",
+      "emergency_number": "911",
+      "ambulance": "911",
+      "fire": "911",
+      "police": "911",
+      "civil_protection": "809-472-0909",
+      "red_cross": "809-221-0000",
+      "emergency_services": [
+        {"name": "Sistema Nacional de Emergencia", "phone": "911"},
+        {"name": "Cruz Roja Dominicana", "phone": "809-221-0000"},
+        {"name": "Protección Civil", "phone": "809-472-0909"}
+      ]
+    },
+    {
+      "code": "ES",
+      "name": "España",
+      "emergency_number": "112",
+      "ambulance": "061",
+      "fire": "080",
+      "police": "091",
+      "civil_protection": "112",
+      "red_cross": "902-222-292",
+      "emergency_services": [
+        {"name": "Servicios de Emergencia", "phone": "112"},
+        {"name": "Cruz Roja", "phone": "902-222-292"},
+        {"name": "Policía Nacional", "phone": "091"}
+      ]
+    }
+  ]
+}

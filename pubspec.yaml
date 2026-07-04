@@ -28,14 +28,17 @@ dependencies:
   crypto: ^3.0.3
   qr_flutter: ^4.1.0
   file_selector: ^1.0.3
+  wakelock_plus: ^1.2.8
   # Mesh: offline device-to-device transports.
   flutter_blue_plus: ^1.32.12
   nearby_connections: ^4.1.1
+  battery_plus: ^7.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  test: ^1.31.0
 
 flutter:
   uses-material-design: true

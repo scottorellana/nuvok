@@ -7,7 +7,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
-import { execSync } from 'node:child_process';
+import crypto from 'node:crypto';
 
 const PORT = parseInt(process.env.PORT || '8848');
 const HOST = '0.0.0.0'; // Listen on all interfaces (LAN accessible)
@@ -22,6 +22,15 @@ const PUBLIC_DIR = path.join(import.meta.dirname, 'public');
 // ── Ensure downloads dir exists ──
 fs.mkdirSync(DOWNLOADS_DIR, { recursive: true });
 fs.mkdirSync(PUBLIC_DIR, { recursive: true });
+
+// True if `child` is `parent` itself or a path underneath it. A bare
+// startsWith() on strings would also accept a sibling like
+// "PrepperPadEvil" when parent is "PrepperPad" — this checks the real
+// directory boundary instead.
+function isInside(child, parent) {
+  const rel = path.relative(parent, child);
+  return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
+}
 
 // ── MIME types ──
 const MIME = {
@@ -83,6 +92,59 @@ function detectPlatform(filename) {
   if (lower.endsWith('.exe') || lower.endsWith('.msi')) return 'windows';
   if (lower.endsWith('.deb') || lower.endsWith('.appimage') || lower.endsWith('.rpm')) return 'linux';
   return null;
+}
+
+// ── Update manifest (/version.json) ──
+// Reads the version straight from pubspec.yaml so it can never drift from
+// what was actually built, and hashes whatever installer is newest per
+// platform in dist/. This is what lib/modules/update/update_service.dart
+// polls — see installer-server's README for why this can't live in the
+// private source repo (no anonymous access to private release assets).
+function pubspecVersion() {
+  try {
+    const text = fs.readFileSync(path.join(ROOT, 'pubspec.yaml'), 'utf8');
+    const m = /^version:\s*([0-9.]+)/m.exec(text);
+    return m ? m[1] : '0.0.0';
+  } catch {
+    return '0.0.0';
+  }
+}
+
+const sha256Cache = new Map();
+
+function sha256Of(filePath) {
+  const stat = fs.statSync(filePath);
+  const key = `${filePath}:${stat.mtimeMs}`;
+  if (sha256Cache.has(key)) return sha256Cache.get(key);
+  const hash = crypto.createHash('sha256').update(fs.readFileSync(filePath)).digest('hex');
+  sha256Cache.clear(); // only the latest computation per path is worth keeping
+  sha256Cache.set(key, hash);
+  return hash;
+}
+
+function buildVersionManifest(lanUrl) {
+  const byPlatform = {};
+  for (const inst of scanInstallers()) {
+    // Newest file wins if there happen to be several builds for a platform.
+    const existing = byPlatform[inst.platform];
+    const full = path.join(ROOT, inst.path);
+    if (existing && existing.mtimeMs >= fs.statSync(full).mtimeMs) continue;
+    byPlatform[inst.platform] = {
+      mtimeMs: fs.statSync(full).mtimeMs,
+      url: `${lanUrl}${inst.url}`,
+      sha256: sha256Of(full),
+      sizeBytes: inst.size,
+    };
+  }
+  const platforms = {};
+  for (const [key, v] of Object.entries(byPlatform)) {
+    platforms[key] = { url: v.url, sha256: v.sha256, sizeBytes: v.sizeBytes };
+  }
+  return {
+    version: pubspecVersion(),
+    notes: 'Última versión disponible en tu red local.',
+    platforms,
+  };
 }
 
 // ── Scan for content packages ──
@@ -180,7 +242,7 @@ function handleDownload(req, res, url) {
 
   // Prevent path traversal
   const resolved = path.resolve(filePath);
-  if (!resolved.startsWith(ROOT) && !resolved.startsWith(DOWNLOADS_DIR) && !resolved.startsWith(PREPPERPAD_DIR)) {
+  if (!isInside(resolved, ROOT) && !isInside(resolved, DOWNLOADS_DIR) && !isInside(resolved, PREPPERPAD_DIR)) {
     res.writeHead(403);
     res.end('Forbidden');
     return true;
@@ -236,7 +298,7 @@ function handleContent(req, res, url) {
   const filePath = path.join(PREPPERPAD_DIR, type, filename);
 
   const resolved = path.resolve(filePath);
-  if (!resolved.startsWith(PREPPERPAD_DIR)) {
+  if (!isInside(resolved, PREPPERPAD_DIR)) {
     res.writeHead(403);
     res.end('Forbidden');
     return true;
@@ -287,7 +349,7 @@ function serveStatic(req, res, url) {
   const filePath = path.join(PUBLIC_DIR, pathname);
   const resolved = path.resolve(filePath);
 
-  if (!resolved.startsWith(PUBLIC_DIR)) {
+  if (!isInside(resolved, PUBLIC_DIR)) {
     res.writeHead(403);
     res.end('Forbidden');
     return true;
@@ -312,6 +374,17 @@ const server = http.createServer((req, res) => {
   // API routes
   if (url.pathname.startsWith('/api/')) {
     if (handleAPI(req, res, url)) return;
+  }
+
+  // Update manifest — what UpdateService (lib/modules/update/) polls to
+  // find out whether a newer version exists and where to fetch it.
+  if (url.pathname === '/version.json') {
+    const ips = getLanIPs();
+    const lanUrl = `http://${ips[0]?.address ?? 'localhost'}:${PORT}`;
+    const body = JSON.stringify(buildVersionManifest(lanUrl));
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(body);
+    return;
   }
 
   // Download routes

@@ -120,7 +120,7 @@ class _WhistleScreenState extends State<WhistleScreen>
     _pulseAnimation = Tween<double>(begin: 1.0, end: 0.4).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
-    _audioPlayer.setLoopMode(true);
+    _audioPlayer.setLoopMode(LoopMode.one);
   }
 
   @override

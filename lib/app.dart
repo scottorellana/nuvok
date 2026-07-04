@@ -19,6 +19,7 @@ import 'modules/notes/notes_page.dart';
 import 'modules/prep/checklist_page.dart';
 import 'modules/tools/battery_saver.dart';
 import 'modules/tools/tools_page.dart';
+import 'modules/update/update_page.dart';
 
 class PrepperPadApp extends StatelessWidget {
   const PrepperPadApp({super.key, required this.firstRun});
@@ -37,6 +38,40 @@ class PrepperPadApp extends StatelessWidget {
         colorScheme: scheme,
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFF14170F),
+        // Tablet-optimized: larger touch targets and text
+        visualDensity: VisualDensity.standard,
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(fontSize: 18),
+          bodyMedium: TextStyle(fontSize: 16),
+          bodySmall: TextStyle(fontSize: 14),
+          titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          labelLarge: TextStyle(fontSize: 16),
+        ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            minimumSize: const Size(88, 52),
+            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+        ),
+        cardTheme: CardThemeData(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
       home: AppLifecycleCleanup(child: HomeShell(firstRun: firstRun)),
     );
@@ -241,6 +276,12 @@ class _HomeShellState extends State<HomeShell> {
                 children: [
                   _LowBatteryBanner(
                     onOpenSaver: () => setState(() => _index = 6), // Herramientas
+                  ),
+                  UpdateBanner(
+                    onOpen: () => setState(() {
+                      _index = 8; // Depósito
+                      _depotInitialTab = 5; // App
+                    }),
                   ),
                   Expanded(
                     child: IndexedStack(index: _index, children: _pages),

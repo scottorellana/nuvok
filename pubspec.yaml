@@ -1,7 +1,7 @@
 name: prepper_pad
 description: Biblioteca de conocimiento offline — Wikipedia, mapas, IA local y notas en una sola app.
 publish_to: 'none'
-version: 0.2.0
+version: 0.2.1
 
 environment:
   sdk: ^3.5.0
@@ -25,7 +25,7 @@ dependencies:
   vector_tile: ^2.0.1
   collection: ^1.18.0
   cryptography: ^2.7.0
-  crypto: ^3.0.3
+  crypto: ^3.0.7
   qr_flutter: ^4.1.0
   file_selector: ^1.0.3
   wakelock_plus: ^1.2.8
@@ -36,12 +36,15 @@ dependencies:
   battery_plus: ^7.1.0
   torch_light: ^2.0.0
   screen_brightness: ^2.1.11
+  package_info_plus: ^10.2.0
+  open_filex: ^4.7.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
   test: ^1.31.0
+  path_provider_platform_interface: ^2.1.3
 
 flutter:
   uses-material-design: true

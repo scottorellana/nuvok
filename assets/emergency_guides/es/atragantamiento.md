@@ -8,53 +8,90 @@ priority: 1
 
 > ⚠️ Esta guía no sustituye atención médica profesional. Busca ayuda médica en cuanto sea posible.
 
-## Cuándo sospecharlo
+## ¿Está realmente atragantado?
 
-- Estaba comiendo o un niño jugaba con objetos pequeños y de pronto:
-- Se lleva las **manos al cuello** (señal universal).
-- **No puede hablar, ni toser con fuerza, ni respirar**, o hace un silbido agudo.
-- Cara roja que se vuelve azulada.
+| Señal | ¿Atragantado? | Acción |
+|-------|--------------|--------|
+| 🗣️ Puede hablar o toser fuerte | ❌ No completo | Animar a toser. NO golpear todavía |
+| 🤐 No puede hablar, silbido agudo | ⚠️ SÍ, obstrucción parcial | Prepararse para actuar |
+| 😰 Se lleva manos al cuello | 🚨 SÍ, señal universal | Actuar YA |
+| 🔵 Cara azulada, no puede toser | 🚨 SÍ, obstrucción total | Actuar YA |
 
-**Regla de oro: si TOSE CON FUERZA o puede hablar → la vía no está completamente tapada. Anímalo a seguir tosiendo y NO lo golpees todavía. Si la tos se vuelve débil o silenciosa, o no puede hablar → actúa YA.**
+**Regla de oro: si TOSE CON FUERZA → anímalo a seguir tosiendo. Si la tos se vuelve débil o no puede hablar → actúa YA.**
 
 ## Qué NO hacer
 
-- ❌ NO le des agua ni pan "para que pase".
-- ❌ NO metas los dedos a ciegas en la garganta (empujas el objeto más adentro). Solo saca algo que VEAS claramente y puedas pinzar.
-- ❌ NO lo pongas boca arriba mientras esté consciente.
-- ❌ NO pierdas tiempo: sin aire hay ~4 minutos antes del daño cerebral.
+| ❌ Error | Por qué |
+|----------|---------|
+| Dar agua o pan "para que pase" | Puede empujar el objeto más adentro |
+| Meter dedos a ciegas en la garganta | Empuja el objeto más adentro |
+| Ponerlo boca arriba consciente | La lengua puede bloquear la vía |
+| Esperar "a ver si pasa solo" | Sin aire hay ~4 minutos antes del daño cerebral |
 
-## Pasos — ADULTO o NIÑO consciente
+## Procedimiento — ADULTO o NIÑO consciente
 
-1. Pregunta: **"¿Te estás ahogando? ¿Puedes hablar?"** Si no puede hablar, avisa: "Te voy a ayudar".
-2. Ponte de pie DETRÁS, un poco de lado. Sostén su pecho con una mano e inclínalo hacia ADELANTE.
-3. **5 golpes secos en la espalda** con el talón de la mano, entre los omóplatos, fuertes y hacia arriba. Mira la boca tras cada golpe: si sale el objeto, listo.
-4. Si no sale: **5 compresiones abdominales**: abrázalo por detrás, un puño con el pulgar hacia adentro JUSTO ARRIBA del ombligo (bien abajo del esternón), agarra el puño con la otra mano y jala **hacia adentro y hacia ARRIBA** con fuerza, como queriendo levantarlo.
-   - Embarazadas u obesos: compresiones en el **centro del PECHO** en vez del abdomen.
-5. **Alterna 5 golpes de espalda / 5 compresiones** hasta que el objeto salga o la persona se desmaye.
-6. **Si se desmaya:** bájalo al suelo con cuidado, y **empieza RCP** (guía "RCP en adultos"), con un extra: antes de cada tanda de soplos, MIRA dentro de la boca y saca el objeto solo si lo VES.
+```
+┌──────────────────────────────────────┐
+│  Paso 1: Confirma                    │
+│  "¿Te estás ahogando? ¿Puedes hablar?"│
+│  Si no puede hablar: "Te voy a ayudar"│
+└──────────────┬───────────────────────┘
+               ▼
+┌──────────────────────────────────────┐
+│  Paso 2: Posición                    │
+│  Detrás, un poco de lado             │
+│  Pecho con una mano, inclinar ADELANTE│
+└──────────────┬───────────────────────┘
+               ▼
+┌──────────────────────────────────────┐
+│  Paso 3: 5 golpes en la espalda      │
+│  Talón de la mano entre omóplatos    │
+│  Firmes, hacia ARRIBA                │
+│  → Mirar boca tras cada golpe        │
+└──────────────┬───────────────────────┘
+               ▼ ¿no salió?
+┌──────────────────────────────────────┐
+│  Paso 4: 5 compresiones abdominales  │
+│  (Maniobra de Heimlich)              │
+│  Puño arriba del ombligo             │
+│  Jalar hacia ADENTRO y ARRIBA        │
+└──────────────┬───────────────────────┘
+               ▼
+        Alternar 5 y 5 hasta:
+        ✓ Objeto sale, O
+        ✓ Persona se desmaya → RCP
+```
 
-## Pasos — BEBÉ (menos de 1 año) consciente
+### Embarazadas u obesos: compresiones en el PECHO (no abdomen)
 
-1. Siéntate. Coloca al bebé **boca abajo sobre tu antebrazo**, apoyado en tu muslo, cabeza más BAJA que el cuerpo, sosteniendo su mandíbula con tus dedos (sin apretar el cuello).
-2. **5 golpes entre los omóplatos** con el talón de la mano — firmes pero medidos.
-3. Gíralo boca arriba sobre el otro antebrazo, cabeza más baja que el cuerpo.
-4. **5 compresiones en el centro del pecho con DOS DEDOS** (como en RCP, justo bajo la línea de las tetillas), más lentas y profundas que las de RCP.
-5. Mira la boca entre ciclos; saca el objeto solo si lo ves. **Alterna 5 y 5** hasta que salga o quede inconsciente.
-6. **Si queda inconsciente:** RCP de bebé (guía "RCP en niños y bebés") mirando la boca antes de cada soplo.
-7. ❌ NUNCA compresiones abdominales (Heimlich) a un bebé — dañan sus órganos.
+| Normal | Embarazada/Obeso |
+|--------|-----------------|
+| Puño arriba del ombligo | Mano en centro del esternón |
+| Jalar hacia adentro y arriba | Comprimir hacia atrás |
+
+## Procedimiento — BEBÉ (menos de 1 año)
+
+| Paso | Acción | Detalle |
+|------|--------|---------|
+| 1️⃣ | Posición boca abajo | Sobre tu antebrazo, cabeza MÁS BAJA |
+| 2️⃣ | Sostener mandíbula | Dedos en la mandíbula, sin apretar cuello |
+| 3️⃣ | **5 golpes en espalda** | Talón de la mano entre omóplatos |
+| 4️⃣ | Girar boca arriba | Otro antebrazo, cabeza más baja |
+| 5️⃣ | **5 compresiones en pecho** | DOS DEDOS, bajo la línea de tetillas |
+| 6️⃣ | Mirar boca | Sacar objeto SOLO si se ve claramente |
+
+> ⚠️ **NUNCA** compresiones abdominales (Heimlich) a un bebé — dañan sus órganos
 
 ## Si estás SOLO y te atragantas TÚ
 
-- No te encierres en el baño (que alguien pueda verte).
-- Puños arriba del ombligo y jala hacia arriba; si no funciona, **deja caer tu abdomen con fuerza contra el respaldo de una silla** o el borde de una mesa, repetidamente.
+1. No te encierres (que alguien pueda verte)
+2. Puño arriba del ombligo, jala hacia arriba
+3. Si no funciona: **deja caer tu abdomen contra el respaldo de una silla o el borde de una mesa**, repetidamente
 
-## Cuándo buscar ayuda / trasladar
+## Después del incidente
 
-- Si hubo compresiones abdominales: revisión médica SIEMPRE (pueden dañar órganos internos sin que se note de inmediato).
-- Si el objeto salió pero queda tos, dolor, o silbido al respirar: al médico — puede quedar un fragmento.
-
-## Señales de deterioro
-
-- Tos que se apaga, labios azulados, somnolencia → la vía se cerró: actúa como obstrucción completa.
-- Quedó inconsciente → RCP ya.
+| Situación | Acción |
+|-----------|--------|
+| Hubo compresiones abdominales | Revisión médica SIEMPRE (daño interno posible) |
+| Objeto salió pero queda tos/silbido | Médico — puede quedar un fragmento |
+| Persona quedó inconsciente en algún momento | Hospital urgente |

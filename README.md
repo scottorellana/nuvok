@@ -18,7 +18,7 @@ servidor Docker: se instala con doble clic en cualquier dispositivo.
 | 🗺️ Mapas | Mapas offline con GPS, ruteo por calles (respeta accesos), POIs y "llévame a…" | `.pmtiles` (Protomaps) |
 | 📡 Comunicación | Mesh sin internet (WiFi): chat cifrado por canal, SOS y posiciones del grupo; LoRa a futuro | — |
 | 📝 Notas | Notas markdown locales | `.md` |
-| 📦 Depósito | Catálogo para descargar contenido y mapas (solo aquí se usa internet) | — |
+| 📦 Depósito | Catálogo para descargar contenido, mapas y **actualizaciones de la app** (solo aquí se usa internet) | — |
 
 ## La biblioteca portable
 
@@ -51,6 +51,26 @@ con ella — nunca se descarga dos veces.
 1. Descarga el `.dmg` de la última release.
 2. Arrastra **Prepper Pad** a Aplicaciones.
 3. Primera vez: clic derecho → Abrir (la app no está firmada por Apple aún).
+
+## Instalador web local
+
+`node installer-server/server.js` levanta una página privada (solo tu red
+WiFi, puerto 8848) para descargar e instalar la app en cualquier dispositivo
+directo desde el navegador — detecta el sistema operativo del visitante, y
+también sirve el contenido ya descargado (libros, mapas, modelos IA) para
+compartirlo entre dispositivos sin repetir la descarga.
+
+## Actualizaciones
+
+La app revisa opcionalmente (`lib/modules/update/`) si hay una versión nueva
+cuando detecta internet, y ofrece descargarla e instalarla — nunca se
+actualiza sola ni bloquea el uso offline si no hay conexión. El mismo
+`installer-server` expone `/version.json` con la versión, tamaño y sha256 de
+los binarios en `dist/`, calculados en el momento — sirve para probar el
+sistema completo en tu red. El manifiesto público es independiente del repo
+de código (privado): un repo privado no puede servir binarios a cualquier
+dispositivo sin exponer un token, así que el canal de actualización necesita
+un host público propio (repo de solo-releases, GitHub Pages, o tu dominio).
 
 ## Desarrollo
 

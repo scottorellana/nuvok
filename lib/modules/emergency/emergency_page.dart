@@ -8,6 +8,7 @@ import 'package:markdown/markdown.dart' as md;
 
 import 'emergency_directory.dart';
 import 'emergency_guides.dart';
+import 'medical_diagrams.dart';
 
 class EmergencyPage extends StatefulWidget {
   const EmergencyPage({super.key});
@@ -464,8 +465,66 @@ class _GuideReader extends StatelessWidget {
   const _GuideReader({required this.guide});
   final EmergencyGuide guide;
 
+  /// Returns widgets to display before specific sections based on guide id.
+  List<Widget> _visualAids(BuildContext context) {
+    final id = guide.id;
+    final widgets = <Widget>[];
+
+    // CPR guides get the animated compression diagram
+    if (id.startsWith('rcp')) {
+      widgets.add(_visualCard(context, 'Técnica de compresión', CprAnimation()));
+    }
+    // Choking guides get the Heimlich animation
+    if (id.contains('atragant')) {
+      widgets.add(_visualCard(context, 'Maniobra de Heimlich',
+        const HeimlichAnimation()));
+    }
+    // Bleeding guides get the tourniquet diagram
+    if (id.contains('hemorragia')) {
+      widgets.add(_visualCard(context, 'Aplicación de torniquete',
+        const TourniquetDiagram()));
+      widgets.add(_visualCard(context, 'Posición de recuperación',
+        const RecoveryPositionDiagram()));
+    }
+    // Burn guides get the severity chart
+    if (id.contains('quemadura')) {
+      widgets.add(const SizedBox(height: 8));
+      widgets.add(const BurnSeverityChart());
+    }
+    // Bite/sting guides
+    if (id.contains('mordedura') || id.contains('picadura')) {
+      widgets.add(const SizedBox(height: 8));
+      widgets.add(const BiteStingComparison());
+    }
+    // Triage
+    if (id.contains('triaje')) {
+      widgets.add(const SizedBox(height: 8));
+      widgets.add(const TriageFlowchart());
+    }
+    return widgets;
+  }
+
+  Widget _visualCard(BuildContext context, String title, Widget child) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text(title,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            child,
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final aids = _visualAids(context);
     return Scaffold(
       appBar: AppBar(title: Text(guide.title)),
       body: SelectionArea(
@@ -473,10 +532,18 @@ class _GuideReader extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 40),
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 760),
-            child: HtmlWidget(
-              md.markdownToHtml(guide.body,
-                  extensionSet: md.ExtensionSet.gitHubFlavored),
-              textStyle: const TextStyle(fontSize: 17, height: 1.45),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Visual aids appear at the top, before the text
+                if (aids.isNotEmpty) ...aids,
+                // Guide content
+                HtmlWidget(
+                  md.markdownToHtml(guide.body,
+                      extensionSet: md.ExtensionSet.gitHubFlavored),
+                  textStyle: const TextStyle(fontSize: 17, height: 1.45),
+                ),
+              ],
             ),
           ),
         ),

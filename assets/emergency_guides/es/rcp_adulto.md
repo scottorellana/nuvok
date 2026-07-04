@@ -10,49 +10,109 @@ priority: 1
 
 ## Cuándo sospecharlo
 
-- La persona **no responde** cuando la llamas fuerte y la sacudes por los hombros.
-- **No respira**, o solo "boquea" (jadeos raros, ruidosos, espaciados — eso NO es respirar, es señal de paro).
-- Está gris, morada o muy pálida.
-- Acaba de desplomarse, o la sacaron del agua, o recibió una descarga eléctrica.
+| Señal | Detalle |
+|-------|---------|
+| 🔇 **No responde** | No reacciona al grito ni al sacudir los hombros |
+| 😶 **No respira normal** | No respira o solo "boquea" (jadeos espaciados = paro) |
+| 👽 **Color gris/morado** | Piel, labios o uñas azulados o pálidos |
+| 💥 **Colapso súbito** | Se desplomó, casi ahogado, o descarga eléctrica |
 
 **Si no responde y no respira normal: tiene un paro cardíaco. Cada minuto sin RCP baja su probabilidad de sobrevivir ~10%. Empieza YA.**
 
 ## Qué NO hacer
 
-- ❌ NO pierdas tiempo buscando el pulso si no sabes hacerlo (se pierde tiempo valioso; con que no responda y no respire normal es suficiente para empezar).
-- ❌ NO le eches agua, no lo abofetees, no esperes "a ver si reacciona".
-- ❌ NO hagas compresiones a alguien que está despierto o respira normal.
-- ❌ NO interrumpas las compresiones más de 10 segundos por ningún motivo.
-- ❌ NO tengas miedo de romper una costilla: pasa a menudo y es preferible a la muerte. Sigue comprimiendo.
+| ❌ Error | ✅ Correcto |
+|----------|------------|
+| Buscar pulso (se pierde tiempo) | Si no responde y no respira → RCP YA |
+| Echar agua, abofetear, esperar | Iniciar compresiones inmediatamente |
+| Interrumpir compresiones >10s | Solo pausar para ventilaciones o DEA |
+| Miedo a romper costillas | Preferible costilla rota a muerte |
 
 ## Pasos
 
-1. **Seguridad primero (3 segundos).** Mira alrededor: ¿cables eléctricos, tráfico, agua, gas, humo? No te conviertas en la segunda víctima. Mueve a la persona SOLO si el lugar es peligroso.
-2. **Comprueba respuesta.** Arrodíllate, sacude sus hombros con firmeza y grita: "¿Me oyes? ¡Abre los ojos!".
-3. **Pide ayuda AHORA.** Grita a alguien concreto: "¡TÚ, el de camisa azul: llama a emergencias y busca un desfibrilador (DEA)!". Si estás solo con un teléfono: llama con el altavoz activado mientras empiezas. Si estás solo sin teléfono: haz RCP 2 minutos ANTES de ir a buscar ayuda.
-4. **Ponlo boca arriba sobre superficie DURA** (suelo, no cama). Descubre el pecho.
-5. **Posición de manos:** talón de una mano en el **centro del pecho** (mitad inferior del esternón, entre las tetillas). La otra mano encima, dedos entrelazados, dedos levantados del pecho.
-6. **Comprime FUERTE y RÁPIDO:**
-   - Profundidad: **5 a 6 cm** (un tercio del pecho). Más de lo que crees.
-   - Ritmo: **100 a 120 por minuto** (el ritmo de la canción "La Macarena" o "Stayin' Alive").
-   - Brazos RECTOS, hombros directamente sobre las manos, usa el peso de tu cuerpo.
-   - **Deja que el pecho suba completamente** entre compresiones (no te apoyes).
-7. **Ventilaciones (si sabes y quieres):** después de **30 compresiones**, da **2 soplos**: inclina la frente hacia atrás, levanta el mentón, tapa la nariz, sella tu boca sobre la suya y sopla 1 segundo hasta que el pecho suba. Si no sale aire, recoloca la cabeza y prueba una vez más — luego vuelve a comprimir.
-   - **Si no sabes, no puedes o te da impresión: SOLO COMPRESIONES SIN PARAR. También salva vidas.**
-8. **Ciclo:** 30 compresiones : 2 soplos, sin parar. Si hay otra persona, **túrnense cada 2 minutos** (uno se agota antes de lo que cree y las compresiones pierden calidad).
-9. **Si llega un DEA (desfibrilador):** enciéndelo y **haz exactamente lo que dice su voz**. Pecho desnudo y seco, parches donde muestra el dibujo, que NADIE toque a la persona cuando el aparato analiza o descarga. Reanuda compresiones inmediatamente después de cada descarga.
-10. **No pares hasta que:** (a) la persona se mueva, tosa o respire normal, (b) te reemplace alguien, (c) llegue ayuda profesional, o (d) estés físicamente agotado por completo.
+### 1️⃣ Seguridad (3 segundos)
+Mira alrededor: ¿cables eléctricos, tráfico, agua, gas, humo? **No te conviertas en la segunda víctima.** Mueve a la persona SOLO si el lugar es peligroso.
+
+### 2️⃣ Comprueba respuesta
+Arrodíllate, sacude sus hombros con firmeza y grita: **"¿Me oyes? ¡Abre los ojos!"**
+
+### 3️⃣ Pide ayuda AHORA
+Grita a alguien concreto: **"¡TÚ, el de camisa azul: llama a emergencias y busca un desfibrilador (DEA)!"**
+
+- Si estás solo con teléfono: llama con altavoz activado mientras empiezas
+- Si estás solo sin teléfono: RCP 2 minutos ANTES de ir a buscar ayuda
+
+### 4️⃣ Posición correcta
+- Boca arriba sobre superficie **DURA** (suelo, NO cama)
+- Descubre el pecho
+
+### 5️⃣ Manos en el centro del pecho
+
+| Elemento | Detalle |
+|----------|---------|
+| **Ubicación** | Centro del pecho, mitad inferior del esternón, entre las tetillas |
+| **Mano 1** | Talón de una mano en el esternón |
+| **Mano 2** | Encima, dedos entrelazados, dedos levantados del pecho |
+| **Brazos** | RECTOS, hombros directamente sobre las manos |
+
+### 6️⃣ Comprime FUERTE y RÁPIDO
+
+| Parámetro | Valor |
+|-----------|-------|
+| **Profundidad** | 5 a 6 cm (un tercio del pecho) |
+| **Ritmo** | 100 a 120 por minuto |
+| **Técnica** | Peso del cuerpo, brazos rectos |
+| **Rebote** | Deja que el pecho suba COMPLETO entre compresiones |
+
+> 💡 El ritmo de "Stayin' Alive" de Bee Gees = exactamente 100-120 BPM
+
+### 7️⃣ Ciclo 30:2
+
+```
+┌─────────────────────────────────────────┐
+│  30 compresiones  →  2 soplos  →  repetir │
+│  Sin parar hasta que:                     │
+│  • La persona respire, tosa o se mueva    │
+│  • Alguien te reemplace                    │
+│  • Llegue ayuda profesional                │
+│  • Estés agotado por completo              │
+└─────────────────────────────────────────┘
+```
+
+**Ventilaciones (si sabes y quieres):** después de 30 compresiones, da **2 soplos**: inclina la frente, levanta el mentón, tapa la nariz, sella tu boca sobre la suya y sopla 1 segundo hasta que el pecho suba.
+
+> **¿No sabes o te da impresión? SOLO COMPRESIONES SIN PARAR. También salva vidas.**
+
+### 8️⃣ Si llega un DEA (desfibrilador)
+1. Enciéndelo y **haz lo que dice su voz**
+2. Pecho desnudo y seco
+3. Parches donde muestra el dibujo
+4. **NADIE toca a la persona** cuando analiza o descarga
+5. Reanuda compresiones inmediatamente después de cada descarga
 
 ## Si vuelve a respirar
 
-Ponla de lado (posición de recuperación): brazo cercano en ángulo recto, dorso de la otra mano bajo su mejilla, dobla su rodilla lejana y gírala hacia ti. Vigila la respiración TODO el tiempo — puede volver a parar.
+Ponla en **posición de recuperación** (posición lateral de seguridad):
+- Brazo cercano en ángulo recto
+- Dorso de la otra mano bajo su mejilla
+- Dobla su rodilla lejana y gírala hacia ti
+- Vigila la respiración TODO el tiempo
 
-## Cuándo buscar ayuda / trasladar
+## Cronograma de supervivencia
 
-- SIEMPRE. Un paro cardíaco necesita hospital aunque la persona "se recupere".
-- Si no hay sistema de emergencias: organiza traslado al centro de salud más cercano SIN interrumpir la RCP (idealmente en vehículo con dos personas turnándose atrás).
+```
+Minuto 0:  Paro cardíaco → 100% probabilidad con RCP
+Minuto 1:  Sin RCP → ~90% probabilidad
+Minuto 3:  Sin RCP → ~70% probabilidad
+Minuto 5:  Sin RCP → ~50% probabilidad
+Minuto 10: Sin RCP → ~0% probabilidad
+           CON RCP + DEA en <5min: hasta 70% supervivencia
+```
 
 ## Señales de deterioro
 
-- Deja de respirar otra vez → reinicia compresiones inmediatamente.
-- Vomita → gírala de lado, limpia la boca rápido con un dedo envuelto en tela, y sigue.
+| Señal | Acción |
+|-------|--------|
+| Deja de respirar otra vez | Reiniciar compresiones YA |
+| Vomita | Girar de lado, limpiar boca con dedo envuelto en tela |
+| Cambia a color normal | Mantener posición, vigilar respiración |

@@ -391,6 +391,10 @@ class MeshService {
         }
         break;
       case MeshType.beacon:
+        // A peer just appeared — flush queued messages immediately so
+        // they don't wait up to 15s for the next beacon timer tick.
+        // Critical for emergency scenarios where every second counts.
+        _router?.flushOutbox();
         break;
     }
   }

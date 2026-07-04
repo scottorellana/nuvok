@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'core/prepper_library.dart';
 import 'modules/ai/llama_server.dart';
 import 'modules/mesh/mesh_service.dart';
 import 'modules/tools/battery_saver.dart';
+import 'modules/update/update_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +18,10 @@ Future<void> main() async {
   // Start reading the real battery early so the level is ready when the user
   // opens Herramientas — non-blocking, failures are swallowed inside.
   BatterySaverController.instance.init();
+  // Opportunistic update check: only does anything useful if the device has
+  // internet right now; silently no-ops otherwise. Never blocks startup —
+  // the app is 100% usable offline whether or not this ever completes.
+  unawaited(UpdateService.instance.init().then((_) => UpdateService.instance.check()));
   runApp(PrepperPadApp(firstRun: firstRun));
 }
 

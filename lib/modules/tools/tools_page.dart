@@ -127,6 +127,39 @@ class ToolsPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
+          // GPS Track Recorder
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.route, size: 32, color: Colors.green),
+                      const SizedBox(width: 12),
+                      const Expanded(
+                        child: Text(
+                          'GPS Track + GPX',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  const GpxRecorderWidget(),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Graba tu ruta y expórtala como GPX 1.1 para usarla '
+                    'en otros mapas o dispositivos Garmin.',
+                    style: TextStyle(color: Theme.of(context).hintColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
           // Flashlight
           Card(
             child: Padding(

@@ -5,6 +5,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/prepper_library.dart';
+import '../update/update_page.dart';
 import 'download_manager.dart';
 import 'kiwix_catalog.dart';
 import 'map_catalog.dart';
@@ -21,7 +22,7 @@ class DepotPage extends StatefulWidget {
 class _DepotPageState extends State<DepotPage>
     with SingleTickerProviderStateMixin {
   late final TabController _tabs =
-      TabController(length: 5, vsync: this, initialIndex: widget.initialTab);
+      TabController(length: 6, vsync: this, initialIndex: widget.initialTab);
 
   @override
   void dispose() {
@@ -43,6 +44,7 @@ class _DepotPageState extends State<DepotPage>
             Tab(text: 'Modelos IA', icon: Icon(Icons.psychology, size: 18)),
             Tab(text: 'Mapas', icon: Icon(Icons.map, size: 18)),
             Tab(text: 'Descargas', icon: Icon(Icons.download, size: 18)),
+            Tab(text: 'App', icon: Icon(Icons.system_update, size: 18)),
           ],
         ),
       ),
@@ -54,6 +56,7 @@ class _DepotPageState extends State<DepotPage>
           _ModelsTab(),
           _MapsInstallTab(),
           _DownloadsTab(),
+          UpdatePage(),
         ],
       ),
     );

@@ -57,3 +57,15 @@ La buena noticia: **la gran mayoría de los partos salen bien solos.** Tu trabaj
 ## Cuándo buscar ayuda / trasladar SIEMPRE
 
 Todo parto de emergencia va después al hospital (madre + bebé + placenta). URGENTE si: sangrado abundante, placenta no sale en 1 hora, el bebé no agarra color/tono, viene de nalgas o sale un brazo/el cordón primero (pon a la madre cadera arriba - pecho abajo y traslada YA).
+
+## Ejemplo práctico: Parto de emergencia (el bebé viene ya)
+
+**Situación:** Una embarazada tiene contracciones muy seguidas, presión intensa y no alcanza a llegar al hospital.
+
+**Haz:** 1. Asegura la escena y pide a una persona específica llamar a emergencias. 2. Sigue los pasos grandes de la guía en orden, sin saltar al paso que parece más dramático. 3. Usa guantes, barreras o telas limpias si están disponibles. 4. Reevalúa cada minuto: respiración, conciencia, sangrado, temperatura o empeoramiento.
+
+**Evita:** No improvises maniobras avanzadas, no muevas cuello/columna si sospechas lesión, no des comida/bebida a alguien confundido y no retrases la llamada por buscar equipo perfecto.
+
+**Escala:** Llama o traslada de inmediato si no respira normal, hay dolor de pecho, sangrado que no cede, confusión, quemadura extensa, posible veneno, embarazo avanzado o múltiples víctimas.
+
+**Chequeo rápido:** antes de cerrar la guía, di en voz alta qué pasó, qué hiciste, qué falta y quién queda responsable. Este ejemplo es una práctica guiada; adapta los pasos a tu entorno y prioriza ayuda profesional cuando exista.

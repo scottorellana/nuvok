@@ -159,8 +159,8 @@ class _MeshPageState extends State<MeshPage> {
     await _service.joinChannel(channel);
     if (mounted) {
       setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Unido a "${channel.name}"')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Unido a "${channel.name}"')));
     }
   }
 
@@ -217,9 +217,8 @@ class _MeshPageState extends State<MeshPage> {
                 avatar: Icon(Icons.podcasts,
                     size: 18,
                     color: count > 0 ? Colors.greenAccent : Colors.grey),
-                label: Text(count > 0
-                    ? '$count cerca'
-                    : 'buscando dispositivos…'),
+                label:
+                    Text(count > 0 ? '$count cerca' : 'buscando dispositivos…'),
               ),
             ),
           ),
@@ -250,8 +249,7 @@ class _MeshPageState extends State<MeshPage> {
           const SizedBox(height: 4),
           _channelTile(MeshChannel.emergency,
               subtitle: 'Abierto a todos los dispositivos cercanos'),
-          for (final c in _service.channels)
-            _channelTile(c, showCode: true),
+          for (final c in _service.channels) _channelTile(c, showCode: true),
           if (_service.channels.isEmpty)
             const Padding(
               padding: EdgeInsets.all(16),
@@ -337,17 +335,16 @@ class _MeshPageState extends State<MeshPage> {
                           'SOS ACTIVO — difundiendo tu posición cada minuto '
                           'a todos los dispositivos al alcance.',
                           style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 12),
                   FilledButton.icon(
-                    style:
-                        FilledButton.styleFrom(backgroundColor: Colors.white,
-                            foregroundColor: Colors.red.shade900),
+                    style: FilledButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.red.shade900),
                     onPressed: () => _service.cancelSos(),
                     icon: const Icon(Icons.check_circle),
                     label: const Text('ESTOY A SALVO (cancelar SOS)'),
@@ -463,10 +460,11 @@ class _ChatPageState extends State<_ChatPage> {
   void initState() {
     super.initState();
     _messages = _service.store.loadMessages(widget.channel.id);
+    // Repaint check marks when a delivery ACK arrives.
+    _service.ackTick.addListener(_onAck);
     _sub = _service.events.listen((e) {
       if (e.channel.id != widget.channel.id) return;
-      if (e.envelope.type != MeshType.chat &&
-          e.envelope.type != MeshType.sos) {
+      if (e.envelope.type != MeshType.chat && e.envelope.type != MeshType.sos) {
         return;
       }
       setState(() {
@@ -476,6 +474,7 @@ class _ChatPageState extends State<_ChatPage> {
           '_name': e.envelope.senderName,
           '_type': e.envelope.type.name,
           '_ts': e.envelope.timestampMs,
+          '_msgId': e.envelope.msgId,
         });
       });
       _scrollToEnd();
@@ -489,8 +488,13 @@ class _ChatPageState extends State<_ChatPage> {
         duration: const Duration(milliseconds: 200), curve: Curves.easeOut);
   }
 
+  void _onAck() {
+    if (mounted) setState(() {});
+  }
+
   @override
   void dispose() {
+    _service.ackTick.removeListener(_onAck);
     _sub?.cancel();
     _inputCtrl.dispose();
     _scroll.dispose();
@@ -511,9 +515,36 @@ class _ChatPageState extends State<_ChatPage> {
     final isEmergency = widget.channel.isEmergency;
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEmergency
-            ? 'EMERGENCIA (todos los cercanos)'
-            : widget.channel.name),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(isEmergency
+                ? 'EMERGENCIA (todos los cercanos)'
+                : widget.channel.name),
+            // Live presence: whether any device is currently reachable. This
+            // is the "is the other person online?" indicator.
+            ValueListenableBuilder<int>(
+              valueListenable: _service.peerCount,
+              builder: (context, count, _) => Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.circle,
+                      size: 9,
+                      color: count > 0 ? Colors.lightGreenAccent : Colors.grey),
+                  const SizedBox(width: 4),
+                  Text(
+                    count > 0
+                        ? '$count en línea'
+                        : 'nadie al alcance',
+                    style: const TextStyle(
+                        fontSize: 11, fontWeight: FontWeight.normal),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
         backgroundColor: isEmergency ? Colors.red.shade900 : null,
       ),
       body: Column(
@@ -590,10 +621,33 @@ class _ChatPageState extends State<_ChatPage> {
                                         '(${m['lat']?.toStringAsFixed(4)}, '
                                         '${m['lon']?.toStringAsFixed(4)})'
                                     : m['text'] as String? ?? ''),
-                                Text(
-                                  _fmtTime(m['_ts'] as int?),
-                                  style: const TextStyle(
-                                      fontSize: 10, color: Colors.grey),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      _fmtTime(m['_ts'] as int?),
+                                      style: const TextStyle(
+                                          fontSize: 10, color: Colors.grey),
+                                    ),
+                                    // Delivery state for OUR messages: single
+                                    // check = sent, double = a peer confirmed
+                                    // receipt (ACK). Only chat carries ACKs.
+                                    if (mine && !isSos) ...[
+                                      const SizedBox(width: 4),
+                                      Builder(builder: (_) {
+                                        final id = m['_msgId'] as int?;
+                                        final delivered = id != null &&
+                                            _service.isDelivered(id);
+                                        return Icon(
+                                          delivered ? Icons.done_all : Icons.done,
+                                          size: 13,
+                                          color: delivered
+                                              ? Colors.lightBlueAccent
+                                              : Colors.grey,
+                                        );
+                                      }),
+                                    ],
+                                  ],
                                 ),
                               ],
                             ),

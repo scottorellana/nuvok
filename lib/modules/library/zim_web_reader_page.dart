@@ -190,8 +190,7 @@ class _ZimWebReaderPageState extends State<ZimWebReaderPage> {
                 if (url.host == '127.0.0.1' || url.scheme == 'about') {
                   return NavigationActionPolicy.ALLOW;
                 }
-                _showSnack(
-                    'Enlace externo — no disponible sin internet: $url');
+                _showSnack('Enlace externo — no disponible sin internet: $url');
                 return NavigationActionPolicy.CANCEL;
               },
             ),
@@ -208,8 +207,7 @@ class _ZimWebReaderPageState extends State<ZimWebReaderPage> {
                     for (final s in _suggestions)
                       ListTile(
                         dense: true,
-                        leading:
-                            const Icon(Icons.article_outlined, size: 18),
+                        leading: const Icon(Icons.article_outlined, size: 18),
                         title: Text(s.title),
                         onTap: () => _goTo(s.entry.fullPath),
                       ),

@@ -57,7 +57,8 @@ class PrepperPadApp extends StatelessWidget {
         filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
             minimumSize: const Size(88, 52),
-            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            textStyle:
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ),
         cardTheme: CardThemeData(
@@ -67,7 +68,8 @@ class PrepperPadApp extends StatelessWidget {
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -115,7 +117,8 @@ class _HomeShellState extends State<HomeShell> {
         const ToolsPage(),
         const NotesPage(),
         // Keyed so switching the starter-tab target rebuilds the Depot.
-        DepotPage(key: ValueKey(_depotInitialTab), initialTab: _depotInitialTab),
+        DepotPage(
+            key: ValueKey(_depotInitialTab), initialTab: _depotInitialTab),
       ];
 
   @override
@@ -178,8 +181,8 @@ class _HomeShellState extends State<HomeShell> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cerrar',
-                style: TextStyle(color: Colors.white70)),
+            child:
+                const Text('Cerrar', style: TextStyle(color: Colors.white70)),
           ),
           if (lat != null && lon != null)
             FilledButton.icon(
@@ -252,8 +255,7 @@ class _HomeShellState extends State<HomeShell> {
                 child: Column(
                   children: [
                     Icon(Icons.backpack,
-                        size: 34,
-                        color: Theme.of(context).colorScheme.primary),
+                        size: 34, color: Theme.of(context).colorScheme.primary),
                     const SizedBox(height: 4),
                     Text('Prepper\nPad',
                         textAlign: TextAlign.center,
@@ -275,7 +277,8 @@ class _HomeShellState extends State<HomeShell> {
               child: Column(
                 children: [
                   _LowBatteryBanner(
-                    onOpenSaver: () => setState(() => _index = 6), // Herramientas
+                    onOpenSaver: () =>
+                        setState(() => _index = 6), // Herramientas
                   ),
                   UpdateBanner(
                     onOpen: () => setState(() {
@@ -315,8 +318,7 @@ class _LowBatteryBanner extends StatelessWidget {
           child: InkWell(
             onTap: onOpenSaver,
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Row(
                 children: [
                   const Icon(Icons.battery_alert,
@@ -332,8 +334,7 @@ class _LowBatteryBanner extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: onOpenSaver,
-                    style: TextButton.styleFrom(
-                        foregroundColor: Colors.white),
+                    style: TextButton.styleFrom(foregroundColor: Colors.white),
                     child: const Text('ABRIR'),
                   ),
                 ],

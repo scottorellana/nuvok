@@ -40,8 +40,7 @@ void main() {
     final canvas = ui.Canvas(recorder);
     vtr.Renderer(theme: theme).render(
       canvas,
-      vtr.TileSource(
-          tileset: vtr.Tileset({'protomaps': tile})),
+      vtr.TileSource(tileset: vtr.Tileset({'protomaps': tile})),
       zoomScaleFactor: 1,
       zoom: z.toDouble(),
       rotation: 0,

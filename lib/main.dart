@@ -21,7 +21,9 @@ Future<void> main() async {
   // Opportunistic update check: only does anything useful if the device has
   // internet right now; silently no-ops otherwise. Never blocks startup —
   // the app is 100% usable offline whether or not this ever completes.
-  unawaited(UpdateService.instance.init().then((_) => UpdateService.instance.check()));
+  unawaited(UpdateService.instance
+      .init()
+      .then((_) => UpdateService.instance.check()));
   runApp(PrepperPadApp(firstRun: firstRun));
 }
 

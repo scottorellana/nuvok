@@ -50,3 +50,15 @@ De lado (posición de recuperación). A un bebé sostenlo en tus brazos de lado,
 
 - Vuelve a quedar flácido o azul → reinicia soplos y compresiones ya.
 - Vomita → de lado, limpia la boca en 2 segundos, continúa.
+
+## Ejemplo práctico: RCP en niños y bebés
+
+**Situación:** Un niño pequeño se desploma después de jugar y no respira normal; hay dos adultos presentes y un teléfono cargado.
+
+**Haz:** 1. Asegura la escena y pide a una persona específica llamar a emergencias. 2. Sigue los pasos grandes de la guía en orden, sin saltar al paso que parece más dramático. 3. Usa guantes, barreras o telas limpias si están disponibles. 4. Reevalúa cada minuto: respiración, conciencia, sangrado, temperatura o empeoramiento.
+
+**Evita:** No improvises maniobras avanzadas, no muevas cuello/columna si sospechas lesión, no des comida/bebida a alguien confundido y no retrases la llamada por buscar equipo perfecto.
+
+**Escala:** Llama o traslada de inmediato si no respira normal, hay dolor de pecho, sangrado que no cede, confusión, quemadura extensa, posible veneno, embarazo avanzado o múltiples víctimas.
+
+**Chequeo rápido:** antes de cerrar la guía, di en voz alta qué pasó, qué hiciste, qué falta y quién queda responsable. Este ejemplo es una práctica guiada; adapta los pasos a tu entorno y prioriza ayuda profesional cuando exista.

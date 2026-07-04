@@ -26,11 +26,55 @@ class RetrievedSource {
 class LibraryRetriever {
   // Very common Spanish/English words that add noise to keyword matching.
   static const _stop = {
-    'el', 'la', 'los', 'las', 'un', 'una', 'de', 'del', 'y', 'o', 'a', 'en',
-    'que', 'como', 'cual', 'cuales', 'es', 'son', 'para', 'por', 'con', 'se',
-    'su', 'mi', 'lo', 'me', 'te', 'qué', 'cómo', 'cuál', 'the', 'an',
-    'of', 'and', 'or', 'to', 'in', 'is', 'are', 'for', 'by', 'with', 'how',
-    'what', 'which', 'do', 'i', 'my', 'can',
+    'el',
+    'la',
+    'los',
+    'las',
+    'un',
+    'una',
+    'de',
+    'del',
+    'y',
+    'o',
+    'a',
+    'en',
+    'que',
+    'como',
+    'cual',
+    'cuales',
+    'es',
+    'son',
+    'para',
+    'por',
+    'con',
+    'se',
+    'su',
+    'mi',
+    'lo',
+    'me',
+    'te',
+    'qué',
+    'cómo',
+    'cuál',
+    'the',
+    'an',
+    'of',
+    'and',
+    'or',
+    'to',
+    'in',
+    'is',
+    'are',
+    'for',
+    'by',
+    'with',
+    'how',
+    'what',
+    'which',
+    'do',
+    'i',
+    'my',
+    'can',
   };
 
   static List<String> keywords(String question) {
@@ -124,9 +168,7 @@ class LibraryRetriever {
     // Cut at a sentence boundary near the limit.
     final cut = collapsed.substring(0, maxChars);
     final lastStop = cut.lastIndexOf('. ');
-    return lastStop > maxChars ~/ 2
-        ? cut.substring(0, lastStop + 1)
-        : '$cut…';
+    return lastStop > maxChars ~/ 2 ? cut.substring(0, lastStop + 1) : '$cut…';
   }
 
   /// Builds the system prompt that grounds the model in the retrieved

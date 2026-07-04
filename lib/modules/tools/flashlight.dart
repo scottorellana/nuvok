@@ -152,8 +152,8 @@ class _FlashlightScreenState extends State<FlashlightScreen> {
   void _runUiSos() {
     _uiOn = _uiStep.isEven;
     if (mounted) setState(() {});
-    final delay = FlashlightController.sosPattern[_uiStep %
-        FlashlightController.sosPattern.length];
+    final delay = FlashlightController
+        .sosPattern[_uiStep % FlashlightController.sosPattern.length];
     _uiSosTimer = Timer(delay, () {
       _uiStep++;
       if (_controller.mode == FlashlightMode.sos) {
@@ -172,8 +172,7 @@ class _FlashlightScreenState extends State<FlashlightScreen> {
       return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-            title: const Text('Linterna'),
-            backgroundColor: Colors.black),
+            title: const Text('Linterna'), backgroundColor: Colors.black),
         body: GestureDetector(
           onTap: () => _controller.setMode(FlashlightMode.on),
           child: Container(
@@ -182,8 +181,7 @@ class _FlashlightScreenState extends State<FlashlightScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: const [
-                Icon(Icons.flashlight_on,
-                    color: Colors.white54, size: 64),
+                Icon(Icons.flashlight_on, color: Colors.white54, size: 64),
                 SizedBox(height: 16),
                 Text('Toca para encender',
                     style: TextStyle(color: Colors.white54, fontSize: 18)),

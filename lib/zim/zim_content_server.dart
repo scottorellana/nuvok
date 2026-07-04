@@ -43,8 +43,7 @@ class ZimContentServer {
     _zims.remove(_idFor(zim.path));
   }
 
-  String _idFor(String path) =>
-      path.hashCode.toUnsigned(32).toRadixString(16);
+  String _idFor(String path) => path.hashCode.toUnsigned(32).toRadixString(16);
 
   Future<void> _handle(HttpRequest req) async {
     try {
@@ -60,8 +59,7 @@ class ZimContentServer {
         await req.response.close();
         return;
       }
-      final zimPath =
-          segments.sublist(2).map(Uri.decodeComponent).join('/');
+      final zimPath = segments.sublist(2).map(Uri.decodeComponent).join('/');
       await _serveEntry(req, zim, zimPath);
     } catch (_) {
       try {
@@ -71,8 +69,7 @@ class ZimContentServer {
     }
   }
 
-  Future<void> _serveEntry(
-      HttpRequest req, ZimFile zim, String zimPath) async {
+  Future<void> _serveEntry(HttpRequest req, ZimFile zim, String zimPath) async {
     final slash = zimPath.indexOf('/');
     final res = req.response;
     if (slash != 1) {
@@ -80,8 +77,7 @@ class ZimContentServer {
       await res.close();
       return;
     }
-    var entry =
-        await zim.entryByPath(zimPath[0], zimPath.substring(2));
+    var entry = await zim.entryByPath(zimPath[0], zimPath.substring(2));
     if (entry == null) {
       res.statusCode = HttpStatus.notFound;
       res.headers.contentType = ContentType.html;
@@ -93,8 +89,8 @@ class ZimContentServer {
     if (entry.isRedirect) {
       final target = await zim.resolveRedirect(entry);
       res.statusCode = HttpStatus.movedTemporarily;
-      res.headers.set(
-          HttpHeaders.locationHeader, urlFor(zim, target.fullPath).path);
+      res.headers
+          .set(HttpHeaders.locationHeader, urlFor(zim, target.fullPath).path);
       await res.close();
       return;
     }
@@ -113,8 +109,7 @@ class ZimContentServer {
       await res.close();
       return;
     }
-    res.headers.contentType =
-        ContentType.parse(_normalizeMime(blob.mimeType));
+    res.headers.contentType = ContentType.parse(_normalizeMime(blob.mimeType));
     res.headers.set(HttpHeaders.acceptRangesHeader, 'bytes');
     res.contentLength = blob.data.length;
     res.add(blob.data);
@@ -146,8 +141,8 @@ class ZimContentServer {
       }
       if (end >= loc.length) end = loc.length - 1;
       res.statusCode = HttpStatus.partialContent;
-      res.headers.set(HttpHeaders.contentRangeHeader,
-          'bytes $start-$end/${loc.length}');
+      res.headers.set(
+          HttpHeaders.contentRangeHeader, 'bytes $start-$end/${loc.length}');
     }
     res.headers.contentType = ContentType.parse(_normalizeMime(loc.mimeType));
     res.headers.set(HttpHeaders.acceptRangesHeader, 'bytes');

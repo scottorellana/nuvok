@@ -53,7 +53,8 @@ void main() {
       expect(chunks[1].length, 5); // header + 1 payload byte
     });
 
-    test('large 64KB datagram fragments into the expected number of chunks', () {
+    test('large 64KB datagram fragments into the expected number of chunks',
+        () {
       final data = Uint8List.fromList(List.generate(65536, (i) => i & 0xff));
       final chunks = BleFrame.fragment(data);
       // payload per chunk = 196; ceil(65536 / 196) = 335
@@ -103,7 +104,8 @@ void main() {
       expect(out, isEmpty);
     });
 
-    test('out-of-order middle chunks are tolerated (buffer keyed by offset)', () {
+    test('out-of-order middle chunks are tolerated (buffer keyed by offset)',
+        () {
       // Our _Buffer writes in arrival order and emits the concatenation; the
       // reassembler itself just needs a START then END to fire. Reordering
       // middle chunks is inherently unsupported by the simple wire format, so
@@ -192,8 +194,7 @@ void main() {
       // connect, and subscribe to incoming streams).
       await Future<void>.delayed(const Duration(milliseconds: 200));
 
-      final payload =
-          Uint8List.fromList(List.generate(1200, (i) => i & 0xff));
+      final payload = Uint8List.fromList(List.generate(1200, (i) => i & 0xff));
       final completer = Completer<Uint8List>();
       final sub = b.onData.listen(completer.complete);
 

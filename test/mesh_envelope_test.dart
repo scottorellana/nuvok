@@ -57,8 +57,7 @@ void main() {
 
     test('decode de basura devuelve null', () {
       expect(MeshEnvelope.decode(Uint8List.fromList([1, 2, 3])), isNull);
-      expect(
-          MeshEnvelope.decode(Uint8List.fromList(List.filled(64, 0xFF))),
+      expect(MeshEnvelope.decode(Uint8List.fromList(List.filled(64, 0xFF))),
           isNull);
     });
 
@@ -95,8 +94,7 @@ void main() {
     });
 
     test('emergencia va en claro y siempre se puede leer', () async {
-      final sealed =
-          await sealPayload({'sos': true}, MeshChannel.emergency);
+      final sealed = await sealPayload({'sos': true}, MeshChannel.emergency);
       final opened = await openPayload(sealed, MeshChannel.emergency);
       expect(opened!['sos'], isTrue);
     });

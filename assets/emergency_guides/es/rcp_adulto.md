@@ -40,7 +40,7 @@ Arrodíllate, sacude sus hombros con firmeza y grita: **"¿Me oyes? ¡Abre los o
 Grita a alguien concreto: **"¡TÚ, el de camisa azul: llama a emergencias y busca un desfibrilador (DEA)!"**
 
 - Si estás solo con teléfono: llama con altavoz activado mientras empiezas
-- Si estás solo sin teléfono: RCP 2 minutos ANTES de ir a buscar ayuda
+- Si estás solo sin teléfono y es un adulto: ve por ayuda/DEA rápido y vuelve a comprimir; en niños o ahogamiento/asfixia, 2 minutos de RCP antes de ir por ayuda
 
 ### 4️⃣ Posición correcta
 - Boca arriba sobre superficie **DURA** (suelo, NO cama)
@@ -116,3 +116,21 @@ Minuto 10: Sin RCP → ~0% probabilidad
 | Deja de respirar otra vez | Reiniciar compresiones YA |
 | Vomita | Girar de lado, limpiar boca con dedo envuelto en tela |
 | Cambia a color normal | Mantener posición, vigilar respiración |
+
+## Ejemplo práctico: RCP en adultos (no respira / sin pulso)
+
+**Situación:** Un adulto cae al suelo en una sala, no responde al hablarle fuerte ni al tocar sus hombros y solo jadea de vez en cuando.
+
+**Haz:** 1. Asegura la escena y pide a una persona específica llamar a emergencias. 2. Sigue los pasos grandes de la guía en orden, sin saltar al paso que parece más dramático. 3. Usa guantes, barreras o telas limpias si están disponibles. 4. Reevalúa cada minuto: respiración, conciencia, sangrado, temperatura o empeoramiento.
+
+**Evita:** No improvises maniobras avanzadas, no muevas cuello/columna si sospechas lesión, no des comida/bebida a alguien confundido y no retrases la llamada por buscar equipo perfecto.
+
+**Escala:** Llama o traslada de inmediato si no respira normal, hay dolor de pecho, sangrado que no cede, confusión, quemadura extensa, posible veneno, embarazo avanzado o múltiples víctimas.
+
+**Chequeo rápido:** antes de cerrar la guía, di en voz alta qué pasó, qué hiciste, qué falta y quién queda responsable. Este ejemplo es una práctica guiada; adapta los pasos a tu entorno y prioriza ayuda profesional cuando exista.
+
+## Base científica e improvisación
+
+- Basado en AHA 2025: compresiones 100-120/min, profundidad adulta 5-6 cm, rebote completo, pausas mínimas y DEA temprano.
+- Si no sabes o no quieres ventilar, haz RCP solo con manos sin parar hasta que llegue ayuda o un DEA.
+- Improvisa ritmo con el metrónomo de la app, una canción de 100-120 BPM o conteo en voz alta; no improvises buscando pulso si no estás entrenado.

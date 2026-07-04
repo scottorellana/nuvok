@@ -35,3 +35,15 @@ priority: 2
 - Linterna + silbato
 - Radio de emergencias
 - Baterías extra
+
+## Ejemplo práctico: Inundación
+
+**Situación:** La calle frente a la casa empieza a llenarse de agua y sigue subiendo.
+
+**Haz:** 1. Deténte 30 segundos y define el peligro principal. 2. Reúne agua, abrigo, luz, comunicación y una ruta segura. 3. Ejecuta la acción más simple que reduce riesgo ahora. 4. Marca lo hecho en notas/checklist para que otra persona pueda continuar.
+
+**Evita:** No gastes batería sin plan, no cruces agua en movimiento, no comas plantas desconocidas, no te separes del grupo y no esperes a que oscurezca para montar refugio.
+
+**Escala:** Cambia de plan si el clima empeora, baja la temperatura corporal, falta agua segura, hay niños/adultos mayores vulnerables o pierdes orientación.
+
+**Chequeo rápido:** antes de cerrar la guía, di en voz alta qué pasó, qué hiciste, qué falta y quién queda responsable. Este ejemplo es una práctica guiada; adapta los pasos a tu entorno y prioriza ayuda profesional cuando exista.

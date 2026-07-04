@@ -29,7 +29,7 @@ priority: 1
 
 1. **Safety first (3 seconds).** Look around: wires, traffic, water, gas, smoke? Don't become victim two. Move the person ONLY if the scene is dangerous.
 2. **Check response.** Kneel, shake their shoulders firmly, shout: "Can you hear me? Open your eyes!"
-3. **Get help NOW.** Point at someone specific: "YOU, blue shirt: call emergency services and find a defibrillator (AED)!" Alone with a phone: call on speaker while you start. Alone with no phone: do 2 minutes of CPR BEFORE leaving to get help.
+3. **Get help NOW.** Point at someone specific: "YOU, blue shirt: call emergency services and find a defibrillator (AED)!" Alone with a phone: call on speaker while you start. Alone with no phone and an adult victim: go get help/AED fast and return to compressions; for children or drowning/asphyxia, do 2 minutes of CPR before leaving.
 4. **Flat on their back on a HARD surface** (floor, not bed). Bare the chest.
 5. **Hand position:** heel of one hand on the **center of the chest** (lower half of the breastbone, between the nipples). Other hand on top, fingers interlaced and lifted off the chest.
 6. **Push HARD and FAST:**
@@ -56,3 +56,21 @@ Roll them onto their side (recovery position): near arm at a right angle, back o
 
 - Breathing stops again → restart compressions immediately.
 - Vomiting → roll to the side, sweep the mouth quickly with a cloth-wrapped finger, continue.
+
+## Example practice: CPR for adults (not breathing / no pulse)
+
+**Situation:** An adult collapses in a living room, does not respond to a loud voice or shoulder tap, and only gasps occasionally.
+
+**Do:** 1. Make the scene safe and assign one specific person to call emergency services. 2. Follow the large steps in this guide in order instead of jumping to the most dramatic action. 3. Use gloves, barriers, or clean cloth if available. 4. Recheck every minute: breathing, responsiveness, bleeding, temperature, or worsening signs.
+
+**Avoid:** Do not improvise advanced procedures, do not move the neck/spine if injury is suspected, do not give food or drink to a confused person, and do not delay calling because you are searching for perfect equipment.
+
+**Escalate:** Call or evacuate immediately if breathing is not normal, chest pain appears, bleeding does not stop, confusion worsens, a burn is large, poisoning is possible, pregnancy is advanced, or there are multiple victims.
+
+**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.
+
+## Evidence base and improvisation
+
+- Based on AHA 2025: compressions 100-120/min, adult depth 5-6 cm, full recoil, minimal pauses, and early AED.
+- If you do not know or do not want to give breaths, use hands-only CPR without stopping until help or an AED arrives.
+- Improvise rhythm with the app metronome, a 100-120 BPM song, or counting out loud; do not improvise by hunting for a pulse if untrained.

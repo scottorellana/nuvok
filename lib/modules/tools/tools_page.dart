@@ -70,9 +70,8 @@ class ToolsPage extends StatelessWidget {
                             : 'Maximiza la autonomía en una emergencia: reduce '
                                 'consumo y desactiva servicios no esenciales.',
                         style: TextStyle(
-                            color: low
-                                ? Colors.red
-                                : Theme.of(context).hintColor),
+                            color:
+                                low ? Colors.red : Theme.of(context).hintColor),
                       ),
                     ],
                   ),
@@ -91,7 +90,8 @@ class ToolsPage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.sports_score, size: 32, color: Colors.red),
+                      const Icon(Icons.sports_score,
+                          size: 32, color: Colors.red),
                       const SizedBox(width: 12),
                       const Expanded(
                         child: Text(
@@ -242,7 +242,7 @@ class ToolsPage extends StatelessWidget {
                       'linterna en modo SOS es visible a kilómetros en la '
                       'oscuridad.',
                       style: TextStyle(
-                        color: Theme.of(context).hintColor, fontSize: 13),
+                          color: Theme.of(context).hintColor, fontSize: 13),
                     ),
                   ),
                 ],

@@ -38,7 +38,8 @@ void main() {
     // ignore: avoid_print
     print('POIs encontrados: ${pois.length} → $byCat');
     // ignore: avoid_print
-    print('Ejemplos: ${pois.take(8).map((p) => '${p.kind}:${p.name}').toList()}');
+    print(
+        'Ejemplos: ${pois.take(8).map((p) => '${p.kind}:${p.name}').toList()}');
     expect(pois, isNotEmpty,
         reason: 'el mapa debería contener al menos algunos POIs');
   });

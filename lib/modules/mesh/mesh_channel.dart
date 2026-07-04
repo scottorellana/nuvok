@@ -30,8 +30,7 @@ class MeshChannel {
 
   /// Shareable code (QR / copy-paste): PPMESH1:base64url(name\nkeyhex)
   String toCode() {
-    final keyHex =
-        key.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+    final keyHex = key.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
     return 'PPMESH1:${base64Url.encode(utf8.encode('$name\n$keyHex'))}';
   }
 
@@ -56,8 +55,7 @@ class MeshChannel {
 
   static MeshChannel create(String name) {
     final rnd = Random.secure();
-    final key =
-        Uint8List.fromList(List.generate(32, (_) => rnd.nextInt(256)));
+    final key = Uint8List.fromList(List.generate(32, (_) => rnd.nextInt(256)));
     return MeshChannel(name: name, key: key);
   }
 

@@ -103,24 +103,87 @@ class EmergencyGuides {
   /// body hit 1 per occurrence (capped). Empty query → all by priority.
   /// Keywords have MUCH higher weight than body matches.
   /// Ignores common Spanish stopwords like "se", "el", "la", "un", etc.
-  static List<EmergencyGuide> search(
-      List<EmergencyGuide> all, String query) {
+  static List<EmergencyGuide> search(List<EmergencyGuide> all, String query) {
     final q = _norm(query);
     if (q.isEmpty) return List.of(all);
-    
+
     // Filter out common stopwords that cause noise
     // Filter out common stopwords that cause noise (use normalized versions)
-    const stopwords = {'se', 'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 
-                       'de', 'del', 'al', 'en', 'por', 'para', 'con', 'sin', 'sobre',
-                       'y', 'o', 'u', 'e', 'i', 'a', 'que', 'es', 'son', 'esta',
-                       'le', 'les', 'me', 'te', 'nos', 'os', 'mi', 'su', 'yo', 
-                       'ella', 'ellos', 'ellas', 'nosotros', 'vosotros',
-                       'lo', 'si', 'no', 'mas', 'muy', 'ya', 'todo', 'toda', 'todos',
-                       'todas', 'este', 'estos', 'estas', 'ese', 'esa', 'esos',
-                       'esas', 'aquel', 'aquella', 'aquellos', 'aquellas', 'como', 
-                       'cuando', 'donde', 'porque', 'pero', 'aunque', 'mientras'};
-    
-    final terms = q.split(RegExp(r'\s+'))
+    const stopwords = {
+      'se',
+      'el',
+      'la',
+      'los',
+      'las',
+      'un',
+      'una',
+      'unos',
+      'unas',
+      'de',
+      'del',
+      'al',
+      'en',
+      'por',
+      'para',
+      'con',
+      'sin',
+      'sobre',
+      'y',
+      'o',
+      'u',
+      'e',
+      'i',
+      'a',
+      'que',
+      'es',
+      'son',
+      'esta',
+      'le',
+      'les',
+      'me',
+      'te',
+      'nos',
+      'os',
+      'mi',
+      'su',
+      'yo',
+      'ella',
+      'ellos',
+      'ellas',
+      'nosotros',
+      'vosotros',
+      'lo',
+      'si',
+      'no',
+      'mas',
+      'muy',
+      'ya',
+      'todo',
+      'toda',
+      'todos',
+      'todas',
+      'este',
+      'estos',
+      'estas',
+      'ese',
+      'esa',
+      'esos',
+      'esas',
+      'aquel',
+      'aquella',
+      'aquellos',
+      'aquellas',
+      'como',
+      'cuando',
+      'donde',
+      'porque',
+      'pero',
+      'aunque',
+      'mientras'
+    };
+
+    final terms = q
+        .split(RegExp(r'\s+'))
         .where((t) => t.length > 1 && !stopwords.contains(t))
         .toList();
     if (terms.isEmpty) return List.of(all);

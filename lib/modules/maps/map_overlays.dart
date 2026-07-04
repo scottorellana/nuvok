@@ -26,7 +26,8 @@ enum OverlayKind {
 }
 
 extension OverlayKindInfo on OverlayKind {
-  bool get isArea => this == OverlayKind.safeZone || this == OverlayKind.riskZone;
+  bool get isArea =>
+      this == OverlayKind.safeZone || this == OverlayKind.riskZone;
   bool get isLine => this == OverlayKind.evacuationRoute;
   bool get isPoint => !isArea && !isLine;
 
@@ -113,19 +114,21 @@ class MapOverlay {
       final rawCoords = geom['coordinates'] as List;
       List<LatLng> pts;
       if (type == 'Point') {
-        pts = [LatLng((rawCoords[1] as num).toDouble(),
-            (rawCoords[0] as num).toDouble())];
+        pts = [
+          LatLng((rawCoords[1] as num).toDouble(),
+              (rawCoords[0] as num).toDouble())
+        ];
       } else if (type == 'LineString') {
         pts = rawCoords
-            .map((c) => LatLng(
-                (c[1] as num).toDouble(), (c[0] as num).toDouble()))
+            .map((c) =>
+                LatLng((c[1] as num).toDouble(), (c[0] as num).toDouble()))
             .toList();
       } else {
         // Polygon: take outer ring, drop the closing duplicate.
         final ring = (rawCoords.first as List);
         pts = ring
-            .map((c) => LatLng(
-                (c[1] as num).toDouble(), (c[0] as num).toDouble()))
+            .map((c) =>
+                LatLng((c[1] as num).toDouble(), (c[0] as num).toDouble()))
             .toList();
         if (pts.length > 1 && pts.first == pts.last) pts.removeLast();
       }

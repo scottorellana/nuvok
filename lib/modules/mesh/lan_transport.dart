@@ -18,7 +18,15 @@ class LanTransport implements MeshTransport {
   static const _lock = MethodChannel('prepper/multicast');
 
   RawDatagramSocket? _socket;
-  final _data = StreamController<Uint8List>.broadcast();
+  StreamController<Uint8List> _data = StreamController<Uint8List>.broadcast();
+
+  // Source addresses we've received datagrams from recently. Once we've heard
+  // even one packet from a peer, we send future traffic to it by UNICAST too —
+  // which keeps working when the WiFi AP or phone hotspot filters multicast /
+  // broadcast between clients (the single most common reason mesh chat "sends
+  // but never arrives" on real networks).
+  final Map<String, (InternetAddress, DateTime)> _peerAddrs = {};
+  static const _peerAddrTtl = Duration(minutes: 3);
 
   @override
   String get name => 'lan';
@@ -29,6 +37,12 @@ class LanTransport implements MeshTransport {
   @override
   Future<void> start() async {
     if (_socket != null) return;
+    // A previous stop() closes the stream controller; recreate it so a
+    // stop→start cycle (battery saver, app resume) doesn't leave reception
+    // permanently dead.
+    if (_data.isClosed) {
+      _data = StreamController<Uint8List>.broadcast();
+    }
     try {
       await _lock.invokeMethod('acquire');
     } catch (_) {
@@ -82,7 +96,10 @@ class LanTransport implements MeshTransport {
       if (event != RawSocketEvent.read) return;
       final dg = socket.receive();
       if (dg != null && dg.data.isNotEmpty) {
-        _data.add(Uint8List.fromList(dg.data));
+        // Remember who this came from so we can reach them by unicast even if
+        // multicast/broadcast later gets filtered.
+        _peerAddrs[dg.address.address] = (dg.address, DateTime.now());
+        if (!_data.isClosed) _data.add(Uint8List.fromList(dg.data));
       }
     });
     _socket = socket;
@@ -102,11 +119,22 @@ class LanTransport implements MeshTransport {
   Future<void> send(Uint8List datagram) async {
     final s = _socket;
     if (s == null) return;
+    // 1) Multicast — the efficient path when the network forwards it.
     try {
       s.send(datagram, _group, port);
     } catch (_) {}
+    // 2) Limited broadcast — some Android vendors filter one but not the other.
     try {
       s.send(datagram, InternetAddress('255.255.255.255'), port);
     } catch (_) {}
+    // 3) Unicast to every peer we've heard from recently — the reliable path
+    //    when the AP/hotspot drops multicast AND broadcast between clients.
+    final now = DateTime.now();
+    _peerAddrs.removeWhere((_, v) => now.difference(v.$2) > _peerAddrTtl);
+    for (final entry in _peerAddrs.values) {
+      try {
+        s.send(datagram, entry.$1, port);
+      } catch (_) {}
+    }
   }
 }

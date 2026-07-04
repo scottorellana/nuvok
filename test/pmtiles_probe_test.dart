@@ -34,9 +34,9 @@ void main() {
       final (x, y) = tileXY(14.0723, -87.1921, z); // Tegucigalpa
       final bytes = await provider.provide(TileIdentity(z, x, y));
       final gzip = bytes.length > 2 && bytes[0] == 0x1f && bytes[1] == 0x8b;
-      final tile = vtr.TileFactory(
-              ProtomapsThemes.lightV4(), const vtr.Logger.noop())
-          .create(vtr.VectorTileReader().read(bytes));
+      final tile =
+          vtr.TileFactory(ProtomapsThemes.lightV4(), const vtr.Logger.noop())
+              .create(vtr.VectorTileReader().read(bytes));
       expect(bytes.length, greaterThan(0));
       expect(gzip, isFalse, reason: 'tile z$z llegó comprimido (gzip)');
       expect(tile.layers, isNotEmpty);

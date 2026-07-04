@@ -18,7 +18,14 @@ void main() {
     });
 
     test('peatonales excluidas en vehículo, permitidas a pie', () {
-      for (final kd in ['footway', 'steps', 'path', 'pedestrian', 'sidewalk', 'crossing']) {
+      for (final kd in [
+        'footway',
+        'steps',
+        'path',
+        'pedestrian',
+        'sidewalk',
+        'crossing'
+      ]) {
         final a = EdgeAttrs(kindDetail: kd);
         expect(RoadRouter.edgeMultiplier(a, RouteProfile.vehicle), isNull,
             reason: '$kd debe excluirse en vehículo');
@@ -81,10 +88,14 @@ void main() {
       LatLng(15.50, -88.00),
     ];
     test('punto dentro del polígono', () {
-      expect(RoadRouter.insideAnyZone(const LatLng(15.505, -88.005), const [zone]), isTrue);
+      expect(
+          RoadRouter.insideAnyZone(const LatLng(15.505, -88.005), const [zone]),
+          isTrue);
     });
     test('punto fuera del polígono', () {
-      expect(RoadRouter.insideAnyZone(const LatLng(15.52, -88.005), const [zone]), isFalse);
+      expect(
+          RoadRouter.insideAnyZone(const LatLng(15.52, -88.005), const [zone]),
+          isFalse);
     });
   });
 

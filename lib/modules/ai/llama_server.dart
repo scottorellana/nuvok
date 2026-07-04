@@ -51,15 +51,11 @@ class LlamaServer extends ChangeNotifier {
       if (Platform.isMacOS) {
         final result = await Process.run('vm_stat', []);
         final out = result.stdout as String;
-        final pageSize = RegExp(r'page size of (\d+)')
-                .firstMatch(out)
-                ?.group(1) ??
-            '16384';
+        final pageSize =
+            RegExp(r'page size of (\d+)').firstMatch(out)?.group(1) ?? '16384';
         int pages(String name) =>
-            int.tryParse(RegExp('$name:\\s+(\\d+)')
-                    .firstMatch(out)
-                    ?.group(1) ??
-                '0') ??
+            int.tryParse(
+                RegExp('$name:\\s+(\\d+)').firstMatch(out)?.group(1) ?? '0') ??
             0;
         final free = pages('Pages free') +
             pages('Pages inactive') +
@@ -68,10 +64,9 @@ class LlamaServer extends ChangeNotifier {
       }
       if (Platform.isLinux) {
         final meminfo = await File('/proc/meminfo').readAsString();
-        final kb = int.tryParse(RegExp(r'MemAvailable:\s+(\d+) kB')
-                .firstMatch(meminfo)
-                ?.group(1) ??
-            '');
+        final kb = int.tryParse(
+            RegExp(r'MemAvailable:\s+(\d+) kB').firstMatch(meminfo)?.group(1) ??
+                '');
         return kb == null ? null : kb * 1024;
       }
     } catch (_) {}
@@ -83,8 +78,7 @@ class LlamaServer extends ChangeNotifier {
     final binary = findBinary();
     if (binary == null) {
       status = LlamaStatus.error;
-      lastError =
-          'No se encontró el motor de IA (llama-server) en la app.';
+      lastError = 'No se encontró el motor de IA (llama-server) en la app.';
       notifyListeners();
       return;
     }
@@ -99,11 +93,16 @@ class LlamaServer extends ChangeNotifier {
       await probe.close();
 
       _process = await Process.start(binary, [
-        '-m', modelPath,
-        '--host', '127.0.0.1',
-        '--port', '$_port',
-        '-c', '4096',
-        '-ngl', '99',
+        '-m',
+        modelPath,
+        '--host',
+        '127.0.0.1',
+        '--port',
+        '$_port',
+        '-c',
+        '4096',
+        '-ngl',
+        '99',
         '--jinja',
       ]);
       _process!.exitCode.then((code) {

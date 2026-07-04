@@ -148,8 +148,7 @@ class _ZimClassicReaderPageState extends State<ZimClassicReaderPage> {
 
   void _showSnack(String msg) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(msg)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
   void _onSearchChanged(String text) {
@@ -180,8 +179,8 @@ class _ZimClassicReaderPageState extends State<ZimClassicReaderPage> {
     if (h.startsWith('/')) return '$ns${h.startsWith('/') ? h : '/$h'}';
     // Relative resolution within the namespace.
     final currentUrl = current.length > 2 ? current.substring(2) : '';
-    final baseSegments =
-        currentUrl.split('/')..removeLast(); // directory of current article
+    final baseSegments = currentUrl.split('/')
+      ..removeLast(); // directory of current article
     final segments = [...baseSegments, ...h.split('/')];
     final out = <String>[];
     for (final s in segments) {
@@ -301,8 +300,7 @@ class _ZimClassicReaderPageState extends State<ZimClassicReaderPage> {
             )
           else if (!_loadingArticle)
             const Center(child: Text('Busca un artículo para empezar')),
-          if (_loadingArticle)
-            const Center(child: CircularProgressIndicator()),
+          if (_loadingArticle) const Center(child: CircularProgressIndicator()),
           if (_suggestions.isNotEmpty)
             Positioned(
               top: 0,

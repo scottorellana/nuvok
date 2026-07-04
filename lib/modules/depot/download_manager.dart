@@ -34,8 +34,8 @@ class DownloadManager extends ChangeNotifier {
 
   void enqueue(String url, String destPath, {int? totalBytes}) {
     if (File(destPath).existsSync()) return; // already downloaded
-    if (tasks.any((t) =>
-        t.destPath == destPath && t.status != DownloadStatus.error)) {
+    if (tasks.any(
+        (t) => t.destPath == destPath && t.status != DownloadStatus.error)) {
       return; // already queued
     }
     tasks.add(

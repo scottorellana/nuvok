@@ -138,8 +138,8 @@ class ZimFile {
       final header = ZimHeader.parse(headerBytes);
       // MIME list: zero-terminated strings, terminated by an empty string.
       final mimeRegionLen = header.urlPtrPos - header.mimeListPos;
-      final mimeBytes = await _readAt(
-          raf, header.mimeListPos, mimeRegionLen.clamp(0, 65536));
+      final mimeBytes =
+          await _readAt(raf, header.mimeListPos, mimeRegionLen.clamp(0, 65536));
       final mimeTypes = <String>[];
       var start = 0;
       for (var i = 0; i < mimeBytes.length; i++) {
@@ -318,8 +318,7 @@ class ZimFile {
   Future<ZimBlob?> contentAtPath(String fullPath) async {
     final slash = fullPath.indexOf('/');
     if (slash != 1) return null;
-    final entry =
-        await entryByPath(fullPath[0], fullPath.substring(2));
+    final entry = await entryByPath(fullPath[0], fullPath.substring(2));
     if (entry == null) return null;
     return contentOf(entry);
   }

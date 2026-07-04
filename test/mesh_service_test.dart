@@ -71,6 +71,22 @@ void main() {
     expect(persisted.first['_name'], 'Mi Tablet');
   });
 
+  test('canales unidos antes de arrancar quedan activos al iniciar', () async {
+    await service.stop();
+    final cold = MeshService.forTest(
+      dirPath: tmp.path,
+      transports: [transport],
+      identity: MeshIdentity.create('Mi Tablet'),
+    );
+    final ch = MeshChannel.create('Prearranque');
+
+    await cold.joinChannel(ch);
+    await cold.start();
+
+    expect(cold.channels.map((c) => c.id), contains(ch.id));
+    await cold.stop();
+  });
+
   test('canales unidos sobreviven reinicio del servicio', () async {
     final ch = MeshChannel.create('Vecinos');
     await service.joinChannel(ch);
@@ -126,8 +142,7 @@ void main() {
       type: MeshType.sosCancel,
       hopLimit: 5,
       timestampMs: DateTime.now().millisecondsSinceEpoch,
-      payload:
-          await sealPayload({'ok': true}, MeshChannel.emergency),
+      payload: await sealPayload({'ok': true}, MeshChannel.emergency),
     );
     transport.inject(cancel.encode());
     await Future<void>.delayed(const Duration(milliseconds: 100));

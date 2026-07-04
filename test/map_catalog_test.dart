@@ -11,9 +11,16 @@ void main() {
     expect(regions.length, greaterThan(40));
     // Cubre varios continentes.
     final groups = regions.map((r) => r.group).toSet();
-    expect(groups, containsAll(<String>{
-      'Norteamérica', 'Sudamérica', 'Europa', 'África', 'Asia', 'Oceanía',
-    }));
+    expect(
+        groups,
+        containsAll(<String>{
+          'Norteamérica',
+          'Sudamérica',
+          'Europa',
+          'África',
+          'Asia',
+          'Oceanía',
+        }));
     // Todas las regiones de extracción traen bbox válido (4 números).
     for (final r in regions) {
       if (r.url != null) continue;

@@ -7,6 +7,7 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:markdown/markdown.dart' as md;
 
 import 'emergency_directory.dart';
+import 'emergency_guide_media.dart';
 import 'emergency_guides.dart';
 import 'medical_diagrams.dart';
 
@@ -81,12 +82,13 @@ class _EmergencyPageState extends State<EmergencyPage> {
     if (id.contains('botiquin') || id.contains('kit')) {
       return Icons.medical_services;
     }
-    if (id.contains('hipotermia') || id.contains('calor') ||
-        id.contains('heat') || id.contains('hypo')) {
+    if (id.contains('hipotermia') ||
+        id.contains('calor') ||
+        id.contains('heat') ||
+        id.contains('hypo')) {
       return Icons.thermostat;
     }
-    if (id.contains('trauma') || id.contains('cabeza') ||
-        id.contains('head')) {
+    if (id.contains('trauma') || id.contains('cabeza') || id.contains('head')) {
       return Icons.psychology_alt;
     }
     if (id.contains('shock')) return Icons.warning;
@@ -160,8 +162,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
                                   'profesional.'
                               : 'These guides do not replace professional '
                                   'medical care.',
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.grey),
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                       ),
                     ],
@@ -188,15 +190,13 @@ class _EmergencyPageState extends State<EmergencyPage> {
                             final critical = g.priority <= 1;
                             return Card(
                               color: critical
-                                  ? Colors.red.shade900
-                                      .withValues(alpha: 0.35)
+                                  ? Colors.red.shade900.withValues(alpha: 0.35)
                                   : null,
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(12),
                                 onTap: () => Navigator.of(context).push(
                                   MaterialPageRoute<void>(
-                                      builder: (_) =>
-                                          _GuideReader(guide: g)),
+                                      builder: (_) => _GuideReader(guide: g)),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(12),
@@ -237,9 +237,12 @@ class _EmergencyPageState extends State<EmergencyPage> {
     final criticalIds = _lang == 'es'
         ? ['rcp_adulto', 'atragantamiento', 'hemorragia_severa', 'shock']
         : ['rcp_adulto', 'atragantamiento', 'hemorragia_severa', 'shock'];
-    final quickGuides = criticalIds.map((id) {
-      return _all.where((g) => g.id == id).firstOrNull;
-    }).whereType<EmergencyGuide>().toList();
+    final quickGuides = criticalIds
+        .map((id) {
+          return _all.where((g) => g.id == id).firstOrNull;
+        })
+        .whereType<EmergencyGuide>()
+        .toList();
 
     if (quickGuides.isEmpty) return const SizedBox.shrink();
 
@@ -258,7 +261,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
               padding: const EdgeInsets.only(left: 6),
               child: ActionChip(
                 label: Text(_shortLabel(g.id, _lang)),
-                avatar: Icon(_iconFor(g.id), size: 18, color: Colors.red.shade300),
+                avatar:
+                    Icon(_iconFor(g.id), size: 18, color: Colors.red.shade300),
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute<void>(
                       builder: (_) => _GuideReader(guide: g)),
@@ -282,7 +286,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
   String? _selectedCountry;
 
   Widget _buildEmergencyDirectory() {
-    final countries = emergencyDirectory.where((c) => c.countryCode != '*').toList();
+    final countries =
+        emergencyDirectory.where((c) => c.countryCode != '*').toList();
     final current = emergencyNumbersFor(_selectedCountry);
 
     return ExpansionTile(
@@ -298,9 +303,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: DropdownButton<String>(
             value: _selectedCountry,
-            hint: Text(_lang == 'es'
-                ? 'Selecciona tu país'
-                : 'Select your country'),
+            hint: Text(
+                _lang == 'es' ? 'Selecciona tu país' : 'Select your country'),
             isExpanded: true,
             items: [
               for (final c in countries)
@@ -320,12 +324,13 @@ class _EmergencyPageState extends State<EmergencyPage> {
               for (final s in current.services)
                 ListTile(
                   dense: true,
-                  leading: Icon(_iconForService(s.name), size: 24,
-                      color: Theme.of(context).colorScheme.primary),
+                  leading: Icon(_iconForService(s.name),
+                      size: 24, color: Theme.of(context).colorScheme.primary),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(s.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+                      Text(s.name,
+                          style: const TextStyle(fontWeight: FontWeight.w600)),
                       if (s.description != null)
                         Text(
                           s.description!,
@@ -354,12 +359,13 @@ class _EmergencyPageState extends State<EmergencyPage> {
                         onPressed: () {
                           // Copy number to clipboard — the app can't dial
                           // directly on all platforms, but the user can paste.
-                          final number = s.number.replaceAll(RegExp(r'[^0-9+]'), '');
+                          final number =
+                              s.number.replaceAll(RegExp(r'[^0-9+]'), '');
                           Clipboard.setData(ClipboardData(text: number));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(_lang == 'es'
-                                ? 'Número copiado: $number — pégalo en el teléfono'
-                                : 'Number copied: $number')));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(_lang == 'es'
+                                  ? 'Número copiado: $number — pégalo en el teléfono'
+                                  : 'Number copied: $number')));
                         },
                       ),
                     ],
@@ -376,10 +382,18 @@ class _EmergencyPageState extends State<EmergencyPage> {
     final n = name.toLowerCase();
     if (n.contains('bomber')) return Icons.local_fire_department;
     if (n.contains('polic')) return Icons.local_police;
-    if (n.contains('cruz roja') || n.contains('red cross')) return Icons.health_and_safety;
-    if (n.contains('médic') || n.contains('medical')) return Icons.medical_services;
-    if (n.contains('civil') || n.contains('riesgo') || n.contains('desastre')) return Icons.warehouse;
-    if (n.contains('suicid') || n.contains('poison') || n.contains('envenen')) return Icons.warning;
+    if (n.contains('cruz roja') || n.contains('red cross')) {
+      return Icons.health_and_safety;
+    }
+    if (n.contains('médic') || n.contains('medical')) {
+      return Icons.medical_services;
+    }
+    if (n.contains('civil') || n.contains('riesgo') || n.contains('desastre')) {
+      return Icons.warehouse;
+    }
+    if (n.contains('suicid') || n.contains('poison') || n.contains('envenen')) {
+      return Icons.warning;
+    }
     return Icons.phone;
   }
 
@@ -431,8 +445,11 @@ class _EmergencyPageState extends State<EmergencyPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          es ? '🚨 EMERGENCIA — toca lo que pasa' : '🚨 EMERGENCY — tap what\'s wrong',
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+          es
+              ? '🚨 EMERGENCIA — toca lo que pasa'
+              : '🚨 EMERGENCY — tap what\'s wrong',
+          style: const TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         actions: [
           IconButton(
@@ -468,23 +485,32 @@ class _GuideReader extends StatelessWidget {
   /// Returns widgets to display before specific sections based on guide id.
   List<Widget> _visualAids(BuildContext context) {
     final id = guide.id;
-    final widgets = <Widget>[];
+    final media = EmergencyGuideMedia.forGuide(id);
+    final widgets = <Widget>[
+      _mediaBriefCard(context, media),
+      _visualCard(
+        context,
+        'Resumen visual',
+        GuideVisualIllustration(guideId: id),
+      ),
+    ];
 
     // CPR guides get the animated compression diagram
     if (id.startsWith('rcp')) {
-      widgets.add(_visualCard(context, 'Técnica de compresión', CprAnimation()));
+      widgets
+          .add(_visualCard(context, 'Técnica de compresión', CprAnimation()));
     }
     // Choking guides get the Heimlich animation
     if (id.contains('atragant')) {
-      widgets.add(_visualCard(context, 'Maniobra de Heimlich',
-        const HeimlichAnimation()));
+      widgets.add(_visualCard(
+          context, 'Maniobra de Heimlich', const HeimlichAnimation()));
     }
     // Bleeding guides get the tourniquet diagram
     if (id.contains('hemorragia')) {
-      widgets.add(_visualCard(context, 'Aplicación de torniquete',
-        const TourniquetDiagram()));
+      widgets.add(_visualCard(
+          context, 'Aplicación de torniquete', const TourniquetDiagram()));
       widgets.add(_visualCard(context, 'Posición de recuperación',
-        const RecoveryPositionDiagram()));
+          const RecoveryPositionDiagram()));
     }
     // Burn guides get the severity chart
     if (id.contains('quemadura')) {
@@ -512,14 +538,170 @@ class _GuideReader extends StatelessWidget {
         child: Column(
           children: [
             Text(title,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.bold)),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             child,
           ],
         ),
       ),
     );
+  }
+
+  Widget _mediaBriefCard(BuildContext context, EmergencyGuideMediaSpec media) {
+    final MaterialColor color = media.visualPolicy == VisualPolicy.contextOnly
+        ? Colors.indigo
+        : Colors.teal;
+    return Card(
+      margin: const EdgeInsets.only(bottom: 16),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            constraints: const BoxConstraints(minHeight: 132),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  color.shade900.withValues(alpha: 0.92),
+                  color.shade600.withValues(alpha: 0.76),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 92,
+                  height: 92,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.16),
+                    borderRadius: BorderRadius.circular(20),
+                    border:
+                        Border.all(color: Colors.white.withValues(alpha: 0.35)),
+                  ),
+                  child: Icon(_iconForMedia(media.animationKind),
+                      color: Colors.white, size: 46),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Imagen fotorealista segura',
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        media.visualPolicy == VisualPolicy.contextOnly
+                            ? 'Escena contextual: prepara el entorno. La técnica exacta se enseña con animación vectorial.'
+                            : 'Escena práctica: muestra el entorno o resultado que debes montar paso a paso.',
+                        style:
+                            const TextStyle(color: Colors.white, height: 1.25),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    Chip(
+                      avatar: const Icon(Icons.photo_camera, size: 18),
+                      label: Text(media.title),
+                    ),
+                    Chip(
+                      avatar:
+                          const Icon(Icons.movie_creation_outlined, size: 18),
+                      label: Text('Animación ${media.animationKind.name}'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  media.safetyNote,
+                  style: TextStyle(
+                    color: Theme.of(context).hintColor,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  IconData _iconForMedia(GuideAnimationKind kind) {
+    switch (kind) {
+      case GuideAnimationKind.pulse:
+        return Icons.monitor_heart;
+      case GuideAnimationKind.airway:
+        return Icons.air;
+      case GuideAnimationKind.bleeding:
+        return Icons.water_drop;
+      case GuideAnimationKind.burn:
+        return Icons.local_fire_department;
+      case GuideAnimationKind.splint:
+        return Icons.personal_injury;
+      case GuideAnimationKind.recognition:
+        return Icons.schedule;
+      case GuideAnimationKind.protect:
+        return Icons.shield;
+      case GuideAnimationKind.warmth:
+        return Icons.thermostat;
+      case GuideAnimationKind.poison:
+        return Icons.science;
+      case GuideAnimationKind.bite:
+        return Icons.pest_control;
+      case GuideAnimationKind.temperature:
+        return Icons.device_thermostat;
+      case GuideAnimationKind.birth:
+        return Icons.child_care;
+      case GuideAnimationKind.spine:
+        return Icons.psychology_alt;
+      case GuideAnimationKind.triage:
+        return Icons.groups;
+      case GuideAnimationKind.kit:
+        return Icons.medical_services;
+      case GuideAnimationKind.algorithm:
+        return Icons.account_tree;
+      case GuideAnimationKind.water:
+        return Icons.water_drop_outlined;
+      case GuideAnimationKind.food:
+        return Icons.restaurant;
+      case GuideAnimationKind.shelter:
+        return Icons.cabin;
+      case GuideAnimationKind.navigation:
+        return Icons.explore;
+      case GuideAnimationKind.signal:
+        return Icons.sos;
+      case GuideAnimationKind.storm:
+        return Icons.thunderstorm;
+      case GuideAnimationKind.flood:
+        return Icons.flood;
+      case GuideAnimationKind.earthquake:
+        return Icons.foundation;
+    }
   }
 
   @override
@@ -595,10 +777,8 @@ class _PanicButtonWidget extends StatelessWidget {
           }
           // Fallback: search by keywords in the label
           if (match == null) {
-            final words = button.label
-                .replaceAll('\n', ' ')
-                .toLowerCase()
-                .split(' ');
+            final words =
+                button.label.replaceAll('\n', ' ').toLowerCase().split(' ');
             for (final g in guides) {
               if (words.any((w) => g.keywords.any((k) => k.contains(w)))) {
                 match = g;

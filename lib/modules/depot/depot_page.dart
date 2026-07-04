@@ -39,7 +39,9 @@ class _DepotPageState extends State<DepotPage>
           controller: _tabs,
           isScrollable: true,
           tabs: const [
-            Tab(text: 'Esenciales', icon: Icon(Icons.medical_services, size: 18)),
+            Tab(
+                text: 'Esenciales',
+                icon: Icon(Icons.medical_services, size: 18)),
             Tab(text: 'Biblioteca', icon: Icon(Icons.menu_book, size: 18)),
             Tab(text: 'Modelos IA', icon: Icon(Icons.psychology, size: 18)),
             Tab(text: 'Mapas', icon: Icon(Icons.map, size: 18)),
@@ -102,8 +104,8 @@ class _StarterPackTabState extends State<_StarterPackTab>
       if (mounted) {
         setState(() => _error =
             'Estos manuales se descargan una vez con internet. Sin conexión '
-            'no se pueden obtener ahora, pero lo que ya tengas descargado '
-            'sigue disponible.');
+                'no se pueden obtener ahora, pero lo que ya tengas descargado '
+                'sigue disponible.');
       }
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -141,7 +143,7 @@ class _StarterPackTabState extends State<_StarterPackTab>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Text('Paquete inicial de emergencia',
+                    child: Text('Paquetes de contenido offline',
                         style: Theme.of(context).textTheme.titleMedium),
                   ),
                   DropdownButton<String>(
@@ -163,9 +165,9 @@ class _StarterPackTabState extends State<_StarterPackTab>
               ),
               const SizedBox(height: 4),
               Text(
-                'Manuales de primeros auxilios y supervivencia en el idioma '
-                'seleccionado. Descárgalos una vez y quedan disponibles para '
-                'siempre sin internet.',
+                'Primeros auxilios, supervivencia, agua, desastres y alimentos. '
+                'Con internet se descargan directo desde Prepper Pad; después '
+                'quedan disponibles sin conexión.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -199,8 +201,8 @@ class _StarterPackTabState extends State<_StarterPackTab>
                         for (final c in _candidates ?? <StarterCandidate>[])
                           Card(
                             child: ListTile(
-                              leading: const Icon(Icons.health_and_safety,
-                                  size: 32),
+                              leading:
+                                  const Icon(Icons.health_and_safety, size: 32),
                               title: Text(c.item.category),
                               subtitle: Text(
                                 '${c.item.description}\n'
@@ -224,7 +226,7 @@ class _StarterPackTabState extends State<_StarterPackTab>
                             child: FilledButton.icon(
                               onPressed: _downloadAll,
                               icon: const Icon(Icons.download),
-                              label: const Text('Descargar todo el paquete'),
+                              label: const Text('Descargar todos los paquetes'),
                             ),
                           ),
                       ],
@@ -284,10 +286,10 @@ class _ZimCatalogTabState extends State<_ZimCatalogTab>
       if (mounted) setState(() => _items = items);
     } catch (e) {
       if (mounted) {
-        setState(() => _error =
-            'Sin conexión a internet. El catálogo necesita conexión '
-            'solo para descargar contenido nuevo — todo lo ya '
-            'descargado sigue disponible.\n\n($e)');
+        setState(() =>
+            _error = 'Sin conexión a internet. El catálogo necesita conexión '
+                'solo para descargar contenido nuevo — todo lo ya '
+                'descargado sigue disponible.\n\n($e)');
       }
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -435,7 +437,8 @@ class _ModelsTabState extends State<_ModelsTab> {
   @override
   Widget build(BuildContext context) {
     final installedFiles = PrepperLibrary.instance.listModels();
-    final installedNames = installedFiles.map((f) => f.path.split('/').last).toSet();
+    final installedNames =
+        installedFiles.map((f) => f.path.split('/').last).toSet();
 
     return ListView(
       padding: const EdgeInsets.all(12),
@@ -511,9 +514,8 @@ class _ModelCard extends StatelessWidget {
             Row(
               children: [
                 Icon(Icons.psychology_outlined,
-                    color: model.recommended
-                        ? theme.colorScheme.primary
-                        : null),
+                    color:
+                        model.recommended ? theme.colorScheme.primary : null),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -525,7 +527,8 @@ class _ModelCard extends StatelessWidget {
                 ),
                 if (model.recommended)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: theme.colorScheme.primaryContainer,
                       borderRadius: BorderRadius.circular(12),
@@ -542,7 +545,8 @@ class _ModelCard extends StatelessWidget {
                 if (isInstalled)
                   Container(
                     margin: const EdgeInsets.only(left: 4),
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: Colors.green.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
@@ -552,7 +556,11 @@ class _ModelCard extends StatelessWidget {
                       children: [
                         Icon(Icons.check_circle, size: 14, color: Colors.green),
                         SizedBox(width: 4),
-                        Text('Instalado', style: TextStyle(fontSize: 11, color: Colors.green, fontWeight: FontWeight.bold)),
+                        Text('Instalado',
+                            style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ),
@@ -579,7 +587,8 @@ class _ModelCard extends StatelessWidget {
                   label: model.languages.join(', '),
                 ),
                 for (final tag in model.tags)
-                  _InfoChip(label: tag, color: theme.colorScheme.secondaryContainer),
+                  _InfoChip(
+                      label: tag, color: theme.colorScheme.secondaryContainer),
               ],
             ),
             const SizedBox(height: 12),
@@ -627,7 +636,8 @@ class _InfoChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Theme.of(context).dividerColor.withValues(alpha: 0.3)),
+        border: Border.all(
+            color: Theme.of(context).dividerColor.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -660,7 +670,8 @@ class _DownloadProgress extends StatelessWidget {
         Row(
           children: [
             const SizedBox(
-              width: 16, height: 16,
+              width: 16,
+              height: 16,
               child: CircularProgressIndicator(strokeWidth: 2),
             ),
             const SizedBox(width: 8),
@@ -675,7 +686,8 @@ class _DownloadProgress extends StatelessWidget {
               task.totalBytes != null
                   ? '${humanSize(task.received)} / ${humanSize(task.totalBytes!)}'
                   : humanSize(task.received),
-              style: TextStyle(fontSize: 12, color: Theme.of(context).hintColor),
+              style:
+                  TextStyle(fontSize: 12, color: Theme.of(context).hintColor),
             ),
           ],
         ),
@@ -788,8 +800,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
       return;
     }
     final name = Uri.parse(url).pathSegments.last;
-    _manager.enqueue(
-        url, '${PrepperLibrary.instance.mapsDir.path}/$name');
+    _manager.enqueue(url, '${PrepperLibrary.instance.mapsDir.path}/$name');
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Descargando $name — mira la pestaña Descargas')));
   }
@@ -799,8 +810,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
         XTypeGroup(label: 'Mapas PMTiles', extensions: ['pmtiles']);
     final file = await openFile(acceptedTypeGroups: const [typeGroup]);
     if (file == null || !mounted) return;
-    final dest =
-        '${PrepperLibrary.instance.mapsDir.path}/${file.name}';
+    final dest = '${PrepperLibrary.instance.mapsDir.path}/${file.name}';
     setState(() => _extracting['_import'] = 'Copiando ${file.name}…');
     try {
       // Copy through a .part so the Maps module never sees a half file.
@@ -812,8 +822,8 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('No se pudo importar: $e')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('No se pudo importar: $e')));
       }
     } finally {
       if (mounted) setState(() => _extracting.remove('_import'));
@@ -881,8 +891,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
           decoration: InputDecoration(
             prefixIcon: const Icon(Icons.search),
             hintText: 'Buscar país (ej: España, México, Japón…)',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             isDense: true,
           ),
           onChanged: (v) => setState(() => _filter = v),
@@ -891,7 +900,8 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
         if (shown.isEmpty)
           const Padding(
             padding: EdgeInsets.all(24),
-            child: Text('Sin coincidencias. Prueba "Región personalizada" '
+            child: Text(
+                'Sin coincidencias. Prueba "Región personalizada" '
                 'para cualquier zona del mundo.',
                 style: TextStyle(color: Colors.grey)),
           ),
@@ -1020,8 +1030,8 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
                         'por comas.')));
                 return;
               }
-              final id = 'custom-${name.toLowerCase().replaceAll(
-                  RegExp(r'[^a-z0-9]+'), '-')}';
+              final id =
+                  'custom-${name.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '-')}';
               Navigator.pop(
                   context,
                   MapRegion(
@@ -1169,9 +1179,8 @@ class _DownloadButtonState extends State<_DownloadButton> {
     if (exists) {
       return const Icon(Icons.check_circle, color: Colors.green);
     }
-    final task = _manager.tasks
-        .where((t) => t.destPath == widget.destPath)
-        .lastOrNull;
+    final task =
+        _manager.tasks.where((t) => t.destPath == widget.destPath).lastOrNull;
     if (task != null && task.status == DownloadStatus.downloading) {
       // Full-width button variant shows progress inline
       if (widget.label != null) {
@@ -1192,7 +1201,10 @@ class _DownloadButtonState extends State<_DownloadButton> {
           width: double.infinity,
           child: FilledButton.tonalIcon(
             onPressed: null,
-            icon: const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+            icon: const SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(strokeWidth: 2)),
             label: const Text('En cola…'),
           ),
         );
@@ -1201,10 +1213,10 @@ class _DownloadButtonState extends State<_DownloadButton> {
     }
 
     void startDownload() => _manager.enqueue(
-      widget.url,
-      widget.destPath,
-      totalBytes: widget.totalBytes,
-    );
+          widget.url,
+          widget.destPath,
+          totalBytes: widget.totalBytes,
+        );
 
     if (widget.label != null) {
       return SizedBox(

@@ -33,12 +33,13 @@ class _Zstd {
         freeDCtx = lib.lookupFunction<Size Function(Pointer<Void>),
             int Function(Pointer<Void>)>('ZSTD_freeDCtx'),
         decompressStream = lib.lookupFunction<
-            Size Function(Pointer<Void>, Pointer<ZstdOutBuffer>,
-                Pointer<ZstdInBuffer>),
+            Size Function(
+                Pointer<Void>, Pointer<ZstdOutBuffer>, Pointer<ZstdInBuffer>),
             int Function(Pointer<Void>, Pointer<ZstdOutBuffer>,
                 Pointer<ZstdInBuffer>)>('ZSTD_decompressStream'),
-        isError = lib.lookupFunction<UnsignedInt Function(Size),
-            int Function(int)>('ZSTD_isError');
+        isError =
+            lib.lookupFunction<UnsignedInt Function(Size), int Function(int)>(
+                'ZSTD_isError');
 
   final Pointer<Void> Function() createDCtx;
   final int Function(Pointer<Void>) freeDCtx;
@@ -164,8 +165,7 @@ class _Lzma {
   _Lzma(DynamicLibrary lib)
       : autoDecoder = lib.lookupFunction<
             Int32 Function(Pointer<LzmaStream>, Uint64, Uint32),
-            int Function(
-                Pointer<LzmaStream>, int, int)>('lzma_auto_decoder'),
+            int Function(Pointer<LzmaStream>, int, int)>('lzma_auto_decoder'),
         code = lib.lookupFunction<Int32 Function(Pointer<LzmaStream>, Int32),
             int Function(Pointer<LzmaStream>, int)>('lzma_code'),
         end = lib.lookupFunction<Void Function(Pointer<LzmaStream>),

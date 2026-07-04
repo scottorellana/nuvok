@@ -35,3 +35,15 @@ priority: 1
 - Non-perishable food
 - Battery-powered radio
 - Important documents in waterproof bag
+
+## Example practice: Earthquake
+
+**Situation:** During a drill, the family is in the living room and must react without running to the doorway.
+
+**Do:** 1. Pause for 30 seconds and name the main danger. 2. Gather water, warmth, light, communication, and a safe route. 3. Take the simplest action that reduces risk right now. 4. Record what you did in notes/checklists so another person can continue.
+
+**Avoid:** Do not drain battery without a plan, do not cross moving water, do not eat unknown plants, do not split the group, and do not wait until dark to build shelter.
+
+**Escalate:** Change plans if weather worsens, body temperature drops, safe water is running out, vulnerable people are present, or you lose orientation.
+
+**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.

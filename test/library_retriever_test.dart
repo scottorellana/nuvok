@@ -21,8 +21,7 @@ void main() {
   test('recupera fuentes reales de la biblioteca instalada', () async {
     final home = Platform.environment['HOME']!;
     final lib = Directory('$home/PrepperPad/zim');
-    if (!lib.existsSync() ||
-        lib.listSync().whereType<File>().isEmpty) {
+    if (!lib.existsSync() || lib.listSync().whereType<File>().isEmpty) {
       markTestSkipped('No hay ZIMs en la biblioteca');
       return;
     }

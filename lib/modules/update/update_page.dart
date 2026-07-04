@@ -25,11 +25,11 @@ class UpdateBanner extends StatelessWidget {
           child: InkWell(
             onTap: onOpen,
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Row(
                 children: [
-                  const Icon(Icons.system_update, color: Colors.white, size: 20),
+                  const Icon(Icons.system_update,
+                      color: Colors.white, size: 20),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
@@ -42,11 +42,9 @@ class UpdateBanner extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: onOpen,
-                    style:
-                        TextButton.styleFrom(foregroundColor: Colors.white),
-                    child: Text(u.state == UpdateState.downloaded
-                        ? 'INSTALAR'
-                        : 'VER'),
+                    style: TextButton.styleFrom(foregroundColor: Colors.white),
+                    child: Text(
+                        u.state == UpdateState.downloaded ? 'INSTALAR' : 'VER'),
                   ),
                 ],
               ),
@@ -93,7 +91,8 @@ class _UpdatePageState extends State<UpdatePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Actualizaciones', style: Theme.of(context).textTheme.titleLarge),
+          Text('Actualizaciones',
+              style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 4),
           Text(
             'Prepper Pad revisa si hay una versión nueva cuando tienes '
@@ -164,9 +163,8 @@ class _UpdatePageState extends State<UpdatePage> {
           style: TextStyle(color: Theme.of(context).hintColor),
         );
       case UpdateState.available:
-        final asset = u.latest == null
-            ? null
-            : u.latest!.platforms[_platformKey()];
+        final asset =
+            u.latest == null ? null : u.latest!.platforms[_platformKey()];
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -220,8 +218,8 @@ class _UpdatePageState extends State<UpdatePage> {
             const SizedBox(height: 6),
             Text(
               'Se abrirá el instalador del sistema — confírmalo ahí.',
-              style: TextStyle(
-                  color: Theme.of(context).hintColor, fontSize: 12),
+              style:
+                  TextStyle(color: Theme.of(context).hintColor, fontSize: 12),
             ),
           ],
         );

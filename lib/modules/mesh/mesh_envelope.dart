@@ -43,7 +43,8 @@ class MeshEnvelope {
   static int newMsgId() {
     final rnd = Random.secure();
     // 63-bit random id (keeps it a positive Dart int everywhere).
-    return (rnd.nextInt(1 << 31) << 32) | rnd.nextInt(1 << 31) << 1 |
+    return (rnd.nextInt(1 << 31) << 32) |
+        rnd.nextInt(1 << 31) << 1 |
         rnd.nextInt(2);
   }
 
@@ -61,8 +62,8 @@ class MeshEnvelope {
   Uint8List encode() {
     final name = utf8.encode(
         senderName.length > 40 ? senderName.substring(0, 40) : senderName);
-    final total = 4 + 8 + 4 + 8 + 1 + 1 + 8 + 1 + name.length + 2 +
-        payload.length;
+    final total =
+        4 + 8 + 4 + 8 + 1 + 1 + 8 + 1 + name.length + 2 + payload.length;
     final out = ByteData(total);
     var o = 0;
     for (final b in _magic) {
@@ -120,8 +121,8 @@ class MeshEnvelope {
       o += 8;
       final nameLen = bd.getUint8(o++);
       if (o + nameLen + 2 > bytes.length) return null;
-      final name = utf8.decode(bytes.sublist(o, o + nameLen),
-          allowMalformed: true);
+      final name =
+          utf8.decode(bytes.sublist(o, o + nameLen), allowMalformed: true);
       o += nameLen;
       final payloadLen = bd.getUint16(o, Endian.little);
       o += 2;

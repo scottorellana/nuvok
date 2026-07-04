@@ -56,7 +56,8 @@ void main() {
     expect(composite.length, 2);
   });
 
-  test('CompositeTileProvider throws 404 when no source has the tile', () async {
+  test('CompositeTileProvider throws 404 when no source has the tile',
+      () async {
     final composite = CompositeTileProvider.fromProviders([
       FakeVectorProvider(tiles: {}),
     ]);

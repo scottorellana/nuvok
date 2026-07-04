@@ -49,3 +49,15 @@ priority: 3
 - Cold, blue, numb fingers after splinting → loosen NOW and re-splint.
 - Relentlessly growing pain with a rock-hard calf/forearm → surgical emergency: go immediately.
 - Pallor + sweat + dizziness → internal shock (guide "Shock").
+
+## Example practice: Fractures, sprains and splinting
+
+**Situation:** On a hike, someone falls, has severe ankle pain, and cannot bear weight.
+
+**Do:** 1. Make the scene safe and assign one specific person to call emergency services. 2. Follow the large steps in this guide in order instead of jumping to the most dramatic action. 3. Use gloves, barriers, or clean cloth if available. 4. Recheck every minute: breathing, responsiveness, bleeding, temperature, or worsening signs.
+
+**Avoid:** Do not improvise advanced procedures, do not move the neck/spine if injury is suspected, do not give food or drink to a confused person, and do not delay calling because you are searching for perfect equipment.
+
+**Escalate:** Call or evacuate immediately if breathing is not normal, chest pain appears, bleeding does not stop, confusion worsens, a burn is large, poisoning is possible, pregnancy is advanced, or there are multiple victims.
+
+**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.

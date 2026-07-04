@@ -119,8 +119,7 @@ class _AiPageState extends State<AiPage> {
         sources = await EmergencyRetriever.retrieve(text);
       } catch (_) {}
       if (sources.isNotEmpty) {
-        systemPrompt =
-            EmergencyRetriever.buildEmergencySystemPrompt(sources);
+        systemPrompt = EmergencyRetriever.buildEmergencySystemPrompt(sources);
       }
       if (mounted) {
         setState(() {
@@ -149,8 +148,8 @@ class _AiPageState extends State<AiPage> {
     try {
       final history = [
         {'role': 'system', 'content': systemPrompt},
-        for (final m in _messages.where(
-            (m) => m.role == 'user' || m.text.isNotEmpty))
+        for (final m
+            in _messages.where((m) => m.role == 'user' || m.text.isNotEmpty))
           {'role': m.role, 'content': m.text},
       ];
       await for (final token in _server.chat(history)) {
@@ -206,8 +205,7 @@ class _AiPageState extends State<AiPage> {
               Text('Emergencia',
                   style: TextStyle(
                       color: _emergencyMode ? Colors.red : null,
-                      fontWeight:
-                          _emergencyMode ? FontWeight.bold : null)),
+                      fontWeight: _emergencyMode ? FontWeight.bold : null)),
               Switch(
                 value: _emergencyMode,
                 activeTrackColor: Colors.red,
@@ -297,8 +295,7 @@ class _AiPageState extends State<AiPage> {
                     controller: _scroll,
                     padding: const EdgeInsets.all(16),
                     itemCount: _messages.length,
-                    itemBuilder: (context, i) =>
-                        _Bubble(message: _messages[i]),
+                    itemBuilder: (context, i) => _Bubble(message: _messages[i]),
                   ),
                 ),
                 SafeArea(
@@ -329,8 +326,8 @@ class _AiPageState extends State<AiPage> {
                               ? const SizedBox(
                                   width: 18,
                                   height: 18,
-                                  child: CircularProgressIndicator(
-                                      strokeWidth: 2),
+                                  child:
+                                      CircularProgressIndicator(strokeWidth: 2),
                                 )
                               : const Icon(Icons.send),
                         ),
@@ -427,8 +424,7 @@ class _Bubble extends StatelessWidget {
                             backgroundColor: scheme.primary,
                             child: Text('${i + 1}',
                                 style: TextStyle(
-                                    fontSize: 11,
-                                    color: scheme.onPrimary)),
+                                    fontSize: 11, color: scheme.onPrimary)),
                           ),
                           label: Text(
                             '${message.sources[i].title} · '

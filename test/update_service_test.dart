@@ -12,9 +12,8 @@ import 'package:prepper_pad/modules/update/update_service.dart';
 /// updates in; the plugin has no real implementation in a widget test
 /// (there's no OS to ask), so we back it with an actual temp folder.
 class _FakePathProvider extends PathProviderPlatform {
-  final String tempPath = Directory.systemTemp
-      .createTempSync('prepper_update_test_')
-      .path;
+  final String tempPath =
+      Directory.systemTemp.createTempSync('prepper_update_test_').path;
 
   @override
   Future<String?> getApplicationSupportPath() async => tempPath;
@@ -38,7 +37,8 @@ void main() {
   late int port;
   final assetBytes = Uint8List.fromList(List.generate(5000, (i) => i % 256));
   final assetSha256 = sha256.convert(assetBytes).toString();
-  const platformKey = 'macos'; // this test suite runs on the host OS (macOS CI runner or dev Mac)
+  const platformKey =
+      'macos'; // this test suite runs on the host OS (macOS CI runner or dev Mac)
 
   setUp(() async {
     await PrepperLibrary.init();

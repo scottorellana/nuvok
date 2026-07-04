@@ -36,8 +36,7 @@ void main() {
     test('non-perishable items have expiryMonths == 0', () {
       for (final item in checklistItems) {
         if (item.category == 'docs' || item.category == 'plan') {
-          expect(item.expiryMonths, 0,
-              reason: '${item.id} should not expire');
+          expect(item.expiryMonths, 0, reason: '${item.id} should not expire');
         }
       }
     });

@@ -320,7 +320,8 @@ class _WhistleScreenState extends State<WhistleScreen>
                 children: [
                   SwitchListTile(
                     title: const Text('Modo pulsado'),
-                    subtitle: const Text('Sonido intermitente — más detectable'),
+                    subtitle:
+                        const Text('Sonido intermitente — más detectable'),
                     value: _pulsedMode,
                     onChanged: (v) => setState(() => _pulsedMode = v),
                   ),

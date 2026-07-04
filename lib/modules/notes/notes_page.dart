@@ -143,8 +143,8 @@ class _NotesPageState extends State<NotesPage> {
                         ListTile(
                           dense: true,
                           selected: _current?.path == f.path,
-                          leading: const Icon(Icons.description_outlined,
-                              size: 18),
+                          leading:
+                              const Icon(Icons.description_outlined, size: 18),
                           title: Text(
                             f.uri.pathSegments.last,
                             overflow: TextOverflow.ellipsis,

@@ -37,8 +37,8 @@ class KiwixCatalog {
       if (query.isNotEmpty) 'q': query,
       if (lang.isNotEmpty) 'lang': lang,
     };
-    final uri = Uri.parse('$base/catalog/v2/entries')
-        .replace(queryParameters: params);
+    final uri =
+        Uri.parse('$base/catalog/v2/entries').replace(queryParameters: params);
     final client = HttpClient();
     client.connectionTimeout = const Duration(seconds: 15);
     try {
@@ -138,8 +138,7 @@ const curatedModels = <CuratedModel>[
   ),
   CuratedModel(
     name: 'Gemma 3 1B IT (Q4_K_M)',
-    description:
-        'Gemma 3 1B con cuantización Q4_K_M — mejor calidad que Q4_0 '
+    description: 'Gemma 3 1B con cuantización Q4_K_M — mejor calidad que Q4_0 '
         'con apenas 80MB más. Ideal para tablets con 3-4GB de RAM. '
         'Multilingüe, buen español.',
     url:
@@ -151,8 +150,7 @@ const curatedModels = <CuratedModel>[
   ),
   CuratedModel(
     name: 'Gemma 2 2B IT (Q4_K_M)',
-    description:
-        'Doble de capacidad que Gemma 1B con mejor razonamiento. '
+    description: 'Doble de capacidad que Gemma 1B con mejor razonamiento. '
         'Cabe en tablets modernas (4GB+ RAM). Excelente español. '
         'El punto dulce calidad/tamaño para Android.',
     url:
@@ -178,8 +176,7 @@ const curatedModels = <CuratedModel>[
   ),
   CuratedModel(
     name: 'Gemma 3 4B IT (Q4_K_M)',
-    description:
-        'Gemma 3 4B con mejor calidad de cuantización. Para tablets '
+    description: 'Gemma 3 4B con mejor calidad de cuantización. Para tablets '
         'con 6-8GB de RAM. Multimodal: puede procesar imágenes '
         'además de texto (cuando el backend lo soporte).',
     url:
@@ -196,8 +193,7 @@ const curatedModels = <CuratedModel>[
 
   CuratedModel(
     name: 'Qwen2.5 0.5B Instruct (Q4_K_M)',
-    description:
-        'Ultraligero — cabe en cualquier dispositivo, incluso tablets '
+    description: 'Ultraligero — cabe en cualquier dispositivo, incluso tablets '
         'antiguas. Calidad limitada pero siempre disponible.',
     url:
         'https://huggingface.co/bartowski/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/Qwen2.5-0.5B-Instruct-Q4_K_M.gguf',
@@ -208,8 +204,7 @@ const curatedModels = <CuratedModel>[
   ),
   CuratedModel(
     name: 'Llama 3.2 1B Instruct (Q4_K_M)',
-    description:
-        'Compacto y capaz — el punto dulce para tablets Android. '
+    description: 'Compacto y capaz — el punto dulce para tablets Android. '
         'Razona bien en español e inglés con solo 1GB.',
     url:
         'https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_K_M.gguf',
@@ -232,8 +227,7 @@ const curatedModels = <CuratedModel>[
   ),
   CuratedModel(
     name: 'Qwen2.5 7B Instruct (Q4_K_M)',
-    description:
-        'Equilibrio calidad/velocidad para Mac con 16-18GB de RAM. '
+    description: 'Equilibrio calidad/velocidad para Mac con 16-18GB de RAM. '
         'Multilingüe sólido.',
     url:
         'https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/resolve/main/Qwen2.5-7B-Instruct-Q4_K_M.gguf',
@@ -244,8 +238,7 @@ const curatedModels = <CuratedModel>[
   ),
   CuratedModel(
     name: 'Qwen2.5 14B Instruct (Q4_K_M)',
-    description:
-        'Mayor calidad de razonamiento. Requiere ~10GB de RAM libre — '
+    description: 'Mayor calidad de razonamiento. Requiere ~10GB de RAM libre — '
         'úsalo con pocas apps abiertas.',
     url:
         'https://huggingface.co/bartowski/Qwen2.5-14B-Instruct-GGUF/resolve/main/Qwen2.5-14B-Instruct-Q4_K_M.gguf',

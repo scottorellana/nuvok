@@ -53,3 +53,15 @@ Otros: pérdida súbita de visión, mareo violento con pérdida de equilibrio, d
 
 - Pierde el conocimiento, deja de respirar → RCP.
 - Los síntomas de derrame "se quitan solos" en minutos → IGUAL al hospital urgente: fue una advertencia y el derrame grande puede venir en las próximas horas.
+
+## Ejemplo práctico: Infarto y derrame cerebral (reconocer a tiempo)
+
+**Situación:** Un familiar empieza con presión en el pecho y sudor frío; otra persona nota que arrastra palabras.
+
+**Haz:** 1. Asegura la escena y pide a una persona específica llamar a emergencias. 2. Sigue los pasos grandes de la guía en orden, sin saltar al paso que parece más dramático. 3. Usa guantes, barreras o telas limpias si están disponibles. 4. Reevalúa cada minuto: respiración, conciencia, sangrado, temperatura o empeoramiento.
+
+**Evita:** No improvises maniobras avanzadas, no muevas cuello/columna si sospechas lesión, no des comida/bebida a alguien confundido y no retrases la llamada por buscar equipo perfecto.
+
+**Escala:** Llama o traslada de inmediato si no respira normal, hay dolor de pecho, sangrado que no cede, confusión, quemadura extensa, posible veneno, embarazo avanzado o múltiples víctimas.
+
+**Chequeo rápido:** antes de cerrar la guía, di en voz alta qué pasó, qué hiciste, qué falta y quién queda responsable. Este ejemplo es una práctica guiada; adapta los pasos a tu entorno y prioriza ayuda profesional cuando exista.

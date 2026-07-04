@@ -51,15 +51,15 @@ class StarterPack {
     }
   }
 
-  /// The two manuals the user asked to include by default, plus their
-  /// language-appropriate catalog queries.
+  /// Curated downloadable content packs. They resolve through the live Kiwix
+  /// catalog when internet is available; once downloaded, the ZIM files remain
+  /// available forever without internet.
   static List<StarterItem> itemsFor(String lang) {
     final isEs = lang == 'spa';
     return [
       StarterItem(
-        category: isEs
-            ? 'Primeros auxilios y medicina'
-            : 'First aid & medicine',
+        category:
+            isEs ? 'Primeros auxilios y medicina' : 'First aid & medicine',
         // WikiMed / Wikipedia Médica is Kiwix's offline medical encyclopedia
         // (includes first-aid procedures); MedlinePlus is a solid fallback.
         queries: isEs
@@ -86,6 +86,49 @@ class StarterPack {
             ? 'Guías de supervivencia, autosuficiencia y preparación.'
             : 'Guides on survival, self-reliance and preparedness.',
       ),
+      StarterItem(
+        category: isEs
+            ? 'Agua, saneamiento e higiene'
+            : 'Water, sanitation & hygiene',
+        queries: isEs
+            ? ['agua potable', 'saneamiento', 'higiene']
+            : ['drinking water', 'sanitation', 'hygiene'],
+        description: isEs
+            ? 'Referencias para potabilizar agua, prevenir enfermedades y '
+                'mantener higiene en cortes de servicio.'
+            : 'References for safe water, disease prevention and hygiene '
+                'during outages.',
+      ),
+      StarterItem(
+        category: isEs ? 'Desastres naturales' : 'Natural disasters',
+        queries: isEs
+            ? [
+                'terremoto inundación huracán',
+                'desastres naturales',
+                'emergencias'
+              ]
+            : [
+                'earthquake flood hurricane',
+                'natural disasters',
+                'emergency management'
+              ],
+        description: isEs
+            ? 'Preparación y respuesta para terremotos, inundaciones, huracanes '
+                'y emergencias grandes.'
+            : 'Preparedness and response for earthquakes, floods, hurricanes '
+                'and major emergencies.',
+      ),
+      StarterItem(
+        category: isEs ? 'Alimentos y autosuficiencia' : 'Food & self-reliance',
+        queries: isEs
+            ? ['conservación de alimentos', 'agricultura', 'autosuficiencia']
+            : ['food preservation', 'agriculture', 'self reliance'],
+        description: isEs
+            ? 'Conservación, huertos, cocina básica y manejo de alimentos '
+                'durante emergencias.'
+            : 'Food preservation, gardening, basic cooking and food handling '
+                'during emergencies.',
+      ),
     ];
   }
 
@@ -97,13 +140,13 @@ class StarterPack {
     for (final item in itemsFor(language)) {
       CatalogItem? found;
       for (final q in item.queries) {
-        final results = await KiwixCatalog.search(
-            query: q, lang: language, count: 5);
+        final results =
+            await KiwixCatalog.search(query: q, lang: language, count: 5);
         if (results.isNotEmpty) {
           // Prefer a title that actually contains a query word.
           found = results.firstWhere(
-            (r) => item.queries.any(
-                (q) => r.title.toLowerCase().contains(q.toLowerCase())),
+            (r) => item.queries
+                .any((q) => r.title.toLowerCase().contains(q.toLowerCase())),
             orElse: () => results.first,
           );
           break;
@@ -130,11 +173,15 @@ class StarterPack {
   static bool alreadyHasEssentials(List<File> zims) {
     final names = zims.map((f) => f.uri.pathSegments.last.toLowerCase());
     final hasMed = names.any((n) =>
-        n.contains('med') || n.contains('health') || n.contains('salud') ||
+        n.contains('med') ||
+        n.contains('health') ||
+        n.contains('salud') ||
         n.contains('medic'));
     final hasSurvival = names.any((n) =>
-        n.contains('surv') || n.contains('reliance') ||
-        n.contains('prepper') || n.contains('superviv'));
+        n.contains('surv') ||
+        n.contains('reliance') ||
+        n.contains('prepper') ||
+        n.contains('superviv'));
     return hasMed && hasSurvival;
   }
 }

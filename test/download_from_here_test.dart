@@ -24,7 +24,8 @@ void main() {
     expect(small.maxZoom, 15);
     expect(medium.maxZoom, 14);
     expect(large.maxZoom, 12);
-    expect(small.id, contains('area'));  // contains "area" despite dash → m conversion
+    expect(small.id,
+        contains('area')); // contains "area" despite dash → m conversion
   });
 
   test('isAlreadyCovered returns true only when point is inside coverage', () {

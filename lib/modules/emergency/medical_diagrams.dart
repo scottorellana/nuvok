@@ -6,6 +6,202 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Generic guide illustration — vector "image" for every survival/first-aid
+// guide. It keeps the app offline-first and low-RAM: no raster assets, no web
+// downloads, just CustomPainter shapes chosen from the guide id.
+// ─────────────────────────────────────────────────────────────────────────────
+
+class GuideVisualIllustration extends StatefulWidget {
+  const GuideVisualIllustration({super.key, required this.guideId});
+
+  final String guideId;
+
+  @override
+  State<GuideVisualIllustration> createState() =>
+      _GuideVisualIllustrationState();
+}
+
+class _GuideVisualIllustrationState extends State<GuideVisualIllustration>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1400),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 170,
+      child: AnimatedBuilder(
+        animation: _ctrl,
+        builder: (_, __) => CustomPaint(
+          painter: _GuideVisualPainter(widget.guideId, _ctrl.value),
+        ),
+      ),
+    );
+  }
+}
+
+class _GuideVisualPainter extends CustomPainter {
+  _GuideVisualPainter(this.id, this.t);
+
+  final String id;
+  final double t;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final bg = RRect.fromRectAndRadius(
+      Offset.zero & size,
+      const Radius.circular(18),
+    );
+    final danger = _dangerColor(id);
+    final safe = _safeColor(id);
+    final bgPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [safe.withValues(alpha: 0.18), danger.withValues(alpha: 0.16)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ).createShader(Offset.zero & size);
+    canvas.drawRRect(bg, bgPaint);
+
+    _drawPulse(canvas, size, danger);
+    _drawScene(canvas, size, safe, danger);
+    _drawChecklist(canvas, size, safe);
+  }
+
+  Color _dangerColor(String id) {
+    if (id.contains('agua') || id.contains('water') || id.contains('flood')) {
+      return Colors.blue;
+    }
+    if (id.contains('quemadura') || id.contains('fire') || id.contains('hur')) {
+      return Colors.deepOrange;
+    }
+    if (id.contains('hemorragia') ||
+        id.startsWith('rcp') ||
+        id.contains('heart')) {
+      return Colors.red;
+    }
+    if (id.contains('naveg') || id.contains('rescue') || id.contains('senas')) {
+      return Colors.amber.shade800;
+    }
+    return Colors.teal;
+  }
+
+  Color _safeColor(String id) {
+    if (id.contains('abrigo') || id.contains('shelter')) return Colors.brown;
+    if (id.contains('botiquin') ||
+        id.contains('auxilios') ||
+        id.contains('aid')) {
+      return Colors.green;
+    }
+    return Colors.blueGrey;
+  }
+
+  void _drawPulse(Canvas canvas, Size size, Color color) {
+    final center = Offset(size.width * 0.22, size.height * 0.48);
+    for (var i = 0; i < 3; i++) {
+      final phase = (t + i / 3) % 1;
+      canvas.drawCircle(
+        center,
+        22 + phase * 32,
+        Paint()
+          ..color = color.withValues(alpha: (1 - phase) * 0.16)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 3,
+      );
+    }
+  }
+
+  void _drawScene(Canvas canvas, Size size, Color safe, Color danger) {
+    final cx = size.width * 0.24;
+    final cy = size.height * 0.52;
+    final person = Paint()..color = safe.withValues(alpha: 0.92);
+    canvas.drawCircle(Offset(cx, cy - 28), 14, person);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(center: Offset(cx, cy + 12), width: 46, height: 70),
+        const Radius.circular(18),
+      ),
+      person,
+    );
+
+    final iconPaint = Paint()
+      ..color = danger
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 5
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    final x = size.width * 0.54;
+    final y = size.height * 0.44;
+    if (id.contains('agua') || id.contains('water') || id.contains('flood')) {
+      final drop = Path()
+        ..moveTo(x, y - 34)
+        ..cubicTo(x - 36, y + 10, x - 14, y + 50, x, y + 50)
+        ..cubicTo(x + 14, y + 50, x + 36, y + 10, x, y - 34)
+        ..close();
+      canvas.drawPath(drop, iconPaint);
+    } else if (id.contains('naveg') ||
+        id.contains('rescue') ||
+        id.contains('senas')) {
+      final path = Path()
+        ..moveTo(x - 36, y + 42)
+        ..lineTo(x, y - 42)
+        ..lineTo(x + 36, y + 42)
+        ..lineTo(x, y + 24)
+        ..close();
+      canvas.drawPath(path, iconPaint);
+      canvas.drawCircle(Offset(x, y), 7 + t * 4, Paint()..color = danger);
+    } else if (id.contains('abrigo') || id.contains('shelter')) {
+      final roof = Path()
+        ..moveTo(x - 48, y + 28)
+        ..lineTo(x, y - 42)
+        ..lineTo(x + 48, y + 28);
+      canvas.drawPath(roof, iconPaint);
+      canvas.drawLine(Offset(x - 28, y + 28), Offset(x - 28, y - 2), iconPaint);
+      canvas.drawLine(Offset(x + 28, y + 28), Offset(x + 28, y - 2), iconPaint);
+    } else {
+      canvas.drawLine(Offset(x - 40, y), Offset(x + 40, y), iconPaint);
+      canvas.drawLine(Offset(x, y - 40), Offset(x, y + 40), iconPaint);
+      canvas.drawCircle(Offset(x, y), 48 + t * 4, iconPaint..strokeWidth = 3);
+    }
+  }
+
+  void _drawChecklist(Canvas canvas, Size size, Color color) {
+    final paint = Paint()
+      ..color = color.withValues(alpha: 0.86)
+      ..strokeWidth = 3
+      ..strokeCap = StrokeCap.round;
+    final startX = size.width * 0.72;
+    for (var i = 0; i < 3; i++) {
+      final y = 48.0 + i * 30;
+      canvas.drawLine(Offset(startX, y), Offset(startX + 10, y + 10), paint);
+      canvas.drawLine(
+          Offset(startX + 10, y + 10), Offset(startX + 30, y - 8), paint);
+      canvas.drawLine(
+          Offset(startX + 42, y), Offset(size.width - 24, y), paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _GuideVisualPainter oldDelegate) {
+    return oldDelegate.t != t || oldDelegate.id != id;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // CPR Compression Animation — shows correct hand position, depth, and rhythm
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -119,7 +315,8 @@ class _CprPainter extends CustomPainter {
     final sternumX = 130.0;
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromCenter(center: Offset(sternumX, torsoY + 8), width: 24, height: 14),
+        Rect.fromCenter(
+            center: Offset(sternumX, torsoY + 8), width: 24, height: 14),
         const Radius.circular(4),
       ),
       sternumPaint,
@@ -144,10 +341,13 @@ class _CprPainter extends CustomPainter {
     // Hand 2 (on top)
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromCenter(center: Offset(sternumX, handY - 12), width: 26, height: 14),
+        Rect.fromCenter(
+            center: Offset(sternumX, handY - 12), width: 26, height: 14),
         const Radius.circular(5),
       ),
-      Paint()..color = Colors.amber.shade800..style = PaintingStyle.fill,
+      Paint()
+        ..color = Colors.amber.shade800
+        ..style = PaintingStyle.fill,
     );
 
     // Arms (from rescuer, straight lines)
@@ -193,15 +393,18 @@ class _CprPainter extends CustomPainter {
     final tp = TextPainter(
       text: TextSpan(
         text: text,
-        style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w600),
+        style:
+            TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w600),
       ),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
     )..layout(maxWidth: 120);
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromCenter(center: pos + Offset(tp.width / 2, tp.height / 2),
-            width: tp.width + 8, height: tp.height + 4),
+        Rect.fromCenter(
+            center: pos + Offset(tp.width / 2, tp.height / 2),
+            width: tp.width + 8,
+            height: tp.height + 4),
         const Radius.circular(4),
       ),
       Paint()..color = color.withValues(alpha: 0.15),
@@ -284,19 +487,23 @@ class _HeimlichPainter extends CustomPainter {
     // Legs
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(cx - 5, 126, 15, 60), const Radius.circular(4),
-      ), victimPaint,
+        Rect.fromLTWH(cx - 5, 126, 15, 60),
+        const Radius.circular(4),
+      ),
+      victimPaint,
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(cx + 18, 126, 15, 60), const Radius.circular(4),
-      ), victimPaint,
+        Rect.fromLTWH(cx + 18, 126, 15, 60),
+        const Radius.circular(4),
+      ),
+      victimPaint,
     );
 
     // Navel marker
     final navelY = 95.0;
-    canvas.drawCircle(Offset(cx + 15, navelY), 3,
-        Paint()..color = Colors.brown.shade600);
+    canvas.drawCircle(
+        Offset(cx + 15, navelY), 3, Paint()..color = Colors.brown.shade600);
 
     // Fist position (above navel, moves inward+upward on thrust)
     final thrustOffset = t * 12.0;
@@ -343,7 +550,8 @@ class _HeimlichPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
       final arrowStart = Offset(fistX - 25, fistY + 20);
-      final arrowEnd = Offset(fistX - 5 - thrustOffset, fistY - 5 - thrustOffset);
+      final arrowEnd =
+          Offset(fistX - 5 - thrustOffset, fistY - 5 - thrustOffset);
       canvas.drawLine(arrowStart, arrowEnd, arrowPaint);
       // Arrowhead
       final angle = (arrowEnd - arrowStart).direction;
@@ -362,8 +570,8 @@ class _HeimlichPainter extends CustomPainter {
     }
 
     // Labels
-    _drawLabel(canvas, 'Puño arriba\ndel ombligo',
-        const Offset(5, 60), Colors.red.shade700);
+    _drawLabel(canvas, 'Puño arriba\ndel ombligo', const Offset(5, 60),
+        Colors.red.shade700);
     _drawLabel(canvas, 'Jala hacia\nadentro y arriba',
         Offset(size.width - 90, 160), Colors.amber.shade800);
   }
@@ -372,16 +580,21 @@ class _HeimlichPainter extends CustomPainter {
     final tp = TextPainter(
       text: TextSpan(
         text: text,
-        style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600,
-          height: 1.1),
+        style: TextStyle(
+            color: color,
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+            height: 1.1),
       ),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
     )..layout(maxWidth: 90);
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromCenter(center: pos + Offset(tp.width / 2, tp.height / 2),
-            width: tp.width + 8, height: tp.height + 4),
+        Rect.fromCenter(
+            center: pos + Offset(tp.width / 2, tp.height / 2),
+            width: tp.width + 8,
+            height: tp.height + 4),
         const Radius.circular(4),
       ),
       Paint()..color = color.withValues(alpha: 0.12),
@@ -476,13 +689,16 @@ class _TourniquetPainter extends CustomPainter {
     final arrowY = 140.0;
     canvas.drawLine(Offset(tqX, arrowY), Offset(180, arrowY), arrowPaint);
     // Tick marks
-    canvas.drawLine(Offset(tqX, arrowY - 4), Offset(tqX, arrowY + 4), arrowPaint);
-    canvas.drawLine(Offset(180, arrowY - 4), Offset(180, arrowY + 4), arrowPaint);
+    canvas.drawLine(
+        Offset(tqX, arrowY - 4), Offset(tqX, arrowY + 4), arrowPaint);
+    canvas.drawLine(
+        Offset(180, arrowY - 4), Offset(180, arrowY + 4), arrowPaint);
 
     // Labels
-    _drawLabel(canvas, 'Torniquete', Offset(tqX - 35, 15), Colors.brown.shade800);
-    _drawLabel(canvas, '5-8 cm arriba\nde la herida', Offset(tqX + 5, arrowY + 5),
-        Colors.green.shade700);
+    _drawLabel(
+        canvas, 'Torniquete', Offset(tqX - 35, 15), Colors.brown.shade800);
+    _drawLabel(canvas, '5-8 cm arriba\nde la herida',
+        Offset(tqX + 5, arrowY + 5), Colors.green.shade700);
     _drawLabel(canvas, 'Herida', Offset(185, 130), Colors.red.shade700);
     _drawLabel(canvas, 'Girar palo\n→ parar sangrado', Offset(250, 20),
         Colors.orange.shade800);
@@ -492,16 +708,21 @@ class _TourniquetPainter extends CustomPainter {
     final tp = TextPainter(
       text: TextSpan(
         text: text,
-        style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600,
-          height: 1.1),
+        style: TextStyle(
+            color: color,
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+            height: 1.1),
       ),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
     )..layout(maxWidth: 90);
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromCenter(center: pos + Offset(tp.width / 2, tp.height / 2),
-            width: tp.width + 8, height: tp.height + 4),
+        Rect.fromCenter(
+            center: pos + Offset(tp.width / 2, tp.height / 2),
+            width: tp.width + 8,
+            height: tp.height + 4),
         const Radius.circular(4),
       ),
       Paint()..color = color.withValues(alpha: 0.12),
@@ -544,7 +765,8 @@ class _RecoveryPainter extends CustomPainter {
       ..color = Colors.brown.shade300
       ..strokeWidth = 3;
     canvas.drawLine(
-      Offset(10, size.height - 15), Offset(size.width - 10, size.height - 15),
+      Offset(10, size.height - 15),
+      Offset(size.width - 10, size.height - 15),
       groundPaint,
     );
 
@@ -588,28 +810,33 @@ class _RecoveryPainter extends CustomPainter {
     canvas.drawPath(kneePath, kneePaint);
 
     // Labels
-    _drawLabel(canvas, 'Brazo en\nángulo recto',
-        const Offset(5, 10), Colors.amber.shade700);
-    _drawLabel(canvas, 'Mano bajo\nla mejilla',
-        const Offset(30, 75), Colors.amber.shade700);
-    _drawLabel(canvas, 'Rodilla doblada\n(estabiliza)',
-        Offset(200, 5), Colors.blueGrey.shade600);
+    _drawLabel(canvas, 'Brazo en\nángulo recto', const Offset(5, 10),
+        Colors.amber.shade700);
+    _drawLabel(canvas, 'Mano bajo\nla mejilla', const Offset(30, 75),
+        Colors.amber.shade700);
+    _drawLabel(canvas, 'Rodilla doblada\n(estabiliza)', Offset(200, 5),
+        Colors.blueGrey.shade600);
   }
 
   void _drawLabel(Canvas canvas, String text, Offset pos, Color color) {
     final tp = TextPainter(
       text: TextSpan(
         text: text,
-        style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600,
-          height: 1.1),
+        style: TextStyle(
+            color: color,
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+            height: 1.1),
       ),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
     )..layout(maxWidth: 90);
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromCenter(center: pos + Offset(tp.width / 2, tp.height / 2),
-            width: tp.width + 8, height: tp.height + 4),
+        Rect.fromCenter(
+            center: pos + Offset(tp.width / 2, tp.height / 2),
+            width: tp.width + 8,
+            height: tp.height + 4),
         const Radius.circular(4),
       ),
       Paint()..color = color.withValues(alpha: 0.12),
@@ -637,8 +864,10 @@ class BurnSeverityChart extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Clasificación de quemaduras',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.bold)),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             _burnRow(context, '1er grado', 'Rojo, doloroso, sin ampollas',
                 Colors.red.shade300, 'Ej: quemadura solar'),
@@ -661,21 +890,26 @@ class BurnSeverityChart extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 36, height: 36,
+            width: 36,
+            height: 36,
             decoration: BoxDecoration(
-              color: color, borderRadius: BorderRadius.circular(8)),
+                color: color, borderRadius: BorderRadius.circular(8)),
           ),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(degree, style: const TextStyle(fontWeight: FontWeight.bold)),
-                Text(desc, style: TextStyle(fontSize: 12,
-                  color: Theme.of(context).hintColor)),
-                Text(example, style: TextStyle(fontSize: 11,
-                  fontStyle: FontStyle.italic,
-                  color: Theme.of(context).hintColor)),
+                Text(degree,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text(desc,
+                    style: TextStyle(
+                        fontSize: 12, color: Theme.of(context).hintColor)),
+                Text(example,
+                    style: TextStyle(
+                        fontSize: 11,
+                        fontStyle: FontStyle.italic,
+                        color: Theme.of(context).hintColor)),
               ],
             ),
           ),
@@ -701,20 +935,26 @@ class BiteStingComparison extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Mordedura vs Picadura — Qué hacer',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.bold)),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            _compareRow(context, Icons.warning, Colors.red,
-              'Mordedura de serpiente',
-              ['❌ NO succiones', '❌ NO torniquete', '❌ NO hielo',
-               '✅ Inmoviliza, calma, traslada YA']),
+            _compareRow(
+                context, Icons.warning, Colors.red, 'Mordedura de serpiente', [
+              '❌ NO succiones',
+              '❌ NO torniquete',
+              '❌ NO hielo',
+              '✅ Inmoviliza, calma, traslada YA'
+            ]),
             const Divider(),
-            _compareRow(context, Icons.bug_report, Colors.orange,
-              'Picadura de abeja',
-              ['✅ Raspa el aguijón (no pellizques)',
-               '✅ Lava con agua y jabón',
-               '✅ Hielo envuelto en tela',
-               '✅ Antihistamínico si hay hinchazón']),
+            _compareRow(
+                context, Icons.bug_report, Colors.orange, 'Picadura de abeja', [
+              '✅ Raspa el aguijón (no pellizques)',
+              '✅ Lava con agua y jabón',
+              '✅ Hielo envuelto en tela',
+              '✅ Antihistamínico si hay hinchazón'
+            ]),
           ],
         ),
       ),
@@ -734,7 +974,8 @@ class BiteStingComparison extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text(title,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 2),
                 for (final item in items)
                   Padding(
@@ -766,20 +1007,22 @@ class TriageFlowchart extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Triaje — ¿Quién atender primero?',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.bold)),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             _triageStep(context, Colors.red, 'ROJO',
-              'No respira tras abrir vía aérea → RCP AHORA'),
+                'No respira tras abrir vía aérea → RCP AHORA'),
             _arrow(context),
             _triageStep(context, Colors.orange, 'NARANJA',
-              'Sangra mucho → Presión/torniquete AHORA'),
+                'Sangra mucho → Presión/torniquete AHORA'),
             _arrow(context),
             _triageStep(context, Colors.yellow.shade700, 'AMARILLO',
-              'Respira y no sangra mucho → Inmoviliza, observa'),
+                'Respira y no sangra mucho → Inmoviliza, observa'),
             _arrow(context),
             _triageStep(context, Colors.green, 'VERDE',
-              'Camina y habla → Puede esperar'),
+                'Camina y habla → Puede esperar'),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(8),
@@ -800,17 +1043,19 @@ class TriageFlowchart extends StatelessWidget {
     );
   }
 
-  Widget _triageStep(BuildContext context, Color color, String label,
-      String desc) {
+  Widget _triageStep(
+      BuildContext context, Color color, String label, String desc) {
     return Row(
       children: [
         Container(
-          width: 14, height: 14,
+          width: 14,
+          height: 14,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: 8),
-        Text(label, style: TextStyle(
-          fontWeight: FontWeight.bold, color: color, fontSize: 13)),
+        Text(label,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, color: color, fontSize: 13)),
         const SizedBox(width: 8),
         Expanded(child: Text(desc, style: const TextStyle(fontSize: 12))),
       ],
@@ -818,8 +1063,8 @@ class TriageFlowchart extends StatelessWidget {
   }
 
   Widget _arrow(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(left: 6, bottom: 2),
-    child: Icon(Icons.arrow_downward,
-      size: 14, color: Theme.of(context).hintColor),
-  );
+        padding: const EdgeInsets.only(left: 6, bottom: 2),
+        child: Icon(Icons.arrow_downward,
+            size: 14, color: Theme.of(context).hintColor),
+      );
 }

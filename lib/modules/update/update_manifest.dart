@@ -38,7 +38,8 @@ class UpdateManifest {
 
   final String version;
   final String notes;
-  final Map<String, UpdatePlatformAsset> platforms; // key: macos, android, windows, linux
+  final Map<String, UpdatePlatformAsset>
+      platforms; // key: macos, android, windows, linux
 
   factory UpdateManifest.fromJson(Map<String, dynamic> j) => UpdateManifest(
         version: j['version'] as String,

@@ -30,7 +30,8 @@ void main() {
       expect(decoded.hopLimit, 1);
     });
 
-    test('ack payload preserves ack msgId in plaintext emergency channel', () async {
+    test('ack payload preserves ack msgId in plaintext emergency channel',
+        () async {
       // Emergency channel is plaintext by design, so ACKs on it are readable.
       final channel = MeshChannel.emergency;
       final payload = await sealPayload({'ack': 12345}, channel);

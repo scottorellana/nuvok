@@ -107,16 +107,16 @@ void main() {
   });
 
   test('releva con hopLimit-1; con hopLimit 0 no releva', () async {
-    final env2 = await makeEnvelope(
-        channel: familia, senderId: otherId, hopLimit: 2);
+    final env2 =
+        await makeEnvelope(channel: familia, senderId: otherId, hopLimit: 2);
     transport.inject(env2.encode());
     await Future<void>.delayed(const Duration(milliseconds: 100));
     expect(transport.sent, hasLength(1), reason: 'debe relevar hop 2→1');
     expect(MeshEnvelope.decode(transport.sent.first)!.hopLimit, 1);
 
     transport.sent.clear();
-    final env0 = await makeEnvelope(
-        channel: familia, senderId: otherId, hopLimit: 0);
+    final env0 =
+        await makeEnvelope(channel: familia, senderId: otherId, hopLimit: 0);
     transport.inject(env0.encode());
     await Future<void>.delayed(const Duration(milliseconds: 100));
     expect(transport.sent, isEmpty, reason: 'hop 0 no se releva');
@@ -134,15 +134,44 @@ void main() {
     expect(transport.sent, hasLength(1));
   });
 
-  test('sin peers → outbox; flush al aparecer un peer', () async {
+  test('sin peers: transmite al aire IGUAL y además encola para reenvío',
+      () async {
     final env = await makeEnvelope(channel: familia, senderId: myId);
     await router.broadcast(env); // no hay peers aún
-    expect(transport.sent, isEmpty);
-    expect(router.outboxCount, 1);
+    // Antes se encolaba sin enviar → deadlock: si la recepción de beacons
+    // fallaba, nunca había peers y el mensaje jamás salía. Ahora SIEMPRE
+    // sale al aire (multicast/broadcast llega a quien esté escuchando ya).
+    expect(transport.sent, hasLength(1),
+        reason: 'debe salir al aire aunque no se haya escuchado a nadie aún');
+    expect(router.outboxCount, 1,
+        reason: 'y quedar en cola por si el destinatario aún no escuchaba');
     router.notePeer(otherId);
     await router.flushOutbox();
-    expect(transport.sent, hasLength(1));
+    expect(transport.sent, hasLength(2)); // 1 en vivo + 1 al drenar la cola
     expect(router.outboxCount, 0);
+  });
+
+  test('outbox offline se mantiene acotado y conserva lo más reciente',
+      () async {
+    for (var i = 0; i < MeshRouter.maxOutboxDatagrams + 30; i++) {
+      final env = await makeEnvelope(
+        channel: familia,
+        senderId: myId,
+        msgId: 10000 + i,
+      );
+      await router.broadcast(env);
+    }
+
+    expect(router.outboxCount, MeshRouter.maxOutboxDatagrams);
+    transport.sent.clear(); // ignoramos los envíos en vivo; miramos el drenado
+    router.notePeer(otherId);
+    await router.flushOutbox();
+
+    expect(transport.sent, hasLength(MeshRouter.maxOutboxDatagrams));
+    final firstSent = MeshEnvelope.decode(transport.sent.first)!;
+    final lastSent = MeshEnvelope.decode(transport.sent.last)!;
+    expect(firstSent.msgId, 10030);
+    expect(lastSent.msgId, 10000 + MeshRouter.maxOutboxDatagrams + 29);
   });
 
   test('mensajes de canal conocido se persisten y recargan', () async {

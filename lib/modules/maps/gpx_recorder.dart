@@ -38,7 +38,9 @@ class TrackPoint {
 
   /// Convert to GPX "trkpt" XML element.
   String toGpx() {
-    final ele = elevation != null ? '\n    <ele>${elevation!.toStringAsFixed(1)}</ele>' : '';
+    final ele = elevation != null
+        ? '\n    <ele>${elevation!.toStringAsFixed(1)}</ele>'
+        : '';
     return '<trkpt lat="$lat" lon="$lon">$ele\n    <time>${time.toIso8601String()}</time>\n  </trkpt>';
   }
 }
@@ -80,8 +82,10 @@ $pts
     double total = 0;
     for (var i = 1; i < points.length; i++) {
       total += LocationService.distanceMeters(
-        points[i-1].lat, points[i-1].lon,
-        points[i].lat, points[i].lon,
+        points[i - 1].lat,
+        points[i - 1].lon,
+        points[i].lat,
+        points[i].lon,
       );
     }
     return total;
@@ -120,7 +124,8 @@ class GpxRecorder {
     final status = await LocationService.ensurePermission();
     if (status != LocationStatus.ok) return false;
 
-    _currentName = name ?? 'Track ${DateTime.now().toIso8601String().substring(0, 10)}';
+    _currentName =
+        name ?? 'Track ${DateTime.now().toIso8601String().substring(0, 10)}';
     _points.clear();
     _startTime = DateTime.now();
     _isRecording = true;
@@ -261,7 +266,9 @@ class _GpxRecorderWidgetState extends State<GpxRecorderWidget> {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    _recording ? '$_pointCount puntos' : 'Graba tu ruta para exportarla',
+                    _recording
+                        ? '$_pointCount puntos'
+                        : 'Graba tu ruta para exportarla',
                     style: TextStyle(
                       fontSize: 12,
                       color: Theme.of(context).hintColor,

@@ -34,9 +34,8 @@ class MapRegion {
 
   String get fileName => '$id.pmtiles';
 
-  bool get installed => File(
-          '${PrepperLibrary.instance.mapsDir.path}/$fileName')
-      .existsSync();
+  bool get installed =>
+      File('${PrepperLibrary.instance.mapsDir.path}/$fileName').existsSync();
 }
 
 class MapCatalog {
@@ -138,8 +137,7 @@ class MapExtractor {
           'Como alternativa usa "Por URL" o "Importar archivo".';
       return;
     }
-    final dest =
-        '${PrepperLibrary.instance.mapsDir.path}/${region.fileName}';
+    final dest = '${PrepperLibrary.instance.mapsDir.path}/${region.fileName}';
     final part = '$dest.part';
     yield 'Extrayendo ${region.name} del mapa mundial ($build)… '
         'esto tarda unos minutos según el tamaño de la región.';

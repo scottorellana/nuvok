@@ -66,8 +66,7 @@ class MeshService {
 
   MeshStore get store => _store ??= MeshStore(dirPath);
 
-  List<MeshChannel> get channels =>
-      _router?.channels ?? _channelsFromDisk();
+  List<MeshChannel> get channels => _router?.channels ?? _channelsFromDisk();
 
   bool get hasIdentity => (identity ??= MeshIdentity.load(dirPath)) != null;
 
@@ -191,12 +190,28 @@ class MeshService {
   }
 
   Future<void> joinChannel(MeshChannel c) async {
-    _router?.addChannel(c);
+    final router = _router;
+    if (router == null) {
+      final existing = _channelsFromDisk();
+      if (existing.any((x) => x.id == c.id)) return;
+      store.saveChannels([...existing, c].map((x) => x.toJson()).toList());
+      return;
+    }
+    router.addChannel(c);
     _saveChannels();
   }
 
   Future<void> leaveChannel(String channelId) async {
-    _router?.removeChannel(channelId);
+    final router = _router;
+    if (router == null) {
+      final remaining = [
+        for (final c in _channelsFromDisk())
+          if (c.id != channelId) c,
+      ];
+      store.saveChannels(remaining.map((c) => c.toJson()).toList());
+      return;
+    }
+    router.removeChannel(channelId);
     _saveChannels();
   }
 
@@ -260,11 +275,11 @@ class MeshService {
       '_name': id.name,
       '_type': MeshType.chat.name,
       '_ts': env.timestampMs,
+      '_msgId': env.msgId, // lets the UI show ✓ (enviado) / ✓✓ (entregado)
     });
     // Track for ACK: this message is awaiting confirmation.
     _pendingAcks[env.msgId] = DateTime.now();
-    _events.add(
-        MeshEvent(envelope: env, channel: channel, payload: payload));
+    _events.add(MeshEvent(envelope: env, channel: channel, payload: payload));
     await router.broadcast(env);
     queuedCount.value = router.outboxCount;
   }
@@ -320,8 +335,8 @@ class MeshService {
     _positionTimer = null;
     if (!enabled) return;
     await _broadcastPosition();
-    _positionTimer = Timer.periodic(
-        const Duration(minutes: 2), (_) => _broadcastPosition());
+    _positionTimer =
+        Timer.periodic(const Duration(minutes: 2), (_) => _broadcastPosition());
   }
 
   Future<void> _broadcastPosition() async {

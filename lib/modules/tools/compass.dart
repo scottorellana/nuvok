@@ -54,7 +54,8 @@ class CompassService {
   Future<bool> start() async {
     if (_sub != null) return _available;
     try {
-      _available = await _sensorChannel.invokeMethod('hasMagnetometer') ?? false;
+      _available =
+          await _sensorChannel.invokeMethod('hasMagnetometer') ?? false;
       if (!_available) {
         _controller.add(CompassReading(
           heading: 0,
@@ -125,7 +126,9 @@ class CompassWidget extends StatefulWidget {
 class _CompassWidgetState extends State<CompassWidget> {
   final _service = CompassService.instance;
   CompassReading _reading = const CompassReading(
-    heading: 0, accuracy: 999, timestamp: null,
+    heading: 0,
+    accuracy: 999,
+    timestamp: null,
   );
   StreamSubscription? _sub;
 
@@ -178,7 +181,8 @@ class _CompassWidgetState extends State<CompassWidget> {
                 Positioned(
                   top: 8,
                   child: Container(
-                    width: 4, height: 30,
+                    width: 4,
+                    height: 30,
                     decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(2),

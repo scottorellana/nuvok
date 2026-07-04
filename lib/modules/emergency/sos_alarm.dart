@@ -152,7 +152,8 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.warning_rounded,
-                    size: 120, color: Colors.white.withValues(alpha: 0.5 + blink * 0.5)),
+                    size: 120,
+                    color: Colors.white.withValues(alpha: 0.5 + blink * 0.5)),
                 const SizedBox(height: 24),
                 const Text(
                   '⚠ SOS RECIBIDO ⚠',
@@ -181,8 +182,7 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                     child: Text(
                       _controller.alarmNote!,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          color: Colors.white, fontSize: 18),
+                      style: const TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
                 const SizedBox(height: 40),

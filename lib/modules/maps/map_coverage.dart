@@ -49,24 +49,31 @@ class MapCoverage {
 }
 
 class MapCoverageReader {
+  /// Builds coverage metadata from an already-opened provider. Used by the
+  /// maps screen so loading N regions does not open each PMTiles archive twice.
+  static MapCoverage fromProvider(
+      File mapFile, PmTilesVectorTileProvider provider) {
+    final header = provider.archive.header;
+    return MapCoverage(
+      fileName: mapFile.uri.pathSegments.last,
+      minLat: header.minPosition.latitude,
+      minLon: header.minPosition.longitude,
+      maxLat: header.maxPosition.latitude,
+      maxLon: header.maxPosition.longitude,
+      minZoom: header.minZoom,
+      maxZoom: header.maxZoom,
+      centerLat: header.centerPosition.latitude,
+      centerLon: header.centerPosition.longitude,
+      centerZoom: header.centerZoom,
+    );
+  }
+
   /// Reads coverage from a .pmtiles file. Returns null on any error (corrupt
   /// or partial file) — callers should skip nulls silently.
   static Future<MapCoverage?> read(File mapFile) async {
     try {
       final provider = await PmTilesVectorTileProvider.fromSource(mapFile.path);
-      final header = provider.archive.header;
-      return MapCoverage(
-        fileName: mapFile.uri.pathSegments.last,
-        minLat: header.minPosition.latitude,
-        minLon: header.minPosition.longitude,
-        maxLat: header.maxPosition.latitude,
-        maxLon: header.maxPosition.longitude,
-        minZoom: header.minZoom,
-        maxZoom: header.maxZoom,
-        centerLat: header.centerPosition.latitude,
-        centerLon: header.centerPosition.longitude,
-        centerZoom: header.centerZoom,
-      );
+      return fromProvider(mapFile, provider);
     } catch (_) {
       return null;
     }

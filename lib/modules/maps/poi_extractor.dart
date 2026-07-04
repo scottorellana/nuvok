@@ -135,12 +135,12 @@ class PoiExtractor {
     final n = 1 << z;
     final x = ((lon + 180) / 360 * n).floor().clamp(0, n - 1);
     final latRad = lat * math.pi / 180;
-    final y = ((1 -
-                math.log(math.tan(latRad) + 1 / math.cos(latRad)) / math.pi) /
-            2 *
-            n)
-        .floor()
-        .clamp(0, n - 1);
+    final y =
+        ((1 - math.log(math.tan(latRad) + 1 / math.cos(latRad)) / math.pi) /
+                2 *
+                n)
+            .floor()
+            .clamp(0, n - 1);
     return (x, y);
   }
 

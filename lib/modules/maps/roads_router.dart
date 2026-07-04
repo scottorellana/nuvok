@@ -24,7 +24,8 @@ enum RouteProfile { vehicle, walk }
 /// cut nearby edges; risk-zone polygons multiply edge cost so the route
 /// goes around them unless there is no alternative.
 class RouteRestrictions {
-  const RouteRestrictions({this.barriers = const [], this.riskZones = const []});
+  const RouteRestrictions(
+      {this.barriers = const [], this.riskZones = const []});
   final List<LatLng> barriers;
   final List<List<LatLng>> riskZones;
 
@@ -99,7 +100,12 @@ class RoadRouter {
     final kd = a.kindDetail;
     if (profile == RouteProfile.vehicle) {
       const forbidden = {
-        'footway', 'steps', 'path', 'pedestrian', 'sidewalk', 'crossing',
+        'footway',
+        'steps',
+        'path',
+        'pedestrian',
+        'sidewalk',
+        'crossing',
         'cycleway',
       };
       if (forbidden.contains(kd)) return null;
@@ -116,8 +122,8 @@ class RoadRouter {
   /// (checked at both endpoints and the midpoint — segments are short).
   static bool nearAnyBarrier(LatLng a, LatLng b, List<LatLng> barriers) {
     if (barriers.isEmpty) return false;
-    final mid = LatLng(
-        (a.latitude + b.latitude) / 2, (a.longitude + b.longitude) / 2);
+    final mid =
+        LatLng((a.latitude + b.latitude) / 2, (a.longitude + b.longitude) / 2);
     for (final barrier in barriers) {
       if (_haversine(a, barrier) < _barrierCutMeters ||
           _haversine(b, barrier) < _barrierCutMeters ||
@@ -137,8 +143,7 @@ class RoadRouter {
         final yi = zone[i].latitude, xi = zone[i].longitude;
         final yj = zone[j].latitude, xj = zone[j].longitude;
         final intersects = ((yi > p.latitude) != (yj > p.latitude)) &&
-            (p.longitude <
-                (xj - xi) * (p.latitude - yi) / (yj - yi) + xi);
+            (p.longitude < (xj - xi) * (p.latitude - yi) / (yj - yi) + xi);
         if (intersects) inside = !inside;
       }
       if (inside) return true;
@@ -211,8 +216,8 @@ class RoadRouter {
                   if (mult == null) continue; // forbidden kind for profile
                 }
               }
-              final directed = !ignoreRestrictions &&
-                  onewayBlocksReverse(attrs, profile);
+              final directed =
+                  !ignoreRestrictions && onewayBlocksReverse(attrs, profile);
               final lines = _lineStrings(f);
               for (final line in lines) {
                 final pts = line
@@ -237,7 +242,8 @@ class RoadRouter {
                       nearAnyBarrier(a, b, restrictions.barriers)) {
                     continue; // a marked gate cuts this edge
                   }
-                  if (!ignoreRestrictions && restrictions.riskZones.isNotEmpty) {
+                  if (!ignoreRestrictions &&
+                      restrictions.riskZones.isNotEmpty) {
                     final mid = LatLng((a.latitude + b.latitude) / 2,
                         (a.longitude + b.longitude) / 2);
                     if (insideAnyZone(mid, restrictions.riskZones)) {
@@ -257,9 +263,14 @@ class RoadRouter {
 
     if (nodePos.isEmpty) {
       return _fallbackOrStatus(RouteStatus.noRoadsNearby,
-          provider: provider, origin: origin, destination: destination,
-          zoom: zoom, maxTiles: maxTiles, profile: profile,
-          restrictions: restrictions, alreadyUnrestricted: ignoreRestrictions);
+          provider: provider,
+          origin: origin,
+          destination: destination,
+          zoom: zoom,
+          maxTiles: maxTiles,
+          profile: profile,
+          restrictions: restrictions,
+          alreadyUnrestricted: ignoreRestrictions);
     }
 
     // Protomaps road tiles are drawn, not noded for routing: roads that cross
@@ -281,9 +292,14 @@ class RoadRouter {
     final nearGoal = _kNearest(nodePos, destination, 8, exclude: {start, goal});
     if (nearStart.isEmpty || nearGoal.isEmpty) {
       return _fallbackOrStatus(RouteStatus.noRoadsNearby,
-          provider: provider, origin: origin, destination: destination,
-          zoom: zoom, maxTiles: maxTiles, profile: profile,
-          restrictions: restrictions, alreadyUnrestricted: ignoreRestrictions);
+          provider: provider,
+          origin: origin,
+          destination: destination,
+          zoom: zoom,
+          maxTiles: maxTiles,
+          profile: profile,
+          restrictions: restrictions,
+          alreadyUnrestricted: ignoreRestrictions);
     }
     for (final k in nearStart) {
       graph
@@ -299,9 +315,14 @@ class RoadRouter {
     final path = _aStar(graph, nodePos, start, goal, destination);
     if (path == null) {
       return _fallbackOrStatus(RouteStatus.noPath,
-          provider: provider, origin: origin, destination: destination,
-          zoom: zoom, maxTiles: maxTiles, profile: profile,
-          restrictions: restrictions, alreadyUnrestricted: ignoreRestrictions);
+          provider: provider,
+          origin: origin,
+          destination: destination,
+          zoom: zoom,
+          maxTiles: maxTiles,
+          profile: profile,
+          restrictions: restrictions,
+          alreadyUnrestricted: ignoreRestrictions);
     }
 
     // The path already begins at the exact origin and ends at the exact
@@ -314,9 +335,7 @@ class RoadRouter {
     return RouteOutcome(
         RouteStatus.ok,
         RouteResult(
-            path: full,
-            distanceMeters: dist,
-            restricted: !ignoreRestrictions));
+            path: full, distanceMeters: dist, restricted: !ignoreRestrictions));
   }
 
   /// When a restricted search fails, retry once without restrictions so an
@@ -375,8 +394,8 @@ class RoadRouter {
   /// a spatial hash grid, so crossing roads and tile-boundary fragments join
   /// into a routable network. Links near a marked barrier are not created —
   /// otherwise the stitch would bridge right across a gate.
-  static void _stitch(Map<String, List<_Edge>> graph,
-      Map<String, LatLng> nodePos,
+  static void _stitch(
+      Map<String, List<_Edge>> graph, Map<String, LatLng> nodePos,
       {List<LatLng> barriers = const []}) {
     // Grid cell ~ stitch distance. 0.0002° ≈ 22 m in latitude.
     const cell = 0.0002;
@@ -504,12 +523,12 @@ class RoadRouter {
     final n = 1 << z;
     final x = ((lon + 180) / 360 * n).floor().clamp(0, n - 1);
     final latRad = lat * math.pi / 180;
-    final y = ((1 -
-                math.log(math.tan(latRad) + 1 / math.cos(latRad)) / math.pi) /
-            2 *
-            n)
-        .floor()
-        .clamp(0, n - 1);
+    final y =
+        ((1 - math.log(math.tan(latRad) + 1 / math.cos(latRad)) / math.pi) /
+                2 *
+                n)
+            .floor()
+            .clamp(0, n - 1);
     return (x, y);
   }
 
@@ -519,10 +538,9 @@ class RoadRouter {
     final worldX = tx + px / extent;
     final worldY = ty + py / extent;
     final lon = worldX / n * 360 - 180;
-    final latRad =
-        math.atan((math.exp(math.pi * (1 - 2 * worldY / n)) -
-                math.exp(-math.pi * (1 - 2 * worldY / n))) /
-            2);
+    final latRad = math.atan((math.exp(math.pi * (1 - 2 * worldY / n)) -
+            math.exp(-math.pi * (1 - 2 * worldY / n))) /
+        2);
     return LatLng(latRad * 180 / math.pi, lon);
   }
 

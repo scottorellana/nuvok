@@ -68,3 +68,15 @@ Un botiquín no salva vidas — **las manos que saben usarlo, sí.** Arma el tuy
 
 - Cada 6 meses: caducidades, pilas, lo que se gastó.
 - Todos en casa deben saber DÓNDE está y haber leído las guías de esta app (Emergencia → RCP, Hemorragia, Atragantamiento son las tres vitales).
+
+## Ejemplo práctico: Botiquín recomendado (casa, vehículo y mochila)
+
+**Situación:** Vas a revisar el botiquín familiar antes de temporada de lluvias y descubres artículos vencidos.
+
+**Haz:** 1. Deténte 30 segundos y define el peligro principal. 2. Reúne agua, abrigo, luz, comunicación y una ruta segura. 3. Ejecuta la acción más simple que reduce riesgo ahora. 4. Marca lo hecho en notas/checklist para que otra persona pueda continuar.
+
+**Evita:** No gastes batería sin plan, no cruces agua en movimiento, no comas plantas desconocidas, no te separes del grupo y no esperes a que oscurezca para montar refugio.
+
+**Escala:** Cambia de plan si el clima empeora, baja la temperatura corporal, falta agua segura, hay niños/adultos mayores vulnerables o pierdes orientación.
+
+**Chequeo rápido:** antes de cerrar la guía, di en voz alta qué pasó, qué hiciste, qué falta y quién queda responsable. Este ejemplo es una práctica guiada; adapta los pasos a tu entorno y prioriza ayuda profesional cuando exista.

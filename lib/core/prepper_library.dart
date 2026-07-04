@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PrepperLibrary {
@@ -11,6 +12,11 @@ class PrepperLibrary {
   final Directory root;
 
   static PrepperLibrary? _instance;
+
+  @visibleForTesting
+  static void setInstanceForTest(Directory root) {
+    _instance = PrepperLibrary(root);
+  }
 
   /// Must be called once before [instance] (see main). On desktop the
   /// library lives in the user's home folder so it's easy to find and copy

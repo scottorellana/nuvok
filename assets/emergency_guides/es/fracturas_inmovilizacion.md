@@ -49,3 +49,15 @@ priority: 3
 - Dedos fríos, azules, dormidos tras inmovilizar → afloja YA y reacomoda la férula.
 - Dolor que crece sin parar y la pantorrilla/antebrazo se pone dura → emergencia quirúrgica: traslado inmediato.
 - Palidez + sudor + mareo → shock interno (guía "Shock").
+
+## Ejemplo práctico: Fracturas, esguinces e inmovilización
+
+**Situación:** En una caminata, alguien cae, siente dolor fuerte en el tobillo y no puede apoyar el pie.
+
+**Haz:** 1. Asegura la escena y pide a una persona específica llamar a emergencias. 2. Sigue los pasos grandes de la guía en orden, sin saltar al paso que parece más dramático. 3. Usa guantes, barreras o telas limpias si están disponibles. 4. Reevalúa cada minuto: respiración, conciencia, sangrado, temperatura o empeoramiento.
+
+**Evita:** No improvises maniobras avanzadas, no muevas cuello/columna si sospechas lesión, no des comida/bebida a alguien confundido y no retrases la llamada por buscar equipo perfecto.
+
+**Escala:** Llama o traslada de inmediato si no respira normal, hay dolor de pecho, sangrado que no cede, confusión, quemadura extensa, posible veneno, embarazo avanzado o múltiples víctimas.
+
+**Chequeo rápido:** antes de cerrar la guía, di en voz alta qué pasó, qué hiciste, qué falta y quién queda responsable. Este ejemplo es una práctica guiada; adapta los pasos a tu entorno y prioriza ayuda profesional cuando exista.

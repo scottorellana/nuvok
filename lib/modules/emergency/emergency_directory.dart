@@ -39,18 +39,28 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Honduras',
     flag: '🇭🇳',
     services: [
-      EmergencyService(name: 'Policía Nacional', number: '199',
-        description: 'Seguridad pública y emergencias'),
-      EmergencyService(name: 'Bomberos', number: '198',
-        description: 'Incendios y rescates'),
-      EmergencyService(name: 'Cruz Roja', number: '195',
-        description: 'Emergencias médicas y desastres'),
-      EmergencyService(name: 'Emergencias médicas (911)', number: '911',
-        description: 'Ambulancia y servicios médicos'),
-      EmergencyService(name: 'COPE (Protección Civil)', number: '197',
-        description: 'Gestión de emergencias y desastres'),
-      EmergencyService(name: 'DINADE (Gestión de Riesgos)', number: '2237-3601',
-        description: 'Autoridad de gestión de riesgos'),
+      EmergencyService(
+          name: 'Policía Nacional',
+          number: '199',
+          description: 'Seguridad pública y emergencias'),
+      EmergencyService(
+          name: 'Bomberos', number: '198', description: 'Incendios y rescates'),
+      EmergencyService(
+          name: 'Cruz Roja',
+          number: '195',
+          description: 'Emergencias médicas y desastres'),
+      EmergencyService(
+          name: 'Emergencias médicas (911)',
+          number: '911',
+          description: 'Ambulancia y servicios médicos'),
+      EmergencyService(
+          name: 'COPE (Protección Civil)',
+          number: '197',
+          description: 'Gestión de emergencias y desastres'),
+      EmergencyService(
+          name: 'DINADE (Gestión de Riesgos)',
+          number: '2237-3601',
+          description: 'Autoridad de gestión de riesgos'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -58,16 +68,24 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'El Salvador',
     flag: '🇸🇻',
     services: [
-      EmergencyService(name: 'Emergencias 911', number: '911',
-        description: 'Policía, bomberos, ambulancia'),
-      EmergencyService(name: 'Cruz Roja', number: '2521-7800',
-        description: 'Emergencias médicas'),
-      EmergencyService(name: 'Bomberos', number: '121',
-        description: 'Incendios y rescates'),
-      EmergencyService(name: 'Policía Nacional Civil', number: '122',
-        description: 'Seguridad pública'),
-      EmergencyService(name: 'Protección Civil', number: '2209-4200',
-        description: 'Gestión de desastres'),
+      EmergencyService(
+          name: 'Emergencias 911',
+          number: '911',
+          description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'Cruz Roja',
+          number: '2521-7800',
+          description: 'Emergencias médicas'),
+      EmergencyService(
+          name: 'Bomberos', number: '121', description: 'Incendios y rescates'),
+      EmergencyService(
+          name: 'Policía Nacional Civil',
+          number: '122',
+          description: 'Seguridad pública'),
+      EmergencyService(
+          name: 'Protección Civil',
+          number: '2209-4200',
+          description: 'Gestión de desastres'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -75,16 +93,26 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Guatemala',
     flag: '🇬🇹',
     services: [
-      EmergencyService(name: 'Bomberos Municipales', number: '122',
-        description: 'Incendios urbanos'),
-      EmergencyService(name: 'Bomberos Voluntarios', number: '123',
-        description: 'Rescates y emergencias'),
-      EmergencyService(name: 'Cruz Roja Guatemalteca', number: '125',
-        description: 'Emergencias médicas y desastres'),
-      EmergencyService(name: 'Policía Nacional Civil', number: '110',
-        description: 'Seguridad pública'),
-      EmergencyService(name: 'CONRED (Desastres)', number: '119',
-        description: 'Coordinadora Nacional para la reducción de desastres'),
+      EmergencyService(
+          name: 'Bomberos Municipales',
+          number: '122',
+          description: 'Incendios urbanos'),
+      EmergencyService(
+          name: 'Bomberos Voluntarios',
+          number: '123',
+          description: 'Rescates y emergencias'),
+      EmergencyService(
+          name: 'Cruz Roja Guatemalteca',
+          number: '125',
+          description: 'Emergencias médicas y desastres'),
+      EmergencyService(
+          name: 'Policía Nacional Civil',
+          number: '110',
+          description: 'Seguridad pública'),
+      EmergencyService(
+          name: 'CONRED (Desastres)',
+          number: '119',
+          description: 'Coordinadora Nacional para la reducción de desastres'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -92,16 +120,22 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Nicaragua',
     flag: '🇳🇮',
     services: [
-      EmergencyService(name: 'Emergencias 118', number: '118',
-        description: 'Policía, bomberos, ambulancia'),
-      EmergencyService(name: 'Cruz Roja', number: '125',
-        description: 'Emergencias médicas'),
-      EmergencyService(name: 'Bomberos', number: '115',
-        description: 'Incendios y rescates'),
-      EmergencyService(name: 'Policía Nacional', number: '101',
-        description: 'Seguridad pública'),
-      EmergencyService(name: 'SINAPRED (Desastres)', number: '118',
-        description: 'Sistema Nacional de Prevención de desastres'),
+      EmergencyService(
+          name: 'Emergencias 118',
+          number: '118',
+          description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'Cruz Roja', number: '125', description: 'Emergencias médicas'),
+      EmergencyService(
+          name: 'Bomberos', number: '115', description: 'Incendios y rescates'),
+      EmergencyService(
+          name: 'Policía Nacional',
+          number: '101',
+          description: 'Seguridad pública'),
+      EmergencyService(
+          name: 'SINAPRED (Desastres)',
+          number: '118',
+          description: 'Sistema Nacional de Prevención de desastres'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -109,16 +143,22 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Costa Rica',
     flag: '🇨🇷',
     services: [
-      EmergencyService(name: 'Emergencias 911', number: '911',
-        description: 'Policía, bomberos, ambulancia'),
-      EmergencyService(name: 'Cruz Roja', number: '911',
-        description: 'Emergencias médicas'),
-      EmergencyService(name: 'Bomberos', number: '911',
-        description: 'Incendios y rescates'),
-      EmergencyService(name: 'Policía (Fuerza Pública)', number: '911',
-        description: 'Seguridad pública'),
-      EmergencyService(name: 'Comisión Nacional Emergencias', number: '911',
-        description: 'Coordinación de desastres'),
+      EmergencyService(
+          name: 'Emergencias 911',
+          number: '911',
+          description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'Cruz Roja', number: '911', description: 'Emergencias médicas'),
+      EmergencyService(
+          name: 'Bomberos', number: '911', description: 'Incendios y rescates'),
+      EmergencyService(
+          name: 'Policía (Fuerza Pública)',
+          number: '911',
+          description: 'Seguridad pública'),
+      EmergencyService(
+          name: 'Comisión Nacional Emergencias',
+          number: '911',
+          description: 'Coordinación de desastres'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -126,16 +166,22 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Panamá',
     flag: '🇵🇦',
     services: [
-      EmergencyService(name: 'Policía Nacional', number: '104',
-        description: 'Seguridad pública'),
-      EmergencyService(name: 'Bomberos', number: '103',
-        description: 'Incendios y rescates'),
-      EmergencyService(name: 'Cruz Roja', number: '105',
-        description: 'Emergencias médicas'),
-      EmergencyService(name: 'SINAPROC (Protección Civil)', number: '106',
-        description: 'Sistema Nacional de Protección Civil'),
-      EmergencyService(name: 'Emergencias', number: '911',
-        description: 'Número universal de emergencias'),
+      EmergencyService(
+          name: 'Policía Nacional',
+          number: '104',
+          description: 'Seguridad pública'),
+      EmergencyService(
+          name: 'Bomberos', number: '103', description: 'Incendios y rescates'),
+      EmergencyService(
+          name: 'Cruz Roja', number: '105', description: 'Emergencias médicas'),
+      EmergencyService(
+          name: 'SINAPROC (Protección Civil)',
+          number: '106',
+          description: 'Sistema Nacional de Protección Civil'),
+      EmergencyService(
+          name: 'Emergencias',
+          number: '911',
+          description: 'Número universal de emergencias'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -143,16 +189,26 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'República Dominicana',
     flag: '🇩🇴',
     services: [
-      EmergencyService(name: 'Emergencias 911', number: '911',
-        description: 'Policía, bomberos, ambulancia'),
-      EmergencyService(name: 'Cruz Roja', number: '809-535-8282',
-        description: 'Emergencias médicas'),
-      EmergencyService(name: 'Bomberos', number: '809-682-3300',
-        description: 'Incendios y rescates'),
-      EmergencyService(name: 'Policía Nacional', number: '809-688-1000',
-        description: 'Seguridad pública'),
-      EmergencyService(name: 'Defensa Civil', number: '809-472-8614',
-        description: 'Gestión de desastres'),
+      EmergencyService(
+          name: 'Emergencias 911',
+          number: '911',
+          description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'Cruz Roja',
+          number: '809-535-8282',
+          description: 'Emergencias médicas'),
+      EmergencyService(
+          name: 'Bomberos',
+          number: '809-682-3300',
+          description: 'Incendios y rescates'),
+      EmergencyService(
+          name: 'Policía Nacional',
+          number: '809-688-1000',
+          description: 'Seguridad pública'),
+      EmergencyService(
+          name: 'Defensa Civil',
+          number: '809-472-8614',
+          description: 'Gestión de desastres'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -160,14 +216,20 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'México',
     flag: '🇲🇽',
     services: [
-      EmergencyService(name: 'Emergencias', number: '911',
-        description: 'Policía, bomberos, ambulancia'),
-      EmergencyService(name: 'Cruz Roja', number: '065',
-        description: 'Emergencias médicas'),
-      EmergencyService(name: 'Protección Civil', number: '911',
-        description: 'Gestión de desastres'),
-      EmergencyService(name: 'Denuncia Anónima', number: '089',
-        description: 'Denuncia de delitos federales'),
+      EmergencyService(
+          name: 'Emergencias',
+          number: '911',
+          description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'Cruz Roja', number: '065', description: 'Emergencias médicas'),
+      EmergencyService(
+          name: 'Protección Civil',
+          number: '911',
+          description: 'Gestión de desastres'),
+      EmergencyService(
+          name: 'Denuncia Anónima',
+          number: '089',
+          description: 'Denuncia de delitos federales'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -175,16 +237,22 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Colombia',
     flag: '🇨🇴',
     services: [
-      EmergencyService(name: 'Emergencias', number: '123',
-        description: 'Policía, bomberos, ambulancia'),
-      EmergencyService(name: 'Cruz Roja', number: '132',
-        description: 'Emergencias médicas'),
-      EmergencyService(name: 'Defensa Civil', number: '144',
-        description: 'Gestión de desastres y rescates'),
-      EmergencyService(name: 'Policía Nacional', number: '156',
-        description: 'Seguridad pública'),
-      EmergencyService(name: 'Bomberos', number: '119',
-        description: 'Incendios'),
+      EmergencyService(
+          name: 'Emergencias',
+          number: '123',
+          description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'Cruz Roja', number: '132', description: 'Emergencias médicas'),
+      EmergencyService(
+          name: 'Defensa Civil',
+          number: '144',
+          description: 'Gestión de desastres y rescates'),
+      EmergencyService(
+          name: 'Policía Nacional',
+          number: '156',
+          description: 'Seguridad pública'),
+      EmergencyService(
+          name: 'Bomberos', number: '119', description: 'Incendios'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -192,14 +260,22 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Estados Unidos',
     flag: '🇺🇸',
     services: [
-      EmergencyService(name: 'Todas las emergencias', number: '911',
-        description: 'Policía, bomberos, ambulancia'),
-      EmergencyService(name: 'FEMA (Desastres)', number: '1-800-621-3362',
-        description: 'Agencia federal de gestión de emergencias'),
-      EmergencyService(name: 'Centro de Control de Envenenamiento', number: '1-800-222-1222',
-        description: 'Ayuda inmediata por intoxicación'),
-      EmergencyService(name: 'Línea de Suicidio', number: '988',
-        description: 'Línea de crisis 24/7'),
+      EmergencyService(
+          name: 'Todas las emergencias',
+          number: '911',
+          description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'FEMA (Desastres)',
+          number: '1-800-621-3362',
+          description: 'Agencia federal de gestión de emergencias'),
+      EmergencyService(
+          name: 'Centro de Control de Envenenamiento',
+          number: '1-800-222-1222',
+          description: 'Ayuda inmediata por intoxicación'),
+      EmergencyService(
+          name: 'Línea de Suicidio',
+          number: '988',
+          description: 'Línea de crisis 24/7'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -207,16 +283,26 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'España',
     flag: '🇪🇸',
     services: [
-      EmergencyService(name: 'Emergencias', number: '112',
-        description: 'Policía, bomberos, ambulancia (todo el país)'),
-      EmergencyService(name: 'Cruz Roja', number: '900-222-222',
-        description: 'Emergencias humanitarias'),
-      EmergencyService(name: 'Bomberos', number: '080',
-        description: 'Incendios urbanos (solo Madrid)'),
-      EmergencyService(name: 'Policía Nacional', number: '091',
-        description: 'Seguridad pública'),
-      EmergencyService(name: 'Guardia Civil', number: '062',
-        description: 'Zonas rurales y autopistas'),
+      EmergencyService(
+          name: 'Emergencias',
+          number: '112',
+          description: 'Policía, bomberos, ambulancia (todo el país)'),
+      EmergencyService(
+          name: 'Cruz Roja',
+          number: '900-222-222',
+          description: 'Emergencias humanitarias'),
+      EmergencyService(
+          name: 'Bomberos',
+          number: '080',
+          description: 'Incendios urbanos (solo Madrid)'),
+      EmergencyService(
+          name: 'Policía Nacional',
+          number: '091',
+          description: 'Seguridad pública'),
+      EmergencyService(
+          name: 'Guardia Civil',
+          number: '062',
+          description: 'Zonas rurales y autopistas'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -224,16 +310,22 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Argentina',
     flag: '🇦🇷',
     services: [
-      EmergencyService(name: 'Emergencias', number: '911',
-        description: 'Policía, bomberos, ambulancia'),
-      EmergencyService(name: 'Bomberos', number: '100',
-        description: 'Incendios y rescates'),
-      EmergencyService(name: 'Policía', number: '101',
-        description: 'Seguridad pública'),
-      EmergencyService(name: 'Emergencias Navales', number: '106',
-        description: 'Rescates marítimos y fluviales'),
-      EmergencyService(name: 'Emergencias Médicas', number: '107',
-        description: 'Ambulancia y servicios médicos'),
+      EmergencyService(
+          name: 'Emergencias',
+          number: '911',
+          description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'Bomberos', number: '100', description: 'Incendios y rescates'),
+      EmergencyService(
+          name: 'Policía', number: '101', description: 'Seguridad pública'),
+      EmergencyService(
+          name: 'Emergencias Navales',
+          number: '106',
+          description: 'Rescates marítimos y fluviales'),
+      EmergencyService(
+          name: 'Emergencias Médicas',
+          number: '107',
+          description: 'Ambulancia y servicios médicos'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -241,14 +333,22 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Canadá',
     flag: '🇨🇦',
     services: [
-      EmergencyService(name: 'Emergencias', number: '911',
-        description: 'Policía, bomberos, ambulancia'),
-      EmergencyService(name: 'Policía (RCMP)', number: '1-888-506-8388',
-        description: 'Policía Montada federal'),
-      EmergencyService(name: 'Transporte de emergencia', number: '911',
-        description: 'Ambulancia y servicios médicos'),
-      EmergencyService(name: 'Línea de ayuda desastres', number: '1-888-335-3362',
-        description: 'FEMA Canadá - línea gratuita'),
+      EmergencyService(
+          name: 'Emergencias',
+          number: '911',
+          description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'Policía (RCMP)',
+          number: '1-888-506-8388',
+          description: 'Policía Montada federal'),
+      EmergencyService(
+          name: 'Transporte de emergencia',
+          number: '911',
+          description: 'Ambulancia y servicios médicos'),
+      EmergencyService(
+          name: 'Línea de ayuda desastres',
+          number: '1-888-335-3362',
+          description: 'FEMA Canadá - línea gratuita'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -256,12 +356,16 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Belice',
     flag: '🇧🇿',
     services: [
-      EmergencyService(name: 'Emergencias', number: '911',
-        description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'Emergencias',
+          number: '911',
+          description: 'Policía, bomberos, ambulancia'),
       EmergencyService(name: 'Policía de Belice', number: '911'),
       EmergencyService(name: 'Bomberos', number: '90'),
-      EmergencyService(name: 'Cruz Roja Belice', number: '61-23456',
-        description: 'Servicios médicos de emergencia'),
+      EmergencyService(
+          name: 'Cruz Roja Belice',
+          number: '61-23456',
+          description: 'Servicios médicos de emergencia'),
     ],
   ),
   CountryEmergencyNumbers(
@@ -269,14 +373,20 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
     countryName: 'Puerto Rico',
     flag: '🇵🇷',
     services: [
-      EmergencyService(name: 'Emergencias 911', number: '911',
-        description: 'Policía, bomberos, ambulancia'),
-      EmergencyService(name: 'Policía de Puerto Rico', number: '787-343-2020',
-        description: 'Negociado de Policía'),
+      EmergencyService(
+          name: 'Emergencias 911',
+          number: '911',
+          description: 'Policía, bomberos, ambulancia'),
+      EmergencyService(
+          name: 'Policía de Puerto Rico',
+          number: '787-343-2020',
+          description: 'Negociado de Policía'),
       EmergencyService(name: 'Bomberos', number: '787-343-2330'),
       EmergencyService(name: 'Emergencias Médicas', number: '787-754-2550'),
-      EmergencyService(name: 'NMEAD (Gestión Emergencias)', number: '787-724-0124',
-        description: 'Autoridad de Manejo de Emergencias'),
+      EmergencyService(
+          name: 'NMEAD (Gestión Emergencias)',
+          number: '787-724-0124',
+          description: 'Autoridad de Manejo de Emergencias'),
     ],
   ),
   // Universal fallback for countries not listed above

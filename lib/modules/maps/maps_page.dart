@@ -53,8 +53,7 @@ Directory tileCacheDirFor(File mapFile) {
   final stat = mapFile.statSync();
   final name = mapFile.uri.pathSegments.last.replaceAll('.pmtiles', '');
   final key = '$name-${stat.size}-${stat.modified.millisecondsSinceEpoch}';
-  return Directory(
-      '${PrepperLibrary.instance.root.path}/.tilecache/$key');
+  return Directory('${PrepperLibrary.instance.root.path}/.tilecache/$key');
 }
 
 class MapsPage extends StatefulWidget {
@@ -466,12 +465,11 @@ class _MapsPageState extends State<MapsPage> {
         try {
           final p = await PmTilesVectorTileProvider.fromSource(f.path);
           providers.add(p);
+          coverages.add(MapCoverageReader.fromProvider(f, p));
         } catch (_) {
           // Skip corrupt/incomplete files — don't fail everything.
         }
       }
-      // Read coverage metadata for the download-area outlines.
-      coverages.addAll(await MapCoverageReader.readAll(_regions));
       if (!mounted) return;
       final composite = CompositeTileProvider.fromProviders(providers);
       setState(() {
@@ -639,9 +637,7 @@ class _MapsPageState extends State<MapsPage> {
                   ? 'Modo híbrido ON (tocar para solo offline)'
                   : 'Solo offline (tocar para modo híbrido)',
               icon: Icon(_hybridMode ? Icons.cloud : Icons.cloud_off),
-              color: _hybridMode
-                  ? Theme.of(context).colorScheme.primary
-                  : null,
+              color: _hybridMode ? Theme.of(context).colorScheme.primary : null,
               onPressed: _toggleHybrid,
             ),
           IconButton(
@@ -691,65 +687,66 @@ class _MapsPageState extends State<MapsPage> {
                   ],
                 )
               : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (_destination != null)
-                  FloatingActionButton.small(
-                    heroTag: 'profile',
-                    tooltip: _profile == RouteProfile.vehicle
-                        ? 'Ruta en vehículo (tocar para ir a pie)'
-                        : 'Ruta a pie (tocar para vehículo)',
-                    backgroundColor: Theme.of(context).colorScheme.surface,
-                    onPressed: _toggleProfile,
-                    child: Icon(_profile == RouteProfile.vehicle
-                        ? Icons.directions_car
-                        : Icons.directions_walk),
-                  ),
-                if (_destination != null) const SizedBox(height: 8),
-                if (_destination != null)
-                  FloatingActionButton.extended(
-                    heroTag: 'route',
-                    tooltip: 'Trazar ruta por calles hasta el destino',
-                    onPressed: _routing ? null : _computeRoute,
-                    icon: _routing
-                        ? const SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2))
-                        : const Icon(Icons.directions),
-                    label: Text(_route != null ? 'Recalcular' : 'Ruta'),
-                  ),
-                if (_destination != null) const SizedBox(height: 8),
-                if (_me != null)
-                  FloatingActionButton.small(
-                    heroTag: 'follow',
-                    tooltip: _following
-                        ? 'Seguimiento activo (tocar para fijar)'
-                        : 'Reanudar seguimiento',
-                    backgroundColor: _following
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.surface,
-                    foregroundColor: _following
-                        ? Theme.of(context).colorScheme.onPrimary
-                        : Theme.of(context).colorScheme.onSurface,
-                    onPressed: _toggleFollow,
-                    child: const Icon(Icons.navigation),
-                  ),
-                const SizedBox(height: 8),
-                FloatingActionButton(
-                  heroTag: 'locate',
-                  tooltip: 'Mi ubicación (GPS)',
-                  onPressed: _locating ? null : _locateMe,
-                  child: _locating
-                      ? const SizedBox(
-                          width: 22,
-                          height: 22,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : const Icon(Icons.my_location),
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_destination != null)
+                      FloatingActionButton.small(
+                        heroTag: 'profile',
+                        tooltip: _profile == RouteProfile.vehicle
+                            ? 'Ruta en vehículo (tocar para ir a pie)'
+                            : 'Ruta a pie (tocar para vehículo)',
+                        backgroundColor: Theme.of(context).colorScheme.surface,
+                        onPressed: _toggleProfile,
+                        child: Icon(_profile == RouteProfile.vehicle
+                            ? Icons.directions_car
+                            : Icons.directions_walk),
+                      ),
+                    if (_destination != null) const SizedBox(height: 8),
+                    if (_destination != null)
+                      FloatingActionButton.extended(
+                        heroTag: 'route',
+                        tooltip: 'Trazar ruta por calles hasta el destino',
+                        onPressed: _routing ? null : _computeRoute,
+                        icon: _routing
+                            ? const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child:
+                                    CircularProgressIndicator(strokeWidth: 2))
+                            : const Icon(Icons.directions),
+                        label: Text(_route != null ? 'Recalcular' : 'Ruta'),
+                      ),
+                    if (_destination != null) const SizedBox(height: 8),
+                    if (_me != null)
+                      FloatingActionButton.small(
+                        heroTag: 'follow',
+                        tooltip: _following
+                            ? 'Seguimiento activo (tocar para fijar)'
+                            : 'Reanudar seguimiento',
+                        backgroundColor: _following
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.surface,
+                        foregroundColor: _following
+                            ? Theme.of(context).colorScheme.onPrimary
+                            : Theme.of(context).colorScheme.onSurface,
+                        onPressed: _toggleFollow,
+                        child: const Icon(Icons.navigation),
+                      ),
+                    const SizedBox(height: 8),
+                    FloatingActionButton(
+                      heroTag: 'locate',
+                      tooltip: 'Mi ubicación (GPS)',
+                      onPressed: _locating ? null : _locateMe,
+                      child: _locating
+                          ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Icon(Icons.my_location),
+                    ),
+                  ],
                 ),
-              ],
-            ),
       body: _regions.isEmpty
           ? _EmptyMaps(dir: PrepperLibrary.instance.mapsDir.path)
           : _error != null
@@ -796,7 +793,8 @@ class _MapsPageState extends State<MapsPage> {
                                   for (final c in _coverages)
                                     Polygon(
                                       points: c.polygon,
-                                      color: Colors.blue.withValues(alpha: 0.05),
+                                      color:
+                                          Colors.blue.withValues(alpha: 0.05),
                                       borderColor:
                                           Colors.blue.withValues(alpha: 0.3),
                                       borderStrokeWidth: 1,
@@ -829,7 +827,8 @@ class _MapsPageState extends State<MapsPage> {
                                         strokeWidth: 4,
                                         color: _overlayColor(o),
                                       ),
-                                  if (_drawKind != null && _drawPoints.length > 1)
+                                  if (_drawKind != null &&
+                                      _drawPoints.length > 1)
                                     Polyline(
                                       points: _drawPoints,
                                       strokeWidth: 3,
@@ -845,7 +844,8 @@ class _MapsPageState extends State<MapsPage> {
                                   Polyline(
                                     points: _route!,
                                     strokeWidth: 5,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ],
                               )
@@ -929,8 +929,7 @@ class _MapsPageState extends State<MapsPage> {
                             // Mesh teammates and SOS alerts heard offline.
                             MarkerLayer(
                               markers: [
-                                for (final p
-                                    in PositionStore.instance.recent())
+                                for (final p in PositionStore.instance.recent())
                                   Marker(
                                     point: LatLng(p.lat, p.lon),
                                     width: p.isSos ? 46 : 34,
@@ -949,8 +948,7 @@ class _MapsPageState extends State<MapsPage> {
                                               child: Text(
                                                 p.name.isEmpty
                                                     ? '?'
-                                                    : p.name[0]
-                                                        .toUpperCase(),
+                                                    : p.name[0].toUpperCase(),
                                                 style: const TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
@@ -1107,8 +1105,8 @@ class _MapsPageState extends State<MapsPage> {
               alignment: Alignment.centerRight,
               child: TextButton.icon(
                 icon: const Icon(Icons.delete_outline, color: Colors.red),
-                label: const Text('Eliminar',
-                    style: TextStyle(color: Colors.red)),
+                label:
+                    const Text('Eliminar', style: TextStyle(color: Colors.red)),
                 onPressed: () async {
                   await _overlays.remove(o.id);
                   if (context.mounted) Navigator.pop(context);
@@ -1146,82 +1144,83 @@ class _MapsPageState extends State<MapsPage> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
                 child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text('Puntos de interés del mapa',
-                            style: Theme.of(context).textTheme.titleMedium),
-                      ),
-                      FilledButton.tonalIcon(
-                        icon: _loadingPois
-                            ? const SizedBox(
-                                width: 16,
-                                height: 16,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2))
-                            : const Icon(Icons.search, size: 18),
-                        label: const Text('Buscar aquí'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _loadPois();
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Wrap(
-                    spacing: 8,
-                    children: [
-                      for (final c in PoiCategory.values)
-                        FilterChip(
-                          avatar: Icon(poiCategoryIcon(c),
-                              size: 18, color: poiCategoryColor(c)),
-                          label: Text(poiCategoryLabel(c)),
-                          selected: _activeCategories.contains(c),
-                          onSelected: (v) => toggleCat(c, v),
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text('Puntos de interés del mapa',
+                              style: Theme.of(context).textTheme.titleMedium),
                         ),
+                        FilledButton.tonalIcon(
+                          icon: _loadingPois
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child:
+                                      CircularProgressIndicator(strokeWidth: 2))
+                              : const Icon(Icons.search, size: 18),
+                          label: const Text('Buscar aquí'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            _loadPois();
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Wrap(
+                      spacing: 8,
+                      children: [
+                        for (final c in PoiCategory.values)
+                          FilterChip(
+                            avatar: Icon(poiCategoryIcon(c),
+                                size: 18, color: poiCategoryColor(c)),
+                            label: Text(poiCategoryLabel(c)),
+                            selected: _activeCategories.contains(c),
+                            onSelected: (v) => toggleCat(c, v),
+                          ),
+                      ],
+                    ),
+                    const Divider(height: 28),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text('Capas tácticas',
+                              style: Theme.of(context).textTheme.titleMedium),
+                        ),
+                        Switch(
+                          value: _showOverlays,
+                          onChanged: (v) {
+                            setSheet(() => _showOverlays = v);
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                    const Text(
+                      'Mantén pulsado el mapa para agregar un punto '
+                      '(refugio, agua, reunión). O dibuja un área o ruta:',
+                      style: TextStyle(fontSize: 13),
+                    ),
+                    const SizedBox(height: 10),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        _drawButton(
+                            OverlayKind.safeZone, Icons.shield_outlined),
+                        _drawButton(OverlayKind.riskZone, Icons.warning_amber),
+                        _drawButton(
+                            OverlayKind.evacuationRoute, Icons.route_outlined),
+                      ],
+                    ),
+                    if (_overlays.overlays.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Text('${_overlays.overlays.length} elementos guardados',
+                          style: Theme.of(context).textTheme.bodySmall),
                     ],
-                  ),
-                  const Divider(height: 28),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text('Capas tácticas',
-                            style: Theme.of(context).textTheme.titleMedium),
-                      ),
-                      Switch(
-                        value: _showOverlays,
-                        onChanged: (v) {
-                          setSheet(() => _showOverlays = v);
-                          setState(() {});
-                        },
-                      ),
-                    ],
-                  ),
-                  const Text(
-                    'Mantén pulsado el mapa para agregar un punto '
-                    '(refugio, agua, reunión). O dibuja un área o ruta:',
-                    style: TextStyle(fontSize: 13),
-                  ),
-                  const SizedBox(height: 10),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      _drawButton(OverlayKind.safeZone, Icons.shield_outlined),
-                      _drawButton(OverlayKind.riskZone, Icons.warning_amber),
-                      _drawButton(
-                          OverlayKind.evacuationRoute, Icons.route_outlined),
-                    ],
-                  ),
-                  if (_overlays.overlays.isNotEmpty) ...[
-                    const SizedBox(height: 8),
-                    Text('${_overlays.overlays.length} elementos guardados',
-                        style: Theme.of(context).textTheme.bodySmall),
-                  ],
                   ],
                 ),
               ),
@@ -1751,8 +1750,7 @@ class _PlaceSearchDialogState extends State<_PlaceSearchDialog> {
                             leading: const Icon(Icons.place),
                             title: Text(name),
                             subtitle: Text(kind),
-                            onTap: () =>
-                                Navigator.of(context).pop((name, loc)),
+                            onTap: () => Navigator.of(context).pop((name, loc)),
                           );
                         },
                       ),

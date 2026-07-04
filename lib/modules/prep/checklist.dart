@@ -52,157 +52,243 @@ class ChecklistCategory {
 
 const categories = [
   ChecklistCategory(id: 'water', nameEs: 'Agua', nameEn: 'Water', icon: '💧'),
-  ChecklistCategory(id: 'food', nameEs: 'Alimentos', nameEn: 'Food', icon: '🍜'),
-  ChecklistCategory(id: 'medical', nameEs: 'Salud', nameEn: 'Health', icon: '🏥'),
-  ChecklistCategory(id: 'docs', nameEs: 'Documentos', nameEn: 'Documents', icon: '📄'),
-  ChecklistCategory(id: 'shelter', nameEs: 'Refugio', nameEn: 'Shelter', icon: '🏕️'),
-  ChecklistCategory(id: 'comms', nameEs: 'Comunicación', nameEn: 'Communication', icon: '📡'),
-  ChecklistCategory(id: 'tools', nameEs: 'Herramientas', nameEn: 'Tools', icon: '🔧'),
-  ChecklistCategory(id: 'plan', nameEs: 'Plan familiar', nameEn: 'Family plan', icon: '👨‍👩‍👧‍👦'),
+  ChecklistCategory(
+      id: 'food', nameEs: 'Alimentos', nameEn: 'Food', icon: '🍜'),
+  ChecklistCategory(
+      id: 'medical', nameEs: 'Salud', nameEn: 'Health', icon: '🏥'),
+  ChecklistCategory(
+      id: 'docs', nameEs: 'Documentos', nameEn: 'Documents', icon: '📄'),
+  ChecklistCategory(
+      id: 'shelter', nameEs: 'Refugio', nameEn: 'Shelter', icon: '🏕️'),
+  ChecklistCategory(
+      id: 'comms', nameEs: 'Comunicación', nameEn: 'Communication', icon: '📡'),
+  ChecklistCategory(
+      id: 'tools', nameEs: 'Herramientas', nameEn: 'Tools', icon: '🔧'),
+  ChecklistCategory(
+      id: 'plan',
+      nameEs: 'Plan familiar',
+      nameEn: 'Family plan',
+      icon: '👨‍👩‍👧‍👦'),
 ];
 
 const checklistItems = [
   // Water — rotate stored water every 6 months
-  ChecklistItem(id: 'water_1', category: 'water',
-    textEs: '4 litros de agua por persona por día (mínimo 3 días)',
-    textEn: '4 liters of water per person per day (minimum 3 days)',
-    expiryMonths: 6),
-  ChecklistItem(id: 'water_2', category: 'water',
-    textEs: 'Filtro de agua o pastillas purificadoras',
-    textEn: 'Water filter or purification tablets',
-    expiryMonths: 24),
-  ChecklistItem(id: 'water_3', category: 'water',
-    textEs: 'Bidón/cuba para almacenar agua (60L+)',
-    textEn: 'Large container for water storage (60L+)'),
+  ChecklistItem(
+      id: 'water_1',
+      category: 'water',
+      textEs: '4 litros de agua por persona por día (mínimo 3 días)',
+      textEn: '4 liters of water per person per day (minimum 3 days)',
+      expiryMonths: 6),
+  ChecklistItem(
+      id: 'water_2',
+      category: 'water',
+      textEs: 'Filtro de agua o pastillas purificadoras',
+      textEn: 'Water filter or purification tablets',
+      expiryMonths: 24),
+  ChecklistItem(
+      id: 'water_3',
+      category: 'water',
+      textEs: 'Bidón/cuba para almacenar agua (60L+)',
+      textEn: 'Large container for water storage (60L+)'),
 
   // Food — rotate every 6 months
-  ChecklistItem(id: 'food_1', category: 'food',
-    textEs: '3 días de comida no perecedera (atún, frijoles, arroz)',
-    textEn: '3 days of non-perishable food (canned tuna, beans, rice)',
-    expiryMonths: 6),
-  ChecklistItem(id: 'food_2', category: 'food',
-    textEs: 'Snacks altos en energía (nueces, barras, galletas)',
-    textEn: 'High-energy snacks (nuts, bars, crackers)',
-    expiryMonths: 6),
-  ChecklistItem(id: 'food_3', category: 'food',
-    textEs: 'Fórmula/comida para bebés si aplica',
-    textEn: 'Baby formula/food if applicable',
-    expiryMonths: 6),
-  ChecklistItem(id: 'food_4', category: 'food',
-    textEs: 'Comida para mascotas (7 días)',
-    textEn: 'Pet food (7 days)',
-    expiryMonths: 6),
+  ChecklistItem(
+      id: 'food_1',
+      category: 'food',
+      textEs: '3 días de comida no perecedera (atún, frijoles, arroz)',
+      textEn: '3 days of non-perishable food (canned tuna, beans, rice)',
+      expiryMonths: 6),
+  ChecklistItem(
+      id: 'food_2',
+      category: 'food',
+      textEs: 'Snacks altos en energía (nueces, barras, galletas)',
+      textEn: 'High-energy snacks (nuts, bars, crackers)',
+      expiryMonths: 6),
+  ChecklistItem(
+      id: 'food_3',
+      category: 'food',
+      textEs: 'Fórmula/comida para bebés si aplica',
+      textEn: 'Baby formula/food if applicable',
+      expiryMonths: 6),
+  ChecklistItem(
+      id: 'food_4',
+      category: 'food',
+      textEs: 'Comida para mascotas (7 días)',
+      textEn: 'Pet food (7 days)',
+      expiryMonths: 6),
 
   // Medical — rotate every 12 months
-  ChecklistItem(id: 'med_1', category: 'medical',
-    textEs: 'Botiquín de primeros auxilios completo',
-    textEn: 'Complete first aid kit',
-    expiryMonths: 12),
-  ChecklistItem(id: 'med_2', category: 'medical',
-    textEs: 'Medicamentos recetados (7 días extra)',
-    textEn: 'Prescription medications (7+ days extra)',
-    expiryMonths: 6),
-  ChecklistItem(id: 'med_3', category: 'medical',
-    textEs: 'Paracetamol, ibuprofeno, antialérgico',
-    textEn: 'Paracetamol, ibuprofen, antihistamine',
-    expiryMonths: 12),
-  ChecklistItem(id: 'med_4', category: 'medical',
-    textEs: 'Alcohol (70%), gasas, esparadrapo, torniquete',
-    textEn: 'Rubbing alcohol (70%), gauze, tape, tourniquet',
-    expiryMonths: 12),
-  ChecklistItem(id: 'med_5', category: 'medical',
-    textEs: 'Termómetro, tijeras, pinzas, guantes',
-    textEn: 'Thermometer, scissors, tweezers, gloves',
-    expiryMonths: 12),
+  ChecklistItem(
+      id: 'med_1',
+      category: 'medical',
+      textEs: 'Botiquín de primeros auxilios completo',
+      textEn: 'Complete first aid kit',
+      expiryMonths: 12),
+  ChecklistItem(
+      id: 'med_2',
+      category: 'medical',
+      textEs: 'Medicamentos recetados (7 días extra)',
+      textEn: 'Prescription medications (7+ days extra)',
+      expiryMonths: 6),
+  ChecklistItem(
+      id: 'med_3',
+      category: 'medical',
+      textEs: 'Paracetamol, ibuprofeno, antialérgico',
+      textEn: 'Paracetamol, ibuprofen, antihistamine',
+      expiryMonths: 12),
+  ChecklistItem(
+      id: 'med_4',
+      category: 'medical',
+      textEs: 'Alcohol (70%), gasas, esparadrapo, torniquete',
+      textEn: 'Rubbing alcohol (70%), gauze, tape, tourniquet',
+      expiryMonths: 12),
+  ChecklistItem(
+      id: 'med_5',
+      category: 'medical',
+      textEs: 'Termómetro, tijeras, pinzas, guantes',
+      textEn: 'Thermometer, scissors, tweezers, gloves',
+      expiryMonths: 12),
 
   // Documents
-  ChecklistItem(id: 'doc_1', category: 'docs',
-    textEs: 'Copias de identificaciones (DNI/pasaporte) en bolsa impermeable',
-    textEn: 'Copies of IDs (passport/national ID) in waterproof bag'),
-  ChecklistItem(id: 'doc_2', category: 'docs',
-    textEs: 'Actas de nacimiento y matrimonio',
-    textEn: 'Birth and marriage certificates'),
-  ChecklistItem(id: 'doc_3', category: 'docs',
-    textEs: 'Pólizas de seguro, títulos de propiedad',
-    textEn: 'Insurance policies, property titles'),
-  ChecklistItem(id: 'doc_4', category: 'docs',
-    textEs: 'Lista de contactos de emergencia en papel',
-    textEn: 'Emergency contact list on paper'),
-  ChecklistItem(id: 'doc_5', category: 'docs',
-    textEs: 'Dinero en efectivo (billetes pequeños)',
-    textEn: 'Cash in small bills'),
+  ChecklistItem(
+      id: 'doc_1',
+      category: 'docs',
+      textEs: 'Copias de identificaciones (DNI/pasaporte) en bolsa impermeable',
+      textEn: 'Copies of IDs (passport/national ID) in waterproof bag'),
+  ChecklistItem(
+      id: 'doc_2',
+      category: 'docs',
+      textEs: 'Actas de nacimiento y matrimonio',
+      textEn: 'Birth and marriage certificates'),
+  ChecklistItem(
+      id: 'doc_3',
+      category: 'docs',
+      textEs: 'Pólizas de seguro, títulos de propiedad',
+      textEn: 'Insurance policies, property titles'),
+  ChecklistItem(
+      id: 'doc_4',
+      category: 'docs',
+      textEs: 'Lista de contactos de emergencia en papel',
+      textEn: 'Emergency contact list on paper'),
+  ChecklistItem(
+      id: 'doc_5',
+      category: 'docs',
+      textEs: 'Dinero en efectivo (billetes pequeños)',
+      textEn: 'Cash in small bills'),
 
   // Shelter
-  ChecklistItem(id: 'shelter_1', category: 'shelter',
-    textEs: 'Tienda de campaña o lona impermeable',
-    textEn: 'Tent or waterproof tarp'),
-  ChecklistItem(id: 'shelter_2', category: 'shelter',
-    textEs: 'Sleeping bags o mantas para cada persona',
-    textEn: 'Sleeping bags or blankets for each person'),
-  ChecklistItem(id: 'shelter_3', category: 'shelter',
-    textEs: 'Ropa de cambio (3 días) en bolsa sellada',
-    textEn: 'Change of clothes (3 days) in sealed bag'),
-  ChecklistItem(id: 'shelter_4', category: 'shelter',
-    textEs: 'Zapatos resistentes extra',
-    textEn: 'Extra sturdy shoes'),
+  ChecklistItem(
+      id: 'shelter_1',
+      category: 'shelter',
+      textEs: 'Tienda de campaña o lona impermeable',
+      textEn: 'Tent or waterproof tarp'),
+  ChecklistItem(
+      id: 'shelter_2',
+      category: 'shelter',
+      textEs: 'Sleeping bags o mantas para cada persona',
+      textEn: 'Sleeping bags or blankets for each person'),
+  ChecklistItem(
+      id: 'shelter_3',
+      category: 'shelter',
+      textEs: 'Ropa de cambio (3 días) en bolsa sellada',
+      textEn: 'Change of clothes (3 days) in sealed bag'),
+  ChecklistItem(
+      id: 'shelter_4',
+      category: 'shelter',
+      textEs: 'Zapatos resistentes extra',
+      textEn: 'Extra sturdy shoes'),
 
   // Communication
-  ChecklistItem(id: 'comm_1', category: 'comms',
-    textEs: 'Radio de batería o manivela (AM/FM)',
-    textEn: 'Battery or hand-crank radio (AM/FM)'),
-  ChecklistItem(id: 'comm_2', category: 'comms',
-    textEs: 'Prepper Pad cargado y actualizado ✅',
-    textEn: 'Prepper Pad loaded and updated ✅'),
-  ChecklistItem(id: 'comm_3', category: 'comms',
-    textEs: 'Power bank (20,000mAh+) cargado',
-    textEn: 'Power bank (20,000mAh+) charged'),
-  ChecklistItem(id: 'comm_4', category: 'comms',
-    textEs: 'Panel solar pequeño para cargar dispositivos',
-    textEn: 'Small solar panel for charging devices'),
-  ChecklistItem(id: 'comm_5', category: 'comms',
-    textEs: 'Silbato para señalar rescate (3 sonidos = SOS)',
-    textEn: 'Whistle to signal rescue (3 blasts = SOS)'),
+  ChecklistItem(
+      id: 'comm_1',
+      category: 'comms',
+      textEs: 'Radio de batería o manivela (AM/FM)',
+      textEn: 'Battery or hand-crank radio (AM/FM)'),
+  ChecklistItem(
+      id: 'comm_2',
+      category: 'comms',
+      textEs: 'Prepper Pad cargado y actualizado ✅',
+      textEn: 'Prepper Pad loaded and updated ✅'),
+  ChecklistItem(
+      id: 'comm_3',
+      category: 'comms',
+      textEs: 'Power bank (20,000mAh+) cargado',
+      textEn: 'Power bank (20,000mAh+) charged'),
+  ChecklistItem(
+      id: 'comm_4',
+      category: 'comms',
+      textEs: 'Panel solar pequeño para cargar dispositivos',
+      textEn: 'Small solar panel for charging devices'),
+  ChecklistItem(
+      id: 'comm_5',
+      category: 'comms',
+      textEs: 'Silbato para señalar rescate (3 sonidos = SOS)',
+      textEn: 'Whistle to signal rescue (3 blasts = SOS)'),
 
   // Tools
-  ChecklistItem(id: 'tool_1', category: 'tools',
-    textEs: 'Linterna frontal o de mano (LED)',
-    textEn: 'Headlamp or handheld flashlight (LED)'),
-  ChecklistItem(id: 'tool_2', category: 'tools',
-    textEs: 'Cuchillo multiusos / navaja suiza',
-    textEn: 'Multi-tool / Swiss army knife'),
-  ChecklistItem(id: 'tool_3', category: 'tools',
-    textEs: 'Fósforos en bolsa impermeable + encendedor',
-    textEn: 'Matches in waterproof bag + lighter'),
-  ChecklistItem(id: 'tool_4', category: 'tools',
-    textEs: 'Cinta adhesiva (duct tape)',
-    textEn: 'Duct tape'),
-  ChecklistItem(id: 'tool_5', category: 'tools',
-    textEs: 'Cuerda/soga (15 metros)',
-    textEn: 'Rope/cord (15 meters)'),
-  ChecklistItem(id: 'tool_6', category: 'tools',
-    textEs: 'Pilas de repuesto (AA, AAA)',
-    textEn: 'Spare batteries (AA, AAA)',
-    expiryMonths: 24),
+  ChecklistItem(
+      id: 'tool_1',
+      category: 'tools',
+      textEs: 'Linterna frontal o de mano (LED)',
+      textEn: 'Headlamp or handheld flashlight (LED)'),
+  ChecklistItem(
+      id: 'tool_2',
+      category: 'tools',
+      textEs: 'Cuchillo multiusos / navaja suiza',
+      textEn: 'Multi-tool / Swiss army knife'),
+  ChecklistItem(
+      id: 'tool_3',
+      category: 'tools',
+      textEs: 'Fósforos en bolsa impermeable + encendedor',
+      textEn: 'Matches in waterproof bag + lighter'),
+  ChecklistItem(
+      id: 'tool_4',
+      category: 'tools',
+      textEs: 'Cinta adhesiva (duct tape)',
+      textEn: 'Duct tape'),
+  ChecklistItem(
+      id: 'tool_5',
+      category: 'tools',
+      textEs: 'Cuerda/soga (15 metros)',
+      textEn: 'Rope/cord (15 meters)'),
+  ChecklistItem(
+      id: 'tool_6',
+      category: 'tools',
+      textEs: 'Pilas de repuesto (AA, AAA)',
+      textEn: 'Spare batteries (AA, AAA)',
+      expiryMonths: 24),
 
   // Family plan
-  ChecklistItem(id: 'plan_1', category: 'plan',
-    textEs: 'Punto de reunión familiar definido (cerca y lejos)',
-    textEn: 'Family meeting point defined (near and far)'),
-  ChecklistItem(id: 'plan_2', category: 'plan',
-    textEs: 'Ruta de evacuación conocida por todos',
-    textEn: 'Evacuation route known by all'),
-  ChecklistItem(id: 'plan_3', category: 'plan',
-    textEs: 'Contacto fuera de la ciudad/zona de riesgo',
-    textEn: 'Out-of-area emergency contact'),
-  ChecklistItem(id: 'plan_4', category: 'plan',
-    textEs: 'Plan para mascotas y animales',
-    textEn: 'Plan for pets and animals'),
-  ChecklistItem(id: 'plan_5', category: 'plan',
-    textEs: 'Práctica de evacuación al menos 1 vez al año',
-    textEn: 'Evacuation drill at least once a year'),
-  ChecklistItem(id: 'plan_6', category: 'plan',
-    textEs: 'Ubicación de llaves de gas/electricidad/agua conocida',
-    textEn: 'Know where gas/electric/water shutoffs are'),
+  ChecklistItem(
+      id: 'plan_1',
+      category: 'plan',
+      textEs: 'Punto de reunión familiar definido (cerca y lejos)',
+      textEn: 'Family meeting point defined (near and far)'),
+  ChecklistItem(
+      id: 'plan_2',
+      category: 'plan',
+      textEs: 'Ruta de evacuación conocida por todos',
+      textEn: 'Evacuation route known by all'),
+  ChecklistItem(
+      id: 'plan_3',
+      category: 'plan',
+      textEs: 'Contacto fuera de la ciudad/zona de riesgo',
+      textEn: 'Out-of-area emergency contact'),
+  ChecklistItem(
+      id: 'plan_4',
+      category: 'plan',
+      textEs: 'Plan para mascotas y animales',
+      textEn: 'Plan for pets and animals'),
+  ChecklistItem(
+      id: 'plan_5',
+      category: 'plan',
+      textEs: 'Práctica de evacuación al menos 1 vez al año',
+      textEn: 'Evacuation drill at least once a year'),
+  ChecklistItem(
+      id: 'plan_6',
+      category: 'plan',
+      textEs: 'Ubicación de llaves de gas/electricidad/agua conocida',
+      textEn: 'Know where gas/electric/water shutoffs are'),
 ];
 
 /// Entry returned by expiry queries — the item plus its stored date.
@@ -286,8 +372,8 @@ class ChecklistProgress {
       _done.add(itemId);
       // Auto-assign suggested expiry for perishable items.
       if (item != null && item.isPerishable && !_expiry.containsKey(itemId)) {
-        final suggested = DateTime.now()
-            .add(Duration(days: 30 * item.expiryMonths));
+        final suggested =
+            DateTime.now().add(Duration(days: 30 * item.expiryMonths));
         _expiry[itemId] = _toIsoDate(suggested);
       }
     }

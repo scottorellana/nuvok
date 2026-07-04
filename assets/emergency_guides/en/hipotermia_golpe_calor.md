@@ -70,3 +70,15 @@ No snow needed: rain + wind + exhaustion, or a river, is enough.
 
 - Stops responding or breathing → CPR.
 - Vomits → always onto the side.
+
+## Example practice: Hypothermia and heat stroke
+
+**Situation:** Two neighbors return from a hike: one is shivering in wet clothes and another is very hot and confused.
+
+**Do:** 1. Make the scene safe and assign one specific person to call emergency services. 2. Follow the large steps in this guide in order instead of jumping to the most dramatic action. 3. Use gloves, barriers, or clean cloth if available. 4. Recheck every minute: breathing, responsiveness, bleeding, temperature, or worsening signs.
+
+**Avoid:** Do not improvise advanced procedures, do not move the neck/spine if injury is suspected, do not give food or drink to a confused person, and do not delay calling because you are searching for perfect equipment.
+
+**Escalate:** Call or evacuate immediately if breathing is not normal, chest pain appears, bleeding does not stop, confusion worsens, a burn is large, poisoning is possible, pregnancy is advanced, or there are multiple victims.
+
+**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.

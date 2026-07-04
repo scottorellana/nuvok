@@ -51,20 +51,22 @@ class _ChecklistPageState extends State<ChecklistPage> {
               child: Row(
                 children: [
                   SizedBox(
-                    width: 80, height: 80,
+                    width: 80,
+                    height: 80,
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
                         CircularProgressIndicator(
                           value: pct,
                           strokeWidth: 8,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surfaceContainerHighest,
+                          backgroundColor: Theme.of(context)
+                              .colorScheme
+                              .surfaceContainerHighest,
                         ),
                         Text(
                           '${(pct * 100).round()}%',
                           style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -80,15 +82,13 @@ class _ChecklistPageState extends State<ChecklistPage> {
                               : pct >= 0.5
                                   ? 'Vas por buen camino 💪'
                                   : 'Empieza tu preparación 🏠',
-                          style:
-                              Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(height: 4),
                         Text(
                           '${_progress.completedCount()} de '
                           '${_progress.totalCount()} completados',
-                          style: TextStyle(
-                              color: Theme.of(context).hintColor),
+                          style: TextStyle(color: Theme.of(context).hintColor),
                         ),
                       ],
                     ),
@@ -136,8 +136,8 @@ class _ChecklistPageState extends State<ChecklistPage> {
               'Esta lista está basada en recomendaciones de FEMA y la Cruz '
               'Roja. Adapta las cantidades al tamaño de tu familia y a los '
               'riesgos de tu zona.',
-              style: TextStyle(
-                  fontSize: 12, color: Theme.of(context).hintColor),
+              style:
+                  TextStyle(fontSize: 12, color: Theme.of(context).hintColor),
               textAlign: TextAlign.center,
             ),
           ),
@@ -152,8 +152,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
       final item = checklistItems.where((i) => i.id == itemId).firstOrNull;
       if (item != null) {
         _progress.setExpiry(
-            itemId,
-            ChecklistProgress.suggestedExpiryForItem(item));
+            itemId, ChecklistProgress.suggestedExpiryForItem(item));
       }
     });
     if (context.mounted) {
@@ -166,16 +165,14 @@ class _ChecklistPageState extends State<ChecklistPage> {
     }
   }
 
-  Future<void> _pickExpiryDate(
-      BuildContext context, String itemId) async {
+  Future<void> _pickExpiryDate(BuildContext context, String itemId) async {
     final item = checklistItems.where((i) => i.id == itemId).firstOrNull;
     if (item == null) return;
 
     final current = _progress.getExpiry(itemId);
     final picked = await showDatePicker(
       context: context,
-      initialDate: current ??
-          ChecklistProgress.suggestedExpiryForItem(item),
+      initialDate: current ?? ChecklistProgress.suggestedExpiryForItem(item),
       firstDate: DateTime.now().subtract(const Duration(days: 365)),
       lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
       helpText: 'Fecha de vencimiento / rotación',

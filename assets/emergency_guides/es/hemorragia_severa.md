@@ -42,23 +42,23 @@ Paso 2: DESCUBRIR
 └── Necesitas VER de dónde sale
      │
      ▼
-Paso 3: PRESIÓN DIRECTA FUERTE ← (detiene 90% de hemorragias)
+Paso 3: PRESIÓN DIRECTA FUERTE ← empieza aquí si puedes mantener presión
 ├── Gasa/trapo limpio sobre el punto que sangra
 ├── Presiona con TODO tu peso (duele y está bien)
 ├── Mínimo 10 minutos SIN levantar a mirar
 └── Si empapa → otro trapo ENCIMA y seguir
      │
      ▼ ¿No cede en brazo/pierna?
-Paso 4: ELEVAR
-└── Subir la extremidad por encima del corazón
+Paso 4: SI ES BRAZO/PIERNA Y ES MASIVO
+└── Torniquete temprano si no cede rápido, amputación o no puedes mantener presión
      │
-     ▼ ¿Aún no cede?
+     ▼ Si es unión cuello/axila/ingle o herida profunda
 Paso 5: EMPAQUETAR (cuello, ingle, axila)
 ├── Meter gasa/tela DENTRO del hueco
 ├── Hasta el fondo con los dedos
 └── Presionar encima
      │
-     ▼ ¿Aún no cede en brazo/pierna?
+     ▼ Si todavía sangra en brazo/pierna
 Paso 6: TORNIQUETE
 ├── Tela fuerte de 4-5 cm (nunca alambre)
 ├── 5-8 cm ARRIBA de la herida
@@ -73,7 +73,7 @@ Paso 6: TORNIQUETE
 |-----------|-------|
 | Material | Tela 4-5 cm de ancho (corbata, camiseta enrollada) |
 | NUNCA | Alambre, cuerda fina, cinturón delgado |
-| Ubicación | 5-8 cm arriba de la herida, más cerca del corazón |
+| Ubicación | 5-8 cm arriba de la herida, más cerca del corazón; si no ves la herida, alto y apretado en la extremidad |
 | Evitar | Sobre articulaciones (codo, rodilla) |
 | Objetivo | Sangrado PARE por completo |
 | Hora | Anotar en torniquete o frente de la persona |
@@ -92,3 +92,21 @@ Paso 6: TORNIQUETE
 
 - **SIEMPRE** con hemorragia severa, torniquete o empaquetado → hospital urgente
 - Sangrados menores: médico si no cierra, si fue mordedura, o si objeto estaba sucio/oxidado (tétanos)
+
+## Ejemplo práctico: Hemorragia severa (sangrado que no para)
+
+**Situación:** En el patio, alguien se corta con una lámina y la sangre empapa una toalla en segundos.
+
+**Haz:** 1. Asegura la escena y pide a una persona específica llamar a emergencias. 2. Sigue los pasos grandes de la guía en orden, sin saltar al paso que parece más dramático. 3. Usa guantes, barreras o telas limpias si están disponibles. 4. Reevalúa cada minuto: respiración, conciencia, sangrado, temperatura o empeoramiento.
+
+**Evita:** No improvises maniobras avanzadas, no muevas cuello/columna si sospechas lesión, no des comida/bebida a alguien confundido y no retrases la llamada por buscar equipo perfecto.
+
+**Escala:** Llama o traslada de inmediato si no respira normal, hay dolor de pecho, sangrado que no cede, confusión, quemadura extensa, posible veneno, embarazo avanzado o múltiples víctimas.
+
+**Chequeo rápido:** antes de cerrar la guía, di en voz alta qué pasó, qué hiciste, qué falta y quién queda responsable. Este ejemplo es una práctica guiada; adapta los pasos a tu entorno y prioriza ayuda profesional cuando exista.
+
+## Base científica e improvisación
+
+- Basado en STOP THE BLEED/ACS: presión directa, empaquetamiento en heridas profundas de unión y torniquete en extremidades para sangrado amenazante.
+- Un torniquete improvisado debe ser ancho (4-5 cm) y apretarse hasta que el sangrado pare; alambre, cordón o cable aumentan daño y suelen fallar.
+- No retires capas empapadas ni aflojes un torniquete colocado; agrega material encima, anota la hora y traslada.

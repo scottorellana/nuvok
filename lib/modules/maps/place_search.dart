@@ -68,8 +68,7 @@ class PlaceIndex {
               final key = '$name@${loc.latitude.toStringAsFixed(2)},'
                   '${loc.longitude.toStringAsFixed(2)}';
               if (seen.add(key)) {
-                entries.add(
-                    PlaceEntry(name: name, kind: kind, location: loc));
+                entries.add(PlaceEntry(name: name, kind: kind, location: loc));
               }
             } catch (_) {}
           }
@@ -156,10 +155,9 @@ class PlaceIndex {
     final worldX = tx + px / extent;
     final worldY = ty + py / extent;
     final lon = worldX / n * 360 - 180;
-    final latRad = math.atan(
-        (math.exp(math.pi * (1 - 2 * worldY / n)) -
-                math.exp(-math.pi * (1 - 2 * worldY / n))) /
-            2);
+    final latRad = math.atan((math.exp(math.pi * (1 - 2 * worldY / n)) -
+            math.exp(-math.pi * (1 - 2 * worldY / n))) /
+        2);
     return LatLng(latRad * 180 / math.pi, lon);
   }
 }

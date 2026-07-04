@@ -16,7 +16,8 @@ class LibraryPage extends StatefulWidget {
 }
 
 class _ZimCardInfo {
-  _ZimCardInfo(this.file, {this.title, this.description, this.icon, this.error});
+  _ZimCardInfo(this.file,
+      {this.title, this.description, this.icon, this.error});
   final File file;
   final String? title;
   final String? description;

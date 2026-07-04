@@ -53,3 +53,15 @@ Also: sudden vision loss, violent dizziness with loss of balance, EXPLOSIVE head
 
 - Loses consciousness, stops breathing → CPR.
 - Stroke symptoms "go away on their own" in minutes → STILL go urgently: it was a warning and the big stroke may come within hours.
+
+## Example practice: Heart attack and stroke (recognize in time)
+
+**Situation:** A relative develops chest pressure and cold sweat; another person notices slurred speech.
+
+**Do:** 1. Make the scene safe and assign one specific person to call emergency services. 2. Follow the large steps in this guide in order instead of jumping to the most dramatic action. 3. Use gloves, barriers, or clean cloth if available. 4. Recheck every minute: breathing, responsiveness, bleeding, temperature, or worsening signs.
+
+**Avoid:** Do not improvise advanced procedures, do not move the neck/spine if injury is suspected, do not give food or drink to a confused person, and do not delay calling because you are searching for perfect equipment.
+
+**Escalate:** Call or evacuate immediately if breathing is not normal, chest pain appears, bleeding does not stop, confusion worsens, a burn is large, poisoning is possible, pregnancy is advanced, or there are multiple victims.
+
+**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.

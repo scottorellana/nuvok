@@ -36,8 +36,14 @@ void main() {
         name: 'Test Track',
         startTime: DateTime.parse('2025-01-15T10:00:00'),
         points: [
-          TrackPoint(lat: 15.5, lon: -88.0, time: DateTime.parse('2025-01-15T10:00:00')),
-          TrackPoint(lat: 15.51, lon: -88.01, time: DateTime.parse('2025-01-15T10:05:00')),
+          TrackPoint(
+              lat: 15.5,
+              lon: -88.0,
+              time: DateTime.parse('2025-01-15T10:00:00')),
+          TrackPoint(
+              lat: 15.51,
+              lon: -88.01,
+              time: DateTime.parse('2025-01-15T10:05:00')),
         ],
       );
       final gpx = track.toGpx();

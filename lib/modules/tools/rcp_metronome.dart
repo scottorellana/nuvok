@@ -45,7 +45,7 @@ class RcpMetronomeController extends ChangeNotifier {
     _timer = Timer.periodic(interval, (_) {
       _compressionCount++;
       _sinceLastBreath++;
-      
+
       // Give 2 breaths every 30 compressions
       if (_sinceLastBreath >= 30) {
         _cycleCount++;
@@ -93,7 +93,8 @@ class RcpMetronomePage extends StatelessWidget {
         final isPlaying = ctrl.playing;
 
         return Scaffold(
-          backgroundColor: isPlaying ? Colors.red.shade900 : Colors.grey.shade900,
+          backgroundColor:
+              isPlaying ? Colors.red.shade900 : Colors.grey.shade900,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             title: const Text('RCP Metrónomo'),
@@ -108,9 +109,16 @@ class RcpMetronomePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('BPM: ', style: TextStyle(color: Colors.white70, fontSize: 18)),
-                      Text('${ctrl.bpm}', style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
-                      const Text(' (100-120)', style: TextStyle(color: Colors.white54)),
+                      const Text('BPM: ',
+                          style:
+                              TextStyle(color: Colors.white70, fontSize: 18)),
+                      Text('${ctrl.bpm}',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold)),
+                      const Text(' (100-120)',
+                          style: TextStyle(color: Colors.white54)),
                     ],
                   ),
                 ),
@@ -129,15 +137,20 @@ class RcpMetronomePage extends StatelessWidget {
                 // Compression counter
                 Text(
                   '${ctrl.compressionCount}',
-                  style: const TextStyle(color: Colors.white, fontSize: 120, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 120,
+                      fontWeight: FontWeight.bold),
                 ),
-                const Text('COMPRESIONES', style: TextStyle(color: Colors.white70, fontSize: 20)),
+                const Text('COMPRESIONES',
+                    style: TextStyle(color: Colors.white70, fontSize: 20)),
 
                 const SizedBox(height: 20),
 
                 // Cycle indicator (30:2)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
@@ -152,7 +165,8 @@ class RcpMetronomePage extends StatelessWidget {
                 if (ctrl._sinceLastBreath >= 25)
                   Container(
                     margin: const EdgeInsets.only(top: 20),
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                     decoration: BoxDecoration(
                       color: Colors.blue.shade700,
                       borderRadius: BorderRadius.circular(30),
@@ -162,7 +176,11 @@ class RcpMetronomePage extends StatelessWidget {
                       children: [
                         Icon(Icons.air, color: Colors.white),
                         SizedBox(width: 8),
-                        Text('2 RESPIRACIONES', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+                        Text('2 RESPIRACIONES',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18)),
                       ],
                     ),
                   ),
@@ -185,9 +203,11 @@ class RcpMetronomePage extends StatelessWidget {
                       // Play/Stop
                       FloatingActionButton.large(
                         heroTag: 'play',
-                        backgroundColor: isPlaying ? Colors.red.shade600 : Colors.green,
+                        backgroundColor:
+                            isPlaying ? Colors.red.shade600 : Colors.green,
                         onPressed: isPlaying ? ctrl.stop : ctrl.play,
-                        child: Icon(isPlaying ? Icons.stop : Icons.play_arrow, color: Colors.white, size: 48),
+                        child: Icon(isPlaying ? Icons.stop : Icons.play_arrow,
+                            color: Colors.white, size: 48),
                       ),
                     ],
                   ),
@@ -198,10 +218,12 @@ class RcpMetronomePage extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Text(
                     isPlaying
-                      ? 'Presiona firmemente 5-6cm en el centro del pecho'
-                      : 'Toca PLAY para iniciar el ritmo de compresiones',
+                        ? 'Presiona firmemente 5-6cm en el centro del pecho'
+                        : 'Toca PLAY para iniciar el ritmo de compresiones',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 14),
+                    style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.7),
+                        fontSize: 14),
                   ),
                 ),
               ],

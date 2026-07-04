@@ -37,12 +37,9 @@ import 'mesh_transport.dart';
 /// TX (we write to peer): 0000ffe1-...
 /// RX (peer writes, we notify): 0000ffe2-...
 class BleUuids {
-  static final Guid serviceGuid =
-      Guid('0000ffe0-0000-1000-8000-00805f9b34fb');
-  static final Guid txGuid =
-      Guid('0000ffe1-0000-1000-8000-00805f9b34fb');
-  static final Guid rxGuid =
-      Guid('0000ffe2-0000-1000-8000-00805f9b34fb');
+  static final Guid serviceGuid = Guid('0000ffe0-0000-1000-8000-00805f9b34fb');
+  static final Guid txGuid = Guid('0000ffe1-0000-1000-8000-00805f9b34fb');
+  static final Guid rxGuid = Guid('0000ffe2-0000-1000-8000-00805f9b34fb');
 }
 
 /// Maximum bytes of a single on-the-wire chunk, including the 4-byte frame

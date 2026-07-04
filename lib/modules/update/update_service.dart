@@ -18,7 +18,15 @@ import 'package:path_provider/path_provider.dart';
 import '../../core/prepper_library.dart';
 import 'update_manifest.dart';
 
-enum UpdateState { idle, checking, upToDate, available, downloading, downloaded, error }
+enum UpdateState {
+  idle,
+  checking,
+  upToDate,
+  available,
+  downloading,
+  downloaded,
+  error
+}
 
 class UpdateService extends ChangeNotifier {
   UpdateService._();
@@ -54,7 +62,8 @@ class UpdateService extends ChangeNotifier {
 
   Future<void> setManifestUrl(String url) async {
     _manifestUrl = url.trim().isEmpty ? defaultManifestUrl : url.trim();
-    await PrepperLibrary.instance.saveSetting('updateManifestUrl', _manifestUrl);
+    await PrepperLibrary.instance
+        .saveSetting('updateManifestUrl', _manifestUrl);
     notifyListeners();
   }
 
@@ -75,8 +84,8 @@ class UpdateService extends ChangeNotifier {
       }
       final body = await res.transform(utf8.decoder).join();
       client.close();
-      final manifest = UpdateManifest.fromJson(
-          jsonDecode(body) as Map<String, dynamic>);
+      final manifest =
+          UpdateManifest.fromJson(jsonDecode(body) as Map<String, dynamic>);
       latest = manifest;
       final asset = _assetForThisPlatform(manifest);
       if (asset != null &&
@@ -128,7 +137,8 @@ class UpdateService extends ChangeNotifier {
       final client = HttpClient();
       final req = await client.getUrl(Uri.parse(asset.url));
       final res = await req.close();
-      final total = res.contentLength > 0 ? res.contentLength : asset.sizeBytes ?? 0;
+      final total =
+          res.contentLength > 0 ? res.contentLength : asset.sizeBytes ?? 0;
       var received = 0;
       final sink = part.openWrite();
       await for (final chunk in res) {
@@ -149,7 +159,8 @@ class UpdateService extends ChangeNotifier {
         final got = sha256.convert(await part.readAsBytes()).toString();
         if (got.toLowerCase() != asset.sha256!.toLowerCase()) {
           await part.delete();
-          throw Exception('Verificación de integridad fallida (sha256 no coincide)');
+          throw Exception(
+              'Verificación de integridad fallida (sha256 no coincide)');
         }
       }
       if (await dest.exists()) await dest.delete();

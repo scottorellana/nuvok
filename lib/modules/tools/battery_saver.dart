@@ -55,8 +55,7 @@ class BatterySaverController extends ChangeNotifier {
 
   String _batteryState = 'unknown';
   String get batteryState => _batteryState;
-  bool get isCharging =>
-      _batteryState == 'charging' || _batteryState == 'full';
+  bool get isCharging => _batteryState == 'charging' || _batteryState == 'full';
 
   Timer? _ambientMonitor;
   StreamSubscription<BatteryState>? _stateSub;
@@ -71,8 +70,8 @@ class BatterySaverController extends ChangeNotifier {
       _batteryState = s.name;
       _refreshBattery();
     });
-    _ambientMonitor ??= Timer.periodic(
-        const Duration(minutes: 1), (_) => _refreshBattery());
+    _ambientMonitor ??=
+        Timer.periodic(const Duration(minutes: 1), (_) => _refreshBattery());
   }
 
   void _loadSettings() {
@@ -280,9 +279,7 @@ class BatterySaverPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      ctrl.enabled
-                          ? Icons.battery_saver
-                          : Icons.battery_full,
+                      ctrl.enabled ? Icons.battery_saver : Icons.battery_full,
                       color: Colors.white,
                       size: 48,
                     ),

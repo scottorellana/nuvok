@@ -23,8 +23,7 @@ void main() {
     await c.toggle();
     expect(c.enabled, isTrue);
     await c.toggle();
-    expect(c.enabled, isFalse,
-        reason: 'debe poder revertirse siempre');
+    expect(c.enabled, isFalse, reason: 'debe poder revertirse siempre');
   });
 
   test('las preferencias persisten en la librería', () async {

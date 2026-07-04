@@ -13,7 +13,8 @@ import 'mesh_store.dart';
 import 'mesh_transport.dart';
 
 class MeshEvent {
-  MeshEvent({required this.envelope, required this.channel, required this.payload});
+  MeshEvent(
+      {required this.envelope, required this.channel, required this.payload});
   final MeshEnvelope envelope;
   final MeshChannel channel;
   final Map<String, dynamic> payload;
@@ -34,6 +35,10 @@ class MeshRouter {
   final MeshStore store;
 
   static const int _seenCap = 500;
+  // Low-RAM / offline-safe cap: if a device stays isolated for days, the
+  // store-and-forward queue must not grow without bound in memory or disk.
+  // Keep the newest messages because they are most actionable in the field.
+  static const int maxOutboxDatagrams = 200;
   static const Duration peerTimeout = Duration(seconds: 45);
 
   final _seen = <int>{};
@@ -62,11 +67,11 @@ class MeshRouter {
     _channels.add(c);
   }
 
-  void removeChannel(String id) =>
-      _channels.removeWhere((c) => c.id == id);
+  void removeChannel(String id) => _channels.removeWhere((c) => c.id == id);
 
   Future<void> start() async {
     _outbox.addAll(store.loadOutbox());
+    _trimOutboxToCap();
     for (final t in _transports) {
       await t.start();
       _subs.add(t.onData.listen(_handleIncoming));
@@ -91,16 +96,27 @@ class MeshRouter {
     _peers[senderId] = DateTime.now();
   }
 
-  /// Sends an envelope to everyone in range; queues it if nobody is.
+  /// Sends an envelope to everyone in range, and queues it for later if we
+  /// haven't confirmed anyone is around yet.
   Future<void> broadcast(MeshEnvelope env) async {
     _markSeen(env.msgId); // never re-process our own message
     final bytes = env.encode();
+    // ALWAYS put it on the wire immediately. multicast/broadcast reaches
+    // anyone listening right now — even a peer whose beacon we haven't heard
+    // yet. Gating this on `hasPeers` was a deadlock: if beacon reception was
+    // flaky (very common — many WiFi APs and phone hotspots drop multicast
+    // between clients), we never registered peers, so messages were queued
+    // forever and never actually sent.
+    await _sendAll(bytes);
+    // If nobody is confirmed in range, ALSO keep it queued so it goes out
+    // again the moment a peer's beacon appears (store-and-forward for peers
+    // that were briefly out of range at send time). The receiver's dedup
+    // makes the resulting best-effort redundancy harmless.
     if (!hasPeers) {
       _outbox.add(bytes);
+      _trimOutboxToCap();
       store.saveOutbox(_outbox);
-      return;
     }
-    await _sendAll(bytes);
   }
 
   /// Sends immediately on every transport, skipping the outbox — for
@@ -118,6 +134,12 @@ class MeshRouter {
     store.saveOutbox(_outbox);
     for (final bytes in pending) {
       await _sendAll(bytes);
+    }
+  }
+
+  void _trimOutboxToCap() {
+    while (_outbox.length > maxOutboxDatagrams) {
+      _outbox.removeAt(0);
     }
   }
 

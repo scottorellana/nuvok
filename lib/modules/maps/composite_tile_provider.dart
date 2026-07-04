@@ -24,9 +24,13 @@ class CompositeTileProvider extends VectorTileProvider {
   final List<_Source> _sources;
 
   /// Builds a composite from a list of already-opened providers.
-  static CompositeTileProvider fromProviders(List<VectorTileProvider> providers) {
+  static CompositeTileProvider fromProviders(
+      List<VectorTileProvider> providers) {
     return CompositeTileProvider(
-      [for (var i = 0; i < providers.length; i++) _Source('source-$i', providers[i])],
+      [
+        for (var i = 0; i < providers.length; i++)
+          _Source('source-$i', providers[i])
+      ],
     );
   }
 

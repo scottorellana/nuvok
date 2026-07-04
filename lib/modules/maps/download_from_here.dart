@@ -45,8 +45,7 @@ MapRegion regionFromCenter(LatLng center, double radiusKm) {
       : '${radiusKm.toStringAsFixed(0)}km';
   final latLabel = center.latitude.toStringAsFixed(2).replaceAll('.', 'd');
   final lonLabel = center.longitude.toStringAsFixed(2).replaceAll('.', 'd');
-  final id = 'area-${latLabel}n${lonLabel}e-$radiusLabel'
-      .replaceAll('-', 'm');
+  final id = 'area-${latLabel}n${lonLabel}e-$radiusLabel'.replaceAll('-', 'm');
   final name = 'Área ${center.latitude.toStringAsFixed(2)}, '
       '${center.longitude.toStringAsFixed(2)} ($radiusLabel)';
   return MapRegion(

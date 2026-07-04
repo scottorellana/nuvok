@@ -58,8 +58,22 @@ function mimeFor(filename) {
 }
 
 // ── Scan for available installers ──
+function installerVersion(filename) {
+  const match = /(?:^|[-_])v?(\d+\.\d+\.\d+(?:\+\d+)?)(?=\.|[-_]|$)/i.exec(filename);
+  return match ? match[1] : null;
+}
+
+function compareSemver(a, b) {
+  const pa = String(a || '0.0.0').split('+')[0].split('.').map((x) => parseInt(x, 10) || 0);
+  const pb = String(b || '0.0.0').split('+')[0].split('.').map((x) => parseInt(x, 10) || 0);
+  for (let i = 0; i < 3; i++) {
+    if ((pa[i] || 0) !== (pb[i] || 0)) return (pa[i] || 0) - (pb[i] || 0);
+  }
+  return 0;
+}
+
 function scanInstallers() {
-  const installers = [];
+  const all = [];
 
   // Scan dist/ directory
   const dirs = [DIST_DIR, DOWNLOADS_DIR];
@@ -71,18 +85,42 @@ function scanInstallers() {
       const ext = path.extname(file).toLowerCase();
       const platform = detectPlatform(file);
       if (platform) {
-        installers.push({
+        all.push({
           name: file,
           platform,
           size: fs.statSync(full).size,
           path: path.relative(ROOT, full),
           url: `/download/${encodeURIComponent(file)}?from=${encodeURIComponent(path.relative(ROOT, full))}`,
+          version: installerVersion(file),
+          mtimeMs: fs.statSync(full).mtimeMs,
         });
       }
     }
   }
 
-  return installers;
+  // Only expose the latest/current app version per platform. Prefer files whose
+  // filename carries the pubspec version (e.g. PrepperPad-v0.2.2.dmg) so the
+  // page never shows both "latest" and an older/versioned artifact. If a
+  // platform has no versioned file yet, fall back to its newest file.
+  const current = pubspecVersion();
+  const latest = {};
+  for (const inst of all) {
+    const existing = latest[inst.platform];
+    const currentMatch = inst.version === current;
+    const existingCurrentMatch = existing?.version === current;
+    let wins = false;
+    if (!existing) {
+      wins = true;
+    } else if (currentMatch !== existingCurrentMatch) {
+      wins = currentMatch;
+    } else if (inst.version && existing.version && compareSemver(inst.version, existing.version) !== 0) {
+      wins = compareSemver(inst.version, existing.version) > 0;
+    } else {
+      wins = inst.mtimeMs > existing.mtimeMs;
+    }
+    if (wins) latest[inst.platform] = inst;
+  }
+  return Object.values(latest).map(({ mtimeMs, version, ...inst }) => inst);
 }
 
 function detectPlatform(filename) {
@@ -368,8 +406,12 @@ function serveStatic(req, res, url) {
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
 
-  // CORS for LAN access
+  // LAN-safe defaults: no external dependencies, no MIME sniffing, no framing,
+  // and explicit CORS so phones/tablets on the same network can fetch metadata.
   res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'no-referrer');
 
   // API routes
   if (url.pathname.startsWith('/api/')) {

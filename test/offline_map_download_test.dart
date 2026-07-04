@@ -50,7 +50,8 @@ void main() {
       centerZoom: 12,
     );
 
-    expect(isAlreadyCovered(const LatLng(14.0818, -87.2068), [coverage]), isTrue);
+    expect(
+        isAlreadyCovered(const LatLng(14.0818, -87.2068), [coverage]), isTrue);
     expect(isAlreadyCovered(const LatLng(15.5, -88.0), [coverage]), isFalse);
     expect(coverage.polygon, hasLength(4));
   });

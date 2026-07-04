@@ -14,8 +14,7 @@ import 'composite_tile_provider.dart';
 /// URL template for the online fallback. Protomaps' public demo server serves
 /// free vector tiles (OpenStreetMap data) for development / light use.
 /// Users who need heavy use can self-host or point this at a custom URL.
-const kOnlineFallbackUrl =
-    'https://demo.protomaps.com/tiles/{z}/{x}/{y}.mvt';
+const kOnlineFallbackUrl = 'https://demo.protomaps.com/tiles/{z}/{x}/{y}.mvt';
 
 /// Wraps a composite offline provider and adds an online fallback layer.
 /// The online source is only tried when all offline sources miss the tile.

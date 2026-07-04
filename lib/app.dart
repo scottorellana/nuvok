@@ -7,6 +7,7 @@ import 'main.dart';
 import 'modules/ai/ai_page.dart';
 import 'modules/depot/depot_page.dart';
 import 'modules/emergency/emergency_page.dart';
+import 'modules/emergency/sos_alarm.dart';
 import 'modules/library/library_page.dart';
 import 'modules/maps/map_focus.dart';
 import 'modules/maps/maps_page.dart';
@@ -202,41 +203,43 @@ class _HomeShellState extends State<HomeShell> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          NavigationRail(
-            selectedIndex: _index,
-            onDestinationSelected: (i) => setState(() => _index = i),
-            labelType: NavigationRailLabelType.all,
-            leading: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Column(
-                children: [
-                  Icon(Icons.backpack,
-                      size: 34,
-                      color: Theme.of(context).colorScheme.primary),
-                  const SizedBox(height: 4),
-                  Text('Prepper\nPad',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.labelSmall),
-                ],
-              ),
-            ),
-            destinations: [
-              for (final (icon, selectedIcon, label) in _destinations)
-                NavigationRailDestination(
-                  icon: Icon(icon),
-                  selectedIcon: Icon(selectedIcon),
-                  label: Text(label),
+    return SosAlarmWrapper(
+      child: Scaffold(
+        body: Row(
+          children: [
+            NavigationRail(
+              selectedIndex: _index,
+              onDestinationSelected: (i) => setState(() => _index = i),
+              labelType: NavigationRailLabelType.all,
+              leading: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Column(
+                  children: [
+                    Icon(Icons.backpack,
+                        size: 34,
+                        color: Theme.of(context).colorScheme.primary),
+                    const SizedBox(height: 4),
+                    Text('Prepper\nPad',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.labelSmall),
+                  ],
                 ),
-            ],
-          ),
-          const VerticalDivider(thickness: 1, width: 1),
-          Expanded(
-            child: IndexedStack(index: _index, children: _pages),
-          ),
-        ],
+              ),
+              destinations: [
+                for (final (icon, selectedIcon, label) in _destinations)
+                  NavigationRailDestination(
+                    icon: Icon(icon),
+                    selectedIcon: Icon(selectedIcon),
+                    label: Text(label),
+                  ),
+              ],
+            ),
+            const VerticalDivider(thickness: 1, width: 1),
+            Expanded(
+              child: IndexedStack(index: _index, children: _pages),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../../core/prepper_library.dart';
+import '../emergency/sos_alarm.dart';
 import '../maps/location_service.dart';
 import 'ble_transport.dart';
 import 'lan_transport.dart';
@@ -317,9 +318,22 @@ class MeshService {
             sosNote: e.payload['note'] as String?,
           ));
         }
+        // Trigger the SOS alarm for incoming distress signals.
+        if (e.envelope.type == MeshType.sos &&
+            e.envelope.senderId != identity?.id) {
+          SosAlarmController.instance.trigger(
+            fromName: e.envelope.senderName,
+            note: e.payload['note'] as String?,
+          );
+        }
         break;
       case MeshType.sosCancel:
         PositionStore.instance.clearSos(e.envelope.senderId);
+        // Silence the alarm if it was from this sender.
+        if (SosAlarmController.instance.alarmFromName ==
+            e.envelope.senderName) {
+          SosAlarmController.instance.silence();
+        }
         break;
       case MeshType.chat:
         // Send an ACK back so the sender knows the message was delivered.

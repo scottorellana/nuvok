@@ -30,6 +30,15 @@ class PrepperLibrary {
       _instance = PrepperLibrary(Directory('${base.path}/PrepperPad'));
       return;
     }
+    if (Platform.isIOS) {
+      // iOS has no usable $HOME env var (resolving it gave '//PrepperPad' at
+      // the read-only filesystem root and killed startup). The sandboxed
+      // Documents dir is the right home; it's also visible in the Files app
+      // and finder-shareable, matching the "portable library" idea.
+      final base = await getApplicationDocumentsDirectory();
+      _instance = PrepperLibrary(Directory('${base.path}/PrepperPad'));
+      return;
+    }
     final home = Platform.environment['HOME'] ??
         Platform.environment['USERPROFILE'] ??
         Directory.current.path;

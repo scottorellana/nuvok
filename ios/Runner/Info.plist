@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Prepper Pad usa Bluetooth para el chat de emergencia entre tus dispositivos cuando no hay internet ni señal.</string>
 	<key>NSLocalNetworkUsageDescription</key>

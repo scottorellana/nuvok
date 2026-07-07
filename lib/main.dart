@@ -18,7 +18,11 @@ Future<void> main() async {
   await PrepperLibrary.init();
   final firstRun = !PrepperLibrary.instance.existedBefore;
   await PrepperLibrary.instance.ensure();
-  await BundledLibrarySeeder.seed();
+  // Seed the bundled starter library WITHOUT blocking the first frame: the
+  // bundle can be gigabytes (tablet single-install), and awaiting it here
+  // left the user staring at a white screen for the whole copy. The UI
+  // modules list whatever exists and pick up new content as it lands.
+  unawaited(BundledLibrarySeeder.seed());
   // Start reading the real battery early so the level is ready when the user
   // opens Herramientas — non-blocking, failures are swallowed inside.
   BatterySaverController.instance.init();

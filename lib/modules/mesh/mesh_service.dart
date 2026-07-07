@@ -3,6 +3,7 @@
 // the always-listened emergency channel, and periodic position sharing that
 // feeds the Maps module.
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 
@@ -11,6 +12,7 @@ import '../emergency/sos_alarm.dart';
 import '../maps/location_service.dart';
 import 'ble_transport.dart';
 import 'lan_transport.dart';
+import 'lora_transport.dart';
 import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
 import 'mesh_identity.dart';
@@ -50,6 +52,7 @@ class MeshService {
   Timer? _beaconTimer;
   Timer? _sosTimer;
   Timer? _positionTimer;
+  final _discoveryTimers = <Timer>[];
   StreamSubscription<MeshEvent>? _eventsSub;
 
   // One stable stream for the whole app: incoming router events and local
@@ -101,6 +104,8 @@ class MeshService {
     if (ble.available) list.add(ble);
     final wifi = WifiDirectTransport();
     if (wifi.available) list.add(wifi);
+    final lora = LoraTransport();
+    if (lora.available) list.add(lora);
     return list;
   }
 
@@ -131,27 +136,25 @@ class MeshService {
         _events.add(e);
         _onEvent(e);
       });
-      _beaconTimer = Timer.periodic(const Duration(seconds: 15), (_) {
-        _sendBeacon();
-        peerCount.value = router.peers.length;
-        queuedCount.value = router.outboxCount;
-        router.flushOutbox();
-      });
+      _scheduleBeaconTick(router);
       // Iniciar timer de cleanup de ACKs
       _startAckCleanupTimer();
       // Retransmit unacked chats every few seconds so a lost datagram is
       // resent until the peer confirms — reliable delivery over lossy WiFi.
       _retryTimer?.cancel();
-      _retryTimer = Timer.periodic(
-          const Duration(seconds: 3), (_) => _retryUnacked());
+      _retryTimer =
+          Timer.periodic(const Duration(seconds: 3), (_) => _retryUnacked());
       running.value = true;
       await _sendBeacon();
       // Discovery burst: fire a few quick beacons so a peer that's already
       // nearby is found in ~1s instead of waiting up to a full 15s cycle.
+      _discoveryTimers.clear();
       for (final ms in const [400, 1200, 3000, 6000]) {
-        Timer(Duration(milliseconds: ms), () {
-          if (running.value) _sendBeacon();
-        });
+        _discoveryTimers.add(
+          Timer(Duration(milliseconds: ms), () {
+            if (running.value) _sendBeacon();
+          }),
+        );
       }
     } finally {
       _starting = false;
@@ -164,8 +167,12 @@ class MeshService {
     _positionTimer?.cancel();
     _ackCleanupTimer?.cancel();
     _retryTimer?.cancel();
-    _beaconTimer = _sosTimer = _positionTimer = _ackCleanupTimer =
-        _retryTimer = null;
+    for (final t in _discoveryTimers) {
+      t.cancel();
+    }
+    _discoveryTimers.clear();
+    _beaconTimer =
+        _sosTimer = _positionTimer = _ackCleanupTimer = _retryTimer = null;
     await _eventsSub?.cancel();
     _eventsSub = null;
     await _router?.stop();
@@ -192,6 +199,26 @@ class MeshService {
       timestampMs: DateTime.now().millisecondsSinceEpoch,
       payload: await sealPayload(payload, channel),
     );
+  }
+
+  /// Beacon cadence: fast while others are around (presence must stay
+  /// fresh — peerTimeout is 45s), slow when alone (battery: the radio still
+  /// wakes for incoming, and the discovery burst re-fires on start/resume).
+  static Duration beaconInterval({required bool peersNearby}) =>
+      peersNearby ? const Duration(seconds: 15) : const Duration(seconds: 60);
+
+  /// One beacon tick that reschedules itself at the adaptive interval.
+  void _scheduleBeaconTick(MeshRouter router) {
+    _beaconTimer?.cancel();
+    _beaconTimer =
+        Timer(beaconInterval(peersNearby: router.peers.isNotEmpty), () {
+      if (!running.value || _router != router) return;
+      _sendBeacon();
+      peerCount.value = router.peers.length;
+      queuedCount.value = router.outboxCount;
+      router.flushOutbox();
+      _scheduleBeaconTick(router);
+    });
   }
 
   Future<void> _sendBeacon() async {
@@ -239,8 +266,12 @@ class MeshService {
   /// message still shows a single ✓ (sent) if never confirmed.
   static const int maxChatSends = 5;
 
-  /// msgIds confirmed as delivered.
+  /// msgIds confirmed as delivered. Bounded by [_confirmedCap] so a long
+  /// session never leaks memory: once the cap is reached, the oldest entries
+  /// are evicted (they are long-delivered and no longer actionable).
   final Set<int> _confirmedAcks = {};
+  final Queue<int> _confirmedQueue = Queue();
+  static const int _confirmedCap = 500;
 
   /// Notifier for UI to observe ACK changes (for ✓✓ display).
   final ValueNotifier<int> ackTick = ValueNotifier(0);
@@ -446,6 +477,10 @@ class MeshService {
         if (ackedId != null && _pendingAcks.containsKey(ackedId)) {
           _pendingAcks.remove(ackedId);
           _confirmedAcks.add(ackedId);
+          _confirmedQueue.add(ackedId);
+          while (_confirmedQueue.length > _confirmedCap) {
+            _confirmedAcks.remove(_confirmedQueue.removeFirst());
+          }
           ackTick.value++;
         }
         break;

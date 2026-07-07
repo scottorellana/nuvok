@@ -29,6 +29,8 @@ class FakeTransport implements MeshTransport {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   late Directory tmp;
   late FakeTransport transport;
   late MeshService service;
@@ -164,6 +166,13 @@ void main() {
         .length;
     expect(chats, lessThanOrEqualTo(MeshService.maxChatSends),
         reason: 'no debe reenviar para siempre');
+  });
+
+  test('beacon adaptativo: 15s con peers cerca, 60s en reposo', () {
+    expect(MeshService.beaconInterval(peersNearby: true),
+        const Duration(seconds: 15));
+    expect(MeshService.beaconInterval(peersNearby: false),
+        const Duration(seconds: 60));
   });
 
   test('SOS entrante queda marcado y sosCancel lo limpia', () async {

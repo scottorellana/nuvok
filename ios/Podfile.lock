@@ -13,12 +13,14 @@ PODS:
   - open_filex (0.0.2):
     - Flutter
   - OrderedSet (6.0.3)
+  - prepper_native (1.0.1)
 
 DEPENDENCIES:
   - bonsoir_darwin (from `.symlinks/plugins/bonsoir_darwin/darwin`)
   - Flutter (from `Flutter`)
   - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
   - open_filex (from `.symlinks/plugins/open_filex/ios`)
+  - prepper_native (from `../native/out/ios`)
 
 SPEC REPOS:
   trunk:
@@ -33,6 +35,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
   open_filex:
     :path: ".symlinks/plugins/open_filex/ios"
+  prepper_native:
+    :path: "../native/out/ios"
 
 SPEC CHECKSUMS:
   bonsoir_darwin: e3b8526c42ca46a885142df84229131dfabea842
@@ -40,7 +44,8 @@ SPEC CHECKSUMS:
   flutter_inappwebview_ios: 6f63631e2c62a7c350263b13fa5427aedefe81d4
   open_filex: 6e26e659846ec990262224a12ef1c528bb4edbe4
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
+  prepper_native: daca9ff5ff079c6b21e5357808fa2709bbb3e530
 
-PODFILE CHECKSUM: e30f02f9d1c72c47bb6344a0a748c9d268180865
+PODFILE CHECKSUM: 680153244547c22108d3de422a3c1c3e807fee45
 
 COCOAPODS: 1.16.2

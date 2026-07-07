@@ -30,6 +30,9 @@ flutter_ios_podfile_setup
 target 'Runner' do
   use_frameworks!
 
+  # Motores nativos propios (zstd para el lector ZIM; ver scripts/build_native_ios.sh).
+  pod 'prepper_native', :path => '../native/out/ios'
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
     inherit! :search_paths

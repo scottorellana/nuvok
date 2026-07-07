@@ -50,6 +50,12 @@ class _Zstd {
 }
 
 DynamicLibrary _openZstd() {
+  if (Platform.isIOS) {
+    // Shipped as a dynamic framework (prepper_native pod). Dynamic — not
+    // static — because FFI resolves symbols at runtime and a static lib
+    // would be dead-stripped by the linker.
+    return DynamicLibrary.open('zstd.framework/zstd');
+  }
   if (Platform.isMacOS) {
     // Bundled in the .app's Frameworks directory; falls back to dev paths.
     final exeDir = File(Platform.resolvedExecutable).parent.path;
@@ -177,6 +183,15 @@ class _Lzma {
 }
 
 DynamicLibrary _openLzma() {
+  if (Platform.isIOS) {
+    // Apple ships liblzma in the OS; the prepper_native pod links it so the
+    // symbols are already in the process image.
+    try {
+      return DynamicLibrary.process();
+    } catch (_) {
+      return DynamicLibrary.open('/usr/lib/liblzma.5.dylib');
+    }
+  }
   if (Platform.isMacOS) return DynamicLibrary.open('/usr/lib/liblzma.5.dylib');
   if (Platform.isWindows) return DynamicLibrary.open('liblzma.dll');
   for (final name in ['liblzma.so.5', 'liblzma.so']) {

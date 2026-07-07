@@ -1,0 +1,12 @@
+{
+  // Flutter vive en ruta no estándar (instalado sin Homebrew).
+  "dart.flutterSdkPath": "~/development/flutter",
+  "dart.lineLength": 80,
+  // Los tests de sockets reales (lan_transport) corren bien desde el runner.
+  "dart.testAdditionalArgs": [],
+  "files.exclude": {
+    "**/.dart_tool": true,
+    "build": true,
+    "native/work": true
+  }
+}

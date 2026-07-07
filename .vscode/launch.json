@@ -1,0 +1,51 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Prepper Pad (macOS)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "macos"
+    },
+    {
+      // Segunda identidad en la MISMA Mac: HOME propio → carpeta
+      // PrepperPad/mesh separada, así las dos instancias se descubren y
+      // chatean entre sí (misma técnica que la verificación en vivo).
+      "name": "Mesh B (segunda identidad, macOS)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "macos",
+      "env": {
+        "HOME": "/tmp/prepperB"
+      }
+    },
+    {
+      "name": "iPhone / Simulador iOS",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "ios"
+    },
+    {
+      "name": "Android (tablet/teléfono USB)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "android"
+    },
+    {
+      // Simula el build de tienda: sin pestaña de updates (Apple 2.5.2).
+      "name": "Build de tienda (STORE_BUILD)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "macos",
+      "toolArgs": ["--dart-define=STORE_BUILD=true"]
+    }
+  ],
+  "compounds": [
+    {
+      // F5 con esto = prueba de mesh completa en una sola Mac: dos apps con
+      // identidades distintas que se encuentran por LAN y chatean con ✓✓.
+      "name": "Mesh A + B (prueba de chat en una Mac)",
+      "configurations": ["Prepper Pad (macOS)", "Mesh B (segunda identidad, macOS)"]
+    }
+  ]
+}

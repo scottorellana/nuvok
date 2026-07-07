@@ -5,7 +5,9 @@
 // in range (store-and-forward).
 import 'dart:async';
 import 'dart:collection';
-import 'dart:typed_data';
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
 
 import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
@@ -48,6 +50,31 @@ class MeshRouter {
   final _outbox = <Uint8List>[];
   final _subs = <StreamSubscription<Uint8List>>[];
 
+  // Flood suppression (Meshtastic-style, scales to ~50 nodes): count copies
+  // heard per msgId and schedule the relay after a random jitter. If the
+  // network already repeated the message enough times while we waited, our
+  // relay adds nothing but airtime — cancel it.
+  final _heardCount = <int, int>{};
+  final _pendingRelays = <int, Timer>{};
+
+  /// Test hook: overrides the relay jitter (production: random per type).
+  @visibleForTesting
+  Duration Function(MeshType type)? debugRelayJitter;
+
+  Duration _relayJitter(MeshType type) {
+    final custom = debugRelayJitter;
+    if (custom != null) return custom(type);
+    final r = Random();
+    // SOS relays sooner and with less suppression: in an emergency, an extra
+    // duplicate beats a lost cry for help.
+    return type == MeshType.sos
+        ? Duration(milliseconds: 20 + r.nextInt(60))
+        : Duration(milliseconds: 50 + r.nextInt(250));
+  }
+
+  static int _suppressThreshold(MeshType type) =>
+      type == MeshType.sos ? 3 : 2;
+
   Stream<MeshEvent> get events => _events.stream;
   int get outboxCount => _outbox.length;
 
@@ -73,12 +100,19 @@ class MeshRouter {
     _outbox.addAll(store.loadOutbox());
     _trimOutboxToCap();
     for (final t in _transports) {
-      await t.start();
+      // Subscribe BEFORE transport start. BLE/WiFi Direct/LAN fakes and some
+      // real stacks can emit discovery/beacon payloads immediately during
+      // start(); broadcast streams drop events with no listeners.
       _subs.add(t.onData.listen(_handleIncoming));
+      await t.start();
     }
   }
 
   Future<void> stop() async {
+    for (final t in _pendingRelays.values) {
+      t.cancel();
+    }
+    _pendingRelays.clear();
     for (final s in _subs) {
       await s.cancel();
     }
@@ -158,7 +192,10 @@ class MeshRouter {
     _seen.add(msgId);
     _seenQueue.add(msgId);
     while (_seenQueue.length > _seenCap) {
-      _seen.remove(_seenQueue.removeFirst());
+      // Evict the heard-count alongside the dedup entry so both stay bounded.
+      final evicted = _seenQueue.removeFirst();
+      _seen.remove(evicted);
+      _heardCount.remove(evicted);
     }
     return true;
   }
@@ -175,12 +212,23 @@ class MeshRouter {
     final env = MeshEnvelope.decode(datagram);
     if (env == null) return;
     if (env.senderId == deviceId) return; // our own flood came back
-    if (!_markSeen(env.msgId)) return; // duplicate
+    // Count every copy heard — including duplicates, which is exactly the
+    // signal that the network already repeated this message without us.
+    _heardCount[env.msgId] = (_heardCount[env.msgId] ?? 0) + 1;
     notePeer(env.senderId);
+    if (!_markSeen(env.msgId)) return; // duplicate: counted above, done
 
-    // Relay for others: controlled flooding with decreasing hop limit.
+    // Relay for others: controlled flooding, but deferred by a random jitter
+    // so dense meshes don't all shout at once — and cancelled if enough
+    // copies were heard in the meantime (someone else already relayed).
     if (env.hopLimit > 0) {
-      await _sendAll(env.withHop(env.hopLimit - 1).encode());
+      final relayBytes = env.withHop(env.hopLimit - 1).encode();
+      _pendingRelays[env.msgId] = Timer(_relayJitter(env.type), () {
+        _pendingRelays.remove(env.msgId);
+        if ((_heardCount[env.msgId] ?? 0) < _suppressThreshold(env.type)) {
+          _sendAll(relayBytes);
+        }
+      });
     }
 
     final channel = _channelFor(env.channelId);

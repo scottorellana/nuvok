@@ -107,6 +107,7 @@ void main() {
   });
 
   test('releva con hopLimit-1; con hopLimit 0 no releva', () async {
+    router.debugRelayJitter = (_) => Duration.zero;
     final env2 =
         await makeEnvelope(channel: familia, senderId: otherId, hopLimit: 2);
     transport.inject(env2.encode());
@@ -123,6 +124,7 @@ void main() {
   });
 
   test('canal desconocido: no emite evento pero SÍ releva', () async {
+    router.debugRelayJitter = (_) => Duration.zero;
     final events = <MeshEvent>[];
     router.events.listen(events.add);
     final ajeno = MeshChannel.create('Ajeno');
@@ -132,6 +134,68 @@ void main() {
     await Future<void>.delayed(const Duration(milliseconds: 100));
     expect(events, isEmpty);
     expect(transport.sent, hasLength(1));
+  });
+
+  // Supresión de inundación (escala ~50 nodos): el relevo espera un jitter;
+  // si mientras tanto la red ya repitió el mensaje, relevarlo de nuevo no
+  // aporta nada y solo satura el aire — se cancela.
+  test('releva con jitter: 1 copia oída → releva al vencer el jitter',
+      () async {
+    router.debugRelayJitter = (_) => const Duration(milliseconds: 30);
+    final env =
+        await makeEnvelope(channel: familia, senderId: otherId, hopLimit: 2);
+    transport.inject(env.encode());
+    await Future<void>.delayed(const Duration(milliseconds: 10));
+    expect(
+        transport.sent
+            .map((b) => MeshEnvelope.decode(b)!)
+            .where((e) => e.msgId == env.msgId),
+        isEmpty,
+        reason: 'dentro del jitter aún no debe relevar');
+    await Future<void>.delayed(const Duration(milliseconds: 80));
+    final relayed = transport.sent
+        .map((b) => MeshEnvelope.decode(b)!)
+        .where((e) => e.msgId == env.msgId)
+        .toList();
+    expect(relayed, hasLength(1));
+    expect(relayed.single.hopLimit, 1);
+  });
+
+  test('supresión: oír 2+ copias durante el jitter cancela el relevo',
+      () async {
+    router.debugRelayJitter = (_) => const Duration(milliseconds: 60);
+    final env =
+        await makeEnvelope(channel: familia, senderId: otherId, hopLimit: 2);
+    transport.inject(env.encode());
+    await Future<void>.delayed(const Duration(milliseconds: 10));
+    transport.inject(env.encode()); // otro nodo ya lo relevó
+    await Future<void>.delayed(const Duration(milliseconds: 120));
+    expect(
+        transport.sent
+            .map((b) => MeshEnvelope.decode(b)!)
+            .where((e) => e.msgId == env.msgId),
+        isEmpty,
+        reason: 'el relevo debe suprimirse si la red ya lo repitió');
+  });
+
+  test('SOS usa umbral 3: dos copias no lo suprimen', () async {
+    router.debugRelayJitter = (_) => const Duration(milliseconds: 60);
+    final env = await makeEnvelope(
+        channel: MeshChannel.emergency,
+        senderId: otherId,
+        type: MeshType.sos,
+        hopLimit: 3,
+        payload: {'note': 'x'});
+    transport.inject(env.encode());
+    await Future<void>.delayed(const Duration(milliseconds: 10));
+    transport.inject(env.encode());
+    await Future<void>.delayed(const Duration(milliseconds: 120));
+    expect(
+        transport.sent
+            .map((b) => MeshEnvelope.decode(b)!)
+            .where((e) => e.msgId == env.msgId),
+        hasLength(1),
+        reason: 'un SOS se releva salvo saturación evidente (3+)');
   });
 
   test('sin peers: transmite al aire IGUAL y además encola para reenvío',

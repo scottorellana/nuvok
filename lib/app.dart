@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/semantics.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -36,12 +37,34 @@ class PrepperPadApp extends StatelessWidget {
       seedColor: const Color(0xFF8C9E5E), // olive
       brightness: Brightness.dark,
     );
-    // Initialize locale from device or saved preference.
-    LocaleService.instance.init();
 
-    return MaterialApp(
+    // Rebuild the whole MaterialApp when the language changes so both our
+    // strings AND the system widget chrome (dialogs, pickers) switch at once.
+    return ListenableBuilder(
+      listenable: LocaleService.instance,
+      builder: (context, _) => MaterialApp(
       title: 'Prepper Pad',
       debugShowCheckedModeBanner: false,
+      locale: LocaleService.instance.locale,
+      supportedLocales: [
+        for (final l in AppLanguage.values) Locale(l.code),
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      // Kreyòl has no Flutter Material translations: system chrome falls
+      // back to French (Haiti's other official language); our own strings
+      // do render in Kreyòl.
+      localeResolutionCallback: (locale, supported) {
+        final code = locale?.languageCode;
+        if (code == 'ht') return const Locale('fr');
+        for (final s in supported) {
+          if (s.languageCode == code) return s;
+        }
+        return const Locale('es');
+      },
       theme: ThemeData(
         colorScheme: scheme,
         useMaterial3: true,
@@ -86,6 +109,7 @@ class PrepperPadApp extends StatelessWidget {
       home: LocaleProvider(
         service: LocaleService.instance,
         child: AppLifecycleCleanup(child: HomeShell(firstRun: firstRun)),
+      ),
       ),
     );
   }

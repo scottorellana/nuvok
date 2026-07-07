@@ -9,6 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # Localización de widgets del sistema (diálogos, selectores) en los 7
+  # idiomas de la app.
+  flutter_localizations:
+    sdk: flutter
   ffi: ^2.1.0
   path_provider: ^2.1.4
   xml: ^6.5.0

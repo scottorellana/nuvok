@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'app.dart';
 import 'core/build_flags.dart';
 import 'core/bundled_library.dart';
+import 'core/locale_service.dart';
 import 'core/prepper_library.dart';
 import 'modules/ai/llama_server.dart';
 import 'modules/mesh/mesh_service.dart';
@@ -16,6 +17,12 @@ import 'modules/update/update_service.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrepperLibrary.init();
+  // Language: a saved explicit choice wins; otherwise follow the DEVICE
+  // language (this is what makes the app come up in the user's own language
+  // the very first time). Must run after PrepperLibrary.init (prefs live in
+  // the library root) and before runApp (first frame already localized).
+  LocaleService.instance
+      .init(deviceLocale: PlatformDispatcher.instance.locale);
   final firstRun = !PrepperLibrary.instance.existedBefore;
   await PrepperLibrary.instance.ensure();
   // Seed the bundled starter library WITHOUT blocking the first frame: the

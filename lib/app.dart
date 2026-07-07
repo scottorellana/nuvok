@@ -126,25 +126,38 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int _index = 0;
 
-  static const _mobileDestinations = [
-    (0, Icons.emergency_outlined, Icons.emergency, 'Emergencia'),
-    (3, Icons.map_outlined, Icons.map, 'Mapas'),
-    (4, Icons.cell_tower_outlined, Icons.cell_tower, 'Comunicación'),
-    (6, Icons.flashlight_on_outlined, Icons.flashlight_on, 'Herramientas'),
+  // Navigation labels are string KEYS resolved through AppStrings at build
+  // time, so switching the language relabels the whole shell instantly.
+  static const _mobileDestinationDefs = [
+    (0, Icons.emergency_outlined, Icons.emergency, 'emergency'),
+    (3, Icons.map_outlined, Icons.map, 'maps'),
+    (4, Icons.cell_tower_outlined, Icons.cell_tower, 'comms'),
+    (6, Icons.flashlight_on_outlined, Icons.flashlight_on, 'tools'),
   ];
 
-  static const _destinations = [
-    (Icons.emergency_outlined, Icons.emergency, 'Emergencia'),
-    (Icons.menu_book_outlined, Icons.menu_book, 'Biblioteca'),
-    (Icons.psychology_outlined, Icons.psychology, 'Asistente IA'),
-    (Icons.map_outlined, Icons.map, 'Mapas'),
-    (Icons.cell_tower_outlined, Icons.cell_tower, 'Comunicación'),
-    (Icons.checklist_outlined, Icons.checklist, 'Preparación'),
-    (Icons.flashlight_on_outlined, Icons.flashlight_on, 'Herramientas'),
-    (Icons.edit_note_outlined, Icons.edit_note, 'Notas'),
-    (Icons.inventory_2_outlined, Icons.inventory_2, 'Depósito'),
-    (Icons.settings_outlined, Icons.settings, 'Configuración'),
+  static const _destinationDefs = [
+    (Icons.emergency_outlined, Icons.emergency, 'emergency'),
+    (Icons.menu_book_outlined, Icons.menu_book, 'library'),
+    (Icons.psychology_outlined, Icons.psychology, 'assistant'),
+    (Icons.map_outlined, Icons.map, 'maps'),
+    (Icons.cell_tower_outlined, Icons.cell_tower, 'comms'),
+    (Icons.checklist_outlined, Icons.checklist, 'prep'),
+    (Icons.flashlight_on_outlined, Icons.flashlight_on, 'tools'),
+    (Icons.edit_note_outlined, Icons.edit_note, 'notes'),
+    (Icons.inventory_2_outlined, Icons.inventory_2, 'depot'),
+    (Icons.settings_outlined, Icons.settings, 'settings'),
   ];
+
+  List<(int, IconData, IconData, String)> _mobileDestinations(
+          AppStrings s) =>
+      [
+        for (final (i, a, b, key) in _mobileDestinationDefs)
+          (i, a, b, s.t(key)),
+      ];
+
+  List<(IconData, IconData, String)> _destinations(AppStrings s) => [
+        for (final (a, b, key) in _destinationDefs) (a, b, s.t(key)),
+      ];
 
   int _depotInitialTab = 0;
   StreamSubscription<MeshEvent>? _sosSub;
@@ -196,9 +209,10 @@ class _HomeShellState extends State<HomeShell> {
     final lat = (e.payload['lat'] as num?)?.toDouble();
     final lon = (e.payload['lon'] as num?)?.toDouble();
     final note = e.payload['note'] as String? ?? '';
-    final sosLabel = 'SOS recibido de ${e.envelope.senderName}'
-        '${note.isNotEmpty ? '. Nota: $note' : ''}'
-        '${lat != null && lon != null ? '. Posición: ${lat.toStringAsFixed(5)}, ${lon.toStringAsFixed(5)}' : '. Sin posición GPS'}';
+    final s = LocaleProvider.of(context);
+    final sosLabel = '${s.t('sosFrom')} ${e.envelope.senderName}'
+        '${note.isNotEmpty ? '. $note' : ''}'
+        '${lat != null && lon != null ? '. ${s.t('position')}: ${lat.toStringAsFixed(5)}, ${lon.toStringAsFixed(5)}' : '. ${s.t('noGps')}'}';
     // Announce to screen readers — also wrapped in Semantics(liveRegion) below.
     // ignore: deprecated_member_use
     // SendAnnouncement is wrapped in try/catch so the alert overlay still
@@ -216,7 +230,7 @@ class _HomeShellState extends State<HomeShell> {
         child: AlertDialog(
           backgroundColor: Colors.red.shade900,
           icon: const Icon(Icons.sos, color: Colors.white, size: 56),
-          title: Text('¡SOS de ${e.envelope.senderName}!',
+          title: Text('${s.t('sosFrom')} ${e.envelope.senderName}',
               textAlign: TextAlign.center,
               style: const TextStyle(color: Colors.white)),
           content: Column(
@@ -229,9 +243,9 @@ class _HomeShellState extends State<HomeShell> {
               const SizedBox(height: 8),
               Text(
                 lat != null && lon != null
-                    ? 'Posición: ${lat.toStringAsFixed(5)}, '
+                    ? '${s.t('position')}: ${lat.toStringAsFixed(5)}, '
                         '${lon.toStringAsFixed(5)}'
-                    : 'Sin posición GPS (fuera de cobertura)',
+                    : s.t('noGps'),
                 style: const TextStyle(color: Colors.white),
               ),
             ],
@@ -240,7 +254,7 @@ class _HomeShellState extends State<HomeShell> {
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child:
-                  const Text('Cerrar', style: TextStyle(color: Colors.white)),
+                  Text(s.close, style: const TextStyle(color: Colors.white)),
             ),
             if (lat != null && lon != null)
               FilledButton.icon(
@@ -253,7 +267,7 @@ class _HomeShellState extends State<HomeShell> {
                   setState(() => _index = 3); // Mapas
                 },
                 icon: const Icon(Icons.map),
-                label: const Text('Ver en mapa'),
+                label: Text(s.t('viewOnMap')),
               ),
           ],
         ),
@@ -264,31 +278,15 @@ class _HomeShellState extends State<HomeShell> {
   void _showWelcome() {
     final welcomeWidth =
         (MediaQuery.of(context).size.width - 48).clamp(280.0, 440.0).toDouble();
+    final s = LocaleProvider.of(context);
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Bienvenido a Prepper Pad'),
+        title: Text(s.t('welcomeTitle')),
         content: SizedBox(
           width: welcomeWidth,
           child: Text(
-            Platform.isIOS
-                ? 'Prepper Pad guarda tu biblioteca de conocimiento offline '
-                    'dentro de la app (visible también en la app Archivos). '
-                    'Desde Depósito descargas lo que necesites — mapas por '
-                    'país, Wikipedia médica, guías — y queda disponible sin '
-                    'internet. Todo vive en tu dispositivo; nada se sube a '
-                    'ningún servidor.'
-                : 'Tu biblioteca de conocimiento offline vive en la carpeta '
-                    'PrepperPad de tu usuario. Esta instalación ya trae un '
-                    'paquete base offline incluido: mapas de Honduras/El '
-                    'Salvador, Wikipedia médica en español, una mini Wikipedia '
-                    'y un modelo IA liviano. En el primer arranque se copian '
-                    'automáticamente a esa carpeta para que funcionen sin '
-                    'internet y puedas copiarlos a otros dispositivos por '
-                    'USB.\n\n'
-                    'Desde Depósito puedes agregar más países, ZIMs o modelos '
-                    'grandes cuando tengas internet o por transferencia local.',
-          ),
+              s.t(Platform.isIOS ? 'welcomeBodyIos' : 'welcomeBodyDesktop')),
         ),
         actions: [
           FilledButton.icon(
@@ -300,11 +298,11 @@ class _HomeShellState extends State<HomeShell> {
               });
             },
             icon: const Icon(Icons.medical_services, size: 18),
-            label: const Text('Ver Paquete inicial'),
+            label: Text(s.t('viewStarterPack')),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Explorar'),
+            child: Text(s.t('explore')),
           ),
         ],
       ),
@@ -371,7 +369,8 @@ class _HomeShellState extends State<HomeShell> {
                       ),
                     ),
                     destinations: [
-                      for (final (icon, selectedIcon, label) in _destinations)
+                      for (final (icon, selectedIcon, label)
+                          in _destinations(LocaleProvider.of(context)))
                         NavigationRailDestination(
                           icon: Icon(icon),
                           selectedIcon: Icon(selectedIcon),
@@ -391,29 +390,31 @@ class _HomeShellState extends State<HomeShell> {
   }
 
   Widget _buildCompactShell(BuildContext context) {
-    final selected = _mobileDestinations.indexWhere((d) => d.$1 == _index);
+    final strings = LocaleProvider.of(context);
+    final mobile = _mobileDestinations(strings);
+    final selected = mobile.indexWhere((d) => d.$1 == _index);
     return Scaffold(
       body: _buildMainContent(),
       bottomNavigationBar: NavigationBar(
-        selectedIndex: selected >= 0 ? selected : _mobileDestinations.length,
+        selectedIndex: selected >= 0 ? selected : mobile.length,
         onDestinationSelected: (i) {
-          if (i < _mobileDestinations.length) {
-            setState(() => _index = _mobileDestinations[i].$1);
+          if (i < mobile.length) {
+            setState(() => _index = mobile[i].$1);
           } else {
             _showMoreModules(context);
           }
         },
         destinations: [
-          for (final (_, icon, selectedIcon, label) in _mobileDestinations)
+          for (final (_, icon, selectedIcon, label) in mobile)
             NavigationDestination(
               icon: Icon(icon),
               selectedIcon: Icon(selectedIcon),
               label: label,
             ),
-          const NavigationDestination(
-            icon: Icon(Icons.apps_outlined),
-            selectedIcon: Icon(Icons.apps),
-            label: 'Más',
+          NavigationDestination(
+            icon: const Icon(Icons.apps_outlined),
+            selectedIcon: const Icon(Icons.apps),
+            label: strings.t('more'),
           ),
         ],
       ),
@@ -424,27 +425,31 @@ class _HomeShellState extends State<HomeShell> {
     showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
-      builder: (context) => SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-          children: [
-            Text('Más módulos', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 8),
-            for (var i = 0; i < _destinations.length; i++)
-              ListTile(
-                leading: Icon(_destinations[i].$1),
-                selected: _index == i,
-                title: Text(_destinations[i].$3),
-                minVerticalPadding: 14,
-                onTap: () {
-                  Navigator.pop(context);
-                  setState(() => _index = i);
-                },
-              ),
-          ],
-        ),
-      ),
+      builder: (context) {
+        final all = _destinations(LocaleProvider.of(context));
+        return SafeArea(
+          child: ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            children: [
+              Text(LocaleProvider.of(context).t('moreModules'),
+                  style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: 8),
+              for (var i = 0; i < all.length; i++)
+                ListTile(
+                  leading: Icon(all[i].$1),
+                  selected: _index == i,
+                  title: Text(all[i].$3),
+                  minVerticalPadding: 14,
+                  onTap: () {
+                    Navigator.pop(context);
+                    setState(() => _index = i);
+                  },
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -463,10 +468,12 @@ class _LowBatteryBanner extends StatelessWidget {
       builder: (context, _) {
         final b = BatterySaverController.instance;
         if (!b.isLow || b.enabled) return const SizedBox.shrink();
+        final s = LocaleProvider.of(context);
+        final lowBatteryMsg =
+            '${s.t('lowBattery')} (${b.batteryLevel}%). ${s.t('lowBatteryHint')}';
         return Semantics(
           liveRegion: true,
-          label:
-              'Batería baja: ${b.batteryLevel} por ciento. Activa el ahorro para durar más.',
+          label: lowBatteryMsg,
           child: Material(
             color: Colors.red.shade900,
             child: InkWell(
@@ -481,8 +488,7 @@ class _LowBatteryBanner extends StatelessWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        'Batería baja (${b.batteryLevel}%). '
-                        'Activa el ahorro para durar más.',
+                        lowBatteryMsg,
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w600),
                       ),
@@ -491,7 +497,7 @@ class _LowBatteryBanner extends StatelessWidget {
                       onPressed: onOpenSaver,
                       style:
                           TextButton.styleFrom(foregroundColor: Colors.white),
-                      child: const Text('ABRIR'),
+                      child: Text(s.open.toUpperCase()),
                     ),
                   ],
                 ),

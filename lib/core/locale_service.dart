@@ -91,6 +91,8 @@ class AppStrings {
     'notes', 'depot', 'more', 'open', 'close', 'cancel', 'save', 'search',
     'settings', 'language', 'sos', 'sosActive', 'imSafe', 'flashlight',
     'whistle', 'compass', 'rcpMetronome',
+    'sosFrom', 'position', 'noGps', 'viewOnMap', 'moreModules',
+    'lowBattery', 'lowBatteryHint',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -199,12 +201,117 @@ class AppStrings {
       'ht': 'Metwonòm RCP',
     },
 
+    // ── SOS dialog (core: must be readable in every language) ──
+    'sosFrom': {
+      'es': '¡SOS de', 'en': 'SOS from', 'pt': 'SOS de',
+      'fr': 'SOS de', 'zh': 'SOS来自', 'ja': 'SOS発信者:', 'ht': 'SOS soti nan',
+    },
+    'position': {
+      'es': 'Posición', 'en': 'Position', 'pt': 'Posição',
+      'fr': 'Position', 'zh': '位置', 'ja': '位置', 'ht': 'Pozisyon',
+    },
+    'noGps': {
+      'es': 'Sin posición GPS (fuera de cobertura)',
+      'en': 'No GPS position (out of coverage)',
+      'pt': 'Sem posição GPS (fora de cobertura)',
+      'fr': 'Pas de position GPS (hors couverture)',
+      'zh': '无GPS位置（超出范围）',
+      'ja': 'GPS位置なし（圏外）',
+      'ht': 'Pa gen pozisyon GPS',
+    },
+    'viewOnMap': {
+      'es': 'Ver en mapa', 'en': 'View on map', 'pt': 'Ver no mapa',
+      'fr': 'Voir sur la carte', 'zh': '在地图上查看', 'ja': '地図で見る',
+      'ht': 'Gade sou kat la',
+    },
+    'moreModules': {
+      'es': 'Más módulos', 'en': 'More modules', 'pt': 'Mais módulos',
+      'fr': 'Plus de modules', 'zh': '更多模块', 'ja': 'その他のモジュール',
+      'ht': 'Plis modil',
+    },
+
+    // ── Battery banner (core: safety-relevant) ──
+    'lowBattery': {
+      'es': 'Batería baja', 'en': 'Low battery', 'pt': 'Bateria fraca',
+      'fr': 'Batterie faible', 'zh': '电量低', 'ja': 'バッテリー残量低下',
+      'ht': 'Batri fèb',
+    },
+    'lowBatteryHint': {
+      'es': 'Activa el ahorro para durar más.',
+      'en': 'Turn on saver mode to last longer.',
+      'pt': 'Ative a economia para durar mais.',
+      'fr': 'Activez l\'économie pour durer plus.',
+      'zh': '开启省电模式以延长续航。',
+      'ja': '省電力モードで長持ちさせましょう。',
+      'ht': 'Aktive mòd ekonomi pou dire pi lontan.',
+    },
+
     // ── Welcome wizard ──
     'welcomeTitle': {
       'es': 'Bienvenido a Prepper Pad',
       'en': 'Welcome to Prepper Pad',
       'pt': 'Bem-vindo ao Prepper Pad',
       'fr': 'Bienvenue sur Prepper Pad',
+    },
+    'welcomeBodyIos': {
+      'es': 'Prepper Pad guarda tu biblioteca de conocimiento offline dentro '
+          'de la app (visible también en la app Archivos). Desde Depósito '
+          'descargas lo que necesites — mapas por país, Wikipedia médica, '
+          'guías — y queda disponible sin internet. Todo vive en tu '
+          'dispositivo; nada se sube a ningún servidor.',
+      'en': 'Prepper Pad keeps your offline knowledge library inside the app '
+          '(also visible in the Files app). From Depot you download what you '
+          'need — country maps, medical Wikipedia, guides — and it stays '
+          'available without internet. Everything lives on your device; '
+          'nothing is uploaded to any server.',
+      'pt': 'O Prepper Pad guarda sua biblioteca de conhecimento offline '
+          'dentro do app (visível também no app Arquivos). No Depósito você '
+          'baixa o que precisar — mapas por país, Wikipédia médica, guias — '
+          'e fica disponível sem internet. Tudo vive no seu dispositivo; '
+          'nada é enviado a nenhum servidor.',
+      'fr': 'Prepper Pad garde votre bibliothèque de connaissances hors '
+          'ligne dans l\'app (visible aussi dans l\'app Fichiers). Depuis '
+          'Dépôt, téléchargez ce qu\'il vous faut — cartes par pays, '
+          'Wikipédia médical, guides — disponible sans internet. Tout reste '
+          'sur votre appareil ; rien n\'est envoyé à aucun serveur.',
+    },
+    'welcomeBodyDesktop': {
+      'es': 'Tu biblioteca de conocimiento offline vive en la carpeta '
+          'PrepperPad de tu usuario. Esta instalación ya trae un paquete '
+          'base offline incluido: mapas, Wikipedia médica, una mini '
+          'Wikipedia y un modelo IA liviano. En el primer arranque se copian '
+          'automáticamente a esa carpeta para que funcionen sin internet y '
+          'puedas copiarlos a otros dispositivos por USB.\n\nDesde Depósito '
+          'puedes agregar más países, ZIMs o modelos grandes cuando tengas '
+          'internet o por transferencia local.',
+      'en': 'Your offline knowledge library lives in the PrepperPad folder '
+          'of your user. This install already includes a base offline pack: '
+          'maps, medical Wikipedia, a mini Wikipedia and a light AI model. '
+          'On first launch they are copied there automatically so they work '
+          'without internet and you can copy them to other devices over '
+          'USB.\n\nFrom Depot you can add more countries, ZIMs or bigger '
+          'models when you have internet or via local transfer.',
+      'pt': 'Sua biblioteca de conhecimento offline vive na pasta PrepperPad '
+          'do seu usuário. Esta instalação já inclui um pacote base offline: '
+          'mapas, Wikipédia médica, uma mini Wikipédia e um modelo IA leve. '
+          'Na primeira execução eles são copiados automaticamente para '
+          'funcionar sem internet e poder copiá-los a outros dispositivos '
+          'por USB.\n\nNo Depósito você pode adicionar mais países, ZIMs ou '
+          'modelos maiores com internet ou por transferência local.',
+      'fr': 'Votre bibliothèque hors ligne vit dans le dossier PrepperPad de '
+          'votre utilisateur. Cette installation inclut déjà un pack de '
+          'base : cartes, Wikipédia médical, une mini Wikipédia et un modèle '
+          'IA léger. Au premier lancement ils y sont copiés automatiquement '
+          'pour fonctionner sans internet et pouvoir être copiés sur '
+          'd\'autres appareils par USB.\n\nDepuis Dépôt, ajoutez plus de '
+          'pays, ZIMs ou modèles avec internet ou par transfert local.',
+    },
+    'viewStarterPack': {
+      'es': 'Ver Paquete inicial', 'en': 'View Starter Pack',
+      'pt': 'Ver Pacote inicial', 'fr': 'Voir le pack de départ',
+    },
+    'explore': {
+      'es': 'Explorar', 'en': 'Explore', 'pt': 'Explorar', 'fr': 'Explorer',
     },
   };
 }

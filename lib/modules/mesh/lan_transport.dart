@@ -8,14 +8,23 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 
+import 'lan_discovery.dart';
 import 'mesh_transport.dart';
 
 class LanTransport implements MeshTransport {
-  LanTransport({this.port = 47777});
+  LanTransport({this.port = 47777, this.deviceId});
 
   final int port;
+
+  /// When set, the transport also announces/browses `_prepperpad._udp` via
+  /// Bonjour — the only LAN discovery path available on iOS without Apple's
+  /// multicast entitlement. Null (tests, LoRa-only builds) skips it.
+  final String? deviceId;
+
   static final InternetAddress _group = InternetAddress('239.255.77.77');
   static const _lock = MethodChannel('prepper/multicast');
+
+  LanDiscovery? _discovery;
 
   RawDatagramSocket? _socket;
   StreamController<Uint8List> _data = StreamController<Uint8List>.broadcast();
@@ -103,10 +112,32 @@ class LanTransport implements MeshTransport {
       }
     });
     _socket = socket;
+
+    // Bonjour discovery seeds the unicast address book, so peers are
+    // reachable even where multicast/broadcast never arrive (iOS, filtered
+    // hotspots). Failures degrade silently inside.
+    final id = deviceId;
+    if (id != null) {
+      final discovery = LanDiscovery(
+        deviceId: id,
+        port: port,
+        onPeer: (ip, peerPort) {
+          try {
+            _peerAddrs[ip] = (InternetAddress(ip), DateTime.now());
+          } catch (_) {
+            // Unparseable address from a broken mDNS responder — ignore.
+          }
+        },
+      );
+      _discovery = discovery;
+      await discovery.start();
+    }
   }
 
   @override
   Future<void> stop() async {
+    await _discovery?.stop();
+    _discovery = null;
     try {
       await _lock.invokeMethod('release');
     } catch (_) {}

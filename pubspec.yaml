@@ -1,7 +1,7 @@
 name: prepper_pad
 description: Biblioteca de conocimiento offline — Wikipedia, mapas, IA local y notas en una sola app.
 publish_to: 'none'
-version: 0.2.4
+version: 0.2.8
 
 environment:
   sdk: ^3.5.0
@@ -33,6 +33,9 @@ dependencies:
   # Mesh: offline device-to-device transports.
   flutter_blue_plus: ^1.32.12
   nearby_connections: ^4.1.1
+  # Bonjour/mDNS discovery: the iOS-sanctioned way to find peers on the LAN
+  # (exempt from the multicast entitlement when declared in Info.plist).
+  bonsoir: ^5.1.0
   battery_plus: ^7.1.0
   torch_light: ^2.0.0
   screen_brightness: ^2.1.11
@@ -51,5 +54,11 @@ flutter:
   assets:
     - assets/map_theme_light_v4.json
     - assets/map_catalog.json
+    - assets/emergency_directory/
     - assets/emergency_guides/es/
     - assets/emergency_guides/en/
+    - assets/emergency_guides/images/
+    - assets/bundled_library/manifest.json
+    - assets/bundled_library/maps/
+    - assets/bundled_library/zim/
+    - assets/bundled_library/models/

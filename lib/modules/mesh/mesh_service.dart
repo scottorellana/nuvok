@@ -98,8 +98,8 @@ class MeshService {
   /// self-degrades to a no-op if its hardware is missing, so including them is
   /// always safe. Kept as a method (not a constant) so availability is checked
   /// freshly every time the mesh starts.
-  static List<MeshTransport> defaultTransports() {
-    final list = <MeshTransport>[LanTransport()];
+  static List<MeshTransport> defaultTransports({String? deviceId}) {
+    final list = <MeshTransport>[LanTransport(deviceId: deviceId)];
     final ble = BleTransport();
     if (ble.available) list.add(ble);
     final wifi = WifiDirectTransport();
@@ -126,7 +126,7 @@ class MeshService {
       if (id == null) return; // UI must onboard first
       final router = MeshRouter(
         deviceId: id.id,
-        transports: _transportsOverride ?? defaultTransports(),
+        transports: _transportsOverride ?? defaultTransports(deviceId: id.id),
         channels: _channelsFromDisk(),
         store: store,
       );

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/build_flags.dart';
 import '../../core/prepper_library.dart';
 import '../update/update_page.dart';
 import 'download_manager.dart';
@@ -16,14 +17,25 @@ class DepotPage extends StatefulWidget {
   const DepotPage({super.key, this.initialTab = 0});
   final int initialTab;
 
+  /// Whether the in-app update tab exists in this build. Store builds never
+  /// self-update (Apple 2.5.2 / Play policy — the stores own updates), and on
+  /// iOS there is no sideload channel at all, so the tab never applies there.
+  static bool showUpdatesTab({required bool storeBuild, required bool isIOS}) =>
+      !storeBuild && !isIOS;
+
+  static bool get _updatesTabEnabled =>
+      showUpdatesTab(storeBuild: kStoreBuild, isIOS: Platform.isIOS);
+
   @override
   State<DepotPage> createState() => _DepotPageState();
 }
 
 class _DepotPageState extends State<DepotPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabs =
-      TabController(length: 6, vsync: this, initialIndex: widget.initialTab);
+  late final TabController _tabs = TabController(
+      length: DepotPage._updatesTabEnabled ? 6 : 5,
+      vsync: this,
+      initialIndex: widget.initialTab);
 
   @override
   void dispose() {
@@ -39,27 +51,50 @@ class _DepotPageState extends State<DepotPage>
         bottom: TabBar(
           controller: _tabs,
           isScrollable: true,
-          tabs: const [
-            Tab(
-                text: 'Esenciales',
-                icon: Icon(Icons.medical_services, size: 18)),
-            Tab(text: 'Biblioteca', icon: Icon(Icons.menu_book, size: 18)),
-            Tab(text: 'Modelos IA', icon: Icon(Icons.psychology, size: 18)),
-            Tab(text: 'Mapas', icon: Icon(Icons.map, size: 18)),
-            Tab(text: 'Descargas', icon: Icon(Icons.download, size: 18)),
-            Tab(text: 'App', icon: Icon(Icons.system_update, size: 18)),
+          tabs: [
+            Semantics(
+              label: 'Pestaña Esenciales',
+              child: Tab(
+                  text: 'Esenciales',
+                  icon: Icon(Icons.medical_services, size: 18)),
+            ),
+            Semantics(
+              label: 'Pestaña Biblioteca',
+              child: Tab(
+                  text: 'Biblioteca', icon: Icon(Icons.menu_book, size: 18)),
+            ),
+            Semantics(
+              label: 'Pestaña Modelos IA',
+              child: Tab(
+                  text: 'Modelos IA', icon: Icon(Icons.psychology, size: 18)),
+            ),
+            Semantics(
+              label: 'Pestaña Mapas',
+              child: Tab(text: 'Mapas', icon: Icon(Icons.map, size: 18)),
+            ),
+            Semantics(
+              label: 'Pestaña Descargas',
+              child:
+                  Tab(text: 'Descargas', icon: Icon(Icons.download, size: 18)),
+            ),
+            if (DepotPage._updatesTabEnabled)
+              Semantics(
+                label: 'Pestaña App',
+                child:
+                    Tab(text: 'App', icon: Icon(Icons.system_update, size: 18)),
+              ),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabs,
-        children: const [
-          _StarterPackTab(),
-          _ZimCatalogTab(),
-          _ModelsTab(),
-          _MapsInstallTab(),
-          _DownloadsTab(),
-          UpdatePage(),
+        children: [
+          const _StarterPackTab(),
+          const _ZimCatalogTab(),
+          const _ModelsTab(),
+          const _MapsInstallTab(),
+          const _DownloadsTab(),
+          if (DepotPage._updatesTabEnabled) const UpdatePage(),
         ],
       ),
     );
@@ -289,7 +324,7 @@ class _ZimCatalogTabState extends State<_ZimCatalogTab>
       if (mounted) {
         setState(() =>
             _error = 'Sin conexión a internet. El catálogo necesita conexión '
-                'solo para descargar contenido nuevo — todo lo ya '
+                'solo para descargar contenido nuevo — lo ya '
                 'descargado sigue disponible.\n\n($e)');
       }
     } finally {
@@ -537,7 +572,7 @@ class _ModelCard extends StatelessWidget {
                     child: Text(
                       '★ Recomendado',
                       style: TextStyle(
-                        fontSize: 11,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: theme.colorScheme.onPrimaryContainer,
                       ),
@@ -559,7 +594,7 @@ class _ModelCard extends StatelessWidget {
                         SizedBox(width: 4),
                         Text('Instalado',
                             style: TextStyle(
-                                fontSize: 11,
+                                fontSize: 14,
                                 color: Colors.green,
                                 fontWeight: FontWeight.bold)),
                       ],
@@ -768,15 +803,17 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
   }
 
   Future<void> _downloadUrl([String? preset]) async {
-    final ctrl = TextEditingController(text: preset ?? '');
+    final txt = TextEditingController(text: preset ?? '');
+    final dialogWidth =
+        (MediaQuery.of(context).size.width - 48).clamp(320.0, 480.0).toDouble();
     final url = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Descargar mapa por URL'),
         content: SizedBox(
-          width: 480,
+          width: dialogWidth,
           child: TextField(
-            controller: ctrl,
+            controller: txt,
             autofocus: true,
             decoration: const InputDecoration(
               labelText: 'URL directa a un archivo .pmtiles',
@@ -789,7 +826,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
               onPressed: () => Navigator.pop(context),
               child: const Text('Cancelar')),
           FilledButton(
-              onPressed: () => Navigator.pop(context, ctrl.text.trim()),
+              onPressed: () => Navigator.pop(context, txt.text.trim()),
               child: const Text('Descargar')),
         ],
       ),
@@ -811,15 +848,16 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
   /// gets maps that a nearby computer prepared. Works even where on-device
   /// extraction isn't available (Android has no pmtiles CLI).
   Future<void> _localServerMaps() async {
-    final saved =
-        PrepperLibrary.instance.settings['localMapServer'] as String?;
+    final saved = PrepperLibrary.instance.settings['localMapServer'] as String?;
     final ctrl = TextEditingController(text: saved ?? 'http://');
+    final localServerWidth =
+        (MediaQuery.of(context).size.width - 48).clamp(320.0, 480.0).toDouble();
     final base = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Servidor local de mapas'),
         content: SizedBox(
-          width: 480,
+          width: localServerWidth,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -879,9 +917,9 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
     if (!mounted) return;
     if (maps.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'El servidor no tiene mapas. Extrae uno en la computadora '
-              'primero (queda en la carpeta PrepperPad/maps).')));
+          content:
+              Text('El servidor no tiene mapas. Extrae uno en la computadora '
+                  'primero (queda en la carpeta PrepperPad/maps).')));
       return;
     }
     await showDialog<void>(
@@ -889,7 +927,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
       builder: (context) => AlertDialog(
         title: const Text('Mapas en el servidor'),
         content: SizedBox(
-          width: 480,
+          width: localServerWidth,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -902,8 +940,8 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
                   onTap: () {
                     final name = m['name'] as String;
                     final url = '$baseUrl${m['url']}';
-                    _manager.enqueue(url,
-                        '${PrepperLibrary.instance.mapsDir.path}/$name');
+                    _manager.enqueue(
+                        url, '${PrepperLibrary.instance.mapsDir.path}/$name');
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
@@ -1113,12 +1151,14 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
   Future<void> _customRegion() async {
     final nameCtrl = TextEditingController();
     final bboxCtrl = TextEditingController();
+    final regionDialogWidth =
+        (MediaQuery.of(context).size.width - 48).clamp(320.0, 520.0).toDouble();
     final region = await showDialog<MapRegion>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Región personalizada'),
         content: SizedBox(
-          width: 520,
+          width: regionDialogWidth,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

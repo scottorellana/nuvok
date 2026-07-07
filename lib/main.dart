@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
 import 'app.dart';
+import 'core/build_flags.dart';
+import 'core/bundled_library.dart';
 import 'core/prepper_library.dart';
 import 'modules/ai/llama_server.dart';
 import 'modules/mesh/mesh_service.dart';
@@ -15,15 +18,19 @@ Future<void> main() async {
   await PrepperLibrary.init();
   final firstRun = !PrepperLibrary.instance.existedBefore;
   await PrepperLibrary.instance.ensure();
+  await BundledLibrarySeeder.seed();
   // Start reading the real battery early so the level is ready when the user
   // opens Herramientas — non-blocking, failures are swallowed inside.
   BatterySaverController.instance.init();
   // Opportunistic update check: only does anything useful if the device has
   // internet right now; silently no-ops otherwise. Never blocks startup —
   // the app is 100% usable offline whether or not this ever completes.
-  unawaited(UpdateService.instance
-      .init()
-      .then((_) => UpdateService.instance.check()));
+  // Store builds (App Store / Play) never self-update: the stores own that.
+  if (!kStoreBuild && !Platform.isIOS) {
+    unawaited(UpdateService.instance
+        .init()
+        .then((_) => UpdateService.instance.check()));
+  }
   runApp(PrepperPadApp(firstRun: firstRun));
 }
 
@@ -47,6 +54,9 @@ class _AppLifecycleCleanupState extends State<AppLifecycleCleanup>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    // Fire-and-forget cleanup: dispose() is synchronous, so we can't await.
+    // These calls initiate native process teardown; they don't need to complete
+    // before the widget is gone.
     LlamaServer.instance.stop();
     MeshService.instance.stop();
     super.dispose();

@@ -20,14 +20,13 @@ tuyos (requieren tus cuentas). El código ya cumple lo que las tiendas revisan.
 ## Binarios
 
 ```bash
-# iOS (archivo para App Store; requiere firma configurada — ver abajo)
-flutter build ipa --release --dart-define=STORE_BUILD=true
+# Tiendas: usa SIEMPRE el script — además de STORE_BUILD=true, excluye la
+# biblioteca embebida de ~1.3GB (Play rechaza bundles así de grandes; en
+# tienda el contenido se descarga desde la app). Restaura todo al terminar.
+./scripts/build_store.sh appbundle   # → build/app/outputs/bundle/release/app-release.aab
+./scripts/build_store.sh ipa         # iOS (requiere firma configurada — ver abajo)
 
-# Android (bundle para Play)
-flutter build appbundle --release --dart-define=STORE_BUILD=true
-# → build/app/outputs/bundle/release/app-release.aab
-
-# Canal directo (SIN la bandera: conserva updates LAN)
+# Canal directo (SIN script ni bandera: biblioteca embebida + updates LAN)
 flutter build apk --release
 ```
 

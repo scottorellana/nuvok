@@ -17,15 +17,14 @@
 //     lives in [BleFrame] / [BleReassembler] — pure, dependency-free classes
 //     that are unit-tested in isolation (test/ble_transport_test.dart).
 //   • Graceful degradation: if the platform has no BLE adapter, [available]
-//     is false and the transport is a no-op, so the LAN transport keeps the
-//     mesh alive exactly like the LoRa stub.
+//     is false and the transport stays inactive, so the LAN transport keeps
+//     the mesh alive just like the no-hardware LoRa transport.
 //
 // flutter_blue_plus is used because it supports Android, macOS, Linux, and
 // Windows from a single API.
 import 'dart:async';
-import 'dart:typed_data';
-
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 import 'mesh_transport.dart';
@@ -336,15 +335,146 @@ class _FbpPeer implements BlePeer {
   String get id => device.remoteId.str;
 }
 
-/// BLE mesh transport. Falls back to a no-op when the adapter is unavailable,
-/// exactly like the LoRa stub.
+class _NativeBlePeer implements BlePeer {
+  _NativeBlePeer(this.id);
+  @override
+  final String id;
+}
+
+/// Native BLE mesh link (Android + iOS + macOS).
+///
+/// Runs both halves required for phone-to-phone Bluetooth with no internet:
+/// advertise a Prepper GATT service + scan/connect/write to nearby devices.
+/// The native side lives in BleMeshBridge.kt (Android) and
+/// BleMeshBridge.swift (iOS/macOS) speaking the same channel protocol, so an
+/// iPhone and an Android discover each other and exchange the exact same
+/// frames. Android also requests its 12+ runtime Bluetooth permissions.
+class NativeBleMeshLink implements BleLink {
+  static const _methods = MethodChannel('prepper/ble_mesh');
+  static const _events = EventChannel('prepper/ble_mesh/events');
+
+  final _disc = StreamController<BlePeer>.broadcast();
+  final _incoming = <String, StreamController<List<int>>>{};
+  StreamSubscription<dynamic>? _eventSub;
+  bool _started = false;
+
+  @override
+  bool get adapterAvailable =>
+      defaultTargetPlatform == TargetPlatform.android ||
+      defaultTargetPlatform == TargetPlatform.iOS ||
+      defaultTargetPlatform == TargetPlatform.macOS;
+
+  @override
+  Stream<BlePeer> get onDiscovery => _disc.stream;
+
+  @override
+  Future<void> start() async {
+    if (_started || !adapterAvailable) return;
+    _started = true;
+    _eventSub ??= _events.receiveBroadcastStream().listen(
+          _handleEvent,
+          onError: (_) {},
+        );
+    try {
+      final ok = await _methods.invokeMethod<bool>('start') ?? false;
+      if (!ok) _started = false;
+    } catch (_) {
+      _started = false;
+    }
+  }
+
+  void _handleEvent(dynamic event) {
+    if (event is! Map) return;
+    final type = event['type'] as String?;
+    final id = event['id'] as String?;
+    if (id == null || id.isEmpty) return;
+    switch (type) {
+      case 'peer':
+        _disc.add(_NativeBlePeer(id));
+        break;
+      case 'data':
+        final bytes = event['bytes'];
+        final list = bytes is Uint8List
+            ? bytes
+            : bytes is List
+                ? Uint8List.fromList(bytes.cast<int>())
+                : null;
+        if (list == null) return;
+        _incoming[id] ??= StreamController<List<int>>.broadcast();
+        _incoming[id]!.add(list);
+        break;
+    }
+  }
+
+  @override
+  Future<void> stop() async {
+    _started = false;
+    try {
+      await _methods.invokeMethod('stop');
+    } catch (_) {}
+    await _eventSub?.cancel();
+    _eventSub = null;
+    for (final c in _incoming.values) {
+      await c.close();
+    }
+    _incoming.clear();
+  }
+
+  @override
+  Future<bool> connect(BlePeer peer) async {
+    if (!_started) return false;
+    _incoming[peer.id] ??= StreamController<List<int>>.broadcast();
+    try {
+      return await _methods.invokeMethod<bool>('connect', {'id': peer.id}) ??
+          false;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  @override
+  Future<void> disconnect(BlePeer peer) async {
+    try {
+      await _methods.invokeMethod('disconnect', {'id': peer.id});
+    } catch (_) {}
+    await _incoming[peer.id]?.close();
+    _incoming.remove(peer.id);
+  }
+
+  @override
+  Stream<List<int>>? incoming(BlePeer peer) {
+    _incoming[peer.id] ??= StreamController<List<int>>.broadcast();
+    return _incoming[peer.id]!.stream;
+  }
+
+  @override
+  Future<void> write(BlePeer peer, Uint8List chunk) async {
+    if (!_started) return;
+    try {
+      await _methods.invokeMethod('send', {'id': peer.id, 'bytes': chunk});
+    } catch (_) {}
+  }
+}
+
+/// BLE mesh transport. Falls back to an inactive state when the adapter is
+/// unavailable.
 class BleTransport implements MeshTransport {
-  BleTransport({BleLink? link}) : _link = link ?? FlutterBluePlusLink();
+  BleTransport({BleLink? link})
+      : _link = link ??
+            (defaultTargetPlatform == TargetPlatform.android ||
+                    defaultTargetPlatform == TargetPlatform.iOS ||
+                    defaultTargetPlatform == TargetPlatform.macOS
+                ? NativeBleMeshLink()
+                : FlutterBluePlusLink());
 
   final BleLink _link;
   final _data = StreamController<Uint8List>.broadcast();
   final _reassemblers = <String, BleReassembler>{};
   final _connected = <String, BlePeer>{};
+  final _connecting = <String, Future<void>>{};
+  // Per-peer incoming-stream subscriptions, so we can cancel them on
+  // disconnect/stop instead of leaking a subscription per connection.
+  final _rxSubs = <String, StreamSubscription<List<int>>>{};
   StreamSubscription<BlePeer>? _discoverSub;
   bool _running = false;
 
@@ -362,8 +492,31 @@ class BleTransport implements MeshTransport {
     if (_running) return;
     if (!available) return; // no adapter — degrade silently
     _running = true;
+    // Subscribe BEFORE start(): some native stacks and tests can emit a peer
+    // immediately when scanning/advertising begins. If we register after
+    // _link.start(), emergency pairing can miss the first nearby device.
+    _discoverSub = _link.onDiscovery.listen(_schedulePeer);
     await _link.start();
-    _discoverSub = _link.onDiscovery.listen(_onPeer);
+    // Let immediate broadcast discovery events run, then wait for the first
+    // connection wave. This makes "open app → send SOS/chat immediately" less
+    // likely to drop the first packet while BLE is still subscribing.
+    await Future<void>.delayed(Duration.zero);
+    if (_connecting.isNotEmpty) {
+      await Future.wait(_connecting.values.toList());
+    }
+  }
+
+  void _schedulePeer(BlePeer peer) {
+    if (_connected.containsKey(peer.id) || _connecting.containsKey(peer.id)) {
+      return;
+    }
+    late final Future<void> pending;
+    pending = _onPeer(peer).whenComplete(() {
+      if (identical(_connecting[peer.id], pending)) {
+        _connecting.remove(peer.id);
+      }
+    });
+    _connecting[peer.id] = pending;
   }
 
   @override
@@ -371,12 +524,17 @@ class BleTransport implements MeshTransport {
     _running = false;
     await _discoverSub?.cancel();
     _discoverSub = null;
+    for (final sub in _rxSubs.values) {
+      await sub.cancel();
+    }
+    _rxSubs.clear();
     for (final p in List.of(_connected.values)) {
       try {
         await _link.disconnect(p);
       } catch (_) {}
     }
     _connected.clear();
+    _connecting.clear();
     _reassemblers.clear();
     await _link.stop();
   }
@@ -384,9 +542,27 @@ class BleTransport implements MeshTransport {
   @override
   Future<void> send(Uint8List datagram) async {
     if (!_running) return;
+    if (_connecting.isNotEmpty) {
+      await Future.wait(_connecting.values.toList());
+    }
     final seq = _nextSeq();
     final chunks = BleFrame.fragment(datagram, seq: seq);
-    for (final p in _connected.values) {
+    // Snapshot the connected peers: the body awaits on the link, which lets
+    // the event loop process concurrent discovery/connect callbacks that
+    // mutate _connected. Iterating the live map across an await point can
+    // throw ConcurrentModificationError in production.
+    final peers = List.of(_connected.values);
+    if (peers.isEmpty) {
+      // No peers reachable — DO NOT silently drop. Log the situation and
+      // let the mesh router's outbox + beacon-triggered flush replay it
+      // when a peer appears. The transport layer cannot store-and-forward
+      // on its own (no persistence), so we surface the gap with a log.
+      // ignore: avoid_print
+      print('BleTransport.send: no peers connected; datagram not sent. '
+          'Outbox flush on next beacon will retry.');
+      return;
+    }
+    for (final p in peers) {
       for (final chunk in chunks) {
         try {
           await _link.write(p, chunk);
@@ -405,9 +581,21 @@ class BleTransport implements MeshTransport {
   }
 
   Future<void> _onPeer(BlePeer peer) async {
+    if (!_running) return; // stop() called before connect
     if (_connected.containsKey(peer.id)) return;
     _connected[peer.id] = peer;
     final ok = await _link.connect(peer);
+    // Race guard: if stop() ran while we were awaiting connect, the peer has
+    // already been cleared from _connected and the link stopped. Bail out
+    // instead of re-registering state into maps stop() just cleared — that
+    // would leak the subscription forever and leave ghost entries.
+    if (!_running) {
+      _connected.remove(peer.id);
+      try {
+        await _link.disconnect(peer);
+      } catch (_) {}
+      return;
+    }
     if (!ok) {
       _connected.remove(peer.id);
       return;
@@ -416,9 +604,32 @@ class BleTransport implements MeshTransport {
     if (rx == null) return;
     final reasm = BleReassembler();
     _reassemblers[peer.id] = reasm;
-    rx.listen((bytes) {
-      final full = reasm.add(Uint8List.fromList(bytes));
-      if (full != null) _data.add(full);
-    });
+    // Track the subscription so stop() can cancel it. Without this the
+    // per-peer stream listener (and its reassembler closure) leaks for every
+    // peer ever seen over the app's lifetime.
+    //
+    // onDone self-cleanup: if the link's incoming stream ends (peer walked
+    // away, adapter reset), drop the subscription so the map shrinks
+    // naturally instead of growing unbounded across a long emergency session.
+    _rxSubs[peer.id] = rx.listen(
+      (bytes) {
+        final full = reasm.add(Uint8List.fromList(bytes));
+        if (full != null && !_data.isClosed) _data.add(full);
+      },
+      onDone: () {
+        if (_rxSubs[peer.id] != null) {
+          _rxSubs.remove(peer.id)?.cancel();
+        }
+        _reassemblers.remove(peer.id);
+        _connected.remove(peer.id);
+      },
+      onError: (_) {
+        if (_rxSubs[peer.id] != null) {
+          _rxSubs.remove(peer.id)?.cancel();
+        }
+        _reassemblers.remove(peer.id);
+        _connected.remove(peer.id);
+      },
+    );
   }
 }

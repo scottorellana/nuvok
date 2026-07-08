@@ -41,6 +41,8 @@ class EmergencyGuideMediaSpec {
     required this.scenePrompt,
     required this.videoPrompt,
     required this.safetyNote,
+    this.imageAssetPath,
+    this.imageAltText = '',
   });
 
   final String id;
@@ -50,6 +52,14 @@ class EmergencyGuideMediaSpec {
   final String scenePrompt;
   final String videoPrompt;
   final String safetyNote;
+
+  /// Bundled illustration for this guide, when one has been curated
+  /// (`assets/emergency_guides/images/<id>.png`). Null = animation only.
+  final String? imageAssetPath;
+
+  /// Accessibility description of the illustration — a guide the user cannot
+  /// see must still be usable with a screen reader in an emergency.
+  final String imageAltText;
 }
 
 class EmergencyGuideMedia {
@@ -73,8 +83,52 @@ class EmergencyGuideMedia {
     'triaje_multivictima',
   };
 
-  static EmergencyGuideMediaSpec forGuide(String id) =>
-      _specs[id] ?? _fallback(id);
+  /// Curated illustrations that exist in the bundle, with the accessibility
+  /// description each one needs (id → alt text). Only ids listed here get an
+  /// imageAssetPath; the rest render their animation only.
+  static const Map<String, String> _imageAlts = {
+    'atragantamiento':
+        'Persona aplicando la maniobra de Heimlich a un adulto atragantado, '
+            'de pie, con los puños bajo el esternón.',
+    'fracturas_inmovilizacion':
+        'Brazo inmovilizado con una férula improvisada de cartón y vendas, '
+            'sujeto al cuerpo con un cabestrillo.',
+    'hemorragia_severa':
+        'Manos presionando firmemente una herida en la pierna con una tela '
+            'doblada para detener el sangrado.',
+    'huracan':
+        'Familia refugiada en una habitación interior sin ventanas, con '
+            'linterna, radio y suministros durante un huracán.',
+    'quemaduras':
+        'Antebrazo con una quemadura bajo un chorro suave de agua fresca '
+            'para enfriarla durante varios minutos.',
+    'rcp_adulto':
+        'Rescatista arrodillado dando compresiones de pecho con los brazos '
+            'rectos a un adulto acostado boca arriba.',
+    'rcp_nino_bebe':
+        'Manos dando compresiones suaves con dos dedos en el pecho de un '
+            'bebé acostado sobre una superficie firme.',
+    'terremoto':
+        'Persona protegiéndose bajo una mesa resistente durante un '
+            'terremoto, sujetando una pata de la mesa.',
+  };
+
+  static EmergencyGuideMediaSpec forGuide(String id) {
+    final base = _specs[id] ?? _fallback(id);
+    final alt = _imageAlts[id];
+    if (alt == null) return base;
+    return EmergencyGuideMediaSpec(
+      id: base.id,
+      title: base.title,
+      visualPolicy: base.visualPolicy,
+      animationKind: base.animationKind,
+      scenePrompt: base.scenePrompt,
+      videoPrompt: base.videoPrompt,
+      safetyNote: base.safetyNote,
+      imageAssetPath: 'assets/emergency_guides/images/$id.png',
+      imageAltText: alt,
+    );
+  }
 
   static EmergencyGuideMediaSpec _fallback(String id) =>
       EmergencyGuideMediaSpec(

@@ -21,6 +21,12 @@ void main() {
       expect(media.videoPrompt.trim().length, greaterThan(180),
           reason: guide.id);
       expect(media.animationKind.name, isNotEmpty, reason: guide.id);
+      if (media.imageAssetPath != null) {
+        expect(media.imageAssetPath, startsWith('assets/emergency_guides/images/'),
+            reason: guide.id);
+        expect(media.imageAltText.trim().length, greaterThan(32),
+            reason: '${guide.id} debe tener alt text útil para accesibilidad');
+      }
       expect(
           media.safetyNote.toLowerCase(),
           anyOf(contains('no sustituye'), contains('does not replace'),

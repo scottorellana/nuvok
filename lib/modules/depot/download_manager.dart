@@ -168,8 +168,10 @@ class DownloadManager extends ChangeNotifier {
 
   Future<void> _finish(DownloadTask task) async {
     // Ensure the destination directory exists (it may have been deleted).
-    final dir = task.destPath.substring(0, task.destPath.lastIndexOf('/'));
-    await Directory(dir).create(recursive: true);
+    final slash = task.destPath.lastIndexOf('/');
+    if (slash > 0) {
+      await Directory(task.destPath.substring(0, slash)).create(recursive: true);
+    }
     await task.partFile.rename(task.destPath);
     task.status = DownloadStatus.done;
     task.received = File(task.destPath).lengthSync();

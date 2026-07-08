@@ -609,6 +609,26 @@ class _GuideReader extends StatelessWidget {
     final id = guide.id;
     final media = EmergencyGuideMedia.forGuide(id);
     final widgets = <Widget>[
+      // Curated photo illustration, when the bundle has one for this guide.
+      // Semantics alt: the guide must work with a screen reader too.
+      if (media.imageAssetPath != null)
+        _visualCard(
+          context,
+          media.title,
+          Semantics(
+            label: media.imageAltText,
+            image: true,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                media.imageAssetPath!,
+                fit: BoxFit.cover,
+                // A missing/corrupt asset must never break the guide.
+                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+              ),
+            ),
+          ),
+        ),
       _mediaBriefCard(context, media),
       _visualCard(
         context,

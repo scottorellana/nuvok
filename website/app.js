@@ -1,5 +1,11 @@
 // Prepper Pad — Interactions & Animations
 
+// ── Gate reveal animations on JS availability ──
+// CSS hides `.js .reveal` (opacity 0). We add the `.js` class to <html> on
+// load so users without JS / offline-first browsers / reduced-motion see the
+// fully-rendered page instead of an invisible one.
+document.documentElement.classList.add('js');
+
 // ── Scroll reveal with IntersectionObserver ──
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {

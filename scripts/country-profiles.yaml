@@ -1,0 +1,128 @@
+# Perfiles de país para instaladores de Prepper Pad
+#
+# Cada perfil define qué mapa (.pmtiles) e idioma se incluyen
+# pre-cargados en el instalador de ese país. El script de build
+# usa este archivo para seleccionar el bundle correcto.
+#
+# Para crear un instalador específico de país:
+#   ./scripts/build_country.sh <country-id>
+#
+# El script:
+#   1. Selecciona el mapa del país del catálogo
+#   2. Genera el .pmtiles si no existe (requiere pmtiles CLI)
+#   3. Copia el mapa a assets/bundled_library/maps/
+#   4. Actualiza el manifest del bundle
+#   5. Compila el APK con Flutter
+#   6. Copia a dist/prepper-pad-v<version>-<country>.apk
+
+profiles:
+  # ── Perfil por defecto (Honduras + El Salvador) ──
+  default:
+    name: "Prepper Pad (Centroamérica)"
+    language: es
+    maps:
+      - honduras
+      - el-salvador
+    extra_zim:
+      - wikipedia_es_medicine_maxi_2026-04
+      - wikipedia_mini
+
+  # ── Honduras ──
+  honduras:
+    name: "Prepper Pad Honduras"
+    language: es
+    maps:
+      - honduras
+    extra_zim:
+      - wikipedia_es_medicine_maxi_2026-04
+      - wikipedia_mini
+
+  # ── El Salvador ──
+  el-salvador:
+    name: "Prepper Pad El Salvador"
+    language: es
+    maps:
+      - el-salvador
+    extra_zim:
+      - wikipedia_es_medicine_maxi_2026-04
+      - wikipedia_mini
+
+  # ── Guatemala ──
+  guatemala:
+    name: "Prepper Pad Guatemala"
+    language: es
+    maps:
+      - guatemala
+    extra_zim:
+      - wikipedia_es_medicine_maxi_2026-04
+      - wikipedia_mini
+
+  # ── Nicaragua ──
+  nicaragua:
+    name: "Prepper Pad Nicaragua"
+    language: es
+    maps:
+      - nicaragua
+    extra_zim:
+      - wikipedia_es_medicine_maxi_2026-04
+      - wikipedia_mini
+
+  # ── Costa Rica ──
+  costa-rica:
+    name: "Prepper Pad Costa Rica"
+    language: es
+    maps:
+      - costa-rica
+    extra_zim:
+      - wikipedia_es_medicine_maxi_2026-04
+      - wikipedia_mini
+
+  # ── Panamá ──
+  panama:
+    name: "Prepper Pad Panamá"
+    language: es
+    maps:
+      - panama
+    extra_zim:
+      - wikipedia_es_medicine_maxi_2026-04
+      - wikipedia_mini
+
+  # ── Estados Unidos (inglés) ──
+  usa:
+    name: "Prepper Pad USA"
+    language: en
+    maps:
+      - usa-northeast
+    extra_zim:
+      - wikipedia_en_medicine_maxi_2026-04
+      - wikipedia_mini
+
+  # ── México ──
+  mexico:
+    name: "Prepper Pad México"
+    language: es
+    maps:
+      - mexico
+    extra_zim:
+      - wikipedia_es_medicine_maxi_2026-04
+      - wikipedia_mini
+
+  # ── Haití (francés/creole) ──
+  haiti:
+    name: "Prepper Pad Haïti"
+    language: fr
+    maps:
+      - haiti
+    extra_zim:
+      - wikipedia_en_medicine_maxi_2026-04
+      - wikipedia_mini
+
+  # ── República Dominicana ──
+  dominican-republic:
+    name: "Prepper Pad República Dominicana"
+    language: es
+    maps:
+      - dominican-republic
+    extra_zim:
+      - wikipedia_es_medicine_maxi_2026-04
+      - wikipedia_mini

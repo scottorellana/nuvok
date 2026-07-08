@@ -62,5 +62,37 @@ void main() {
       expect(nonZero, greaterThan(5),
           reason: 'El tono debe tener energía significativa');
     });
+
+    test('archivo temporal escribe WAV reproducible y limpia recursos', () async {
+      final file = await WhistleToneFile.write(3000, durationMs: 20);
+      try {
+        expect(await file.exists(), isTrue);
+        expect(await file.length(), greaterThan(44));
+        final header = await file.openRead(0, 12).fold<List<int>>(
+          <int>[],
+          (bytes, chunk) => bytes..addAll(chunk),
+        );
+        expect(String.fromCharCodes(header.sublist(0, 4)), 'RIFF');
+        expect(String.fromCharCodes(header.sublist(8, 12)), 'WAVE');
+      } finally {
+        await WhistleToneFile.delete(file);
+      }
+      expect(await file.exists(), isFalse);
+      expect(await file.parent.exists(), isFalse);
+    });
+
+    test('audio source tolera rangos fuera del buffer', () async {
+      final wav = WhistleGenerator.generateWav(3000, durationMs: 10);
+      final source = CustomAudioSource(wav);
+
+      final whole = await source.request();
+      expect(whole.contentLength, wav.length);
+
+      final clamped = await source.request(0, wav.length + 1024);
+      expect(clamped.contentLength, wav.length);
+
+      final empty = await source.request(wav.length + 1, wav.length + 99);
+      expect(empty.contentLength, 0);
+    });
   });
 }

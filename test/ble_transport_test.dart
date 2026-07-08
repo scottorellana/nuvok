@@ -215,6 +215,27 @@ void main() {
       await t.send(Uint8List.fromList([1, 2, 3])); // must not throw
       await t.stop();
     });
+
+    // Regression: send() iterates _connected while awaiting on the link.
+    // A discovery event arriving mid-send mutates _connected and would throw
+    // ConcurrentModificationError if send() iterated the live map. This test
+    // injects a peer during the write await to guard against that.
+    test('send survives a peer connecting mid-send (no concurrent modification)',
+        () async {
+      final link = _FakeBleLink(available: true);
+      final t = BleTransport(link: link);
+      await t.start();
+      // Give the (empty) discovery wave time to settle.
+      await Future<void>.delayed(const Duration(milliseconds: 50));
+
+      // Schedule a new discovery event to fire while send() is awaiting write.
+      final extraPeer = _FakePeer('late-peer');
+      link.scheduleDiscovery(extraPeer);
+
+      // send() must not throw even though _connected is mutated under it.
+      await t.send(Uint8List.fromList(List.generate(500, (i) => i & 0xff)));
+      await t.stop();
+    });
   });
 }
 
@@ -254,6 +275,12 @@ class _FakeBleLink implements BleLink {
       _disc.add(_FakePeer('peer-from-${other.hashCode}'));
       other._disc.add(_FakePeer('peer-from-$hashCode'));
     });
+  }
+
+  /// Injects a discovery event asynchronously (microtask), used to simulate a
+  /// peer appearing while the transport is mid-send (awaits on write).
+  void scheduleDiscovery(BlePeer peer) {
+    Future.microtask(() => _disc.add(peer));
   }
 
   @override

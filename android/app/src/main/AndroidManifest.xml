@@ -18,6 +18,7 @@
     <!-- Android 12+ (API 31) reemplaza los dos anteriores por estos: -->
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/>
     <!-- Prepper Mesh (WiFi Direct transport): P2P sin infraestructura. -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <!-- Android 13+ (API 33): descubrir dispositivos WiFi cercanos (WiFi Direct
@@ -25,9 +26,22 @@
          el transporte P2P falla en silencio en tablets modernas. -->
     <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES"
         android:usesPermissionFlags="neverForLocation"/>
-    <!-- Declara que la app solo funciona con BLE (no Bluetooth Classic) para
-         que Google Play filtre dispositivos sin él. -->
+    <!-- Declara BLE opcional: si no existe, la app sigue funcionando por LAN/WiFi. -->
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
+    <!-- SOS/alertas: vibración, notificaciones y posible servicio foreground para alarma. -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <!-- API 34+ puede exigir tipo explícito si se usa para reproducir audio de alerta. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- FLASH/TORCH (si SOS usa linterna por canal nativo). -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false"/>
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false"/>
+    <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false"/>
+    <uses-feature android:name="android.hardware.sensor.compass" android:required="false"/>
     <application
         android:label="Prepper Pad"
         android:name="${applicationName}"

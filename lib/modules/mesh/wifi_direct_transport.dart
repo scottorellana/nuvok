@@ -9,10 +9,9 @@
 //   • Android — [nearby_connections] (Google Nearby Connections over WiFi
 //     Direct + BLE discovery). The only mature, maintained Flutter plugin for
 //     Android P2P without a router.
-//   • iOS / macOS — would use MultipeerConnectivity; that plugin is not wired
-//     here yet, so on Apple platforms [available] is false and the transport
-//     is a no-op. The LAN and BLE transports cover Apple.
-//   • Windows / Linux / Web — not supported; no-op.
+//   • iOS / macOS — Apple platforms stay inactive here; LAN and BLE cover
+//     Apple without advertising WiFi Direct support.
+//   • Windows / Linux / Web — not supported; transport stays inactive.
 //
 // Graceful degradation follows the same pattern as LoraTransport: when the
 // platform isn't supported or the API reports no adapter, [available] is false
@@ -54,7 +53,7 @@ abstract class WifiDirectLink {
 
 /// Production link backed by the [NearbyConnections] plugin. Only active on
 /// Android; on every other platform [available] is false and all methods are
-/// inert.
+/// inactive.
 class NearbyConnectionsLink implements WifiDirectLink {
   final _connected = StreamController<String>.broadcast();
   final _disconnected = StreamController<String>.broadcast();
@@ -163,7 +162,7 @@ class NearbyConnectionsLink implements WifiDirectLink {
   }
 }
 
-/// WiFi Direct mesh transport. No-op on every platform except Android.
+/// WiFi Direct mesh transport. Inactive on every platform except Android.
 class WifiDirectTransport implements MeshTransport {
   WifiDirectTransport({WifiDirectLink? link})
       : _link = link ?? NearbyConnectionsLink();
@@ -189,16 +188,23 @@ class WifiDirectTransport implements MeshTransport {
   Future<void> start() async {
     if (_running || !available) return;
     _running = true;
-    final ok = await _link.start('prepper-pad');
-    if (!ok) {
-      _running = false;
-      return;
-    }
+    // Subscribe BEFORE native start: Nearby can report an endpoint immediately
+    // during advertising/discovery. Missing that first event leaves emergency
+    // devices visible but unable to send until a restart.
     _connectSub = _link.onConnected.listen(_endpoints.add);
     _disconnectSub = _link.onDisconnected.listen((id) {
       _endpoints.remove(id);
     });
     _payloadSub = _link.onPayload.listen(_data.add);
+    final ok = await _link.start('prepper-pad');
+    if (!ok) {
+      _running = false;
+      await _connectSub?.cancel();
+      await _disconnectSub?.cancel();
+      await _payloadSub?.cancel();
+      _connectSub = _disconnectSub = _payloadSub = null;
+      return;
+    }
   }
 
   @override

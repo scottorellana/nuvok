@@ -38,19 +38,26 @@ void main() {
         'platforms': {
           'macos': {
             'url': 'https://example.com/PrepperPad-0.2.1.dmg',
-            'sha256': 'abc123',
+            'sha256':
+                'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
             'sizeBytes': 33500000,
           },
           'android': {
             'url': 'https://example.com/prepper-pad-0.2.1.apk',
+            'sha256':
+                'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+            'sizeBytes': 70487939,
           },
         },
       });
       expect(m.version, '0.2.1');
       expect(m.notes, contains('Batería'));
-      expect(m.platforms['macos']!.sha256, 'abc123');
+      expect(m.platforms['macos']!.sha256,
+          'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
       expect(m.platforms['macos']!.sizeBytes, 33500000);
-      expect(m.platforms['android']!.sha256, isNull);
+      expect(m.platforms['android']!.sha256,
+          'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
+      expect(m.platforms['android']!.sizeBytes, 70487939);
       expect(m.platforms['windows'], isNull);
     });
 
@@ -58,6 +65,21 @@ void main() {
       final m = UpdateManifest.fromJson({'version': '0.2.1'});
       expect(m.notes, '');
       expect(m.platforms, isEmpty);
+    });
+
+    test('acepta size legacy del servidor LAN además de sizeBytes', () {
+      final m = UpdateManifest.fromJson({
+        'version': '0.2.5',
+        'platforms': {
+          'android': {
+            'url': '/download/prepper-pad-v0.2.5.apk',
+            'sha256':
+                'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            'size': 70487939,
+          },
+        },
+      });
+      expect(m.platforms['android']!.sizeBytes, 70487939);
     });
   });
 }

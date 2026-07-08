@@ -1,0 +1,4 @@
+/* Français - Descriptions d'utilisation des permissions */
+"NSBluetoothAlwaysUsageDescription" = "Prepper Pad utilise le Bluetooth pour le chat d'urgence entre vos appareils lorsqu'il n'y a pas d'internet ni de signal.";
+"NSLocalNetworkUsageDescription" = "Prepper Pad communique avec vos autres appareils Prepper Pad sur votre réseau WiFi, sans internet. Rien ne sort de votre réseau.";
+"NSLocationWhenInUseUsageDescription" = "Votre position sert à vous afficher sur la carte hors ligne et à la partager dans un SOS. Elle ne quitte jamais vos appareils.";

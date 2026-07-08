@@ -1,14 +1,29 @@
-// Medical procedure diagrams — pure Flutter CustomPainter vector graphics.
-// Zero image assets, zero memory overhead, infinite scalability.
-// Each diagram is an animated, self-contained widget that demonstrates
-// a life-saving procedure with visual clarity.
+// Medical procedure diagrams — uses realistic AI-generated medical images
+// for the main guides, falling back to pure Flutter CustomPainter vector
+// graphics for guides that don't have a raster image yet.
+// This keeps the app offline-first while providing high-quality visuals.
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Generic guide illustration — vector "image" for every survival/first-aid
-// guide. It keeps the app offline-first and low-RAM: no raster assets, no web
-// downloads, just CustomPainter shapes chosen from the guide id.
+// Guide IDs that have a realistic AI-generated image available.
+// When a guide's ID is in this set, GuideVisualIllustration shows the
+// raster image instead of the vector animation.
+// ─────────────────────────────────────────────────────────────────────────────
+const _realisticImageGuides = <String>{
+  'rcp_adulto',
+  'rcp_nino_bebe',
+  'hemorragia_severa',
+  'atragantamiento',
+  'quemaduras',
+  'fracturas_inmovilizacion',
+  'huracan',
+  'terremoto',
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Generic guide illustration — shows a realistic image when available,
+// otherwise falls back to the vector CustomPainter animation.
 // ─────────────────────────────────────────────────────────────────────────────
 
 class GuideVisualIllustration extends StatefulWidget {
@@ -24,6 +39,8 @@ class GuideVisualIllustration extends StatefulWidget {
 class _GuideVisualIllustrationState extends State<GuideVisualIllustration>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
+  ImageStream? _imageStream;
+  bool _imageLoadFailed = false;
 
   @override
   void initState() {
@@ -32,6 +49,28 @@ class _GuideVisualIllustrationState extends State<GuideVisualIllustration>
       vsync: this,
       duration: const Duration(milliseconds: 1400),
     )..repeat(reverse: true);
+
+    // Pre-load realistic image if available for this guide.
+    if (_realisticImageGuides.contains(widget.guideId)) {
+      _loadImage();
+    }
+  }
+
+  void _loadImage() {
+    final asset = AssetImage(
+      'assets/emergency_guides/images/${widget.guideId}.png',
+    );
+    _imageStream = asset.resolve(const ImageConfiguration());
+    _imageStream!.addListener(
+      ImageStreamListener(
+        (info, _) {
+          if (mounted) setState(() {}); // Image loaded successfully.
+        },
+        onError: (exception, stackTrace) {
+          if (mounted) setState(() => _imageLoadFailed = true);
+        },
+      ),
+    );
   }
 
   @override
@@ -42,6 +81,23 @@ class _GuideVisualIllustrationState extends State<GuideVisualIllustration>
 
   @override
   Widget build(BuildContext context) {
+    // Show realistic image if available and loaded.
+    if (_realisticImageGuides.contains(widget.guideId) && !_imageLoadFailed) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: Image.asset(
+          'assets/emergency_guides/images/${widget.guideId}.png',
+          width: double.infinity,
+          height: 200,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) => _buildVectorAnimation(),
+        ),
+      );
+    }
+    return _buildVectorAnimation();
+  }
+
+  Widget _buildVectorAnimation() {
     return SizedBox(
       width: double.infinity,
       height: 170,

@@ -264,10 +264,37 @@ body {
   .features { grid-template-columns: 1fr 1fr; }
   .burn-chart { grid-template-columns: 1fr 1fr; }
 }
+
+/* ── Accessibility: skip-link + focus-visible ── */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 12px 16px;
+  background: var(--olive);
+  color: var(--bg);
+  font-weight: 700;
+  z-index: 9999;
+  border-radius: 0 0 8px 0;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
+}
+:focus-visible {
+  outline: 3px solid var(--olive-bright);
+  outline-offset: 2px;
+}
+button:focus-visible, a:focus-visible {
+  outline-color: var(--olive-bright);
+}
 </style>
 </head>
 <body>
 
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<header role="banner" aria-label="Encabezado">
 <div class="hero">
   <div class="hero-logo">
     <svg viewBox="0 0 24 24" fill="none" stroke="#10130b" stroke-width="2.5" width="40" height="40">
@@ -288,6 +315,8 @@ body {
 </div>
 
 <div class="container">
+
+<main id="main" role="main" tabindex="-1" aria-label="Contenido de la demo">
 
   <!-- Features -->
   <div class="section">
@@ -387,7 +416,7 @@ body {
     <h2>📊 Estado del proyecto</h2>
     <div class="features">
       <div class="feature-card">
-        <div class="feature-icon" style="font-size:2rem;">164</div>
+        <div class="feature-icon" style="font-size:2rem;">207</div>
         <h3>Tests</h3>
         <p>Todos pasando, 0 fallos</p>
       </div>
@@ -397,22 +426,24 @@ body {
         <p>Flutter analyze limpio</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon" style="font-size:2rem;">16</div>
+        <div class="feature-icon" style="font-size:2rem;">18</div>
         <h3>Guías</h3>
         <p>ES + EN, con diagramas</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon" style="font-size:2rem;">3</div>
+        <div class="feature-icon" style="font-size:2rem;">4</div>
         <h3>Transportes</h3>
-        <p>WiFi, BLE, LoRa</p>
+        <p>WiFi, BLE, LoRa, LAN</p>
       </div>
     </div>
   </div>
 
 </div>
 
+</main>
+<footer role="contentinfo" aria-label="Pie de página">
 <div class="footer">
-  <p>🎒 Prepper Pad v0.2.1+ · App offline-first de supervivencia<br>
+  <p>🎒 Prepper Pad v0.2.8 · App offline-first de supervivencia<br>
   Instalador: <code>http://[IP-LOCAL]:8848</code> · Demo: <code>http://[IP-LOCAL]:8849</code><br>
   <br>Esta demo es solo para visualización. La app completa funciona offline en tu dispositivo.</p>
 </div>

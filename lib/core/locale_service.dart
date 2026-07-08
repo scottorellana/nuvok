@@ -612,6 +612,175 @@ class AppStrings {
     'explore': {
       'es': 'Explorar', 'en': 'Explore', 'pt': 'Explorar', 'fr': 'Explorer',
     },
+
+    // ── Mesh UI — strings that were previously hardcoded in mesh_page.dart ──
+    'emergencyChannelSubtitle': {
+      'es': 'Abierto a todos los dispositivos cercanos',
+      'en': 'Open to all nearby devices',
+      'pt': 'Aberto para todos os dispositivos próximos',
+      'fr': 'Ouvert à tous les appareils à proximité',
+      'zh': '对所有附近设备开放',
+      'ja': '近くの全デバイスに開放',
+      'ht': 'Ouvè pou tout aparèy toupre',
+    },
+    'noChannelsHint': {
+      'es': 'Crea un canal para tu familia o grupo y compártelo por código QR. '
+          'Los mensajes van cifrados: solo quien tiene el código puede leerlos.',
+      'en': 'Create a channel for your family or group and share it via QR code. '
+          'Messages are encrypted: only those with the code can read them.',
+      'pt': 'Crie um canal para sua família ou grupo e compartilhe pelo código QR. '
+          'As mensagens são criptografadas: só quem tem o código pode lê-las.',
+      'fr': 'Créez un canal pour votre famille ou groupe et partagez-le via QR. '
+          'Les messages sont chiffrés : seul celui qui a le code peut les lire.',
+      'zh': '为家人或群组创建频道并通过二维码分享。消息已加密：只有持有代码的人才能阅读。',
+      'ja': '家族やグループ用チャンネルを作成しQRコードで共有。メッセージは暗号化され、コードを持つ人だけが読めます。',
+      'ht': 'Kreye yon kanal pou fanmi ou gwoup ou epi pataje l pa kòd QR. '
+          'Mesaj yo chifre: sèlman moun ki gen kòd la ka li yo.',
+    },
+    'meshOnboardDesc': {
+      'es': 'Chatea, comparte tu posición y lanza SOS entre dispositivos cercanos '
+          'SIN internet (misma red WiFi o hotspot). ¿Cómo quieres que te vean los demás?',
+      'en': 'Chat, share your position and launch SOS between nearby devices '
+          'WITHOUT internet (same WiFi or hotspot). How do you want others to see you?',
+      'pt': 'Converse, compartilhe sua posição e envie SOS entre dispositivos próximos '
+          'SEM internet (mesma rede WiFi ou hotspot). Como quer que os outros te vejam?',
+      'fr': 'Discutez, partagez votre position et lancez SOS entre appareils proches '
+          'SANS internet (même WiFi ou hotspot). Comment voulez-vous que les autres vous voient?',
+      'zh': '在附近设备之间聊天、分享位置和发送SOS，无需互联网（同一WiFi或热点）。您希望别人如何看到您？',
+      'ja': '近くのデバイス間でインターネットなしでチャット、位置共有、SOS発信。他の人にどう見られたいですか？',
+      'ht': 'Tchate, pataje pozisyon ou epi voye SOS ant aparèy toupre SANS entènèt '
+          '(menm rezo WiFi oswa hotspot). Ki jan ou vle lòt moun wè ou?',
+    },
+    'sosActiveDesc': {
+      'es': 'SOS ACTIVO — difundiendo tu posición cada minuto a todos los dispositivos al alcance.',
+      'en': 'SOS ACTIVE — broadcasting your position every minute to all devices in range.',
+      'pt': 'SOS ATIVO — transmitindo sua posição a cada minuto para todos os dispositivos ao alcance.',
+      'fr': 'SOS ACTIF — diffusion de votre position chaque minute à tous les appareils à portée.',
+      'zh': 'SOS激活 — 每分钟向范围内所有设备广播您的位置。',
+      'ja': 'SOS発信中 — 毎分、範囲内の全デバイスに位置を送信中。',
+      'ht': 'SOS AKTIF — ap difize pozisyon ou chak minit bay tout aparèy ki nan zòn nan.',
+    },
+    'sosCardSubtitle': {
+      'es': 'Difunde tu posición a cualquier dispositivo cercano, sin claves',
+      'en': 'Broadcast your position to any nearby device, no keys needed',
+      'pt': 'Difunda sua posição para qualquer dispositivo próximo, sem chaves',
+      'fr': 'Diffusez votre position à tout appareil proche, sans clé',
+      'zh': '向任何附近设备广播您的位置，无需密钥',
+      'ja': '近くのデバイスに位置を送信、鍵不要',
+      'ht': 'Difize pozisyon ou bay nenpòt aparèy toupre, san kle',
+    },
+    'meshInstructions': {
+      'es': '1) Activa Bluetooth. 2) Si hay varios equipos, usa un hotspot o '
+          'la misma Wi‑Fi aunque no tenga internet. 3) En Android, Wi‑Fi Direct '
+          'busca pares sin router. 4) Si conectas radio LoRa compatible, '
+          'Prepper Mesh usará el mismo protocolo de mensajes.',
+      'en': '1) Enable Bluetooth. 2) If using multiple devices, share a hotspot '
+          'or the same Wi‑Fi even without internet. 3) On Android, Wi‑Fi Direct '
+          'finds peers without a router. 4) If you connect a compatible LoRa radio, '
+          'Prepper Mesh will use the same message protocol.',
+      'pt': '1) Ative o Bluetooth. 2) Se houver vários equipamentos, use um hotspot '
+          'ou o mesmo Wi‑Fi sem internet. 3) No Android, o Wi‑Fi Direct encontra '
+          'pares sem roteador. 4) Se conectar um rádio LoRa compatível, o Prepper '
+          'Mesh usará o mesmo protocolo.',
+      'fr': '1) Activez le Bluetooth. 2) Si plusieurs appareils, utilisez un hotspot '
+          'ou le même Wi‑Fi sans internet. 3) Sur Android, Wi‑Fi Direct trouve des '
+          'pairs sans routeur. 4) Si vous connectez une radio LoRa compatible, '
+          'Prepper Mesh utilisera le même protocole.',
+      'zh': '1) 启用蓝牙。2) 如果有多台设备，即使没有互联网也可使用热点或相同Wi-Fi。'
+          '3) 在Android上，Wi-Fi Direct无需路由器即可查找设备。4) 如果连接兼容的LoRa收音机，'
+          'Prepper Mesh将使用相同的消息协议。',
+      'ja': '1) Bluetoothを有効にする。2) 複数デバイス使用時はホットスポットや同じWi-Fiを共有。'
+          '3) AndroidではWi-Fi Directがルーターなしでピアを検索。4) 互換LoRAラジオを接続すると'
+          'Prepper Meshが同じプロトコルを使用。',
+      'ht': '1) Aktive Bluetooth. 2) Si gen plizyè aparèy, itilize yon hotspot oswa '
+          'menm Wi‑Fi a menm san entènèt. 3) Sou Android, Wi‑Fi Direct jwenn pè san routeur. '
+          '4) Si ou konekte yon radyo LoRa ki konpatib, Prepper Mesh ap itilize menm pwotokòl mesaj.',
+    },
+    'emergencyChannelTitle': {
+      'es': 'EMERGENCIA (todos)',
+      'en': 'EMERGENCY (everyone)',
+      'pt': 'EMERGÊNCIA (todos)',
+      'fr': 'URGENCE (tout le monde)',
+      'zh': '紧急（所有人）',
+      'ja': '緊急（全員）',
+      'ht': 'IJANS (tout moun)',
+    },
+    'emergencyChannelTitleAll': {
+      'es': 'EMERGENCIA (todos los cercanos)',
+      'en': 'EMERGENCY (all nearby)',
+      'pt': 'EMERGÊNCIA (todos próximos)',
+      'fr': 'URGENCE (tous proches)',
+      'zh': '紧急（所有附近）',
+      'ja': '緊急（近くの全員）',
+      'ht': 'IJANS (tout moun toupre)',
+    },
+    'emergencyWarning': {
+      'es': 'Canal abierto SIN cifrar: lo lee cualquier Prepper Pad cercano. '
+          'Úsalo para pedir o dar ayuda.',
+      'en': 'Open channel, NOT encrypted: any nearby Prepper Pad can read it. '
+          'Use it to ask for or give help.',
+      'pt': 'Canal aberto SEM criptografia: qualquer Prepper Pad próximo pode lê-lo. '
+          'Use para pedir ou dar ajuda.',
+      'fr': 'Canal ouvert SANS chiffrement : tout Prepper Pad proche peut le lire. '
+          'Utilisez-le pour demander ou offrir de l\'aide.',
+      'zh': '开放频道，未加密：附近任何Prepper Pad均可读取。用于求助或提供帮助。',
+      'ja': '暗号化なしの公開チャンネル：近くのPrepper Padなら誰でも読めます。助けを求めたり提供したりするために使用してください。',
+      'ht': 'Kanal ouvè SANS chifraj: nenpòt Prepper Pad toupre ka li li. '
+          'Itilize l pou mande oswa bay èd.',
+    },
+    'noMessagesHint': {
+      'es': 'Sin mensajes. ¡Escribe el primero!',
+      'en': 'No messages yet. Write the first one!',
+      'pt': 'Sem mensagens. Escreva a primeira!',
+      'fr': 'Aucun message. Rédigez le premier !',
+      'zh': '暂无消息。写第一条！',
+      'ja': 'メッセージなし。最初のメッセージを書いてください！',
+      'ht': 'Pa gen mesaj. Ekri premye a!',
+    },
+    'noDevicesHint': {
+      'es': 'Sin dispositivos al alcance.\nLos mensajes que envíes quedarán en '
+          'cola y se entregarán cuando alguien aparezca.',
+      'en': 'No devices in range.\nMessages you send will be queued and delivered '
+          'when someone appears.',
+      'pt': 'Sem dispositivos ao alcance.\nAs mensagens que você enviar ficarão '
+          'na fila e serão entregues quando alguém aparecer.',
+      'fr': 'Aucun appareil à portée.\nLes messages envoyés seront mis en file '
+          'd\'attente et livrés quand quelqu\'un apparaîtra.',
+      'zh': '没有设备在范围内。\n您发送的消息将排队等待，当有人出现时送达。',
+      'ja': '範囲内にデバイスなし。\n送信したメッセージはキューに入り、誰かが現れたとき届きます。',
+      'ht': 'Pa gen aparèy nan pòte.\nMesaj ou voye yo ap nan liy epi yo ap livre lè yon moun parèt.',
+    },
+    'messageHint': {
+      'es': 'Mensaje…', 'en': 'Message…', 'pt': 'Mensagem…',
+      'fr': 'Message…', 'zh': '消息…', 'ja': 'メッセージ…', 'ht': 'Mesaj…',
+    },
+    'messageHintEmergency': {
+      'es': 'Mensaje para TODOS los cercanos…',
+      'en': 'Message for ALL nearby…',
+      'pt': 'Mensagem para TODOS os próximos…',
+      'fr': 'Message pour TOUS les proches…',
+      'zh': '给附近所有人发消息…',
+      'ja': '近くの全員へメッセージ…',
+      'ht': 'Mesaj pou TOUT moun toupre…',
+    },
+    'online': {
+      'es': 'en línea', 'en': 'online', 'pt': 'online',
+      'fr': 'en ligne', 'zh': '在线', 'ja': 'オンライン', 'ht': 'anliy',
+    },
+    'noneInRange': {
+      'es': 'nadie al alcance', 'en': 'no one in range',
+      'pt': 'ninguém ao alcance', 'fr': 'personne à portée',
+      'zh': '没有人在范围内', 'ja': '範囲内にいません', 'ht': 'pèsonn nan pòte',
+    },
+    'showChannelCodeTooltip': {
+      'es': 'Mostrar código / QR para invitar',
+      'en': 'Show code / QR to invite',
+      'pt': 'Mostrar código / QR para convidar',
+      'fr': 'Afficher le code / QR pour inviter',
+      'zh': '显示代码/二维码邀请',
+      'ja': 'コード/QRを表示して招待',
+      'ht': 'Montre kòd / QR pou envite',
+    },
   };
 }
 

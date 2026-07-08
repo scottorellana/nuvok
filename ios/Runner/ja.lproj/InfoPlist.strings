@@ -1,0 +1,4 @@
+/* 日本語 - 権限使用の説明 */
+"NSBluetoothAlwaysUsageDescription" = "Prepper Padは、インターネットや電波がない時に、デバイス間の緊急チャットにBluetoothを使用します。";
+"NSLocalNetworkUsageDescription" = "Prepper Padは、インターネットなしで、WiFiネットワーク上の他のPrepper Padデバイスと通信します。ネットワークの外には何も出ません。";
+"NSLocationWhenInUseUsageDescription" = "あなたの位置は、オフラインマップに表示し、SOSで共有するために使用されます。デバイスの外には出ません。";

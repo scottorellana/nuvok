@@ -22,3 +22,10 @@ native/out/
 dist/
 android/.kotlin/
 installer-server/downloads/
+native/work/
+
+# Contenido pesado del canal directo (GBs, >límite de GitHub);
+# se puebla con scripts/build_country.sh / update_bundle_manifest.py
+assets/bundled_library/zim/
+assets/bundled_library/maps/
+assets/bundled_library/models/

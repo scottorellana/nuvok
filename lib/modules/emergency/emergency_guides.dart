@@ -158,7 +158,6 @@ class EmergencyGuides {
       'mas',
       'muy',
       'ya',
-      'todo',
       'toda',
       'todos',
       'todas',

@@ -42,12 +42,11 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: 8),
           ...AppLanguage.values.map((lang) {
             final isSelected = service.language == lang;
+            // Material (not a colored Container) hosts the tile so the tap
+            // ink splash is actually visible — Flutter warns otherwise.
             return Container(
               margin: const EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(
-                color: isSelected
-                    ? const Color(0xFF242B18)
-                    : const Color(0xFF1A1F12),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color:
@@ -55,7 +54,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   width: 2,
                 ),
               ),
-              child: ListTile(
+              child: Material(
+                color: isSelected
+                    ? const Color(0xFF242B18)
+                    : const Color(0xFF1A1F12),
+                borderRadius: BorderRadius.circular(10),
+                child: ListTile(
                 leading: Text(lang.flag, style: const TextStyle(fontSize: 28)),
                 title: Text(
                   lang.displayName,
@@ -73,6 +77,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 onTap: () {
                   service.setLanguage(lang);
                 },
+                ),
               ),
             );
           }),

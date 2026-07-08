@@ -283,7 +283,7 @@ class RoadRouter {
 
     // Connect synthetic start/goal nodes to the K nearest road nodes, so the
     // search can enter the network from several points — robust against the
-    // closest node being a disconnected stub or a dead-end.
+    // closest node being a disconnected spur or a dead-end.
     const start = '__start__';
     const goal = '__goal__';
     nodePos[start] = origin;

@@ -53,6 +53,16 @@ const MIME = {
   '.ico': 'image/x-icon',
 };
 
+const CONTENT_ALLOWLIST = Object.freeze({
+  zim: new Set(['.zim']),
+  maps: new Set(['.pmtiles']),
+  models: new Set(['.gguf']),
+});
+
+function safeAttachmentName(filename) {
+  return path.basename(filename).replace(/[\r\n"\\]/g, '_').slice(0, 160) || 'download.bin';
+}
+
 function mimeFor(filename) {
   return MIME[path.extname(filename).toLowerCase()] || 'application/octet-stream';
 }
@@ -154,29 +164,93 @@ function sha256Of(filePath) {
   const stat = fs.statSync(filePath);
   const key = `${filePath}:${stat.mtimeMs}`;
   if (sha256Cache.has(key)) return sha256Cache.get(key);
-  const hash = crypto.createHash('sha256').update(fs.readFileSync(filePath)).digest('hex');
-  sha256Cache.clear(); // only the latest computation per path is worth keeping
-  sha256Cache.set(key, hash);
-  return hash;
+
+  // Installers are ~GB-sized. Hash incrementally so /version.json can be
+  // generated without buffering the whole DMG/APK in RAM.
+  const hash = crypto.createHash('sha256');
+  const fd = fs.openSync(filePath, 'r');
+  try {
+    const buffer = Buffer.allocUnsafe(4 * 1024 * 1024);
+    let bytesRead = 0;
+    do {
+      bytesRead = fs.readSync(fd, buffer, 0, buffer.length, null);
+      if (bytesRead > 0) hash.update(buffer.subarray(0, bytesRead));
+    } while (bytesRead > 0);
+  } finally {
+    fs.closeSync(fd);
+  }
+  const digest = hash.digest('hex');
+  sha256Cache.set(key, digest);
+  return digest;
+}
+
+function parseRange(range, size) {
+  const match = /^bytes=(\d*)-(\d*)$/.exec(range || '');
+  if (!match) return null;
+
+  let start;
+  let end;
+  if (match[1] === '' && match[2] === '') return null;
+  if (match[1] === '') {
+    const suffixLength = parseInt(match[2], 10);
+    if (!Number.isSafeInteger(suffixLength) || suffixLength <= 0) return null;
+    start = Math.max(size - suffixLength, 0);
+    end = size - 1;
+  } else {
+    start = parseInt(match[1], 10);
+    end = match[2] === '' ? size - 1 : parseInt(match[2], 10);
+    if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end)) return null;
+  }
+
+  if (start < 0 || end < start || start >= size) return null;
+  return { start, end: Math.min(end, size - 1) };
+}
+
+function sendRangeNotSatisfiable(res, size) {
+  res.writeHead(416, {
+    'Content-Range': `bytes */${size}`,
+    'Accept-Ranges': 'bytes',
+  });
+  res.end('Range not satisfiable');
+}
+
+function readDistManifest() {
+  const manifestPath = path.join(DIST_DIR, 'version.json');
+  if (!fs.existsSync(manifestPath)) return {};
+  try {
+    return JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  } catch {
+    return {};
+  }
 }
 
 function buildVersionManifest(lanUrl) {
+  const distManifest = readDistManifest();
   const byPlatform = {};
   for (const inst of scanInstallers()) {
     // Newest file wins if there happen to be several builds for a platform.
     const existing = byPlatform[inst.platform];
     const full = path.join(ROOT, inst.path);
     if (existing && existing.mtimeMs >= fs.statSync(full).mtimeMs) continue;
-    byPlatform[inst.platform] = {
+    const platformManifest = {
       mtimeMs: fs.statSync(full).mtimeMs,
       url: `${lanUrl}${inst.url}`,
       sha256: sha256Of(full),
       sizeBytes: inst.size,
     };
+    if (inst.platform === 'android' && distManifest.signing) {
+      platformManifest.signing = distManifest.signing;
+    }
+    byPlatform[inst.platform] = platformManifest;
   }
   const platforms = {};
   for (const [key, v] of Object.entries(byPlatform)) {
-    platforms[key] = { url: v.url, sha256: v.sha256, sizeBytes: v.sizeBytes };
+    platforms[key] = {
+      url: v.url,
+      sha256: v.sha256,
+      sizeBytes: v.sizeBytes,
+      ...(v.signing ? { signing: v.signing } : {}),
+    };
   }
   return {
     version: pubspecVersion(),
@@ -267,20 +341,33 @@ function handleAPI(req, res, url) {
 }
 
 // ── File download handler ──
+function isTopLevelDistAsset(urlPathname) {
+  const filename = decodeURIComponent(urlPathname.slice(1));
+  if (!filename || filename !== path.basename(filename) || filename.includes('\0')) return false;
+  const ext = path.extname(filename).toLowerCase();
+  return ['.apk', '.dmg', '.txt'].includes(ext) && fs.existsSync(path.join(DIST_DIR, filename));
+}
+
 function handleDownload(req, res, url) {
-  // /download/:filename?from=relative/path
+  // /download/:filename?from=relative/path, or direct top-level dist assets
+  // like /prepper-pad-v0.2.8.apk and /CHECKSUMS-v0.2.8.txt.
   const from = url.searchParams.get('from');
   let filePath;
   if (from) {
     filePath = path.join(ROOT, from);
-  } else {
+  } else if (url.pathname.startsWith('/download/')) {
     const filename = decodeURIComponent(url.pathname.split('/download/')[1] || '');
+    filePath = path.join(DIST_DIR, filename);
+  } else {
+    const filename = decodeURIComponent(url.pathname.slice(1));
     filePath = path.join(DIST_DIR, filename);
   }
 
-  // Prevent path traversal
+  // Prevent path traversal and arbitrary repo reads. /download may only serve
+  // release artifacts staged in dist/ or installer-server/downloads/; content
+  // files under ~/PrepperPad are exposed exclusively via /content/:type/:file.
   const resolved = path.resolve(filePath);
-  if (!isInside(resolved, ROOT) && !isInside(resolved, DOWNLOADS_DIR) && !isInside(resolved, PREPPERPAD_DIR)) {
+  if (!isInside(resolved, DIST_DIR) && !isInside(resolved, DOWNLOADS_DIR)) {
     res.writeHead(403);
     res.end('Forbidden');
     return true;
@@ -298,28 +385,29 @@ function handleDownload(req, res, url) {
 
   // Support range requests for large files
   if (range) {
-    const match = /bytes=(\d*)-(\d*)/.exec(range);
-    if (match) {
-      const start = match[1] ? parseInt(match[1]) : 0;
-      const end = match[2] ? parseInt(match[2]) : stat.size - 1;
-      const chunkSize = end - start + 1;
-      const stream = fs.createReadStream(resolved, { start, end });
-      res.writeHead(206, {
-        'Content-Range': `bytes ${start}-${end}/${stat.size}`,
-        'Accept-Ranges': 'bytes',
-        'Content-Length': chunkSize,
-        'Content-Type': mimeFor(filename),
-        'Content-Disposition': `attachment; filename="${filename}"`,
-      });
-      stream.pipe(res);
+    const parsed = parseRange(range, stat.size);
+    if (!parsed) {
+      sendRangeNotSatisfiable(res, stat.size);
       return true;
     }
+    const { start, end } = parsed;
+    const chunkSize = end - start + 1;
+    const stream = fs.createReadStream(resolved, { start, end });
+    res.writeHead(206, {
+      'Content-Range': `bytes ${start}-${end}/${stat.size}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': chunkSize,
+      'Content-Type': mimeFor(filename),
+      'Content-Disposition': `attachment; filename="${safeAttachmentName(filename)}"`,
+    });
+    stream.pipe(res);
+    return true;
   }
 
   res.writeHead(200, {
     'Content-Type': mimeFor(filename),
     'Content-Length': stat.size,
-    'Content-Disposition': `attachment; filename="${filename}"`,
+    'Content-Disposition': `attachment; filename="${safeAttachmentName(filename)}"`,
     'Accept-Ranges': 'bytes',
   });
   fs.createReadStream(resolved).pipe(res);
@@ -328,11 +416,30 @@ function handleDownload(req, res, url) {
 
 // ── Content package download ──
 function handleContent(req, res, url) {
-  // /content/:type/:filename
+  // /content/:type/:filename — only public content packages are served.
+  // Never expose ~/PrepperPad wholesale: it also contains settings, notes and
+  // mesh identity/channel keys that must stay local to the device.
   const parts = url.pathname.split('/');
-  if (parts.length < 4) return false;
+  if (parts.length !== 4) return false;
   const type = parts[2]; // zim, maps, models
-  const filename = decodeURIComponent(parts.slice(3).join('/'));
+  const allowedExts = CONTENT_ALLOWLIST[type];
+  if (!allowedExts) {
+    res.writeHead(403);
+    res.end('Forbidden');
+    return true;
+  }
+  const filename = decodeURIComponent(parts[3]);
+  if (!filename || filename !== path.basename(filename) || filename.includes('\0')) {
+    res.writeHead(400);
+    res.end('Bad Request');
+    return true;
+  }
+  const ext = path.extname(filename).toLowerCase();
+  if (!allowedExts.has(ext)) {
+    res.writeHead(403);
+    res.end('Forbidden');
+    return true;
+  }
   const filePath = path.join(PREPPERPAD_DIR, type, filename);
 
   const resolved = path.resolve(filePath);
@@ -352,27 +459,28 @@ function handleContent(req, res, url) {
   const range = req.headers.range;
 
   if (range) {
-    const match = /bytes=(\d*)-(\d*)/.exec(range);
-    if (match) {
-      const start = match[1] ? parseInt(match[1]) : 0;
-      const end = match[2] ? parseInt(match[2]) : stat.size - 1;
-      const stream = fs.createReadStream(resolved, { start, end });
-      res.writeHead(206, {
-        'Content-Range': `bytes ${start}-${end}/${stat.size}`,
-        'Accept-Ranges': 'bytes',
-        'Content-Length': end - start + 1,
-        'Content-Type': mimeFor(filename),
-        'Content-Disposition': `attachment; filename="${filename}"`,
-      });
-      stream.pipe(res);
+    const parsed = parseRange(range, stat.size);
+    if (!parsed) {
+      sendRangeNotSatisfiable(res, stat.size);
       return true;
     }
+    const { start, end } = parsed;
+    const stream = fs.createReadStream(resolved, { start, end });
+    res.writeHead(206, {
+      'Content-Range': `bytes ${start}-${end}/${stat.size}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': end - start + 1,
+      'Content-Type': mimeFor(filename),
+      'Content-Disposition': `attachment; filename="${safeAttachmentName(filename)}"`,
+    });
+    stream.pipe(res);
+    return true;
   }
 
   res.writeHead(200, {
     'Content-Type': mimeFor(filename),
     'Content-Length': stat.size,
-    'Content-Disposition': `attachment; filename="${filename}"`,
+    'Content-Disposition': `attachment; filename="${safeAttachmentName(filename)}"`,
     'Accept-Ranges': 'bytes',
   });
   fs.createReadStream(resolved).pipe(res);
@@ -404,7 +512,18 @@ function serveStatic(req, res, url) {
 
 // ── Main server ──
 const server = http.createServer((req, res) => {
-  const url = new URL(req.url, `http://${req.headers.host}`);
+  // An empty/missing Host header makes `new URL(req.url, 'http://')` throw
+  // ERR_INVALID_URL, which would crash the whole process (DoS). Fall back to
+  // a safe placeholder so the request is still handled (and rejected) instead
+  // of taking the server down.
+  let url;
+  try {
+    url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+  } catch {
+    res.writeHead(400);
+    res.end('Bad Request');
+    return;
+  }
 
   // LAN-safe defaults: no external dependencies, no MIME sniffing, no framing,
   // and explicit CORS so phones/tablets on the same network can fetch metadata.
@@ -430,7 +549,7 @@ const server = http.createServer((req, res) => {
   }
 
   // Download routes
-  if (url.pathname.startsWith('/download/')) {
+  if (url.pathname.startsWith('/download/') || isTopLevelDistAsset(url.pathname)) {
     if (handleDownload(req, res, url)) return;
   }
 

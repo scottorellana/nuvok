@@ -12,6 +12,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
 const _alarmChannel = MethodChannel('prepper/sos_alarm');
@@ -43,6 +44,22 @@ class SosAlarmController extends ChangeNotifier {
     _alarmNote = note;
     notifyListeners();
 
+    // Announce the SOS to screen readers so a visually-impaired user knows
+    // help is needed even if they can't see the overlay. Wrapped in
+    // try/catch so unit tests without TestWidgetsFlutterBinding still work.
+    try {
+      // ignore: deprecated_member_use
+      SemanticsService.announce(
+        'Alarma SOS recibida'
+        '${fromName != null ? ' de $fromName' : ''}'
+        '${note != null && note.isNotEmpty ? '. Nota: $note' : ''}',
+        TextDirection.ltr,
+      );
+    } catch (_) {
+      // Binding not initialized (test env) — accessibility announce is
+      // best-effort. The audible alarm + UI overlay still fire.
+    }
+
     if (!wasAlarming) {
       _startSoundLoop();
       _startEscalation();
@@ -73,7 +90,14 @@ class SosAlarmController extends ChangeNotifier {
     // strongest built-in feedback available.
     _soundTimer?.cancel();
     _soundTimer = Timer.periodic(const Duration(milliseconds: 800), (_) {
-      HapticFeedback.heavyImpact();
+      try {
+        HapticFeedback.heavyImpact();
+      } catch (_) {
+        // Binding not initialized (test env) — cancel the timer so we
+        // don't keep throwing every 800ms.
+        _soundTimer?.cancel();
+        _soundTimer = null;
+      }
     });
   }
 
@@ -148,72 +172,87 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
         return Scaffold(
           backgroundColor: bg,
           body: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.warning_rounded,
-                    size: 120,
-                    color: Colors.white.withValues(alpha: 0.5 + blink * 0.5)),
-                const SizedBox(height: 24),
-                const Text(
-                  '⚠ SOS RECIBIDO ⚠',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 2,
+            child: Semantics(
+              liveRegion: true,
+              label: 'Alarma SOS activa'
+                  '${_controller.alarmFromName != null ? '. De ${_controller.alarmFromName}' : ''}'
+                  '${_controller.alarmNote != null && _controller.alarmNote!.isNotEmpty ? '. Nota: ${_controller.alarmNote}' : ''}',
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.warning_rounded,
+                      size: 120,
+                      color:
+                          Colors.white.withValues(alpha: 0.5 + blink * 0.5)),
+                  const SizedBox(height: 24),
+                  const Text(
+                    '⚠ SOS RECIBIDO ⚠',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 2,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                if (_controller.alarmFromName != null)
+                  const SizedBox(height: 16),
+                  if (_controller.alarmFromName != null)
+                    Text(
+                      'De: ${_controller.alarmFromName}',
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 22),
+                    ),
+                  if (_controller.alarmNote != null &&
+                      _controller.alarmNote!.isNotEmpty)
+                    Container(
+                      margin: const EdgeInsets.all(24),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        _controller.alarmNote!,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  const SizedBox(height: 40),
+                  SizedBox(
+                    width: 280,
+                    height: 80,
+                    child: Semantics(
+                      button: true,
+                      enabled: true,
+                      label:
+                          'Entendido: silenciar la alarma SOS',
+                      child: FilledButton(
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.red.shade900,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          textStyle: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        onPressed: () => _controller.silence(),
+                        child: const Text('ENTENDIDO'),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   Text(
-                    'De: ${_controller.alarmFromName}',
-                    style: const TextStyle(color: Colors.white, fontSize: 22),
-                  ),
-                if (_controller.alarmNote != null &&
-                    _controller.alarmNote!.isNotEmpty)
-                  Container(
-                    margin: const EdgeInsets.all(24),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.black26,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      _controller.alarmNote!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.white, fontSize: 18),
+                    'Toca para silenciar la alarma',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
                     ),
                   ),
-                const SizedBox(height: 40),
-                SizedBox(
-                  width: 280,
-                  height: 80,
-                  child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.red.shade900,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      textStyle: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    onPressed: () => _controller.silence(),
-                    child: const Text('ENTENDIDO'),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Toca para silenciar la alarma',
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

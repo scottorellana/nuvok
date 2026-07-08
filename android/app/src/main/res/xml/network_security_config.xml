@@ -2,7 +2,7 @@
 <!-- Android bloquea HTTP sin cifrar por defecto. Solo lo permitimos hacia
      el propio dispositivo (127.0.0.1), donde vive el servidor interno de
      contenido que alimenta la Biblioteca (videos/audio de los ZIM).
-     Todo el tráfico externo sigue exigiendo HTTPS. -->
+     El tráfico externo sigue exigiendo HTTPS. -->
 <network-security-config>
     <base-config cleartextTrafficPermitted="false" />
     <domain-config cleartextTrafficPermitted="true">

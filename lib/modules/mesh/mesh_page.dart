@@ -248,16 +248,14 @@ class _MeshPageState extends State<MeshPage> {
           ),
           const SizedBox(height: 4),
           _channelTile(MeshChannel.emergency,
-              subtitle: 'Abierto a todos los dispositivos cercanos'),
+              subtitle: tr(context, 'emergencyChannelSubtitle')),
           for (final c in _service.channels) _channelTile(c, showCode: true),
           if (_service.channels.isEmpty)
-            const Padding(
-              padding: EdgeInsets.all(16),
+            Padding(
+              padding: const EdgeInsets.all(16),
               child: Text(
-                'Crea un canal para tu familia o grupo y compártelo por '
-                'código QR. Los mensajes van cifrados: solo quien tiene el '
-                'código puede leerlos.',
-                style: TextStyle(color: Colors.grey),
+                tr(context, 'noChannelsHint'),
+                style: const TextStyle(color: Colors.grey),
               ),
             ),
         ],
@@ -286,10 +284,8 @@ class _MeshPageState extends State<MeshPage> {
                   Text(tr(context, 'meshOnboardTitle'),
                       style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Chatea, comparte tu posición y lanza SOS entre '
-                    'dispositivos cercanos SIN internet (misma red WiFi o '
-                    'hotspot). ¿Cómo quieres que te vean los demás?',
+                  Text(
+                    tr(context, 'meshOnboardDesc'),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
@@ -328,15 +324,14 @@ class _MeshPageState extends State<MeshPage> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      Icon(Icons.sos, color: Colors.white, size: 32),
-                      SizedBox(width: 12),
+                      const Icon(Icons.sos, color: Colors.white, size: 32),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'SOS ACTIVO — difundiendo tu posición cada minuto '
-                          'a todos los dispositivos al alcance.',
-                          style: TextStyle(
+                          tr(context, 'sosActiveDesc'),
+                          style: const TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -366,8 +361,7 @@ class _MeshPageState extends State<MeshPage> {
               child: const Icon(Icons.sos, color: Colors.white, size: 30),
             ),
             title: Text(tr(context, 'emergencyAskHelp')),
-            subtitle: const Text(
-                'Difunde tu posición a cualquier dispositivo cercano, sin claves'),
+            subtitle: Text(tr(context, 'sosCardSubtitle')),
             trailing: FilledButton(
               style: FilledButton.styleFrom(backgroundColor: Colors.red),
               onPressed: _confirmSos,
@@ -398,9 +392,7 @@ class _MeshPageState extends State<MeshPage> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  '1) Activa Bluetooth. 2) Si hay varios equipos, usa un hotspot o la misma Wi‑Fi aunque no tenga internet. 3) En Android, Wi‑Fi Direct busca pares sin router. 4) Si conectas radio LoRa compatible, Prepper Mesh usará el mismo protocolo de mensajes.',
-                ),
+                Text(tr(context, 'meshInstructions')),
                 const SizedBox(height: 8),
                 const Wrap(
                   spacing: 8,
@@ -459,7 +451,7 @@ class _MeshPageState extends State<MeshPage> {
       {String? subtitle, bool showCode = false}) {
     final last = _service.store.loadMessages(channel.id, limit: 1);
     final preview = last.isEmpty
-        ? (subtitle ?? 'Sin mensajes todavía')
+        ? (subtitle ?? tr(context, 'noMessagesHint'))
         : '${last.last['_name']}: ${last.last['text'] ?? '…'}';
     final isEmergency = channel.isEmergency;
     return Card(
@@ -470,14 +462,14 @@ class _MeshPageState extends State<MeshPage> {
           child: Icon(isEmergency ? Icons.campaign : Icons.forum,
               color: Colors.white, size: 20),
         ),
-        title: Text(isEmergency ? 'EMERGENCIA (todos)' : channel.name),
+        title: Text(isEmergency ? tr(context, 'emergencyChannelTitle') : channel.name),
         subtitle: Text(preview, maxLines: 1, overflow: TextOverflow.ellipsis),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (showCode)
               IconButton(
-                tooltip: 'Mostrar código / QR para invitar',
+                tooltip: tr(context, 'showChannelCodeTooltip'),
                 icon: const Icon(Icons.qr_code),
                 onPressed: () => _showChannelCode(channel),
               ),
@@ -573,7 +565,7 @@ class _ChatPageState extends State<_ChatPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(isEmergency
-                ? 'EMERGENCIA (todos los cercanos)'
+                ? tr(context, 'emergencyChannelTitleAll')
                 : widget.channel.name),
             // Live presence: whether any device is currently reachable. This
             // is the "is the other person online?" indicator.
@@ -587,7 +579,9 @@ class _ChatPageState extends State<_ChatPage> {
                       color: count > 0 ? Colors.lightGreenAccent : Colors.grey),
                   const SizedBox(width: 4),
                   Text(
-                    count > 0 ? '$count en línea' : 'nadie al alcance',
+                    count > 0
+                        ? '$count ${tr(context, 'online')}'
+                        : tr(context, 'noneInRange'),
                     style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.normal),
                   ),
@@ -605,11 +599,10 @@ class _ChatPageState extends State<_ChatPage> {
               width: double.infinity,
               color: Colors.red.shade900.withValues(alpha: 0.3),
               padding: const EdgeInsets.all(8),
-              child: const Text(
-                'Canal abierto SIN cifrar: lo lee cualquier Prepper Pad '
-                'cercano. Úsalo para pedir o dar ayuda.',
+              child: Text(
+                tr(context, 'emergencyWarning'),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
             ),
           Expanded(
@@ -619,10 +612,8 @@ class _ChatPageState extends State<_ChatPage> {
                   ? Center(
                       child: Text(
                         count > 0
-                            ? 'Sin mensajes. ¡Escribe el primero!'
-                            : 'Sin dispositivos al alcance.\nLos mensajes '
-                                'que envíes quedarán en cola y se '
-                                'entregarán cuando alguien aparezca.',
+                            ? tr(context, 'noMessagesHint')
+                            : tr(context, 'noDevicesHint'),
                         textAlign: TextAlign.center,
                         style: const TextStyle(color: Colors.grey),
                       ),
@@ -724,8 +715,8 @@ class _ChatPageState extends State<_ChatPage> {
                       controller: _inputCtrl,
                       decoration: InputDecoration(
                         hintText: isEmergency
-                            ? 'Mensaje para TODOS los cercanos…'
-                            : 'Mensaje…',
+                            ? tr(context, 'messageHintEmergency')
+                            : tr(context, 'messageHint'),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(24)),
                         contentPadding: const EdgeInsets.symmetric(

@@ -125,6 +125,47 @@ void main() {
     expect(onDisk, assetBytes);
   });
 
+  test('download() resuelve URLs relativas contra el manifiesto LAN', () async {
+    final relativeServer =
+        await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    final relativePort = relativeServer.port;
+    relativeServer.listen((req) async {
+      if (req.uri.path == '/updates/version.json') {
+        req.response.headers.contentType = ContentType.json;
+        req.response.write(jsonEncode({
+          'version': '9.9.9',
+          'platforms': {
+            'macos': {
+              'url':
+                  '/download/PrepperPad-v9.9.9.dmg?from=dist%2FPrepperPad-v9.9.9.dmg',
+              'sha256': assetSha256,
+              'size': assetBytes.length,
+            },
+          },
+        }));
+      } else if (req.uri.path == '/download/PrepperPad-v9.9.9.dmg') {
+        req.response.add(assetBytes);
+      } else {
+        req.response.statusCode = 404;
+      }
+      await req.response.close();
+    });
+    addTearDown(() => relativeServer.close(force: true));
+
+    if (!Platform.isMacOS) return;
+    final svc = UpdateService.instance;
+    svc.currentVersion = '0.0.1';
+    await svc
+        .setManifestUrl('http://127.0.0.1:$relativePort/updates/version.json');
+    await svc.check();
+    expect(svc.state, UpdateState.available);
+    expect(svc.latest!.platforms['macos']!.sizeBytes, assetBytes.length);
+    await svc.download();
+    expect(svc.state, UpdateState.downloaded);
+    expect(svc.downloadedFile!.path, endsWith('PrepperPad-v9.9.9.dmg'));
+    expect(await svc.downloadedFile!.readAsBytes(), assetBytes);
+  });
+
   test('download() rechaza un archivo con sha256 que no coincide', () async {
     // Point the manifest's checksum at a wrong value while serving the
     // same bytes — download() must refuse to hand this to the installer.
@@ -159,5 +200,65 @@ void main() {
     await svc.download();
     expect(svc.state, UpdateState.error);
     expect(svc.error, contains('Verificación'));
+  });
+
+  test('download() rechaza manifiestos sin sha256 o tamaño exacto', () async {
+    final malformedServer =
+        await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    final malformedPort = malformedServer.port;
+    malformedServer.listen((req) async {
+      req.response.headers.contentType = ContentType.json;
+      req.response.write(jsonEncode({
+        'version': '9.9.9',
+        'platforms': {
+          'macos': {
+            'url': 'http://127.0.0.1:$malformedPort/asset.bin',
+            // sha256 omitted on purpose: update manifests must be integrity-checked.
+            'sizeBytes': assetBytes.length,
+          },
+        },
+      }));
+      await req.response.close();
+    });
+    addTearDown(() => malformedServer.close(force: true));
+
+    if (!Platform.isMacOS) return;
+    final svc = UpdateService.instance;
+    svc.currentVersion = '0.0.1';
+    await svc.setManifestUrl('http://127.0.0.1:$malformedPort/version.json');
+    await svc.check();
+    expect(svc.state, UpdateState.error);
+    expect(svc.error, contains('sha256'));
+  });
+
+  test('download() rechaza instaladores cross-origin', () async {
+    final crossOriginServer =
+        await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    final crossOriginPort = crossOriginServer.port;
+    crossOriginServer.listen((req) async {
+      req.response.headers.contentType = ContentType.json;
+      req.response.write(jsonEncode({
+        'version': '9.9.9',
+        'platforms': {
+          'macos': {
+            'url': 'http://127.0.0.1:${crossOriginPort + 1}/asset.bin',
+            'sha256': assetSha256,
+            'sizeBytes': assetBytes.length,
+          },
+        },
+      }));
+      await req.response.close();
+    });
+    addTearDown(() => crossOriginServer.close(force: true));
+
+    if (!Platform.isMacOS) return;
+    final svc = UpdateService.instance;
+    svc.currentVersion = '0.0.1';
+    await svc.setManifestUrl('http://127.0.0.1:$crossOriginPort/version.json');
+    await svc.check();
+    expect(svc.state, UpdateState.available);
+    await svc.download();
+    expect(svc.state, UpdateState.error);
+    expect(svc.error, contains('mismo servidor'));
   });
 }

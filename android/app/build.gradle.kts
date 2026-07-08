@@ -4,6 +4,16 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val releaseKeystorePath = System.getenv("PREPPER_PAD_KEYSTORE")
+val releaseKeyAlias = System.getenv("PREPPER_PAD_KEY_ALIAS")
+val releaseStorePassword = System.getenv("PREPPER_PAD_STORE_PASSWORD")
+val releaseKeyPassword = System.getenv("PREPPER_PAD_KEY_PASSWORD") ?: releaseStorePassword
+val hasReleaseSigning = !releaseKeystorePath.isNullOrBlank() &&
+    !releaseKeyAlias.isNullOrBlank() &&
+    !releaseStorePassword.isNullOrBlank() &&
+    !releaseKeyPassword.isNullOrBlank() &&
+    file(releaseKeystorePath!!).exists()
+
 android {
     namespace = "com.prepperpad.prepper_pad"
     compileSdk = flutter.compileSdkVersion
@@ -25,11 +35,26 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("releaseEnv") {
+                storeFile = file(releaseKeystorePath!!)
+                storePassword = releaseStorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Production builds should set PREPPER_PAD_KEYSTORE,
+            // PREPPER_PAD_KEY_ALIAS and PREPPER_PAD_STORE_PASSWORD. Local
+            // unsigned-key builds keep the debug fallback so QA APK generation
+            // still works without checking secrets into the repo.
+            signingConfig = signingConfigs.getByName(
+                if (hasReleaseSigning) "releaseEnv" else "debug"
+            )
         }
     }
 }

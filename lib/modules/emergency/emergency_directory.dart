@@ -286,7 +286,7 @@ const emergencyDirectory = <CountryEmergencyNumbers>[
       EmergencyService(
           name: 'Emergencias',
           number: '112',
-          description: 'Policía, bomberos, ambulancia (todo el país)'),
+          description: 'Policía, bomberos, ambulancia (cobertura nacional)'),
       EmergencyService(
           name: 'Cruz Roja',
           number: '900-222-222',

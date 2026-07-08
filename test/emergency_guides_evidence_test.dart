@@ -20,7 +20,8 @@ void main() {
     for (final entry in criticalPairs.entries) {
       final path = 'assets/emergency_guides/${entry.key}.md';
       final raw = await rootBundle.loadString(path);
-      expect(raw, contains(entry.value), reason: '$path sin fuente ${entry.value}');
+      expect(raw, contains(entry.value),
+          reason: '$path sin fuente ${entry.value}');
       expect(
         raw.toLowerCase(),
         anyOf(contains('improvisación'), contains('improvisation')),

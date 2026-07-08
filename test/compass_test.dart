@@ -54,18 +54,107 @@ void main() {
     });
   });
 
+  group('CompassMath', () {
+    test('normalizeHeading keeps values in 0 inclusive to 360 exclusive', () {
+      expect(CompassMath.normalizeHeading(0), 0);
+      expect(CompassMath.normalizeHeading(360), 0);
+      expect(CompassMath.normalizeHeading(725), 5);
+      expect(CompassMath.normalizeHeading(-1), 359);
+      expect(CompassMath.normalizeHeading(-720), 0);
+    });
+
+    test('circularMean handles north wrap without averaging to south', () {
+      final mean = CompassMath.circularMean([359, 1]);
+      expect(mean < 2 || mean > 358, isTrue);
+    });
+
+    test('circularMean of east-ish readings stays east', () {
+      final mean = CompassMath.circularMean([80, 90, 100]);
+      expect(mean, closeTo(90, 0.001));
+    });
+  });
+
   group('CompassService', () {
-    test('circularMean of identical angles returns same angle', () {
-      final svc = CompassService.instance;
+    test(
+        'feedRawHeading emits normalized smoothed heading with improving accuracy',
+        () async {
+      final svc = CompassService.createForTest();
+      addTearDown(svc.dispose);
+      final seen = <CompassReading>[];
+      final sub = svc.readings.listen(seen.add);
+      addTearDown(sub.cancel);
+
+      svc.feedRawHeading(-1);
+      await Future<void>.delayed(Duration.zero);
+      expect(seen.last.heading, closeTo(359, 0.001));
+      expect(seen.last.cardinalDirection, 'N');
+      expect(seen.last.accuracy, 15);
+
+      for (final h in [1.0, 0.0, 2.0, 358.0]) {
+        svc.feedRawHeading(h);
+      }
+      await Future<void>.delayed(Duration.zero);
+      expect(seen.last.heading < 3 || seen.last.heading > 357, isTrue);
+      expect(seen.last.cardinalDirection, 'N');
+      expect(seen.last.accuracy, 5);
+    });
+
+    test('feedRawHeading preserves native accuracy and calibration status',
+        () async {
+      final svc = CompassService.createForTest();
+      addTearDown(svc.dispose);
+      final seen = <CompassReading>[];
+      final sub = svc.readings.listen(seen.add);
+      addTearDown(sub.cancel);
+
+      svc.feedRawHeading(
+        91,
+        accuracyDegrees: 30,
+        needsCalibration: true,
+        sensorType: 'accelerometer_magnetometer',
+      );
+      await Future<void>.delayed(Duration.zero);
+
+      expect(seen.last.heading, closeTo(91, 0.001));
+      expect(seen.last.accuracy, 30);
+      expect(seen.last.needsCalibration, isTrue);
+      expect(seen.last.sensorType, 'accelerometer_magnetometer');
+    });
+
+    test('feedRawHeading ignores invalid numeric readings', () async {
+      final svc = CompassService.createForTest();
+      addTearDown(svc.dispose);
+      final seen = <CompassReading>[];
+      final sub = svc.readings.listen(seen.add);
+      addTearDown(sub.cancel);
+
+      svc.feedRawHeading(double.nan);
+      svc.feedRawHeading(double.infinity);
+      await Future<void>.delayed(Duration.zero);
+
+      expect(seen, isEmpty);
+    });
+
+    test('stop() clears smoothing history to avoid stale post-resume heading',
+        () async {
+      final svc = CompassService.createForTest();
+      addTearDown(svc.dispose);
+      final seen = <CompassReading>[];
+      final sub = svc.readings.listen(seen.add);
+      addTearDown(sub.cancel);
+
+      for (var i = 0; i < 6; i++) {
+        svc.feedRawHeading(i.toDouble());
+      }
+      await Future<void>.delayed(Duration.zero);
+      expect(seen.last.accuracy, 5);
+
+      svc.stop();
       svc.feedRawHeading(90);
-      svc.feedRawHeading(90);
-      svc.feedRawHeading(90);
-      // The reading stream is async; check the internal state via a
-      // fresh reading by feeding and checking the last emitted value.
-      // Since this is a broadcast stream, we test the math indirectly.
-      // The circular mean of [90, 90, 90] should be 90.
-      // We can't easily access private _circularMean, but the smoothing
-      // logic is verified by the consistency of readings.
+      await Future<void>.delayed(Duration.zero);
+
+      expect(seen.last.accuracy, 15);
+      expect(seen.last.heading, 90);
     });
   });
 }

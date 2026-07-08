@@ -431,6 +431,57 @@ class AppStrings {
       'ht': 'Aktive mòd ekonomi pou dire pi lontan.',
     },
 
+    // ── Tools / Notes / Prep (ES/EN/PT/FR) ──
+    'batterySaverTitle': {
+      'es': 'Modo Ahorro Batería', 'en': 'Battery Saver Mode',
+      'pt': 'Modo Economia de Bateria', 'fr': 'Mode économie de batterie',
+    },
+    'lowerBrightness': {
+      'es': 'Bajar brillo de pantalla', 'en': 'Lower screen brightness',
+      'pt': 'Reduzir brilho da tela', 'fr': 'Baisser la luminosité',
+    },
+    'pauseRadios': {
+      'es': 'Pausar radios de comunicación', 'en': 'Pause communication radios',
+      'pt': 'Pausar rádios de comunicação', 'fr': 'Suspendre les radios',
+    },
+    'pauseAi': {
+      'es': 'Pausar asistente de IA', 'en': 'Pause AI assistant',
+      'pt': 'Pausar assistente de IA', 'fr': 'Suspendre l\'assistant IA',
+    },
+    'deactivateRestore': {
+      'es': 'Desactivar y restaurar configuración',
+      'en': 'Deactivate and restore settings',
+      'pt': 'Desativar e restaurar configuração',
+      'fr': 'Désactiver et restaurer les réglages',
+    },
+    'emergencyWhistle': {
+      'es': 'Silbato de Emergencia', 'en': 'Emergency Whistle',
+      'pt': 'Apito de Emergência', 'fr': 'Sifflet d\'urgence',
+    },
+    'calibrateCompass': {
+      'es': 'Calibrar brújula', 'en': 'Calibrate compass',
+      'pt': 'Calibrar bússola', 'fr': 'Calibrer la boussole',
+    },
+    'selectOrCreateNote': {
+      'es': 'Selecciona o crea una nota', 'en': 'Select or create a note',
+      'pt': 'Selecione ou crie uma nota', 'fr': 'Sélectionnez ou créez une note',
+    },
+    'deleteNoteQ': {
+      'es': '¿Eliminar nota?', 'en': 'Delete note?',
+      'pt': 'Excluir nota?', 'fr': 'Supprimer la note ?',
+    },
+    'delete': {
+      'es': 'Eliminar', 'en': 'Delete', 'pt': 'Excluir', 'fr': 'Supprimer',
+    },
+    'writeMarkdown': {
+      'es': 'Escribe en markdown…', 'en': 'Write in markdown…',
+      'pt': 'Escreva em markdown…', 'fr': 'Écrivez en markdown…',
+    },
+    'familyPrep': {
+      'es': 'Preparación Familiar', 'en': 'Family Preparation',
+      'pt': 'Preparação Familiar', 'fr': 'Préparation familiale',
+    },
+
     // ── Welcome wizard ──
     'welcomeTitle': {
       'es': 'Bienvenido a Prepper Pad',

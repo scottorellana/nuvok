@@ -6,6 +6,7 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:markdown/markdown.dart' as md;
 
 import '../../core/prepper_library.dart';
+import '../../core/locale_service.dart';
 
 class NotesPage extends StatefulWidget {
   const NotesPage({super.key});
@@ -81,15 +82,15 @@ class _NotesPageState extends State<NotesPage> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('¿Eliminar nota?'),
+        title: Text(tr(context, 'deleteNoteQ')),
         content: Text(f.uri.pathSegments.last),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancelar')),
+              child: Text(tr(context, 'cancel'))),
           FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Eliminar')),
+              child: Text(tr(context, 'delete'))),
         ],
       ),
     );
@@ -107,7 +108,7 @@ class _NotesPageState extends State<NotesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notas'),
+        title: Text(tr(context, 'notes')),
         actions: [
           if (_current != null)
             IconButton(
@@ -161,7 +162,7 @@ class _NotesPageState extends State<NotesPage> {
           const VerticalDivider(width: 1),
           Expanded(
             child: _current == null
-                ? const Center(child: Text('Selecciona o crea una nota'))
+                ? Center(child: Text(tr(context, 'selectOrCreateNote')))
                 : _preview
                     ? SingleChildScrollView(
                         padding: const EdgeInsets.all(24),
@@ -180,9 +181,9 @@ class _NotesPageState extends State<NotesPage> {
                           textAlignVertical: TextAlignVertical.top,
                           style: const TextStyle(
                               fontFamily: 'Menlo', fontSize: 14, height: 1.5),
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Escribe en markdown…',
+                            hintText: tr(context, 'writeMarkdown'),
                           ),
                         ),
                       ),

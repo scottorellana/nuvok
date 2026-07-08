@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import 'checklist.dart';
+import '../../core/locale_service.dart';
 
 class ChecklistPage extends StatefulWidget {
   const ChecklistPage({super.key});
@@ -28,7 +29,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Preparación Familiar'),
+        title: Text(tr(context, 'familyPrep')),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -426,7 +427,7 @@ class _ChecklistTile extends StatelessWidget {
                             ? 'Rotar en $days días'
                             : 'Vence: ${_formatDate(progress.getExpiry(item.id)!)}',
                     style: TextStyle(
-                      fontSize: 11,
+                      fontSize: 14,
                       color: expired
                           ? Colors.red.shade300
                           : nearExpiry
@@ -439,19 +440,28 @@ class _ChecklistTile extends StatelessWidget {
                     'Perecedero — vencimiento sugerido: '
                     '${item.expiryMonths} meses',
                     style: TextStyle(
-                      fontSize: 11,
+                      fontSize: 14,
                       color: Theme.of(context).hintColor,
                     ),
                   ),
                 if (item.isPerishable)
-                  GestureDetector(
-                    onTap: onSetExpiry,
-                    child: Text(
-                      'Cambiar fecha',
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Theme.of(context).colorScheme.primary,
-                        decoration: TextDecoration.underline,
+                  Semantics(
+                    button: true,
+                    label: 'Cambiar fecha de vencimiento',
+                    child: InkWell(
+                      onTap: onSetExpiry,
+                      borderRadius: BorderRadius.circular(8),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 4, vertical: 6),
+                        child: Text(
+                          'Cambiar fecha',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.primary,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
                       ),
                     ),
                   ),

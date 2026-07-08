@@ -1,239 +1,133 @@
 // Tools page — quick survival tools accessible from the nav rail.
-// Groups battery saver, flashlight, compass, whistle, GPS track, and future tools.
+// Groups battery saver, flashlight, compass, whistle, RCP metronome, and GPS track.
+// All cards use a consistent dark palette matching the app theme.
 import 'package:flutter/material.dart';
 
 import 'battery_saver.dart';
 import 'compass.dart';
 import 'flashlight.dart';
+import 'rcp_metronome.dart';
 import 'whistle.dart';
 import '../maps/gpx_recorder.dart';
+import '../../core/locale_service.dart';
 
 class ToolsPage extends StatelessWidget {
   const ToolsPage({super.key});
 
+  // Consistent card surface for the dark olive theme.
+  static const _cardSurface = Color(0xFF1A1F12);
+  static const _dimText = Color(0xFF8A9070);
+  static const _brightText = Color(0xFFE8F0D8);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Herramientas')),
+      appBar: AppBar(title: Text(tr(context, 'tools'))),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // Battery saver — shows the REAL battery level and opens the saver.
+          // ── Battery saver ──
           ListenableBuilder(
             listenable: BatterySaverController.instance,
             builder: (context, _) {
               final b = BatterySaverController.instance;
               final low = b.batteryKnown && b.batteryLevel <= 20;
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            b.isCharging
-                                ? Icons.battery_charging_full
-                                : Icons.battery_saver,
-                            size: 32,
-                            color: low ? Colors.red : null,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              b.batteryKnown
-                                  ? 'Batería: ${b.batteryLevel}%'
-                                      '${b.isCharging ? ' · cargando' : ''}'
-                                  : 'Ahorro de batería',
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          FilledButton.icon(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute<void>(
-                                  builder: (_) => const BatterySaverPage(),
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.battery_saver),
-                            label: const Text('Abrir'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        low
-                            ? '⚠️ Batería baja. Activa el ahorro para durar más.'
-                            : 'Maximiza la autonomía en una emergencia: reduce '
-                                'consumo y desactiva servicios no esenciales.',
-                        style: TextStyle(
-                            color:
-                                low ? Colors.red : Theme.of(context).hintColor),
-                      ),
-                    ],
-                  ),
-                ),
+              return _ToolCard(
+                icon: b.isCharging
+                    ? Icons.battery_charging_full
+                    : Icons.battery_saver,
+                iconColor:
+                    low ? const Color(0xFFEF5350) : const Color(0xFF8C9E5E),
+                title: b.batteryKnown
+                    ? 'Batería: ${b.batteryLevel}%'
+                        '${b.isCharging ? ' · cargando' : ''}'
+                    : 'Ahorro de batería',
+                subtitle: low
+                    ? '⚠️ Batería baja. Activa el ahorro para durar más.'
+                    : 'Maximiza la autonomía en una emergencia.',
+                subtitleColor: low ? const Color(0xFFEF5350) : _dimText,
+                buttonText: 'Abrir',
+                onPressed: () => _push(context, const BatterySaverPage()),
               );
             },
           ),
-          const SizedBox(height: 16),
-          // Whistle - NEW
-          Card(
-            color: Colors.red.shade50,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.sports_score,
-                          size: 32, color: Colors.red),
-                      const SizedBox(width: 12),
-                      const Expanded(
-                        child: Text(
-                          'Silbato de Emergencia',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      FilledButton.icon(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (_) => const WhistleScreen(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.play_arrow),
-                        label: const Text('Activar'),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: Colors.red,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Silbato digital de alta frecuencia (3kHz) audible a larga '
-                    'distancia. Incluye modo pulsado y flash de pantalla.',
-                    style: TextStyle(color: Theme.of(context).hintColor),
-                  ),
-                ],
-              ),
-            ),
+
+          // ── Whistle ──
+          _ToolCard(
+            icon: Icons.campaign,
+            iconColor: const Color(0xFFEF5350),
+            title: 'Silbato de Emergencia',
+            subtitle:
+                'Silbato digital de alta frecuencia (3 kHz) audible a larga '
+                'distancia. Incluye modo pulsado y flash de pantalla.',
+            buttonText: 'Activar',
+            buttonColor: const Color(0xFFC62828),
+            onPressed: () => _push(context, const WhistleScreen()),
           ),
-          const SizedBox(height: 16),
-          // GPS Track Recorder
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.route, size: 32, color: Colors.green),
-                      const SizedBox(width: 12),
-                      const Expanded(
-                        child: Text(
-                          'GPS Track + GPX',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  const GpxRecorderWidget(),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Graba tu ruta y expórtala como GPX 1.1 para usarla '
-                    'en otros mapas o dispositivos Garmin.',
-                    style: TextStyle(color: Theme.of(context).hintColor),
-                  ),
-                ],
-              ),
-            ),
+
+          // ── RCP Metronome ──
+          _ToolCard(
+            icon: Icons.monitor_heart,
+            iconColor: const Color(0xFFE57373),
+            title: 'RCP Metrónomo',
+            subtitle:
+                'Mantiene el ritmo correcto de compresiones (100-120 BPM) '
+                'con contador y aviso de respiraciones 30:2.',
+            buttonText: 'Iniciar',
+            buttonColor: const Color(0xFFC62828),
+            onPressed: () => _push(context, const RcpMetronomePage()),
           ),
-          const SizedBox(height: 16),
-          // Flashlight
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.flashlight_on, size: 32),
-                      const SizedBox(width: 12),
-                      const Expanded(
-                        child: Text(
-                          'Linterna / SOS luminoso',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      FilledButton.icon(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (_) => const FlashlightScreen(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.flash_on),
-                        label: const Text('Abrir'),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Ilumina con el flash de la cámara. Activa SOS para '
-                    'señal luminosa en código Morse (...---...).',
-                    style: TextStyle(color: Theme.of(context).hintColor),
-                  ),
-                ],
-              ),
-            ),
+
+          // ── GPS Track Recorder ──
+          _ToolCard(
+            icon: Icons.route,
+            iconColor: const Color(0xFF8C9E5E),
+            title: 'GPS Track + GPX',
+            subtitle: null,
+            extra: const GpxRecorderWidget(),
+            footerText: 'Graba tu ruta y expórtala como GPX 1.1 para usarla '
+                'en otros mapas o dispositivos Garmin.',
+            onPressed: null,
           ),
-          const SizedBox(height: 16),
-          // Compass
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.explore, size: 32),
-                      const SizedBox(width: 12),
-                      const Text(
-                        'Brújula',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  const CompassWidget(),
-                ],
-              ),
-            ),
+
+          // ── Flashlight ──
+          _ToolCard(
+            icon: Icons.flashlight_on,
+            iconColor: const Color(0xFFFFAB40),
+            title: 'Linterna / SOS luminoso',
+            subtitle: 'Ilumina con el flash de la cámara. Activa SOS para '
+                'señal luminosa en código Morse (...---...).',
+            buttonText: 'Abrir',
+            onPressed: () => _push(context, const FlashlightScreen()),
           ),
-          const SizedBox(height: 16),
-          // Tip
-          Card(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+
+          // ── Compass ──
+          _ToolCard(
+            icon: Icons.explore,
+            iconColor: const Color(0xFF8C9E5E),
+            title: 'Brújula',
+            subtitle: null,
+            extra: const Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: CompassWidget(),
+            ),
+            onPressed: null,
+          ),
+
+          const SizedBox(height: 8),
+
+          // ── Tip ──
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFF2A2A1A),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: const Color(0xFF4A4A2A), width: 0.5),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  const Icon(Icons.lightbulb, color: Colors.amber),
+                  const Icon(Icons.lightbulb, color: Color(0xFFFFAB40)),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
@@ -241,8 +135,7 @@ class ToolsPage extends StatelessWidget {
                       'en forma de 8 antes de usarla. En emergencias, la '
                       'linterna en modo SOS es visible a kilómetros en la '
                       'oscuridad.',
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor, fontSize: 13),
+                      style: const TextStyle(color: _dimText, fontSize: 13),
                     ),
                   ),
                 ],
@@ -250,6 +143,105 @@ class ToolsPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _push(BuildContext context, Widget page) {
+    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
+  }
+}
+
+/// A consistent tool card with dark surface, bright title, dim subtitle,
+/// and an optional action button. Eliminates the rainbow of card colors
+/// that previously broke the dark theme.
+class _ToolCard extends StatelessWidget {
+  const _ToolCard({
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    this.subtitle,
+    this.subtitleColor,
+    this.buttonText,
+    this.buttonColor,
+    this.onPressed,
+    this.extra,
+    this.footerText,
+  });
+
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final String? subtitle;
+  final Color? subtitleColor;
+  final String? buttonText;
+  final Color? buttonColor;
+  final VoidCallback? onPressed;
+  final Widget? extra;
+  final String? footerText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: ToolsPage._cardSurface,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, size: 32, color: iconColor),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: ToolsPage._brightText,
+                    ),
+                  ),
+                ),
+                if (buttonText != null && onPressed != null)
+                  FilledButton.icon(
+                    onPressed: onPressed,
+                    icon: const Icon(Icons.arrow_forward, size: 18),
+                    label: Text(buttonText!),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: buttonColor,
+                    ),
+                  ),
+              ],
+            ),
+            if (subtitle != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                subtitle!,
+                style: TextStyle(color: subtitleColor ?? ToolsPage._dimText),
+              ),
+            ],
+            if (extra != null) extra!,
+            if (footerText != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                footerText!,
+                style: const TextStyle(color: ToolsPage._dimText, fontSize: 13),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

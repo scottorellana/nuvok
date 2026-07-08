@@ -10,33 +10,72 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../core/locale_service.dart';
 
-// We avoid importing sensors_plus directly to not add a dependency that
-// breaks desktop. Instead we use a MethodChannel stub that can be filled
-// in later. For now we compute heading from magnetometer data if available.
+// We avoid importing sensors_plus directly to keep desktop builds stable.
+// Android/macOS provide capability checks through MethodChannel and Android
+// streams continuous headings through the native EventChannel below.
 final _sensorChannel = MethodChannel('prepper/sensors');
+final _compassEventChannel = EventChannel('prepper/sensors/compass');
+
+class CompassMath {
+  const CompassMath._();
+
+  static double normalizeHeading(double headingDegrees) {
+    var h = headingDegrees % 360;
+    if (h < 0) h += 360;
+    // Avoid showing 360° due to floating point dust; north is 0°.
+    return h == 360 ? 0 : h;
+  }
+
+  static double circularMean(Iterable<double> angles) {
+    final list = angles.toList(growable: false);
+    if (list.isEmpty) return 0;
+    var sumSin = 0.0, sumCos = 0.0;
+    for (final a in list) {
+      final rad = normalizeHeading(a) * math.pi / 180;
+      sumSin += math.sin(rad);
+      sumCos += math.cos(rad);
+    }
+    if (sumSin.abs() < 1e-12 && sumCos.abs() < 1e-12) return 0;
+    final avg = math.atan2(sumSin / list.length, sumCos / list.length);
+    return normalizeHeading(avg * 180 / math.pi);
+  }
+
+  static String cardinalDirection(double heading) {
+    const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    final idx = ((normalizeHeading(heading) + 22.5) % 360 / 45).floor();
+    return dirs[idx];
+  }
+}
 
 class CompassReading {
   final double heading; // degrees, 0=N, 90=E, 180=S, 270=W
   final double accuracy; // degrees uncertainty (low=better)
+  final bool needsCalibration;
+  final String? sensorType;
   final DateTime? timestamp;
 
   const CompassReading({
     required this.heading,
     required this.accuracy,
+    this.needsCalibration = false,
+    this.sensorType,
     this.timestamp,
   });
 
-  String get cardinalDirection {
-    const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-    final idx = ((heading + 22.5) % 360 / 45).floor();
-    return dirs[idx];
-  }
+  String get cardinalDirection => CompassMath.cardinalDirection(heading);
 }
 
-class CompassService {
+class CompassService extends ChangeNotifier {
   CompassService._();
   static final CompassService instance = CompassService._();
+
+  /// Test-only constructor used by `test/compass_test.dart`. The test file
+  /// calls `CompassService.createForTest()` directly — never executed in
+  /// production paths.
+  @visibleForTesting
+  factory CompassService.createForTest() = CompassService._;
 
   StreamSubscription? _sub;
   final _controller = StreamController<CompassReading>.broadcast();
@@ -45,73 +84,148 @@ class CompassService {
   bool _available = false;
   bool get available => _available;
 
+  bool _isCalibrating = false;
+  bool get isCalibrating => _isCalibrating;
+
+  Timer? _calibrationTimer;
+
   // Smoothing: last few readings averaged to reduce jitter.
   final _history = <double>[];
   static const _historySize = 5;
 
   /// Starts listening to compass sensor events. Returns false if the
-  /// platform doesn't have a magnetometer.
+  /// platform doesn't have a usable heading sensor.
   Future<bool> start() async {
-    if (_sub != null) return _available;
+    if (_sub != null) {
+      if (_available && !_isCalibrating) {
+        unawaited(calibrate());
+      }
+      return _available;
+    }
+
     try {
-      _available =
-          await _sensorChannel.invokeMethod('hasMagnetometer') ?? false;
+      final rotationVector = await _sensorChannel.invokeMethod<bool>(
+        'hasCompass',
+      );
+      final magnetometer = await _sensorChannel.invokeMethod<bool>(
+        'hasMagnetometer',
+      );
+      final hasCompass = (rotationVector ?? false) || (magnetometer ?? false);
+      _available = hasCompass;
+      _history.clear();
       if (!_available) {
-        _controller.add(CompassReading(
-          heading: 0,
-          accuracy: 999,
-          timestamp: DateTime.now(),
-        ));
+        // Don't emit a fake "heading=0°" reading into the public stream. In a
+        // survival app the UI would otherwise show "north" with the same
+        // widget as a real reading, silently guiding the user wrong. The UI
+        // already renders an "unavailable" state from `instance.available`.
+        notifyListeners();
         return false;
       }
-      // Event channel would go here in a real implementation.
-      // For now we return true if the sensor is available.
+
+      _sub = _compassEventChannel.receiveBroadcastStream().listen(
+        _onNativeReading,
+        onError: (_) {
+          _sub?.cancel();
+          _sub = null;
+          _available = false;
+          _isCalibrating = false;
+          _calibrationTimer?.cancel();
+          _calibrationTimer = null;
+          // Same reasoning as above — don't emit a fake reading. Just mark
+          // unavailable so the UI falls back to its "no compass" state.
+          notifyListeners();
+        },
+      );
+      unawaited(calibrate());
       return true;
     } catch (_) {
       _available = false;
+      _isCalibrating = false;
+      notifyListeners();
       return false;
     }
   }
 
-  void feedRawHeading(double headingDegrees) {
-    // Normalize to 0-360.
-    var h = headingDegrees % 360;
-    if (h < 0) h += 360;
+  Future<void> calibrate({Duration? duration}) async {
+    if (!_available) return;
+    duration ??= const Duration(seconds: 4);
+
+    _calibrationTimer?.cancel();
+    _history.clear();
+    _isCalibrating = true;
+    notifyListeners();
+    try {
+      await _sensorChannel.invokeMethod<void>('calibrateCompass');
+    } catch (_) {
+      // Native side may not expose calibration yet; keep local reset as fallback.
+    }
+
+    _calibrationTimer = Timer(duration, () {
+      _isCalibrating = false;
+      notifyListeners();
+    });
+  }
+
+  void _onNativeReading(Object? event) {
+    if (event is num) {
+      feedRawHeading(event.toDouble());
+      return;
+    }
+    if (event is Map) {
+      final heading = event['heading'];
+      if (heading is num) {
+        final accuracy = event['accuracy'];
+        final needsCalibration = event['needsCalibration'];
+        final sensorType = event['sensorType'];
+        feedRawHeading(
+          heading.toDouble(),
+          accuracyDegrees: accuracy is num ? accuracy.toDouble() : null,
+          needsCalibration: needsCalibration is bool ? needsCalibration : false,
+          sensorType: sensorType is String ? sensorType : null,
+        );
+      }
+    }
+  }
+
+  void feedRawHeading(
+    double headingDegrees, {
+    double? accuracyDegrees,
+    bool needsCalibration = false,
+    String? sensorType,
+  }) {
+    if (!headingDegrees.isFinite) return;
+    final h = CompassMath.normalizeHeading(headingDegrees);
 
     // Smooth: circular average of last N readings.
     _history.add(h);
     if (_history.length > _historySize) _history.removeAt(0);
 
-    final smoothed = _circularMean(_history);
+    final effectiveNeedsCalibration = _isCalibrating || needsCalibration;
+    final smoothed = CompassMath.circularMean(_history);
     _controller.add(CompassReading(
       heading: smoothed,
-      accuracy: _history.length < _historySize ? 15 : 5,
+      accuracy: accuracyDegrees ?? (_history.length < _historySize ? 15 : 5),
+      needsCalibration: effectiveNeedsCalibration,
+      sensorType: sensorType,
       timestamp: DateTime.now(),
     ));
-  }
-
-  double _circularMean(List<double> angles) {
-    if (angles.isEmpty) return 0;
-    var sumSin = 0.0, sumCos = 0.0;
-    for (final a in angles) {
-      final rad = a * math.pi / 180;
-      sumSin += math.sin(rad);
-      sumCos += math.cos(rad);
-    }
-    final avg = math.atan2(sumSin / angles.length, sumCos / angles.length);
-    var deg = avg * 180 / math.pi;
-    if (deg < 0) deg += 360;
-    return deg;
   }
 
   void stop() {
     _sub?.cancel();
     _sub = null;
+    _isCalibrating = false;
+    _calibrationTimer?.cancel();
+    _calibrationTimer = null;
+    _history.clear();
+    notifyListeners();
   }
 
+  @override
   void dispose() {
     stop();
     _controller.close();
+    super.dispose();
   }
 }
 
@@ -128,6 +242,7 @@ class _CompassWidgetState extends State<CompassWidget> {
   CompassReading _reading = const CompassReading(
     heading: 0,
     accuracy: 999,
+    needsCalibration: false,
     timestamp: null,
   );
   StreamSubscription? _sub;
@@ -135,7 +250,12 @@ class _CompassWidgetState extends State<CompassWidget> {
   @override
   void initState() {
     super.initState();
+    _service.addListener(_onServiceChanged);
     _initCompass();
+  }
+
+  void _onServiceChanged() {
+    if (mounted) setState(() {});
   }
 
   Future<void> _initCompass() async {
@@ -149,9 +269,16 @@ class _CompassWidgetState extends State<CompassWidget> {
     }
   }
 
+  Future<void> _calibrateNow() async {
+    await _service.calibrate();
+    if (mounted) setState(() {});
+  }
+
   @override
   void dispose() {
     _sub?.cancel();
+    _service.removeListener(_onServiceChanged);
+    _service.stop();
     super.dispose();
   }
 
@@ -194,9 +321,50 @@ class _CompassWidgetState extends State<CompassWidget> {
         ),
         const SizedBox(height: 12),
         if (available)
-          Text(
-            '${_reading.heading.round()}° ${_reading.cardinalDirection}',
-            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          Column(
+            children: [
+              Text(
+                '${_reading.heading.round()}° ${_reading.cardinalDirection}',
+                style:
+                    const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                _reading.needsCalibration
+                    ? 'Precisión baja · calibrando automáticamente'
+                    : 'Precisión ±${_reading.accuracy.round()}°',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: _reading.needsCalibration
+                      ? Colors.orangeAccent
+                      : Theme.of(context).hintColor,
+                  fontSize: 14,
+                  fontWeight: _reading.needsCalibration
+                      ? FontWeight.w700
+                      : FontWeight.normal,
+                ),
+              ),
+              const SizedBox(height: 8),
+              if (_service.isCalibrating)
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                    SizedBox(width: 8),
+                    Text('Calibrando brújula…', style: TextStyle(fontSize: 13)),
+                  ],
+                )
+              else
+                FilledButton.icon(
+                  onPressed: _calibrateNow,
+                  icon: const Icon(Icons.explore, size: 18),
+                  label: Text(tr(context, 'calibrateCompass')),
+                ),
+            ],
           )
         else
           Text(

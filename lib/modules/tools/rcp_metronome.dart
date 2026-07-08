@@ -5,6 +5,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../core/prepper_colors.dart';
+
 class RcpMetronomeController extends ChangeNotifier {
   RcpMetronomeController._();
   static final RcpMetronomeController instance = RcpMetronomeController._();
@@ -23,6 +25,8 @@ class RcpMetronomeController extends ChangeNotifier {
 
   Timer? _timer;
   int _sinceLastBreath = 0;
+  int _breathCueTicks = 0;
+  bool get showBreathCue => _breathCueTicks > 0;
 
   void setBpm(int bpm) {
     _bpm = bpm.clamp(100, 120);
@@ -39,6 +43,7 @@ class RcpMetronomeController extends ChangeNotifier {
     _compressionCount = 0;
     _cycleCount = 0;
     _sinceLastBreath = 0;
+    _breathCueTicks = 0;
     notifyListeners();
 
     final interval = Duration(milliseconds: (60000 / _bpm).round());
@@ -50,10 +55,15 @@ class RcpMetronomeController extends ChangeNotifier {
       if (_sinceLastBreath >= 30) {
         _cycleCount++;
         _sinceLastBreath = 0;
+        _breathCueTicks = 5;
+      } else if (_breathCueTicks > 0) {
+        _breathCueTicks--;
       }
 
       // Haptic + visual feedback for each compression
-      HapticFeedback.mediumImpact();
+      try {
+        HapticFeedback.mediumImpact();
+      } catch (_) {}
       notifyListeners();
     });
   }
@@ -70,6 +80,7 @@ class RcpMetronomeController extends ChangeNotifier {
     _compressionCount = 0;
     _cycleCount = 0;
     _sinceLastBreath = 0;
+    _breathCueTicks = 0;
     notifyListeners();
   }
 
@@ -93,8 +104,11 @@ class RcpMetronomePage extends StatelessWidget {
         final isPlaying = ctrl.playing;
 
         return Scaffold(
-          backgroundColor:
-              isPlaying ? Colors.red.shade900 : Colors.grey.shade900,
+          backgroundColor: ctrl.showBreathCue
+              ? const Color(0xFF0D47A1)
+              : isPlaying
+                  ? PrepperColors.emergencyDeep
+                  : PrepperColors.background,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             title: const Text('RCP Metrónomo'),
@@ -128,22 +142,45 @@ class RcpMetronomePage extends StatelessWidget {
                     min: 100,
                     max: 120,
                     divisions: 20,
-                    activeColor: Colors.red,
+                    activeColor: const Color(0xFF8C9E5E),
                     onChanged: (v) => ctrl.setBpm(v.round()),
                   ),
 
                 const Spacer(),
 
-                // Compression counter
-                Text(
-                  '${ctrl.compressionCount}',
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 120,
-                      fontWeight: FontWeight.bold),
+                // Compression counter / breathing cue
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 120),
+                  child: ctrl.showBreathCue
+                      ? const Column(
+                          key: ValueKey('breath-cue'),
+                          children: [
+                            Icon(Icons.air,
+                                color: PrepperColors.white, size: 88),
+                            SizedBox(height: 8),
+                            Text(
+                              '2 RESPIRACIONES',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: PrepperColors.white,
+                                fontSize: 42,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Text(
+                          '${ctrl.compressionCount}',
+                          key: const ValueKey('compression-count'),
+                          style: const TextStyle(
+                              color: PrepperColors.white,
+                              fontSize: 120,
+                              fontWeight: FontWeight.bold),
+                        ),
                 ),
-                const Text('COMPRESIONES',
-                    style: TextStyle(color: Colors.white70, fontSize: 20)),
+                Text(ctrl.showBreathCue ? 'PAUSA BREVE' : 'COMPRESIONES',
+                    style:
+                        const TextStyle(color: Colors.white70, fontSize: 20)),
 
                 const SizedBox(height: 20),
 
@@ -168,7 +205,7 @@ class RcpMetronomePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 12),
                     decoration: BoxDecoration(
-                      color: Colors.blue.shade700,
+                      color: PrepperColors.info,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: const Row(
@@ -186,7 +223,6 @@ class RcpMetronomePage extends StatelessWidget {
                   ),
 
                 const Spacer(),
-
                 // Controls
                 Padding(
                   padding: const EdgeInsets.all(32),
@@ -194,20 +230,33 @@ class RcpMetronomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       // Reset
-                      FloatingActionButton(
-                        heroTag: 'reset',
-                        backgroundColor: Colors.grey.shade700,
-                        onPressed: ctrl.reset,
-                        child: const Icon(Icons.refresh, color: Colors.white),
+                      Semantics(
+                        button: true,
+                        enabled: true,
+                        label: 'Reiniciar contador de compresiones',
+                        child: FloatingActionButton(
+                          heroTag: 'reset',
+                          backgroundColor: PrepperColors.cardElevated,
+                          onPressed: ctrl.reset,
+                          child: const Icon(Icons.refresh, color: Colors.white),
+                        ),
                       ),
                       // Play/Stop
-                      FloatingActionButton.large(
-                        heroTag: 'play',
-                        backgroundColor:
-                            isPlaying ? Colors.red.shade600 : Colors.green,
-                        onPressed: isPlaying ? ctrl.stop : ctrl.play,
-                        child: Icon(isPlaying ? Icons.stop : Icons.play_arrow,
-                            color: Colors.white, size: 48),
+                      Semantics(
+                        button: true,
+                        enabled: true,
+                        label: isPlaying
+                            ? 'Detener metrónomo RCP'
+                            : 'Iniciar metrónomo RCP',
+                        child: FloatingActionButton.large(
+                          heroTag: 'play',
+                          backgroundColor: isPlaying
+                              ? PrepperColors.emergency
+                              : PrepperColors.safe,
+                          onPressed: isPlaying ? ctrl.stop : ctrl.play,
+                          child: Icon(isPlaying ? Icons.stop : Icons.play_arrow,
+                              color: Colors.white, size: 48),
+                        ),
                       ),
                     ],
                   ),
@@ -217,9 +266,11 @@ class RcpMetronomePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                    isPlaying
-                        ? 'Presiona firmemente 5-6cm en el centro del pecho'
-                        : 'Toca PLAY para iniciar el ritmo de compresiones',
+                    ctrl.showBreathCue
+                        ? 'Da 2 respiraciones y vuelve rápido a compresiones. No pauses más de 10 segundos.'
+                        : isPlaying
+                            ? 'Presiona firmemente 5-6cm en el centro del pecho'
+                            : 'Toca PLAY para iniciar el ritmo de compresiones',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.7),

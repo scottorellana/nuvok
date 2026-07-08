@@ -16,6 +16,7 @@ import 'package:screen_brightness/screen_brightness.dart';
 import '../../core/prepper_library.dart';
 import '../ai/llama_server.dart';
 import '../mesh/mesh_service.dart';
+import '../../core/locale_service.dart';
 
 class BatterySaverController extends ChangeNotifier {
   BatterySaverController._();
@@ -256,7 +257,7 @@ class BatterySaverPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Modo Ahorro Batería'),
+        title: Text(tr(context, 'batterySaverTitle')),
         backgroundColor: Colors.green.shade900,
         foregroundColor: Colors.white,
       ),
@@ -322,7 +323,7 @@ class BatterySaverPage extends StatelessWidget {
                     child: FilledButton.icon(
                       onPressed: () => ctrl.toggle(),
                       icon: const Icon(Icons.restart_alt),
-                      label: const Text('Desactivar y restaurar todo'),
+                      label: Text(tr(context, 'deactivateRestore')),
                       style: FilledButton.styleFrom(
                         backgroundColor: Colors.green.shade700,
                         minimumSize: const Size.fromHeight(52),
@@ -368,7 +369,7 @@ class BatterySaverPage extends StatelessWidget {
 
               SwitchListTile(
                 secondary: const Icon(Icons.brightness_6),
-                title: const Text('Bajar brillo de pantalla'),
+                title: Text(tr(context, 'lowerBrightness')),
                 subtitle: const Text(
                     'La pantalla es el mayor consumo. Se restaura al desactivar.'),
                 value: ctrl.reduceBrightness,
@@ -376,7 +377,7 @@ class BatterySaverPage extends StatelessWidget {
               ),
               SwitchListTile(
                 secondary: const Icon(Icons.cell_tower),
-                title: const Text('Pausar radios de comunicación'),
+                title: Text(tr(context, 'pauseRadios')),
                 subtitle: const Text(
                     'Apaga el mesh (WiFi/Bluetooth de la app). OJO: no '
                     'recibirás SOS de otros mientras esté pausado.'),
@@ -385,7 +386,7 @@ class BatterySaverPage extends StatelessWidget {
               ),
               SwitchListTile(
                 secondary: const Icon(Icons.psychology),
-                title: const Text('Pausar asistente de IA'),
+                title: Text(tr(context, 'pauseAi')),
                 subtitle: const Text(
                     'Detiene el modelo local (gran consumo). Se reinicia al '
                     'desactivar el ahorro si estaba activo.'),

@@ -360,13 +360,16 @@ class NativeBleMeshLink implements BleLink {
 
   @override
   bool get adapterAvailable =>
-      // Phones/tablets only: that's where BLE matters (no router in the
-      // field). On macOS desktop the LAN transport already covers peers, and
-      // starting CoreBluetooth at boot got debug builds killed by TCC even
-      // with the usage key present — not worth the risk for zero coverage
-      // gain. The Swift bridge stays compiled for macOS for future use.
+      // BLE is the no-infrastructure path: phone↔phone in the field, and
+      // the Mac joins too so an iPhone can reach it with WiFi off. The TCC
+      // crash that once made us disable macOS came from `flutter run` dev
+      // launches (TCC checks the RESPONSIBLE process — the terminal — for
+      // the usage key); apps launched normally are their own responsible
+      // process and prompt fine. The Swift bridge also refuses to start
+      // radios when Bluetooth permission is explicitly denied.
       defaultTargetPlatform == TargetPlatform.android ||
-      defaultTargetPlatform == TargetPlatform.iOS;
+      defaultTargetPlatform == TargetPlatform.iOS ||
+      defaultTargetPlatform == TargetPlatform.macOS;
 
   @override
   Stream<BlePeer> get onDiscovery => _disc.stream;
@@ -466,7 +469,8 @@ class BleTransport implements MeshTransport {
   BleTransport({BleLink? link})
       : _link = link ??
             (defaultTargetPlatform == TargetPlatform.android ||
-                    defaultTargetPlatform == TargetPlatform.iOS
+                    defaultTargetPlatform == TargetPlatform.iOS ||
+                    defaultTargetPlatform == TargetPlatform.macOS
                 ? NativeBleMeshLink()
                 : FlutterBluePlusLink());
 

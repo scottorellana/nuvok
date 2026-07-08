@@ -49,6 +49,17 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
     private func handle(call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "start":
+            // If the user explicitly denied Bluetooth, instantiating the
+            // managers is useless (and on dev launches TCC can even kill the
+            // process). Report unavailable; the mesh keeps running on LAN.
+            if #available(macOS 11.0, iOS 13.1, *) {
+                NSLog("PPMESH start requested, authorization=%d", CBManager.authorization.rawValue)
+                if CBManager.authorization == .denied || CBManager.authorization == .restricted {
+                    NSLog("PPMESH bluetooth DENIED — radios not started")
+                    result(false)
+                    return
+                }
+            }
             running = true
             if central == nil { central = CBCentralManager(delegate: self, queue: nil) }
             if peripheral == nil { peripheral = CBPeripheralManager(delegate: self, queue: nil) }
@@ -114,7 +125,8 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
         guard let bytes = bytes, !id.isEmpty else { return false }
         // Path #1: notify a central subscribed to our RX characteristic.
         if let c = subscribedCentrals[id], let rx = rxCharacteristic {
-            peripheral?.updateValue(bytes, for: rx, onSubscribedCentrals: [c])
+            let ok = peripheral?.updateValue(bytes, for: rx, onSubscribedCentrals: [c]) ?? false
+            NSLog("PPMESH notify-out %d bytes ok=%d (max %d)", bytes.count, ok ? 1 : 0, c.maximumUpdateValueLength)
             return true
         }
         // Path #2: write to the TX characteristic of a peripheral we joined.
@@ -146,7 +158,9 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
 // MARK: - Central role: find and join nearby Prepper Pads.
 extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        NSLog("PPMESH central state=%d", central.state.rawValue)
         guard running, central.state == .poweredOn else { return }
+        NSLog("PPMESH central scanning")
         central.scanForPeripherals(
             withServices: [Self.serviceUuid],
             options: [CBCentralManagerScanOptionAllowDuplicatesKey: false]
@@ -157,6 +171,7 @@ extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
                         advertisementData: [String: Any], rssi RSSI: NSNumber) {
         let id = peripheral.identifier.uuidString
         if peripherals[id] == nil {
+            NSLog("PPMESH discovered peripheral %@", id)
             peripherals[id] = peripheral
             peripheral.delegate = self
             emit(["type": "peer", "id": id])
@@ -206,7 +221,9 @@ extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
 // MARK: - Peripheral role: be discoverable and serve the mesh characteristics.
 extension BleMeshBridge: CBPeripheralManagerDelegate {
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
+        NSLog("PPMESH peripheral state=%d", peripheral.state.rawValue)
         guard running, peripheral.state == .poweredOn else { return }
+        NSLog("PPMESH advertising start")
         let tx = CBMutableCharacteristic(
             type: Self.txUuid,
             properties: [.write, .writeWithoutResponse],
@@ -233,6 +250,7 @@ extension BleMeshBridge: CBPeripheralManagerDelegate {
                            central: CBCentral, didSubscribeTo characteristic: CBCharacteristic) {
         guard characteristic.uuid == Self.rxUuid else { return }
         let id = central.identifier.uuidString
+        NSLog("PPMESH central subscribed %@ maxUpdate=%d", id, central.maximumUpdateValueLength)
         subscribedCentrals[id] = central
         emit(["type": "peer", "id": id])
     }
@@ -246,6 +264,7 @@ extension BleMeshBridge: CBPeripheralManagerDelegate {
                            didReceiveWrite requests: [CBATTRequest]) {
         for request in requests {
             if request.characteristic.uuid == Self.txUuid, let value = request.value {
+                NSLog("PPMESH write-in %d bytes from %@", value.count, request.central.identifier.uuidString)
                 emit([
                     "type": "data",
                     "id": request.central.identifier.uuidString,

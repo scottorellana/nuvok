@@ -482,6 +482,23 @@ class AppStrings {
       'pt': 'Preparação Familiar', 'fr': 'Préparation familiale',
     },
 
+    // ── Depot tabs (ES/EN/PT/FR) ──
+    'essentials': {
+      'es': 'Esenciales', 'en': 'Essentials',
+      'pt': 'Essenciais', 'fr': 'Essentiels',
+    },
+    'aiModels': {
+      'es': 'Modelos IA', 'en': 'AI Models',
+      'pt': 'Modelos IA', 'fr': 'Modèles IA',
+    },
+    'downloads': {
+      'es': 'Descargas', 'en': 'Downloads',
+      'pt': 'Downloads', 'fr': 'Téléchargements',
+    },
+    'appTab': {
+      'es': 'App', 'en': 'App', 'pt': 'App', 'fr': 'App',
+    },
+
     // ── AI / Updates (ES/EN/PT/FR) ──
     'load': {
       'es': 'Cargar', 'en': 'Load', 'pt': 'Carregar', 'fr': 'Charger',

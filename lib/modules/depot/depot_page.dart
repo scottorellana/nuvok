@@ -12,6 +12,7 @@ import 'download_manager.dart';
 import 'kiwix_catalog.dart';
 import 'map_catalog.dart';
 import 'starter_pack.dart';
+import '../../core/locale_service.dart';
 
 class DepotPage extends StatefulWidget {
   const DepotPage({super.key, this.initialTab = 0});
@@ -47,7 +48,7 @@ class _DepotPageState extends State<DepotPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Depósito'),
+        title: Text(tr(context, 'depot')),
         bottom: TabBar(
           controller: _tabs,
           isScrollable: true,
@@ -55,33 +56,33 @@ class _DepotPageState extends State<DepotPage>
             Semantics(
               label: 'Pestaña Esenciales',
               child: Tab(
-                  text: 'Esenciales',
+                  text: tr(context, 'essentials'),
                   icon: Icon(Icons.medical_services, size: 18)),
             ),
             Semantics(
               label: 'Pestaña Biblioteca',
               child: Tab(
-                  text: 'Biblioteca', icon: Icon(Icons.menu_book, size: 18)),
+                  text: tr(context, 'library'), icon: Icon(Icons.menu_book, size: 18)),
             ),
             Semantics(
               label: 'Pestaña Modelos IA',
               child: Tab(
-                  text: 'Modelos IA', icon: Icon(Icons.psychology, size: 18)),
+                  text: tr(context, 'aiModels'), icon: Icon(Icons.psychology, size: 18)),
             ),
             Semantics(
               label: 'Pestaña Mapas',
-              child: Tab(text: 'Mapas', icon: Icon(Icons.map, size: 18)),
+              child: Tab(text: tr(context, 'maps'), icon: Icon(Icons.map, size: 18)),
             ),
             Semantics(
               label: 'Pestaña Descargas',
               child:
-                  Tab(text: 'Descargas', icon: Icon(Icons.download, size: 18)),
+                  Tab(text: tr(context, 'downloads'), icon: Icon(Icons.download, size: 18)),
             ),
             if (DepotPage._updatesTabEnabled)
               Semantics(
                 label: 'Pestaña App',
                 child:
-                    Tab(text: 'App', icon: Icon(Icons.system_update, size: 18)),
+                    Tab(text: tr(context, 'appTab'), icon: Icon(Icons.system_update, size: 18)),
               ),
           ],
         ),

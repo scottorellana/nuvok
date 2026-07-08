@@ -12,6 +12,7 @@ import 'package:vector_map_tiles_pmtiles/vector_map_tiles_pmtiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart' as vtr;
 
 import '../../core/prepper_library.dart';
+import '../../core/prepper_colors.dart';
 import '../depot/map_catalog.dart';
 import '../mesh/position_store.dart';
 import 'composite_tile_provider.dart';
@@ -887,11 +888,19 @@ class _MapsPageState extends State<MapsPage> {
                                 for (final p in _pois)
                                   Marker(
                                     point: p.location,
-                                    width: 30,
-                                    height: 30,
-                                    child: GestureDetector(
-                                      onTap: () => _showPoiInfo(p),
-                                      child: _PoiPin(category: p.category),
+                                    width: 44,
+                                    height: 44,
+                                    child: Semantics(
+                                      button: true,
+                                      label:
+                                          'Punto de interés ${p.name ?? p.kind}',
+                                      child: GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () => _showPoiInfo(p),
+                                        child: Center(
+                                          child: _PoiPin(category: p.category),
+                                        ),
+                                      ),
                                     ),
                                   ),
                               ],
@@ -904,11 +913,19 @@ class _MapsPageState extends State<MapsPage> {
                                     if (o.kind.isPoint)
                                       Marker(
                                         point: o.anchor,
-                                        width: 34,
-                                        height: 34,
-                                        child: GestureDetector(
-                                          onTap: () => _showOverlayInfo(o),
-                                          child: _OverlayPin(overlay: o),
+                                        width: 44,
+                                        height: 44,
+                                        child: Semantics(
+                                          button: true,
+                                          label:
+                                              'Marcador ${o.name ?? o.kind.label}',
+                                          child: GestureDetector(
+                                            behavior: HitTestBehavior.opaque,
+                                            onTap: () => _showOverlayInfo(o),
+                                            child: Center(
+                                              child: _OverlayPin(overlay: o),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                   // Vertices being drawn.
@@ -1004,14 +1021,18 @@ class _MapsPageState extends State<MapsPage> {
                             right: 12,
                             top: 12,
                             child: Card(
-                              color: Colors.orange.shade100,
+                              color: PrepperColors.cautionSurface,
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Text(
                                   'Dibujando ${_drawKind!.label} · '
                                   '${_drawPoints.length} puntos. Toca el mapa '
                                   'para agregar, ✓ para terminar.',
-                                  style: const TextStyle(color: Colors.black87),
+                                  style: const TextStyle(
+                                    color: PrepperColors.text,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ),

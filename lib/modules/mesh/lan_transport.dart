@@ -101,16 +101,24 @@ class LanTransport implements MeshTransport {
         // No multicast at all; the broadcast fallback still carries traffic.
       }
     }
-    socket.listen((event) {
-      if (event != RawSocketEvent.read) return;
-      final dg = socket.receive();
-      if (dg != null && dg.data.isNotEmpty) {
-        // Remember who this came from so we can reach them by unicast even if
-        // multicast/broadcast later gets filtered.
-        _peerAddrs[dg.address.address] = (dg.address, DateTime.now());
-        if (!_data.isClosed) _data.add(Uint8List.fromList(dg.data));
-      }
-    });
+    socket.listen(
+      (event) {
+        if (event != RawSocketEvent.read) return;
+        final dg = socket.receive();
+        if (dg != null && dg.data.isNotEmpty) {
+          // Remember who this came from so we can reach them by unicast even
+          // if multicast/broadcast later gets filtered.
+          _peerAddrs[dg.address.address] = (dg.address, DateTime.now());
+          if (!_data.isClosed) _data.add(Uint8List.fromList(dg.data));
+        }
+      },
+      // iOS delivers send failures (errno 65 "No route to host" for blocked
+      // multicast) asynchronously through THIS stream. Without an onError
+      // handler they became unhandled exceptions that killed
+      // MeshService.start() mid-flight and left the mesh dead on iPhone.
+      onError: (Object _) {},
+      cancelOnError: false,
+    );
     _socket = socket;
 
     // Bonjour discovery seeds the unicast address book, so peers are
@@ -150,14 +158,19 @@ class LanTransport implements MeshTransport {
   Future<void> send(Uint8List datagram) async {
     final s = _socket;
     if (s == null) return;
-    // 1) Multicast — the efficient path when the network forwards it.
-    try {
-      s.send(datagram, _group, port);
-    } catch (_) {}
-    // 2) Limited broadcast — some Android vendors filter one but not the other.
-    try {
-      s.send(datagram, InternetAddress('255.255.255.255'), port);
-    } catch (_) {}
+    // On iOS raw multicast/broadcast are blocked without Apple's special
+    // entitlement — every attempt fails with an async errno 65. Skip them:
+    // Bonjour discovery + unicast (below) is the sanctioned path there.
+    if (!Platform.isIOS) {
+      // 1) Multicast — the efficient path when the network forwards it.
+      try {
+        s.send(datagram, _group, port);
+      } catch (_) {}
+      // 2) Limited broadcast — some vendors filter one but not the other.
+      try {
+        s.send(datagram, InternetAddress('255.255.255.255'), port);
+      } catch (_) {}
+    }
     // 3) Unicast to every peer we've heard from recently — the reliable path
     //    when the AP/hotspot drops multicast AND broadcast between clients.
     final now = DateTime.now();

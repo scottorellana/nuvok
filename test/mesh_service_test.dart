@@ -28,6 +28,28 @@ class FakeTransport implements MeshTransport {
   void inject(Uint8List d) => _incoming.add(d);
 }
 
+/// Reproduce el iPhone real: el SO reporta el fallo del socket DESPUÉS de
+/// retornar (errno 65 asíncrono) — la excepción emerge en el event loop,
+/// fuera del try síncrono del que llamó. En el campo esto MATABA
+/// MeshService.start() a la mitad y dejaba el mesh muerto.
+class AsyncThrowingTransport implements MeshTransport {
+  @override
+  String get name => 'evil';
+  @override
+  Future<void> start() async {}
+  @override
+  Future<void> stop() async {}
+  @override
+  Future<void> send(Uint8List datagram) async {
+    await Future<void>.delayed(Duration.zero);
+    throw const SocketException('Send failed',
+        osError: OSError('No route to host', 65));
+  }
+
+  @override
+  Stream<Uint8List> get onData => const Stream.empty();
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -49,6 +71,26 @@ void main() {
   tearDown(() async {
     await service.stop();
     tmp.deleteSync(recursive: true);
+  });
+
+  test('un transporte que lanza async NO mata el arranque (bug iPhone)',
+      () async {
+    final tmp2 = Directory.systemTemp.createTempSync('mesh_evil');
+    addTearDown(() => tmp2.deleteSync(recursive: true));
+    final good = FakeTransport();
+    final evil = MeshService.forTest(
+      dirPath: tmp2.path,
+      transports: [AsyncThrowingTransport(), good],
+      identity: MeshIdentity.create('iPhone de Scott'),
+    );
+    await evil.start();
+    // Dejar que el fallo async del socket dispare.
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    expect(evil.running.value, isTrue,
+        reason: 'el mesh debe quedar corriendo aunque un radio falle');
+    expect(good.sent, isNotEmpty,
+        reason: 'el beacon debe salir por los transportes sanos');
+    await evil.stop();
   });
 
   test('al arrancar difunde un beacon de presencia', () {

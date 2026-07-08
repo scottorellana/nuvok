@@ -109,19 +109,33 @@ class _EmergencyPageState extends State<EmergencyPage> {
   @override
   Widget build(BuildContext context) {
     if (_emergencyMode) return _buildPanicMode(context);
+    // On phone widths the full "MODO EMERGENCIA" button + language selector
+    // overflow the AppBar (76px on iPhone). The big CTA below the bar already
+    // exists, so in compact mode the action collapses to a warning icon.
+    final compactBar = MediaQuery.of(context).size.width < 560;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Guías de Emergencia'),
         actions: [
-          FilledButton.icon(
-            onPressed: () => setState(() => _emergencyMode = true),
-            icon: const Icon(Icons.warning, size: 18),
-            label: const Text('MODO EMERGENCIA'),
-            style: FilledButton.styleFrom(
-                backgroundColor: PrepperColors.emergencyDark),
-          ),
+          if (compactBar)
+            IconButton(
+              tooltip: 'MODO EMERGENCIA',
+              onPressed: () => setState(() => _emergencyMode = true),
+              icon: const Icon(Icons.warning, color: PrepperColors.emergency),
+            )
+          else
+            FilledButton.icon(
+              onPressed: () => setState(() => _emergencyMode = true),
+              icon: const Icon(Icons.warning, size: 18),
+              label: const Text('MODO EMERGENCIA'),
+              style: FilledButton.styleFrom(
+                  backgroundColor: PrepperColors.emergencyDark),
+            ),
           const SizedBox(width: 8),
           SegmentedButton<String>(
+            style: const ButtonStyle(
+                visualDensity: VisualDensity.compact,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap),
             segments: const [
               ButtonSegment(value: 'es', label: Text('ES')),
               ButtonSegment(value: 'en', label: Text('EN')),

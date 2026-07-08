@@ -224,10 +224,15 @@ class MeshService {
   Future<void> _sendBeacon() async {
     final router = _router;
     if (identity == null || router == null) return;
-    // Beacons skip the outbox: presence only matters live.
-    await router.sendNow(await _envelope(
-        MeshChannel.emergency, MeshType.beacon, {'n': identity!.name},
-        hopLimit: 1));
+    try {
+      // Beacons skip the outbox: presence only matters live.
+      await router.sendNow(await _envelope(
+          MeshChannel.emergency, MeshType.beacon, {'n': identity!.name},
+          hopLimit: 1));
+    } catch (_) {
+      // A failing radio must never abort start() or a beacon timer: the
+      // other transports keep the mesh alive (this killed iOS in the field).
+    }
   }
 
   Future<void> joinChannel(MeshChannel c) async {

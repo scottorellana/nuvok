@@ -46,7 +46,7 @@
 	<string>Prepper Pad se comunica con tus otros dispositivos Prepper Pad en tu red WiFi, sin internet. Nada sale de tu red.</string>
 	<key>NSBonjourServices</key>
 	<array>
-		<string>_prepperpad._udp.</string>
+		<string>_prepperpad._udp</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Tu posición se usa para mostrarte en el mapa offline y compartirla en un SOS. Nunca sale de tus dispositivos.</string>

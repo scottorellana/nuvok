@@ -1,8 +1,8 @@
 // The in-app map installer's region catalog plus the machinery to get a
-// region installed: direct download when a URL exists, or a real
-// `pmtiles extract` against the Protomaps daily build when the CLI binary is
-// available (desktop) — the same process that produced the original Honduras
-// map, now one tap instead of a terminal session.
+// region installed: direct download when a URL exists, or a pure-Dart
+// `pmtiles extract` against the Protomaps daily build — runs on EVERY
+// platform (iPhone/Android/desktop), so production users download any
+// country map straight from the app with zero servers of ours.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:flutter/services.dart' show rootBundle;
 
 import '../../core/prepper_library.dart';
+import 'pmtiles_extract_dart.dart';
 
 class MapRegion {
   MapRegion({
@@ -66,29 +67,13 @@ class MapCatalog {
 /// build. Desktop-only (needs the CLI binary); progress lines stream out so
 /// the UI can show something alive during the minutes it takes.
 class MapExtractor {
-  /// Where the pmtiles CLI may live. First hit wins.
-  static final List<String> _binCandidates = [
-    '${Platform.environment['HOME'] ?? ''}/development/bin/pmtiles',
-    '/usr/local/bin/pmtiles',
-    '/opt/homebrew/bin/pmtiles',
-  ];
-
-  static String? binaryPath() {
-    if (Platform.isAndroid || Platform.isIOS) return null;
-    for (final p in _binCandidates) {
-      if (p.isNotEmpty && File(p).existsSync()) return p;
-    }
-    return null;
-  }
-
-  static bool get available => binaryPath() != null;
+  /// Pure-Dart extract works everywhere; only a bbox is required.
+  static bool get available => true;
 
   static const _buildHost = 'https://build.protomaps.com';
 
-  /// Most recent daily build file name (e.g. 20260703.pmtiles). Protomaps
-  /// no longer publishes a builds.json index, so we probe by date: today's
-  /// build, then walk back day by day until one answers. A HEAD-style range
-  /// request (first byte only) is enough to know a build exists.
+  /// Most recent daily build file name (e.g. 20260703.pmtiles), probed by
+  /// date walking back from today. Cheap: one 1-byte range request per try.
   static Future<String?> latestBuild() async {
     final now = DateTime.now().toUtc();
     for (var back = 0; back < 10; back++) {
@@ -106,11 +91,9 @@ class MapExtractor {
     try {
       client = HttpClient()..connectionTimeout = const Duration(seconds: 15);
       final req = await client.getUrl(Uri.parse('$_buildHost/$name'));
-      // Ask for just the first byte: cheap existence check with no download.
       req.headers.set(HttpHeaders.rangeHeader, 'bytes=0-0');
       final res = await req.close();
       await res.drain<void>();
-      // 206 = range served (exists); 200 = full (exists); 404 = missing.
       return res.statusCode == 206 || res.statusCode == 200;
     } catch (_) {
       return false;
@@ -119,14 +102,18 @@ class MapExtractor {
     }
   }
 
-  /// Extracts [region] into the maps folder. Emits progress lines. The
-  /// output goes to a .part path and is renamed only on success, so a killed
-  /// extract can never leave a half map that the Maps module would open.
+  /// Extracts [region] into the maps folder using the pure-Dart engine.
+  /// Emits progress lines; writes to a temp path and renames only on
+  /// success, so a killed extract never leaves a half map behind.
   static Stream<String> extract(MapRegion region) async* {
-    final bin = binaryPath();
     final bbox = region.bbox;
-    if (bin == null || bbox == null) {
-      yield 'error: extracción no disponible en este dispositivo';
+    if (bbox == null) {
+      yield 'error: esta región no tiene área definida';
+      return;
+    }
+    final parts = bbox.split(',').map(double.parse).toList();
+    if (parts.length != 4) {
+      yield 'error: bbox inválido';
       return;
     }
     yield 'Buscando el mapa mundial más reciente…';
@@ -138,54 +125,34 @@ class MapExtractor {
       return;
     }
     final dest = '${PrepperLibrary.instance.mapsDir.path}/${region.fileName}';
-    final part = '$dest.part';
-    yield 'Extrayendo ${region.name} del mapa mundial ($build)… '
-        'esto tarda unos minutos según el tamaño de la región.';
-    final process = await Process.start(bin, [
-      'extract',
-      '$_buildHost/$build',
-      part,
-      '--bbox=$bbox',
-      // Large regions cap the zoom so the file stays a sane size; street
-      // detail (z15) is kept for small ones.
-      if (region.maxZoom != null) '--maxzoom=${region.maxZoom}',
-    ]);
-    final buffer = StringBuffer();
-    await for (final chunk in StreamGroup2.merge([
-      process.stdout.transform(utf8.decoder),
-      process.stderr.transform(utf8.decoder),
-    ])) {
-      buffer.write(chunk);
-      for (final line in chunk.split('\n')) {
-        final t = line.trim();
-        if (t.isNotEmpty) yield t;
+    yield 'Extrayendo ${region.name} del mapa mundial ($build)…';
+
+    final progress = StreamController<String>();
+    final done = extractPmTiles(
+      source: HttpRangeSource(Uri.parse('$_buildHost/$build')),
+      dest: File(dest),
+      west: parts[0],
+      south: parts[1],
+      east: parts[2],
+      north: parts[3],
+      maxZoom: region.maxZoom,
+      onProgress: (m, f) {
+        if (!progress.isClosed) progress.add(m);
+      },
+    ).then((_) {
+      if (!progress.isClosed) progress.close();
+    }).catchError((Object e) {
+      if (!progress.isClosed) {
+        progress.add('error: $e');
+        progress.close();
       }
-    }
-    final code = await process.exitCode;
-    if (code == 0 && File(part).existsSync()) {
-      File(part).renameSync(dest);
+    });
+
+    yield* progress.stream;
+    await done;
+    if (File(dest).existsSync()) {
       yield 'listo: ${region.name} instalado';
-    } else {
-      try {
-        File(part).deleteSync();
-      } catch (_) {}
-      yield 'error: la extracción falló (código $code). '
-          '${buffer.toString().split('\n').where((l) => l.contains('error')).join(' ')}';
     }
   }
 }
 
-/// Tiny two-stream merge to avoid a package dependency.
-class StreamGroup2 {
-  static Stream<T> merge<T>(List<Stream<T>> streams) {
-    final controller = StreamController<T>();
-    var active = streams.length;
-    for (final s in streams) {
-      s.listen(controller.add, onError: controller.addError, onDone: () {
-        active--;
-        if (active == 0) controller.close();
-      });
-    }
-    return controller.stream;
-  }
-}

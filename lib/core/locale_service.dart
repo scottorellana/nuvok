@@ -365,15 +365,15 @@ class AppStrings {
     },
     'joinInstructions': {
       'es': 'En el otro dispositivo: Comunicación → Unirse y pega este '
-          'código (o escanea el QR cuando tengas lector).',
-      'en': 'On the other device: Communication → Join and paste this code '
-          '(or scan the QR when you have a reader).',
-      'pt': 'No outro dispositivo: Comunicação → Entrar e cole este código '
-          '(ou escaneie o QR quando tiver leitor).',
+          'código. El QR sirve para copiarlo con un lector externo.',
+      'en': 'On the other device: Communication → Join and paste this code. '
+          'The QR lets you copy it with an external reader.',
+      'pt': 'No outro dispositivo: Comunicação → Entrar e cole este código. '
+          'O QR serve para copiá-lo com um leitor externo.',
       'fr': 'Sur l\'autre appareil : Communication → Rejoindre et collez ce '
-          'code (ou scannez le QR).',
-      'zh': '在另一台设备上：通信 → 加入，粘贴此代码（或扫描二维码）。',
-      'ja': '他のデバイスで：通信 → 参加でこのコードを貼り付け（またはQRをスキャン）。',
+          'code. Le QR permet de le copier avec un lecteur externe.',
+      'zh': '在另一台设备上：通信 → 加入，粘贴此代码。二维码可用外部扫码器复制。',
+      'ja': '他のデバイスで：通信 → 参加でこのコードを貼り付け。QRは外部リーダーでのコピー用です。',
       'ht': 'Sou lòt aparèy la: Kominikasyon → Antre epi kole kòd sa a.',
     },
     'joinedChannel': {

@@ -482,6 +482,52 @@ class AppStrings {
       'pt': 'Preparação Familiar', 'fr': 'Préparation familiale',
     },
 
+    // ── AI / Updates (ES/EN/PT/FR) ──
+    'load': {
+      'es': 'Cargar', 'en': 'Load', 'pt': 'Carregar', 'fr': 'Charger',
+    },
+    'loadAnyway': {
+      'es': 'Cargar igual', 'en': 'Load anyway',
+      'pt': 'Carregar mesmo assim', 'fr': 'Charger quand même',
+    },
+    'discard': {
+      'es': 'Descartar', 'en': 'Discard', 'pt': 'Descartar', 'fr': 'Rejeter',
+    },
+    'stop': {
+      'es': 'Detener', 'en': 'Stop', 'pt': 'Parar', 'fr': 'Arrêter',
+    },
+    'tightMemory': {
+      'es': 'Memoria ajustada', 'en': 'Tight memory',
+      'pt': 'Memória apertada', 'fr': 'Mémoire limitée',
+    },
+    'model': {
+      'es': 'Modelo', 'en': 'Model', 'pt': 'Modelo', 'fr': 'Modèle',
+    },
+    'downloadReady': {
+      'es': 'Descarga lista.', 'en': 'Download ready.',
+      'pt': 'Download pronto.', 'fr': 'Téléchargement prêt.',
+    },
+    'saveAndSearch': {
+      'es': 'Guardar y buscar', 'en': 'Save and check',
+      'pt': 'Salvar e buscar', 'fr': 'Enregistrer et vérifier',
+    },
+    'installNow': {
+      'es': 'Instalar ahora', 'en': 'Install now',
+      'pt': 'Instalar agora', 'fr': 'Installer maintenant',
+    },
+    'updateServer': {
+      'es': 'Servidor de actualizaciones', 'en': 'Update server',
+      'pt': 'Servidor de atualizações', 'fr': 'Serveur de mises à jour',
+    },
+    'server': {
+      'es': 'Servidor', 'en': 'Server', 'pt': 'Servidor', 'fr': 'Serveur',
+    },
+    'upToDate': {
+      'es': 'Ya tienes la última versión.', 'en': 'You have the latest version.',
+      'pt': 'Você já tem a versão mais recente.',
+      'fr': 'Vous avez la dernière version.',
+    },
+
     // ── Welcome wizard ──
     'welcomeTitle': {
       'es': 'Bienvenido a Prepper Pad',

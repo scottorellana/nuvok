@@ -6,6 +6,7 @@ import '../../core/prepper_library.dart';
 import 'emergency_retriever.dart';
 import 'library_retriever.dart';
 import 'llama_server.dart';
+import '../../core/locale_service.dart';
 
 class ChatMessage {
   ChatMessage(this.role, this.text, {this.sources = const []});
@@ -72,7 +73,7 @@ class _AiPageState extends State<AiPage> {
       final proceed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Memoria ajustada'),
+          title: Text(tr(context, 'tightMemory')),
           content: Text(
             'Este modelo pesa ${humanSize(size)} y tu memoria libre '
             'aproximada es ${humanSize(free)}. Cargarlo puede hacer lenta '
@@ -81,11 +82,11 @@ class _AiPageState extends State<AiPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancelar'),
+              child: Text(tr(context, 'cancel')),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Cargar igual'),
+              child: Text(tr(context, 'loadAnyway')),
             ),
           ],
         ),
@@ -193,9 +194,37 @@ class _AiPageState extends State<AiPage> {
 
   @override
   Widget build(BuildContext context) {
+    // iOS forbids spawning child processes, and the local AI runs llama-server
+    // as one — so on iPhone/iPad v1 the assistant is honestly unavailable
+    // instead of silently broken. Everything else works in full.
+    if (Platform.isIOS) {
+      return Scaffold(
+        appBar: AppBar(title: Text(tr(context, 'assistant'))),
+        body: const Center(
+          child: Padding(
+            padding: EdgeInsets.all(32),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.psychology_outlined, size: 56, color: Colors.grey),
+                SizedBox(height: 16),
+                Text(
+                  'El asistente de IA local estará disponible en iPhone y '
+                  'iPad en una próxima versión.\n\n'
+                  'En tablet Android, Mac y PC ya funciona. Todo lo demás — '
+                  'mapas, comunicación de emergencia, biblioteca y guías — '
+                  'funciona completo en este dispositivo, sin internet.',
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Asistente IA'),
+        title: Text(tr(context, 'assistant')),
         actions: [
           Row(
             children: [
@@ -214,7 +243,7 @@ class _AiPageState extends State<AiPage> {
               const SizedBox(width: 8),
               const Icon(Icons.menu_book_outlined, size: 18),
               const SizedBox(width: 4),
-              const Text('Biblioteca'),
+              Text(tr(context, 'library')),
               Switch(
                 value: _useLibrary,
                 onChanged: (v) => setState(() => _useLibrary = v),
@@ -238,8 +267,8 @@ class _AiPageState extends State<AiPage> {
                     key: ValueKey(_selectedModel),
                     initialValue: _selectedModel,
                     isDense: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Modelo',
+                    decoration: InputDecoration(
+                      labelText: tr(context, 'model'),
                       border: OutlineInputBorder(),
                       isDense: true,
                     ),
@@ -286,17 +315,22 @@ class _AiPageState extends State<AiPage> {
                     actions: [
                       TextButton(
                         onPressed: () => _server.stop(),
-                        child: const Text('Descartar'),
+                        child: Text(tr(context, 'discard')),
                       ),
                     ],
                   ),
                 Expanded(
-                  child: ListView.builder(
-                    controller: _scroll,
-                    padding: const EdgeInsets.all(16),
-                    itemCount: _messages.length,
-                    itemBuilder: (context, i) => _Bubble(message: _messages[i]),
-                  ),
+                  child: _messages.isEmpty
+                      ? AiEmptyState(
+                          selectedModelPath: _selectedModel,
+                          server: _server,
+                        )
+                      : ListView.builder(
+                          controller: _scroll,
+                          padding: const EdgeInsets.all(16),
+                          itemCount: _messages.length,
+                          itemBuilder: (context, i) => _Bubble(message: _messages[i]),
+                        ),
                 ),
                 SafeArea(
                   child: Padding(
@@ -341,6 +375,74 @@ class _AiPageState extends State<AiPage> {
   }
 }
 
+class AiEmptyState extends StatelessWidget {
+  const AiEmptyState({super.key, required this.selectedModelPath, required this.server});
+
+  final String? selectedModelPath;
+  final LlamaServer server;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final modelName = selectedModelPath == null
+        ? 'sin modelo seleccionado'
+        : File(selectedModelPath!).uri.pathSegments.last;
+    final status = switch (server.status) {
+      LlamaStatus.stopped => 'Pulsa Cargar arriba para iniciar el modelo local.',
+      LlamaStatus.starting => 'Cargando el modelo local… puede tardar varios minutos.',
+      LlamaStatus.running => 'Modelo listo. Escribe tu pregunta abajo.',
+      LlamaStatus.error => server.lastError ?? 'El motor de IA reportó un error.',
+    };
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 560),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.psychology_alt_outlined,
+                    size: 56,
+                    color: scheme.primary,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Modelo local encontrado',
+                    style: Theme.of(context).textTheme.titleLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    modelName,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    status,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Si ves la pantalla oscura, espera a que el estado cambie o vuelve atrás; '
+                    'la app ya no debe quedarse sin mensaje visible.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _ServerButton extends StatelessWidget {
   const _ServerButton({required this.server, required this.onLoad});
   final LlamaServer server;
@@ -354,7 +456,7 @@ class _ServerButton extends StatelessWidget {
         return FilledButton.icon(
           onPressed: onLoad,
           icon: const Icon(Icons.play_arrow),
-          label: const Text('Cargar'),
+          label: Text(tr(context, 'load')),
         );
       case LlamaStatus.starting:
         return const FilledButton(
@@ -369,7 +471,7 @@ class _ServerButton extends StatelessWidget {
         return OutlinedButton.icon(
           onPressed: () => server.stop(),
           icon: const Icon(Icons.stop),
-          label: const Text('Detener'),
+          label: Text(tr(context, 'stop')),
         );
     }
   }

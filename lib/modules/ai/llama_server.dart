@@ -16,6 +16,7 @@ class LlamaServer extends ChangeNotifier {
   Process? _process;
   int? _port;
   String? _modelPath;
+  final List<String> _recentOutput = [];
   LlamaStatus status = LlamaStatus.stopped;
   String? lastError;
 
@@ -75,6 +76,7 @@ class LlamaServer extends ChangeNotifier {
 
   Future<void> start(String modelPath) async {
     await stop();
+    _recentOutput.clear();
     final binary = findBinary();
     if (binary == null) {
       status = LlamaStatus.error;
@@ -108,37 +110,49 @@ class LlamaServer extends ChangeNotifier {
       _process!.exitCode.then((code) {
         if (status == LlamaStatus.running || status == LlamaStatus.starting) {
           status = LlamaStatus.error;
-          lastError = 'El motor de IA se cerró inesperadamente (código $code)';
+          final tail = _recentOutput.isEmpty ? '' : '\n${_recentOutput.join('\n')}';
+          lastError = 'El motor de IA se cerró inesperadamente (código $code)$tail';
           _process = null;
           notifyListeners();
         }
       });
       // Drain output to avoid blocking the child.
-      _process!.stdout.transform(utf8.decoder).listen((_) {});
-      _process!.stderr.transform(utf8.decoder).listen((_) {});
+      void remember(String chunk) {
+        for (final line in chunk.split('\n')) {
+          final trimmed = line.trim();
+          if (trimmed.isEmpty) continue;
+          _recentOutput.add(trimmed);
+          if (_recentOutput.length > 8) _recentOutput.removeAt(0);
+        }
+      }
+
+      _process!.stdout.transform(utf8.decoder).listen(remember);
+      _process!.stderr.transform(utf8.decoder).listen(remember);
 
       // Wait for /health to come up (model load can take a while).
       final client = HttpClient();
-      final deadline = DateTime.now().add(const Duration(minutes: 5));
-      while (DateTime.now().isBefore(deadline)) {
-        if (_process == null) return; // crashed during load
-        try {
-          final req = await client
-              .getUrl(baseUri.replace(path: '/health'))
-              .timeout(const Duration(seconds: 2));
-          final res = await req.close().timeout(const Duration(seconds: 2));
-          await res.drain<void>();
-          if (res.statusCode == 200) {
-            status = LlamaStatus.running;
-            notifyListeners();
-            client.close();
-            return;
-          }
-        } catch (_) {}
-        await Future<void>.delayed(const Duration(milliseconds: 700));
+      try {
+        final deadline = DateTime.now().add(const Duration(minutes: 5));
+        while (DateTime.now().isBefore(deadline)) {
+          if (_process == null) return; // crashed during load
+          try {
+            final req = await client
+                .getUrl(baseUri.replace(path: '/health'))
+                .timeout(const Duration(seconds: 2));
+            final res = await req.close().timeout(const Duration(seconds: 2));
+            await res.drain<void>();
+            if (res.statusCode == 200) {
+              status = LlamaStatus.running;
+              notifyListeners();
+              return;
+            }
+          } catch (_) {}
+          await Future<void>.delayed(const Duration(milliseconds: 700));
+        }
+        throw TimeoutException('El modelo tardó demasiado en cargar');
+      } finally {
+        client.close();
       }
-      client.close();
-      throw TimeoutException('El modelo tardó demasiado en cargar');
     } catch (e) {
       status = LlamaStatus.error;
       lastError = e.toString();

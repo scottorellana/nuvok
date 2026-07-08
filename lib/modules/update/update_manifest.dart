@@ -15,18 +15,35 @@
 //   }
 // }
 class UpdatePlatformAsset {
-  UpdatePlatformAsset({required this.url, this.sha256, this.sizeBytes});
+  UpdatePlatformAsset({
+    required this.url,
+    required this.sha256,
+    required this.sizeBytes,
+  });
 
   final String url;
-  final String? sha256; // hex digest, verified after download when present
-  final int? sizeBytes; // for progress display before the download starts
+  final String sha256; // hex digest, verified after download
+  final int sizeBytes; // expected exact size; prevents unbounded disk writes
 
-  factory UpdatePlatformAsset.fromJson(Map<String, dynamic> j) =>
-      UpdatePlatformAsset(
-        url: j['url'] as String,
-        sha256: j['sha256'] as String?,
-        sizeBytes: (j['sizeBytes'] as num?)?.toInt(),
-      );
+  factory UpdatePlatformAsset.fromJson(Map<String, dynamic> j) {
+    final url = j['url'] as String?;
+    final sha256 = j['sha256'] as String?;
+    final sizeBytes = ((j['sizeBytes'] ?? j['size']) as num?)?.toInt();
+    if (url == null || url.trim().isEmpty) {
+      throw const FormatException('update asset url requerido');
+    }
+    if (sha256 == null || !RegExp(r'^[a-fA-F0-9]{64}$').hasMatch(sha256)) {
+      throw const FormatException('update asset sha256 inválido');
+    }
+    if (sizeBytes == null || sizeBytes <= 0) {
+      throw const FormatException('update asset sizeBytes inválido');
+    }
+    return UpdatePlatformAsset(
+      url: url,
+      sha256: sha256.toLowerCase(),
+      sizeBytes: sizeBytes,
+    );
+  }
 }
 
 class UpdateManifest {

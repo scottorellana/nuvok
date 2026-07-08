@@ -4,7 +4,9 @@
 // action. Lives in Depósito → App, next to the other "get more" tabs.
 import 'package:flutter/material.dart';
 
+import '../../core/prepper_library.dart';
 import 'update_service.dart';
+import '../../core/locale_service.dart';
 
 /// Thin banner shown app-wide, same visual language as the low-battery
 /// banner — an update is good news, so it's olive instead of red.
@@ -83,6 +85,54 @@ class _UpdatePageState extends State<UpdatePage> {
     if (mounted) setState(() {});
   }
 
+  /// host — while letting every device update from one computer on the LAN.
+  Future<void> _configureServer() async {
+    final current =
+        PrepperLibrary.instance.settings['localMapServer'] as String?;
+    final ctrl = TextEditingController(text: current ?? 'http://');
+    final serverDialogWidth =
+        (MediaQuery.of(context).size.width - 48).clamp(280.0, 480.0).toDouble();
+    final base = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(tr(context, 'updateServer')),
+        content: SizedBox(
+          width: serverDialogWidth,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Dirección del Prepper Pad servidor en tu red (la misma de '
+                'los mapas). Todos los aparatos en esa WiFi se actualizan '
+                'desde ahí, sin internet.',
+                style: TextStyle(fontSize: 13, color: Colors.grey),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: ctrl,
+                autofocus: true,
+                keyboardType: TextInputType.url,
+                decoration:
+                    const InputDecoration(labelText: 'http://192.168.x.x:8848'),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(tr(context, 'cancel'))),
+          FilledButton(
+              onPressed: () => Navigator.pop(context, ctrl.text.trim()),
+              child: Text(tr(context, 'saveAndSearch'))),
+        ],
+      ),
+    );
+    if (base == null || base.isEmpty || base == 'http://') return;
+    await _service.setLocalServer(base);
+    await _service.check();
+  }
+
   @override
   Widget build(BuildContext context) {
     final u = _service;
@@ -124,10 +174,20 @@ class _UpdatePageState extends State<UpdatePage> {
                             height: 20,
                             child: CircularProgressIndicator(strokeWidth: 2))
                       else
-                        OutlinedButton.icon(
-                          onPressed: () => u.check(),
-                          icon: const Icon(Icons.refresh, size: 18),
-                          label: const Text('Buscar'),
+                        Wrap(
+                          spacing: 8,
+                          children: [
+                            OutlinedButton.icon(
+                              onPressed: _configureServer,
+                              icon: const Icon(Icons.lan, size: 18),
+                              label: Text(tr(context, 'server')),
+                            ),
+                            OutlinedButton.icon(
+                              onPressed: () => u.check(),
+                              icon: const Icon(Icons.refresh, size: 18),
+                              label: Text(tr(context, 'search')),
+                            ),
+                          ],
                         ),
                     ],
                   ),
@@ -149,18 +209,36 @@ class _UpdatePageState extends State<UpdatePage> {
       case UpdateState.checking:
         return const Text('Buscando…', style: TextStyle(color: Colors.grey));
       case UpdateState.upToDate:
-        return const Row(
+        return Row(
           children: [
             Icon(Icons.check_circle, color: Colors.green, size: 20),
             SizedBox(width: 8),
-            Text('Ya tienes la última versión.'),
+            Text(tr(context, 'upToDate')),
           ],
         );
       case UpdateState.error:
-        return Text(
-          'No se pudo comprobar (sin internet o el servidor no responde). '
-          'Se sigue usando la versión instalada normalmente.',
-          style: TextStyle(color: Theme.of(context).hintColor),
+        final noSource = !u.hasManifestSource;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              noSource
+                  ? 'Aún no hay servidor de actualizaciones configurado. '
+                      'Apunta la app a tu computadora con Prepper Pad en la '
+                      'misma WiFi (sin internet).'
+                  : 'No se pudo comprobar (¿misma WiFi que el servidor?). '
+                      'Se sigue usando la versión instalada normalmente.',
+              style: TextStyle(color: Theme.of(context).hintColor),
+            ),
+            const SizedBox(height: 10),
+            FilledButton.tonalIcon(
+              onPressed: _configureServer,
+              icon: const Icon(Icons.lan, size: 18),
+              label: Text(noSource
+                  ? 'Configurar servidor local'
+                  : 'Revisar servidor local'),
+            ),
+          ],
         );
       case UpdateState.available:
         final asset =
@@ -181,8 +259,7 @@ class _UpdatePageState extends State<UpdatePage> {
               icon: const Icon(Icons.download),
               label: Text(asset == null
                   ? 'No disponible para este dispositivo'
-                  : 'Descargar actualización'
-                      '${asset.sizeBytes != null ? ' (${_humanSize(asset.sizeBytes!)})' : ''}'),
+                  : 'Descargar actualización (${_humanSize(asset.sizeBytes)})'),
             ),
           ],
         );
@@ -202,18 +279,18 @@ class _UpdatePageState extends State<UpdatePage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
                 Icon(Icons.check_circle, color: Colors.lightGreen, size: 20),
                 SizedBox(width: 8),
-                Text('Descarga lista.'),
+                Text(tr(context, 'downloadReady')),
               ],
             ),
             const SizedBox(height: 10),
             FilledButton.icon(
               onPressed: u.install,
               icon: const Icon(Icons.system_update_alt),
-              label: const Text('Instalar ahora'),
+              label: Text(tr(context, 'installNow')),
             ),
             const SizedBox(height: 6),
             Text(

@@ -32,15 +32,18 @@ class UpdateService extends ChangeNotifier {
   UpdateService._();
   static final UpdateService instance = UpdateService._();
 
-  /// Public manifest URL. No auth, no secrets — this is what makes it safe
-  /// to ship inside the app, unlike a token for the private source repo.
-  /// Overridable so a build (or the user, via Configuración avanzada) can
-  /// point at a different host without a code change.
-  static const String defaultManifestUrl =
-      'https://prepperpad.app/updates/version.json';
+  /// LAN-first by design: this build keeps everything private, so updates are
+  /// served by the Prepper Pad "installer-server" running on a computer on the
+  /// same WiFi (it already exposes /version.json + the binaries). There is no
+  /// public host. The address is derived from the local server the user set
+  /// for maps, or set explicitly here — see [resolveManifestUrl].
+  static const String defaultManifestUrl = '';
 
   String _manifestUrl = defaultManifestUrl;
   String get manifestUrl => _manifestUrl;
+
+  /// Whether we have somewhere to check at all (a local server is configured).
+  bool get hasManifestSource => _manifestUrl.isNotEmpty;
 
   UpdateState state = UpdateState.idle;
   UpdateManifest? latest;
@@ -55,13 +58,35 @@ class UpdateService extends ChangeNotifier {
   Future<void> init() async {
     final info = await PackageInfo.fromPlatform();
     currentVersion = info.version;
-    final saved =
-        PrepperLibrary.instance.settings['updateManifestUrl'] as String?;
-    if (saved != null && saved.isNotEmpty) _manifestUrl = saved;
+    _manifestUrl = _resolveManifestUrl();
+  }
+
+  /// Resolves where to check for updates: an explicit override wins, otherwise
+  /// we reuse the local map/content server the user already configured (the
+  /// installer-server serves /version.json too). Keeps a single "your computer
+  /// on the WiFi" address for both maps and updates.
+  String _resolveManifestUrl() {
+    final settings = PrepperLibrary.instance.settings;
+    final explicit = settings['updateManifestUrl'] as String?;
+    if (explicit != null && explicit.isNotEmpty) return explicit;
+    final localServer = settings['localMapServer'] as String?;
+    if (localServer != null && localServer.isNotEmpty) {
+      return '${localServer.replaceAll(RegExp(r'/+$'), '')}/version.json';
+    }
+    return defaultManifestUrl;
+  }
+
+  /// Point updates at a local server base URL (e.g. http://192.168.1.5:8848).
+  /// Shared with the maps installer so the user configures it once.
+  Future<void> setLocalServer(String baseUrl) async {
+    final clean = baseUrl.trim().replaceAll(RegExp(r'/+$'), '');
+    await PrepperLibrary.instance.saveSetting('localMapServer', clean);
+    _manifestUrl = clean.isEmpty ? defaultManifestUrl : '$clean/version.json';
+    notifyListeners();
   }
 
   Future<void> setManifestUrl(String url) async {
-    _manifestUrl = url.trim().isEmpty ? defaultManifestUrl : url.trim();
+    _manifestUrl = url.trim();
     await PrepperLibrary.instance
         .saveSetting('updateManifestUrl', _manifestUrl);
     notifyListeners();
@@ -71,19 +96,27 @@ class UpdateService extends ChangeNotifier {
   /// pull-to-refresh) — never throws, never blocks, and does nothing harmful
   /// if there's no connection.
   Future<void> check({Duration timeout = const Duration(seconds: 6)}) async {
+    // Re-resolve in case the user just set the local server.
+    if (_manifestUrl.isEmpty) _manifestUrl = _resolveManifestUrl();
+    if (_manifestUrl.isEmpty) {
+      // No update source configured yet — not an error the user did wrong.
+      state = UpdateState.error;
+      error = 'Configura el servidor local para buscar actualizaciones.';
+      notifyListeners();
+      return;
+    }
     state = UpdateState.checking;
     error = null;
     notifyListeners();
+    final client = HttpClient()..connectionTimeout = timeout;
     try {
       currentVersion ??= (await PackageInfo.fromPlatform()).version;
-      final client = HttpClient()..connectionTimeout = timeout;
       final req = await client.getUrl(Uri.parse(_manifestUrl)).timeout(timeout);
       final res = await req.close().timeout(timeout);
       if (res.statusCode != 200) {
         throw HttpException('HTTP ${res.statusCode}');
       }
       final body = await res.transform(utf8.decoder).join();
-      client.close();
       final manifest =
           UpdateManifest.fromJson(jsonDecode(body) as Map<String, dynamic>);
       latest = manifest;
@@ -99,6 +132,11 @@ class UpdateService extends ChangeNotifier {
       // the expected common case for an offline-first app, not a crash.
       state = UpdateState.error;
       error = e.toString();
+    } finally {
+      // close() must run on every exit path. Without this, a mid-stream
+      // network drop leaks the HttpClient and its sockets — repeated failed
+      // check() calls would accumulate until OOM.
+      client.close(force: true);
     }
     notifyListeners();
   }
@@ -117,6 +155,44 @@ class UpdateService extends ChangeNotifier {
     return m.platforms[key];
   }
 
+  Uri _resolveAssetUri(String rawUrl) {
+    final uri = Uri.parse(rawUrl.trim());
+    final base = Uri.parse(_manifestUrl);
+    final resolved = uri.hasScheme ? uri : base.resolveUri(uri);
+    if (resolved.scheme != 'http' && resolved.scheme != 'https') {
+      throw const FormatException(
+          'Solo se permiten actualizaciones http/https');
+    }
+    if (resolved.userInfo.isNotEmpty) {
+      throw const FormatException(
+          'URL de actualización con credenciales no permitida');
+    }
+    // LAN/offline updates are same-origin: the manifest and APK/DMG must come
+    // from the same local installer. This avoids a malicious/stale manifest
+    // redirecting downloads to arbitrary hosts while still supporting relative
+    // /download/... URLs from installer-server.
+    if (resolved.scheme != base.scheme ||
+        resolved.host != base.host ||
+        resolved.port != base.port) {
+      throw const FormatException(
+          'El instalador debe estar en el mismo servidor que el manifiesto');
+    }
+    return resolved;
+  }
+
+  String _downloadFileName(Uri uri) {
+    final segments = uri.pathSegments;
+    if (segments.isEmpty || segments.last.isEmpty) {
+      return 'prepper-pad-update.bin';
+    }
+    final name = segments.last;
+    final safe = RegExp(r'^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$');
+    if (name == '.' || name == '..' || !safe.hasMatch(name)) {
+      throw const FormatException('Nombre de instalador inseguro');
+    }
+    return name;
+  }
+
   /// Downloads the update for this platform to the library's updates folder,
   /// verifying the checksum when the manifest provides one — a corrupt or
   /// tampered download must never be handed to the OS installer.
@@ -128,40 +204,47 @@ class UpdateService extends ChangeNotifier {
     downloadProgress = 0;
     error = null;
     notifyListeners();
+    final client = HttpClient();
+    IOSink? sink;
     try {
       final dir = await _updatesDir();
-      final fileName = asset.url.split('/').last;
+      final assetUri = _resolveAssetUri(asset.url);
+      final fileName = _downloadFileName(assetUri);
       final dest = File('${dir.path}/$fileName');
       final part = File('${dest.path}.part');
 
-      final client = HttpClient();
-      final req = await client.getUrl(Uri.parse(asset.url));
+      final req = await client.getUrl(assetUri);
       final res = await req.close();
-      final total =
-          res.contentLength > 0 ? res.contentLength : asset.sizeBytes ?? 0;
+      if (res.statusCode != 200) {
+        throw HttpException('HTTP ${res.statusCode}', uri: assetUri);
+      }
+      final total = asset.sizeBytes;
       var received = 0;
-      final sink = part.openWrite();
+      sink = part.openWrite();
       await for (final chunk in res) {
-        sink.add(chunk);
         received += chunk.length;
-        if (total > 0) {
-          downloadProgress = received / total;
-          notifyListeners();
+        if (received > total) {
+          throw Exception('Descarga excede el tamaño esperado');
         }
+        sink.add(chunk);
+        downloadProgress = received / total;
+        notifyListeners();
       }
       await sink.close();
-      client.close();
+      sink = null;
 
-      if (asset.sha256 != null) {
-        // Hash the file we just wrote (these are tens of MB, fine to read
-        // back in one pass) — a corrupt or tampered download must never
-        // reach the OS installer.
-        final got = sha256.convert(await part.readAsBytes()).toString();
-        if (got.toLowerCase() != asset.sha256!.toLowerCase()) {
-          await part.delete();
-          throw Exception(
-              'Verificación de integridad fallida (sha256 no coincide)');
-        }
+      if (received != total) {
+        await part.delete();
+        throw Exception('Descarga incompleta ($received != $total bytes)');
+      }
+
+      // Hash the file as a stream. Release APK/DMG files can be >1 GB; reading
+      // them with readAsBytes() would spike RAM and can kill the app on phones.
+      final got = await sha256.bind(part.openRead()).first;
+      if (got.toString() != asset.sha256.toLowerCase()) {
+        await part.delete();
+        throw Exception(
+            'Verificación de integridad fallida (sha256 no coincide)');
       }
       if (await dest.exists()) await dest.delete();
       await part.rename(dest.path);
@@ -170,6 +253,14 @@ class UpdateService extends ChangeNotifier {
     } catch (e) {
       state = UpdateState.error;
       error = e.toString();
+    } finally {
+      // Close the sink first (if it's still open after an exception), then
+      // the HTTP client. Without this, a network drop mid-stream leaks
+      // both the file writer and the HttpClient.
+      try {
+        await sink?.close();
+      } catch (_) {}
+      client.close(force: true);
     }
     notifyListeners();
   }

@@ -230,6 +230,191 @@ class AppStrings {
       'ht': 'Plis modil',
     },
 
+    // ── Mesh / Communication (core: the emergency chat itself) ──
+    'meshTitle': {
+      'es': 'Comunicación (sin internet)', 'en': 'Communication (no internet)',
+      'pt': 'Comunicação (sem internet)', 'fr': 'Communication (sans internet)',
+      'zh': '通信（无需互联网）', 'ja': '通信（インターネット不要）',
+      'ht': 'Kominikasyon (san entènèt)',
+    },
+    'nearby': {
+      'es': 'cerca', 'en': 'nearby', 'pt': 'por perto',
+      'fr': 'à proximité', 'zh': '附近', 'ja': '近く', 'ht': 'toupre',
+    },
+    'searchingDevices': {
+      'es': 'buscando dispositivos…', 'en': 'searching for devices…',
+      'pt': 'procurando dispositivos…', 'fr': 'recherche d\'appareils…',
+      'zh': '正在搜索设备…', 'ja': 'デバイスを検索中…', 'ht': 'ap chèche aparèy…',
+    },
+    'queuedNoReach': {
+      'es': 'en cola (sin alcance)', 'en': 'queued (out of reach)',
+      'pt': 'na fila (fora de alcance)', 'fr': 'en attente (hors de portée)',
+      'zh': '排队中（无法送达）', 'ja': '送信待ち（圏外）',
+      'ht': 'nan liy (pa gen rive)',
+    },
+    'emergencyAskHelp': {
+      'es': 'Emergencia — pedir ayuda', 'en': 'Emergency — ask for help',
+      'pt': 'Emergência — pedir ajuda', 'fr': 'Urgence — demander de l\'aide',
+      'zh': '紧急情况 — 求助', 'ja': '緊急 — 助けを求める',
+      'ht': 'Ijans — mande èd',
+    },
+    'activateSosQ': {
+      'es': '¿Activar SOS?', 'en': 'Activate SOS?', 'pt': 'Ativar SOS?',
+      'fr': 'Activer le SOS ?', 'zh': '激活SOS？', 'ja': 'SOSを発信しますか？',
+      'ht': 'Aktive SOS?',
+    },
+    'sosBody': {
+      'es': 'Tu posición y esta nota se difundirán cada minuto a TODOS los '
+          'Prepper Pad al alcance (no solo tu grupo), hasta que lo canceles.',
+      'en': 'Your position and this note will broadcast every minute to ALL '
+          'Prepper Pads in range (not just your group) until you cancel.',
+      'pt': 'Sua posição e esta nota serão transmitidas a cada minuto a '
+          'TODOS os Prepper Pads ao alcance (não só seu grupo), até cancelar.',
+      'fr': 'Votre position et cette note seront diffusées chaque minute à '
+          'TOUS les Prepper Pads à portée (pas seulement votre groupe), '
+          'jusqu\'à annulation.',
+      'zh': '您的位置和此备注将每分钟广播给范围内的所有Prepper Pad（不仅是您的群组），直到您取消。',
+      'ja': 'あなたの位置とメモは、キャンセルするまで毎分、範囲内のすべてのPrepper Padに送信されます（グループ外にも）。',
+      'ht': 'Pozisyon ou ak nòt sa a ap difize chak minit bay TOUT Prepper '
+          'Pad ki nan zòn nan, jiskaske ou anile li.',
+    },
+    'sosNoteHint': {
+      'es': 'Nota (opcional): ¿qué pasa?', 'en': 'Note (optional): what\'s happening?',
+      'pt': 'Nota (opcional): o que houve?', 'fr': 'Note (optionnel) : que se passe-t-il ?',
+      'zh': '备注（可选）：发生了什么？', 'ja': 'メモ（任意）：何が起きていますか？',
+      'ht': 'Nòt (si ou vle): kisa k ap pase?',
+    },
+    'activateSos': {
+      'es': 'ACTIVAR SOS', 'en': 'ACTIVATE SOS', 'pt': 'ATIVAR SOS',
+      'fr': 'ACTIVER SOS', 'zh': '激活SOS', 'ja': 'SOS発信',
+      'ht': 'AKTIVE SOS',
+    },
+    'imSafeCancelSos': {
+      'es': 'ESTOY A SALVO (cancelar SOS)', 'en': "I'M SAFE (cancel SOS)",
+      'pt': 'ESTOU BEM (cancelar SOS)', 'fr': 'JE SUIS EN SÉCURITÉ (annuler)',
+      'zh': '我安全了（取消SOS）', 'ja': '安全です（SOS解除）',
+      'ht': 'M BYEN (anile SOS)',
+    },
+    'shareMyPosition': {
+      'es': 'Compartir mi posición', 'en': 'Share my position',
+      'pt': 'Compartilhar minha posição', 'fr': 'Partager ma position',
+      'zh': '分享我的位置', 'ja': '位置を共有', 'ht': 'Pataje pozisyon mwen',
+    },
+    'channels': {
+      'es': 'Canales', 'en': 'Channels', 'pt': 'Canais',
+      'fr': 'Canaux', 'zh': '频道', 'ja': 'チャンネル', 'ht': 'Kanal',
+    },
+    'createChannel': {
+      'es': 'Crear canal', 'en': 'Create channel', 'pt': 'Criar canal',
+      'fr': 'Créer un canal', 'zh': '创建频道', 'ja': 'チャンネル作成',
+      'ht': 'Kreye kanal',
+    },
+    'joinChannel': {
+      'es': 'Unirse a un canal', 'en': 'Join a channel',
+      'pt': 'Entrar em um canal', 'fr': 'Rejoindre un canal',
+      'zh': '加入频道', 'ja': 'チャンネルに参加', 'ht': 'Antre nan yon kanal',
+    },
+    'join': {
+      'es': 'Unirme', 'en': 'Join', 'pt': 'Entrar',
+      'fr': 'Rejoindre', 'zh': '加入', 'ja': '参加', 'ht': 'Antre',
+    },
+    'create': {
+      'es': 'Crear', 'en': 'Create', 'pt': 'Criar',
+      'fr': 'Créer', 'zh': '创建', 'ja': '作成', 'ht': 'Kreye',
+    },
+    'done': {
+      'es': 'Listo', 'en': 'Done', 'pt': 'Pronto',
+      'fr': 'Terminé', 'zh': '完成', 'ja': '完了', 'ht': 'Fini',
+    },
+    'copyCode': {
+      'es': 'Copiar código', 'en': 'Copy code', 'pt': 'Copiar código',
+      'fr': 'Copier le code', 'zh': '复制代码', 'ja': 'コードをコピー',
+      'ht': 'Kopye kòd la',
+    },
+    'codeCopied': {
+      'es': 'Código copiado', 'en': 'Code copied', 'pt': 'Código copiado',
+      'fr': 'Code copié', 'zh': '代码已复制', 'ja': 'コードをコピーしました',
+      'ht': 'Kòd kopye',
+    },
+    'invalidCode': {
+      'es': 'Código inválido — revisa que esté completo.',
+      'en': 'Invalid code — check that it\'s complete.',
+      'pt': 'Código inválido — verifique se está completo.',
+      'fr': 'Code invalide — vérifiez qu\'il est complet.',
+      'zh': '代码无效 — 请检查是否完整。',
+      'ja': 'コードが無効です — 完全か確認してください。',
+      'ht': 'Kòd la pa bon — verifye li konplè.',
+    },
+    'groupNameHint': {
+      'es': 'Nombre del grupo (ej. Familia)', 'en': 'Group name (e.g. Family)',
+      'pt': 'Nome do grupo (ex. Família)', 'fr': 'Nom du groupe (ex. Famille)',
+      'zh': '群组名称（如：家人）', 'ja': 'グループ名（例：家族）',
+      'ht': 'Non gwoup la (egz. Fanmi)',
+    },
+    'pasteCodeHint': {
+      'es': 'Pega el código PPMESH1:…', 'en': 'Paste the PPMESH1:… code',
+      'pt': 'Cole o código PPMESH1:…', 'fr': 'Collez le code PPMESH1:…',
+      'zh': '粘贴 PPMESH1:… 代码', 'ja': 'PPMESH1:… コードを貼り付け',
+      'ht': 'Kole kòd PPMESH1:… a',
+    },
+    'askCreator': {
+      'es': 'Pídelo al que creó el canal', 'en': 'Ask the channel creator',
+      'pt': 'Peça a quem criou o canal', 'fr': 'Demandez au créateur du canal',
+      'zh': '向频道创建者索取', 'ja': 'チャンネル作成者に聞いてください',
+      'ht': 'Mande moun ki kreye kanal la',
+    },
+    'joinInstructions': {
+      'es': 'En el otro dispositivo: Comunicación → Unirse y pega este '
+          'código (o escanea el QR cuando tengas lector).',
+      'en': 'On the other device: Communication → Join and paste this code '
+          '(or scan the QR when you have a reader).',
+      'pt': 'No outro dispositivo: Comunicação → Entrar e cole este código '
+          '(ou escaneie o QR quando tiver leitor).',
+      'fr': 'Sur l\'autre appareil : Communication → Rejoindre et collez ce '
+          'code (ou scannez le QR).',
+      'zh': '在另一台设备上：通信 → 加入，粘贴此代码（或扫描二维码）。',
+      'ja': '他のデバイスで：通信 → 参加でこのコードを貼り付け（またはQRをスキャン）。',
+      'ht': 'Sou lòt aparèy la: Kominikasyon → Antre epi kole kòd sa a.',
+    },
+    'joinedChannel': {
+      'es': 'Unido a', 'en': 'Joined', 'pt': 'Entrou em',
+      'fr': 'Rejoint', 'zh': '已加入', 'ja': '参加しました:', 'ht': 'Ou antre nan',
+    },
+    'channelWord': {
+      'es': 'Canal', 'en': 'Channel', 'pt': 'Canal',
+      'fr': 'Canal', 'zh': '频道', 'ja': 'チャンネル', 'ht': 'Kanal',
+    },
+    'meshOnboardTitle': {
+      'es': 'Prepper Mesh', 'en': 'Prepper Mesh', 'pt': 'Prepper Mesh',
+      'fr': 'Prepper Mesh', 'zh': 'Prepper Mesh', 'ja': 'Prepper Mesh',
+      'ht': 'Prepper Mesh',
+    },
+    'meshOnboardSubtitle': {
+      'es': 'Conexión de emergencia sin internet',
+      'en': 'Emergency connection without internet',
+      'pt': 'Conexão de emergência sem internet',
+      'fr': 'Connexion d\'urgence sans internet',
+      'zh': '无需互联网的紧急连接',
+      'ja': 'インターネット不要の緊急通信',
+      'ht': 'Koneksyon ijans san entènèt',
+    },
+    'deviceNameLabel': {
+      'es': 'Nombre de este dispositivo', 'en': 'Name of this device',
+      'pt': 'Nome deste dispositivo', 'fr': 'Nom de cet appareil',
+      'zh': '此设备的名称', 'ja': 'このデバイスの名前',
+      'ht': 'Non aparèy sa a',
+    },
+    'deviceNameHint': {
+      'es': 'ej. Tablet de Ana', 'en': 'e.g. Ana\'s tablet',
+      'pt': 'ex. Tablet da Ana', 'fr': 'ex. Tablette d\'Ana',
+      'zh': '如：安娜的平板', 'ja': '例：アナのタブレット',
+      'ht': 'egz. Tablèt Ana',
+    },
+    'start': {
+      'es': 'Empezar', 'en': 'Start', 'pt': 'Começar',
+      'fr': 'Commencer', 'zh': '开始', 'ja': '開始', 'ht': 'Kòmanse',
+    },
+
     // ── Battery banner (core: safety-relevant) ──
     'lowBattery': {
       'es': 'Batería baja', 'en': 'Low battery', 'pt': 'Bateria fraca',
@@ -380,6 +565,10 @@ class LocaleService extends ChangeNotifier {
     }
   }
 }
+
+/// Shorthand for call sites: `tr(context, 'key')`.
+String tr(BuildContext context, String key) =>
+    LocaleProvider.of(context).t(key);
 
 /// InheritedWidget that provides AppStrings to the entire tree.
 class LocaleProvider extends InheritedNotifier<LocaleService> {

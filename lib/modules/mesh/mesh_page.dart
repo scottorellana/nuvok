@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../core/locale_service.dart';
 import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
 import 'mesh_router.dart';
@@ -51,21 +52,21 @@ class _MeshPageState extends State<MeshPage> {
     final name = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Crear canal'),
+        title: Text(tr(context, 'createChannel')),
         content: TextField(
           controller: nameCtrl,
           autofocus: true,
-          decoration: const InputDecoration(
-              labelText: 'Nombre del grupo (ej. Familia)'),
+          decoration: InputDecoration(
+              labelText: tr(context, 'groupNameHint')),
           onSubmitted: (v) => Navigator.pop(context, v),
         ),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancelar')),
+              child: Text(tr(context, 'cancel'))),
           FilledButton(
               onPressed: () => Navigator.pop(context, nameCtrl.text),
-              child: const Text('Crear')),
+              child: Text(tr(context, 'create'))),
         ],
       ),
     );
@@ -81,28 +82,29 @@ class _MeshPageState extends State<MeshPage> {
   /// QR + copyable code so other devices can join this channel.
   void _showChannelCode(MeshChannel channel) {
     final code = channel.toCode();
+    final codeDialogWidth =
+        (MediaQuery.of(context).size.width - 48).clamp(280.0, 420.0).toDouble();
+    final qrSize = (codeDialogWidth - 64).clamp(140.0, 260.0).toDouble();
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Canal "${channel.name}"'),
+        title: Text('${tr(context, 'channelWord')} "${channel.name}"'),
         content: SizedBox(
-          width: 340,
+          width: codeDialogWidth,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(12),
-                child: QrImageView(data: code, size: 220),
+                child: QrImageView(data: code, size: qrSize),
               ),
               const SizedBox(height: 12),
-              const Text('En el otro dispositivo: Comunicación → Unirse '
-                  'y pega este código (o escanea el QR cuando tengas '
-                  'lector).'),
+              Text(tr(context, 'joinInstructions')),
               const SizedBox(height: 8),
               SelectableText(code,
-                  style: const TextStyle(fontSize: 11, fontFamily: 'monospace'),
-                  maxLines: 3),
+                  style: const TextStyle(fontSize: 14, fontFamily: 'monospace'),
+                  maxLines: 4),
             ],
           ),
         ),
@@ -111,14 +113,14 @@ class _MeshPageState extends State<MeshPage> {
             onPressed: () {
               Clipboard.setData(ClipboardData(text: code));
               ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Código copiado')));
+                  SnackBar(content: Text(tr(context, 'codeCopied'))));
             },
             icon: const Icon(Icons.copy, size: 18),
-            label: const Text('Copiar código'),
+            label: Text(tr(context, 'copyCode')),
           ),
           FilledButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Listo')),
+              child: Text(tr(context, 'done'))),
         ],
       ),
     );
@@ -129,38 +131,38 @@ class _MeshPageState extends State<MeshPage> {
     final code = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Unirse a un canal'),
+        title: Text(tr(context, 'joinChannel')),
         content: TextField(
           controller: codeCtrl,
           autofocus: true,
           maxLines: 3,
-          decoration: const InputDecoration(
-            labelText: 'Pega el código PPMESH1:…',
-            hintText: 'Pídelo al que creó el canal',
+          decoration: InputDecoration(
+            labelText: tr(context, 'pasteCodeHint'),
+            hintText: tr(context, 'askCreator'),
           ),
         ),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancelar')),
+              child: Text(tr(context, 'cancel'))),
           FilledButton(
               onPressed: () => Navigator.pop(context, codeCtrl.text),
-              child: const Text('Unirme')),
+              child: Text(tr(context, 'join'))),
         ],
       ),
     );
     if (code == null || !mounted) return;
     final channel = MeshChannel.fromCode(code.trim());
     if (channel == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Código inválido — revisa que esté completo.')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(tr(context, 'invalidCode'))));
       return;
     }
     await _service.joinChannel(channel);
     if (mounted) {
       setState(() {});
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Unido a "${channel.name}"')));
+          .showSnackBar(SnackBar(content: Text('${tr(context, 'joinedChannel')} "${channel.name}"')));
     }
   }
 
@@ -170,29 +172,27 @@ class _MeshPageState extends State<MeshPage> {
       context: context,
       builder: (context) => AlertDialog(
         icon: const Icon(Icons.sos, color: Colors.red, size: 40),
-        title: const Text('¿Activar SOS?'),
+        title: Text(tr(context, 'activateSosQ')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Tu posición y esta nota se difundirán cada minuto a '
-                'TODOS los Prepper Pad al alcance (no solo tu grupo), hasta '
-                'que lo canceles.'),
+            Text(tr(context, 'sosBody')),
             const SizedBox(height: 12),
             TextField(
               controller: noteCtrl,
-              decoration: const InputDecoration(
-                  labelText: 'Nota (opcional): ¿qué pasa?'),
+              decoration: InputDecoration(
+                  labelText: tr(context, 'sosNoteHint')),
             ),
           ],
         ),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancelar')),
+              child: Text(tr(context, 'cancel'))),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('ACTIVAR SOS'),
+            child: Text(tr(context, 'activateSos')),
           ),
         ],
       ),
@@ -207,7 +207,7 @@ class _MeshPageState extends State<MeshPage> {
     if (!_service.hasIdentity) return _buildOnboarding(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Comunicación (sin internet)'),
+        title: Text(tr(context, 'meshTitle')),
         actions: [
           ValueListenableBuilder(
             valueListenable: _service.peerCount,
@@ -218,7 +218,7 @@ class _MeshPageState extends State<MeshPage> {
                     size: 18,
                     color: count > 0 ? Colors.greenAccent : Colors.grey),
                 label:
-                    Text(count > 0 ? '$count cerca' : 'buscando dispositivos…'),
+                    Text(count > 0 ? '$count ${tr(context, 'nearby')}' : tr(context, 'searchingDevices')),
               ),
             ),
           ),
@@ -233,17 +233,17 @@ class _MeshPageState extends State<MeshPage> {
           const SizedBox(height: 16),
           Row(
             children: [
-              Text('Canales', style: Theme.of(context).textTheme.titleMedium),
+              Text(tr(context, 'channels'), style: Theme.of(context).textTheme.titleMedium),
               const Spacer(),
               TextButton.icon(
                   onPressed: _joinChannel,
-                  icon: const Icon(Icons.qr_code_scanner, size: 18),
-                  label: const Text('Unirse')),
+                  icon: const Icon(Icons.input, size: 18),
+                  label: Text(tr(context, 'join'))),
               const SizedBox(width: 4),
               FilledButton.icon(
                   onPressed: _createChannel,
                   icon: const Icon(Icons.add, size: 18),
-                  label: const Text('Crear')),
+                  label: Text(tr(context, 'create'))),
             ],
           ),
           const SizedBox(height: 4),
@@ -266,22 +266,24 @@ class _MeshPageState extends State<MeshPage> {
   }
 
   Widget _buildOnboarding(BuildContext context) {
+    final formWidth =
+        (MediaQuery.of(context).size.width - 48).clamp(320.0, 420.0).toDouble();
     return Scaffold(
-      appBar: AppBar(title: const Text('Comunicación (sin internet)')),
+      appBar: AppBar(title: Text(tr(context, 'meshTitle'))),
       body: Center(
         child: Card(
           margin: const EdgeInsets.all(24),
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: SizedBox(
-              width: 420,
+              width: formWidth,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.cell_tower,
                       size: 48, color: Theme.of(context).colorScheme.primary),
                   const SizedBox(height: 12),
-                  Text('Prepper Mesh',
+                  Text(tr(context, 'meshOnboardTitle'),
                       style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 8),
                   const Text(
@@ -294,9 +296,9 @@ class _MeshPageState extends State<MeshPage> {
                   TextField(
                     controller: _nameCtrl,
                     autofocus: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Nombre de este dispositivo',
-                      hintText: 'ej. Tablet de Ana',
+                    decoration: InputDecoration(
+                      labelText: tr(context, 'deviceNameLabel'),
+                      hintText: tr(context, 'deviceNameHint'),
                     ),
                     onSubmitted: (_) => _saveName(),
                   ),
@@ -304,7 +306,7 @@ class _MeshPageState extends State<MeshPage> {
                   FilledButton.icon(
                     onPressed: _saveName,
                     icon: const Icon(Icons.check),
-                    label: const Text('Empezar'),
+                    label: Text(tr(context, 'start')),
                   ),
                 ],
               ),
@@ -347,7 +349,7 @@ class _MeshPageState extends State<MeshPage> {
                         foregroundColor: Colors.red.shade900),
                     onPressed: () => _service.cancelSos(),
                     icon: const Icon(Icons.check_circle),
-                    label: const Text('ESTOY A SALVO (cancelar SOS)'),
+                    label: Text(tr(context, 'imSafeCancelSos')),
                   ),
                 ],
               ),
@@ -363,9 +365,9 @@ class _MeshPageState extends State<MeshPage> {
               radius: 26,
               child: const Icon(Icons.sos, color: Colors.white, size: 30),
             ),
-            title: const Text('Emergencia — pedir ayuda'),
+            title: Text(tr(context, 'emergencyAskHelp')),
             subtitle: const Text(
-                'Difunde tu posición a TODO dispositivo cercano, sin claves'),
+                'Difunde tu posición a cualquier dispositivo cercano, sin claves'),
             trailing: FilledButton(
               style: FilledButton.styleFrom(backgroundColor: Colors.red),
               onPressed: _confirmSos,
@@ -378,25 +380,76 @@ class _MeshPageState extends State<MeshPage> {
   }
 
   Widget _buildStatusRow() {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ValueListenableBuilder(
-          valueListenable: _service.queuedCount,
-          builder: (context, queued, _) => queued == 0
-              ? const SizedBox.shrink()
-              : Chip(
-                  avatar: const Icon(Icons.schedule_send, size: 18),
-                  label: Text('$queued en cola (sin alcance)'),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.offline_bolt, color: Colors.green.shade700),
+                    const SizedBox(width: 8),
+                    Text(tr(context, 'meshOnboardSubtitle'),
+                        style: Theme.of(context).textTheme.titleSmall),
+                  ],
                 ),
-        ),
-        const Spacer(),
-        const Text('Compartir mi posición'),
-        ValueListenableBuilder(
-          valueListenable: _service.sharingPosition,
-          builder: (context, sharing, _) => Switch(
-            value: sharing,
-            onChanged: (v) => _service.setSharePosition(v),
+                const SizedBox(height: 8),
+                const Text(
+                  '1) Activa Bluetooth. 2) Si hay varios equipos, usa un hotspot o la misma Wi‑Fi aunque no tenga internet. 3) En Android, Wi‑Fi Direct busca pares sin router. 4) Si conectas radio LoRa compatible, Prepper Mesh usará el mismo protocolo de mensajes.',
+                ),
+                const SizedBox(height: 8),
+                const Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    Chip(
+                      avatar: Icon(Icons.wifi_tethering, size: 18),
+                      label: Text('LAN/hotspot'),
+                    ),
+                    Chip(
+                      avatar: Icon(Icons.bluetooth, size: 18),
+                      label: Text('Bluetooth LE'),
+                    ),
+                    Chip(
+                      avatar: Icon(Icons.wifi, size: 18),
+                      label: Text('Wi‑Fi Direct'),
+                    ),
+                    Chip(
+                      avatar: Icon(Icons.settings_input_antenna, size: 18),
+                      label: Text('LoRa radio'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            ValueListenableBuilder(
+              valueListenable: _service.queuedCount,
+              builder: (context, queued, _) => queued == 0
+                  ? const SizedBox.shrink()
+                  : Chip(
+                      avatar: const Icon(Icons.schedule_send, size: 18),
+                      label: Text('$queued ${tr(context, 'queuedNoReach')}'),
+                    ),
+            ),
+            const Spacer(),
+            Text(tr(context, 'shareMyPosition')),
+            ValueListenableBuilder(
+              valueListenable: _service.sharingPosition,
+              builder: (context, sharing, _) => Switch(
+                value: sharing,
+                onChanged: (v) => _service.setSharePosition(v),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -534,11 +587,9 @@ class _ChatPageState extends State<_ChatPage> {
                       color: count > 0 ? Colors.lightGreenAccent : Colors.grey),
                   const SizedBox(width: 4),
                   Text(
-                    count > 0
-                        ? '$count en línea'
-                        : 'nadie al alcance',
+                    count > 0 ? '$count en línea' : 'nadie al alcance',
                     style: const TextStyle(
-                        fontSize: 11, fontWeight: FontWeight.normal),
+                        fontSize: 14, fontWeight: FontWeight.normal),
                   ),
                 ],
               ),
@@ -558,7 +609,7 @@ class _ChatPageState extends State<_ChatPage> {
                 'Canal abierto SIN cifrar: lo lee cualquier Prepper Pad '
                 'cercano. Úsalo para pedir o dar ayuda.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 14),
               ),
             ),
           Expanded(
@@ -592,7 +643,11 @@ class _ChatPageState extends State<_ChatPage> {
                             margin: const EdgeInsets.symmetric(vertical: 3),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 8),
-                            constraints: const BoxConstraints(maxWidth: 420),
+                            constraints: BoxConstraints(
+                              maxWidth:
+                                  (MediaQuery.of(context).size.width * 0.86)
+                                      .clamp(140.0, 560.0),
+                            ),
                             decoration: BoxDecoration(
                               color: isSos
                                   ? Colors.red.shade900
@@ -611,7 +666,7 @@ class _ChatPageState extends State<_ChatPage> {
                                 if (!mine)
                                   Text(m['_name'] as String? ?? '?',
                                       style: TextStyle(
-                                          fontSize: 11,
+                                          fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                           color: Theme.of(context)
                                               .colorScheme
@@ -627,7 +682,7 @@ class _ChatPageState extends State<_ChatPage> {
                                     Text(
                                       _fmtTime(m['_ts'] as int?),
                                       style: const TextStyle(
-                                          fontSize: 10, color: Colors.grey),
+                                          fontSize: 12, color: Colors.grey),
                                     ),
                                     // Delivery state for OUR messages: single
                                     // check = sent, double = a peer confirmed
@@ -639,7 +694,9 @@ class _ChatPageState extends State<_ChatPage> {
                                         final delivered = id != null &&
                                             _service.isDelivered(id);
                                         return Icon(
-                                          delivered ? Icons.done_all : Icons.done,
+                                          delivered
+                                              ? Icons.done_all
+                                              : Icons.done,
                                           size: 13,
                                           color: delivered
                                               ? Colors.lightBlueAccent

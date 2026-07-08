@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import '../../core/prepper_library.dart';
 import '../../zim/zim_file.dart';
+import '../../core/locale_service.dart';
+import '../../core/shell_nav.dart';
 import '../depot/download_manager.dart';
 import 'zim_reader_page.dart';
 
@@ -150,23 +152,42 @@ class _EmptyLibrary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // One tap to real content: the starter pack (first aid, survival,
+    // medical Wikipedia) downloads from inside the app — no folders, no
+    // other sites.
     return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 480),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.menu_book_outlined, size: 72),
-            const SizedBox(height: 16),
-            Text('Tu biblioteca está vacía',
-                style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: 8),
-            Text(
-              'Descarga Wikipedia, guías médicas y más desde el Depósito, '
-              'o copia archivos .zim a:\n$dir',
-              textAlign: TextAlign.center,
-            ),
-          ],
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 480),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.menu_book_outlined, size: 72),
+              const SizedBox(height: 16),
+              Text(tr(context, 'emptyLibraryTitle'),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  textAlign: TextAlign.center),
+              const SizedBox(height: 8),
+              Text(tr(context, 'emptyLibraryBody'),
+                  textAlign: TextAlign.center),
+              const SizedBox(height: 20),
+              FilledButton.icon(
+                onPressed: () => ShellNav.goDepot(tab: 0),
+                icon: const Icon(Icons.medical_services),
+                label: Text(tr(context, 'downloadStarterPack')),
+              ),
+              const SizedBox(height: 8),
+              TextButton(
+                onPressed: () => ShellNav.goDepot(tab: 1),
+                child: Text(tr(context, 'browseCatalog')),
+              ),
+              const SizedBox(height: 8),
+              Text(tr(context, 'needInternetOnce'),
+                  style: Theme.of(context).textTheme.bodySmall,
+                  textAlign: TextAlign.center),
+            ],
+          ),
         ),
       ),
     );

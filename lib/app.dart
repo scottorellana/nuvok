@@ -8,6 +8,7 @@ import 'package:latlong2/latlong.dart';
 
 import 'core/locale_service.dart';
 import 'core/prepper_colors.dart';
+import 'core/shell_nav.dart';
 import 'main.dart';
 import 'modules/ai/ai_page.dart';
 import 'modules/depot/depot_page.dart';
@@ -190,10 +191,23 @@ class _HomeShellState extends State<HomeShell> {
       MeshService.instance.start();
     }
     _sosSub = MeshService.instance.events.listen(_onMeshEvent);
+    // Cross-module jumps (e.g. empty Library → Depósito → Esenciales).
+    ShellNav.request.addListener(_onShellNav);
+  }
+
+  void _onShellNav() {
+    final req = ShellNav.request.value;
+    if (req == null || !mounted) return;
+    ShellNav.request.value = null;
+    setState(() {
+      _index = req.moduleIndex;
+      if (req.depotTab != null) _depotInitialTab = req.depotTab!;
+    });
   }
 
   @override
   void dispose() {
+    ShellNav.request.removeListener(_onShellNav);
     _sosSub?.cancel();
     super.dispose();
   }

@@ -13,6 +13,8 @@ import 'package:vector_tile_renderer/vector_tile_renderer.dart' as vtr;
 
 import '../../core/prepper_library.dart';
 import '../../core/prepper_colors.dart';
+import '../../core/locale_service.dart';
+import '../../core/shell_nav.dart';
 import '../depot/map_catalog.dart';
 import '../mesh/position_store.dart';
 import 'composite_tile_provider.dart';
@@ -749,7 +751,9 @@ class _MapsPageState extends State<MapsPage> {
                   ],
                 ),
       body: _regions.isEmpty
-          ? _EmptyMaps(dir: PrepperLibrary.instance.mapsDir.path)
+          ? _EmptyMaps(
+              dir: PrepperLibrary.instance.mapsDir.path,
+              onInstalled: () => _refresh(clearCache: true))
           : _error != null
               ? Center(child: Text(_error!))
               : _loading || _provider == null || _theme == null
@@ -1597,31 +1601,152 @@ class _LocationReadout extends StatelessWidget {
   }
 }
 
-class _EmptyMaps extends StatelessWidget {
-  const _EmptyMaps({required this.dir});
+/// First-run Maps experience: pick your country (pre-selected from the
+/// device locale) and download it RIGHT HERE — no folders, no other sites.
+/// The extract streams progress and, when done, [onInstalled] reloads the
+/// map so it opens immediately.
+class _EmptyMaps extends StatefulWidget {
+  const _EmptyMaps({required this.dir, required this.onInstalled});
   final String dir;
+  final VoidCallback onInstalled;
+
+  @override
+  State<_EmptyMaps> createState() => _EmptyMapsState();
+}
+
+class _EmptyMapsState extends State<_EmptyMaps> {
+  List<MapRegion>? _regions;
+  MapRegion? _selected;
+  String? _progress;
+  bool _downloading = false;
+
+  /// ISO country code (from the device locale) → catalog region id.
+  static const _isoToRegion = <String, String>{
+    'HN': 'honduras', 'SV': 'el-salvador', 'GT': 'guatemala',
+    'NI': 'nicaragua', 'CR': 'costa-rica', 'PA': 'panama', 'BZ': 'belize',
+    'MX': 'mexico', 'US': 'usa', 'CA': 'canada', 'CU': 'cuba',
+    'DO': 'rep-dominicana', 'HT': 'haiti', 'PR': 'puerto-rico',
+    'CO': 'colombia', 'VE': 'venezuela', 'EC': 'ecuador', 'PE': 'peru',
+    'BO': 'bolivia', 'BR': 'brasil', 'CL': 'chile', 'AR': 'argentina',
+    'UY': 'uruguay', 'PY': 'paraguay', 'ES': 'espana', 'PT': 'portugal',
+    'FR': 'francia', 'GB': 'reino-unido', 'IE': 'irlanda', 'DE': 'alemania',
+    'IT': 'italia', 'NL': 'paises-bajos', 'BE': 'belgica', 'CH': 'suiza',
+    'AT': 'austria', 'PL': 'polonia', 'SE': 'suecia', 'NO': 'noruega',
+    'GR': 'grecia', 'UA': 'ucrania', 'MA': 'marruecos', 'EG': 'egipto',
+    'NG': 'nigeria', 'ZA': 'sudafrica', 'KE': 'kenia', 'ET': 'etiopia',
+    'CN': 'china', 'IN': 'india', 'JP': 'japon', 'KR': 'corea-sur',
+    'PH': 'filipinas', 'ID': 'indonesia', 'TH': 'tailandia', 'VN': 'vietnam',
+    'TR': 'turquia', 'SA': 'arabia-saudita', 'AU': 'australia',
+    'NZ': 'nueva-zelanda',
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final regions = await MapCatalog.load();
+    if (!mounted) return;
+    // Suggest the device's country ("es_HN" → HN → honduras).
+    final locale = Platform.localeName;
+    final cc = locale.contains('_')
+        ? locale.split('_').last.toUpperCase()
+        : null;
+    final suggestedId = cc == null ? null : _isoToRegion[cc];
+    setState(() {
+      _regions = regions;
+      _selected = regions.firstWhere(
+        (r) => r.id == suggestedId,
+        orElse: () => regions.first,
+      );
+    });
+  }
+
+  Future<void> _download() async {
+    final region = _selected;
+    if (region == null || _downloading) return;
+    setState(() {
+      _downloading = true;
+      _progress = '…';
+    });
+    var failed = false;
+    await for (final line in MapExtractor.extract(region)) {
+      if (!mounted) return;
+      setState(() => _progress = line);
+      if (line.startsWith('error')) failed = true;
+    }
+    if (!mounted) return;
+    setState(() => _downloading = false);
+    if (!failed && region.installed) {
+      widget.onInstalled(); // reload → the map opens right away
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final regions = _regions;
     return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 500),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.map_outlined, size: 72),
-            const SizedBox(height: 16),
-            Text('Sin mapas todavía',
-                style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: 8),
-            Text(
-              'Copia archivos de región .pmtiles a:\n$dir\n\n'
-              'Puedes generarlos gratis en maps.protomaps.com/builds '
-              'o descargar extractos regionales — el Depósito incluye '
-              'las instrucciones.',
-              textAlign: TextAlign.center,
-            ),
-          ],
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 460),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.travel_explore, size: 72),
+              const SizedBox(height: 16),
+              Text(tr(context, 'emptyMapsTitle'),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  textAlign: TextAlign.center),
+              const SizedBox(height: 8),
+              Text(tr(context, 'emptyMapsBody'),
+                  textAlign: TextAlign.center),
+              const SizedBox(height: 20),
+              if (regions == null)
+                const CircularProgressIndicator()
+              else ...[
+                DropdownMenu<MapRegion>(
+                  initialSelection: _selected,
+                  width: 320,
+                  enabled: !_downloading,
+                  dropdownMenuEntries: [
+                    for (final r in regions)
+                      DropdownMenuEntry(
+                        value: r,
+                        label: '${r.flag} ${r.name} · ${r.sizeMB} MB',
+                      ),
+                  ],
+                  onSelected: (r) => setState(() => _selected = r),
+                ),
+                const SizedBox(height: 16),
+                if (_downloading || _progress != null) ...[
+                  if (_downloading) const LinearProgressIndicator(),
+                  const SizedBox(height: 8),
+                  Text(_progress ?? '',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodySmall),
+                  const SizedBox(height: 12),
+                ],
+                FilledButton.icon(
+                  onPressed: _downloading ? null : _download,
+                  icon: const Icon(Icons.download),
+                  label: Text(
+                      '${tr(context, 'downloadMap')} — ${_selected?.name ?? ''}'),
+                ),
+                const SizedBox(height: 8),
+                Text(tr(context, 'needInternetOnce'),
+                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center),
+                TextButton(
+                  onPressed:
+                      _downloading ? null : () => ShellNav.goDepot(tab: 3),
+                  child: Text(tr(context, 'moreCountries')),
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );

@@ -430,6 +430,64 @@ class AppStrings {
       'ht': 'Konekte yon modil LoRa sou Bluetooth pou plizyè kilomèt.',
     },
 
+    // ── Empty states: download-in-place (ES/EN/PT/FR) ──
+    'emptyMapsTitle': {
+      'es': 'Descarga el mapa de tu país',
+      'en': 'Download your country map',
+      'pt': 'Baixe o mapa do seu país',
+      'fr': 'Téléchargez la carte de votre pays',
+    },
+    'emptyMapsBody': {
+      'es': 'Un toque y queda guardado en este dispositivo: funciona para '
+          'siempre sin internet, con búsqueda y rutas.',
+      'en': 'One tap and it lives on this device: works forever without '
+          'internet, with search and routing.',
+      'pt': 'Um toque e fica salvo neste dispositivo: funciona para sempre '
+          'sem internet, com busca e rotas.',
+      'fr': 'Un geste et elle reste sur cet appareil : fonctionne pour '
+          'toujours sans internet, avec recherche et itinéraires.',
+    },
+    'downloadMap': {
+      'es': 'Descargar mapa', 'en': 'Download map',
+      'pt': 'Baixar mapa', 'fr': 'Télécharger la carte',
+    },
+    'moreCountries': {
+      'es': 'Más países y regiones en el Depósito',
+      'en': 'More countries and regions in the Depot',
+      'pt': 'Mais países e regiões no Depósito',
+      'fr': 'Plus de pays et régions dans le Dépôt',
+    },
+    'needInternetOnce': {
+      'es': 'Necesitas internet solo para esta descarga.',
+      'en': 'You need internet only for this download.',
+      'pt': 'Você precisa de internet só para este download.',
+      'fr': 'Internet n\'est requis que pour ce téléchargement.',
+    },
+    'emptyLibraryTitle': {
+      'es': 'Tu biblioteca está vacía',
+      'en': 'Your library is empty',
+      'pt': 'Sua biblioteca está vazia',
+      'fr': 'Votre bibliothèque est vide',
+    },
+    'emptyLibraryBody': {
+      'es': 'Descarga primeros auxilios, supervivencia y Wikipedia médica '
+          'con un toque. Después funcionan sin internet.',
+      'en': 'Download first aid, survival and medical Wikipedia in one tap. '
+          'They work offline afterwards.',
+      'pt': 'Baixe primeiros socorros, sobrevivência e Wikipédia médica com '
+          'um toque. Depois funcionam sem internet.',
+      'fr': 'Téléchargez premiers secours, survie et Wikipédia médical en un '
+          'geste. Ensuite tout fonctionne hors ligne.',
+    },
+    'downloadStarterPack': {
+      'es': 'Descargar paquete inicial', 'en': 'Download starter pack',
+      'pt': 'Baixar pacote inicial', 'fr': 'Télécharger le pack de départ',
+    },
+    'browseCatalog': {
+      'es': 'Ver catálogo completo', 'en': 'Browse full catalog',
+      'pt': 'Ver catálogo completo', 'fr': 'Voir le catalogue complet',
+    },
+
     // ── Battery banner (core: safety-relevant) ──
     'lowBattery': {
       'es': 'Batería baja', 'en': 'Low battery', 'pt': 'Bateria fraca',

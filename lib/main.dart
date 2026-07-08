@@ -10,6 +10,9 @@ import 'core/bundled_library.dart';
 import 'core/locale_service.dart';
 import 'core/prepper_library.dart';
 import 'modules/ai/llama_server.dart';
+import 'modules/mesh/mesh_envelope.dart';
+import 'modules/mesh/mesh_notifications.dart';
+import 'modules/mesh/mesh_router.dart';
 import 'modules/mesh/mesh_service.dart';
 import 'modules/tools/battery_saver.dart';
 import 'modules/update/update_service.dart';
@@ -30,6 +33,14 @@ Future<void> main() async {
   // left the user staring at a white screen for the whole copy. The UI
   // modules list whatever exists and pick up new content as it lands.
   unawaited(BundledLibrarySeeder.seed());
+  // Local notifications so an incoming SOS/chat reaches the user with the app
+  // in the background. Non-blocking; no-ops where unsupported.
+  unawaited(MeshNotifications.instance.init());
+  // Start the mesh at boot with an automatic identity: every Prepper Pad is
+  // discoverable from the moment it opens, so in an emergency nobody is
+  // invisible for not having configured anything. Non-blocking; the radios
+  // self-degrade where hardware/permission is missing.
+  unawaited(MeshService.instance.ensureStartedAuto());
   // Start reading the real battery early so the level is ready when the user
   // opens Herramientas — non-blocking, failures are swallowed inside.
   BatterySaverController.instance.init();
@@ -56,15 +67,43 @@ class AppLifecycleCleanup extends StatefulWidget {
 
 class _AppLifecycleCleanupState extends State<AppLifecycleCleanup>
     with WidgetsBindingObserver {
+  StreamSubscription? _meshSub;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    // Turn incoming mesh events into system notifications when the app is
+    // backgrounded (the policy lives in MeshNotifications.shouldNotify).
+    _meshSub = MeshService.instance.events.listen(_onMeshEvent);
+  }
+
+  void _onMeshEvent(MeshEvent e) {
+    final fromSelf =
+        e.envelope.senderId == MeshService.instance.identity?.id;
+    final name = e.envelope.senderName;
+    final String title;
+    final String body;
+    if (e.envelope.type == MeshType.sos) {
+      title = '🚨 SOS — $name';
+      final note = (e.payload['note'] as String?)?.trim() ?? '';
+      body = note.isNotEmpty ? note : 'Pide ayuda cerca de ti';
+    } else {
+      title = name;
+      body = (e.payload['text'] as String?)?.trim() ?? '';
+    }
+    MeshNotifications.instance.notify(
+      type: e.envelope.type,
+      fromSelf: fromSelf,
+      title: title,
+      body: body,
+    );
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _meshSub?.cancel();
     // Fire-and-forget cleanup: dispose() is synchronous, so we can't await.
     // These calls initiate native process teardown; they don't need to complete
     // before the widget is gone.
@@ -75,6 +114,9 @@ class _AppLifecycleCleanupState extends State<AppLifecycleCleanup>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Track foreground so notifications only fire when off-screen.
+    MeshNotifications.instance.appInForeground =
+        state == AppLifecycleState.resumed;
     if (state == AppLifecycleState.resumed) {
       // Re-establish mesh presence when app comes to foreground
       MeshService.instance.onAppResumed();

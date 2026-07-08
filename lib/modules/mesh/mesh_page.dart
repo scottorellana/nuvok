@@ -420,6 +420,18 @@ class _MeshPageState extends State<MeshPage> {
             ),
           ),
         ),
+        Card(
+          child: SwitchListTile(
+            secondary: const Icon(Icons.settings_input_antenna),
+            title: Text(tr(context, 'loraTitle')),
+            subtitle: Text(tr(context, 'loraSubtitle')),
+            value: MeshService.loraEnabled,
+            onChanged: (v) async {
+              await _service.setLoraEnabled(v);
+              if (mounted) setState(() {});
+            },
+          ),
+        ),
         const SizedBox(height: 8),
         Row(
           children: [

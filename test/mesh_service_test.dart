@@ -93,6 +93,29 @@ void main() {
     await evil.stop();
   });
 
+  test('perder internet dispara una ráfaga de descubrimiento inmediata',
+      () async {
+    // La conexión instantánea entre vecinos importa JUSTO cuando se cae la
+    // red: la app relanza beacons de inmediato para encontrarse en segundos
+    // (sin esperar el ciclo de timer de 15-60s).
+    transport.sent.clear();
+    service.onConnectivityLost();
+    await Future<void>.delayed(Duration.zero); // dejar correr el microtask
+    expect(transport.sent, isNotEmpty,
+        reason: 'debe salir un beacon ya, no esperar el timer');
+    expect(MeshEnvelope.decode(transport.sent.first)!.type, MeshType.beacon);
+  });
+
+  test('la ráfaga es segura de llamar repetidamente sin duplicar timers',
+      () async {
+    service.onConnectivityLost();
+    service.onConnectivityLost();
+    service.onConnectivityLost();
+    await Future<void>.delayed(Duration.zero);
+    // No explota; sigue corriendo.
+    expect(service.running.value, isTrue);
+  });
+
   test('al arrancar difunde un beacon de presencia', () {
     expect(transport.sent, isNotEmpty);
     final env = MeshEnvelope.decode(transport.sent.first)!;

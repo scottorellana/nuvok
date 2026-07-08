@@ -414,6 +414,21 @@ class AppStrings {
       'es': 'Empezar', 'en': 'Start', 'pt': 'Começar',
       'fr': 'Commencer', 'zh': '开始', 'ja': '開始', 'ht': 'Kòmanse',
     },
+    'loraTitle': {
+      'es': 'Radio LoRa (largo alcance)', 'en': 'LoRa radio (long range)',
+      'pt': 'Rádio LoRa (longo alcance)', 'fr': 'Radio LoRa (longue portée)',
+      'zh': 'LoRa 无线电（远距离）', 'ja': 'LoRa 無線（長距離）',
+      'ht': 'Radyo LoRa (long distans)',
+    },
+    'loraSubtitle': {
+      'es': 'Conecta un módulo LoRa por Bluetooth para alcance de kilómetros.',
+      'en': 'Pair a LoRa module over Bluetooth for kilometer-range reach.',
+      'pt': 'Conecte um módulo LoRa por Bluetooth para alcance de km.',
+      'fr': 'Associez un module LoRa en Bluetooth pour une portée de km.',
+      'zh': '通过蓝牙配对 LoRa 模块，实现公里级覆盖。',
+      'ja': 'BluetoothでLoRaモジュールを接続し、キロ単位の到達距離。',
+      'ht': 'Konekte yon modil LoRa sou Bluetooth pou plizyè kilomèt.',
+    },
 
     // ── Battery banner (core: safety-relevant) ──
     'lowBattery': {

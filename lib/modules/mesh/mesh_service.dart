@@ -5,6 +5,7 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../core/prepper_library.dart';
@@ -12,6 +13,7 @@ import '../emergency/sos_alarm.dart';
 import '../maps/location_service.dart';
 import 'ble_transport.dart';
 import 'lan_transport.dart';
+import 'lora_ble_uart.dart';
 import 'lora_transport.dart';
 import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
@@ -73,6 +75,15 @@ class MeshService {
 
   bool get hasIdentity => (identity ??= MeshIdentity.load(dirPath)) != null;
 
+  /// Boot the mesh with zero setup: mint an automatic identity on first run,
+  /// then start. Called at app launch so EVERY Prepper Pad is discoverable
+  /// from the moment it opens — nobody is invisible for not having configured
+  /// anything. The user can still rename the device later in Comunicación.
+  Future<void> ensureStartedAuto() async {
+    identity ??= MeshIdentity.ensureAuto(dirPath);
+    await start();
+  }
+
   Future<void> setIdentity(String name) async {
     final current = identity ?? MeshIdentity.load(dirPath);
     if (current == null) {
@@ -104,9 +115,28 @@ class MeshService {
     if (ble.available) list.add(ble);
     final wifi = WifiDirectTransport();
     if (wifi.available) list.add(wifi);
-    final lora = LoraTransport();
-    if (lora.available) list.add(lora);
+    // LoRa is opt-in: only wired when the user has paired a radio (persisted
+    // flag). Included via the real BLE-UART driver, which connects to a
+    // Nordic-UART LoRa module on start; if none is found it no-ops and the
+    // other transports carry the mesh.
+    if (loraEnabled) {
+      list.add(LoraTransport(link: BleUartLoraDriver()));
+    }
     return list;
+  }
+
+  /// Whether the user has enabled the LoRa long-range radio. Persisted so it
+  /// survives restarts. Toggling restarts the mesh so the transport list is
+  /// rebuilt with/without LoRa.
+  static bool get loraEnabled =>
+      PrepperLibrary.instance.settings['meshLoraEnabled'] == true;
+
+  Future<void> setLoraEnabled(bool enabled) async {
+    await PrepperLibrary.instance.saveSetting('meshLoraEnabled', enabled);
+    if (running.value) {
+      await stop();
+      await start();
+    }
   }
 
   void _saveChannels() {
@@ -146,19 +176,58 @@ class MeshService {
           Timer.periodic(const Duration(seconds: 3), (_) => _retryUnacked());
       running.value = true;
       await _sendBeacon();
-      // Discovery burst: fire a few quick beacons so a peer that's already
-      // nearby is found in ~1s instead of waiting up to a full 15s cycle.
-      _discoveryTimers.clear();
-      for (final ms in const [400, 1200, 3000, 6000]) {
-        _discoveryTimers.add(
-          Timer(Duration(milliseconds: ms), () {
-            if (running.value) _sendBeacon();
-          }),
-        );
-      }
+      _triggerDiscoveryBurst();
+      _listenConnectivity();
     } finally {
       _starting = false;
     }
+  }
+
+  StreamSubscription<List<ConnectivityResult>>? _connSub;
+
+  /// Watch connectivity so a grid/WiFi drop instantly relaunches discovery.
+  /// Skipped under test (no override, no platform channel) and never fatal.
+  void _listenConnectivity() {
+    if (_transportsOverride != null) return; // test mode: no platform channel
+    _connSub?.cancel();
+    try {
+      _connSub = Connectivity().onConnectivityChanged.listen((results) {
+        final offline = results.isEmpty ||
+            results.every((r) => r == ConnectivityResult.none);
+        if (offline) onConnectivityLost();
+      }, onError: (_) {});
+    } catch (_) {
+      // No connectivity plugin on this platform — the periodic beacon still
+      // forms the mesh; we just lose the instant-on-drop optimization.
+    }
+  }
+
+  /// Fires an immediate beacon plus a few quick follow-ups so a peer already
+  /// nearby is found in ~1s instead of waiting up to a full beacon cycle.
+  /// Used at startup AND whenever internet drops (see [onConnectivityLost]) —
+  /// the moment neighbors most need to find each other fast.
+  void _triggerDiscoveryBurst() {
+    if (!running.value) return;
+    _sendBeacon();
+    for (final t in _discoveryTimers) {
+      t.cancel();
+    }
+    _discoveryTimers.clear();
+    for (final ms in const [400, 1200, 3000, 6000, 12000]) {
+      _discoveryTimers.add(
+        Timer(Duration(milliseconds: ms), () {
+          if (running.value) _sendBeacon();
+        }),
+      );
+    }
+  }
+
+  /// Call when the device loses internet connectivity. In an emergency the
+  /// grid often dies first — the instant it does, every Prepper Pad relaunches
+  /// discovery so the local mesh forms in seconds without any action.
+  void onConnectivityLost() {
+    if (!running.value) return;
+    _triggerDiscoveryBurst();
   }
 
   Future<void> stop() async {
@@ -175,6 +244,8 @@ class MeshService {
         _sosTimer = _positionTimer = _ackCleanupTimer = _retryTimer = null;
     await _eventsSub?.cancel();
     _eventsSub = null;
+    await _connSub?.cancel();
+    _connSub = null;
     await _router?.stop();
     _router = null;
     running.value = false;

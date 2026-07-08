@@ -48,6 +48,12 @@ dependencies:
   screen_brightness: ^2.1.11
   package_info_plus: ^10.2.0
   open_filex: ^4.7.0
+  # Detecta la caída de internet para relanzar el descubrimiento del mesh
+  # justo cuando los vecinos más necesitan encontrarse.
+  connectivity_plus: ^6.1.0
+  # Notificaciones locales: SOS/chat entrante avisan aunque la app no esté
+  # en pantalla (radios BLE siguen activos en segundo plano).
+  flutter_local_notifications: ^18.0.1
 
 dev_dependencies:
   flutter_test:

@@ -195,7 +195,11 @@ class LoraTransport implements MeshTransport {
 
   @override
   Future<void> start() async {
-    if (_open || !available) return;
+    // Gate only on already-open: the driver's open() performs the actual
+    // connect (BLE scan/pair), so availability isn't known until after. A
+    // driver with no radio (UnavailableLoraLinkDriver) returns false from
+    // open() and this no-ops cheaply.
+    if (_open) return;
     // Subscribe before open: USB/BLE drivers can emit queued bytes as soon as
     // the port opens.
     _framesSub = _link.onFrame.listen((frame) {

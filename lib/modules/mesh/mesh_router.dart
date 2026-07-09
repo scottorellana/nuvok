@@ -46,6 +46,9 @@ class MeshRouter {
   final _seen = <int>{};
   final _seenQueue = Queue<int>();
   final _peers = <String, DateTime>{}; // senderId → last heard
+  // Pares oídos recientemente POR TRANSPORTE — alimenta TransportHealth.peers
+  // para que el banner pueda decir "3 dispositivos por Bluetooth".
+  final _peersVia = <String, Map<String, DateTime>>{};
   final _events = StreamController<MeshEvent>.broadcast();
   final _outbox = <Uint8List>[];
   final _subs = <StreamSubscription<Uint8List>>[];
@@ -86,6 +89,15 @@ class MeshRouter {
 
   bool get hasPeers => peers.isNotEmpty;
 
+  /// Pares vivos oídos por un transporte concreto ('ble', 'lan', …).
+  int peersVia(String transport) {
+    final m = _peersVia[transport];
+    if (m == null) return 0;
+    final now = DateTime.now();
+    m.removeWhere((_, heard) => now.difference(heard) >= peerTimeout);
+    return m.length;
+  }
+
   /// Channels whose messages we can read (emergency is always implied).
   List<MeshChannel> get channels => List.unmodifiable(_channels);
 
@@ -103,7 +115,7 @@ class MeshRouter {
       // Subscribe BEFORE transport start. BLE/WiFi Direct/LAN fakes and some
       // real stacks can emit discovery/beacon payloads immediately during
       // start(); broadcast streams drop events with no listeners.
-      _subs.add(t.onData.listen(_handleIncoming));
+      _subs.add(t.onData.listen((d) => _handleIncoming(d, via: t.name)));
       await t.start();
     }
   }
@@ -208,10 +220,13 @@ class MeshRouter {
     return null;
   }
 
-  Future<void> _handleIncoming(Uint8List datagram) async {
+  Future<void> _handleIncoming(Uint8List datagram, {String? via}) async {
     final env = MeshEnvelope.decode(datagram);
     if (env == null) return;
     if (env.senderId == deviceId) return; // our own flood came back
+    if (via != null) {
+      (_peersVia[via] ??= <String, DateTime>{})[env.senderId] = DateTime.now();
+    }
     // Count every copy heard — including duplicates, which is exactly the
     // signal that the network already repeated this message without us.
     _heardCount[env.msgId] = (_heardCount[env.msgId] ?? 0) + 1;

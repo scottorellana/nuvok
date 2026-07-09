@@ -16,6 +16,10 @@
 #include <thread>
 #include <vector>
 
+#ifdef __APPLE__
+#include <TargetConditionals.h>
+#endif
+
 #include "llama.h"
 
 namespace {
@@ -57,6 +61,11 @@ void * ppllm_load(const char * model_path, int32_t n_ctx, int32_t n_gpu_layers) 
 
     llama_model_params mparams = llama_model_default_params();
     mparams.n_gpu_layers = n_gpu_layers;
+#if defined(TARGET_OS_SIMULATOR) && TARGET_OS_SIMULATOR
+    // The iOS Simulator's Metal stack miscompiles ggml kernels (output turns
+    // to garbage); CPU is correct there. Real iPhones get full Metal.
+    mparams.n_gpu_layers = 0;
+#endif
     h->model = llama_model_load_from_file(model_path, mparams);
     if (!h->model) {
         g_last_error = std::string("no se pudo cargar el modelo: ") + model_path;

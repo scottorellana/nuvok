@@ -20,13 +20,15 @@ command -v cmake >/dev/null || {
 }
 
 build_one() {
-  local sdk="$1" outdir="$2"
+  # Simulator slice must be arm64+x86_64: Flutter's sim builds pass both
+  # ARCHS and CocoaPods refuses an xcframework slice that lacks one.
+  local sdk="$1" outdir="$2" archs="$3"
   local build="$WORK/ppllm-ios-$sdk"
   rm -rf "$build"
   cmake -S "$REPO_DIR/native/pp_llm" -B "$build" \
     -DCMAKE_SYSTEM_NAME=iOS \
     -DCMAKE_OSX_SYSROOT="$sdk" \
-    -DCMAKE_OSX_ARCHITECTURES=arm64 \
+    -DCMAKE_OSX_ARCHITECTURES="$archs" \
     -DCMAKE_OSX_DEPLOYMENT_TARGET="$MIN_IOS" \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLAMA_DIR="$LLAMA_DIR" >/dev/null
@@ -57,11 +59,11 @@ PLIST
 
 echo "==> ppllm para iPhone (device)…"
 DEV_DIR="$WORK/ppllm-fw-device"; rm -rf "$DEV_DIR"; mkdir -p "$DEV_DIR"
-build_one iphoneos "$DEV_DIR"
+build_one iphoneos "$DEV_DIR" "arm64"
 
 echo "==> ppllm para simulador…"
 SIM_DIR="$WORK/ppllm-fw-sim"; rm -rf "$SIM_DIR"; mkdir -p "$SIM_DIR"
-build_one iphonesimulator "$SIM_DIR"
+build_one iphonesimulator "$SIM_DIR" "arm64;x86_64"
 
 echo "==> Empaquetando xcframework…"
 rm -rf "$OUT/ppllm.xcframework"

@@ -15,7 +15,7 @@ PODS:
   - open_filex (0.0.2):
     - Flutter
   - OrderedSet (6.0.3)
-  - prepper_native (1.0.1)
+  - prepper_native (1.1.0)
 
 DEPENDENCIES:
   - bonsoir_darwin (from `.symlinks/plugins/bonsoir_darwin/darwin`)
@@ -50,7 +50,7 @@ SPEC CHECKSUMS:
   flutter_local_notifications: df98d66e515e1ca797af436137b4459b160ad8c9
   open_filex: 6e26e659846ec990262224a12ef1c528bb4edbe4
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
-  prepper_native: daca9ff5ff079c6b21e5357808fa2709bbb3e530
+  prepper_native: db7a64e80d60399de34e5f7380118cfc6e635728
 
 PODFILE CHECKSUM: 9a0ccf4a6072dc53d9c5aea6a1726af2fa6cb822
 

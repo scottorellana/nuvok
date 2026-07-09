@@ -506,6 +506,9 @@ class MeshService {
       '_ts': env.timestampMs,
       '_msgId': env.msgId,
     });
+    // Mismo contrato de entrega que el chat: ✓ al enviar, ✓✓ con el ACK, y
+    // retransmisión hasta que un par confirme.
+    _pendingAcks[env.msgId] = _PendingChat(env);
     _events.add(MeshEvent(envelope: env, channel: channel, payload: payload));
     await router.broadcast(env);
     queuedCount.value = router.outboxCount;

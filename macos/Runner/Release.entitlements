@@ -17,5 +17,7 @@
 	<!-- Prepper Mesh (BLE transport): access to the Bluetooth radio. -->
 	<key>com.apple.security.device.bluetooth</key>
 	<true/>
+	<key>com.apple.security.device.audio-input</key>
+	<true/>
 </dict>
 </plist>

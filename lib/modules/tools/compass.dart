@@ -13,8 +13,9 @@ import 'package:flutter/services.dart';
 import '../../core/locale_service.dart';
 
 // We avoid importing sensors_plus directly to keep desktop builds stable.
-// Android/macOS provide capability checks through MethodChannel and Android
-// streams continuous headings through the native EventChannel below.
+// Android, iOS and macOS provide capability checks through MethodChannel;
+// Android (SensorManager) and iOS (CoreLocation) stream continuous headings
+// through the native EventChannel below. macOS reports "no compass".
 final _sensorChannel = MethodChannel('prepper/sensors');
 final _compassEventChannel = EventChannel('prepper/sensors/compass');
 

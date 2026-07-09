@@ -42,5 +42,7 @@
 	<string>Prepper Pad usa Bluetooth para conectar con otros dispositivos cercanos y permitir chat mesh sin internet ni router.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Prepper Pad usa Bluetooth para conectar con otros dispositivos cercanos y permitir chat mesh sin internet ni router.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Prepper Pad usa el micrófono para enviar notas de voz por la red local de emergencia (walkie-talkie sin internet).</string>
 </dict>
 </plist>

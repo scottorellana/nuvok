@@ -98,6 +98,7 @@ class AppStrings {
     'advisorTitle', 'advisorBtOff', 'advisorBtOffBody',
     'advisorBtPerm', 'advisorBtPermBody', 'advisorHotspot',
     'advisorHotspotBody', 'advisorLora', 'advisorLoraBody',
+    'voiceHold', 'voiceMicPermission',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -984,6 +985,20 @@ class AppStrings {
       'fr': 'Besoin de kilomètres de portée ?',
       'zh': '需要数公里的通信距离？', 'ja': '数kmの通信距離が必要？',
       'ht': 'Bezwen plizyè kilomèt distans?',
+    },
+    'voiceHold': {
+      'es': 'Mantén presionado para hablar', 'en': 'Hold to talk',
+      'pt': 'Segure para falar', 'fr': 'Maintenez pour parler',
+      'zh': '按住说话', 'ja': '長押しで話す', 'ht': 'Kenbe peze pou pale',
+    },
+    'voiceMicPermission': {
+      'es': 'Permite el micrófono en los ajustes de la app para enviar notas de voz',
+      'en': 'Allow the microphone in the app settings to send voice notes',
+      'pt': 'Permita o microfone nos ajustes do app para enviar notas de voz',
+      'fr': 'Autorisez le micro dans les réglages de l’app pour envoyer des notes vocales',
+      'zh': '请在应用设置中允许麦克风以发送语音消息',
+      'ja': '音声メモを送るには、アプリ設定でマイクを許可してください',
+      'ht': 'Pèmèt mikwo a nan paramèt app la pou voye nòt vwa',
     },
     'advisorLoraBody': {
       'es': 'Con una radio LoRa (módulo Nordic UART por Bluetooth) el mesh '

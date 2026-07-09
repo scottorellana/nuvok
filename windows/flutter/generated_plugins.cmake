@@ -5,9 +5,11 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   battery_plus
   bonsoir_windows
+  connectivity_plus
   file_selector_windows
   flutter_inappwebview_windows
   geolocator_windows
+  record_windows
   screen_brightness_windows
 )
 

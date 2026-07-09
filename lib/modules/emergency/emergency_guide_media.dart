@@ -111,6 +111,58 @@ class EmergencyGuideMedia {
     'terremoto':
         'Persona protegiéndose bajo una mesa resistente durante un '
             'terremoto, sujetando una pata de la mesa.',
+    'abrigo_refugio':
+        'Persona construyendo un refugio improvisado de ramas y hojas en un '
+            'bosque al anochecer, con manta térmica en el suelo.',
+    'agua_survival':
+        'Botella de agua de río turbia junto a una segunda botella con '
+            'agua filtrada más clara, y una taza hirviendo en un hornillo.',
+    'alimentacion_supervivencia':
+        'Alimentos de supervivencia sobre superficie oscura: latas, barras '
+            'energéticas, frutos secos, cuchillo y pastillas purificadoras.',
+    'botiquin':
+        'Botiquín completo de primeros auxilios desplegado: gasas, vendas, '
+            'torniquete, férula, guantes, solución antiséptica y manta térmica.',
+    'convulsiones':
+        'Persona acostada de lado en el suelo tras una convulsión, con un '
+            'cojín bajo la cabeza y el área despejada de objetos.',
+    'hipotermia_golpe_calor':
+        'Escena dividida: persona pálida temblando de frío en montaña y '
+            'persona sudando profusamente con piel roja en calor desértico.',
+    'infarto_acv':
+        'Panel FAST en cuatro cuadros: rostro caído de un lado, brazo que '
+            'se desvía al levantarlo, habla confusa y reloj con teléfono '
+            'para llamar de inmediato.',
+    'intoxicaciones':
+        'Adulto llamando al centro de toxicología mientras aleja a un niño '
+            'de productos de limpieza con símbolo de veneno en la encimera.',
+    'inundacion':
+        'Vista aérea de una inundación: casa rodeada de agua turbia que '
+            'cubre los autos hasta el techo bajo un cielo de tormenta.',
+    'mordeduras_picaduras':
+        'Primer plano de una pierna con dos marcas de mordedura y un '
+            'vendaje de presión siendo aplicado firmemente.',
+    'navegacion':
+        'Brújula de placa transparente sobre un mapa topográfico, con la '
+            'aguja roja apuntando al norte y una ruta marcada a lápiz.',
+    'parto_emergencia':
+        'Suministros de parto de emergencia sobre una toalla limpia: '
+            'tijeras, hilos, guantes, mantas, perilla de succión y agua.',
+    'primeros_auxilios_extremos':
+        'Equipo de trauma táctico desplegado: torniquete, venda israelí, '
+            'gas hemostática, sello torácico y tijeras.',
+    'senas_rescate':
+        'Tres fogatas en triángulo en una cima montañosa con humo blanco, '
+            'panel naranja de señal y reflejo de espejo.',
+    'shock':
+        'Persona acostada de espaldas con piernas elevadas sobre una mochila, '
+            'pálida y sudorosa, cubierta con manta térmica.',
+    'trauma_cabeza_columna':
+        'Rescatista sosteniendo la cabeza y cuello de una persona en el suelo '
+            'tras un accidente, manteniendo la columna estable.',
+    'triaje_multivictima':
+        'Cuatro etiquetas de triaje apiladas: roja urgente, amarilla menos '
+            'urgente, verde leve y negra fallecido.',
   };
 
   static EmergencyGuideMediaSpec forGuide(String id) {

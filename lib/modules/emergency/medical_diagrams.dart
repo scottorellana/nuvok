@@ -5,26 +5,343 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Guide IDs that have a realistic AI-generated image available.
-// When a guide's ID is in this set, GuideVisualIllustration shows the
-// raster image instead of the vector animation.
-// ─────────────────────────────────────────────────────────────────────────────
-const _realisticImageGuides = <String>{
-  'rcp_adulto',
-  'rcp_nino_bebe',
-  'hemorragia_severa',
-  'atragantamiento',
-  'quemaduras',
-  'fracturas_inmovilizacion',
-  'huracan',
-  'terremoto',
-};
+import '../../core/prepper_colors.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Generic guide illustration — shows a realistic image when available,
-// otherwise falls back to the vector CustomPainter animation.
+// Critical Steps Card — extracts the most important actions from the guide's
+// markdown body and presents them as a clean, numbered visual flow that someone
+// in panic can follow at a glance. This replaces the old generic vector
+// animation which looked the same for every guide.
 // ─────────────────────────────────────────────────────────────────────────────
+
+class CriticalStepsCard extends StatelessWidget {
+  const CriticalStepsCard({super.key, required this.title, required this.body});
+
+  final String title;
+  final String body;
+
+  @override
+  Widget build(BuildContext context) {
+    final steps = _extractSteps(body);
+    final warnings = _extractWarnings(body);
+    final lang = _detectLang(title, body);
+    final es = lang == 'es';
+
+    return Card(
+      margin: const EdgeInsets.only(bottom: 16),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Header bar
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  PrepperColors.emergencyDark.withValues(alpha: 0.85),
+                  PrepperColors.emergencyDeep.withValues(alpha: 0.7),
+                ],
+              ),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.flash_on, color: PrepperColors.white, size: 22),
+                const SizedBox(width: 8),
+                Text(
+                  es ? 'PASOS CRÍTICOS' : 'CRITICAL STEPS',
+                  style: const TextStyle(
+                    color: PrepperColors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 15,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (steps.isEmpty && warnings.isEmpty)
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                es
+                    ? 'Lee la guía completa abajo para los pasos detallados.'
+                    : 'Read the full guide below for detailed steps.',
+                style: TextStyle(color: Theme.of(context).hintColor),
+              ),
+            )
+          else ...[
+            // Steps as numbered visual flow
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 12, 8, 4),
+              child: Column(
+                children: [
+                  for (var i = 0; i < steps.length && i < 6; i++)
+                    _StepRow(
+                      number: i + 1,
+                      text: steps[i],
+                      isLast: i == (steps.length - 1).clamp(0, 5),
+                    ),
+                ],
+              ),
+            ),
+            // Warnings (what NOT to do)
+            if (warnings.isNotEmpty) ...[
+              const Divider(height: 1, indent: 16, endIndent: 16),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.block,
+                              color: PrepperColors.emergency, size: 18),
+                          const SizedBox(width: 6),
+                          Text(
+                            es ? 'NO HAGAS:' : 'DO NOT:',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: PrepperColors.emergency,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    for (final w in warnings.take(3))
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 3),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('✗  ',
+                                style: TextStyle(
+                                    color: PrepperColors.emergency,
+                                    fontWeight: FontWeight.bold)),
+                            Expanded(
+                              child: Text(w,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: 0.85))),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ],
+        ],
+      ),
+    );
+  }
+
+  /// Extracts short, actionable steps from the markdown body.
+  /// Parses numbered lists and bold-prefixed lines.
+  List<String> _extractSteps(String body) {
+    final steps = <String>[];
+    for (final line in body.split('\n')) {
+      final trimmed = line.trim();
+      // Match "1. **Action** — detail" or "1. Action"
+      final match = RegExp(r'^\d+\.\s*(.+)$').firstMatch(trimmed);
+      if (match != null) {
+        var text = match.group(1)!;
+        // Clean markdown: **bold** → text, strip excessive detail after —.
+        // NOTE: Dart's replaceAll takes the replacement LITERALLY ($1 is not a
+        // backreference); we must use replaceAllMapped to keep the captured text.
+        text = text.replaceAllMapped(
+            RegExp(r'\*\*(.+?)\*\*'), (m) => m.group(1)!);
+        // Keep only the actionable part (before em-dash or pipe)
+        text = text.split(RegExp(r'\s+[—–-]\s')).first.trim();
+        // Remove table pipes
+        text = text.replaceAll('|', '').trim();
+        if (text.isNotEmpty && text.length > 3 && text.length < 120) {
+          steps.add(text);
+        }
+      }
+    }
+    return steps;
+  }
+
+  /// Extracts "what NOT to do" items.
+  ///
+  /// Guides express don'ts two ways:
+  ///  1. A two-column table whose FIRST column header carries ❌
+  ///     (e.g. `| ❌ Error | ✅ Correcto |`). The real don'ts are the first
+  ///     column of the DATA rows — the header itself must be skipped.
+  ///  2. Stand-alone `❌ ...` lines (not inside such a table).
+  List<String> _extractWarnings(String body) {
+    final warnings = <String>[];
+    final lines = body.split('\n');
+    var inDontTable = false;
+
+    for (final line in lines) {
+      final trimmed = line.trim();
+
+      // A markdown table row splits into cells on '|'.
+      final isTableRow = trimmed.startsWith('|') && trimmed.contains('|');
+      if (isTableRow) {
+        final cells = trimmed
+            .split('|')
+            .map((c) => c.trim())
+            .where((c) => c.isNotEmpty)
+            .toList();
+        if (cells.isEmpty) continue;
+
+        // Separator row like |----|----| — ignore, stay in table.
+        if (cells.every((c) => RegExp(r'^:?-{2,}:?$').hasMatch(c))) {
+          continue;
+        }
+
+        final firstCellHasCross = cells.first.contains('❌');
+        // Header row of a don't table: enter table mode, do NOT emit the header.
+        if (firstCellHasCross && cells.length >= 2) {
+          inDontTable = true;
+          continue;
+        }
+
+        if (inDontTable) {
+          // Data row: the first column is the wrong action.
+          warnings.addAll(_cleanWarnings(cells.first));
+          continue;
+        }
+        // A table we don't care about — leave don't-table mode.
+        inDontTable = false;
+        continue;
+      }
+
+      // Any non-table line ends a don't table.
+      inDontTable = false;
+
+      // Stand-alone ❌ bullet lines.
+      if (trimmed.startsWith('❌')) {
+        warnings.addAll(_cleanWarnings(trimmed));
+      }
+    }
+    return warnings;
+  }
+
+  /// Normalizes a raw don't cell/line into a short, display-ready warning.
+  Iterable<String> _cleanWarnings(String raw) {
+    var text = raw
+        .replaceAll('❌', '')
+        .replaceAllMapped(RegExp(r'\*\*(.+?)\*\*'), (m) => m.group(1)!)
+        .trim();
+    // Keep only the short action, not the trailing explanation.
+    text = text.split(RegExp(r'\s+[—–-]\s')).first.trim();
+    if (text.isEmpty || text.length <= 2 || text.length >= 100) {
+      return const [];
+    }
+    return [text];
+  }
+
+  String _detectLang(String title, String body) {
+    // Heuristic: if body contains common Spanish words, it's Spanish.
+    if (body.contains(' Qué ') ||
+        body.contains(' Qué ')) {
+      return 'es';
+    }
+    if (body.contains(' the ') || body.contains(' and ')) {
+      return 'en';
+    }
+    return 'es';
+  }
+}
+
+class _StepRow extends StatelessWidget {
+  const _StepRow({
+    required this.number,
+    required this.text,
+    required this.isLast,
+  });
+
+  final int number;
+  final String text;
+  final bool isLast;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Number circle
+          Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: PrepperColors.emergencyDark,
+              border: Border.all(
+                  color: PrepperColors.emergency.withValues(alpha: 0.4),
+                  width: 2),
+            ),
+            child: Center(
+              child: Text(
+                '$number',
+                style: const TextStyle(
+                  color: PrepperColors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          // Step text
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 16,
+                  height: 1.3,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+          // Connector line (except last)
+          if (!isLast)
+            Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Icon(Icons.arrow_downward,
+                  size: 16, color: Theme.of(context).hintColor),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Legacy vector illustration (kept for guides without hero images, but
+// GuideVisualIllustration is no longer shown in the reader when a hero
+// image exists — CriticalStepsCard replaces it).
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// All 25 guides now have realistic AI-generated images, so the legacy
+/// vector animation is never the primary visual. Kept for backward compat.
+const _realisticImageGuides = <String>{
+  'rcp_adulto', 'rcp_nino_bebe', 'hemorragia_severa', 'atragantamiento',
+  'quemaduras', 'fracturas_inmovilizacion', 'huracan', 'terremoto',
+  'abrigo_refugio', 'agua_survival', 'alimentacion_supervivencia', 'botiquin',
+  'convulsiones', 'hipotermia_golpe_calor', 'infarto_acv', 'intoxicaciones',
+  'inundacion', 'mordeduras_picaduras', 'navegacion', 'parto_emergencia',
+  'primeros_auxilios_extremos', 'senas_rescate', 'shock',
+  'trauma_cabeza_columna', 'triaje_multivictima',
+};
 
 class GuideVisualIllustration extends StatefulWidget {
   const GuideVisualIllustration({super.key, required this.guideId});

@@ -13,6 +13,7 @@ import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
 import 'mesh_router.dart';
 import 'mesh_service.dart';
+import 'voice_chat_widgets.dart';
 
 class MeshPage extends StatefulWidget {
   const MeshPage({super.key});
@@ -709,11 +710,17 @@ class _ChatPageState extends State<_ChatPage> {
                                           color: Theme.of(context)
                                               .colorScheme
                                               .primary)),
-                                Text(isSos
-                                    ? '🆘 SOS ${m['note'] ?? ''} '
-                                        '(${m['lat']?.toStringAsFixed(4)}, '
-                                        '${m['lon']?.toStringAsFixed(4)})'
-                                    : m['text'] as String? ?? ''),
+                                if (m['_type'] == 'voice')
+                                  VoiceBubbleContent(
+                                    msgId: (m['_msgId'] as num?)?.toInt() ?? 0,
+                                    payload: m,
+                                  )
+                                else
+                                  Text(isSos
+                                      ? '🆘 SOS ${m['note'] ?? ''} '
+                                          '(${m['lat']?.toStringAsFixed(4)}, '
+                                          '${m['lon']?.toStringAsFixed(4)})'
+                                      : m['text'] as String? ?? ''),
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -773,6 +780,13 @@ class _ChatPageState extends State<_ChatPage> {
                     ),
                   ),
                   const SizedBox(width: 8),
+                  // Walkie-talkie: mantener presionado graba, soltar envía.
+                  VoiceMicButton(
+                    onClip: (bytes, durMs) async {
+                      await _service.sendVoice(widget.channel, bytes, durMs);
+                    },
+                  ),
+                  const SizedBox(width: 4),
                   IconButton.filled(
                       onPressed: _send, icon: const Icon(Icons.send)),
                 ],

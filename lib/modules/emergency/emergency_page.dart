@@ -106,6 +106,31 @@ class _EmergencyPageState extends State<EmergencyPage> {
     return Icons.healing;
   }
 
+  /// Fallback widget for guides without a photorealistic image — shows
+  /// the guide icon on a gradient surface so the grid looks consistent.
+  Widget _iconFallback(EmergencyGuide g, bool critical) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: critical
+              ? [PrepperColors.emergencyDark, PrepperColors.emergencyDeep]
+              : [PrepperColors.cardElevated, PrepperColors.card],
+        ),
+      ),
+      child: Center(
+        child: Icon(
+          _iconFor(g.id),
+          size: 48,
+          color: critical
+              ? PrepperColors.emergency
+              : PrepperColors.olive,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_emergencyMode) return _buildPanicMode(context);
@@ -205,8 +230,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
                           padding: const EdgeInsets.all(16),
                           gridDelegate:
                               const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 260,
-                            mainAxisExtent: 96,
+                            maxCrossAxisExtent: 280,
+                            mainAxisExtent: 200,
                             crossAxisSpacing: 12,
                             mainAxisSpacing: 12,
                           ),
@@ -214,7 +239,10 @@ class _EmergencyPageState extends State<EmergencyPage> {
                           itemBuilder: (context, i) {
                             final g = _shown[i];
                             final critical = g.priority <= 1;
+                            final media = EmergencyGuideMedia.forGuide(g.id);
+                            final hasImage = media.imageAssetPath != null;
                             return Card(
+                              clipBehavior: Clip.antiAlias,
                               color: critical
                                   ? PrepperColors.emergencyDeep
                                       .withValues(alpha: 0.35)
@@ -225,29 +253,69 @@ class _EmergencyPageState extends State<EmergencyPage> {
                                   MaterialPageRoute<void>(
                                       builder: (_) => _GuideReader(guide: g)),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Row(
-                                    children: [
-                                      Icon(_iconFor(g.id),
-                                          size: 34,
-                                          color: critical
-                                              ? PrepperColors.emergency
-                                              : Theme.of(context)
-                                                  .colorScheme
-                                                  .primary),
-                                      const SizedBox(width: 12),
-                                      Expanded(
-                                        child: Text(
-                                          g.title,
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w600),
-                                        ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    // Thumbnail: photorealistic image if available,
+                                    // otherwise icon fallback with gradient.
+                                    Expanded(
+                                      flex: 3,
+                                      child: hasImage
+                                          ? Stack(
+                                              fit: StackFit.expand,
+                                              children: [
+                                                Image.asset(
+                                                  media.imageAssetPath!,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (_, __, ___) =>
+                                                      _iconFallback(g, critical),
+                                                ),
+                                                if (critical)
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                        begin: Alignment.topCenter,
+                                                        end: Alignment.bottomCenter,
+                                                        colors: [
+                                                          Colors.transparent,
+                                                          PrepperColors.emergencyDeep
+                                                              .withValues(alpha: 0.6),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            )
+                                          : _iconFallback(g, critical),
+                                    ),
+                                    // Title bar
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 8),
+                                      child: Row(
+                                        children: [
+                                          Icon(_iconFor(g.id),
+                                              size: 18,
+                                              color: critical
+                                                  ? PrepperColors.emergency
+                                                  : Theme.of(context)
+                                                      .colorScheme
+                                                      .primary),
+                                          const SizedBox(width: 6),
+                                          Expanded(
+                                            child: Text(
+                                              g.title,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 14),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             );
@@ -622,50 +690,58 @@ class _GuideReader extends StatelessWidget {
   List<Widget> _visualAids(BuildContext context) {
     final id = guide.id;
     final media = EmergencyGuideMedia.forGuide(id);
-    final widgets = <Widget>[
-      // Curated photo illustration, when the bundle has one for this guide.
-      // Semantics alt: the guide must work with a screen reader too.
-      if (media.imageAssetPath != null)
-        _visualCard(
-          context,
-          media.title,
-          Semantics(
+    final widgets = <Widget>[];
+
+    // Hero image — full-width, no card wrapper, no developer metadata.
+    if (media.imageAssetPath != null) {
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Semantics(
             label: media.imageAltText,
             image: true,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(16),
               child: Image.asset(
                 media.imageAssetPath!,
                 fit: BoxFit.cover,
-                // A missing/corrupt asset must never break the guide.
                 errorBuilder: (_, __, ___) => const SizedBox.shrink(),
               ),
             ),
           ),
         ),
-      _mediaBriefCard(context, media),
-      _visualCard(
-        context,
-        'Resumen visual',
-        GuideVisualIllustration(guideId: id),
-      ),
-    ];
+      );
+    }
+
+    // Critical steps card — the most useful visual element in the reader.
+    // Shows numbered action steps extracted from the guide's markdown body,
+    // plus "what NOT to do" warnings. Replaces the old generic vector animation.
+    widgets.add(CriticalStepsCard(
+      title: guide.title,
+      body: guide.body,
+    ));
 
     // CPR guides get the animated compression diagram
     if (id.startsWith('rcp')) {
-      widgets
-          .add(_visualCard(context, 'Técnica de compresión', CprAnimation()));
+      widgets.add(_visualCard(
+          context, _guideReaderLabel(id, 'Técnica de compresión'), CprAnimation()));
     }
     // Choking guides get the Heimlich animation
     if (id.contains('atragant')) {
       widgets.add(_visualCard(
-          context, 'Maniobra de Heimlich', const HeimlichAnimation()));
+          context,
+          _guideReaderLabel(id, 'Maniobra de Heimlich'),
+          const HeimlichAnimation()));
     }
     // Bleeding guides get the tourniquet diagram
     if (id.contains('hemorragia')) {
       widgets.add(_visualCard(
-          context, 'Aplicación de torniquete', const TourniquetDiagram()));
-      widgets.add(_visualCard(context, 'Posición de recuperación',
+          context,
+          _guideReaderLabel(id, 'Aplicación de torniquete'),
+          const TourniquetDiagram()));
+      widgets.add(_visualCard(
+          context,
+          _guideReaderLabel(id, 'Posición de recuperación'),
           const RecoveryPositionDiagram()));
     }
     // Burn guides get the severity chart
@@ -686,6 +762,18 @@ class _GuideReader extends StatelessWidget {
     return widgets;
   }
 
+  /// Localized section titles in the guide reader.
+  String _guideReaderLabel(String id, String fallback) {
+    // The reader doesn't have lang context; use the guide's lang field.
+    final es = guide.lang == 'es';
+    if (fallback.contains('compresión')) return es ? 'Técnica de compresión' : 'Compression technique';
+    if (fallback.contains('Heimlich')) return es ? 'Maniobra de Heimlich' : 'Heimlich maneuver';
+    if (fallback.contains('torniquete')) return es ? 'Aplicación de torniquete' : 'Tourniquet application';
+    if (fallback.contains('recuperación')) return es ? 'Posición de recuperación' : 'Recovery position';
+    if (fallback.contains('Resumen')) return es ? 'Resumen visual' : 'Visual summary';
+    return fallback;
+  }
+
   Widget _visualCard(BuildContext context, String title, Widget child) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
@@ -704,160 +792,6 @@ class _GuideReader extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _mediaBriefCard(BuildContext context, EmergencyGuideMediaSpec media) {
-    final MaterialColor color = media.visualPolicy == VisualPolicy.contextOnly
-        ? Colors.indigo
-        : Colors.teal;
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            constraints: const BoxConstraints(minHeight: 132),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  color.shade900.withValues(alpha: 0.92),
-                  color.shade600.withValues(alpha: 0.76),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 92,
-                  height: 92,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.16),
-                    borderRadius: BorderRadius.circular(20),
-                    border:
-                        Border.all(color: Colors.white.withValues(alpha: 0.35)),
-                  ),
-                  child: Icon(_iconForMedia(media.animationKind),
-                      color: Colors.white, size: 46),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Imagen fotorealista segura',
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        media.visualPolicy == VisualPolicy.contextOnly
-                            ? 'Escena contextual: prepara el entorno. La técnica exacta se enseña con animación vectorial.'
-                            : 'Escena práctica: muestra el entorno o resultado que debes montar paso a paso.',
-                        style:
-                            const TextStyle(color: Colors.white, height: 1.25),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    Chip(
-                      avatar: const Icon(Icons.photo_camera, size: 18),
-                      label: Text(media.title),
-                    ),
-                    Chip(
-                      avatar:
-                          const Icon(Icons.movie_creation_outlined, size: 18),
-                      label: Text('Animación ${media.animationKind.name}'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  media.safetyNote,
-                  style: TextStyle(
-                    color: Theme.of(context).hintColor,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  IconData _iconForMedia(GuideAnimationKind kind) {
-    switch (kind) {
-      case GuideAnimationKind.pulse:
-        return Icons.monitor_heart;
-      case GuideAnimationKind.airway:
-        return Icons.air;
-      case GuideAnimationKind.bleeding:
-        return Icons.water_drop;
-      case GuideAnimationKind.burn:
-        return Icons.local_fire_department;
-      case GuideAnimationKind.splint:
-        return Icons.personal_injury;
-      case GuideAnimationKind.recognition:
-        return Icons.schedule;
-      case GuideAnimationKind.protect:
-        return Icons.shield;
-      case GuideAnimationKind.warmth:
-        return Icons.thermostat;
-      case GuideAnimationKind.poison:
-        return Icons.science;
-      case GuideAnimationKind.bite:
-        return Icons.pest_control;
-      case GuideAnimationKind.temperature:
-        return Icons.device_thermostat;
-      case GuideAnimationKind.birth:
-        return Icons.child_care;
-      case GuideAnimationKind.spine:
-        return Icons.psychology_alt;
-      case GuideAnimationKind.triage:
-        return Icons.groups;
-      case GuideAnimationKind.kit:
-        return Icons.medical_services;
-      case GuideAnimationKind.algorithm:
-        return Icons.account_tree;
-      case GuideAnimationKind.water:
-        return Icons.water_drop_outlined;
-      case GuideAnimationKind.food:
-        return Icons.restaurant;
-      case GuideAnimationKind.shelter:
-        return Icons.cabin;
-      case GuideAnimationKind.navigation:
-        return Icons.explore;
-      case GuideAnimationKind.signal:
-        return Icons.sos;
-      case GuideAnimationKind.storm:
-        return Icons.thunderstorm;
-      case GuideAnimationKind.flood:
-        return Icons.flood;
-      case GuideAnimationKind.earthquake:
-        return Icons.foundation;
-    }
   }
 
   @override

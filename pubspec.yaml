@@ -54,6 +54,7 @@ dependencies:
   # Notificaciones locales: SOS/chat entrante avisan aunque la app no esté
   # en pantalla (radios BLE siguen activos en segundo plano).
   flutter_local_notifications: ^18.0.1
+  record: ^7.1.1
 
 dev_dependencies:
   flutter_test:

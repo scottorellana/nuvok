@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "ble_mesh_bridge.h"
 #include "flutter/generated_plugin_registrant.h"
 
 FlutterWindow::FlutterWindow(const flutter::DartProject& project)
@@ -25,6 +26,8 @@ bool FlutterWindow::OnCreate() {
     return false;
   }
   RegisterPlugins(flutter_controller_->engine());
+  // Prepper Mesh BLE: mismo protocolo prepper/ble_mesh que Android/Apple.
+  RegisterBleMeshBridge(flutter_controller_->engine()->messenger());
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
 
   flutter_controller_->engine()->SetNextFrameCallback([&]() {

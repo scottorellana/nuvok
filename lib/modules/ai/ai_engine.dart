@@ -21,8 +21,10 @@ class AiEngine extends ChangeNotifier {
   }
   static final AiEngine instance = AiEngine._();
 
-  /// iOS cannot spawn llama-server; everyone else keeps the proven process.
-  static bool get _useFfi => Platform.isIOS;
+  /// Phones run llama.cpp IN-PROCESS via FFI: iOS forbids child processes
+  /// and Android ships libppllm.so per-ABI. Desktops keep the proven
+  /// llama-server child process.
+  static bool get _useFfi => Platform.isIOS || Platform.isAndroid;
 
   FfiLlamaEngine? _ffi;
   LlamaStatus _ffiStatus = LlamaStatus.stopped;
@@ -47,7 +49,10 @@ class AiEngine extends ChangeNotifier {
     notifyListeners();
     try {
       // Phones are tighter on RAM than desktops: smaller context window.
-      _ffi = await FfiLlamaEngine.load(path, nCtx: 2048);
+      // iOS gets full Metal offload; Android runs the NEON CPU path (no
+      // stable GPU backend on Android yet).
+      _ffi = await FfiLlamaEngine.load(path,
+          nCtx: 2048, nGpuLayers: Platform.isIOS ? 99 : 0);
       _ffiModelPath = path;
       _ffiStatus = LlamaStatus.running;
     } catch (e) {

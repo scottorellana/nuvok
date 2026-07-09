@@ -488,6 +488,16 @@ class AppStrings {
       'pt': 'Ver catálogo completo', 'fr': 'Voir le catalogue complet',
     },
 
+    // ── AI assistant status (ES/EN/PT/FR) ──
+    'aiSearchingGuides': {
+      'es': 'Buscando en las guías…', 'en': 'Searching the guides…',
+      'pt': 'Buscando nos guias…', 'fr': 'Recherche dans les guides…',
+    },
+    'aiSearchingLibrary': {
+      'es': 'Buscando en la biblioteca…', 'en': 'Searching the library…',
+      'pt': 'Buscando na biblioteca…', 'fr': 'Recherche dans la bibliothèque…',
+    },
+
     // ── Battery banner (core: safety-relevant) ──
     'lowBattery': {
       'es': 'Batería baja', 'en': 'Low battery', 'pt': 'Bateria fraca',

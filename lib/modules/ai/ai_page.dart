@@ -97,6 +97,29 @@ class _AiPageState extends State<AiPage> {
     await _server.start(path);
   }
 
+  /// System prompt in the app's active language. Small models follow an
+  /// explicit language instruction far better than "reply in the user's
+  /// language", so each UI language pins the reply language too.
+  String _systemPromptForLanguage() {
+    const prompts = {
+      'es': 'Eres el asistente de Prepper Pad, una app de conocimiento '
+          'offline. Responde de forma útil y concisa, siempre en español.',
+      'en': 'You are the Prepper Pad assistant, an offline knowledge app. '
+          'Reply helpfully and concisely, always in English.',
+      'pt': 'Você é o assistente do Prepper Pad, um app de conhecimento '
+          'offline. Responda de forma útil e concisa, sempre em português.',
+      'fr': 'Tu es l\'assistant de Prepper Pad, une app de connaissances '
+          'hors ligne. Réponds utilement et brièvement, toujours en français.',
+      'zh': '你是 Prepper Pad 的助手，一款离线知识应用。请始终用中文简明有用地回答。',
+      'ja': 'あなたはオフライン知識アプリ Prepper Pad のアシスタントです。'
+          '常に日本語で簡潔かつ役立つ回答をしてください。',
+      'ht': 'Ou se asistan Prepper Pad, yon aplikasyon konesans san entènèt. '
+          'Reponn yon fason itil e kout, toujou an kreyòl.',
+    };
+    final code = LocaleService.instance.language.code;
+    return prompts[code] ?? prompts['en']!;
+  }
+
   Future<void> _send() async {
     final text = _input.text.trim();
     if (text.isEmpty || _generating) return;
@@ -112,11 +135,10 @@ class _AiPageState extends State<AiPage> {
     // build a system prompt that lists those sources and requires citations.
     // Emergency mode retrieves from the bundled guides FIRST.
     List<RetrievedSource> sources = const [];
-    String systemPrompt =
-        'Eres el asistente de Prepper Pad, una app de conocimiento offline. '
-        'Responde de forma útil y concisa en el idioma del usuario.';
+    String systemPrompt = _systemPromptForLanguage();
     if (_emergencyMode) {
-      setState(() => _messages.last.text = '🚨 Buscando en las guías…');
+      setState(() =>
+          _messages.last.text = '🚨 ${tr(context, 'aiSearchingGuides')}');
       try {
         sources = await EmergencyRetriever.retrieve(text);
       } catch (_) {}
@@ -131,7 +153,8 @@ class _AiPageState extends State<AiPage> {
         });
       }
     } else if (_useLibrary && PrepperLibrary.instance.listZims().isNotEmpty) {
-      setState(() => _messages.last.text = '🔎 Buscando en la biblioteca…');
+      setState(() =>
+          _messages.last.text = '🔎 ${tr(context, 'aiSearchingLibrary')}');
       try {
         sources = await LibraryRetriever.retrieve(text);
       } catch (_) {}

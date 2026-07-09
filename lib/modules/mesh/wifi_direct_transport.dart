@@ -22,6 +22,7 @@ import 'package:flutter/foundation.dart';
 import 'package:nearby_connections/nearby_connections.dart';
 
 import 'mesh_transport.dart';
+import 'transport_health.dart';
 
 /// Strategy: P2P_CLUSTER (star topology, best for battery + throughput).
 const Strategy _kStrategy = Strategy.P2P_CLUSTER;
@@ -163,7 +164,7 @@ class NearbyConnectionsLink implements WifiDirectLink {
 }
 
 /// WiFi Direct mesh transport. Inactive on every platform except Android.
-class WifiDirectTransport implements MeshTransport {
+class WifiDirectTransport implements MeshTransport, HealthReporting {
   WifiDirectTransport({WifiDirectLink? link})
       : _link = link ?? NearbyConnectionsLink();
 
@@ -174,6 +175,20 @@ class WifiDirectTransport implements MeshTransport {
   StreamSubscription<String>? _disconnectSub;
   StreamSubscription<Uint8List>? _payloadSub;
   bool _running = false;
+
+  @override
+  final ValueNotifier<TransportHealth> health = ValueNotifier(
+      const TransportHealth(
+          name: 'wifi-direct', state: TransportState.unavailable));
+
+  void _refreshHealth() {
+    if (!_running) return;
+    health.value = health.value.copyWith(
+        state: _endpoints.isEmpty
+            ? TransportState.searching
+            : TransportState.connected,
+        peers: _endpoints.length);
+  }
 
   /// True on Android with the plugin available.
   bool get available => _link.available;
@@ -186,30 +201,45 @@ class WifiDirectTransport implements MeshTransport {
 
   @override
   Future<void> start() async {
-    if (_running || !available) return;
+    if (_running || !available) {
+      if (!available) {
+        health.value = health.value.copyWith(
+            state: TransportState.unavailable, hint: 'android_only');
+      }
+      return;
+    }
     _running = true;
     // Subscribe BEFORE native start: Nearby can report an endpoint immediately
     // during advertising/discovery. Missing that first event leaves emergency
     // devices visible but unable to send until a restart.
-    _connectSub = _link.onConnected.listen(_endpoints.add);
+    _connectSub = _link.onConnected.listen((id) {
+      _endpoints.add(id);
+      _refreshHealth();
+    });
     _disconnectSub = _link.onDisconnected.listen((id) {
       _endpoints.remove(id);
+      _refreshHealth();
     });
     _payloadSub = _link.onPayload.listen(_data.add);
     final ok = await _link.start('prepper-pad');
     if (!ok) {
       _running = false;
+      health.value =
+          health.value.copyWith(state: TransportState.unavailable);
       await _connectSub?.cancel();
       await _disconnectSub?.cancel();
       await _payloadSub?.cancel();
       _connectSub = _disconnectSub = _payloadSub = null;
       return;
     }
+    _refreshHealth();
   }
 
   @override
   Future<void> stop() async {
     _running = false;
+    health.value = health.value
+        .copyWith(state: TransportState.unavailable, peers: 0);
     await _connectSub?.cancel();
     await _disconnectSub?.cancel();
     await _payloadSub?.cancel();

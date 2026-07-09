@@ -6,12 +6,14 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'lan_discovery.dart';
 import 'mesh_transport.dart';
+import 'transport_health.dart';
 
-class LanTransport implements MeshTransport {
+class LanTransport implements MeshTransport, HealthReporting {
   LanTransport({this.port = 47777, this.deviceId});
 
   final int port;
@@ -41,6 +43,10 @@ class LanTransport implements MeshTransport {
   String get name => 'lan';
 
   @override
+  final ValueNotifier<TransportHealth> health = ValueNotifier(
+      const TransportHealth(name: 'lan', state: TransportState.unavailable));
+
+  @override
   Stream<Uint8List> get onData => _data.stream;
 
   @override
@@ -68,8 +74,11 @@ class LanTransport implements MeshTransport {
     } catch (e) {
       // Port may be in use by another instance or the OS may block
       // multicast. Fail gracefully — the mesh runs on other transports.
+      health.value = health.value
+          .copyWith(state: TransportState.unavailable, hint: 'no_network');
       return;
     }
+    health.value = health.value.copyWith(state: TransportState.searching);
     socket.broadcastEnabled = true;
     socket.multicastLoopback = true;
     // Join the group on EVERY interface, not just the default one. This is
@@ -144,6 +153,8 @@ class LanTransport implements MeshTransport {
 
   @override
   Future<void> stop() async {
+    health.value = health.value
+        .copyWith(state: TransportState.unavailable, peers: 0);
     await _discovery?.stop();
     _discovery = null;
     try {

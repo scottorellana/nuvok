@@ -6,9 +6,11 @@
 // Until a physical radio is detected, the transport degrades silently and LAN /
 // BLE / WiFi Direct continue carrying the mesh.
 import 'dart:async';
-import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart';
 
 import 'mesh_transport.dart';
+import 'transport_health.dart';
 
 /// Maximum on-radio frame size. 230 bytes fits common Meshtastic/LoRa payload
 /// ceilings with margin for firmware headers.
@@ -164,7 +166,7 @@ class _LoraBuffer {
   }
 }
 
-class LoraTransport implements MeshTransport {
+class LoraTransport implements MeshTransport, HealthReporting {
   LoraTransport({
     LoraLinkDriver? link,
     this.kind = LoraLinkKind.usbSerial,
@@ -186,6 +188,10 @@ class LoraTransport implements MeshTransport {
   int _seqCounter = 0;
 
   bool get available => _link.available;
+
+  @override
+  final ValueNotifier<TransportHealth> health = ValueNotifier(
+      const TransportHealth(name: 'lora', state: TransportState.unavailable));
 
   @override
   String get name => 'lora';
@@ -210,12 +216,19 @@ class LoraTransport implements MeshTransport {
     if (!_open) {
       await _framesSub?.cancel();
       _framesSub = null;
+      health.value = health.value
+          .copyWith(state: TransportState.unavailable, hint: 'no_radio');
+      return;
     }
+    health.value =
+        health.value.copyWith(state: TransportState.searching);
   }
 
   @override
   Future<void> stop() async {
     _open = false;
+    health.value = health.value
+        .copyWith(state: TransportState.unavailable, peers: 0);
     await _framesSub?.cancel();
     _framesSub = null;
     _reassembler.reset();

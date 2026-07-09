@@ -90,6 +90,12 @@ class MeshRouter {
   bool get hasPeers => peers.isNotEmpty;
 
   /// Pares vivos oídos por un transporte concreto ('ble', 'lan', …).
+  ///
+  /// Nota: cuenta el REMITENTE ORIGINAL del envelope, así que un mensaje de A
+  /// relevado por B y oído por BLE registra a A como "alcanzable por BLE" —
+  /// correcto para el asistente (A es alcanzable vía ese transporte a través
+  /// del relevo), pero el desglose por transporte puede superar a los
+  /// vecinos físicos directos.
   int peersVia(String transport) {
     final m = _peersVia[transport];
     if (m == null) return 0;

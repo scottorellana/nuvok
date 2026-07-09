@@ -74,19 +74,65 @@ class BleMeshBridge(
     // advertise a connectable address): we answer them with notifications.
     private val subscribedCentrals = ConcurrentHashMap<String, BluetoothDevice>()
 
-    // Estado del adaptador en vivo (usuario apaga BT con la app abierta) →
-    // eventos {type:'state'} que alimentan TransportHealth en Dart.
+    // Estado del adaptador en vivo (usuario apaga/enciende BT con la app
+    // abierta) → eventos {type:'state'} para TransportHealth en Dart, Y
+    // auto-recuperación: al volver STATE_ON las radios se relanzan solas —
+    // un ciclo del adaptador invalida scanner/advertiser/GATT server, y el
+    // asistente le pide al usuario exactamente "enciende Bluetooth", así que
+    // obedecerlo TIENE que revivir el mesh sin reiniciar la app.
     private val btStateReceiver = object : android.content.BroadcastReceiver() {
         override fun onReceive(c: Context?, i: android.content.Intent?) {
             when (i?.getIntExtra(android.bluetooth.BluetoothAdapter.EXTRA_STATE, -1)) {
-                android.bluetooth.BluetoothAdapter.STATE_ON ->
+                android.bluetooth.BluetoothAdapter.STATE_ON -> {
                     emit(mapOf("type" to "state", "value" to "on"))
-                android.bluetooth.BluetoothAdapter.STATE_OFF ->
+                    if (radiosWanted && hasRuntimePermissions()) {
+                        main.post { startRadios() }
+                    }
+                }
+                android.bluetooth.BluetoothAdapter.STATE_OFF -> {
                     emit(mapOf("type" to "state", "value" to "off"))
+                    // Los objetos de radio quedaron inválidos; resetear los
+                    // flags para que startRadios() no haga early-return con
+                    // estado fantasma cuando el adaptador vuelva.
+                    resetRadiosAfterAdapterOff()
+                }
             }
         }
     }
     private var btReceiverRegistered = false
+
+    // True desde que el mesh pidió radios y hasta stop(): el receiver lo usa
+    // para saber si debe relanzarlas cuando el usuario enciende Bluetooth.
+    @Volatile private var radiosWanted = false
+
+    private fun registerBtReceiverOnce() {
+        if (btReceiverRegistered) return
+        activity.registerReceiver(
+            btStateReceiver,
+            android.content.IntentFilter(
+                android.bluetooth.BluetoothAdapter.ACTION_STATE_CHANGED,
+            ),
+        )
+        btReceiverRegistered = true
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun resetRadiosAfterAdapterOff() {
+        scanning = false
+        advertising = false
+        try {
+            gattServer?.close()
+        } catch (_: Throwable) {}
+        gattServer = null
+        serverRx = null
+        for (state in peers.values) {
+            try {
+                state.gatt?.close()
+            } catch (_: Throwable) {}
+        }
+        peers.clear()
+        subscribedCentrals.clear()
+    }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
@@ -121,15 +167,21 @@ class BleMeshBridge(
     }
 
     private fun start(result: MethodChannel.Result) {
+        radiosWanted = true
         if (!hasBleHardware()) {
             // Distinguir "no hay adaptador" (irreparable) de "está apagado"
             // (accionable): el asistente da instrucciones distintas.
             val adapter = bluetoothManager?.adapter
+            // Registrar el receiver AUNQUE Bluetooth esté apagado: si no,
+            // encenderlo después no emite ningún evento y el paso del
+            // asistente nunca se limpia.
+            if (adapter != null) registerBtReceiverOnce()
             emit(mapOf("type" to "state",
                 "value" to if (adapter == null) "unsupported" else "off"))
             result.success(false)
             return
         }
+        registerBtReceiverOnce()
         if (!hasRuntimePermissions()) {
             pendingStartResult = result
             ActivityCompat.requestPermissions(activity, missingRuntimePermissions(), REQUEST_CODE)
@@ -181,15 +233,7 @@ class BleMeshBridge(
         startAdvertising(adapter)
         startScanning(adapter)
         emit(mapOf("type" to "state", "value" to "on"))
-        if (!btReceiverRegistered) {
-            activity.registerReceiver(
-                btStateReceiver,
-                android.content.IntentFilter(
-                    android.bluetooth.BluetoothAdapter.ACTION_STATE_CHANGED,
-                ),
-            )
-            btReceiverRegistered = true
-        }
+        registerBtReceiverOnce()
         // Scanner-only still helps if another device is advertising. GATT server
         // without advertiser is useful once a peer already knows our address.
         return gattServer != null || advertising || scanning
@@ -290,6 +334,7 @@ class BleMeshBridge(
             runCatching { activity.unregisterReceiver(btStateReceiver) }
             btReceiverRegistered = false
         }
+        radiosWanted = false
     }
 
     @SuppressLint("MissingPermission")

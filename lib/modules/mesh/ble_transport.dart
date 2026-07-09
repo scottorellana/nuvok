@@ -525,11 +525,21 @@ class BleTransport implements MeshTransport, HealthReporting {
           state: TransportState.noPermission, hint: 'bluetooth_permission'),
       'unsupported' => health.value
           .copyWith(state: TransportState.unavailable, hint: 'no_adapter'),
-      _ => health.value.copyWith(
+      // Construcción fresca (no copyWith): limpia el hint residual de un
+      // estado bloqueado anterior — copyWith no puede poner hint en null.
+      _ => TransportHealth(
+          name: 'ble',
           state: _connected.isEmpty
               ? TransportState.searching
-              : TransportState.connected),
+              : TransportState.connected,
+          peers: _connected.length),
     };
+    if (s == 'on' && _running) {
+      // El usuario encendió Bluetooth (el paso 1 del asistente): si el link
+      // nativo había fallado su start (BT apagado al lanzar), reintentarlo
+      // ahora — sin esto el mesh BLE queda muerto hasta reiniciar la app.
+      unawaited(_link.start());
+    }
   }
 
   void _refreshPeerHealth() {

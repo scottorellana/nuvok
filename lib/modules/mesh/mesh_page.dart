@@ -24,13 +24,24 @@ class MeshPage extends StatefulWidget {
 class _MeshPageState extends State<MeshPage> {
   final _service = MeshService.instance;
   final _nameCtrl = TextEditingController();
-  // Cuándo empezó esta sesión de búsqueda — el asistente escala sus consejos
-  // (hotspot, LoRa) según cuánto llevamos sin encontrar a nadie.
-  final _searchStart = DateTime.now();
+  // Cuándo empezó la sesión de búsqueda ACTUAL — el asistente escala sus
+  // consejos (hotspot, LoRa) según cuánto llevamos sin encontrar a nadie.
+  // Se reancla cuando los pares caen a cero: si no, tras una hora conectado
+  // una desconexión saltaría directo a hotspot sin dar tiempo a reconectar.
+  DateTime _searchStart = DateTime.now();
+  int _lastPeerCount = 0;
+
+  void _onPeerCountChange() {
+    final c = _service.peerCount.value;
+    if (_lastPeerCount > 0 && c == 0) _searchStart = DateTime.now();
+    _lastPeerCount = c;
+  }
 
   @override
   void initState() {
     super.initState();
+    _lastPeerCount = _service.peerCount.value;
+    _service.peerCount.addListener(_onPeerCountChange);
     if (_service.hasIdentity && !_service.running.value) {
       _service.start().then((_) {
         if (mounted) setState(() {});
@@ -40,6 +51,7 @@ class _MeshPageState extends State<MeshPage> {
 
   @override
   void dispose() {
+    _service.peerCount.removeListener(_onPeerCountChange);
     _nameCtrl.dispose();
     super.dispose();
   }

@@ -330,6 +330,10 @@ class MeshService {
       _sendBeacon();
       peerCount.value = router.peers.length;
       queuedCount.value = router.outboxCount;
+      // También republicar la salud: sin esto, cuando un par expira en
+      // silencio (LAN no emite desconexión) los healths quedan congelados
+      // con peers>0 y el asistente devuelve cero pasos para siempre.
+      _publishHealth(router);
       router.flushOutbox();
       _scheduleBeaconTick(router);
     });

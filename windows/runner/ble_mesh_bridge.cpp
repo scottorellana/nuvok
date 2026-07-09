@@ -7,13 +7,19 @@
 //   GATT service   0000ffe0-… with write-char ffe1 (peers write to us) and
 //                  notify-char ffe2 (we notify subscribed centrals).
 //
-// Threading note: WinRT async completions arrive on thread-pool threads. The
-// flutter EventSink is only safe on the platform thread, so every emit is
-// marshalled through a mutex-guarded queue drained by a Win32 timer on the
-// main thread (see FlushPending) — the same pattern the community BLE plugins
-// use. Method-call handlers run on the platform thread; the blocking .get()
-// calls inside them take milliseconds for BLE ops (mirrors the synchronous
-// Kotlin bridge behaviour).
+// Threading model:
+//   • Los handlers de método corren en el platform thread (STA). Todo el
+//     trabajo WinRT bloqueante (CreateAsync/Connect/Write con .get()) se
+//     despacha a un worker std::thread con apartment MTA propio — .get() en
+//     un STA dispara WINRT_ASSERT y congelaría la ventana.
+//   • El EventSink y los MethodResult solo se tocan en el platform thread:
+//     los callbacks WinRT (threadpool) y los workers encolan eventos y
+//     respuestas en colas protegidas por mutex, drenadas por un WM_TIMER del
+//     hilo principal (SetTimer con HWND null genera su PROPIO id — hay que
+//     guardar el retorno, compararlo en el TimerProc sería siempre falso con
+//     el id pedido).
+//   • Los delegados WinRT van completos en try/catch: una hresult_error que
+//     escapa de un delegado en el threadpool termina el proceso entero.
 #include "ble_mesh_bridge.h"
 
 #include <flutter/event_channel.h>
@@ -31,12 +37,14 @@
 #include <winrt/Windows.Storage.Streams.h>
 
 #include <deque>
+#include <functional>
 #include <map>
 #include <memory>
 #include <mutex>
-#include <set>
 #include <sstream>
 #include <string>
+#include <thread>
+#include <utility>
 #include <vector>
 
 using namespace winrt;
@@ -53,6 +61,12 @@ const guid kTxUuid{0x0000ffe1, 0x0000, 0x1000,
                    {0x80, 0x00, 0x00, 0x80, 0x5f, 0x9b, 0x34, 0xfb}};
 const guid kRxUuid{0x0000ffe2, 0x0000, 0x1000,
                    {0x80, 0x00, 0x00, 0x80, 0x5f, 0x9b, 0x34, 0xfb}};
+
+// Re-anunciar el mismo peer como mucho cada 2s: Dart deduplica y reintenta
+// conexiones fallidas al siguiente aviso (igual que Android, que re-emite en
+// cada scan result); sin re-emisión un connect fallido dejaba al peer
+// inalcanzable para siempre.
+constexpr ULONGLONG kPeerReemitMs = 2000;
 
 std::string AddressToId(uint64_t addr) {
   std::ostringstream o;
@@ -84,7 +98,8 @@ struct Peer {
   winrt::event_token rx_token{};
 };
 
-constexpr UINT_PTR kFlushTimerId = 0x50504d; // 'PPM'
+using MethodResultPtr =
+    std::shared_ptr<flutter::MethodResult<flutter::EncodableValue>>;
 
 class BleMeshBridge {
  public:
@@ -123,26 +138,38 @@ class BleMeshBridge {
                std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
                    result) {
           const std::string& m = call.method_name();
+          MethodResultPtr shared(std::move(result));
           if (m == "start") {
-            result->Success(flutter::EncodableValue(Start()));
+            RunOnWorker([this, shared] { QueueReply(shared, Start()); });
           } else if (m == "stop") {
-            Stop();
-            result->Success(flutter::EncodableValue(true));
+            RunOnWorker([this, shared] {
+              Stop();
+              QueueReply(shared, true);
+            });
           } else if (m == "connect") {
-            result->Success(flutter::EncodableValue(Connect(ArgId(call))));
+            const std::string id = ArgId(call);
+            RunOnWorker(
+                [this, shared, id] { QueueReply(shared, Connect(id)); });
           } else if (m == "disconnect") {
-            Disconnect(ArgId(call));
-            result->Success(flutter::EncodableValue(true));
+            const std::string id = ArgId(call);
+            RunOnWorker([this, shared, id] {
+              Disconnect(id);
+              QueueReply(shared, true);
+            });
           } else if (m == "send") {
-            result->Success(
-                flutter::EncodableValue(Send(ArgId(call), ArgBytes(call))));
+            const std::string id = ArgId(call);
+            const std::vector<uint8_t> bytes = ArgBytes(call);
+            RunOnWorker(
+                [this, shared, id, bytes] { QueueReply(shared, Send(id, bytes)); });
           } else {
-            result->NotImplemented();
+            shared->NotImplemented();
           }
         });
 
-    // Timer on the platform thread drains events queued from WinRT threads.
-    SetTimer(nullptr, kFlushTimerId, 50, &BleMeshBridge::TimerProc);
+    // Timer del hilo principal que drena eventos y respuestas. OJO: con
+    // HWND null, Windows IGNORA el id solicitado y devuelve uno nuevo — el
+    // TimerProc debe comparar contra el RETORNO, no contra una constante.
+    timer_id_ = SetTimer(nullptr, 0, 50, &BleMeshBridge::TimerProc);
     instance_ = this;
   }
 
@@ -150,7 +177,24 @@ class BleMeshBridge {
   static BleMeshBridge* instance_;
 
   static void CALLBACK TimerProc(HWND, UINT, UINT_PTR id, DWORD) {
-    if (id == kFlushTimerId && instance_) instance_->FlushPending();
+    BleMeshBridge* self = instance_;
+    if (self && id == self->timer_id_) self->FlushPending();
+  }
+
+  // Ejecuta trabajo WinRT bloqueante fuera del platform thread. Un hilo por
+  // llamada es suficiente: las operaciones BLE son esporádicas (conectar,
+  // escribir chunks) y el orden por-peer lo garantiza el protocolo de Dart,
+  // que espera cada invokeMethod antes del siguiente.
+  static void RunOnWorker(std::function<void()> work) {
+    std::thread([work = std::move(work)] {
+      // Los hilos nuevos no tienen apartment COM; WinRT lo exige.
+      try {
+        winrt::init_apartment(winrt::apartment_type::multi_threaded);
+      } catch (const hresult_error&) {
+        // Ya inicializado con otro modo — seguir igual.
+      }
+      work();
+    }).detach();
   }
 
   static std::string ArgId(
@@ -178,20 +222,33 @@ class BleMeshBridge {
     return {};
   }
 
-  // Queue an event from ANY thread; the platform-thread timer delivers it.
+  // Encola un evento desde CUALQUIER hilo; el timer lo entrega en el
+  // platform thread.
   void Emit(flutter::EncodableMap event) {
     std::lock_guard<std::mutex> lock(mutex_);
-    pending_.push_back(std::move(event));
+    pending_events_.push_back(std::move(event));
+    // Backstop: si Dart nunca abre el EventChannel la cola no debe crecer
+    // sin límite mientras llegan advertisements.
+    while (pending_events_.size() > 512) pending_events_.pop_front();
+  }
+
+  void QueueReply(MethodResultPtr result, bool value) {
+    std::lock_guard<std::mutex> lock(mutex_);
+    pending_replies_.emplace_back(std::move(result), value);
   }
 
   void FlushPending() {
-    std::deque<flutter::EncodableMap> drained;
+    std::deque<flutter::EncodableMap> events;
+    std::deque<std::pair<MethodResultPtr, bool>> replies;
     {
       std::lock_guard<std::mutex> lock(mutex_);
-      if (!sink_) return;
-      drained.swap(pending_);
+      replies.swap(pending_replies_);
+      if (sink_) events.swap(pending_events_);
     }
-    for (auto& e : drained) {
+    for (auto& [result, value] : replies) {
+      result->Success(flutter::EncodableValue(value));
+    }
+    for (auto& e : events) {
       std::lock_guard<std::mutex> lock(mutex_);
       if (sink_) sink_->Success(flutter::EncodableValue(std::move(e)));
     }
@@ -239,20 +296,30 @@ class BleMeshBridge {
     write_char.WriteRequested(
         [this](GattLocalCharacteristic const&,
                GattWriteRequestedEventArgs const& args) {
-          auto deferral = args.GetDeferral();
-          auto request = args.GetRequestAsync().get();
-          auto bytes = FromBuffer(request.Value());
-          std::string id =
-              winrt::to_string(args.Session().DeviceId().Id());
-          Emit({{flutter::EncodableValue("type"),
-                 flutter::EncodableValue("data")},
-                {flutter::EncodableValue("id"), flutter::EncodableValue(id)},
-                {flutter::EncodableValue("bytes"),
-                 flutter::EncodableValue(bytes)}});
-          if (request.Option() == GattWriteOption::WriteWithResponse) {
-            request.Respond();
+          // Delegado threadpool: NADA puede escapar (mataría el proceso) y
+          // GetRequestAsync devuelve null si la sesión GATT ya se cerró.
+          try {
+            auto deferral = args.GetDeferral();
+            auto request = args.GetRequestAsync().get();
+            if (request) {
+              auto bytes = FromBuffer(request.Value());
+              std::string id =
+                  winrt::to_string(args.Session().DeviceId().Id());
+              Emit({{flutter::EncodableValue("type"),
+                     flutter::EncodableValue("data")},
+                    {flutter::EncodableValue("id"),
+                     flutter::EncodableValue(id)},
+                    {flutter::EncodableValue("bytes"),
+                     flutter::EncodableValue(bytes)}});
+              if (request.Option() == GattWriteOption::WriteWithResponse) {
+                request.Respond();
+              }
+            }
+            deferral.Complete();
+          } catch (const hresult_error&) {
+            // Peer se desconectó a mitad de escritura — ignorar.
+          } catch (const std::exception&) {
           }
-          deferral.Complete();
         });
 
     GattLocalCharacteristicParameters notify_params;
@@ -278,20 +345,31 @@ class BleMeshBridge {
     watcher_.Received(
         [this](BluetoothLEAdvertisementWatcher const&,
                BluetoothLEAdvertisementReceivedEventArgs const& args) {
-          for (auto const& uuid : args.Advertisement().ServiceUuids()) {
-            if (uuid == kServiceUuid) {
-              std::string id = AddressToId(args.BluetoothAddress());
-              {
-                std::lock_guard<std::mutex> lock(mutex_);
-                if (seen_.count(id)) return;  // report each peer once
-                seen_.insert(id);
+          try {
+            for (auto const& uuid : args.Advertisement().ServiceUuids()) {
+              if (uuid == kServiceUuid) {
+                std::string id = AddressToId(args.BluetoothAddress());
+                {
+                  // Throttle por peer, NO dedup permanente: Dart reintenta
+                  // conexiones fallidas al siguiente aviso.
+                  std::lock_guard<std::mutex> lock(mutex_);
+                  ULONGLONG now = GetTickCount64();
+                  auto it = last_peer_emit_.find(id);
+                  if (it != last_peer_emit_.end() &&
+                      now - it->second < kPeerReemitMs) {
+                    return;
+                  }
+                  last_peer_emit_[id] = now;
+                }
+                Emit({{flutter::EncodableValue("type"),
+                       flutter::EncodableValue("peer")},
+                      {flutter::EncodableValue("id"),
+                       flutter::EncodableValue(id)}});
+                break;
               }
-              Emit({{flutter::EncodableValue("type"),
-                     flutter::EncodableValue("peer")},
-                    {flutter::EncodableValue("id"),
-                     flutter::EncodableValue(id)}});
-              break;
             }
+          } catch (const hresult_error&) {
+          } catch (const std::exception&) {
           }
         });
     watcher_.Start();
@@ -331,13 +409,17 @@ class BleMeshBridge {
       peer.rx_token = peer.rx.ValueChanged(
           [this, id](GattCharacteristic const&,
                      GattValueChangedEventArgs const& args) {
-            Emit({{flutter::EncodableValue("type"),
-                   flutter::EncodableValue("data")},
-                  {flutter::EncodableValue("id"),
-                   flutter::EncodableValue(id)},
-                  {flutter::EncodableValue("bytes"),
-                   flutter::EncodableValue(
-                       FromBuffer(args.CharacteristicValue()))}});
+            try {
+              Emit({{flutter::EncodableValue("type"),
+                     flutter::EncodableValue("data")},
+                    {flutter::EncodableValue("id"),
+                     flutter::EncodableValue(id)},
+                    {flutter::EncodableValue("bytes"),
+                     flutter::EncodableValue(
+                         FromBuffer(args.CharacteristicValue()))}});
+            } catch (const hresult_error&) {
+            } catch (const std::exception&) {
+            }
           });
       std::lock_guard<std::mutex> lock(mutex_);
       peers_[id] = std::move(peer);
@@ -350,14 +432,19 @@ class BleMeshBridge {
   }
 
   void Disconnect(const std::string& id) {
-    std::lock_guard<std::mutex> lock(mutex_);
-    auto it = peers_.find(id);
-    if (it == peers_.end()) return;
-    if (it->second.rx && it->second.rx_token) {
-      it->second.rx.ValueChanged(it->second.rx_token);
+    Peer peer;
+    {
+      std::lock_guard<std::mutex> lock(mutex_);
+      auto it = peers_.find(id);
+      if (it == peers_.end()) return;
+      peer = std::move(it->second);
+      peers_.erase(it);
     }
-    if (it->second.device) it->second.device.Close();
-    peers_.erase(it);
+    try {
+      if (peer.rx && peer.rx_token) peer.rx.ValueChanged(peer.rx_token);
+      if (peer.device) peer.device.Close();
+    } catch (const hresult_error&) {
+    }
   }
 
   bool Send(const std::string& id, const std::vector<uint8_t>& bytes) {
@@ -402,13 +489,19 @@ class BleMeshBridge {
       }
     } catch (const hresult_error&) {
     }
-    std::lock_guard<std::mutex> lock(mutex_);
-    for (auto& [id, p] : peers_) {
-      if (p.rx && p.rx_token) p.rx.ValueChanged(p.rx_token);
-      if (p.device) p.device.Close();
+    std::map<std::string, Peer> peers;
+    {
+      std::lock_guard<std::mutex> lock(mutex_);
+      peers.swap(peers_);
+      last_peer_emit_.clear();
     }
-    peers_.clear();
-    seen_.clear();
+    for (auto& [id, p] : peers) {
+      try {
+        if (p.rx && p.rx_token) p.rx.ValueChanged(p.rx_token);
+        if (p.device) p.device.Close();
+      } catch (const hresult_error&) {
+      }
+    }
   }
 
   std::unique_ptr<flutter::MethodChannel<flutter::EncodableValue>>
@@ -416,14 +509,16 @@ class BleMeshBridge {
   std::unique_ptr<flutter::EventChannel<flutter::EncodableValue>>
       event_channel_;
   std::unique_ptr<flutter::EventSink<flutter::EncodableValue>> sink_;
-  std::deque<flutter::EncodableMap> pending_;
+  std::deque<flutter::EncodableMap> pending_events_;
+  std::deque<std::pair<MethodResultPtr, bool>> pending_replies_;
   std::mutex mutex_;
+  UINT_PTR timer_id_ = 0;
 
   GattServiceProvider provider_{nullptr};
   GattLocalCharacteristic notify_char_{nullptr};
   BluetoothLEAdvertisementWatcher watcher_{nullptr};
   std::map<std::string, Peer> peers_;
-  std::set<std::string> seen_;
+  std::map<std::string, ULONGLONG> last_peer_emit_;
 };
 
 BleMeshBridge* BleMeshBridge::instance_ = nullptr;

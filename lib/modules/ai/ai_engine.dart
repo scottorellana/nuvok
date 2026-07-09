@@ -1,8 +1,9 @@
 // The one door to local AI for the whole app. Behind it live two engines:
-// - LlamaServer: llama-server child process (macOS/Windows/Linux — battle
-//   tested here, isolates crashes from the app).
-// - FfiLlamaEngine: llama.cpp embedded IN-PROCESS via FFI (iOS, where child
-//   processes are forbidden; also the future path for Android).
+// - FfiLlamaEngine: llama.cpp embedded IN-PROCESS via FFI — iOS (child
+//   processes forbidden), Android (libppllm.so per ABI) and macOS (Metal),
+//   so phone and computer run the exact same engine.
+// - LlamaServer: llama-server child process (Windows/Linux, where we ship
+//   the server binary instead of a native library).
 // The UI talks only to AiEngine and cannot tell which one is running.
 import 'dart:async';
 import 'dart:io';
@@ -21,10 +22,11 @@ class AiEngine extends ChangeNotifier {
   }
   static final AiEngine instance = AiEngine._();
 
-  /// Phones run llama.cpp IN-PROCESS via FFI: iOS forbids child processes
-  /// and Android ships libppllm.so per-ABI. Desktops keep the proven
-  /// llama-server child process.
-  static bool get _useFfi => Platform.isIOS || Platform.isAndroid;
+  /// iOS, Android and macOS run llama.cpp IN-PROCESS via FFI (one engine,
+  /// verified identical on all three). Windows/Linux keep the llama-server
+  /// child process until libppllm ships there too.
+  static bool get _useFfi =>
+      Platform.isIOS || Platform.isAndroid || Platform.isMacOS;
 
   FfiLlamaEngine? _ffi;
   LlamaStatus _ffiStatus = LlamaStatus.stopped;
@@ -49,10 +51,11 @@ class AiEngine extends ChangeNotifier {
     notifyListeners();
     try {
       // Phones are tighter on RAM than desktops: smaller context window.
-      // iOS gets full Metal offload; Android runs the NEON CPU path (no
-      // stable GPU backend on Android yet).
+      // Apple platforms get full Metal offload; Android runs the NEON CPU
+      // path (no stable GPU backend on Android yet).
       _ffi = await FfiLlamaEngine.load(path,
-          nCtx: 2048, nGpuLayers: Platform.isIOS ? 99 : 0);
+          nCtx: Platform.isMacOS ? 4096 : 2048,
+          nGpuLayers: Platform.isAndroid ? 0 : 99);
       _ffiModelPath = path;
       _ffiStatus = LlamaStatus.running;
     } catch (e) {

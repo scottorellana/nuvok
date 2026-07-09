@@ -69,8 +69,19 @@ class _PpLlmBindings {
       return DynamicLibrary.open('ppllm.framework/ppllm');
     }
     if (Platform.isMacOS) {
-      // Bundled next to libzstd in Contents/Frameworks (@rpath).
-      return DynamicLibrary.open('libppllm.dylib');
+      // Packaged app first (next to libzstd in Contents/Frameworks), then
+      // the development build outputs — same lookup order as libzstd.
+      final exeDir = File(Platform.resolvedExecutable).parent.path;
+      final home = Platform.environment['HOME'] ?? '';
+      for (final path in [
+        '$exeDir/../Frameworks/libppllm.dylib',
+        'native/out/macos/libppllm.dylib',
+        '${Directory.current.path}/native/out/macos/libppllm.dylib',
+        '$home/prepper-pad/native/out/macos/libppllm.dylib',
+      ]) {
+        if (File(path).existsSync()) return DynamicLibrary.open(path);
+      }
+      throw UnsupportedError('No se encontró libppllm (macOS)');
     }
     if (Platform.isAndroid) {
       return DynamicLibrary.open('libppllm.so');

@@ -8,8 +8,8 @@ REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 NATIVE="$REPO_DIR/native/out/macos"
 DIST="$REPO_DIR/dist"
 
-[ -f "$NATIVE/llama-server" ] && [ -f "$NATIVE/libzstd.1.dylib" ] || {
-  echo "Motores nativos no encontrados. Ejecuta scripts/build_native_macos.sh primero."
+[ -f "$NATIVE/libppllm.dylib" ] && [ -f "$NATIVE/libzstd.1.dylib" ] || {
+  echo "Motores nativos no encontrados. Ejecuta scripts/build_native_macos.sh y scripts/build_llm_macos.sh primero."
   exit 1
 }
 
@@ -24,8 +24,10 @@ rm -rf "$DIST/Prepper Pad.app" "$DIST/PrepperPad.dmg" "$DIST/dmg-root"
 cp -R "$APP_SRC" "$DIST/Prepper Pad.app"
 
 APP="$DIST/Prepper Pad.app"
-mkdir -p "$APP/Contents/Resources/bin" "$APP/Contents/Frameworks"
-cp "$NATIVE/llama-server" "$APP/Contents/Resources/bin/"
+mkdir -p "$APP/Contents/Frameworks"
+# The AI engine is libppllm (llama.cpp in-process, Metal) — the same engine
+# the app runs on iPhone and Android.
+cp "$NATIVE/libppllm.dylib" "$APP/Contents/Frameworks/"
 cp "$NATIVE/libzstd.1.dylib" "$APP/Contents/Frameworks/"
 
 # Ad-hoc signature so macOS Gatekeeper allows right-click → Open.

@@ -15,7 +15,10 @@ import 'package:cryptography/cryptography.dart';
 
 import 'mesh_channel.dart';
 
-enum MeshType { chat, position, sos, sosCancel, ack, beacon }
+// voice va AL FINAL: los decoders viejos descartan índices fuera de rango
+// (decode devuelve null), así que insertar en medio rompería el mapeo de
+// los tipos existentes entre versiones.
+enum MeshType { chat, position, sos, sosCancel, ack, beacon, voice }
 
 class MeshEnvelope {
   MeshEnvelope({

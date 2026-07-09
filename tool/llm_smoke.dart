@@ -7,7 +7,7 @@ Future<void> main() async {
       '${Directory.current.path}/native/out/macos/libppllm.dylib');
   final sw = Stopwatch()..start();
   final engine = await FfiLlamaEngine.load(
-      '${Platform.environment['HOME']}/PrepperPad/models/qwen2.5-0.5b-instruct-q4_k_m.gguf');
+      '${Platform.environment['HOME']}/PrepperPad/models/google_gemma-3-1b-it-Q4_K_M.gguf');
   stdout.writeln('modelo cargado en ${sw.elapsedMilliseconds}ms');
   sw.reset();
   var tokens = 0;

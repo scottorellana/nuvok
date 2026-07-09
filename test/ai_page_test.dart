@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prepper_pad/modules/ai/ai_page.dart';
-import 'package:prepper_pad/modules/ai/llama_server.dart';
+import 'package:prepper_pad/modules/ai/ai_engine.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +13,7 @@ void main() {
         home: Scaffold(
           body: AiEmptyState(
             selectedModelPath: '/tmp/qwen2.5-0.5b-instruct-q4_k_m.gguf',
-            server: LlamaServer.instance,
+            server: AiEngine.instance,
           ),
         ),
       ),

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import '../../core/prepper_library.dart';
 import 'emergency_retriever.dart';
 import 'library_retriever.dart';
-import 'llama_server.dart';
+import 'ai_engine.dart';
+import 'llama_server.dart' show LlamaStatus;
 import '../../core/locale_service.dart';
 
 class ChatMessage {
@@ -23,7 +24,7 @@ class AiPage extends StatefulWidget {
 }
 
 class _AiPageState extends State<AiPage> {
-  final _server = LlamaServer.instance;
+  final _server = AiEngine.instance;
   final _input = TextEditingController();
   final _scroll = ScrollController();
   final List<ChatMessage> _messages = [];
@@ -67,7 +68,7 @@ class _AiPageState extends State<AiPage> {
     final path = _selectedModel;
     if (path == null) return;
     final size = File(path).lengthSync();
-    final free = await LlamaServer.freeRamBytes();
+    final free = await AiEngine.freeRamBytes();
     if (!mounted) return;
     if (free != null && size > free * 0.8) {
       final proceed = await showDialog<bool>(
@@ -194,34 +195,6 @@ class _AiPageState extends State<AiPage> {
 
   @override
   Widget build(BuildContext context) {
-    // iOS forbids spawning child processes, and the local AI runs llama-server
-    // as one — so on iPhone/iPad v1 the assistant is honestly unavailable
-    // instead of silently broken. Everything else works in full.
-    if (Platform.isIOS) {
-      return Scaffold(
-        appBar: AppBar(title: Text(tr(context, 'assistant'))),
-        body: const Center(
-          child: Padding(
-            padding: EdgeInsets.all(32),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.psychology_outlined, size: 56, color: Colors.grey),
-                SizedBox(height: 16),
-                Text(
-                  'El asistente de IA local estará disponible en iPhone y '
-                  'iPad en una próxima versión.\n\n'
-                  'En tablet Android, Mac y PC ya funciona. Todo lo demás — '
-                  'mapas, comunicación de emergencia, biblioteca y guías — '
-                  'funciona completo en este dispositivo, sin internet.',
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text(tr(context, 'assistant')),
@@ -379,7 +352,7 @@ class AiEmptyState extends StatelessWidget {
   const AiEmptyState({super.key, required this.selectedModelPath, required this.server});
 
   final String? selectedModelPath;
-  final LlamaServer server;
+  final AiEngine server;
 
   @override
   Widget build(BuildContext context) {
@@ -445,7 +418,7 @@ class AiEmptyState extends StatelessWidget {
 
 class _ServerButton extends StatelessWidget {
   const _ServerButton({required this.server, required this.onLoad});
-  final LlamaServer server;
+  final AiEngine server;
   final Future<void> Function() onLoad;
 
   @override

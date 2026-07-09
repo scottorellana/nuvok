@@ -130,6 +130,9 @@ class _EagerBleLink implements BleLink {
   bool get adapterAvailable => available;
 
   @override
+  Stream<String> get onAdapterState => const Stream.empty();
+
+  @override
   Stream<BlePeer> get onDiscovery => _disc.stream;
 
   @override

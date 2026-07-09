@@ -93,6 +93,11 @@ class AppStrings {
     'whistle', 'compass', 'rcpMetronome',
     'sosFrom', 'position', 'noGps', 'viewOnMap', 'moreModules',
     'lowBattery', 'lowBatteryHint',
+    // Asistente de conexión: superficie vital — 7 idiomas obligatorios.
+    'meshBannerConnected', 'meshBannerSearching', 'meshBannerTapHelp',
+    'advisorTitle', 'advisorBtOff', 'advisorBtOffBody',
+    'advisorBtPerm', 'advisorBtPermBody', 'advisorHotspot',
+    'advisorHotspotBody', 'advisorLora', 'advisorLoraBody',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -863,6 +868,143 @@ class AppStrings {
       'zh': '显示代码/二维码邀请',
       'ja': 'コード/QRを表示して招待',
       'ht': 'Montre kòd / QR pou envite',
+    },
+    // ── Asistente de conexión (banner + hoja de pasos) ──
+    'meshBannerConnected': {
+      'es': '{n} dispositivos conectados', 'en': '{n} devices connected',
+      'pt': '{n} dispositivos conectados', 'fr': '{n} appareils connectés',
+      'zh': '已连接 {n} 台设备', 'ja': '{n}台のデバイスが接続中',
+      'ht': '{n} aparèy konekte',
+    },
+    'meshBannerSearching': {
+      'es': 'Buscando dispositivos…', 'en': 'Searching for devices…',
+      'pt': 'Procurando dispositivos…', 'fr': 'Recherche d’appareils…',
+      'zh': '正在搜索设备…', 'ja': 'デバイスを検索中…', 'ht': 'K ap chèche aparèy…',
+    },
+    'meshBannerTapHelp': {
+      'es': 'Toca para ver qué falta', 'en': 'Tap to see what’s missing',
+      'pt': 'Toque para ver o que falta',
+      'fr': 'Touchez pour voir ce qui manque',
+      'zh': '点按查看缺少什么', 'ja': 'タップして不足を確認',
+      'ht': 'Peze pou wè sa ki manke',
+    },
+    'advisorTitle': {
+      'es': 'Asistente de conexión', 'en': 'Connection assistant',
+      'pt': 'Assistente de conexão', 'fr': 'Assistant de connexion',
+      'zh': '连接助手', 'ja': '接続アシスタント', 'ht': 'Asistan koneksyon',
+    },
+    'advisorBtOff': {
+      'es': 'Enciende Bluetooth', 'en': 'Turn on Bluetooth',
+      'pt': 'Ligue o Bluetooth', 'fr': 'Activez le Bluetooth',
+      'zh': '打开蓝牙', 'ja': 'Bluetoothをオンにする', 'ht': 'Limen Bluetooth',
+    },
+    'advisorBtOffBody': {
+      'es': 'Abre Ajustes → Bluetooth y actívalo. Los dispositivos cercanos '
+          'se encontrarán solos, sin internet.',
+      'en': 'Open Settings → Bluetooth and turn it on. Nearby devices will '
+          'find each other automatically, no internet needed.',
+      'pt': 'Abra Ajustes → Bluetooth e ative-o. Os dispositivos próximos se '
+          'encontrarão sozinhos, sem internet.',
+      'fr': 'Ouvrez Réglages → Bluetooth et activez-le. Les appareils proches '
+          'se trouveront seuls, sans internet.',
+      'zh': '打开 设置 → 蓝牙 并启用。附近的设备会自动互相发现，无需互联网。',
+      'ja': '設定 → Bluetooth を開いてオンにしてください。近くのデバイスは'
+          'インターネットなしで自動的に見つかります。',
+      'ht': 'Ouvri Paramèt → Bluetooth epi limen li. Aparèy ki tou pre yo ap '
+          'jwenn youn lòt poukont yo, san entènèt.',
+    },
+    'advisorBtPerm': {
+      'es': 'Permite el acceso a Bluetooth', 'en': 'Allow Bluetooth access',
+      'pt': 'Permita o acesso ao Bluetooth',
+      'fr': 'Autorisez l’accès Bluetooth',
+      'zh': '允许蓝牙权限', 'ja': 'Bluetoothへのアクセスを許可',
+      'ht': 'Pèmèt aksè Bluetooth',
+    },
+    'advisorBtPermBody': {
+      'es': 'La app no tiene permiso de Bluetooth. Abre Ajustes → Apps → '
+          'Prepper Pad → Permisos y permite Bluetooth / Dispositivos cercanos.',
+      'en': 'The app has no Bluetooth permission. Open Settings → Apps → '
+          'Prepper Pad → Permissions and allow Bluetooth / Nearby devices.',
+      'pt': 'O app não tem permissão de Bluetooth. Abra Ajustes → Apps → '
+          'Prepper Pad → Permissões e permita Bluetooth / Dispositivos '
+          'próximos.',
+      'fr': 'L’app n’a pas la permission Bluetooth. Ouvrez Réglages → Apps → '
+          'Prepper Pad → Autorisations et autorisez Bluetooth / Appareils à '
+          'proximité.',
+      'zh': '应用没有蓝牙权限。打开 设置 → 应用 → Prepper Pad → 权限，'
+          '允许蓝牙/附近的设备。',
+      'ja': 'アプリにBluetooth権限がありません。設定 → アプリ → Prepper Pad → '
+          '権限 で Bluetooth/付近のデバイス を許可してください。',
+      'ht': 'App la pa gen pèmisyon Bluetooth. Ouvri Paramèt → App → '
+          'Prepper Pad → Pèmisyon epi pèmèt Bluetooth / Aparèy tou pre.',
+    },
+    'advisorHotspot': {
+      'es': 'Crea un punto de acceso (hotspot)', 'en': 'Create a hotspot',
+      'pt': 'Crie um ponto de acesso (hotspot)',
+      'fr': 'Créez un point d’accès (hotspot)',
+      'zh': '创建热点', 'ja': 'テザリング（ホットスポット）を作成',
+      'ht': 'Kreye yon hotspot',
+    },
+    'advisorHotspotBody': {
+      'es': 'Sin router, un teléfono puede ser la red:\n\n1. En UN teléfono: '
+          'Ajustes → Punto de acceso / Compartir internet → actívalo (no '
+          'importa que no haya internet).\n2. En LOS DEMÁS dispositivos: '
+          'Ajustes → WiFi → únete a esa red.\n3. Vuelve aquí: se encontrarán '
+          'solos en segundos.',
+      'en': 'Without a router, one phone can be the network:\n\n1. On ONE '
+          'phone: Settings → Hotspot / Tethering → turn it on (it doesn’t '
+          'matter that there is no internet).\n2. On the OTHER devices: '
+          'Settings → WiFi → join that network.\n3. Come back here: they '
+          'will find each other in seconds.',
+      'pt': 'Sem roteador, um telefone pode ser a rede:\n\n1. Em UM telefone: '
+          'Ajustes → Ponto de acesso → ative-o (não importa que não haja '
+          'internet).\n2. Nos OUTROS dispositivos: Ajustes → WiFi → entre '
+          'nessa rede.\n3. Volte aqui: eles se encontrarão em segundos.',
+      'fr': 'Sans routeur, un téléphone peut être le réseau :\n\n1. Sur UN '
+          'téléphone : Réglages → Partage de connexion → activez-le (peu '
+          'importe s’il n’y a pas d’internet).\n2. Sur les AUTRES appareils : '
+          'Réglages → WiFi → rejoignez ce réseau.\n3. Revenez ici : ils se '
+          'trouveront en quelques secondes.',
+      'zh': '没有路由器时，一部手机就是网络：\n\n1. 在一部手机上：设置 → 个人热点 → '
+          '开启（没有互联网也没关系）。\n2. 在其他设备上：设置 → WiFi → 加入该网络。'
+          '\n3. 回到这里：几秒钟内它们就会互相发现。',
+      'ja': 'ルーターがなくても、1台のスマホがネットワークになれます：\n\n1. 1台の'
+          'スマホで：設定 → テザリング → オンにする（インターネットがなくてもOK）。'
+          '\n2. 他のデバイスで：設定 → WiFi → そのネットワークに接続。\n3. ここに'
+          '戻る：数秒でお互いを見つけます。',
+      'ht': 'San routeur, yon telefòn ka sèvi kòm rezo a:\n\n1. Sou YON '
+          'telefòn: Paramèt → Hotspot → limen li (pa gen pwoblèm si pa gen '
+          'entènèt).\n2. Sou LÒT aparèy yo: Paramèt → WiFi → antre nan rezo '
+          'sa a.\n3. Tounen isit la: y ap jwenn youn lòt nan kèk segond.',
+    },
+    'advisorLora': {
+      'es': '¿Necesitas kilómetros de alcance?',
+      'en': 'Need kilometers of range?',
+      'pt': 'Precisa de quilômetros de alcance?',
+      'fr': 'Besoin de kilomètres de portée ?',
+      'zh': '需要数公里的通信距离？', 'ja': '数kmの通信距離が必要？',
+      'ht': 'Bezwen plizyè kilomèt distans?',
+    },
+    'advisorLoraBody': {
+      'es': 'Con una radio LoRa (módulo Nordic UART por Bluetooth) el mesh '
+          'alcanza kilómetros sin ninguna red. Conecta la radio y activa LoRa '
+          'en Comunicación → ajustes.',
+      'en': 'With a LoRa radio (Nordic UART module over Bluetooth) the mesh '
+          'reaches kilometers with no network at all. Connect the radio and '
+          'enable LoRa in Communication → settings.',
+      'pt': 'Com um rádio LoRa (módulo Nordic UART por Bluetooth) o mesh '
+          'alcança quilômetros sem nenhuma rede. Conecte o rádio e ative '
+          'LoRa em Comunicação → ajustes.',
+      'fr': 'Avec une radio LoRa (module Nordic UART en Bluetooth), le mesh '
+          'atteint des kilomètres sans aucun réseau. Connectez la radio et '
+          'activez LoRa dans Communication → réglages.',
+      'zh': '使用LoRa电台（通过蓝牙的Nordic UART模块），无需任何网络即可达到数公里。'
+          '连接电台并在 通信 → 设置 中启用LoRa。',
+      'ja': 'LoRa無線（Bluetooth経由のNordic UARTモジュール）でネットワークなしで'
+          '数km届きます。無線を接続し、通信 → 設定 でLoRaを有効にしてください。',
+      'ht': 'Avèk yon radyo LoRa (modil Nordic UART sou Bluetooth) mesh la '
+          'rive plizyè kilomèt san okenn rezo. Konekte radyo a epi aktive '
+          'LoRa nan Kominikasyon → paramèt.',
     },
   };
 }

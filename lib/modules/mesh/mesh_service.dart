@@ -22,6 +22,7 @@ import 'mesh_router.dart';
 import 'mesh_store.dart';
 import 'mesh_transport.dart';
 import 'position_store.dart';
+import 'transport_health.dart';
 import 'wifi_direct_transport.dart';
 
 class MeshService {
@@ -68,6 +69,13 @@ class MeshService {
   final ValueNotifier<int> peerCount = ValueNotifier(0);
   final ValueNotifier<int> queuedCount = ValueNotifier(0);
   String? sosNote;
+
+  /// Salud agregada de todos los transportes, con pares por transporte.
+  /// La UI (banner + asistente de conexión) observa esto.
+  final ValueNotifier<List<TransportHealth>> transportHealths =
+      ValueNotifier(const []);
+  final _healthListeners = <ValueNotifier<TransportHealth>, VoidCallback>{};
+  List<MeshTransport> _activeTransports = const [];
 
   MeshStore get store => _store ??= MeshStore(dirPath);
 
@@ -154,14 +162,18 @@ class MeshService {
       identity ??= MeshIdentity.load(dirPath);
       final id = identity;
       if (id == null) return; // UI must onboard first
+      final transports =
+          _transportsOverride ?? defaultTransports(deviceId: id.id);
+      _activeTransports = transports;
       final router = MeshRouter(
         deviceId: id.id,
-        transports: _transportsOverride ?? defaultTransports(deviceId: id.id),
+        transports: transports,
         channels: _channelsFromDisk(),
         store: store,
       );
       _router = router;
       await router.start();
+      _wireHealth(router);
       _eventsSub = router.events.listen((e) {
         _events.add(e);
         _onEvent(e);
@@ -184,6 +196,31 @@ class MeshService {
   }
 
   StreamSubscription<List<ConnectivityResult>>? _connSub;
+
+  /// Suscribe la agregación a cada transporte que reporta salud y publica el
+  /// estado combinado inicial.
+  void _wireHealth(MeshRouter router) {
+    for (final t in _activeTransports) {
+      if (t is HealthReporting) {
+        final notifier = (t as HealthReporting).health;
+        void listener() => _publishHealth(router);
+        notifier.addListener(listener);
+        _healthListeners[notifier] = listener;
+      }
+    }
+    _publishHealth(router);
+  }
+
+  void _publishHealth(MeshRouter router) {
+    transportHealths.value = [
+      for (final t in _activeTransports)
+        (t is HealthReporting
+                ? (t as HealthReporting).health.value
+                : TransportHealth(
+                    name: t.name, state: TransportState.searching))
+            .copyWith(peers: router.peersVia(t.name)),
+    ];
+  }
 
   /// Watch connectivity so a grid/WiFi drop instantly relaunches discovery.
   /// Skipped under test (no override, no platform channel) and never fatal.
@@ -246,6 +283,12 @@ class MeshService {
     _eventsSub = null;
     await _connSub?.cancel();
     _connSub = null;
+    for (final entry in _healthListeners.entries) {
+      entry.key.removeListener(entry.value);
+    }
+    _healthListeners.clear();
+    _activeTransports = const [];
+    transportHealths.value = const [];
     await _router?.stop();
     _router = null;
     running.value = false;
@@ -509,6 +552,9 @@ class MeshService {
   void _onEvent(MeshEvent e) {
     peerCount.value = _router?.peers.length ?? 0;
     queuedCount.value = _router?.outboxCount ?? 0;
+    // Refrescar pares-por-transporte al oír tráfico (beacon, chat, SOS…).
+    final r = _router;
+    if (r != null) _publishHealth(r);
     switch (e.envelope.type) {
       case MeshType.position:
       case MeshType.sos:

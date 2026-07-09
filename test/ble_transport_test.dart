@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prepper_pad/modules/mesh/ble_transport.dart';
+import 'package:prepper_pad/modules/mesh/transport_health.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Pure framing tests — exercise fragmentation/reassembly with no hardware.
@@ -236,6 +237,35 @@ void main() {
       await t.send(Uint8List.fromList(List.generate(500, (i) => i & 0xff)));
       await t.stop();
     });
+
+    test('BleTransport reporta salud según el estado del adaptador', () async {
+      final link = _FakeBleLink(available: true);
+      final t = BleTransport(link: link);
+      await t.start();
+      expect(t.health.value.state, TransportState.searching);
+
+      link.stateCtrl.add('off');
+      await Future<void>.delayed(Duration.zero);
+      expect(t.health.value.state, TransportState.off);
+      expect(t.health.value.hint, 'bluetooth_off');
+
+      link.stateCtrl.add('unauthorized');
+      await Future<void>.delayed(Duration.zero);
+      expect(t.health.value.state, TransportState.noPermission);
+
+      link.stateCtrl.add('on');
+      await Future<void>.delayed(Duration.zero);
+      expect(t.health.value.state, TransportState.searching);
+      await t.stop();
+    });
+
+    test('adaptador ausente → salud unavailable con hint', () async {
+      final t = BleTransport(link: _FakeBleLink(available: false));
+      await t.start();
+      expect(t.health.value.state, TransportState.unavailable);
+      expect(t.health.value.hint, 'no_adapter');
+      await t.stop();
+    });
   });
 }
 
@@ -254,6 +284,11 @@ class _FakeBleLink implements BleLink {
 
   @override
   bool get adapterAvailable => available;
+
+  final stateCtrl = StreamController<String>.broadcast();
+
+  @override
+  Stream<String> get onAdapterState => stateCtrl.stream;
 
   final bool available;
 

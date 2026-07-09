@@ -28,6 +28,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 import 'mesh_transport.dart';
+import 'transport_health.dart';
 
 /// Wire UUIDs for the Prepper Pad BLE GATT service.
 ///
@@ -175,6 +176,9 @@ abstract class BleLink {
   /// True if the platform exposes a powered-on BLE adapter right now.
   bool get adapterAvailable;
 
+  /// Cambios del adaptador: 'on' | 'off' | 'unauthorized' | 'unsupported'.
+  Stream<String> get onAdapterState;
+
   /// Stream of newly discovered peers that advertise our service.
   Stream<BlePeer> get onDiscovery;
 
@@ -216,6 +220,16 @@ class FlutterBluePlusLink implements BleLink {
 
   @override
   Stream<BlePeer> get onDiscovery => _disc.stream;
+
+  @override
+  Stream<String> get onAdapterState =>
+      FlutterBluePlus.adapterState.map((s) => switch (s) {
+            BluetoothAdapterState.on => 'on',
+            BluetoothAdapterState.off => 'off',
+            BluetoothAdapterState.unauthorized => 'unauthorized',
+            BluetoothAdapterState.unavailable => 'unsupported',
+            _ => 'off',
+          });
 
   @override
   Future<void> start() async {
@@ -354,9 +368,13 @@ class NativeBleMeshLink implements BleLink {
   static const _events = EventChannel('prepper/ble_mesh/events');
 
   final _disc = StreamController<BlePeer>.broadcast();
+  final _state = StreamController<String>.broadcast();
   final _incoming = <String, StreamController<List<int>>>{};
   StreamSubscription<dynamic>? _eventSub;
   bool _started = false;
+
+  @override
+  Stream<String> get onAdapterState => _state.stream;
 
   @override
   bool get adapterAvailable =>
@@ -393,6 +411,11 @@ class NativeBleMeshLink implements BleLink {
   void _handleEvent(dynamic event) {
     if (event is! Map) return;
     final type = event['type'] as String?;
+    if (type == 'state') {
+      final v = event['value'] as String?;
+      if (v != null) _state.add(v);
+      return;
+    }
     final id = event['id'] as String?;
     if (id == null || id.isEmpty) return;
     switch (type) {
@@ -465,7 +488,7 @@ class NativeBleMeshLink implements BleLink {
 
 /// BLE mesh transport. Falls back to an inactive state when the adapter is
 /// unavailable.
-class BleTransport implements MeshTransport {
+class BleTransport implements MeshTransport, HealthReporting {
   BleTransport({BleLink? link})
       : _link = link ??
             (defaultTargetPlatform == TargetPlatform.android ||
@@ -483,7 +506,40 @@ class BleTransport implements MeshTransport {
   // disconnect/stop instead of leaking a subscription per connection.
   final _rxSubs = <String, StreamSubscription<List<int>>>{};
   StreamSubscription<BlePeer>? _discoverSub;
+  StreamSubscription<String>? _stateSub;
   bool _running = false;
+
+  @override
+  final ValueNotifier<TransportHealth> health = ValueNotifier(
+      const TransportHealth(name: 'ble', state: TransportState.unavailable));
+
+  void _onAdapterState(String s) {
+    health.value = switch (s) {
+      'off' => health.value
+          .copyWith(state: TransportState.off, hint: 'bluetooth_off'),
+      'unauthorized' => health.value.copyWith(
+          state: TransportState.noPermission, hint: 'bluetooth_permission'),
+      'unsupported' => health.value
+          .copyWith(state: TransportState.unavailable, hint: 'no_adapter'),
+      _ => health.value.copyWith(
+          state: _connected.isEmpty
+              ? TransportState.searching
+              : TransportState.connected),
+    };
+  }
+
+  void _refreshPeerHealth() {
+    // Solo pisa searching/connected: si el adaptador está apagado o sin
+    // permiso, ese estado (accionable) debe permanecer visible.
+    if (health.value.state == TransportState.searching ||
+        health.value.state == TransportState.connected) {
+      health.value = health.value.copyWith(
+          state: _connected.isEmpty
+              ? TransportState.searching
+              : TransportState.connected,
+          peers: _connected.length);
+    }
+  }
 
   /// True only when a BLE adapter is powered on.
   bool get available => _link.adapterAvailable;
@@ -497,8 +553,14 @@ class BleTransport implements MeshTransport {
   @override
   Future<void> start() async {
     if (_running) return;
-    if (!available) return; // no adapter — degrade silently
+    if (!available) {
+      health.value = health.value
+          .copyWith(state: TransportState.unavailable, hint: 'no_adapter');
+      return; // no adapter — degrade silently
+    }
     _running = true;
+    _stateSub ??= _link.onAdapterState.listen(_onAdapterState);
+    health.value = health.value.copyWith(state: TransportState.searching);
     // Subscribe BEFORE start(): some native stacks and tests can emit a peer
     // immediately when scanning/advertising begins. If we register after
     // _link.start(), emergency pairing can miss the first nearby device.
@@ -529,6 +591,10 @@ class BleTransport implements MeshTransport {
   @override
   Future<void> stop() async {
     _running = false;
+    await _stateSub?.cancel();
+    _stateSub = null;
+    health.value = health.value
+        .copyWith(state: TransportState.unavailable, peers: 0);
     await _discoverSub?.cancel();
     _discoverSub = null;
     for (final sub in _rxSubs.values) {
@@ -609,6 +675,7 @@ class BleTransport implements MeshTransport {
     }
     final rx = _link.incoming(peer);
     if (rx == null) return;
+    _refreshPeerHealth();
     final reasm = BleReassembler();
     _reassemblers[peer.id] = reasm;
     // Track the subscription so stop() can cancel it. Without this the
@@ -629,6 +696,7 @@ class BleTransport implements MeshTransport {
         }
         _reassemblers.remove(peer.id);
         _connected.remove(peer.id);
+        _refreshPeerHealth();
       },
       onError: (_) {
         if (_rxSubs[peer.id] != null) {
@@ -636,6 +704,7 @@ class BleTransport implements MeshTransport {
         }
         _reassemblers.remove(peer.id);
         _connected.remove(peer.id);
+        _refreshPeerHealth();
       },
     );
   }

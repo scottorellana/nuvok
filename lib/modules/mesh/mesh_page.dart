@@ -8,10 +8,12 @@ import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../core/locale_service.dart';
+import 'connection_banner.dart';
 import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
 import 'mesh_router.dart';
 import 'mesh_service.dart';
+import 'transport_health.dart';
 
 class MeshPage extends StatefulWidget {
   const MeshPage({super.key});
@@ -23,6 +25,9 @@ class MeshPage extends StatefulWidget {
 class _MeshPageState extends State<MeshPage> {
   final _service = MeshService.instance;
   final _nameCtrl = TextEditingController();
+  // Cuándo empezó esta sesión de búsqueda — el asistente escala sus consejos
+  // (hotspot, LoRa) según cuánto llevamos sin encontrar a nadie.
+  final _searchStart = DateTime.now();
 
   @override
   void initState() {
@@ -224,7 +229,25 @@ class _MeshPageState extends State<MeshPage> {
           ),
         ],
       ),
-      body: ListView(
+      body: Column(
+        children: [
+          // Banner de salud del mesh: verde con pares (y por qué transporte),
+          // ámbar buscando — tocar abre el Asistente de conexión.
+          ValueListenableBuilder<List<TransportHealth>>(
+            valueListenable: _service.transportHealths,
+            builder: (context, healths, _) => ConnectionBanner(
+              healths: healths,
+              searching: DateTime.now().difference(_searchStart),
+            ),
+          ),
+          Expanded(child: _buildMainList(context)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMainList(BuildContext context) {
+    return ListView(
         padding: const EdgeInsets.all(16),
         children: [
           _buildSosCard(),
@@ -259,8 +282,7 @@ class _MeshPageState extends State<MeshPage> {
               ),
             ),
         ],
-      ),
-    );
+      );
   }
 
   Widget _buildOnboarding(BuildContext context) {

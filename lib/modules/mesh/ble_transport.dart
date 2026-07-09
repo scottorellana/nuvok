@@ -387,7 +387,10 @@ class NativeBleMeshLink implements BleLink {
       // radios when Bluetooth permission is explicitly denied.
       defaultTargetPlatform == TargetPlatform.android ||
       defaultTargetPlatform == TargetPlatform.iOS ||
-      defaultTargetPlatform == TargetPlatform.macOS;
+      defaultTargetPlatform == TargetPlatform.macOS ||
+      // Windows habla el mismo protocolo vía el bridge WinRT
+      // (windows/runner/ble_mesh_bridge.cpp).
+      defaultTargetPlatform == TargetPlatform.windows;
 
   @override
   Stream<BlePeer> get onDiscovery => _disc.stream;
@@ -493,7 +496,8 @@ class BleTransport implements MeshTransport, HealthReporting {
       : _link = link ??
             (defaultTargetPlatform == TargetPlatform.android ||
                     defaultTargetPlatform == TargetPlatform.iOS ||
-                    defaultTargetPlatform == TargetPlatform.macOS
+                    defaultTargetPlatform == TargetPlatform.macOS ||
+                    defaultTargetPlatform == TargetPlatform.windows
                 ? NativeBleMeshLink()
                 : FlutterBluePlusLink());
 

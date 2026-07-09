@@ -3,6 +3,7 @@
 // the always-listened emergency channel, and periodic position sharing that
 // feeds the Maps module.
 import 'dart:async';
+import 'dart:io';
 import 'dart:collection';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -23,6 +24,7 @@ import 'mesh_store.dart';
 import 'mesh_transport.dart';
 import 'position_store.dart';
 import 'transport_health.dart';
+import 'voice_note.dart';
 import 'wifi_direct_transport.dart';
 
 class MeshService {
@@ -485,6 +487,44 @@ class MeshService {
   /// Checks if a chat message [msgId] was acknowledged by a peer.
   bool isDelivered(int msgId) => _confirmedAcks.contains(msgId);
 
+  /// Envía un clip de voz por el mesh — el walkie-talkie sin internet.
+  /// Reutiliza broadcast + outbox: si no hay nadie al alcance, el clip sale
+  /// cuando aparezca un par. Devuelve false si el audio excede el límite.
+  Future<bool> sendVoice(
+      MeshChannel channel, Uint8List audio, int durationMs) async {
+    final router = _router;
+    final id = identity;
+    if (id == null || router == null) return false;
+    final payload = encodeVoicePayload(audio, durationMs);
+    if (payload == null) return false;
+    final env = await _envelope(channel, MeshType.voice, payload);
+    store.appendMessage(channel.id, {
+      ...payload,
+      '_from': id.id,
+      '_name': id.name,
+      '_type': MeshType.voice.name,
+      '_ts': env.timestampMs,
+      '_msgId': env.msgId,
+    });
+    _events.add(MeshEvent(envelope: env, channel: channel, payload: payload));
+    await router.broadcast(env);
+    queuedCount.value = router.outboxCount;
+    return true;
+  }
+
+  /// Escribe (una sola vez) los bytes de un clip a
+  /// `<mesh>/voice/<msgId>.m4a` y devuelve el archivo — just_audio
+  /// reproduce desde disco, no desde memoria.
+  Future<File> voiceFile(int msgId, VoiceNote note) async {
+    final dir = Directory('$dirPath/voice');
+    if (!dir.existsSync()) dir.createSync(recursive: true);
+    final f = File('${dir.path}/$msgId.m4a');
+    if (!f.existsSync()) {
+      await f.writeAsBytes(note.audio, flush: true);
+    }
+    return f;
+  }
+
   /// SOS: broadcast position+note on the open emergency channel now and
   /// every minute until cancelled. Reaches every Prepper Pad in range,
   /// authenticated or not.
@@ -596,6 +636,16 @@ class MeshService {
       case MeshType.chat:
         // Send an ACK back so the sender knows the message was delivered.
         _sendAck(e);
+        break;
+      case MeshType.voice:
+        // Un clip de voz entrante: confirmar entrega igual que un chat y
+        // cachear el audio a disco para reproducirlo sin decodificar base64
+        // cada vez.
+        if (e.envelope.senderId != identity?.id) _sendAck(e);
+        final note = decodeVoicePayload(e.payload);
+        if (note != null) {
+          unawaited(voiceFile(e.envelope.msgId, note));
+        }
         break;
       case MeshType.ack:
         // Mark the original message as delivered.

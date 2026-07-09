@@ -159,6 +159,14 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
 extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         NSLog("PPMESH central state=%d", central.state.rawValue)
+        // Estado del adaptador → {type:'state'} para TransportHealth en Dart.
+        switch central.state {
+        case .poweredOn: emit(["type": "state", "value": "on"])
+        case .poweredOff: emit(["type": "state", "value": "off"])
+        case .unauthorized: emit(["type": "state", "value": "unauthorized"])
+        case .unsupported: emit(["type": "state", "value": "unsupported"])
+        default: break
+        }
         guard running, central.state == .poweredOn else { return }
         NSLog("PPMESH central scanning")
         central.scanForPeripherals(

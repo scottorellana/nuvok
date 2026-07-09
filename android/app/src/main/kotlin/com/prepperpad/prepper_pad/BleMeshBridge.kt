@@ -74,6 +74,20 @@ class BleMeshBridge(
     // advertise a connectable address): we answer them with notifications.
     private val subscribedCentrals = ConcurrentHashMap<String, BluetoothDevice>()
 
+    // Estado del adaptador en vivo (usuario apaga BT con la app abierta) →
+    // eventos {type:'state'} que alimentan TransportHealth en Dart.
+    private val btStateReceiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(c: Context?, i: android.content.Intent?) {
+            when (i?.getIntExtra(android.bluetooth.BluetoothAdapter.EXTRA_STATE, -1)) {
+                android.bluetooth.BluetoothAdapter.STATE_ON ->
+                    emit(mapOf("type" to "state", "value" to "on"))
+                android.bluetooth.BluetoothAdapter.STATE_OFF ->
+                    emit(mapOf("type" to "state", "value" to "off"))
+            }
+        }
+    }
+    private var btReceiverRegistered = false
+
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "start" -> start(result)
@@ -108,6 +122,11 @@ class BleMeshBridge(
 
     private fun start(result: MethodChannel.Result) {
         if (!hasBleHardware()) {
+            // Distinguir "no hay adaptador" (irreparable) de "está apagado"
+            // (accionable): el asistente da instrucciones distintas.
+            val adapter = bluetoothManager?.adapter
+            emit(mapOf("type" to "state",
+                "value" to if (adapter == null) "unsupported" else "off"))
             result.success(false)
             return
         }
@@ -122,6 +141,7 @@ class BleMeshBridge(
     fun onRequestPermissionsResult(requestCode: Int, grantResults: IntArray): Boolean {
         if (requestCode != REQUEST_CODE) return false
         val granted = grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+        if (!granted) emit(mapOf("type" to "state", "value" to "unauthorized"))
         val result = pendingStartResult
         pendingStartResult = null
         result?.success(if (granted) startRadios() else false)
@@ -160,6 +180,16 @@ class BleMeshBridge(
         startGattServer(manager)
         startAdvertising(adapter)
         startScanning(adapter)
+        emit(mapOf("type" to "state", "value" to "on"))
+        if (!btReceiverRegistered) {
+            activity.registerReceiver(
+                btStateReceiver,
+                android.content.IntentFilter(
+                    android.bluetooth.BluetoothAdapter.ACTION_STATE_CHANGED,
+                ),
+            )
+            btReceiverRegistered = true
+        }
         // Scanner-only still helps if another device is advertising. GATT server
         // without advertiser is useful once a peer already knows our address.
         return gattServer != null || advertising || scanning
@@ -256,6 +286,10 @@ class BleMeshBridge(
         } catch (_: Throwable) {}
         gattServer = null
         serverRx = null
+        if (btReceiverRegistered) {
+            runCatching { activity.unregisterReceiver(btStateReceiver) }
+            btReceiverRegistered = false
+        }
     }
 
     @SuppressLint("MissingPermission")

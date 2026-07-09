@@ -12,13 +12,20 @@ class ConnectionBanner extends StatelessWidget {
   const ConnectionBanner({
     super.key,
     required this.healths,
-    required this.searching,
+    required this.searchStart,
+    required this.totalPeers,
   });
 
   final List<TransportHealth> healths;
-  final Duration searching;
 
-  int get _peerTotal => healths.fold(0, (a, h) => a + h.peers);
+  /// Cuándo empezó la búsqueda. La duración se calcula AL TOCAR el banner
+  /// (no al construirlo): sin tráfico mesh no hay rebuilds, y una duración
+  /// congelada haría que el asistente nunca escalara a la guía de hotspot.
+  final DateTime searchStart;
+
+  /// Pares ÚNICOS (MeshService.peerCount). No se suman los pares por
+  /// transporte: un mismo teléfono oído por BLE y WiFi contaría doble.
+  final int totalPeers;
 
   static const _transportLabels = {
     'ble': 'Bluetooth',
@@ -37,10 +44,11 @@ class ConnectionBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final connected = _peerTotal > 0;
+    final connected = totalPeers > 0;
     final color = connected ? Colors.green : Colors.orange;
+    final via = _viaLabel();
     final title = connected
-        ? '${tr(context, 'meshBannerConnected').replaceFirst('{n}', '$_peerTotal')} · ${_viaLabel()}'
+        ? '${tr(context, 'meshBannerConnected').replaceFirst('{n}', '$totalPeers')}${via.isEmpty ? '' : ' · $via'}'
         : tr(context, 'meshBannerSearching');
     return Material(
       color: color.withValues(alpha: 0.15),
@@ -77,7 +85,8 @@ class ConnectionBanner extends StatelessWidget {
     final steps = ConnectionAdvisor.advise(
       healths: healths,
       platform: Theme.of(context).platform,
-      searching: searching,
+      // Fresca al momento del toque, no del último rebuild.
+      searching: DateTime.now().difference(searchStart),
     );
     showModalBottomSheet<void>(
       context: context,

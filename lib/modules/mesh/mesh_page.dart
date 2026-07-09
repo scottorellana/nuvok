@@ -13,7 +13,6 @@ import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
 import 'mesh_router.dart';
 import 'mesh_service.dart';
-import 'transport_health.dart';
 
 class MeshPage extends StatefulWidget {
   const MeshPage({super.key});
@@ -233,11 +232,13 @@ class _MeshPageState extends State<MeshPage> {
         children: [
           // Banner de salud del mesh: verde con pares (y por qué transporte),
           // ámbar buscando — tocar abre el Asistente de conexión.
-          ValueListenableBuilder<List<TransportHealth>>(
-            valueListenable: _service.transportHealths,
-            builder: (context, healths, _) => ConnectionBanner(
-              healths: healths,
-              searching: DateTime.now().difference(_searchStart),
+          AnimatedBuilder(
+            animation: Listenable.merge(
+                [_service.transportHealths, _service.peerCount]),
+            builder: (context, _) => ConnectionBanner(
+              healths: _service.transportHealths.value,
+              totalPeers: _service.peerCount.value,
+              searchStart: _searchStart,
             ),
           ),
           Expanded(child: _buildMainList(context)),

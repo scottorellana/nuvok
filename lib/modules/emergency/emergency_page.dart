@@ -809,6 +809,27 @@ class _GuideReader extends StatelessWidget {
       body: guide.body,
     ));
 
+    // Imágenes de paso adicionales (2-3 por guía en los paquetes nuevos).
+    for (final (path, alt) in EmergencyGuideMedia.extraImagesFor(id)) {
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Semantics(
+            label: alt,
+            image: true,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(
+                path,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     // CPR guides get the animated compression diagram
     if (id.startsWith('rcp')) {
       widgets.add(_visualCard(

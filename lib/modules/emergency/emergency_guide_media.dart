@@ -183,11 +183,48 @@ class EmergencyGuideMedia {
         'Manos terminando un as de guía en cuerda naranja gruesa sobre un '
             'tronco: el lazo fijo abierto y bien formado, cada vuelta del '
             'nudo visible.',
+    'bosque_agua':
+        'Lona plástica tendida en V entre árboles del bosque canalizando '
+            'agua de lluvia hacia una olla metálica en el suelo.',
+    'bosque_peligros':
+        'Bota de excursionista pisando SOBRE un tronco caído con musgo, '
+            'con un palo largo apartando la hojarasca del suelo.',
+    'bosque_orientacion':
+        'Marca de rastro en un sendero del bosque: rama verde quebrada '
+            'apuntando la dirección junto a una flecha de piedras.',
     'pesca_trampas_supervivencia':
         'Trampa de pesca improvisada con una botella plástica en la orilla '
             'de un arroyo: el tercio superior invertido como embudo hacia '
             'adentro, anclada con piedras.',
   };
+
+  /// Imágenes de paso adicionales por guía (convención `<id>_2.png`, `_3.png`).
+  /// Solo se listan las que existen; el lector las pinta tras los pasos
+  /// críticos con su alt de accesibilidad.
+  static const Map<String, List<String>> _extraAlts = {
+    'bosque_agua': [
+      'Bolsa plástica transparente atada sobre una rama frondosa al sol, '
+          'con gotas de agua condensada acumulándose en el fondo.',
+    ],
+    'bosque_peligros': [
+      'Pinzas extrayendo una garrapata de la piel sujetándola por la '
+          'cabeza, tirando recto hacia arriba.',
+    ],
+    'bosque_orientacion': [
+      'Diagrama del método del palo y la sombra: palo vertical, dos marcas '
+          'de la punta de la sombra y la línea oeste-este entre ellas.',
+    ],
+  };
+
+  /// Rutas y alts de las imágenes extra existentes para [id].
+  static List<(String, String)> extraImagesFor(String id) {
+    final alts = _extraAlts[id];
+    if (alts == null) return const [];
+    return [
+      for (final (i, alt) in alts.indexed)
+        ('assets/emergency_guides/images/${id}_${i + 2}.png', alt),
+    ];
+  }
 
   static EmergencyGuideMediaSpec forGuide(String id) {
     final base = _specs[id] ?? _fallback(id);

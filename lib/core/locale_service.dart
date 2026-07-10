@@ -114,6 +114,7 @@ class AppStrings {
     'dtTitle', 'dtResponds', 'dtBreathing', 'dtHadImpact', 'dtWhatHappens',
     'dtYes', 'dtNo', 'dtChoking', 'dtBleeding', 'dtBurn', 'dtChest',
     'dtSeizure', 'dtPoison',
+    'mpTitle', 'mpGo', 'mpArrived', 'mpPending', 'mpNoPositions',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -1430,6 +1431,32 @@ class AppStrings {
     'dtPoison': {
       'es': 'Intoxicación', 'en': 'Poisoning', 'pt': 'Intoxicação',
       'fr': 'Intoxication', 'zh': '中毒', 'ja': '中毒', 'ht': 'Anpwazonnman',
+    },
+    'mpTitle': {
+      'es': 'Punto de encuentro', 'en': 'Meeting point',
+      'pt': 'Ponto de encontro', 'fr': 'Point de rassemblement',
+      'zh': '集合点', 'ja': '集合場所', 'ht': 'Pwen randevou',
+    },
+    'mpGo': {
+      'es': 'IR', 'en': 'GO', 'pt': 'IR', 'fr': 'Y ALLER',
+      'zh': '前往', 'ja': '向かう', 'ht': 'ALE',
+    },
+    'mpArrived': {
+      'es': 'Llegaron', 'en': 'Arrived', 'pt': 'Chegaram',
+      'fr': 'Arrivés', 'zh': '已到达', 'ja': '到着', 'ht': 'Rive',
+    },
+    'mpPending': {
+      'es': 'Faltan', 'en': 'Pending', 'pt': 'Faltam',
+      'fr': 'Manquants', 'zh': '未到', 'ja': '未着', 'ht': 'Poko rive',
+    },
+    'mpNoPositions': {
+      'es': 'Aún sin posiciones del grupo (se comparten por el mesh al activar posición).',
+      'en': 'No group positions yet (shared over the mesh when position sharing is on).',
+      'pt': 'Ainda sem posições do grupo (compartilhadas pelo mesh ao ativar posição).',
+      'fr': 'Pas encore de positions du groupe (partagées via le mesh quand la position est activée).',
+      'zh': '尚无小组位置（开启位置共享后经网状网络同步）。',
+      'ja': 'グループの位置情報はまだありません（位置共有をオンにするとメッシュ経由で共有）。',
+      'ht': 'Poko gen pozisyon gwoup la (yo pataje sou mesh la lè pozisyon aktive).',
     },
     'callEmergency': {
       'es': 'LLAMAR', 'en': 'CALL', 'pt': 'LIGAR', 'fr': 'APPELER',

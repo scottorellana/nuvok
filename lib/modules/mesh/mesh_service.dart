@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import '../../core/prepper_library.dart';
 import '../emergency/sos_alarm.dart';
 import '../maps/location_service.dart';
+import '../maps/map_overlays.dart';
 import 'ble_transport.dart';
 import 'lan_transport.dart';
 import 'lora_ble_uart.dart';
@@ -515,6 +516,20 @@ class MeshService {
     return true;
   }
 
+  /// Comparte un overlay táctico (GeoJSON Feature) al canal de emergencia:
+  /// "puente caído aquí" marcado por un vecino aparece en el mapa de TODOS.
+  Future<bool> shareOverlayFeature(Map<String, dynamic> feature) async {
+    final router = _router;
+    final id = identity;
+    if (id == null || router == null) return false;
+    final env = await _envelope(
+        MeshChannel.emergency, MeshType.overlay, {'f': feature},
+        hopLimit: 5);
+    await router.broadcast(env);
+    queuedCount.value = router.outboxCount;
+    return true;
+  }
+
   /// Escribe (una sola vez) los bytes de un clip a
   /// `<mesh>/voice/<msgId>.m4a` y devuelve el archivo — just_audio
   /// reproduce desde disco, no desde memoria.
@@ -639,6 +654,14 @@ class MeshService {
       case MeshType.chat:
         // Send an ACK back so the sender knows the message was delivered.
         _sendAck(e);
+        break;
+      case MeshType.overlay:
+        // Overlay táctico entrante → directo al mapa (upsert idempotente).
+        final f = e.payload['f'];
+        if (f is Map) {
+          final o = MapOverlay.fromFeature(f.cast<String, dynamic>());
+          if (o != null) unawaited(OverlayStore.instance.upsert(o));
+        }
         break;
       case MeshType.voice:
         // Un clip de voz entrante: confirmar entrega igual que un chat y

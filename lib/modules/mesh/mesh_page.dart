@@ -12,6 +12,7 @@ import 'connection_banner.dart';
 import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
 import 'mesh_router.dart';
+import 'meeting_point_card.dart';
 import 'mesh_service.dart';
 import 'voice_chat_widgets.dart';
 
@@ -267,6 +268,9 @@ class _MeshPageState extends State<MeshPage> {
           _buildSosCard(),
           const SizedBox(height: 12),
           _buildStatusRow(),
+          const SizedBox(height: 8),
+          // Punto de encuentro: quién llegó / quién falta (si está marcado).
+          const MeetingPointCard(),
           const SizedBox(height: 16),
           Row(
             children: [

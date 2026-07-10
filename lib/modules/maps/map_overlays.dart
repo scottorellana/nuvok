@@ -4,6 +4,8 @@
 // evacuation routes). Being GeoJSON, overlays travel with the library and
 // can be shared or edited by hand.
 import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 import 'package:latlong2/latlong.dart';
@@ -148,7 +150,7 @@ class MapOverlay {
 }
 
 /// Loads/saves overlays as a GeoJSON FeatureCollection.
-class OverlayStore {
+class OverlayStore extends ChangeNotifier {
   OverlayStore._();
   static final OverlayStore instance = OverlayStore._();
 
@@ -189,11 +191,26 @@ class OverlayStore {
   Future<void> add(MapOverlay o) async {
     overlays.add(o);
     await _save();
+    notifyListeners();
+  }
+
+  /// Inserta o reemplaza por id — la vía de entrada de overlays que llegan
+  /// por el mesh (idempotente ante datagramas repetidos).
+  Future<void> upsert(MapOverlay o) async {
+    final i = overlays.indexWhere((e) => e.id == o.id);
+    if (i >= 0) {
+      overlays[i] = o;
+    } else {
+      overlays.add(o);
+    }
+    await _save();
+    notifyListeners();
   }
 
   Future<void> remove(String id) async {
     overlays.removeWhere((o) => o.id == id);
     await _save();
+    notifyListeners();
   }
 
   Future<void> update(MapOverlay o) async {

@@ -32,9 +32,10 @@ void main() {
 
   test('MeshType.voice viaja en el envelope y las versiones viejas no rompen',
       () async {
-    // voice debe ser el ÚLTIMO valor: los decoders viejos descartan índices
-    // fuera de rango en vez de mapear el tipo equivocado.
-    expect(MeshType.values.last, MeshType.voice);
+    // Los índices existentes NUNCA cambian: los decoders viejos descartan
+    // índices fuera de rango, así que lo nuevo solo puede ir AL FINAL.
+    expect(MeshType.values.indexOf(MeshType.voice), 6);
+    expect(MeshType.values.indexOf(MeshType.overlay), 7);
 
     final canal = MeshChannel.create('Familia');
     final audio = Uint8List.fromList(List.generate(1000, (i) => i % 251));

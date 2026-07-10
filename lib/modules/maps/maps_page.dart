@@ -16,6 +16,7 @@ import '../../core/prepper_colors.dart';
 import '../../core/locale_service.dart';
 import '../../core/shell_nav.dart';
 import '../depot/map_catalog.dart';
+import '../mesh/mesh_service.dart';
 import '../mesh/position_store.dart';
 import 'composite_tile_provider.dart';
 import 'download_from_here.dart';
@@ -120,6 +121,8 @@ class _MapsPageState extends State<MapsPage> {
     _refresh();
     // Mesh teammates / SOS positions repaint the map as they arrive.
     PositionStore.instance.peers.addListener(_onPeersChanged);
+    // Overlays tácticos que llegan por el mesh repintan el mapa.
+    _overlays.addListener(_onPeersChanged);
     // "Show this on the map" requests from the SOS alert or other modules.
     MapFocus.request.addListener(_onFocusRequest);
     WidgetsBinding.instance.addPostFrameCallback((_) => _onFocusRequest());
@@ -141,6 +144,7 @@ class _MapsPageState extends State<MapsPage> {
   void dispose() {
     PositionStore.instance.peers.removeListener(_onPeersChanged);
     MapFocus.request.removeListener(_onFocusRequest);
+    _overlays.removeListener(_onPeersChanged);
     _posSub?.cancel();
     _poiDebounce?.cancel();
     super.dispose();
@@ -369,12 +373,15 @@ class _MapsPageState extends State<MapsPage> {
       builder: (context) => _AddPointSheet(point: point),
     );
     if (result == null) return;
-    await _overlays.add(MapOverlay(
+    final overlay = MapOverlay(
       id: DateTime.now().microsecondsSinceEpoch.toString(),
       kind: result.$1,
       points: [point],
       name: result.$2,
-    ));
+    );
+    await _overlays.add(overlay);
+    // Mapa táctico compartido: lo que marcas lo ve todo el grupo por el mesh.
+    unawaited(MeshService.instance.shareOverlayFeature(overlay.toFeature()));
     if (mounted) setState(() {});
   }
 
@@ -409,12 +416,14 @@ class _MapsPageState extends State<MapsPage> {
         builder: (context) => _DangerLevelDialog(),
       );
     }
-    await _overlays.add(MapOverlay(
+    final overlay = MapOverlay(
       id: DateTime.now().microsecondsSinceEpoch.toString(),
       kind: kind,
       points: List.of(_drawPoints),
       dangerLevel: danger,
-    ));
+    );
+    await _overlays.add(overlay);
+    unawaited(MeshService.instance.shareOverlayFeature(overlay.toFeature()));
     if (mounted) {
       setState(() {
         _drawKind = null;

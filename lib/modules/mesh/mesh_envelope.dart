@@ -18,7 +18,7 @@ import 'mesh_channel.dart';
 // voice va AL FINAL: los decoders viejos descartan índices fuera de rango
 // (decode devuelve null), así que insertar en medio rompería el mapeo de
 // los tipos existentes entre versiones.
-enum MeshType { chat, position, sos, sosCancel, ack, beacon, voice }
+enum MeshType { chat, position, sos, sosCancel, ack, beacon, voice, overlay }
 
 class MeshEnvelope {
   MeshEnvelope({

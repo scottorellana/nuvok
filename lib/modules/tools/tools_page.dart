@@ -8,6 +8,7 @@ import 'compass.dart';
 import 'flashlight.dart';
 import 'rcp_metronome.dart';
 import 'whistle.dart';
+import '../emergency/calculators_page.dart';
 import '../maps/gpx_recorder.dart';
 import '../../core/locale_service.dart';
 
@@ -91,6 +92,17 @@ class ToolsPage extends StatelessWidget {
           ),
 
           // ── Flashlight ──
+          // ── Calculadoras de emergencia (OMS) ──
+          _ToolCard(
+            icon: Icons.calculate,
+            iconColor: const Color(0xFF4FC3F7),
+            title: 'Calculadoras de emergencia',
+            subtitle: 'Dosis pediátrica por peso, suero oral y cloro para '
+                'purificar agua — fórmulas OMS, sin internet.',
+            buttonText: 'Abrir',
+            onPressed: () => _push(context, const CalculatorsPage()),
+          ),
+
           _ToolCard(
             icon: Icons.flashlight_on,
             iconColor: const Color(0xFFFFAB40),

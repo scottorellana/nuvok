@@ -102,6 +102,10 @@ class AppStrings {
     'aiSearchingGuides', 'aiSearchingLibrary', 'aiHintEmergency',
     'aiNoAiNoGuide', 'aiQuickRcp', 'aiQuickChoking', 'aiQuickBleeding',
     'aiQuickBurn', 'aiEmptyHint',
+    'calcTitle', 'calcDoseTitle', 'calcWeightKg', 'calcPerDose',
+    'calcIbuNotUnder5', 'calcOrsTitle', 'calcLiters', 'calcSugar',
+    'calcSalt', 'calcTspNote', 'calcChlorineTitle', 'calcBleachPct',
+    'calcCloudy', 'calcDrops', 'calcWait30', 'calcDisclaimer',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -1115,6 +1119,102 @@ class AppStrings {
       'es': 'Se quemó, ¿qué hago primero?', 'en': 'Someone got burned, what first?',
       'pt': 'Se queimou, o que faço primeiro?', 'fr': 'Brûlure : que faire en premier ?',
       'zh': '烧伤了，先做什么？', 'ja': 'やけどしました、まず何を？', 'ht': 'Li boule, kisa pou m fè anvan?',
+    },
+    'calcTitle': {
+      'es': 'Calculadoras de emergencia', 'en': 'Emergency calculators',
+      'pt': 'Calculadoras de emergência', 'fr': 'Calculatrices d\'urgence',
+      'zh': '应急计算器', 'ja': '緊急計算ツール', 'ht': 'Kalkilatris ijans',
+    },
+    'calcDoseTitle': {
+      'es': 'Dosis pediátrica por peso', 'en': 'Pediatric dose by weight',
+      'pt': 'Dose pediátrica por peso', 'fr': 'Dose pédiatrique par poids',
+      'zh': '儿童按体重剂量', 'ja': '小児の体重別用量', 'ht': 'Dòz timoun selon pwa',
+    },
+    'calcWeightKg': {
+      'es': 'Peso del niño', 'en': 'Child\'s weight',
+      'pt': 'Peso da criança', 'fr': 'Poids de l\'enfant',
+      'zh': '儿童体重', 'ja': '子どもの体重', 'ht': 'Pwa timoun nan',
+    },
+    'calcPerDose': {
+      'es': 'por dosis, cada', 'en': 'per dose, every',
+      'pt': 'por dose, a cada', 'fr': 'par dose, toutes les',
+      'zh': '每次剂量，每隔', 'ja': '1回量、間隔', 'ht': 'pa dòz, chak',
+    },
+    'calcIbuNotUnder5': {
+      'es': 'NO en menores de 3 meses (~5 kg) sin médico',
+      'en': 'NOT under 3 months (~5 kg) without a doctor',
+      'pt': 'NÃO em menores de 3 meses (~5 kg) sem médico',
+      'fr': 'PAS avant 3 mois (~5 kg) sans médecin',
+      'zh': '3个月以下（约5公斤）没有医生指导时禁用',
+      'ja': '生後3か月未満（約5kg）には医師なしで使用不可',
+      'ht': 'PA pou pi piti pase 3 mwa (~5 kg) san doktè',
+    },
+    'calcOrsTitle': {
+      'es': 'Suero de rehidratación oral (OMS)', 'en': 'Oral rehydration solution (WHO)',
+      'pt': 'Soro de reidratação oral (OMS)', 'fr': 'Solution de réhydratation orale (OMS)',
+      'zh': '口服补液盐（世卫）', 'ja': '経口補水液（WHO）', 'ht': 'Sewòm oral (OMS)',
+    },
+    'calcLiters': {
+      'es': 'Litros de agua segura', 'en': 'Liters of safe water',
+      'pt': 'Litros de água segura', 'fr': 'Litres d\'eau sûre',
+      'zh': '安全饮用水（升）', 'ja': '安全な水（リットル）', 'ht': 'Lit dlo ki bon',
+    },
+    'calcSugar': {
+      'es': 'Azúcar (cditas rasas)', 'en': 'Sugar (level tsp)',
+      'pt': 'Açúcar (colheres rasas)', 'fr': 'Sucre (c. à café rases)',
+      'zh': '糖（平茶匙）', 'ja': '砂糖（すり切り小さじ）', 'ht': 'Sik (ti kiyè plat)',
+    },
+    'calcSalt': {
+      'es': 'Sal (cditas rasas)', 'en': 'Salt (level tsp)',
+      'pt': 'Sal (colheres rasas)', 'fr': 'Sel (c. à café rases)',
+      'zh': '盐（平茶匙）', 'ja': '塩（すり切り小さじ）', 'ht': 'Sèl (ti kiyè plat)',
+    },
+    'calcTspNote': {
+      'es': 'Cucharaditas RASAS. Prueba: no más salado que las lágrimas.',
+      'en': 'LEVEL teaspoons. Test: no saltier than tears.',
+      'pt': 'Colheres RASAS. Teste: não mais salgado que lágrimas.',
+      'fr': 'Cuillères RASES. Test : pas plus salé que des larmes.',
+      'zh': '必须是平匙。测试：不能比眼泪更咸。',
+      'ja': 'すり切りで。目安：涙より塩辛くないこと。',
+      'ht': 'Ti kiyè PLAT. Tès: pa pi sale pase dlo je.',
+    },
+    'calcChlorineTitle': {
+      'es': 'Purificar agua con lejía', 'en': 'Purify water with bleach',
+      'pt': 'Purificar água com água sanitária', 'fr': 'Purifier l\'eau avec de l\'eau de Javel',
+      'zh': '用漂白水净化饮用水', 'ja': '漂白剤で水を浄化', 'ht': 'Pirifye dlo ak klowòks',
+    },
+    'calcBleachPct': {
+      'es': 'Concentración de la lejía', 'en': 'Bleach concentration',
+      'pt': 'Concentração da água sanitária', 'fr': 'Concentration de la Javel',
+      'zh': '漂白水浓度', 'ja': '漂白剤の濃度', 'ht': 'Konsantrasyon klowòks la',
+    },
+    'calcCloudy': {
+      'es': 'Agua turbia', 'en': 'Cloudy water',
+      'pt': 'Água turva', 'fr': 'Eau trouble',
+      'zh': '浑浊水', 'ja': '濁った水', 'ht': 'Dlo twoub',
+    },
+    'calcDrops': {
+      'es': 'gotas · esperar 30 minutos', 'en': 'drops · wait 30 minutes',
+      'pt': 'gotas · aguardar 30 minutos', 'fr': 'gouttes · attendre 30 minutes',
+      'zh': '滴 · 等待30分钟', 'ja': '滴 · 30分待つ', 'ht': 'gout · tann 30 minit',
+    },
+    'calcWait30': {
+      'es': 'Lejía SIN perfume ni jabón. Si tras 30 min no huele levemente a cloro, repite la dosis una vez.',
+      'en': 'UNSCENTED bleach only. If after 30 min there is no slight chlorine smell, repeat the dose once.',
+      'pt': 'Água sanitária SEM perfume. Se após 30 min não houver leve cheiro de cloro, repita a dose uma vez.',
+      'fr': 'Javel SANS parfum. Si après 30 min aucune légère odeur de chlore, répétez la dose une fois.',
+      'zh': '仅用无香型漂白水。30分钟后若无轻微氯味，再加一次剂量。',
+      'ja': '無香料の漂白剤のみ。30分後に微かな塩素臭がなければ、もう一度だけ追加。',
+      'ht': 'Klowòks SAN pafen sèlman. Si apre 30 minit pa gen ti sant klò, repete dòz la yon fwa.',
+    },
+    'calcDisclaimer': {
+      'es': 'Fórmulas estándar OMS/CDC. No sustituyen atención médica: busca ayuda profesional en cuanto exista.',
+      'en': 'Standard WHO/CDC formulas. They do not replace medical care: seek professional help as soon as it exists.',
+      'pt': 'Fórmulas padrão OMS/CDC. Não substituem atendimento médico: procure ajuda profissional assim que existir.',
+      'fr': 'Formules standard OMS/CDC. Elles ne remplacent pas les soins : cherchez de l\'aide professionnelle dès que possible.',
+      'zh': '世卫/CDC标准配方。不能替代医疗：一旦有条件请立即就医。',
+      'ja': 'WHO/CDC標準式。医療の代わりにはなりません：可能になり次第、専門家の助けを求めてください。',
+      'ht': 'Fòmil estanda OMS/CDC. Yo pa ranplase swen medikal: chèche èd pwofesyonèl kou li posib.',
     },
     'callEmergency': {
       'es': 'LLAMAR', 'en': 'CALL', 'pt': 'LIGAR', 'fr': 'APPELER',

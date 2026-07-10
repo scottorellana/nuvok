@@ -9,7 +9,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart' show rootBundle;
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import 'pmtiles_extract_dart.dart';
 
 class MapRegion {
@@ -36,7 +36,7 @@ class MapRegion {
   String get fileName => '$id.pmtiles';
 
   bool get installed =>
-      File('${PrepperLibrary.instance.mapsDir.path}/$fileName').existsSync();
+      File('${NuvokLibrary.instance.mapsDir.path}/$fileName').existsSync();
 }
 
 class MapCatalog {
@@ -124,7 +124,7 @@ class MapExtractor {
           'Como alternativa usa "Por URL" o "Importar archivo".';
       return;
     }
-    final dest = '${PrepperLibrary.instance.mapsDir.path}/${region.fileName}';
+    final dest = '${NuvokLibrary.instance.mapsDir.path}/${region.fileName}';
     yield 'Extrayendo ${region.name} del mapa mundial ($build)…';
 
     final progress = StreamController<String>();

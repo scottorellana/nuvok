@@ -1,4 +1,4 @@
 /* Kreyòl ayisyen - Deskripsyon itilizasyon pèmisyon */
-"NSBluetoothAlwaysUsageDescription" = "Prepper Pad itilize Bluetooth pou chat ijans ant aparèy ou yo lè pa gen entènèt ni siyal.";
-"NSLocalNetworkUsageDescription" = "Prepper Pad kominike ak lòt aparèy Prepper Pad ou yo sou rezo WiFi ou a, san entènèt. Anyen pa soti nan rezo ou a.";
+"NSBluetoothAlwaysUsageDescription" = "Nuvok itilize Bluetooth pou chat ijans ant aparèy ou yo lè pa gen entènèt ni siyal.";
+"NSLocalNetworkUsageDescription" = "Nuvok kominike ak lòt aparèy Nuvok ou yo sou rezo WiFi ou a, san entènèt. Anyen pa soti nan rezo ou a.";
 "NSLocationWhenInUseUsageDescription" = "Pozisyon ou itilize pou montre ou sou kat offline la epi pataje nan yon SOS. Li pa janm kite aparèy ou yo.";

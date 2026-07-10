@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/tools/compass.dart';
+import 'package:nuvok/modules/tools/compass.dart';
 
 void main() {
   group('CompassReading', () {

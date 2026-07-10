@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/emergency_guide_media.dart';
-import 'package:prepper_pad/modules/emergency/emergency_guides.dart';
+import 'package:nuvok/modules/emergency/emergency_guide_media.dart';
+import 'package:nuvok/modules/emergency/emergency_guides.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +12,7 @@ void main() {
       ...await EmergencyGuides.load('en'),
     ];
     // 34 guías × 2 idiomas (25 originales + 6 supervivencia + 3 bosque).
-    expect(guides, hasLength(74));
+    expect(guides, hasLength(134));
 
     for (final guide in guides) {
       final media = EmergencyGuideMedia.forGuide(guide.id);
@@ -23,7 +23,8 @@ void main() {
           reason: guide.id);
       expect(media.animationKind.name, isNotEmpty, reason: guide.id);
       if (media.imageAssetPath != null) {
-        expect(media.imageAssetPath, startsWith('assets/emergency_guides/images/'),
+        expect(
+            media.imageAssetPath, startsWith('assets/emergency_guides/images/'),
             reason: guide.id);
         expect(media.imageAltText.trim().length, greaterThan(32),
             reason: '${guide.id} debe tener alt text útil para accesibilidad');

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:prepper_pad/modules/maps/download_from_here.dart';
-import 'package:prepper_pad/modules/maps/map_coverage.dart';
+import 'package:nuvok/modules/maps/download_from_here.dart';
+import 'package:nuvok/modules/maps/map_coverage.dart';
 
 void main() {
   test('bboxFromCenter creates symmetric bbox around center', () {

@@ -5,16 +5,16 @@ import FlutterMacOS
 import Flutter
 #endif
 
-/// Apple-native BLE bridge for Prepper Mesh (mirror of BleMeshBridge.kt).
+/// Apple-native BLE bridge for Nuvok Link (mirror of BleMeshBridge.kt).
 ///
 /// Speaks the exact same channel protocol as the Android bridge so the Dart
 /// transport is one code path everywhere:
-///   MethodChannel  "prepper/ble_mesh":        start / stop / connect(id) /
+///   MethodChannel  "Nuvok/ble_mesh":        start / stop / connect(id) /
 ///                                             disconnect(id) / send(id, bytes)
-///   EventChannel   "prepper/ble_mesh/events": {type:"peer", id}
+///   EventChannel   "Nuvok/ble_mesh/events": {type:"peer", id}
 ///                                             {type:"data", id, bytes}
 ///
-/// Both halves run at once: CBPeripheralManager advertises the Prepper GATT
+/// Both halves run at once: CBPeripheralManager advertises the Nuvok GATT
 /// service (TX ffe1 write-in, RX ffe2 notify-out), and CBCentralManager scans
 /// for the same service on others. That is what lets any iPhone↔Android or
 /// iPhone↔iPhone pair find each other with zero infrastructure.
@@ -38,11 +38,11 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
 
     static func register(messenger: FlutterBinaryMessenger) {
         let bridge = BleMeshBridge()
-        let methods = FlutterMethodChannel(name: "prepper/ble_mesh", binaryMessenger: messenger)
+        let methods = FlutterMethodChannel(name: "Nuvok/ble_mesh", binaryMessenger: messenger)
         methods.setMethodCallHandler { call, result in
             bridge.handle(call: call, result: result)
         }
-        let events = FlutterEventChannel(name: "prepper/ble_mesh/events", binaryMessenger: messenger)
+        let events = FlutterEventChannel(name: "Nuvok/ble_mesh/events", binaryMessenger: messenger)
         events.setStreamHandler(bridge)
     }
 
@@ -155,7 +155,7 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
     }
 }
 
-// MARK: - Central role: find and join nearby Prepper Pads.
+// MARK: - Central role: find and join nearby Nuvoks.
 extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         NSLog("PPMESH central state=%d", central.state.rawValue)

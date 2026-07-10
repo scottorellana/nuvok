@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import '../../zim/zim_file.dart';
 import '../../core/locale_service.dart';
 import '../../core/shell_nav.dart';
@@ -57,7 +57,7 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   Future<void> _load() async {
-    final files = PrepperLibrary.instance.listZims();
+    final files = NuvokLibrary.instance.listZims();
     final infos = <_ZimCardInfo>[];
     for (final f in files) {
       try {
@@ -93,7 +93,7 @@ class _LibraryPageState extends State<LibraryPage> {
       body: zims == null
           ? const Center(child: CircularProgressIndicator())
           : zims.isEmpty
-              ? _EmptyLibrary(dir: PrepperLibrary.instance.zimDir.path)
+              ? _EmptyLibrary(dir: NuvokLibrary.instance.zimDir.path)
               : ListView.builder(
                   padding: const EdgeInsets.all(12),
                   itemCount: zims.length,

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/prepper_library.dart';
-import 'package:prepper_pad/modules/tools/battery_saver.dart';
+import 'package:nuvok/core/nuvok_library.dart';
+import 'package:nuvok/modules/tools/battery_saver.dart';
 
 // The battery saver must always be reversible and must never expose fake
 // controls. These tests lock in the state machine (enable → measures on,
@@ -9,7 +9,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
-    await PrepperLibrary.init();
+    await NuvokLibrary.init();
   });
 
   test('toggle flips enabled and back', () async {
@@ -30,7 +30,7 @@ void main() {
     final c = BatterySaverController.instance;
     await c.setPauseMesh(false);
     await c.setPauseAi(false);
-    final saved = PrepperLibrary.instance.settings['batterySaver'];
+    final saved = NuvokLibrary.instance.settings['batterySaver'];
     expect(saved, isA<Map>());
     expect((saved as Map)['pauseMesh'], isFalse);
     expect(saved['pauseAi'], isFalse);

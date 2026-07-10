@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/mesh_envelope.dart';
-import 'package:prepper_pad/modules/mesh/mesh_notifications.dart';
+import 'package:nuvok/modules/mesh/mesh_envelope.dart';
+import 'package:nuvok/modules/mesh/mesh_notifications.dart';
 
 // Qué mensajes del mesh merecen una notificación del sistema. En una
 // emergencia un SOS entrante DEBE avisar aunque la app esté en segundo plano;

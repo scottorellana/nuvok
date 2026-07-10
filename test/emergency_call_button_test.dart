@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/emergency_call_button.dart';
+import 'package:nuvok/modules/emergency/emergency_call_button.dart';
 
 void main() {
   testWidgets('muestra el número del país detectado', (tester) async {

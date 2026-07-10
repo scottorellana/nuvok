@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/lan_transport.dart';
+import 'package:nuvok/modules/mesh/lan_transport.dart';
 
 // Integración real: dos transportes LAN en el mismo host se ven por
 // multicast loopback. Si el runner de CI bloquea multicast, se omite.
@@ -23,7 +23,7 @@ void main() {
     final sub = b.onData.listen((d) {
       if (!received.isCompleted) received.complete(d);
     });
-    final probe = Uint8List.fromList('PPMESH-PROBE'.codeUnits);
+    final probe = Uint8List.fromList('NuvokMesh-PROBE'.codeUnits);
     // Reintenta unas veces: el join multicast puede tardar un instante.
     Uint8List? got;
     for (var i = 0; i < 10 && got == null; i++) {
@@ -41,6 +41,6 @@ void main() {
       markTestSkipped('multicast loopback no disponible en este entorno');
       return;
     }
-    expect(String.fromCharCodes(got), 'PPMESH-PROBE');
+    expect(String.fromCharCodes(got), 'NuvokMesh-PROBE');
   }, timeout: const Timeout(Duration(seconds: 30)));
 }

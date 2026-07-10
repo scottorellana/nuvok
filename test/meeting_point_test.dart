@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:prepper_pad/modules/maps/map_overlays.dart';
-import 'package:prepper_pad/modules/maps/meeting_point.dart';
-import 'package:prepper_pad/modules/mesh/position_store.dart';
+import 'package:nuvok/modules/maps/map_overlays.dart';
+import 'package:nuvok/modules/maps/meeting_point.dart';
+import 'package:nuvok/modules/mesh/position_store.dart';
 
 PeerPosition _p(String name, double lat, double lon) => PeerPosition(
     id: name, name: name, lat: lat, lon: lon, time: DateTime(2026, 7, 9));

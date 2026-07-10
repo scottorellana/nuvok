@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/ble_transport.dart';
-import 'package:prepper_pad/modules/mesh/transport_health.dart';
+import 'package:nuvok/modules/mesh/ble_transport.dart';
+import 'package:nuvok/modules/mesh/transport_health.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Pure framing tests — exercise fragmentation/reassembly with no hardware.

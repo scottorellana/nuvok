@@ -19,8 +19,8 @@ class EmergencyRetriever {
     ];
   }
 
-  /// Guides first — EN EL IDIOMA DE LA APP (el loader completa faltantes
-  /// con en→es), con bonus del modo de supervivencia activo; luego ZIMs.
+  /// Guides first — EN EL IDIOMA DE LA APP, con bonus del modo de
+  /// supervivencia activo; luego ZIMs.
   static Future<List<RetrievedSource>> retrieve(String question,
       {int maxSources = 4, String lang = 'es', String? mode}) async {
     final sources = <RetrievedSource>[];
@@ -46,8 +46,8 @@ class EmergencyRetriever {
   /// Used when the local model isn't installed or fails mid-emergency.
   static Future<String?> strictAnswer(String question,
       {String appLang = 'es', String? mode}) async {
-    // Primero el idioma de la app (con fallback por guía del loader) — con
-    // contenido en 7 idiomas la respuesta sin modelo YA sale en tu idioma.
+    // Primero el idioma de la app. ES/EN sólo son último recurso explícito si
+    // la instalación local está incompleta o corrupta.
     final ordered = <String>{appLang, 'es', 'en'}.toList();
     for (final lang in ordered) {
       final guides = await EmergencyGuides.load(lang);
@@ -73,8 +73,13 @@ class EmergencyRetriever {
   /// Nombre nativo de cada idioma para fijar el idioma de RESPUESTA en el
   /// prompt (los modelos pequeños obedecen mejor una instrucción explícita).
   static const Map<String, String> _langNames = {
-    'es': 'español', 'en': 'English', 'pt': 'português', 'fr': 'français',
-    'zh': '中文', 'ja': '日本語', 'ht': 'kreyòl ayisyen',
+    'es': 'español',
+    'en': 'English',
+    'pt': 'português',
+    'fr': 'français',
+    'zh': '中文',
+    'ja': '日本語',
+    'ht': 'kreyòl ayisyen',
   };
 
   static String buildEmergencySystemPrompt(List<RetrievedSource> sources,

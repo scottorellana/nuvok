@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter_map/flutter_map.dart' show LatLngBounds;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:prepper_pad/modules/maps/poi_extractor.dart';
+import 'package:nuvok/modules/maps/poi_extractor.dart';
 import 'package:vector_map_tiles_pmtiles/vector_map_tiles_pmtiles.dart';
 
 // Probes POI extraction against the real Honduras map. Skipped on CI.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final home = Platform.environment['HOME']!;
-  final path = '$home/PrepperPad/maps/honduras.pmtiles';
+  final path = '$home/Nuvok/maps/honduras.pmtiles';
 
   test('extrae POIs reales (hospitales, farmacias, tiendas) del .pmtiles',
       () async {

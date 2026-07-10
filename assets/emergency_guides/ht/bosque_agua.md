@@ -1,6 +1,6 @@
 ---
 title: Dlo nan Forè a
-keywords: [dlo, forè, jeng, swaf, sous, lapli, pirifye]
+keywords: [dlo, forè, rakbwa, swaf, ravin, lapli, pirifye]
 priority: 2
 mode: [bosque]
 category: supervivencia
@@ -8,49 +8,49 @@ category: supervivencia
 
 # Dlo nan Forè a
 
-**Règ 3 yo: ou mouri nan 3 jou san dlo** — epi lè ou dezidrate, ou panse mal depi premye jou a. Nan forè a dlo egziste; fòk ou konn li siy li yo.
+**Règ 3 yo: ou mouri nan 3 jou san dlo** — epi lè ou dezidrate, ou panse mal depi premye jou a. Nan forè a dlo egziste; ou dwe konnen kijan pou li li.
 
-## Etap kritik yo
+## Etap kritik
 
-1. **Koute anvan ou chèche.** Nan maten bonè ak nan aswè, rete an plas 2 minit: dlo k ap koule TANDE lwen. Mache nan direksyon son an.
-2. **Desann, pa monte.** Dlo swiv gravite: swiv ravin yo ak ba yo desann. Zwazo nan aswè vole AL JWENN dlo.
-3. **Chèche siy vèt yo.** Plant ki pi vèt e pi dans, wozo, sikren, mous epè = dlo tou pre sifas la.
-4. **Lapli = dlo gratis e san danje.** Louvri yon plastik/prela an fòm V nan yon veso. Se SÈL dlo ou ka bwè san tretman.
-5. **Pyèj transpirasyon.** Yon sache plastik byen mare sou yon branch ak anpil fèy nan solèy: nan 4-6 èdtan li ranmase dlo pwòp ki soti nan fèy yo (piti, men san danje).
-6. **Filtre dlo twoub ANVAN ou pirifye.** Twal/mayo an kouch: li retire labou ak ti bèt ou wè. Filtre PA pirifye.
-7. **TOUJOU pirifye dlo ou jwenn.** Bouyi 1 minit ak gwo bouyon (3 minit nan mòn) oswa mete klò (2 gout klowòks 5% pou chak lit, tann 30 minit — gen kalkilatris nan Zouti).
+1. **Koute anvan ou chèche.** Lè solèy leve ak lè solèy kouche, rete san bouje 2 minit: dlo k ap koule TANDE lwen. Mache nan direksyon son an.
+2. **Desann, pa monte.** Dlo obeyi gravite: swiv ravin ak fon yo desann. Zwazo nan fen apremidi vole NAN DIREKSYON dlo.
+3. **Chèche endikatè vèt yo.** Vejetasyon ki pi vèt ak pi dans, jon, sòl, mous abondan = dlo toupre sifas la.
+4. **Lapli = dlo gratis ak san danje.** Tann plastik/twal an V pou mennen nan yon resipyan. Se SÈL dlo ou ka bwè san trete.
+5. **Pyèj transpirasyon.** Sak plastik byen mare sou yon branch ki gen anpil fèy nan solèy: nan 4-6 èdtan li ranmase dlo pwòp ki soti nan fèy yo (ti kantite, men san danje).
+6. **Filtre sa ki twoub ANVAN ou pirifye.** Twal/mayo an kouch: retire labou ak ti bèt vizib. Filtre PA pirifye.
+7. **Pirifye TOUJOU dlo ou jwenn.** Bouyi 1 minit ak gwo bouyi (3 min nan mòn) oswa sèvi ak klò (2 gout/lit klowòks 5%, tann 30 min — kalkilatris nan Zouti).
 
-## Sa POU PA fè
+## Sa pou PA fè
 
-| ❌ Erè | ✅ Korèk |
-|--------|---------|
-| Bwè nan ma dlo oswa dlo ki pa koule "paske li parèt klè" | Sèlman dlo k ap koule, e TOUJOU pirifye |
-| Manje nèj oswa bwè san pirifye paske ou dezespere | Dyare a dezidrate PLIS: toujou pirifye |
-| Tann ou swaf pou ou ekonomize dlo | Bwè ti gòje regilye; swaf la vini twò ta |
-| Mache nan chalè lajounen ap chèche dlo | Chèche bonè oswa nan aswè; ou swe mwens |
-| Bwè pipi oswa dlo lanmè | Yo akselere dezidratasyon — janmen |
-| Fè konfyans ak fwi/lyann ou pa konnen pou ji yo | Sèlman si ou rekonèt yo san okenn dout |
+| ❌ Erè | ✅ Kòrèk |
+|----------|------------|
+| Bwè nan flak dlo oswa dlo ki dòmi "paske li parèt klè" | Sèlman dlo k ap koule, epi TOUJOU pirifye |
+| Manje nèj oswa bwè san pirifye akoz dezespwa | Dyare dezidrate PLIS: toujou pirifye |
+| Tann ou swaf pou rasyone | Bwè ti gòje regilye; swaf rive an reta |
+| Mache lajounen nan chalè ap chèche dlo | Chèche bonè oswa nan fen apremidi; ou swe mwens |
+| Bwè pipi oswa dlo lanmè | Yo akselere dezidratasyon — pa janm |
+| Fè konfyans fwi/lyann ou pa konnen akoz likid yo | Sèlman si ou rekonèt yo ak sètenn total |
 
 ## Sous yo klase pa sekirite
 
-1. **Lapli ou ranmase dirèk** — san danje san tretman.
-2. **Transpirasyon fèy (sache)** — san danje, dousman.
-3. **Sous ak ti rivyè rapid** — toujou pirifye.
-4. **Rivyè ak basen** — filtre + pirifye.
-5. **Dlo ki pa koule** — dènye chans: filtre + bouyi fò.
+1. **Lapli ranmase dirèk** — san danje san trete.
+2. **Transpirasyon fèy (sak)** — san danje, dousman.
+3. **Sous ak ravin rapid** — toujou pirifye.
+4. **Rivyè ak basen dlo** — filtre + pirifye.
+5. **Dlo ki dòmi** — dènye rekou: filtre + bouyi fò.
 
 ## Konbyen dlo ou bezwen
 
-- Repoze nan lonbraj: **2-3 lit/jou**.
-- Mache ak chay: **4-6 lit/jou**.
-- Ekonomize dlo PA mache: ekonomize SUÈ a (deplase bonè/ta, repoze nan lonbraj).
+- Repo nan lonbraj: **2-3 lit/jou**.
+- Ap mache ak chay: **4-6 lit/jou**.
+- Rasyone dlo PA mache: rasyone SWE a (deplase bonè/ta, repoze nan lonbraj).
 
-## Egzanp: Dlo nan Forè a
+## Egzanp pratik: Dlo nan Forè a
 
-**Sitiyasyon:** Dezyèm jou pèdi nan forè a, boutèy la vid depi yè swa e solèy la cho.
+**Sitiyasyon:** Dezyèm jou ou pèdi nan forè a, boutèy la vid depi yè swa epi gen gwo solèy.
 
-**Fè:** 1. Rete nan lonbraj jiska mitan apremidi. 2. Koute 2 minit an silans: jwenn kote dlo ap koule. 3. Desann ravin lan swiv vèt ki pi dans lan. 4. Filtre ak mayo a epi bouyi 1 minit oswa mete klò 30 minit. 5. Monte prela a an V si lapli ta tonbe.
+**Fè:** 1. Rete nan lonbraj jouk mitan apremidi. 2. Koute 2 minit an silans: lokalize dlo k ap koule. 3. Desann nan ravin nan pandan w ap swiv vèt ki pi dans la. 4. Filtre ak mayo a epi bouyi 1 minit oswa klore 30 min. 5. Monte twal la an V si lapli tonbe.
 
-**Evite:** Pa mache midi, pa bwè san pirifye, pa manje san dlo (dijesyon itilize dlo), pa monte mòn ap chèche dlo.
+**Evite:** Pa mache a midi, pa bwè san pirifye, pa manje san dlo (dijere depanse dlo), pa monte ti mòn ap chèche dlo.
 
-**Eskale:** Si dyare oswa vomisman parèt apre dlo dout, ale nan gid anpwazonnman an epi prepare sewòm oral (kalkilatris); apre 24 è san dlo, bay siyal sekou priyorite olye ou kontinye mache.
+**Eskalad:** Si dyare oswa vomisman parèt apre ou bwè dlo dout, pase nan gid entoksikasyon yo epi prepare sewòm oral (kalkilatris); si ou pase 24 h san jwenn dlo, bay siyal sekou priyorite olye ou kontinye mache.

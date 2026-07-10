@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:prepper_pad/modules/maps/roads_router.dart';
+import 'package:nuvok/modules/maps/roads_router.dart';
 import 'package:vector_map_tiles_pmtiles/vector_map_tiles_pmtiles.dart';
 
 // Probes street routing on the real Honduras map. Skipped on CI.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final home = Platform.environment['HOME']!;
-  final path = '$home/PrepperPad/maps/honduras.pmtiles';
+  final path = '$home/Nuvok/maps/honduras.pmtiles';
 
   test('calcula una ruta por calles entre dos puntos de San Pedro Sula',
       () async {

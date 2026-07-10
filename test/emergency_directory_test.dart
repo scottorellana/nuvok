@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/emergency_directory.dart';
+import 'package:nuvok/modules/emergency/emergency_directory.dart';
 
 void main() {
   group('Emergency Directory', () {

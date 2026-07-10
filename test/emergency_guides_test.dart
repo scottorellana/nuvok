@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/emergency_guides.dart';
+import 'package:nuvok/modules/emergency/emergency_guides.dart';
 
 // Las guías embebidas deben cargar, indexarse y encontrarse por síntoma.
 void main() {

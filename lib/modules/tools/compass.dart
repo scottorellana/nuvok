@@ -16,8 +16,8 @@ import '../../core/locale_service.dart';
 // Android, iOS and macOS provide capability checks through MethodChannel;
 // Android (SensorManager) and iOS (CoreLocation) stream continuous headings
 // through the native EventChannel below. macOS reports "no compass".
-final _sensorChannel = MethodChannel('prepper/sensors');
-final _compassEventChannel = EventChannel('prepper/sensors/compass');
+final _sensorChannel = MethodChannel('nuvok/sensors');
+final _compassEventChannel = EventChannel('nuvok/sensors/compass');
 
 class CompassMath {
   const CompassMath._();

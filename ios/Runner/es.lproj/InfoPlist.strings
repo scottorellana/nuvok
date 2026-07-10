@@ -1,4 +1,4 @@
 /* Español - Descripciones de uso de permisos */
-"NSBluetoothAlwaysUsageDescription" = "Prepper Pad usa Bluetooth para el chat de emergencia entre tus dispositivos cuando no hay internet ni señal.";
-"NSLocalNetworkUsageDescription" = "Prepper Pad se comunica con tus otros dispositivos Prepper Pad en tu red WiFi, sin internet. Nada sale de tu red.";
+"NSBluetoothAlwaysUsageDescription" = "Nuvok usa Bluetooth para el chat de emergencia entre tus dispositivos cuando no hay internet ni señal.";
+"NSLocalNetworkUsageDescription" = "Nuvok se comunica con tus otros dispositivos Nuvok en tu red WiFi, sin internet. Nada sale de tu red.";
 "NSLocationWhenInUseUsageDescription" = "Tu posición se usa para mostrarte en el mapa offline y compartirla en un SOS. Nunca sale de tus dispositivos.";

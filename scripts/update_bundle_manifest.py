@@ -65,7 +65,7 @@ def main():
 
     manifest = {
         'version': 1,
-        'description': 'Contenido offline incluido en la instalación única de Prepper Pad.',
+        'description': 'Contenido offline incluido en la instalación única de Nuvok.',
         'entries': entries,
     }
     MANIFEST_PATH.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n')

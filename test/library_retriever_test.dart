@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/prepper_library.dart';
-import 'package:prepper_pad/modules/ai/library_retriever.dart';
+import 'package:nuvok/core/nuvok_library.dart';
+import 'package:nuvok/modules/ai/library_retriever.dart';
 
 // Verifies the retriever against a real ZIM in the user's library.
 // Skipped when no library is present (e.g. on CI).
@@ -20,12 +20,12 @@ void main() {
 
   test('recupera fuentes reales de la biblioteca instalada', () async {
     final home = Platform.environment['HOME']!;
-    final lib = Directory('$home/PrepperPad/zim');
+    final lib = Directory('$home/Nuvok/zim');
     if (!lib.existsSync() || lib.listSync().whereType<File>().isEmpty) {
       markTestSkipped('No hay ZIMs en la biblioteca');
       return;
     }
-    await PrepperLibrary.init();
+    await NuvokLibrary.init();
     // "animal" existe como artículo en la Wikipedia mini y la de 100.
     final sources = await LibraryRetriever.retrieve('¿Qué es un animal?');
     if (sources.isEmpty) {

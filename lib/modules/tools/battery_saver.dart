@@ -13,7 +13,7 @@ import 'package:battery_plus/battery_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import '../ai/llama_server.dart';
 import '../mesh/mesh_service.dart';
 import '../../core/locale_service.dart';
@@ -76,7 +76,7 @@ class BatterySaverController extends ChangeNotifier {
   }
 
   void _loadSettings() {
-    final s = PrepperLibrary.instance.settings['batterySaver'];
+    final s = NuvokLibrary.instance.settings['batterySaver'];
     if (s is Map) {
       _reduceBrightness = s['reduceBrightness'] as bool? ?? _reduceBrightness;
       _pauseMesh = s['pauseMesh'] as bool? ?? _pauseMesh;
@@ -88,7 +88,7 @@ class BatterySaverController extends ChangeNotifier {
     // Fire-and-forget; persistence must never block the UI. Note we persist
     // only the PREFERENCES, never the enabled state — a saver left "on"
     // across restarts could otherwise strand the device dimmed.
-    PrepperLibrary.instance.saveSetting('batterySaver', {
+    NuvokLibrary.instance.saveSetting('batterySaver', {
       'reduceBrightness': _reduceBrightness,
       'pauseMesh': _pauseMesh,
       'pauseAi': _pauseAi,

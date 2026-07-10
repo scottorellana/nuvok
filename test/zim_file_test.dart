@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/zim/zim_file.dart';
+import 'package:nuvok/zim/zim_file.dart';
 
 void main() {
   const fixture = 'test/fixtures/mini.zim';

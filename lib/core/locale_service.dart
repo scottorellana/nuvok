@@ -13,7 +13,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'prepper_library.dart';
+import 'nuvok_library.dart';
 
 enum AppLanguage {
   es('Español', '🇪🇸', 'es'),
@@ -292,17 +292,17 @@ class AppStrings {
     },
     'sosBody': {
       'es': 'Tu posición y esta nota se difundirán cada minuto a TODOS los '
-          'Prepper Pad al alcance (no solo tu grupo), hasta que lo canceles.',
+          'Nuvok al alcance (no solo tu grupo), hasta que lo canceles.',
       'en': 'Your position and this note will broadcast every minute to ALL '
-          'Prepper Pads in range (not just your group) until you cancel.',
+          'Nuvoks in range (not just your group) until you cancel.',
       'pt': 'Sua posição e esta nota serão transmitidas a cada minuto a '
-          'TODOS os Prepper Pads ao alcance (não só seu grupo), até cancelar.',
+          'TODOS os Nuvoks ao alcance (não só seu grupo), até cancelar.',
       'fr': 'Votre position et cette note seront diffusées chaque minute à '
-          'TOUS les Prepper Pads à portée (pas seulement votre groupe), '
+          'TOUS les Nuvoks à portée (pas seulement votre groupe), '
           'jusqu\'à annulation.',
-      'zh': '您的位置和此备注将每分钟广播给范围内的所有Prepper Pad（不仅是您的群组），直到您取消。',
-      'ja': 'あなたの位置とメモは、キャンセルするまで毎分、範囲内のすべてのPrepper Padに送信されます（グループ外にも）。',
-      'ht': 'Pozisyon ou ak nòt sa a ap difize chak minit bay TOUT Prepper '
+      'zh': '您的位置和此备注将每分钟广播给范围内的所有Nuvok（不仅是您的群组），直到您取消。',
+      'ja': 'あなたの位置とメモは、キャンセルするまで毎分、範囲内のすべてのNuvokに送信されます（グループ外にも）。',
+      'ht': 'Pozisyon ou ak nòt sa a ap difize chak minit bay TOUT Nuvok '
           'Pad ki nan zòn nan, jiskaske ou anile li.',
     },
     'sosNoteHint': {
@@ -379,10 +379,10 @@ class AppStrings {
       'ht': 'Non gwoup la (egz. Fanmi)',
     },
     'pasteCodeHint': {
-      'es': 'Pega el código PPMESH1:…', 'en': 'Paste the PPMESH1:… code',
-      'pt': 'Cole o código PPMESH1:…', 'fr': 'Collez le code PPMESH1:…',
-      'zh': '粘贴 PPMESH1:… 代码', 'ja': 'PPMESH1:… コードを貼り付け',
-      'ht': 'Kole kòd PPMESH1:… a',
+      'es': 'Pega el código NUVOK1:…', 'en': 'Paste the NUVOK1:… code',
+      'pt': 'Cole o código NUVOK1:…', 'fr': 'Collez le code NUVOK1:…',
+      'zh': '粘贴 NUVOK1:… 代码', 'ja': 'NUVOK1:… コードを貼り付け',
+      'ht': 'Kole kòd NUVOK1:… a',
     },
     'askCreator': {
       'es': 'Pídelo al que creó el canal', 'en': 'Ask the channel creator',
@@ -412,9 +412,9 @@ class AppStrings {
       'fr': 'Canal', 'zh': '频道', 'ja': 'チャンネル', 'ht': 'Kanal',
     },
     'meshOnboardTitle': {
-      'es': 'Prepper Mesh', 'en': 'Prepper Mesh', 'pt': 'Prepper Mesh',
-      'fr': 'Prepper Mesh', 'zh': 'Prepper Mesh', 'ja': 'Prepper Mesh',
-      'ht': 'Prepper Mesh',
+      'es': 'Nuvok Link', 'en': 'Nuvok Link', 'pt': 'Nuvok Link',
+      'fr': 'Nuvok Link', 'zh': 'Nuvok Link', 'ja': 'Nuvok Link',
+      'ht': 'Nuvok Link',
     },
     'meshOnboardSubtitle': {
       'es': 'Conexión de emergencia sin internet',
@@ -660,28 +660,28 @@ class AppStrings {
 
     // ── Welcome wizard ──
     'welcomeTitle': {
-      'es': 'Bienvenido a Prepper Pad',
-      'en': 'Welcome to Prepper Pad',
-      'pt': 'Bem-vindo ao Prepper Pad',
-      'fr': 'Bienvenue sur Prepper Pad',
+      'es': 'Bienvenido a Nuvok',
+      'en': 'Welcome to Nuvok',
+      'pt': 'Bem-vindo ao Nuvok',
+      'fr': 'Bienvenue sur Nuvok',
     },
     'welcomeBodyIos': {
-      'es': 'Prepper Pad guarda tu biblioteca de conocimiento offline dentro '
+      'es': 'Nuvok guarda tu biblioteca de conocimiento offline dentro '
           'de la app (visible también en la app Archivos). Desde Depósito '
           'descargas lo que necesites — mapas por país, Wikipedia médica, '
           'guías — y queda disponible sin internet. Todo vive en tu '
           'dispositivo; nada se sube a ningún servidor.',
-      'en': 'Prepper Pad keeps your offline knowledge library inside the app '
+      'en': 'Nuvok keeps your offline knowledge library inside the app '
           '(also visible in the Files app). From Depot you download what you '
           'need — country maps, medical Wikipedia, guides — and it stays '
           'available without internet. Everything lives on your device; '
           'nothing is uploaded to any server.',
-      'pt': 'O Prepper Pad guarda sua biblioteca de conhecimento offline '
+      'pt': 'O Nuvok guarda sua biblioteca de conhecimento offline '
           'dentro do app (visível também no app Arquivos). No Depósito você '
           'baixa o que precisar — mapas por país, Wikipédia médica, guias — '
           'e fica disponível sem internet. Tudo vive no seu dispositivo; '
           'nada é enviado a nenhum servidor.',
-      'fr': 'Prepper Pad garde votre bibliothèque de connaissances hors '
+      'fr': 'Nuvok garde votre bibliothèque de connaissances hors '
           'ligne dans l\'app (visible aussi dans l\'app Fichiers). Depuis '
           'Dépôt, téléchargez ce qu\'il vous faut — cartes par pays, '
           'Wikipédia médical, guides — disponible sans internet. Tout reste '
@@ -689,28 +689,28 @@ class AppStrings {
     },
     'welcomeBodyDesktop': {
       'es': 'Tu biblioteca de conocimiento offline vive en la carpeta '
-          'PrepperPad de tu usuario. Esta instalación ya trae un paquete '
+          'Nuvok de tu usuario. Esta instalación ya trae un paquete '
           'base offline incluido: mapas, Wikipedia médica, una mini '
           'Wikipedia y un modelo IA liviano. En el primer arranque se copian '
           'automáticamente a esa carpeta para que funcionen sin internet y '
           'puedas copiarlos a otros dispositivos por USB.\n\nDesde Depósito '
           'puedes agregar más países, ZIMs o modelos grandes cuando tengas '
           'internet o por transferencia local.',
-      'en': 'Your offline knowledge library lives in the PrepperPad folder '
+      'en': 'Your offline knowledge library lives in the Nuvok folder '
           'of your user. This install already includes a base offline pack: '
           'maps, medical Wikipedia, a mini Wikipedia and a light AI model. '
           'On first launch they are copied there automatically so they work '
           'without internet and you can copy them to other devices over '
           'USB.\n\nFrom Depot you can add more countries, ZIMs or bigger '
           'models when you have internet or via local transfer.',
-      'pt': 'Sua biblioteca de conhecimento offline vive na pasta PrepperPad '
+      'pt': 'Sua biblioteca de conhecimento offline vive na pasta Nuvok '
           'do seu usuário. Esta instalação já inclui um pacote base offline: '
           'mapas, Wikipédia médica, uma mini Wikipédia e um modelo IA leve. '
           'Na primeira execução eles são copiados automaticamente para '
           'funcionar sem internet e poder copiá-los a outros dispositivos '
           'por USB.\n\nNo Depósito você pode adicionar mais países, ZIMs ou '
           'modelos maiores com internet ou por transferência local.',
-      'fr': 'Votre bibliothèque hors ligne vit dans le dossier PrepperPad de '
+      'fr': 'Votre bibliothèque hors ligne vit dans le dossier Nuvok de '
           'votre utilisateur. Cette installation inclut déjà un pack de '
           'base : cartes, Wikipédia médical, une mini Wikipédia et un modèle '
           'IA léger. Au premier lancement ils y sont copiés automatiquement '
@@ -786,28 +786,28 @@ class AppStrings {
       'es': '1) Activa Bluetooth. 2) Si hay varios equipos, usa un hotspot o '
           'la misma Wi‑Fi aunque no tenga internet. 3) En Android, Wi‑Fi Direct '
           'busca pares sin router. 4) Si conectas radio LoRa compatible, '
-          'Prepper Mesh usará el mismo protocolo de mensajes.',
+          'Nuvok Link usará el mismo protocolo de mensajes.',
       'en': '1) Enable Bluetooth. 2) If using multiple devices, share a hotspot '
           'or the same Wi‑Fi even without internet. 3) On Android, Wi‑Fi Direct '
           'finds peers without a router. 4) If you connect a compatible LoRa radio, '
-          'Prepper Mesh will use the same message protocol.',
+          'Nuvok Link will use the same message protocol.',
       'pt': '1) Ative o Bluetooth. 2) Se houver vários equipamentos, use um hotspot '
           'ou o mesmo Wi‑Fi sem internet. 3) No Android, o Wi‑Fi Direct encontra '
-          'pares sem roteador. 4) Se conectar um rádio LoRa compatível, o Prepper '
+          'pares sem roteador. 4) Se conectar um rádio LoRa compatível, o Nuvok '
           'Mesh usará o mesmo protocolo.',
       'fr': '1) Activez le Bluetooth. 2) Si plusieurs appareils, utilisez un hotspot '
           'ou le même Wi‑Fi sans internet. 3) Sur Android, Wi‑Fi Direct trouve des '
           'pairs sans routeur. 4) Si vous connectez une radio LoRa compatible, '
-          'Prepper Mesh utilisera le même protocole.',
+          'Nuvok Link utilisera le même protocole.',
       'zh': '1) 启用蓝牙。2) 如果有多台设备，即使没有互联网也可使用热点或相同Wi-Fi。'
           '3) 在Android上，Wi-Fi Direct无需路由器即可查找设备。4) 如果连接兼容的LoRa收音机，'
-          'Prepper Mesh将使用相同的消息协议。',
+          'Nuvok Link将使用相同的消息协议。',
       'ja': '1) Bluetoothを有効にする。2) 複数デバイス使用時はホットスポットや同じWi-Fiを共有。'
           '3) AndroidではWi-Fi Directがルーターなしでピアを検索。4) 互換LoRAラジオを接続すると'
-          'Prepper Meshが同じプロトコルを使用。',
+          'Nuvok Linkが同じプロトコルを使用。',
       'ht': '1) Aktive Bluetooth. 2) Si gen plizyè aparèy, itilize yon hotspot oswa '
           'menm Wi‑Fi a menm san entènèt. 3) Sou Android, Wi‑Fi Direct jwenn pè san routeur. '
-          '4) Si ou konekte yon radyo LoRa ki konpatib, Prepper Mesh ap itilize menm pwotokòl mesaj.',
+          '4) Si ou konekte yon radyo LoRa ki konpatib, Nuvok Link ap itilize menm pwotokòl mesaj.',
     },
     'emergencyChannelTitle': {
       'es': 'EMERGENCIA (todos)',
@@ -828,17 +828,17 @@ class AppStrings {
       'ht': 'IJANS (tout moun toupre)',
     },
     'emergencyWarning': {
-      'es': 'Canal abierto SIN cifrar: lo lee cualquier Prepper Pad cercano. '
+      'es': 'Canal abierto SIN cifrar: lo lee cualquier Nuvok cercano. '
           'Úsalo para pedir o dar ayuda.',
-      'en': 'Open channel, NOT encrypted: any nearby Prepper Pad can read it. '
+      'en': 'Open channel, NOT encrypted: any nearby Nuvok can read it. '
           'Use it to ask for or give help.',
-      'pt': 'Canal aberto SEM criptografia: qualquer Prepper Pad próximo pode lê-lo. '
+      'pt': 'Canal aberto SEM criptografia: qualquer Nuvok próximo pode lê-lo. '
           'Use para pedir ou dar ajuda.',
-      'fr': 'Canal ouvert SANS chiffrement : tout Prepper Pad proche peut le lire. '
+      'fr': 'Canal ouvert SANS chiffrement : tout Nuvok proche peut le lire. '
           'Utilisez-le pour demander ou offrir de l\'aide.',
-      'zh': '开放频道，未加密：附近任何Prepper Pad均可读取。用于求助或提供帮助。',
-      'ja': '暗号化なしの公開チャンネル：近くのPrepper Padなら誰でも読めます。助けを求めたり提供したりするために使用してください。',
-      'ht': 'Kanal ouvè SANS chifraj: nenpòt Prepper Pad toupre ka li li. '
+      'zh': '开放频道，未加密：附近任何Nuvok均可读取。用于求助或提供帮助。',
+      'ja': '暗号化なしの公開チャンネル：近くのNuvokなら誰でも読めます。助けを求めたり提供したりするために使用してください。',
+      'ht': 'Kanal ouvè SANS chifraj: nenpòt Nuvok toupre ka li li. '
           'Itilize l pou mande oswa bay èd.',
     },
     'noMessagesHint': {
@@ -947,21 +947,21 @@ class AppStrings {
     },
     'advisorBtPermBody': {
       'es': 'La app no tiene permiso de Bluetooth. Abre Ajustes → Apps → '
-          'Prepper Pad → Permisos y permite Bluetooth / Dispositivos cercanos.',
+          'Nuvok → Permisos y permite Bluetooth / Dispositivos cercanos.',
       'en': 'The app has no Bluetooth permission. Open Settings → Apps → '
-          'Prepper Pad → Permissions and allow Bluetooth / Nearby devices.',
+          'Nuvok → Permissions and allow Bluetooth / Nearby devices.',
       'pt': 'O app não tem permissão de Bluetooth. Abra Ajustes → Apps → '
-          'Prepper Pad → Permissões e permita Bluetooth / Dispositivos '
+          'Nuvok → Permissões e permita Bluetooth / Dispositivos '
           'próximos.',
       'fr': 'L’app n’a pas la permission Bluetooth. Ouvrez Réglages → Apps → '
-          'Prepper Pad → Autorisations et autorisez Bluetooth / Appareils à '
+          'Nuvok → Autorisations et autorisez Bluetooth / Appareils à '
           'proximité.',
-      'zh': '应用没有蓝牙权限。打开 设置 → 应用 → Prepper Pad → 权限，'
+      'zh': '应用没有蓝牙权限。打开 设置 → 应用 → Nuvok → 权限，'
           '允许蓝牙/附近的设备。',
-      'ja': 'アプリにBluetooth権限がありません。設定 → アプリ → Prepper Pad → '
+      'ja': 'アプリにBluetooth権限がありません。設定 → アプリ → Nuvok → '
           '権限 で Bluetooth/付近のデバイス を許可してください。',
       'ht': 'App la pa gen pèmisyon Bluetooth. Ouvri Paramèt → App → '
-          'Prepper Pad → Pèmisyon epi pèmèt Bluetooth / Aparèy tou pre.',
+          'Nuvok → Pèmisyon epi pèmèt Bluetooth / Aparèy tou pre.',
     },
     'advisorHotspot': {
       'es': 'Crea un punto de acceso (hotspot)', 'en': 'Create a hotspot',
@@ -1659,14 +1659,14 @@ class LocaleService extends ChangeNotifier {
     } catch (_) {}
   }
 
-  /// Prefs live inside the PrepperPad library root, which is
+  /// Prefs live inside the Nuvok library root, which is
   /// platform-correct everywhere. Deriving it from $HOME broke iOS ($HOME
   /// doesn't exist there → read-only '/', the choice silently never saved).
   File? _prefsFile() {
     try {
-      return File('${PrepperLibrary.instance.root.path}/locale.json');
+      return File('${NuvokLibrary.instance.root.path}/locale.json');
     } catch (_) {
-      // PrepperLibrary not initialized (tests) — no persistence, no crash.
+      // NuvokLibrary not initialized (tests) — no persistence, no crash.
       return null;
     }
   }

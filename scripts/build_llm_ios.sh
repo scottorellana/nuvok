@@ -1,7 +1,7 @@
 #!/bin/bash
 # Builds ppllm (embedded llama.cpp engine, Metal) as an iOS xcframework:
 # device arm64 + simulator arm64 → native/out/ios/ppllm.xcframework,
-# consumed by the Runner via the local prepper_native pod (same pattern as
+# consumed by the Runner via the local Nuvok_native pod (same pattern as
 # zstd). Takes ~10 min: llama.cpp compiles twice.
 set -euo pipefail
 
@@ -45,7 +45,7 @@ build_one() {
 <dict>
   <key>CFBundleDevelopmentRegion</key><string>en</string>
   <key>CFBundleExecutable</key><string>ppllm</string>
-  <key>CFBundleIdentifier</key><string>com.prepperpad.ppllm</string>
+  <key>CFBundleIdentifier</key><string>org.nuvok.ppllm</string>
   <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
   <key>CFBundleName</key><string>ppllm</string>
   <key>CFBundlePackageType</key><string>FMWK</string>

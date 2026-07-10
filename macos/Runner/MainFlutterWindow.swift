@@ -10,7 +10,7 @@ class MainFlutterWindow: NSWindow {
     self.setFrame(windowFrame, display: true)
 
     let channel = FlutterMethodChannel(
-      name: "prepper/bundled_assets",
+      name: "nuvok/bundled_assets",
       binaryMessenger: flutterViewController.engine.binaryMessenger)
     channel.setMethodCallHandler { call, result in
       guard call.method == "copyAsset" else {
@@ -40,7 +40,7 @@ class MainFlutterWindow: NSWindow {
     }
 
     let sensorChannel = FlutterMethodChannel(
-      name: "prepper/sensors",
+      name: "Nuvok/sensors",
       binaryMessenger: flutterViewController.engine.binaryMessenger)
     sensorChannel.setMethodCallHandler { call, result in
       switch call.method {
@@ -52,11 +52,11 @@ class MainFlutterWindow: NSWindow {
     }
 
     let compassEvents = FlutterEventChannel(
-      name: "prepper/sensors/compass",
+      name: "Nuvok/sensors/compass",
       binaryMessenger: flutterViewController.engine.binaryMessenger)
     compassEvents.setStreamHandler(NoCompassStreamHandler())
 
-    // Prepper Mesh over BLE: dual-role (advertise + scan) bridge, mirror of
+    // Nuvok Link over BLE: dual-role (advertise + scan) bridge, mirror of
     // the Android BleMeshBridge so Apple↔Android pairs find each other.
     BleMeshBridge.register(
       messenger: flutterViewController.engine.binaryMessenger)

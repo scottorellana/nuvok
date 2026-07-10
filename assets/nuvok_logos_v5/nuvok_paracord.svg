@@ -1,0 +1,21 @@
+<svg width="1024" height="1024" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="cord" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#FF6D00"/><stop offset="50%" stop-color="#FF3D00"/><stop offset="100%" stop-color="#D84315"/>
+</linearGradient>
+</defs>
+<path d="M 55 155 L 55 50" stroke="url(#cord)" stroke-width="20" stroke-linecap="round"/>
+<line x1="55" y1="70" x2="62" y2="80" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="55" y1="90" x2="48" y2="100" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="55" y1="110" x2="62" y2="120" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="55" y1="130" x2="48" y2="140" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<path d="M 145 155 L 145 50" stroke="url(#cord)" stroke-width="20" stroke-linecap="round"/>
+<line x1="145" y1="70" x2="138" y2="80" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="145" y1="90" x2="152" y2="100" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="145" y1="110" x2="138" y2="120" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="145" y1="130" x2="152" y2="140" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<path d="M 65 65 L 135 145" stroke="url(#cord)" stroke-width="18" stroke-linecap="round"/>
+<circle cx="100" cy="105" r="12" fill="#FF6D00"/>
+<circle cx="100" cy="105" r="7" fill="#FFAB40"/>
+<circle cx="100" cy="105" r="3" fill="#FFF3E0"/>
+</svg>

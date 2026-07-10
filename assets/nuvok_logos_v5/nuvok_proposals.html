@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuvok — Logo v5</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#05070D;color:#E2E8F0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:50px 30px}
+h1{font-size:28px;font-weight:800;letter-spacing:-0.5px;color:#fff;margin-bottom:4px;text-align:center}
+h1 span{color:#FF6F00}
+.sub{color:#64748B;font-size:14px;text-align:center;margin-bottom:45px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:35px;max-width:1100px;margin:0 auto}
+.card{background:#0A0F1A;border:1px solid #1A2333;border-radius:18px;padding:32px 24px;text-align:center}
+.icon-wrap{width:200px;height:200px;margin:0 auto 20px;border-radius:44px;display:flex;align-items:center;justify-content:center}
+.dark-bg{background:#05070D}
+.card h2{font-size:16px;font-weight:700;color:#FFB300;margin-bottom:6px}
+.card p{color:#64748B;font-size:12.5px;line-height:1.6}
+.swatches{margin-top:14px;display:flex;justify-content:center;gap:6px}
+.sw{width:24px;height:24px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<h1>Nuvok <span>·</span> Propuestas v5</h1>
+<p class="sub">Luz cálida en la oscuridad del aislamiento</p>
+
+<div class="grid">
+
+<!-- ═════════════════════════════════════════════════════════════════════
+     CONCEPTO 1: THE SPARK — La chispa que sobrevive al apagón
+     La N dibujada como una chispa/brasa viva. No es fuego genérico:
+     es el momento exacto en que se enciende la llama.
+     Colores: ámbar brillante sobre carbón oscuro.
+═════════════════════════════════════════════════════════════════════ -->
+<div class="card">
+<div class="icon-wrap dark-bg">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient id="ember1" cx="50%" cy="55%" r="50%">
+<stop offset="0%" stop-color="#FFEB3B"/>
+<stop offset="30%" stop-color="#FF9800"/>
+<stop offset="70%" stop-color="#FF6F00"/>
+<stop offset="100%" stop-color="#BF360C"/>
+</radialGradient>
+<radialGradient id="glow1" cx="50%" cy="50%" r="55%">
+<stop offset="0%" stop-color="#FF9800" stop-opacity="0.3"/>
+<stop offset="100%" stop-color="#FF6F00" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<!-- Halo de calor -->
+<circle cx="100" cy="105" r="80" fill="url(#glow1)"/>
+<!-- La chispa N: angular, viva, como llama recién nacida -->
+<!-- Pilar izquierdo: recto y grueso como tronco -->
+<path d="M 58 155 L 58 55 L 72 55 L 72 155 Z" fill="url(#ember1)"/>
+<!-- Pilar derecho: recto y grueso -->
+<path d="M 128 155 L 128 55 L 142 55 L 142 155 Z" fill="url(#ember1)"/>
+<!-- Diagonal: no es recta, es una llama que sube con vida -->
+<path d="M 65 60
+         Q 85 75 90 85
+         Q 100 70 110 85
+         Q 120 100 135 60
+         L 135 55
+         L 120 55
+         Q 110 80 100 80
+         Q 90 65 75 55
+         L 65 55 Z" fill="url(#ember1)"/>
+<!-- Chispa: pequeño destello blanco en el centro -->
+<circle cx="100" cy="78" r="4" fill="#FFFDE7"/>
+<circle cx="100" cy="78" r="2" fill="#FFFFFF"/>
+</svg>
+</div>
+<h2>1 — The Spark</h2>
+<p>La N como una chispa viva. El momento en que se enciende la llama. Ambar sobre carbón: vida naciendo del vacío. Cuando todo se apaga, Nuvok enciende.</p>
+<div class="swatches">
+<div class="sw" style="background:#FFEB3B"></div>
+<div class="sw" style="background:#FF9800"></div>
+<div class="sw" style="background:#FF6F00"></div>
+<div class="sw" style="background:#BF360C"></div>
+<div class="sw" style="background:#05070D"></div>
+</div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════════════
+     CONCEPTO 2: THE ISOLATED NODE — El nodo que brilla solo
+     Un solo punto brillante en la oscuridad total. De él salen
+     arcos de señal que se dispersan: sin internet, tu eres la red.
+     La forma del nodo + arcos crea una N por composición.
+     Colores: verde esmeralda (vida/sobrevivencia) sobre negro absoluto.
+═════════════════════════════════════════════════════════════════════ -->
+<div class="card">
+<div class="icon-wrap dark-bg">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="emerald2" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#00E676"/>
+<stop offset="100%" stop-color="#00897B"/>
+</linearGradient>
+<radialGradient id="nodeGlow2" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="#00E676" stop-opacity="0.4"/>
+<stop offset="100%" stop-color="#00E676" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<!-- Arcos de señal expandiéndose desde el centro -->
+<path d="M 40 100 Q 100 40 160 100" stroke="#00E676" stroke-width="3" fill="none" opacity="0.15" stroke-linecap="round"/>
+<path d="M 52 100 Q 100 55 148 100" stroke="#00E676" stroke-width="3.5" fill="none" opacity="0.3" stroke-linecap="round"/>
+<path d="M 64 100 Q 100 70 136 100" stroke="#00E676" stroke-width="4" fill="none" opacity="0.5" stroke-linecap="round"/>
+<!-- Nodo central: diamante angular (el dispositivo) -->
+<circle cx="100" cy="100" r="50" fill="url(#nodeGlow2)"/>
+<!-- N formada por el espacio entre los arcos y el nodo -->
+<!-- Barra izquierda -->
+<path d="M 72 135 L 72 65" stroke="url(#emerald2)" stroke-width="10" stroke-linecap="round"/>
+<!-- Barra derecha -->
+<path d="M 128 135 L 128 65" stroke="url(#emerald2)" stroke-width="10" stroke-linecap="round"/>
+<!-- Conector diagonal -->
+<path d="M 77 70 L 123 130" stroke="url(#emerald2)" stroke-width="10" stroke-linecap="round"/>
+<!-- Punto central brillante: el dispositivo encendido -->
+<circle cx="100" cy="100" r="8" fill="#B9F6CA"/>
+<circle cx="100" cy="100" r="4" fill="#FFFFFF"/>
+</svg>
+</div>
+<h2>2 — Isolated Node</h2>
+<p>Un nodo brillando solo en la oscuridad. Arcos de señal que se expanden. Tú eres la red cuando no hay red. Verde esmeralda: vida, resistencia, "sigues adelante".</p>
+<div class="swatches">
+<div class="sw" style="background:#00E676"></div>
+<div class="sw" style="background:#00897B"></div>
+<div class="sw" style="background:#B9F6CA"></div>
+<div class="sw" style="background:#05070D"></div>
+</div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════════════
+     CONCEPTO 3: THE PARACORD — N de cuerda de supervivencia
+     La N tejida como paracord, la herramienta universal de 
+     supervivencia. Gruesa, texturada, real. Evoca preparación
+     tangible, algo que puedes tocar y usar.
+     Colores: naranja de emergencia sobre verde militar oscuro.
+═════════════════════════════════════════════════════════════════════ -->
+<div class="card">
+<div class="icon-wrap" style="background:#0D1B14">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="cord3" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#FF6D00"/>
+<stop offset="50%" stop-color="#FF3D00"/>
+<stop offset="100%" stop-color="#D84315"/>
+</linearGradient>
+<linearGradient id="weave3" x1="0%" y1="0%" x2="0%" y2="100%">
+<stop offset="0%" stop-color="#FF6D00"/>
+<stop offset="100%" stop-color="#BF360C"/>
+</linearGradient>
+</defs>
+<!-- Cuerda izquierda: con patrón de trenza -->
+<path d="M 55 155 L 55 50" stroke="url(#cord3)" stroke-width="20" stroke-linecap="round" fill="none"/>
+<!-- Marcas de trenza en cuerda izq -->
+<line x1="55" y1="70" x2="62" y2="80" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="55" y1="90" x2="48" y2="100" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="55" y1="110" x2="62" y2="120" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="55" y1="130" x2="48" y2="140" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<!-- Cuerda derecha -->
+<path d="M 145 155 L 145 50" stroke="url(#cord3)" stroke-width="20" stroke-linecap="round" fill="none"/>
+<line x1="145" y1="70" x2="138" y2="80" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="145" y1="90" x2="152" y2="100" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="145" y1="110" x2="138" y2="120" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<line x1="145" y1="130" x2="152" y2="140" stroke="#BF360C" stroke-width="2.5" opacity="0.6"/>
+<!-- Diagonal tejida: el cruzamiento de la cuerda -->
+<path d="M 65 65 L 135 145" stroke="url(#weave3)" stroke-width="18" stroke-linecap="round" fill="none"/>
+<!-- Punto de cruce: nudo visible -->
+<circle cx="100" cy="105" r="12" fill="#FF6D00"/>
+<circle cx="100" cy="105" r="7" fill="#FFAB40"/>
+<circle cx="100" cy="105" r="3" fill="#FFF3E0"/>
+</svg>
+</div>
+<h2>3 — Paracord</h2>
+<p>La N tejida como cuerda paracord: la herramienta universal del que se prepara. Tienes algo real entre manos. Naranja de emergencia sobre verde táctico.</p>
+<div class="swatches">
+<div class="sw" style="background:#FF6D00"></div>
+<div class="sw" style="background:#FF3D00"></div>
+<div class="sw" style="background:#FFAB40"></div>
+<div class="sw" style="background:#0D1B14"></div>
+</div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════════════
+     CONCEPTO 4: THE DAWN — La N como horizonte amaneciendo
+     La N formada por montañas/terreno con un sol naciendo detrás.
+     El amanecer = sobreviviste la noche. La luz vuelve.
+     Colores: dorado-rosado del amanecer sobre azul medianoche.
+═════════════════════════════════════════════════════════════════════ -->
+<div class="card">
+<div class="icon-wrap dark-bg">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="sky4" x1="0%" y1="0%" x2="0%" y2="100%">
+<stop offset="0%" stop-color="#0D47A1"/>
+<stop offset="50%" stop-color="#E65100"/>
+<stop offset="100%" stop-color="#FFAB00"/>
+</linearGradient>
+<radialGradient id="sun4" cx="50%" cy="100%" r="60%">
+<stop offset="0%" stop-color="#FFEB3B"/>
+<stop offset="50%" stop-color="#FF9800"/>
+<stop offset="100%" stop-color="#FF6F00" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<!-- Cielo/amanecer -->
+<rect x="0" y="0" width="200" height="200" rx="44" fill="#05070D"/>
+<!-- Sol naciendo detrás de las montañas -->
+<circle cx="100" cy="130" r="70" fill="url(#sun4)" opacity="0.5"/>
+<!-- Montaña izquierda (pilar N izquierdo) -->
+<path d="M 30 165 L 65 70 L 80 100 L 80 165 Z" fill="#0A1929" stroke="#FF9800" stroke-width="2" stroke-linejoin="round"/>
+<!-- Montaña derecha (pilar N derecho) -->
+<path d="M 120 165 L 120 100 L 135 70 L 170 165 Z" fill="#0A1929" stroke="#FF9800" stroke-width="2" stroke-linejoin="round"/>
+<!-- Valle diagonal: la luz del amanecer entre las montañas -->
+<path d="M 65 70 L 135 70 L 120 100 L 80 100 Z" fill="#0A1929" stroke="#FF9800" stroke-width="2" stroke-linejoin="round"/>
+<!-- Sol brillando en el centro del valle -->
+<circle cx="100" cy="78" r="10" fill="#FFEB3B"/>
+<circle cx="100" cy="78" r="6" fill="#FFFFFF" opacity="0.9"/>
+<!-- Rayos del amanecer -->
+<line x1="100" y1="60" x2="100" y2="45" stroke="#FF9800" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+<line x1="75" y1="65" x2="65" y2="55" stroke="#FF9800" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+<line x1="125" y1="65" x2="135" y2="55" stroke="#FF9800" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+</svg>
+</div>
+<h2>4 — The Dawn</h2>
+<p>Dos montañas con un sol naciendo entre ellas forman la N. El amanecer: sobreviviste la noche. La luz vuelve. Dorado cálido sobre medianoche profundo.</p>
+<div class="swatches">
+<div class="sw" style="background:#FFEB3B"></div>
+<div class="sw" style="background:#FF9800"></div>
+<div class="sw" style="background:#FF6F00"></div>
+<div class="sw" style="background:#0A1929"></div>
+<div class="sw" style="background:#05070D"></div>
+</div>
+</div>
+
+</div>
+
+</body>
+</html>

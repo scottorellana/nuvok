@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/depot/starter_pack.dart';
+import 'package:nuvok/modules/depot/starter_pack.dart';
 
 void main() {
   test('paquetes de contenido cubren áreas clave y son descargables', () {

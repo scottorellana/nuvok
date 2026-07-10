@@ -3,6 +3,8 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 KEYSTORE="$HOME/.prepper-pad/signing/prepper-pad-release.p12"
+# Keep the historical signing identity so installed Prepper Pad builds can
+# upgrade to Nuvok without Android rejecting the package signature.
 KEY_ALIAS="prepper-pad-release"
 KEYCHAIN_SERVICE="com.prepperpad.android.release-signing"
 
@@ -20,15 +22,15 @@ if [[ -z "$STORE_PASSWORD" || -z "$KEY_PASSWORD" ]]; then
 fi
 
 cleanup() {
-  unset PREPPER_PAD_KEYSTORE PREPPER_PAD_KEY_ALIAS PREPPER_PAD_STORE_PASSWORD PREPPER_PAD_KEY_PASSWORD
+  unset NUVOK_KEYSTORE NUVOK_KEY_ALIAS NUVOK_STORE_PASSWORD NUVOK_KEY_PASSWORD
   unset STORE_PASSWORD KEY_PASSWORD
 }
 trap cleanup EXIT
 
-export PREPPER_PAD_KEYSTORE="$KEYSTORE"
-export PREPPER_PAD_KEY_ALIAS="$KEY_ALIAS"
-export PREPPER_PAD_STORE_PASSWORD="$STORE_PASSWORD"
-export PREPPER_PAD_KEY_PASSWORD="$KEY_PASSWORD"
+export NUVOK_KEYSTORE="$KEYSTORE"
+export NUVOK_KEY_ALIAS="$KEY_ALIAS"
+export NUVOK_STORE_PASSWORD="$STORE_PASSWORD"
+export NUVOK_KEY_PASSWORD="$KEY_PASSWORD"
 
 cd "$ROOT"
 flutter build apk --release --android-skip-build-dependency-validation

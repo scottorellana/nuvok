@@ -52,14 +52,14 @@ class MeshNotifications {
       final android = _plugin.resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>();
       await android?.createNotificationChannel(const AndroidNotificationChannel(
-        'prepper_sos',
+        'Nuvok_sos',
         'Emergencia (SOS)',
-        description: 'Alertas de SOS de Prepper Pads cercanos',
+        description: 'Alertas de SOS de Nuvoks cercanos',
         importance: Importance.max,
         playSound: true,
       ));
       await android?.createNotificationChannel(const AndroidNotificationChannel(
-        'prepper_chat',
+        'Nuvok_chat',
         'Mensajes',
         description: 'Mensajes del mesh sin internet',
         importance: Importance.high,
@@ -93,7 +93,7 @@ class MeshNotifications {
         body,
         NotificationDetails(
           android: AndroidNotificationDetails(
-            isSos ? 'prepper_sos' : 'prepper_chat',
+            isSos ? 'Nuvok_sos' : 'Nuvok_chat',
             isSos ? 'Emergencia (SOS)' : 'Mensajes',
             importance: isSos ? Importance.max : Importance.high,
             priority: isSos ? Priority.max : Priority.high,

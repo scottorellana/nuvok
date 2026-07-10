@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/lan_transport.dart';
-import 'package:prepper_pad/modules/mesh/mesh_channel.dart';
-import 'package:prepper_pad/modules/mesh/mesh_identity.dart';
-import 'package:prepper_pad/modules/mesh/mesh_service.dart';
+import 'package:nuvok/modules/mesh/lan_transport.dart';
+import 'package:nuvok/modules/mesh/mesh_channel.dart';
+import 'package:nuvok/modules/mesh/mesh_identity.dart';
+import 'package:nuvok/modules/mesh/mesh_service.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

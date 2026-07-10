@@ -51,7 +51,7 @@ class _Zstd {
 
 DynamicLibrary _openZstd() {
   if (Platform.isIOS) {
-    // Shipped as a dynamic framework (prepper_native pod). Dynamic — not
+    // Shipped as a dynamic framework (Nuvok_native pod). Dynamic — not
     // static — because FFI resolves symbols at runtime and a static lib
     // would be dead-stripped by the linker.
     return DynamicLibrary.open('zstd.framework/zstd');
@@ -65,7 +65,7 @@ DynamicLibrary _openZstd() {
       // the freshly built dylib (cwd is the repo root during tests).
       'native/out/macos/libzstd.1.dylib',
       '${Directory.current.path}/native/out/macos/libzstd.1.dylib',
-      '${Platform.environment['HOME']}/prepper-pad/native/out/macos/libzstd.1.dylib',
+      '${Platform.environment['HOME']}/Nuvok-pad/native/out/macos/libzstd.1.dylib',
       '${Platform.environment['HOME']}/development/zstd/lib/libzstd.dylib',
       'libzstd.1.dylib',
     ];
@@ -184,7 +184,7 @@ class _Lzma {
 
 DynamicLibrary _openLzma() {
   if (Platform.isIOS) {
-    // Apple ships liblzma in the OS; the prepper_native pod links it so the
+    // Apple ships liblzma in the OS; the Nuvok_native pod links it so the
     // symbols are already in the process image.
     try {
       return DynamicLibrary.process();

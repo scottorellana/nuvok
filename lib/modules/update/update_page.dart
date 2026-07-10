@@ -4,7 +4,7 @@
 // action. Lives in Depósito → App, next to the other "get more" tabs.
 import 'package:flutter/material.dart';
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import 'update_service.dart';
 import '../../core/locale_service.dart';
 
@@ -88,7 +88,7 @@ class _UpdatePageState extends State<UpdatePage> {
   /// host — while letting every device update from one computer on the LAN.
   Future<void> _configureServer() async {
     final current =
-        PrepperLibrary.instance.settings['localMapServer'] as String?;
+        NuvokLibrary.instance.settings['localMapServer'] as String?;
     final ctrl = TextEditingController(text: current ?? 'http://');
     final serverDialogWidth =
         (MediaQuery.of(context).size.width - 48).clamp(280.0, 480.0).toDouble();
@@ -102,7 +102,7 @@ class _UpdatePageState extends State<UpdatePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'Dirección del Prepper Pad servidor en tu red (la misma de '
+                'Dirección del Nuvok servidor en tu red (la misma de '
                 'los mapas). Todos los aparatos en esa WiFi se actualizan '
                 'desde ahí, sin internet.',
                 style: TextStyle(fontSize: 13, color: Colors.grey),
@@ -145,7 +145,7 @@ class _UpdatePageState extends State<UpdatePage> {
               style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 4),
           Text(
-            'Prepper Pad revisa si hay una versión nueva cuando tienes '
+            'Nuvok revisa si hay una versión nueva cuando tienes '
             'internet; funciona igual sin conexión. Nunca se actualiza '
             'solo — tú decides cuándo instalar.',
             style: TextStyle(color: Theme.of(context).hintColor),
@@ -229,7 +229,7 @@ class _UpdatePageState extends State<UpdatePage> {
             Text(
               noSource
                   ? 'Aún no hay servidor de actualizaciones configurado. '
-                      'Apunta la app a tu computadora con Prepper Pad en la '
+                      'Apunta la app a tu computadora con Nuvok en la '
                       'misma WiFi (sin internet).'
                   : 'No se pudo comprobar (¿misma WiFi que el servidor?). '
                       'Se sigue usando la versión instalada normalmente.',

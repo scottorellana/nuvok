@@ -3,8 +3,8 @@
 import subprocess, sys, os, time
 
 VENV = os.path.expanduser("~/.hermes/hermes-agent/venv/bin/python3")
-SCRIPT = os.path.expanduser("~/prepper-pad/scripts/generate_guide_image.py")
-OUT_DIR = os.path.expanduser("~/prepper-pad/assets/emergency_guides/images")
+SCRIPT = os.path.expanduser("~/Nuvok-pad/scripts/generate_guide_image.py")
+OUT_DIR = os.path.expanduser("~/Nuvok-pad/assets/emergency_guides/images")
 
 # Each guide: (filename, prompt)
 # Prompts designed to be photorealistic, educational, and safe:

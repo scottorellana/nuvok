@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
-const _alarmChannel = MethodChannel('prepper/sos_alarm');
+const _alarmChannel = MethodChannel('nuvok/sos_alarm');
 
 /// Controls the SOS alarm lifecycle.
 class SosAlarmController extends ChangeNotifier {
@@ -182,8 +182,7 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                 children: [
                   Icon(Icons.warning_rounded,
                       size: 120,
-                      color:
-                          Colors.white.withValues(alpha: 0.5 + blink * 0.5)),
+                      color: Colors.white.withValues(alpha: 0.5 + blink * 0.5)),
                   const SizedBox(height: 24),
                   const Text(
                     '⚠ SOS RECIBIDO ⚠',
@@ -198,8 +197,7 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                   if (_controller.alarmFromName != null)
                     Text(
                       'De: ${_controller.alarmFromName}',
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 22),
+                      style: const TextStyle(color: Colors.white, fontSize: 22),
                     ),
                   if (_controller.alarmNote != null &&
                       _controller.alarmNote!.isNotEmpty)
@@ -213,8 +211,8 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                       child: Text(
                         _controller.alarmNote!,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            color: Colors.white, fontSize: 18),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),
                   const SizedBox(height: 40),
@@ -224,8 +222,7 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                     child: Semantics(
                       button: true,
                       enabled: true,
-                      label:
-                          'Entendido: silenciar la alarma SOS',
+                      label: 'Entendido: silenciar la alarma SOS',
                       child: FilledButton(
                         style: FilledButton.styleFrom(
                           backgroundColor: Colors.white,

@@ -10,7 +10,7 @@ import 'package:vector_tile_renderer/vector_tile_renderer.dart' as vtr;
 // is not present (e.g. on CI).
 void main() {
   final home = Platform.environment['HOME']!;
-  final path = '$home/PrepperPad/maps/honduras.pmtiles';
+  final path = '$home/Nuvok/maps/honduras.pmtiles';
 
   (int, int) tileXY(double lat, double lon, int z) {
     final n = 1 << z;

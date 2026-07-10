@@ -9,7 +9,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import 'location_service.dart';
 
 /// A single track point with timestamp.
@@ -61,7 +61,7 @@ class GpxTrack {
   String toGpx() {
     final pts = points.map((p) => p.toGpx()).join('\n');
     return '''<?xml version="1.0" encoding="UTF-8"?>
-<gpx version="1.1" creator="Prepper Pad"
+<gpx version="1.1" creator="Nuvok"
   xmlns="http://www.topografix.com/GPX/1/1">
   <metadata>
     <name>$name</name>
@@ -164,7 +164,7 @@ class GpxRecorder {
 
   /// Save track to library as .gpx file.
   Future<File?> saveTrack(GpxTrack track) async {
-    final lib = PrepperLibrary.instance;
+    final lib = NuvokLibrary.instance;
     final gpxDir = Directory('${lib.root.path}/tracks');
     if (!await gpxDir.exists()) {
       await gpxDir.create(recursive: true);
@@ -178,7 +178,7 @@ class GpxRecorder {
 
   /// List all saved tracks.
   Future<List<File>> listSavedTracks() async {
-    final lib = PrepperLibrary.instance;
+    final lib = NuvokLibrary.instance;
     final gpxDir = Directory('${lib.root.path}/tracks');
     if (!await gpxDir.exists()) return [];
 

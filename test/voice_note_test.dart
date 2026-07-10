@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/mesh_channel.dart';
-import 'package:prepper_pad/modules/mesh/mesh_envelope.dart';
-import 'package:prepper_pad/modules/mesh/voice_note.dart';
+import 'package:nuvok/modules/mesh/mesh_channel.dart';
+import 'package:nuvok/modules/mesh/mesh_envelope.dart';
+import 'package:nuvok/modules/mesh/voice_note.dart';
 
 void main() {
   test('encode/decode de payload de voz hace round-trip', () {

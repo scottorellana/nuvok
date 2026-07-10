@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/guide_voice.dart';
-import 'package:prepper_pad/modules/emergency/medical_diagrams.dart';
+import 'package:nuvok/modules/emergency/guide_voice.dart';
+import 'package:nuvok/modules/emergency/medical_diagrams.dart';
 
 void main() {
   test('ttsLocaleFor cubre los 7 idiomas de la app', () {

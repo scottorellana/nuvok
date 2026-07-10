@@ -1,9 +1,9 @@
-// WiFi Direct / Apple Multipeer transport for Prepper Mesh.
+// WiFi Direct / Apple Multipeer transport for Nuvok Link.
 //
 // Where the LAN transport needs an existing WiFi network (router or hotspot)
 // and BLE is short-range/low-bandwidth, WiFi Direct gives device-to-device
 // WiFi at full bandwidth with no infrastructure at all — the right path for
-// moving big map tiles or media offline between two nearby Prepper Pads.
+// moving big map tiles or media offline between two nearby Nuvoks.
 //
 // Platform coverage:
 //   • Android — [nearby_connections] (Google Nearby Connections over WiFi
@@ -81,7 +81,7 @@ class NearbyConnectionsLink implements WifiDirectLink {
         userName,
         _kStrategy,
         onConnectionInitiated: (id, info) {
-          // Accept any Prepper Pad; the network name above is the gate.
+          // Accept any Nuvok; the network name above is the gate.
           Nearby().acceptConnection(
             id,
             onPayLoadRecieved: (eid, payload) {
@@ -221,7 +221,7 @@ class WifiDirectTransport implements MeshTransport, HealthReporting {
       _refreshHealth();
     });
     _payloadSub = _link.onPayload.listen(_data.add);
-    final ok = await _link.start('prepper-pad');
+    final ok = await _link.start('Nuvok-pad');
     if (!ok) {
       _running = false;
       health.value =

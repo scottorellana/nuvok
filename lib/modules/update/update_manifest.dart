@@ -1,5 +1,5 @@
 // The update manifest is a tiny public JSON file (no auth, no secrets) that
-// tells every installed copy of Prepper Pad what the latest version is and
+// tells every installed copy of Nuvok what the latest version is and
 // where to fetch it — independent of the private source repo. A private repo
 // cannot serve release binaries to arbitrary devices without embedding a
 // token in the shipped app, which would leak repo access to anyone who
@@ -10,8 +10,8 @@
 //   "version": "0.2.1",
 //   "notes": "Qué cambió, en una o dos líneas.",
 //   "platforms": {
-//     "macos":   {"url": "https://.../PrepperPad-0.2.1.dmg", "sha256": "...", "sizeBytes": 33500000},
-//     "android": {"url": "https://.../prepper-pad-0.2.1.apk", "sha256": "...", "sizeBytes": 66000000}
+//     "macos":   {"url": "https://.../Nuvok-0.2.1.dmg", "sha256": "...", "sizeBytes": 33500000},
+//     "android": {"url": "https://.../Nuvok-pad-0.2.1.apk", "sha256": "...", "sizeBytes": 66000000}
 //   }
 // }
 class UpdatePlatformAsset {

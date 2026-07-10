@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:markdown/markdown.dart' as md;
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import '../../core/locale_service.dart';
 
 class NotesPage extends StatefulWidget {
@@ -38,7 +38,7 @@ class _NotesPageState extends State<NotesPage> {
   }
 
   void _refresh() {
-    setState(() => _notes = PrepperLibrary.instance.listNotes());
+    setState(() => _notes = NuvokLibrary.instance.listNotes());
   }
 
   Future<void> _openNote(File f) async {
@@ -66,7 +66,7 @@ class _NotesPageState extends State<NotesPage> {
   }
 
   Future<void> _newNote() async {
-    final dir = PrepperLibrary.instance.notesDir;
+    final dir = NuvokLibrary.instance.notesDir;
     var i = 1;
     File f;
     do {

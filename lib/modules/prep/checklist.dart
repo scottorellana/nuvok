@@ -10,7 +10,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 
 class ChecklistItem {
   const ChecklistItem({
@@ -207,8 +207,8 @@ const checklistItems = [
   ChecklistItem(
       id: 'comm_2',
       category: 'comms',
-      textEs: 'Prepper Pad cargado y actualizado ✅',
-      textEn: 'Prepper Pad loaded and updated ✅'),
+      textEs: 'Nuvok cargado y actualizado ✅',
+      textEn: 'Nuvok loaded and updated ✅'),
   ChecklistItem(
       id: 'comm_3',
       category: 'comms',
@@ -319,7 +319,7 @@ class ChecklistProgress {
   final String? _rootDir;
 
   File get _file {
-    final root = _rootDir ?? PrepperLibrary.instance.root.path;
+    final root = _rootDir ?? NuvokLibrary.instance.root.path;
     return File('$root/checklist.json');
   }
 

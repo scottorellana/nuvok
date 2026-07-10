@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/tools/flashlight.dart';
+import 'package:nuvok/modules/tools/flashlight.dart';
 
 const _torchChannel = MethodChannel('com.svprdga.torchlight/main');
 

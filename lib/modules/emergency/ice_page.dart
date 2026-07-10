@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../core/locale_service.dart';
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import '../mesh/mesh_channel.dart';
 import '../mesh/mesh_service.dart';
 import 'ice_profile.dart';
@@ -19,7 +19,7 @@ class IcePage extends StatefulWidget {
 
 class _IcePageState extends State<IcePage> {
   late final IceStore _store = widget.storeOverride ??
-      IceStore('${PrepperLibrary.instance.root.path}/emergency');
+      IceStore('${NuvokLibrary.instance.root.path}/emergency');
 
   late final _name = TextEditingController(text: _store.profile?.name ?? '');
   late final _blood =

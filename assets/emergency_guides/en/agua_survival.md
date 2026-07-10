@@ -1,6 +1,6 @@
 ---
 title: Safe Water
-keywords: [water, safe, purify, boil, filter, dehydration]
+keywords: [water, drinking water, purify water, safe, purify, boil, filter, dehydration]
 priority: 1
 mode: [bosque, desierto, montana, rio]
 category: supervivencia

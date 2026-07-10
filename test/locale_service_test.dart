@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/locale_service.dart';
+import 'package:nuvok/core/locale_service.dart';
 
 // El idioma es infraestructura de seguridad aquí: una app de emergencia que
 // el usuario no entiende es una app rota. Estos tests fijan la detección del

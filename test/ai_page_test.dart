@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/ai/ai_page.dart';
-import 'package:prepper_pad/modules/ai/ai_engine.dart';
+import 'package:nuvok/modules/ai/ai_page.dart';
+import 'package:nuvok/modules/ai/ai_engine.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -65,7 +65,7 @@ class _PpLlmBindings {
   static DynamicLibrary openLibrary({String? override}) {
     if (override != null) return DynamicLibrary.open(override);
     if (Platform.isIOS) {
-      // Shipped inside ppllm.framework via the prepper_native pod.
+      // Shipped inside ppllm.framework via the Nuvok_native pod.
       return DynamicLibrary.open('ppllm.framework/ppllm');
     }
     if (Platform.isMacOS) {
@@ -77,7 +77,7 @@ class _PpLlmBindings {
         '$exeDir/../Frameworks/libppllm.dylib',
         'native/out/macos/libppllm.dylib',
         '${Directory.current.path}/native/out/macos/libppllm.dylib',
-        '$home/prepper-pad/native/out/macos/libppllm.dylib',
+        '$home/Nuvok-pad/native/out/macos/libppllm.dylib',
       ]) {
         if (File(path).existsSync()) return DynamicLibrary.open(path);
       }

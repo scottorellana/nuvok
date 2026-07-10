@@ -1,0 +1,56 @@
+{
+  "1": [
+    "bosque_peligros",
+    "fracturas_inmovilizacion",
+    "parto_emergencia",
+    "recon_letrinas_saneamiento",
+    "rio_agua",
+    "tsunami"
+  ],
+  "1,2": [
+    "alimentacion_supervivencia",
+    "desierto_calor_refugio",
+    "primeros_auxilios_extremos",
+    "quemaduras",
+    "recon_agua_comunitaria"
+  ],
+  "1,2,3": [
+    "convulsiones",
+    "hemorragia_severa",
+    "mar_peligros",
+    "rcp_nino_bebe",
+    "senas_rescate"
+  ],
+  "1,3": [
+    "abrigo_refugio",
+    "agua_survival",
+    "ciudad_peligros",
+    "mordeduras_picaduras",
+    "nudos_supervivencia",
+    "pesca_trampas_supervivencia",
+    "triaje_multivictima"
+  ],
+  "2": [
+    "cruce_rios",
+    "fuego_supervivencia",
+    "navegacion"
+  ],
+  "2,3": [
+    "atragantamiento",
+    "bosque_agua",
+    "hipotermia_golpe_calor",
+    "infarto_acv",
+    "intoxicaciones",
+    "montana_peligros",
+    "pantano_peligros",
+    "terremoto"
+  ],
+  "3": [
+    "artico_peligros",
+    "desierto_agua",
+    "pantano_moverse",
+    "recon_conservar_alimentos",
+    "recon_energia_solar",
+    "shock"
+  ]
+}

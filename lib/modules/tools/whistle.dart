@@ -93,7 +93,7 @@ class WhistleGenerator {
 /// tool.
 class WhistleToneFile {
   static Future<File> write(double frequency, {int durationMs = 2000}) async {
-    final dir = await Directory.systemTemp.createTemp('prepper_pad_whistle_');
+    final dir = await Directory.systemTemp.createTemp('nuvok_whistle_');
     final path = '${dir.path}/whistle_${frequency.round()}hz.wav';
     final file = File(path);
     await file.writeAsBytes(

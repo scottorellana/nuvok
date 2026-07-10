@@ -12,18 +12,18 @@ import UIKit
 
   func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
-    // Prepper Mesh over BLE: dual-role (advertise + scan) bridge, mirror of
+    // Nuvok Link over BLE: dual-role (advertise + scan) bridge, mirror of
     // the Android BleMeshBridge — this is what lets an iPhone find another
-    // Prepper Pad with zero infrastructure.
+    // Nuvok with zero infrastructure.
     if let registrar =
-        engineBridge.pluginRegistry.registrar(forPlugin: "PrepperBleMesh") {
+        engineBridge.pluginRegistry.registrar(forPlugin: "NuvokBleMesh") {
       BleMeshBridge.register(messenger: registrar.messenger())
     }
     // Compass over CoreLocation: mirror of the Android CompassStreamHandler,
     // same channel protocol, so the Dart CompassService has no platform
     // branches.
     if let registrar =
-        engineBridge.pluginRegistry.registrar(forPlugin: "PrepperCompass") {
+        engineBridge.pluginRegistry.registrar(forPlugin: "NuvokCompass") {
       CompassBridge.register(messenger: registrar.messenger())
     }
   }

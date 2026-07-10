@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/lan_transport.dart';
+import 'package:nuvok/modules/mesh/lan_transport.dart';
 
 // Real-socket integration test for the LAN transport: two transports on the
 // same host over loopback UDP. This is what actually proves "a datagram sent

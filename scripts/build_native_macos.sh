@@ -1,5 +1,5 @@
 #!/bin/bash
-# Builds the native engines Prepper Pad embeds on macOS:
+# Builds the native engines Nuvok embeds on macOS:
 #   - libzstd.1.dylib  (ZIM cluster decompression)
 #   - llama-server     (local AI, static build with embedded Metal shaders)
 # Outputs to native/out/macos/. Requires Xcode and cmake.

@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_map_tiles_pmtiles/vector_map_tiles_pmtiles.dart';
-import 'package:prepper_pad/modules/maps/maps_page.dart';
+import 'package:nuvok/modules/maps/maps_page.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart' as vtr;
 
 // Renders one Tegucigalpa tile to a PNG on disk so we can see exactly what
@@ -13,7 +13,7 @@ import 'package:vector_tile_renderer/vector_tile_renderer.dart' as vtr;
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final home = Platform.environment['HOME']!;
-  final path = '$home/PrepperPad/maps/honduras.pmtiles';
+  final path = '$home/Nuvok/maps/honduras.pmtiles';
 
   test('renderiza un tile z12 de Tegucigalpa a PNG', () async {
     if (!File(path).existsSync()) {

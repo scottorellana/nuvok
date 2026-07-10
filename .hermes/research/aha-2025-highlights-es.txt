@@ -1,0 +1,2955 @@
+=== PAGE 1 ===
+ASPECTOS DESTACADOS
+DE LAS GUÍAS DE LA AMERICAN HEART ASSOCIATION DE 2025
+PARA RCP Y ACE
+
+
+=== PAGE 2 ===
+eccguidelines.heart.org	
+ 1
+Aspectos destacados 
+de 2025
+Aspectos destacados de 2025 
+American Heart Association Guidelines 
+for Cardiopulmonary Resuscitation 
+and Emergency Cardiovascular Care
+La American Heart Association (AHA) agradece a las siguientes personas por su colaboración en la elaboración de esta publicación:  
+Ian R. Drennan, ACP, PhD; Stephen M. Schexnayder, MD; Jason Bartos, MD, PhD; Marina Del Rios, MD; Melissa Mahgoub, PhD; 
+Ashish R. Panchal, MD, PhD; Amber J. Rodriguez, PhD; Julie Sell, MSN, RN; Comilla Sasson, MD, PhD; Jaylen Wright, PhD; y el 
+equipo de proyecto de los aspectos destacados de las guías de la AHA. Revisión de la versión en español: Fabián Gelpi, MD
+IntroduccIón
+En estos Aspectos destacados se resumen los principales aspectos y cambios de las 2025 AHA Guidelines for Cardiopulmonary Resuscitation 
+(CPR) and Emergency Cardiovascular Care (ECC).1 Las Guías de 2025 son una revisión exhaustiva de las guías de la AHA para el soporte vital 
+para adultos, el soporte vital pediátrico y neonatal; la ciencia de la educación en reanimación; los sistemas de atención, y temas de ética en 
+reanimación. Se han desarrollado con el objetivo de que los profesionales encargados de la reanimación y los instructores de la AHA se centren 
+en los avances científicos en materia de reanimación y en las recomendaciones de las guías más importantes o controvertidas, o aquellas que 
+sean susceptibles de modificar la práctica o el entrenamiento de la reanimación. A continuación se exponen los fundamentos que justifican 
+cada una de estas recomendaciones.
+Dado que esta publicación es un resumen, no se hace referencia a los estudios publicados en los que se basa, y tampoco se incluye las 
+clases de recomendaciones ni los niveles de evidencia. Para obtener información más detallada y referencias, lea las Guías de 2025, incluido 
+el resumen ejecutivo, publicado en Circulation en octubre de 2025, así como el resumen detallado sobre los avances científicos en materia 
+de reanimación elaborado por el International Liaison Committee on Resuscitation (ILCOR) en el 2025 ILCOR Consensus on Science With 
+Treatment Recommendations,2 publicado simultáneamente en Circulation y Resuscitation en octubre de 2025. Los métodos utilizados por el 
+ILCOR para realizar la evaluación de la evidencia y por la AHA para traducir estas evaluaciones en guías de reanimación, así como para evaluar 
+temas no considerados por el ILCOR, se han publicado en detalle.
+En las Guías de 2025 se ha utilizado la versión más reciente de las definiciones de la AHA sobre cada clase de recomendación y nivel de 
+evidencia (Figura 1). En conjunto, se dan 760 recomendaciones específicas para el soporte vital en adultos, soporte vital pediátrico y neonatal; la 
+ciencia de la educación en reanimación; y los sistemas de atención. De estas recomendaciones, 233 son de clase 1 y 451 de clase 2 (Figura 2). 
+Además, 76 recomendaciones son de clase 3, incluidas 55 por falta de evidencia de beneficio y 21 por evidencia de daño. 
+	
+1.
+Del Rios M, Bartos JA, Panchal AR, et al. Part 1: executive summary: 2025 American Heart Association Guidelines for Cardiopulmonary Resuscitation and Emergency 
+Cardiovascular Care. Circulation. 2025;152(suppl 2):In press.
+2.	
+International Liaison Committee on Resuscitation. 2025 ILCOR Consensus on Science With Treatment Recommendations. Circulation. 2025;152(suppl 1):In press.
+© 2025 American Heart Association     JN-1582
+
+
+=== PAGE 3 ===
+2	
+American Heart Association
+Figura 1. Aplicación de la clase de recomendación y el nivel de evidencia de ACC/AHA a estrategias clínicas, intervenciones, tratamientos o 
+pruebas diagnósticas en la atención al paciente* (actualizado en diciembre de 2024).
+CLASE (INTENSIDAD) DE RECOMENDACIÓN
+CLASE 1 (ALTA) 
+Beneficio >>> Riesgo
+Frases sugeridas para redactar las recomendaciones:
+• Se recomienda
+• Se indica/es útil/eficaz/beneficioso
+• Se debe realizar/aplicar/otro
+• Frases comparativas de eficacia†:
+– El tratamiento/la estrategia A se recomienda/se indica 
+preferentemente antes que el tratamiento B
+– Se debe elegir el tratamiento A antes que el tratamiento B 
+CLASE 2a (MODERADA)	
+Beneficio >> Riesgo
+Frases sugeridas para redactar las recomendaciones:
+• Es razonable
+• Puede ser útil/eficaz/beneficioso
+• Frases comparativas de eficacia†:
+– El tratamiento/la estrategia A probablemente se recomienda/se indica 
+preferentemente antes que el tratamiento B
+– Es razonable seleccionar el tratamiento A antes que el tratamiento B
+CLASE 2b (BAJA) 
+Beneficio ≥ Riesgo
+Frases sugeridas para redactar las recomendaciones:
+• Puede/podría ser razonable
+• Puede/podría considerarse
+• No se ha determinado o se desconoce/es poco clara o incierta la 
+utilidad/eficacia
+CLASE 3: sin beneficio (MODERADA)	
+(Generalmente, use solo NDE A o B)
+Beneficio = Riesgo 
+Frases sugeridas para redactar las recomendaciones:
+• No se recomienda
+• No se indica/no es útil/eficaz/beneficioso
+• No debe realizarse/aplicarse/otro
+CLASE 3: perjuicio (ALTA) 
+Riesgo > Beneficio
+Frases sugeridas para redactar las recomendaciones:
+• Potencialmente perjudicial
+• Causa daños
+• Se asocia con una mayor morbilidad/mortalidad
+• No debe realizarse/aplicarse/otro
+NIVEL (CALIDAD) DE EVIDENCIA‡
+NIVEL A
+• Evidencia de alta calidad‡ obtenida de más de 1 ECA
+• Metaanálisis de varios ECA de alta calidad
+• Uno o más ECA corroborados por estudios de registro de alta calidad
+NIVEL B-A	
+(Aleatorizado)
+• Evidencia de calidad moderada‡ obtenida de 1 o varios ECA
+• Metaanálisis de varios ECA de calidad moderada
+NIVEL B-NA	
+(No aleatorizado)
+• Evidencia de calidad moderada‡ obtenida de 1 o más estudios no 
+aleatorizados, estudios observacionales o estudios de registro bien 
+diseñados y ejecutados
+• Metaanálisis de dichos estudios
+NIVEL C-DL	
+(Datos limitados)
+• Estudios observacionales o de registro aleatorizados o no aleatorizados 
+con limitaciones de diseño o ejecución
+• Metaanálisis de dichos estudios
+• Estudios fisiológicos o mecanicistas en humanos
+NIVEL C-OE	
+(Opinión de expertos)
+• Consenso de opiniones de expertos basadas en la experiencia clínica
+La CDR y el NDE se determinan de forma independiente (cualquier CDR puede 
+relacionarse con cualquier NDE).
+Una recomendación con NDE C no implica que la recomendación sea débil. Muchas 
+cuestiones clínicas importantes que se abordan en las guías no se prestan a ensayos 
+clínicos. Aunque no haya ECA disponibles, podría existir un consenso clínico perfectamente 
+definido en torno a la utilidad o eficacia de una prueba o tratamiento particulares.
+*	 El resultado de la intervención se debe especificar (una mejor evolución clínica, una 
+mayor precisión del diagnóstico o un incremento en la información sobre el pronóstico).
+†	 En las recomendaciones comparativas de eficacia (solamente CDR 1 y 2a; NDE 
+A y B), los estudios que respaldan el uso de verbos comparativos deberían incluir 
+comparaciones directas de los tratamientos o estrategias objeto de evaluación.
+‡	 El método para evaluar la calidad evoluciona; esto incluye la aplicación de 
+herramientas de graduación de la evidencia estandarizadas, de uso generalizado 
+y, preferiblemente, validadas; y, en el caso de las revisiones sistemáticas, la 
+incorporación de un comité de revisión de evidencias.
+A, aleatorizado; CDR, clase de recomendación; DL, datos limitados; ECA, ensayo controlado 
+aleatorizado; NA, no aleatorizado; NDE, nivel de evidencia; y OE, opinión de expertos.
+
+
+=== PAGE 4 ===
+eccguidelines.heart.org	
+ 3
+Aspectos destacados de 2025
+Figura 2. Distribución de CDR y NDE como porcentaje del total de 760 recomendaciones en las 2025 AHA Guidelines for CPR and ECC.*
+Clases de recomendación
+Niveles de calidad de los datos
+3: Ningún beneficio 
+(moderada)
+7%
+2b (baja)
+31%
+1 (alta)
+31%
+2a (moderada)
+28%
+3: Perjuicio (alta)
+3%
+A
+1%
+C-EO
+27%
+C-LD
+38%
+B-NR
+23%
+B-R
+11%
+Abreviaturas: A, aleatorizado; CDR, clase de recomendación; DL, datos limitados; NA, no aleatorizado; NDE, nivel de evidencia; y OE, opinión de 
+expertos.
+*Los resultados son un porcentaje de 760 recomendaciones en las áreas de soporte vital básico y avanzado (SVA) para adultos, soporte vital básico 
+y avanzado pediátrico, soporte vital neonatal, atención posparo cardíaco, ciencia de la educación en reanimación, circunstancias especiales y 
+sistemas de atención.
+AcercA de lAs recomendAcIones
+El hecho de que solo 11 (1,4%) de estas 760 recomendaciones se basen en evidencia de nivel A (al menos 1 ensayo clínico aleatorizado [ECA] 
+de alta calidad, corroborado por un segundo ensayo o estudio de registro de alta calidad) da testimonio de los retos que sigue planteando la 
+realización de investigaciones de alta calidad en materia de reanimación. Se necesita un esfuerzo concertado a nivel nacional e internacional 
+para financiar y apoyar de otras formas la investigación sobre reanimación.
+Tanto el proceso de evaluación de la evidencia del ILCOR como el proceso de desarrollo de guías de la AHA se rigen por estrictas políticas 
+de divulgación diseñadas para que las relaciones con la industria y otros conflictos de intereses sean totalmente transparentes y para proteger 
+estos procesos de influencias indebidas. El personal de la AHA procesó las declaraciones de conflicto de intereses de todos los participantes. 
+Se exigió que todos los presidentes de los equipos de redacción de guías y al menos el 50% de los miembros de dichos grupos estuvieran 
+libres de cualquier conflicto de intereses, y todas las relaciones pertinentes se revelan en las respectivas publicaciones de las guías.
+
+
+=== PAGE 5 ===
+4	
+American Heart Association
+ÉtIcA
+Resumen de los aspectos 
+clave y los principales 
+cambios realizados 
+La RCP y la ACE suelen emplearse en 
+situaciones imprevistas y de alto riesgo. Los 
+profesionales y las organizaciones sanitarias 
+se enfrentan a decisiones difíciles tanto a 
+nivel individual como sistémico. Este capítulo 
+ofrece una visión general de los marcos 
+éticos que identifican las obligaciones 
+compartidas por los profesionales y las 
+organizaciones de atención médica y 
+ofrecen marcos a través de los cuales 
+pueden analizarse las decisiones difíciles. 
+Las guías anteriores se centraban en 
+recomendaciones sobre el tratamiento 
+ético (por ejemplo, recomendar pruebas 
+diagnósticas específicas para orientar el 
+pronóstico tras un paro cardíaco), pero no 
+ofrecían un análisis detallado de los principios 
+éticos o consideraciones subyacentes. 
+El capítulo sobre ética de las Guías de 2025:
+•	 proporciona un análisis narrativo centrado 
+específicamente en la ética, con la 
+profundidad suficiente para permitir a los 
+lectores desenvolverse en las cuestiones 
+que más se plantean en este ámbito
+•	 se fundamenta en múltiples marcos 
+éticos, en una abundante producción 
+académica y en el consenso de expertos 
+de este grupo de redacción, que respaldan 
+el imperativo de que los profesionales 
+de la salud y sus organizaciones 
+aborden activamente las inequidades 
+en los determinantes sociales de la 
+salud, eliminando así las desigualdades 
+resultantes en el paro cardíaco y la 
+atención cardiovascular de emergencia
+•	 revisa las numerosas complejidades de la 
+reanimación, incluida la incapacidad del 
+paciente para participar en las decisiones 
+y los retos que se plantean a lo largo del 
+continuo de edades, desde los recién 
+nacidos hasta los pacientes geriátricos, 
+y considera los efectos a largo plazo de la 
+RCP tanto en los pacientes como en las 
+familias y los profesionales de la salud
+El equipo de redacción realizó una serie 
+exhaustiva de revisiones bibliográficas 
+estructuradas. Todo el contenido de este 
+capítulo es nuevo en comparación con el 
+contenido de las guías anteriores, aunque 
+las consideraciones éticas subyacentes 
+coinciden en gran medida con las que 
+informaron las guías anteriores.
+Principios éticos fundamentales
+El principialismo es el marco ético médico 
+predominante. Es un proceso deliberativo 
+centrado en 4 principios morales de igual 
+importancia: beneficencia, no maleficencia, 
+respeto por la autonomía y justicia. Las 
+cuestiones éticas pueden evaluarse a través 
+de la lente de cada principio, ofreciendo 
+perspectivas que pueden sintetizarse en un 
+enfoque pluralista. La beneficencia guía las 
+decisiones que benefician a los pacientes. 
+La no maleficencia es la obligación ética de 
+no perjudicar a los pacientes. El respeto por la 
+autonomía se centra en honrar el derecho de 
+las personas a tomar decisiones informadas 
+sobre su propia atención. La justicia es 
+imparcialidad, concretamente el trato justo, 
+equitativo y adecuado de las personas.
+También son pertinentes otros 
+principios y marcos éticos, como la ética 
+narrativa, las estándares de atención en 
+situaciones de crisis, la ética de la virtud 
+y la dignidad. Estos ofrecen perspectivas 
+complementarias; a menudo, una 
+combinación de marcos y principios 
+puede abordar mejor un conflicto ético.
+Compromiso con la equidad en materia 
+de salud y reanimación
+El objetivo de la AHA de mejorar la salud 
+cardiovascular de toda la población no podrá 
+alcanzarse plenamente mientras persistan 
+las inequidades que generan desigualdades 
+en los resultados de la atención médica. 
+Las inequidades en materia de salud 
+surgen de los determinantes sociales que la 
+condicionan y, aunque son completamente 
+evitables, están profundamente arraigadas en 
+las estructuras sociales. Si no se reconocen 
+ni abordan las desigualdades, estas no se 
+resolverán y las inequidades sistémicas 
+permanecerán intactas. Por este motivo, 
+los profesionales y las organizaciones de 
+la salud deben abordar activamente las 
+inequidades estructurales vinculadas con 
+los determinantes sociales de la salud y 
+eliminar, de este modo, las desigualdades en 
+la atención cardiovascular de emergencia, 
+incluido el paro cardíaco.
+Toma de decisiones éticas 
+en reanimación
+La necesidad de tomar decisiones para 
+iniciar o suspender los esfuerzos de 
+reanimación, y si continuar o terminar estas 
+terapias después del inicio, es común. El 
+enfoque por defecto en muchos entornos 
+es iniciar el tratamiento. Es fundamental 
+documentar un plan de atención anticipada 
+si el paciente desea renunciar a estas 
+intervenciones en caso de urgencia. Las 
+órdenes de tratamiento de soporte vital 
+portátiles son la mejor manera de hacerlo. 
+Cuando los deseos de los pacientes no 
+están documentados y estos no pueden 
+tomar decisiones de forma independiente, 
+sus representantes autorizados lo hacen en 
+su nombre, utilizando criterios sustitutivos.
+La toma de decisiones compartida es 
+preferible cuando se elige entre más de una 
+opción médicamente razonable. Para ello 
+es necesario que (1) los profesionales de la 
+salud se aseguren de que el paciente o su 
+representante comprendan el estado de 
+salud actual del paciente; (2) los profesionales 
+de la salud expongan las opciones médicas 
+disponibles; (3) los profesionales de la salud 
+averigüen los objetivos, valores y preferencias 
+del paciente; (4) los profesionales de la salud 
+hagan una recomendación acorde con 
+los objetivos y valores del paciente; (5) los 
+profesionales de la salud apoyen al paciente 
+o a su representante en su elección.
+En el caso de adultos que tienen un paro 
+cardíaco, el procedimiento habitual es iniciar 
+la RCP, salvo cuando ello suponga un riesgo 
+grave de daño físico para el profesional de 
+la salud, existan signos objetivos de muerte 
+irreversible o haya una directiva anticipada 
+en la que se rechaza el tratamiento. 
+Aceptar solicitudes verbales de la familia 
+que piden no realizar la RCP o expresan 
+el no consentimiento informado es ético 
+en determinadas circunstancias. Una vez 
+iniciada, la aplicación de reglas predefinidas 
+para la terminación de la reanimación puede 
+
+
+=== PAGE 6 ===
+eccguidelines.heart.org	
+ 5
+Aspectos destacados de 2025
+minimizar los tratamientos médicamente 
+ineficaces y promover la justicia distributiva. 
+Los pacientes pediátricos y neonatales 
+presentan retos éticos únicos para los 
+profesionales de la salud. Se puede 
+encontrar información detallada sobre 
+pacientes pediátricos y neonatales en los 
+capítulos correspondientes de las guías.
+En algunas circunstancias, puede que 
+uno o más tratamientos no aporten ningún 
+beneficio realista a un paciente determinado. 
+Los profesionales de la salud no están 
+éticamente obligados a proporcionar estos 
+tratamientos, ni siquiera cuando los solicitan 
+los representantes. Se trata de una decisión 
+difícil, que puede ser subjetiva y dar lugar 
+a conflictos. Para minimizar la posibilidad 
+de que las perspectivas y prejuicios de un 
+profesional de la salud individual influyan en 
+la determinación de los beneficios y para 
+proteger a los profesionales de la salud de 
+la angustia moral, siempre que sea posible, 
+estas decisiones deben recaer en un comité 
+institucional o un consultor ético y tomarse 
+de acuerdo con las políticas institucionales.
+Otros temas éticos
+La investigación en reanimación plantea retos 
+únicos. En situaciones de reanimación, los 
+pacientes con emergencias potencialmente 
+mortales a menudo carecen de capacidad 
+de decisión, las ventanas terapéuticas para la 
+intervención son estrechas y las reacciones 
+emocionales de los representantes 
+autorizados impiden el consentimiento 
+informado habitual. Las vías éticas para la 
+investigación en estos entornos incluyen la 
+excepción del consentimiento informado, 
+la renuncia al consentimiento informado 
+y el consentimiento informado prospectivo. 
+Son las juntas de revisión institucional, y no 
+los investigadores, quienes determinan 
+las vías de regulación adecuadas. No es 
+ético eludir estos requisitos en actividades 
+que cumplen con las definiciones 
+reconocidas de investigación clínica.
+La ACE puede tener un efecto duradero 
+en el bienestar físico y mental de los 
+profesionales de la salud. La AHA considera 
+que los profesionales de la salud que 
+realizan labores de reanimación deben 
+estar protegidos frente a daños físicos. 
+Los profesionales de la salud también 
+tienen el deber profesional de proporcionar 
+tratamiento. Las recomendaciones 
+basadas en la evidencia no pueden 
+abordar plenamente todos los escenarios 
+o circunstancias clínicas. Al interpretar 
+las recomendaciones en contexto, los 
+profesionales de la salud deben ser 
+conscientes de sus posibles sesgos, ser 
+deliberados en la toma de decisiones 
+y aplicar un enfoque sistemático para 
+sopesar la evidencia disponible. La angustia 
+moral puede producirse cuando alguien está 
+realizando la RCP, especialmente cuando 
+los profesionales de la salud consideran 
+que los intentos de RCP son inadecuados. 
+Las organizaciones deben proporcionar 
+políticas y orientación para la reanimación 
+y ayudar a los profesionales de la salud a 
+resolver disputas y abordar la angustia moral. 
+El manejo de estas situaciones complejas 
+no debe recaer únicamente en el individuo.
+Los pacientes que sobreviven a la RCP 
+suelen experimentar síntomas duraderos. 
+Las organizaciones de atención médica 
+tienen la responsabilidad de desarrollar 
+sistemas de atención para optimizar la salud y 
+el bienestar a largo plazo de estos pacientes. 
+El paro cardíaco también puede tener 
+repercusiones duraderas en las personas de 
+la comunidad. Aunque el deber primordial de 
+los profesionales de la salud es para con el 
+paciente, las obligaciones éticas se extienden 
+al apoyo a las familias, los cuidadores y otras 
+personas que rodean al paciente. Para las 
+familias, la presencia durante la RCP puede 
+reducir la complicación del duelo y mejorar 
+los resultados psicológicos. Las instituciones 
+deben desarrollar políticas que definan 
+las circunstancias o consideraciones que 
+podrían impedir la presencia familiar y deben 
+garantizar los recursos y el entrenamiento 
+adecuados para apoyar esta práctica.
+Los estándares de atención en situaciones 
+de crisis modulan el tratamiento de 
+referencia en respuesta a un desastre. Los 
+estándares de atención en situaciones de 
+crisis no modifican ni disminuyen el deber 
+de los profesionales de la salud para con los 
+pacientes, cuyas responsabilidades legales 
+y éticas consisten en adoptar las mismas 
+medidas que adoptaría un profesional de la 
+salud de forma razonable en circunstancias 
+similares. Las normas éticas del utilitarismo 
+y la equidad informan el diseño y la aplicación 
+de los estándares de atención en situación 
+de crisis, que buscan proporcionar una 
+distribución justa de los recursos y promover 
+resultados de salud equitativos.
+La reanimación cardiopulmonar 
+extracorpórea (RCP-EC) es un ejemplo 
+concreto de terapia avanzada que puede 
+utilizarse para tratar a un grupo muy 
+selecto de pacientes. Entre las cuestiones 
+éticas relevantes se incluyen la escasez 
+de datos para orientar la selección de 
+pacientes, la dificultad para obtener el 
+consentimiento informado, el elevado 
+costo y la utilización de recursos, con las 
+cuestiones asociadas de distribución 
+equitativa, y el papel de estas terapias en 
+la posible transición de una reanimación 
+fallida a una posible donación de órganos 
+o retirada de las terapias de soporte vital.
+Debe considerarse la donación de órganos 
+y tejidos en todos los pacientes en situación 
+de paro que evolucionan hacia la muerte por 
+criterios neurológicos o en los que se prevé 
+la retirada de las terapias de soporte vital. Las 
+decisiones sobre los cuidados al final de la 
+vida deben tomarse en beneficio del paciente 
+antes de ofrecer la opción de la donación 
+de órganos al paciente o a su representante 
+legal, y de forma independiente de ello. 
+Las instituciones deben desarrollar 
+procesos para promover la confianza 
+pública y evitar conflictos de intereses.
+
+
+=== PAGE 7 ===
+6	
+American Heart Association
+sIstemAs de 
+AtencIón
+La supervivencia tras un paro cardíaco 
+requiere sistemas integrados de personas, 
+protocolos, políticas y recursos, junto 
+con la adquisición y revisión continuas 
+de datos. Las guías de los sistemas de 
+atención siguen la cadena de supervivencia 
+unificada en caso de paro cardíaco (Figura 
+3), que comienza con la prevención y la 
+preparación para la reanimación, continúa 
+con la identificación rápida del paro 
+cardíaco, sigue con la reanimación eficaz 
+y continúa con la atención posparo cardíaco, 
+la supervivencia y la recuperación. La 
+optimización de los resultados tras un paro 
+cardíaco requiere el buen funcionamiento 
+de los sistemas de atención, tanto dentro 
+como fuera del hospital, así como el 
+compromiso de recopilar y analizar datos 
+orientados a la mejora de la calidad en cada 
+eslabón de la cadena de supervivencia. 
+Resumen de los aspectos 
+clave y los principales 
+cambios realizados
+•	 Se pretende que una única cadena de 
+supervivencia se aplique tanto a los 
+casos de paro cardíaco intrahospitalario 
+(PCIH) en adultos y niños como a los 
+casos de paro cardíaco extrahospitalario 
+(PCEH). Al crear esta cadena única, 
+se reconoce que, antes de un paro 
+cardíaco, la prevención y la preparación 
+pueden tanto evitar la necesidad de 
+reanimación como optimizarla. 
+•	 Varias recomendaciones se han 
+consolidado en un bloque de 
+conocimientos dedicado a las iniciativas 
+comunitarias para mejorar la respuesta 
+de los reanimadores legos ante un 
+PCEH. Aquí, el lector encontrará 
+recomendaciones sobre enfoques 
+basados en sistemas destinados 
+a aumentar la concienciación de la 
+comunidad sobre el paro cardíaco, el papel 
+crucial de la RCP por reanimadores legos y 
+el uso del desfibrilador externo automático. 
+•	 Se han combinado las recomendaciones 
+para pediatría y adultos sobre el uso 
+de sistemas de alarma temprana 
+y equipos de respuesta rápida o 
+emergencia médica para prevenir el 
+PCIH, con una recomendación adicional 
+sobre el uso de reuniones breves de 
+seguridad para prevenir el PCIH. 
+•	 Las políticas para facilitar el acceso 
+público a la naloxona se recomiendan 
+ahora junto con el acceso público 
+a la desfibrilación, porque ambos 
+tienen el potencial de salvar vidas.
+•	 Ahora los operadores telefónicos 
+disponen de recomendaciones diferentes 
+para las instrucciones de RCP de adultos 
+y niños; deben guiar a los reanimadores 
+legos para que utilicen la RCP solo con 
+las manos en el caso de los adultos 
+y la RCP convencional, incluidas las 
+ventilaciones, en el caso de los niños. 
+Se reitera el marco “No-No-Go” como 
+método eficaz para reconocer los PCEH. 
+•	 Se reiteran las recomendaciones sobre 
+el debriefing clínico, con una nueva 
+recomendación sobre la incorporación 
+del debriefing inmediato (en caliente) 
+y diferido (en frío) tras los eventos de RCP. 
+•	 Se ofrecen nuevas recomendaciones 
+sobre la composición de los equipos de 
+reanimación intra y extrahospitalarios. 
+•	 Sigue habiendo incertidumbre sobre el 
+momento oportuno para el transporte de 
+pacientes con reanimación en curso y tras 
+el retorno de la circulación espontánea 
+(RCE). Esta cuestión se aborda en 
+varios módulos de conocimientos 
+que abarcan la reanimación en la 
+escena (frente al transporte con RCP 
+en curso), el transporte para RCP-EC 
+y la transferencia interhospitalaria 
+a centros de paro cardíaco. Estos 
+últimos bloques de conocimientos 
+tratan de abordar importantes 
+consideraciones del sistema en los 
+centros de paro cardíaco y de RCP-EC. 
+•	 Se ofrecen nuevas recomendaciones 
+sobre la creación de un sistema de 
+atención que garantice una recuperación 
+óptima tras la reanimación de los 
+supervivientes de un paro cardíaco. 
+Principales recomendaciones 
+nuevas y actualizadas 
+Prevención del PCIH
+2025 (nuevo): La realización de reuniones 
+breves de seguridad para mejorar la 
+conciencia situacional en escenarios que 
+involucran a pacientes hospitalizados de alto 
+riesgo y mitigar su deterioro puede ser eficaz 
+para reducir las tasas de paro cardíaco.
+Figura 3. Cadena de supervivencia del paro cardíaco.
+Desfibrilación
+RCP de alta calidad
+Atención posparo 
+cardíaco
+Reanimación 
+avanzada
+Recuperación y 
+supervivencia
+Reconocimiento y 
+activación de emergencia
+
+
+=== PAGE 8 ===
+eccguidelines.heart.org	
+ 7
+Aspectos destacados de 2025
+Motivo: Dos proyectos multicéntricos y 
+observacionales de mejora de la calidad 
+que implementaron un paquete de 
+medidas para el paro cardíaco, que incluye 
+reuniones breves de seguridad en torno 
+a los pacientes de alto riesgo, redujeron 
+los PCIH en las unidades de cuidados 
+intensivos pediátricos y generales.
+Acceso público a la naloxona
+2025 (nuevo): Las políticas públicas deben 
+permitir la posesión, el uso y la inmunidad 
+frente a la responsabilidad civil y penal por 
+la administración de buena fe de naloxona 
+por parte de reanimadores legos. 
+2025 (nuevo): Los programas de distribución 
+de naloxona pueden ser beneficiosos 
+para aumentar su disponibilidad entre los 
+reanimadores legos y reducir la mortalidad 
+por sobredosis relacionada con opiáceos.
+Motivo: Los estudios observacionales que 
+analizaron el impacto de la legislación 
+que facilita la disponibilidad de naloxona 
+y protege a los rescatadores legos de 
+procesos judiciales por su posesión o 
+uso de buena fe, así como los programas 
+destinados a distribuir naloxona en las 
+comunidades, se asocian generalmente 
+con la reducción de la mortalidad.
+Iniciativas comunitarias para 
+mejorar la respuesta de los 
+reanimadores legos ante un PCEH
+2025 (actualización): La puesta en 
+marcha de un conjunto de iniciativas 
+comunitarias es una estrategia razonable 
+para mejorar la respuesta de los 
+reanimadores legos ante un PCEH. 
+2025 (nuevo): Aumentar la disponibilidad 
+de entrenamientos dirigidos por un 
+instructor en las comunidades puede 
+ser eficaz para mejorar la respuesta de 
+los reanimadores legos ante un PCEH. 
+2025 (nuevo): Puede considerarse la 
+posibilidad de realizar campañas en 
+los medios de comunicación para 
+promover el aprendizaje de las técnicas 
+de RCP en todas las poblaciones.
+2025 (nuevo): Puede ser razonable que las 
+comunidades apliquen políticas que exijan la 
+certificación de RCP al público en general. 
+Motivo: La mejora de la respuesta de los 
+reanimadores legos requiere un enfoque 
+polifacético, y la evidencia existente respalda 
+la eficacia de numerosas intervenciones.
+Debriefing clínico 
+2025 (nuevo): Incorporar el debriefing 
+inmediato y diferido es razonable 
+y puede identificar diferentes 
+oportunidades de mejora del sistema. 
+Motivo: Los estudios que examinan el 
+debriefing utilizan métodos inmediatos 
+y diferidos, aunque ninguno ha 
+demostrado ser superior y el uso de 
+ambos puede ofrecer ventajas.
+Composición del equipo de PCEH 
+2025 (nuevo): Puede ser beneficioso 
+contar con la presencia de un médico 
+de nivel de soporte vital avanzado 
+(SVA) durante la reanimación de una 
+persona con sospecha de PCEH. 
+2025 (nuevo): Es razonable garantizar que 
+los sistemas de emergencias médicas 
+(SEM) cuenten con un equipo de tamaño 
+suficiente para cumplir los roles asignados 
+de manera clara dentro del equipo. 
+Motivo: Los estudios demuestran que la 
+optimización de la reanimación en caso 
+de PCEH requiere un equipo de tamaño 
+suficiente para desempeñar las funciones 
+vitales y entrenamiento suficiente para 
+proporcionar un manejo avanzado.
+Composición del equipo de 
+código intrahospitalario 
+2025 (nuevo): Los equipos de códigos 
+intrahospitalarios deben estar formados 
+por miembros con entrenamiento en SVA. 
+2025 (nuevo): Los equipos de código 
+designados o dedicados con funciones 
+claramente definidas, experiencia 
+diversa y entrenamiento adecuado que 
+incorpore la simulación pueden ser 
+beneficiosos para mejorar los resultados 
+de los pacientes tras un PCIH. 
+Motivo: Al igual que los equipos de PCEH, los 
+equipos de código de PCIH se benefician 
+de un entrenamiento avanzado y de 
+funciones definidas con entrenamiento 
+basado en simulación para apoyar a los 
+miembros del equipo en esas funciones.
+Reanimación en caso de PCEH la escena 
+2025 (nuevo): Los SEM deben estar 
+preparados para terminar la reanimación en 
+la escena; esto implica que los profesionales 
+de los SEM reciban entrenamiento 
+sobre la notificación de la muerte.
+2025 (nuevo): Dar prioridad a la reanimación 
+en la escena, con el objetivo de lograr 
+un RCE sostenido, antes de iniciar el 
+transporte, puede ser beneficioso para 
+la mayoría de los adultos y niños que 
+sufren un paro cardíaco extrahospitalario, 
+siempre que no existan circunstancias 
+especiales que indiquen lo contrario.
+Motivo: Permanecer en la escena durante toda 
+la reanimación conllevará inevitablemente 
+la muerte en muchos casos, por lo que 
+es fundamental recibir entrenamiento 
+sobre cuándo terminar los esfuerzos y 
+cómo notificarlo a la familia para poder 
+proporcionar una atención compasiva y evitar 
+el desgaste profesional. Intentar trasladar 
+a los pacientes al hospital mientras se está 
+practicando la RCP compromete la calidad 
+de la reanimación y puede poner en riesgo 
+la seguridad de los reanimadores, por lo que 
+debe reservarse para situaciones en las que 
+se crea que mejora significativamente las 
+probabilidades de supervivencia del paciente.
+Sistemas de atención extracorpórea 
+2025 (nuevo): Es razonable que los 
+centros con programas de RCP-EC 
+desarrollen y reevalúen con frecuencia 
+los criterios de selección de pacientes 
+para maximizar la supervivencia en 
+caso de paro cardíaco, garantizar un 
+acceso equitativo y limitar la futilidad. 
+2025 (nuevo): Es razonable que los 
+médicos que realicen la canulación 
+periférica de RCP-EC en adultos tengan 
+experiencia en la técnica percutánea.
+2025 (nuevo): Un enfoque regionalizado de 
+la RCP-EC es razonable para optimizar los 
+resultados y la utilización de recursos.
+2025 (nuevo): El transporte rápido durante 
+el paro cardíaco para la RCP-EC puede 
+considerarse para un grupo muy selecto 
+de pacientes adultos con PCEH.
+Motivo: La RCP-EC requiere muchos 
+recursos y equipos especializados y muy 
+capacitados. Estos factores hacen que la 
+regionalización resulte atractiva, pero la 
+necesidad de trasladar al paciente durante 
+el paro cardíaco en el contexto de un PCEH 
+y la alta demanda de recursos requieren 
+una selección cuidadosa de los pacientes.
+
+
+=== PAGE 9 ===
+8	
+American Heart Association
+Donación de órganos 
+2025 (nuevo): Las instituciones deben 
+desarrollar sistemas de atención centrados 
+en facilitar y evaluar la donación de órganos 
+tras un paro cardíaco, en consonancia con 
+los requisitos legales y normativos locales. 
+Motivo: Las políticas destinadas a aumentar 
+la donación de órganos varían a escala 
+internacional y están estrechamente 
+vinculadas a los valores y la cultura 
+de la nación donde se aplican.
+Mejorando la recuperación 
+tras un paro cardíaco
+2025 (nuevo): Es probable que la recuperación 
+y los resultados funcionales a largo plazo de 
+los supervivientes de un paro cardíaco se 
+beneficien del uso de sistemas integrados 
+que evalúen a los pacientes antes del alta, 
+reevalúen sus necesidades tras el alta 
+y aborden estas necesidades de forma 
+continuada durante la recuperación.
+Motivo: La rehabilitación de los supervivientes 
+de un paro cardíaco puede mejorar los 
+resultados a largo plazo, pero su aplicación 
+requiere la coordinación de un equipo 
+multidisciplinar que abarque a proveedores 
+tanto dentro como fuera del hospital.
+soporte vItAl 
+neonAtAl 
+En Estados Unidos y Canadá se producen 
+unos 4 millones de nacimientos al año. Uno 
+de cada 10 a 20 recién nacidos necesitará 
+ayuda para pasar del entorno lleno de líquido 
+del útero a la habitación llena de aire. Es 
+esencial que todo recién nacido que requiera 
+esta atención cuente con un profesional 
+de la salud formado y equipado para la 
+función dedicada a facilitar esa transición. 
+Resumen de los aspectos 
+clave y los principales 
+cambios realizados 
+•	 La cadena de atención para recién 
+nacidos comienza con los cuidados 
+prenatales y se extiende hasta 
+la recuperación y el seguimiento 
+adecuado en el periodo posnatal. 
+•	 La reanimación neonatal requiere 
+anticipación y preparación por parte 
+de los profesionales de la salud, que se 
+entrenan individualmente y en equipo. 
+•	 La mayoría de los recién nacidos pueden 
+ser evaluados y controlados durante 
+el retraso del pinzamiento del cordón 
+umbilical por 60 segundos o más y pueden 
+mantener el contacto piel con piel con uno 
+de sus progenitores tras el nacimiento. 
+•	 La ventilación eficaz de los pulmones 
+es la prioridad en los recién nacidos 
+que necesitan reanimación. 
+•	 Algunas recomendaciones nuevas, 
+como el posicionamiento para las 
+compresiones torácicas, el momento 
+de colocación del pulsioxímetro y las 
+acciones correctivas de ventilación, 
+son prácticas que quizá ya se realicen 
+habitualmente, pero que se han añadido 
+con la revisión de las últimas evidencias. 
+•	 Pueden ser necesarias acciones 
+correctivas de ventilación, que incluyen el 
+uso de una vía aérea alternativa como una 
+mascarilla laríngea o un tubo endotraqueal, 
+si la frecuencia cardiaca no aumenta 
+con la ventilación con mascarilla facial. 
+Algoritmos y ayudas visuales 
+El Algoritmo de reanimación neonatal 
+(Figura 4) se ha actualizado para hacer 
+hincapié en la importancia del manejo 
+del cordón umbilical en el momento del 
+nacimiento. La tabla de objetivo de saturación 
+de oxígeno comienza a los 2 minutos porque 
+el retraso en el pinzamiento del cordón 
+durante 60 segundos o más significa 
+que la saturación de oxígeno a 1 minuto 
+no se obtendrá de forma rutinaria. Se 
+recomienda realizar una electrocardiografía 
+antes de las compresiones torácicas.  
+Los resultados de los recién nacidos se 
+ven afectados por el contexto general en 
+el que se produce la reanimación neonatal, 
+incluidos los sistemas de atención antes, 
+durante y después del parto. La cadena de 
+atención neonatal (figura 5) proporciona un 
+marco para abordar los elementos esenciales 
+del sistema de atención médica con el fin 
+de mejorar la salud de los recién nacidos.
+Principales recomendaciones 
+nuevas y actualizadas 
+Manejo del cordón umbilical 
+2025 (actualización): Para los recién nacidos 
+a término que no requieren reanimación 
+inmediata, el retraso en el pinzamiento del 
+cordón durante al menos 60 segundos 
+puede ser beneficioso en comparación 
+con el pinzamiento inmediato. 
+Motivo: Se ha demostrado en los metanálisis 
+que los índices hematológicos y los 
+niveles de hierro en la infancia mejoran 
+con el retraso en el pinzamiento del 
+cordón umbilical. Se han confirmado 
+estos hallazgos en estudios recientes 
+que amplían el retraso en el pinzamiento 
+a 60 segundos en comparación con el 
+pinzamiento temprano del cordón umbilical. 
+2025 (nuevo): Para los recién nacidos a 
+término faltos de vigor y los prematuros 
+tardíos de 35 semanas o más de edad 
+gestacional, el “ordeño” del cordón intacto 
+puede ser razonable en comparación con 
+el pinzamiento inmediato del cordón. 
+Motivo: En un ECA a gran escala realizado 
+en lactantes faltos de vigor de entre 35 
+y 42 semanas de gestación, se observó 
+que el ordeño del cordón umbilical intacto, 
+en comparación con el pinzamiento 
+temprano del cordón, se asociaba con 
+una disminución de las tasas de asistencia 
+cardiorrespiratoria, encefalopatía 
+hipóxico-isquémica de moderada a 
+grave y uso de hipotermia terapéutica. 
+2025 (actualización): Para los recién nacidos 
+de menos de 37 semanas de gestación 
+que no requieren reanimación inmediata, 
+se recomienda el retrasar el pinzamiento del 
+cordón durante al menos 60 segundos en 
+comparación con el pinzamiento inmediato. 
+Motivo: Se ha demostrado en los metanálisis 
+han que los recién nacidos prematuros 
+que recibieron un pinzamiento del cordón 
+umbilical retrasado durante 60 segundos 
+o más en comparación con el pinzamiento 
+inmediato del cordón umbilical tuvieron 
+una reducción de la mortalidad en 
+comparación con los que tuvieron un 
+pinzamiento inmediato del cordón umbilical. 
+
+
+=== PAGE 10 ===
+eccguidelines.heart.org	
+ 9
+Aspectos destacados de 2025
+Figura 4. Algoritmo de reanimación neonatal.
+Asesoramiento prenatal
+Reunión informativa del equipo
+Comprobación del equipamiento
+Nacimiento
+Iniciar el plan de manejo del cordón umbilical
+¿Gestación a término? 
+¿Buen tono? 
+¿Respira o llora?
+Sí
+Piel con piel con los padres
+Atención de rutina
+Mantener la temperatura normal
+Evaluación continuada
+No
+Calentarlo y mantener la temperatura normal
+Secarlo
+Posicionar
+Estimular y despejar la vía aérea si es necesario
+¿Jadeos/boqueos 
+o apnea? 
+¿FC <100/min?
+No
+¿Presenta dificultad 
+respiratoria o cianosis 
+persistente?
+Sí
+Pulsioxímetro
+Oxígeno si es necesario
+Considerar CPAP
+Sí
+Administrar ventilaciones
+Pulsioxímetro
+Evaluar utilizar el monitor cardíaco 
+1 minuto
+¿FC <100/min?
+No
+Cuidados posreanimación
+Comunicarse con la familia
+Debriefing de equipo
+Sí
+Acciones correctivas de ventilación 
+Considerar intubación o mascarilla laríngea 
+Monitor cardíaco
+¿FC <60/min?
+No
+Sí
+Intubar o colocar mascarilla laríngea 
+Compresiones torácicas
+Coordinar 3:1 con ventilaciones
+Oxígeno al 100%
+CVU o IO
+¿FC <60/min?
+No
+Sí
+Adrenalina por vía CVU o IO cada 3-5 minutos
+Si la FC sigue siendo <60/min:
+• Considerar hipovolemia
+• Considerar neumotórax
+Tabla de objetivo de saturación 
+de oxígeno
+2 min
+65%-70%
+3 min
+70%-75%
+4 min
+75%-80%
+5 min
+80%-85%
+10 min
+85%-95%
+© 2025 American Heart Association and American Academy of Pediatrics
+
+
+=== PAGE 11 ===
+10	
+American Heart Association
+Figura 5. Cadena de atención neonatal.
+Ventilación
+Pasos iniciales
+Cuidado posnatal
+Reanimación 
+avanzada
+Recuperación
+Reconocimiento y 
+activación
+Prevención
+Ventilación y presión positiva 
+continua en la vía aérea 
+2025 (actualización): Para los recién nacidos, 
+son razonables presiones de inflado máximas 
+iniciales de 20 a 30 cm de H2O, con ajuste 
+de las presiones de inflado máximas para 
+proporcionar una ventilación eficaz. 
+Motivo: Estudios observacionales en 
+recién nacidos prematuros y a término 
+han informado de presiones máximas 
+de inflado de hasta 30 cm de H O 
+o más, correspondientes a volúmenes 
+2
+corrientes que se consideran adecuados 
+para la ventilación del recién nacido. Las 
+presiones pueden ajustarse a medida 
+que se consigue una ventilación eficaz. 
+2025 (actualización): Es razonable 
+proporcionar ventilación a una frecuencia 
+de 30 a 60/min en recién nacidos. 
+Motivo: Un estudio observacional informó 
+que la ventilación a una frecuencia de 
+30 a 60/min daba lugar a volúmenes 
+corrientes administrados de entre 5 ml/kg  
+y 10 ml/kg. Un estudio observacional 
+de recién nacidos prematuros, tardíos 
+y a término informó de que una frecuencia 
+de inflado de 30/min se asociaba con la 
+mayor depuración de dióxido de carbono. 
+2025 (nuevo): La videolaringoscopía puede 
+ser útil para los recién nacidos que 
+requieren intubación endotraqueal. 
+Motivo: En un metanálisis de 6 ECA que 
+incluían intubaciones, la videolaringoscopía 
+comparada con la laringoscopía 
+tradicional condujo a un mayor éxito de 
+la intubación. La laringoscopía tradicional 
+sigue siendo un método razonable para 
+lograr la intubación endotraqueal. 
+2025 (nuevo): Es razonable utilizar una máscara 
+laríngea como alternativa a la intubación 
+endotraqueal en recién nacidos con una 
+edad gestacional de 34 0/7 semanas 
+o más, en los que la ventilación mediante 
+mascarilla facial no ha tenido éxito. 
+Motivo: En 4 ECA, no se observaron 
+diferencias significativas en el tiempo de 
+inserción ni en el éxito en el primer intento 
+cuando se utilizó una máscara laríngea 
+(dispositivo supraglótico para la vía aérea) 
+como dispositivo secundario en lugar 
+de la intubación endotraqueal después 
+de que la ventilación con mascarilla 
+facial no tuviera éxito. En 1 estudio 
+observacional, el uso de una mascarilla 
+laríngea en lugar de un tubo endotraqueal 
+se asoció a un menor ingreso en la unidad 
+de cuidados intensivos neonatales. 
+2025 (nuevo): Puede ser razonable utilizar una 
+mascarilla laríngea como interfaz principal 
+para administrar la ventilación en lugar de una 
+mascarilla facial en los recién nacidos con 
+34 0/7 semanas o más de edad gestacional. 
+Motivo: En un metanálisis de 6 ECA se 
+observó que el uso de una máscara 
+laríngea, en comparación con el uso de una 
+mascarilla facial, reducía la probabilidad 
+de que no se produjera una mejoría 
+con el dispositivo asignado y la tasa de 
+intubación endotraqueal. La duración de 
+la ventilación y el tiempo transcurrido 
+hasta que la frecuencia cardiaca alcanzó 
+un valor superior a 100/min fueron más 
+cortos con la mascarilla laríngea. 
+Oxígeno 
+2025 (nuevo): Debe colocarse un 
+pulsioxímetro lo antes posible a los 
+recién nacidos que reciban asistencia 
+respiratoria u oxígeno adicional. 
+Motivo: La colocación de un pulsioxímetro 
+en las primeras fases de la reanimación 
+permite una lectura más temprana de la 
+saturación de oxígeno para orientar el 
+tratamiento. En los estudios observacionales, 
+la mediana del tiempo necesario para obtener 
+la lectura de la pulsioximetría osciló entre 
+238 y 260 segundos y fue mayor en los 
+recién nacidos prematuros en comparación 
+con los recién nacidos a término. 
+2025 (actualización): En los recién nacidos 
+prematuros con menos de 32 semanas de 
+edad gestacional que reciben asistencia 
+respiratoria al nacer, puede ser razonable 
+comenzar con oxígeno del 30% al 100%. 
+Motivo: Los análisis de los estudios 
+disponibles para esta población han llevado 
+a conclusiones que entran en conflicto con 
+las de un metaanálisis a nivel de estudio 
+de 10 ECA que no muestran diferencias 
+en la mortalidad a corto plazo cuando 
+la concentración inicial de oxígeno era 
+baja en comparación con cuando era alta 
+(en estos estudios, se considera que el 
+oxígeno bajo es generalmente del 21% al 
+30% y el oxígeno alto del 60% al 100%). Un 
+metaanálisis reciente de datos individuales 
+de pacientes reveló que una concentración 
+inicial alta de oxígeno, entre el 90% y el 100%, 
+se asociaba con una menor mortalidad 
+en comparación con una concentración 
+inicial baja, entre el 21% y el 30%. La 
+concentración de oxígeno puede reducirse 
+a medida que se alcanzan los objetivos.
+Compresiones torácicas 
+2025 (nuevo): Puede ser razonable comprimir 
+sobre el tercio inferior del esternón, 
+teniendo cuidado de estar por encima 
+de la apófisis xifoides cuando se realicen 
+compresiones torácicas a recién nacidos. 
+
+
+=== PAGE 12 ===
+eccguidelines.heart.org	
+ 11
+Aspectos destacados de 2025
+Motivo: En un estudio de autopsias de 
+lactantes y niños pequeños se observó que la 
+realización de compresiones en el cuerpo del 
+esternón no estaba asociada a la rotura del 
+hígado. Se produjeron desgarros superficiales 
+de la cápsula hepática cuando se aplicaron 
+compresiones en la apófisis xifoides, 
+y todos los pacientes con compresiones 
+torácicas y abdominales simultáneas 
+o compresiones abdominales solas 
+presentaron rotura hepática. Los estudios 
+radiográficos de tórax identifican que el 
+corazón se encuentra bajo el tercio inferior 
+del esternón en la mayoría de los lactantes. 
+2025 (nuevo): Puede ser razonable cambiar 
+de compresor cada 2 a 5 minutos cuando 
+se realicen compresiones torácicas 
+a recién nacidos y cambiar de compresor 
+mientras se evalúa la frecuencia cardiaca. 
+Motivo: Las compresiones torácicas de alta 
+calidad abarcan múltiples factores, como 
+una relación compresión-ventilación óptima, 
+una frecuencia adecuada, una profundidad 
+de compresión adecuada y una expansión 
+completa entre compresiones. Los estudios 
+con maniquíes neonatales demuestran 
+que la calidad de las compresiones 
+puede disminuir entre 2 y 5 minutos 
+cuando las realiza un solo médico. 
+soporte 
+vItAl básIco 
+pedIátrIco 
+Cada año se producen en Estados Unidos 
+más de 7000 PCEH y aproximadamente 
+20 000 PCIH en lactantes y niños. A pesar 
+del aumento de la supervivencia y de 
+las tasas comparativamente buenas de 
+resultados neurológicos favorables 
+tras un PCIH pediátrico, las tasas de 
+supervivencia del PCEH siguen siendo 
+bajas, sobre todo en lactantes. La cadena 
+de supervivencia requiere esfuerzos 
+coordinados de profesionales médicos de 
+diversas disciplinas y, en el caso del PCEH, 
+de los reanimadores legos, los operadores 
+telefónicos y el personal de emergencias. 
+Resumen de los aspectos 
+clave y los principales 
+cambios realizados 
+•	 El paro cardíaco en lactantes y niños 
+no suele deberse a una causa cardiaca 
+primaria, sino a una insuficiencia 
+respiratoria progresiva o a shock. 
+•	 Dada la naturaleza secundaria de 
+la mayoría de los paros cardíacos 
+pediátricos, el reconocimiento 
+temprano del lactante o niño en 
+estado crítico por parte del cuidador, 
+el entrenamiento en RCP del reanimador 
+lego y el acceso rápido a la atención 
+de emergencia son fundamentales 
+para mejorar los resultados. 
+•	 La RCP de alta calidad y la desfibrilación 
+precoz de los ritmos desfibrilables 
+son la piedra angular del tratamiento 
+del paro cardíaco pediátrico y deben 
+proporcionarse a todos los pacientes para 
+que las demás terapias sean eficaces.
+Principales recomendaciones 
+nuevas y actualizadas 
+Componentes de la RCP de alta calidad 
+2025 (nuevo): En el caso de lactantes y niños 
+con paro cardíaco, las interrupciones en 
+la RCP deben reducirse al mínimo y las 
+pausas en las compresiones torácicas 
+deben ser inferiores a 10 segundos. 
+Motivo: Los datos de un registro de 
+cohortes observacional multinacional 
+y multiinstitucional demostraron que el 
+aumento de la frecuencia y la duración 
+de las pausas en la RCP se asociaban 
+significativamente con una menor 
+probabilidad de alcanzar el RCE. 
+Secuencia de reanimación 
+2025 (actualización): En el caso de los  
+lactantes, los reanimadores deben  
+comprimir el esternón con la base de  
+1 mano o utilizando la maniobra con  
+2 pulgares y manos alrededor del 
+tórax. Si el reanimador no puede rodear 
+físicamente el pecho, se recomienda 
+comprimirlo con la base de 1 mano. 
+Motivo: Las revisiones sistemáticas y los 
+metaanálisis de los estudios de simulación 
+sugieren que la maniobra con 2 pulgares 
+y manos alrededor del tórax es la técnica 
+superior para administrar compresiones 
+a los lactantes en comparación con la 
+maniobra de 2 dedos, en particular para 
+lograr una profundidad adecuada. En 
+un estudio de registro observacional 
+prospectivo multicéntrico, la maniobra con 
+una mano dio lugar a una mayor profundidad 
+de compresiones que la maniobra con 
+2 pulgares en lactantes, sin diferencias en la 
+frecuencia de compresión torácica entre las 
+posiciones de las manos. En este estudio, la 
+maniobra de 2 dedos se utilizó en contadas 
+ocasiones, pero cuando se utilizó, ningún 
+segmento de compresión torácica cumplía 
+con las guías de la AHA. Teniendo esto en 
+cuenta, para los lactantes se recomienda 
+utilizar la maniobra con la base de 1 mano  
+o con 2 pulgares y manos alrededor del 
+tórax. Ya no se recomienda la maniobra 
+de los 2 dedos para la RCP de lactantes.
+Obstrucción de la vía aérea 
+por cuerpo extraño 
+2025 (actualización): En casos graves de niños 
+con obstrucción de la vía aérea por cuerpo 
+extraño, se deben realizar ciclos repetidos 
+de 5 golpes en la espalda alternados 
+con 5 compresiones abdominales hasta 
+que se expulse el objeto o el niño deje de 
+responder (véase el algoritmo actualizado).
+Motivo: Muchas obstrucciones de la vía aérea 
+por cuerpo extraño se resuelven dejando 
+toser al paciente o, si son graves, mediante 
+presiones en el pecho o compresiones 
+abdominales por parte de reanimadores 
+legos. Un reciente estudio observacional de 
+obstrucciones de la vía aérea por cuerpo 
+extraño pediátricas y adultas sugiere que hay 
+una mejor eliminación del cuerpo extraño 
+con el uso de golpes en la espalda en lugar 
+de compresiones abdominales. Con el fin de 
+garantizar la coherencia con fines didácticos, 
+y en ausencia de datos pediátricos que 
+indiquen inferioridad, el tratamiento de los 
+casos graves de obstrucción de la vía aérea 
+por cuerpo extraño en niños comienza 
+ahora con una serie de golpes en la espalda 
+en lugar de compresiones abdominales. 
+Se realizan ciclos repetidos de 5 golpes en 
+la espalda seguidos de 5 compresiones 
+abdominales hasta que se elimina la 
+obstrucción o el niño deja de responder. 
+2025 (actualización): Para lactantes con 
+casos graves de obstrucciones de la 
+vía aérea por cuerpo extraño, se deben 
+realizar ciclos repetidos de 5 golpes en 
+la espalda alternados con 5 presiones 
+en el pecho hasta que se expulse el 
+objeto o el lactante deje de responder.
+
+
+=== PAGE 13 ===
+12	
+American Heart Association
+Motivo: Las compresiones abdominales no 
+se recomiendan para los lactantes, dado el 
+potencial de causar lesiones en los órganos 
+abdominales. La maniobra con la base de 
+1 mano para las presiones en el pecho 
+se recomienda ahora para los lactantes 
+con casos graves de obstrucción de la 
+vía aérea por cuerpo extraño. Aunque la 
+maniobra con la base de 1 mano para las 
+presiones en el pecho se asemeja a las 
+compresiones torácicas que se utilizan como 
+parte de la RCP, no se presta atención a los 
+demás componentes de las compresiones 
+torácicas de RCP de alta calidad (p. ej., 
+frecuencia, expansión), por lo que no se 
+utiliza el término compresión torácica.
+soporte vItAl 
+básIco pArA 
+Adultos
+Los PCEH y PCIH afectan a cientos de 
+miles de personas cada año en Estados 
+Unidos. Existen variaciones significativas en 
+las tasas de RCP por reanimadores legos, 
+uso público de desfibriladores externos 
+automáticos, tiempos de respuesta de 
+los SEM y supervivencia al alta entre 
+regiones geográficas. La supervivencia de 
+los adultos tras PCEH y PCIH disminuyó 
+durante la pandemia de COVID-19. 
+Resumen de los aspectos 
+clave y los principales 
+cambios realizados 
+•	 La realización temprana de una RCP 
+de alta calidad y la desfibrilación rápida 
+son las intervenciones más importantes 
+asociadas a la mejora de los resultados 
+en el paro cardíaco en adultos. 
+•	 En el caso de un adulto con traumatismo 
+craneal y cervical, si no se puede abrir la 
+vía aérea con la tracción mandibular y la 
+inserción de un dispositivo de manejo 
+de la vía aérea, los reanimadores deben 
+abrir la vía aérea mediante la extensión 
+de la cabeza y elevación del mentón.
+•	 En caso de paro cardíaco en adultos, 
+los reanimadores deben realizar las 
+compresiones torácicas con el paciente 
+sobre una superficie firme y con el torso 
+del paciente aproximadamente a la 
+altura de las rodillas del reanimador. 
+•	 Al proporcionar ventilación a un 
+paciente adulto con paro respiratorio, 
+es razonable que el profesional de la 
+salud administre 1 ventilación cada 
+6 segundos, o 10 ventilaciones/min,  
+y que cada ventilación genere una 
+elevación visible del tórax. 
+•	 La RCP de adultos obesos en paro 
+cardíaco debe realizarse de la misma 
+manera que en los pacientes no obesos. 
+•	 No se recomienda el uso rutinario de 
+dispositivos mecánicos de RCP en 
+caso de paro cardíaco en adultos. 
+•	 Para adultos con casos graves de 
+obstrucción de la vía aérea por cuerpo 
+extraño, se deben realizar ciclos 
+repetidos de 5 golpes en la espalda 
+(palmadas) seguidos de 5 compresiones 
+abdominales hasta que se expulse el 
+objeto o la persona deje de responder. 
+Algoritmos y ayudas visuales 
+El algoritmo de soporte vital básico (SVB) 
+para profesionales de la salud se actualizó 
+para ilustrar el papel de los antagonistas 
+opiáceos (p. ej., naloxona) en caso de 
+sospecha de sobredosis de opiáceos 
+durante un paro respiratorio y cardíaco. Una 
+ayuda visual simplificada para reanimadores 
+legos hace hincapié en la activación 
+temprana del SEM y en la obtención de un 
+desfibrilador externo automático, además 
+del inicio de las compresiones torácicas. 
+Se añadió un nuevo algoritmo para el 
+tratamiento de la obstrucción de la vía aérea 
+por cuerpo extraño en adultos (Figura 6) 
+para mostrar el enfoque de utilizar golpes en 
+la espalda como maniobra inicial, seguidos 
+de compresiones abdominales. En el caso 
+de pacientes con obstrucción grave, se 
+indica al reanimador que active el sistema de 
+respuesta a emergencias porque, una vez 
+que la persona queda inconsciente, puede 
+evolucionar rápidamente a un paro cardíaco.
+Principales recomendaciones 
+nuevas y actualizadas 
+Manejo de la vía aérea
+2025 (actualización): En el caso de un adulto 
+con traumatismo craneal y cervical, 
+si no se puede abrir la vía aérea con la 
+tracción mandibular y la inserción de un 
+dispositivo de manejo de la vía aérea, 
+los reanimadores entrenados deben 
+abrir la vía aérea mediante la extensión 
+de la cabeza y elevación del mentón. 
+Motivo: Es prioritario abrir la vía aérea de 
+un paciente con traumatismo. Si bien en 
+los traumatismos craneales y cervicales 
+se prefiere la tracción mandibular, en los 
+pacientes con traumatismo se hace hincapié 
+en la importancia de una vía aérea permeable 
+para la oxigenación y la ventilación. 
+Ventilación
+2025 (actualización): Cuando se ventila 
+a un paciente adulto en paro cardíaco, 
+es razonable administrar un volumen 
+corriente suficiente para producir 
+una elevación visible del tórax. 
+2025 (actualización): Al proporcionar 
+ventilaciones a pacientes adultos en 
+paro cardíaco, los reanimadores deben 
+evitar la hipoventilación (muy pocas 
+ventilaciones o con poco volumen) o la 
+hiperventilación (demasiadas ventilaciones 
+o con un volumen demasiado grande). 
+Motivo: En estudios recientes se ha 
+demostrado que los reanimadores a menudo 
+no administran la ventilación de acuerdo 
+con las guías. En estos estudios, la RCP 
+con ventilación y compresiones torácicas 
+eficaces se asoció a mejores resultados. 
+Relación compresión-ventilación 
+2025 (actualización): Es razonable que los 
+reanimadores legos y los profesionales 
+de la salud realicen la RCP con ciclos de 
+30 compresiones seguidas de 2 ventilaciones 
+antes de colocar un dispositivo de manejo 
+avanzado de la vía aérea (p. ej., un dispositivo 
+supraglótico o un tubo endotraqueal). 
+Motivo: En la mayoría de los estudios no se 
+informan diferencias entre los resultados 
+de los pacientes con RCP interrumpida 
+con pausas de ventilación y compresiones 
+torácicas continuas. Sin embargo, evidencia 
+reciente ha demostrado que la ventilación a 
+menudo no es adecuada; el uso de la RCP 
+con ciclos de 30 compresiones seguidas de 
+2 ventilaciones, en lugar de compresiones 
+torácicas continuas, permite al reanimador 
+controlar la elevación del tórax y, por lo tanto, 
+comprobar si la ventilación es adecuada. 
+
+
+=== PAGE 14 ===
+eccguidelines.heart.org	
+ 13
+Aspectos destacados de 2025
+Figura 6. Algoritmo de obstrucción de de la vía aérea por cuerpo extraño en adultos.
+Confirmar la seguridad de la escena.
+Comprobar signos de obstrucción grave 
+de la vía aérea por cuerpo extraño
+ • Tos débil o ausente
+ • Imposibilidad para hablar
+ • Cambio de color (cianosis)
+ • Alteración del estado mental
+ • Apnea
+Ausente
+ • Animar a la persona a toser.
+ • Seguir comprobando 
+signos de obstrucción 
+grave de la vía aérea por 
+cuerpo extraño.
+Presente
+Active el sistema de 
+respuesta a emergencias.
+¿El adulto responde?
+Sí
+Inicie ciclos repetidos de
+ • 5 golpes en la espalda (palmadas), seguidos de
+ • 5 compresiones abdominales*
+ • Repetir hasta que se expulse el objeto o el 
+adulto deje de responder.
+ • Si se expulsa el objeto, siga vigilando hasta que 
+llegue atención avanzada.
+No
+Inicie RCP hasta que llegue la 
+ayuda avanzada; consulte el 
+algoritmo de SVB para adultos.
+ • Empiece con las compresiones.
+ • Compruebe si ve un objeto en la 
+boca antes de dar ventilaciones.
+*Para las pacientes en las últimas fases del embarazo, o cuando el reanimador no pueda 
+rodear el abdomen de la paciente, se deben realizar 5 presiones en el pecho en su lugar.
+© 2025 American Heart Association
+Parches de desfibrilación 
+2025 (nuevo): Al colocar los parches para 
+la desfibrilación de un adulto en paro 
+cardíaco, podría ser razonable ajustar la 
+posición del sostén en lugar de retirarlo.
+Motivo: Las mujeres experimentan tasas 
+significativamente más bajas de desfibrilación 
+de acceso público en comparación con los 
+hombres. La necesidad de aplicar parches 
+o palas directamente sobre el pecho 
+desnudo puede ser un factor contribuyente. 
+La opción de acomodar el sostén en 
+lugar de quitarlo podría mitigar factores 
+como la incomodidad de un reanimador 
+al exponer el pecho de una mujer. 
+RCP para adultos con obesidad 
+2025 (nuevo): La RCP de adultos obesos en 
+paro cardíaco debe realizarse con las mismas 
+maniobras que en los pacientes no obesos. 
+Motivo: Una revisión exploratoria de ILCOR de 
+2024 incluyó 34 estudios observacionales 
+que evaluaban el paro cardíaco en pacientes 
+adultos con obesidad y no encontró evidencia 
+que respalde cambios en la RCP estándar. 
+Técnicas alternativas de RCP 
+2025 (actualización): No se recomienda el 
+uso rutinario de dispositivos mecánicos de 
+RCP en caso de paro cardíaco en adultos. 
+2025 (nuevo): En el paro cardíaco en adultos, 
+puede considerarse el uso de dispositivos 
+mecánicos de RCP en entornos específicos 
+en los que la administración de compresiones 
+manuales de alta calidad puede resultar 
+difícil o peligrosa para los profesionales de la 
+salud, siempre que se limiten estrictamente 
+las interrupciones de la RCP durante la 
+colocación y retirada del dispositivo. 
+
+
+=== PAGE 15 ===
+14	
+American Heart Association
+Motivo: En numerosos ECA se ha demostrado 
+que no hay diferencias en la supervivencia 
+de los pacientes entre la RCP manual y la 
+RCP mecánica. Sin embargo, puede haber 
+circunstancias específicas en las que el uso 
+de dispositivos mecánicos de RCP pueda 
+ofrecer ventajas logísticas o de seguridad. 
+Estas situaciones no están representadas 
+en los ensayos clínicos actuales.
+Obstrucción de la vía aérea 
+por cuerpo extraño 
+2025 (actualización): Para adultos con casos 
+graves de obstrucción de la vía aérea 
+por cuerpo extraño, se deben realizar 
+ciclos repetidos de 5 golpes en la espalda 
+(palmadas) seguidos de 5 compresiones 
+abdominales hasta que se expulse el 
+objeto o la persona deje de responder. 
+Motivo: En los estudios de adultos con 
+obstrucción de la vía aérea por cuerpo 
+extraño se mostró que los golpes en la 
+espalda se asociaban con mejores tasas 
+de desobstrucción y menos lesiones 
+en comparación con las compresiones 
+abdominales. La recomendación de 
+alternar series de 5 golpes en la espalda y 
+5 compresiones abdominales se basa en 
+la importancia de mantener la coherencia 
+con las guías pediátricas y neonatales 
+existentes que utilizan este enfoque. 
+soporte vItAl 
+AvAnzAdo 
+pedIátrIco
+Dados los malos resultados observados 
+anteriormente en PCEH pediátricos, 
+sigue habiendo grandes oportunidades 
+para mejorar la reanimación en todas 
+las fases de la asistencia. La creciente 
+investigación en reanimación pediátrica 
+a través de redes de reanimación tanto 
+intrahospitalarias como extrahospitalarias 
+está contribuyendo de manera significativa 
+al avance del conocimiento y ha dado lugar 
+a varios cambios en las Guías de 2025.
+•	 Este capítulo incluye actualizaciones 
+sobre los medicamentos utilizados 
+durante el paro cardíaco, incluidos 
+cambios en la clase de recomendación 
+de varios medicamentos.
+•	 Se proporcionan nuevas recomendaciones 
+como resultado del creciente 
+volumen de datos de seguimiento 
+disponibles para impulsar prácticas 
+recomendadas tras un paro cardíaco.
+•	 Por primera vez, las guías incluyen 
+información sobre la compleja tarea 
+de predecir el resultado neurológico 
+tras un paro cardíaco (pronóstico 
+neurológico), tanto para resultados 
+favorables como desfavorables.
+Principales recomendaciones 
+nuevas y actualizadas 
+Administración de fármacos 
+durante el paro cardíaco 
+2025 (actualización): En el caso de lactantes 
+y niños en paro cardíaco con ritmo inicial 
+no desfibrilable, es razonable administrar la 
+dosis inicial de adrenalina lo antes posible. 
+Motivo: Una revisión sistemática reciente de 
+7 estudios observacionales identificó que 
+un plazo más corto para la administración 
+de adrenalina en casos de PCEH y PCIH se 
+asociaba con mayores tasas de resultados 
+favorables. Un intervalo inferior a 3 minutos 
+hasta la administración de la primera dosis 
+de adrenalina se asoció con las tasas más 
+altas de resultados favorables, aunque no 
+se realizó una comparación directa entre 
+los distintos intervalos de tiempo hasta 
+la administración de la primera dosis de 
+adrenalina (por ejemplo, <5 min, <10 min). 
+Medición de la fisiología durante la RCP 
+2025 (actualización): En el caso de lactantes 
+y niños con vías respiratorias invasivas 
+colocadas durante la RCP, puede 
+considerarse la monitorización del dióxido 
+de carbono al final de la espiración (ETCO2) 
+para controlar la calidad de la RCP. 
+2025 (nuevo): No se debe utilizar únicamente 
+un valor límite específico de ETCO2 como 
+indicación para poner fin a los esfuerzos 
+de reanimación en lactantes y niños. 
+Motivo: La monitorización de los niveles de 
+dióxido de carbono exhalado en pacientes 
+que reciben RCP con una vía aérea invasiva 
+es importante porque la ETCO2 refleja el 
+gasto cardíaco nativo y la eficacia de la 
+ventilación, además de informar sobre la 
+calidad de la RCP. En un reciente estudio 
+prospectivo multicéntrico que evaluó la 
+ETCO2 media durante los 10 primeros 
+minutos de la RCP intrahospitalaria en niños, 
+los valores de ETCO2 iguales o superiores 
+a 20 mmHg durante la RCP se asociaron 
+con mayores probabilidades de RCE 
+y supervivencia al alta, así como con una 
+presión arterial más alta durante el paro 
+cardíaco. No se observó ninguna relación 
+con los parámetros de calidad de la RCP, 
+como la frecuencia y la profundidad de 
+las compresiones torácicas. Sin embargo, 
+cuando los reanimadores se plantean 
+poner fin a los esfuerzos de reanimación, 
+es vital que eviten utilizar únicamente un 
+valor límite específico de ETCO2, ya que se 
+ha observado supervivencia en pacientes 
+con una ETCO2 media inferior a 20 mmHg. 
+2025 (nuevo): En el caso de lactantes y niños 
+con monitorización invasiva continua de 
+la presión arterial durante la RCP, puede 
+ser razonable que los profesionales 
+de la salud fijen como objetivo una 
+presión arterial diastólica de 25 mmHg 
+o superior en lactantes y de 30 mmHg 
+o superior en niños de 1 año o más. 
+Motivo: Un nuevo estudio muestra que, 
+entre los pacientes pediátricos que 
+reciben RCP con una vía arterial invasiva 
+colocada, las tasas de supervivencia 
+con resultado neurológico favorable 
+mejoraban si la presión arterial diastólica 
+era de al menos 25 mmHg en lactantes 
+y de al menos 30 mmHg en niños. 
+Tratamiento de la taquicardia 
+supraventricular con pulso 
+2025 (actualización): En el caso de lactantes 
+y niños con taquicardia supraventricular 
+y compromiso cardiopulmonar que 
+no responden a maniobras vagales, 
+adenosina y cardioversión eléctrica 
+sincronizada y para los que no se 
+dispone de consulta experta, puede ser 
+razonable considerar la procainamida, la 
+amiodarona o el sotalol intravenosos (IV). 
+Motivo: La procainamida y la amiodarona son 
+tratamientos moderadamente eficaces para 
+la taquicardia supraventricular refractaria 
+a la adenosina, aunque pueden producirse 
+efectos adversos con ambas terapias. El 
+sotalol se aprobó para el tratamiento de la 
+taquicardia supraventricular en 2009, con 
+varios estudios que demuestran su eficacia 
+en la conversión aguda de la taquicardia 
+supraventricular cuando se administra bajo 
+la dirección de electrofisiólogos pediátricos 
+
+
+=== PAGE 16 ===
+eccguidelines.heart.org	
+ 15
+Aspectos destacados de 2025
+en entornos de cuidados intensivos y que
+informan de efectos adversos mínimos. 
+ 
+Manejo posparo cardíaco 
+2025 (actualización): Tras un paro cardíaco en 
+lactantes y niños, se recomienda mantener 
+una presión arterial sistólica y media 
+superior al percentil 10 para la edad. 
+Motivo: Dado que la presión arterial suele 
+ser lábil en el periodo posparo cardíaco, 
+es importante reconocer la hipotensión 
+(inferior al percentil 5 para la edad y el 
+sexo). La hipotensión es frecuente tras el 
+retorno de la circulación después de un 
+paro cardíaco, y se da entre el 25% y el 50% 
+de los lactantes y niños. En dos estudios 
+observacionales se asoció la presión arterial 
+sistólica por debajo del quinto percentil 
+para la edad en las primeras 12 horas tras 
+el paro cardíaco con menores tasas de 
+supervivencia al alta. Además, un análisis 
+secundario del ensayo ICU-Resuscitation 
+sobre el PCIH pediátrico reveló mayores 
+tasas de supervivencia al alta hospitalaria, 
+así como de supervivencia al alta hospitalaria 
+con resultados neurológicos favorables, 
+cuando los objetivos de presión arterial 
+se situaban por encima de un umbral de 
+presión arterial sistólica superior al percentil 
+10 para la edad y de presión arterial diastólica 
+superior al percentil 50 para la edad durante 
+las primeras 6 horas tras el paro cardíaco. 
+Pronóstico después del paro cardíaco 
+2025 (actualización): Se recomienda que los 
+profesionales de la salud tengan en cuenta 
+múltiples modalidades a la hora de predecir 
+los resultados neurológicos (favorables 
+o desfavorables tras la reanimación por 
+paro cardíaco en lactantes y niños). 
+2025 (nuevo): La utilidad de los reflejos 
+tusígeno, nauseoso o de la respuesta al 
+dolor para apoyar un pronóstico neurológico 
+favorable o desfavorable en cualquier 
+momento tras un paro cardíaco en lactantes 
+y niños no está bien establecida.
+2025 (nuevo): Cuando se interpreta 
+en el contexto de otros criterios 
+pronósticos, es razonable utilizar la 
+electroencefalografía (EEG) hasta 72 horas 
+después del paro cardíaco en lactantes 
+y niños para apoyar un pronóstico 
+neurológico favorable o desfavorable. 
+Motivo: Dos revisiones sistemáticas 
+evaluaron la asociación de la exploración 
+neurológica, los biomarcadores, el EEG y 
+las modalidades de imagen neurológica 
+con resultados favorables y desfavorables 
+tras la reanimación de un paro cardíaco 
+pediátrico. Ninguna de estas modalidades se 
+evaluó de forma aislada, y ninguna cumplió 
+con la precisión preespecificada para ser 
+utilizada como criterio pronóstico solitario 
+en cualquier punto temporal; por lo tanto, 
+a pesar de las recomendaciones en torno 
+a las pruebas individuales, ninguna debe 
+utilizarse de forma aislada para predecir el 
+resultado. La EEG es una modalidad que 
+puede utilizarse junto con otras pruebas, 
+según numerosos estudios, para pronosticar 
+el resultado. Sin embargo, faltan datos 
+que respalden el uso del reflejo tusígeno 
+o nauseoso para predecir un resultado 
+favorable o desfavorable. Los médicos deben 
+tener en cuenta múltiples modalidades a la 
+hora de evaluar el pronóstico neurológico 
+de los supervivientes tras un paro cardíaco. 
+Recuperación y supervivencia 
+posparo cardíaco 
+2025 (actualización): Es razonable que se 
+evalúen las necesidades físicas, cognitivas 
+y emocionales de los lactantes y niños 
+que sobreviven a un paro cardíaco para 
+orientar la atención de seguimiento durante 
+el primer año posterior al paro cardíaco. 
+Motivo: Cada vez se reconoce más que la 
+recuperación tras un paro cardíaco continúa 
+mucho después de la hospitalización inicial. 
+Los supervivientes pueden necesitar apoyo 
+médico, de rehabilitación, de los cuidadores 
+y de la comunidad durante los meses o años 
+posteriores al paro cardíaco. Una reciente 
+declaración científica de la AHA subraya la 
+importancia de apoyar a los pacientes y sus 
+familias durante este periodo para lograr 
+el mejor resultado posible a largo plazo. 
+soporte vItAl 
+AvAnzAdo 
+pArA Adultos
+ 
+La supervivencia al alta hospitalaria tras 
+un PCEH tratado por el SEM sigue siendo 
+baja, de aproximadamente el 10%, mientras 
+que las tasas de supervivencia al alta 
+hospitalaria para el PCIH se sitúan en torno 
+al 24%. Entre los que sobreviven hasta el 
+alta, aproximadamente el 85% tienen una 
+evolución neurológica favorable. La RCP 
+inmediata de alta calidad y la desfibrilación 
+oportuna son las piedras angulares de 
+una reanimación eficaz. Sin embargo, las 
+intervenciones de SVA, incluido el manejo 
+avanzado de la vía aérea, los tratamientos 
+farmacológicos y la atención coordinada 
+tras la reanimación, tanto en el ámbito 
+extrahospitalario como en el hospitalario, 
+siguen siendo esenciales para mejorar 
+los resultados de los pacientes. 
+Resumen de los aspectos 
+clave y los principales 
+cambios realizados 
+•	 Las arritmias (como las taquicardias) 
+pueden ser tanto una causa como 
+una manifestación de inestabilidad 
+clínica. Evaluar la causa próxima de esa 
+inestabilidad orientará a los profesionales 
+hacia el uso más juicioso de estas guías. 
+•	 Para la cardioversión de la fibrilación 
+auricular (FA) y el flúter auricular, 
+es preferible utilizar valores de 
+energía más altos (≥200 J) en la 
+primera descarga que más bajos.
+•	 Además de las actualizaciones 
+de las recomendaciones de 
+desfibrilación secuencial doble, 
+se añadieron recomendaciones para 
+la desfibrilación con cambio vectorial 
+basadas en bibliografía nueva. 
+Algoritmos y ayudas visuales 
+Se actualizó el Algoritmo de terminación 
+de la reanimación para incluir las 
+reglas de SVB y de terminación de la 
+reanimación. Se ha añadido un algoritmo 
+actualizado para el tratamiento de la 
+bradicardia en adultos con pulso. 
+
+
+=== PAGE 17 ===
+16	
+American Heart Association
+Principales recomendaciones 
+nuevas y actualizadas 
+Cambio de vector y desfibrilación 
+secuencial doble
+2025 (nuevo): No se ha establecido la 
+utilidad de la desfibrilación con cambio 
+vectorial en adultos con paro cardíaco 
+y fibrilación ventricular/taquicardia 
+ventricular sin pulso persistente después 
+de 3 o más descargas consecutivas. 
+2025 (actualización): No se ha establecido 
+la utilidad de la desfibrilación secuencial 
+doble en adultos con paro cardíaco 
+y fibrilación ventricular/taquicardia 
+ventricular sin pulso persistente tras 
+3 o más descargas consecutivas. 
+Motivo: El 2023 International Consensus 
+on CPR and ECC Science With Treatment 
+Recommendations del International Liaison 
+Committee on Resuscitation (ILCOR) 
+identificó un único ECA pequeño que 
+apoyaba el uso de la desfibrilación con 
+cambio vectorial y la desfibrilación secuencial 
+doble para la fibrilación ventricular refractaria. 
+Hay una serie de cuestiones pendientes 
+sobre el impacto de estas intervenciones 
+que requieren más investigación. 
+Acceso vascular inicial
+2025 (actualización): Se recomienda que 
+los profesionales de la salud intenten 
+primero establecer un acceso IV para 
+la administración de fármacos en 
+pacientes adultos con paro cardíaco. 
+2025 (actualización): El acceso intraóseo 
+(IO) es razonable si los intentos iniciales de 
+acceso IV no tienen éxito o no son factibles 
+en pacientes adultos con paro cardíaco.
+Motivo: En una revisión sistemática 
+y metanálisis del ILCOR de 2025, que 
+incluía datos de 3 ECA recientes de gran 
+tamaño, se halló que el uso del acceso 
+IO en comparación con el acceso IV no 
+producía una mejora estadísticamente 
+significativa de los resultados. Esta 
+revisión sistemática señaló una menor 
+probabilidad de lograr una RCE sostenida 
+por vía IO en comparación con la vía IV. 
+Medicamentos vasopresores 
+2025 (actualización): Teniendo en cuenta el 
+tiempo, en el caso de pacientes adultos en 
+paro cardíaco con un ritmo desfibrilable, 
+es razonable administrar adrenalina 
+después de que hayan fracasado los 
+intentos iniciales de desfibrilación. 
+Motivo: La bibliografía apoya que se dé 
+prioridad a la desfibrilación rápida y a la 
+administración de adrenalina después 
+de que los intentos iniciales con RCP 
+y desfibrilación no tengan éxito en 
+pacientes con ritmos desfibrilables. 
+2025 (actualización): La vasopresina 
+sola o en combinación con adrenalina 
+no ofrece ninguna ventaja como 
+sustituto de la adrenalina en pacientes 
+adultos con paro cardíaco. 
+Motivo: En múltiples revisiones 
+sistemáticas, metanálisis de ECA 
+y estudios observacionales no se han 
+encontrado diferencias en los resultados 
+de supervivencia al comparar la vasopresina 
+sola o la vasopresina combinada con 
+adrenalina frente a la adrenalina sola. 
+Medicamentos no vasopresores
+2025 (nuevo): En adultos con paro cardíaco, 
+no está claro si el uso de betabloqueantes, 
+bretilio, procainamida o sotalol para tratar 
+la fibrilación ventricular o la taquicardia 
+ventricular sin pulso que no responden 
+a la desfibrilación tiene algún beneficio. 
+Motivo: La actualización de la evidencia del 
+ILCOR en 2025 no aportó nueva evidencia 
+sobre el uso de otros agentes antiarrítmicos 
+parenterales en el paro cardíaco. Entre 
+ellos se incluye el tosilato de bretilio (que 
+se ha reintroducido recientemente en 
+el mercado estadounidense sin nueva 
+evidencia sobre su eficacia o seguridad). 
+Complementos de la RCP
+2025 (nuevo): No se recomienda la 
+RCP con la cabeza levantada en 
+adultos con paro cardíaco, excepto 
+en el marco de ensayos clínicos. 
+Motivo: En una revisión sistemática reciente 
+del ILCOR no se identificó ningún ECA 
+y solo 3 estudios observacionales, cada 
+uno con limitaciones metodológicas 
+significativas, lo que identificó una certeza 
+muy baja de la evidencia, reducida por el 
+riesgo grave de sesgo en los resultados 
+de supervivencia al alta y supervivencia al 
+alta con resultado neurológico favorable, 
+y señaló que se requiere trabajo a futuro 
+para evaluar este complemento. 
+Medidas de terminación 
+de la reanimación 
+2025 (actualización): En un SEM escalonado 
+con profesionales de SVA y SVB, es 
+razonable utilizar la regla universal de 
+terminación de la reanimación para 
+los pacientes adultos con PCEH. 
+Motivo: La regla universal de terminación 
+de la reanimación, que utiliza los mismos 
+criterios que la regla del SVB (es decir, paro 
+cardíaco no presenciado por profesionales 
+del SEM; sin descarga eléctrica; sin 
+RCE), ha sido validada prospectivamente 
+de forma específica en sistemas de 
+emergencia médica que combinan 
+SVB y SVA, o respuesta escalonada.
+Taquicardia de complejo ancho
+2025 (actualización): La cardioversión 
+sincronizada se recomienda para el 
+tratamiento agudo de pacientes adultos 
+con taquicardia de complejo ancho 
+hemodinámicamente inestable. 
+Motivo: En pacientes hemodinámicamente 
+inestables con taquicardia de complejo 
+ancho, es fundamental restablecer 
+rápidamente el ritmo sinusal. La cardioversión 
+sincronizada tiene una alta tasa de resolución 
+de la taquicardia de complejo ancho. 
+2025 (actualización): La cardioversión 
+sincronizada se recomienda para 
+el tratamiento agudo de pacientes 
+adultos con taquicardia de complejo 
+ancho hemodinámicamente estable 
+cuando las maniobras vagales y el 
+tratamiento farmacológico son 
+ineficaces o están contraindicados. 
+Motivo: En pacientes estables con taquicardia 
+de complejo ancho, pueden intentarse 
+maniobras vagales o adenosina; sin embargo, 
+si el paciente permanece en taquicardia 
+de complejo ancho tras estas terapias, se 
+recomienda la cardioversión sincronizada 
+para restablecer el ritmo sinusal. 
+
+
+=== PAGE 18 ===
+eccguidelines.heart.org	
+ 17
+Aspectos destacados de 2025
+Fibrilación o flúter auricular con 
+respuesta ventricular rápida 
+2025 (actualización): Para la cardioversión 
+sincronizada de la FA en adultos con 
+cualquier desfibrilador de onda bifásica 
+aprobado actualmente en EE. UU., es 
+razonable un ajuste inicial de energía de 
+al menos 200 J, que se incrementará en 
+caso de fallo de la descarga, dependiendo 
+del desfibrilador bifásico utilizado. 
+Motivo: En ensayos aleatorizados recientes, 
+junto con un metaanálisis en red en el 
+que participaron más de 3000 pacientes 
+con FA, se reveló que las descargas 
+de 200 J lograron un éxito acumulado 
+de la cardioversión superior al 90% en 
+las 3 plataformas bifásicas disponibles 
+actualmente en Estados Unidos. Las 
+descargas monofásicas de baja energía 
+tuvieron una probabilidad significativamente 
+mayor de provocar fibrilación ventricular al 
+cardiovertir la FA y FA al cardiovertir el flúter 
+auricular que un ajuste de 200 J o superior. 
+2025 (nuevo): La utilidad de la cardioversión 
+sincronizada doble de la FA en adultos como 
+estrategia de tratamiento inicial es incierta. 
+Motivo: Sobre la base de los datos 
+actualmente disponibles y dado el elevado 
+éxito de la cardioversión sincronizada 
+óptima utilizando ondas bifásicas, el 
+beneficio incremental de la cardioversión 
+sincronizada doble parece modesto. 
+2025 (actualización): Para la cardioversión 
+sincronizada del flúter auricular en adultos, 
+un ajuste de energía inicial de 200 J puede 
+ser razonable e incrementarse en caso 
+de fallo de la descarga, dependiendo 
+del desfibrilador bifásico utilizado. 
+Motivo: Estudios recientes respaldan la 
+probabilidad de una mayor eficacia, eficiencia 
+y simplicidad, sin problemas de seguridad, 
+cuando se utiliza una energía inicial de 
+200 J con cualquier desfibrilador bifásico 
+comercializado actualmente en EE. UU. para 
+la cardioversión del flúter y se incrementa en 
+caso de fallo de la descarga, dependiendo 
+de las características del desfibrilador. 
+Manejo inicial de la bradicardia
+2025 (nuevo): En pacientes adultos 
+con bradicardia hemodinámicamente 
+inestable persistente y refractaria al 
+tratamiento médico, es razonable utilizar 
+estimulación cardíaca transvenosa 
+temporal para aumentar la frecuencia 
+cardiaca y mejorar los síntomas. 
+Motivo: Cuando la frecuencia cardiaca no 
+mejora con la medicación y persiste el 
+shock, la estimulación cardíaca transvenosa 
+puede mejorar la frecuencia cardiaca y los 
+síntomas hasta que pueda aplicarse un 
+tratamiento más definitivo (corrección 
+de la causa subyacente o colocación 
+de un marcapasos permanente). 
+AtencIón 
+pospAro 
+cArdíAco
+La atención posparo cardíaco se centra 
+en reducir las secuelas neurológicas y la 
+disfunción orgánica al tiempo que se 
+identifica y aborda cualquier causa reversible 
+del paro cardíaco. El pronóstico neurológico 
+es un componente clave de la atención 
+tras un paro cardíaco para garantizar 
+la utilización adecuada de los recursos, 
+la retirada del tratamiento de soporte 
+vital y la optimización de los resultados 
+del paciente. El Algoritmo de atención 
+posparo cardíaco en adultos (Figura 7) 
+se ha actualizado para reflejar los nuevos 
+conocimientos científicos en este campo. 
+Resumen de los aspectos 
+clave y los principales 
+cambios realizados 
+•	 La sección sobre pronóstico neurológico 
+se actualizó para incluir predictores de 
+resultados favorables y se añadió la 
+determinación de neurofilamentos de 
+cadena ligera como biomarcador sérico.
+•	 Es razonable que el control de la 
+temperatura se mantenga durante 
+al menos 36 horas en pacientes 
+adultos que siguen sin responder 
+a instrucciones verbales tras el RCE. 
+•	 Debe evitarse la hipotensión en adultos 
+tras el RCE manteniendo una presión 
+arterial media (PAM) mínima de al menos 
+65 mmHg, aunque no hay evidencia 
+suficiente para recomendar un vasopresor 
+específico que trate la hipotensión en 
+pacientes adultos tras un paro cardíaco. 
+•	 Las nuevas recomendaciones 
+para los supervivientes de un paro 
+cardíaco y sus cuidadores se centran 
+en la evaluación estructurada y el 
+tratamiento/derivación por angustia 
+emocional tras la estabilización 
+médica y antes del alta hospitalaria.
+Principales recomendaciones 
+nuevas y actualizadas 
+Presión arterial en adultos 
+tras un paro cardíaco 
+2025 (actualización): Debe evitarse 
+la hipotensión en adultos tras el 
+RCE manteniendo una PAM mínima 
+de al menos 65 mmHg. 
+Motivo: Cuatro ensayos aleatorizados 
+compararon objetivos de PAM más bajos 
+con objetivos más altos después de un 
+PCEH. Estos estudios no demostraron una 
+mejor supervivencia global o un resultado 
+neurológico favorable con una mayor PAM. 
+Estudios diagnósticos para 
+adultos tras un paro cardíaco 
+2025 (nuevo): Puede ser razonable realizar una 
+tomografía computarizada (TAC) de la cabeza 
+a la pelvis en pacientes adultos tras el RCE 
+para investigar la etiología del paro cardíaco 
+y las complicaciones de la reanimación. 
+2025 (nuevo): Puede ser razonable realizar 
+una ecocardiografía o una ecografía 
+cardíaca en el punto de atención 
+a pacientes adultos tras el RCE para 
+identificar diagnósticos clínicamente 
+significativos que requieran intervención. 
+Motivo: La ecocardiografía, la ecografía 
+cardíaca en el punto de atención y la 
+tomografía computarizada se utilizan en 
+pacientes que han sufrido un paro cardíaco 
+para identificar diagnósticos clínicamente 
+significativos que requieran intervención. 
+
+
+=== PAGE 19 ===
+18	
+American Heart Association
+Algoritmo de atención posparo cardíaco en adultos
+Figura 7. Algoritmo de atención posparo cardíaco en adultos.
+RCE logrado
+Maneje la vía aérea
+Evaluar la vía aérea.
+Colocar o cambiar un dispositivo de manejo avanzado 
+de la vía aérea, según sea necesario.
+Confirmar la correcta colocación de una vía aérea 
+avanzada.
+Proporcione oxigenación y ventilación
+Mantenga la Fio2 al 100% hasta que se pueda medir de 
+forma fiable la Spo2 (o Pao2).
+Objetivo de Spo2 de 90%-98% (Pao2 de 60-105 mmHg)
+Objetivo de Pco2 de 35-45 mmHg 
+Controle la hemodinamia
+PAM objetivo de ≥65 mmHg
+Pruebas diagnósticas tempranas
+Obtener un ECG de 12 derivaciones.
+Evaluar realizar diagnóstico por 
+imágenes (TAC o ecografía).
+Estabilización 
+inicial tras el 
+RCE
+Trate las etiologías y complicaciones del paro.
+Evalúe realizar una angiografía coronaria de 
+urgencia o emplear asistencia circulatoria 
+mecánica.
+Evalúe al paciente tras la sedación y 
+bloqueo neuromuscular, si es posible.
+¿Sigue 
+instrucciones?
+Sí
+Cuidados críticos continuos
+Angiografía coronaria cuando 
+sea apropiado
+No o no 
+está seguro
+Cuidados críticos continuos
+Estrategia deliberada para 
+controlar la temperatura
+EEG
+Angiografía coronaria cuando 
+sea apropiado
+Pronóstico multimodal en el 
+momento adecuado
+Manejo 
+continuado
+Estabilización inicial tras el RCE
+La reanimación continúa durante la fase 
+posterior al RCE, y muchas de estas 
+actividades pueden darse simultáneamente.
+Maneje la vía aérea: Evaluar y considerar 
+la colocación o el cambio de un dispositivo 
+de manejo avanzado de la vía aérea 
+(normalmente un tubo endotraqueal o 
+dispositivo supraglótico). Confirmar la 
+correcta colocación de un dispositivo 
+de manejo avanzado de la vía aérea. 
+Esto incluye generalmente el uso de la 
+onda de capnografía o la capnometría.
+Proporcione oxigenación y ventilación: 
+Ajustar la Fio2 para lograr una Spo2 de 90%-
+98% (o Pao2 de 60-105 mmHg). Ajustar la 
+ventilación por minuto para alcanzar una 
+Pco2 de 35-45 mmHg si no hay acidosis 
+grave.
+Controle la hemodinamia: Iniciar o 
+ajustar los vasopresores o la reanimación 
+con líquidos según sea necesario para 
+conseguir una PAM ≥65 mmHg.
+Pruebas diagnósticas tempranas: Realice 
+un ECG de 12 derivaciones para evaluar la 
+presencia de isquemia o arritmia. Considere 
+la posibilidad de realizar una TAC craneal, de 
+tórax, abdomen y/o pelvis para determinar 
+la causa del paro cardíaco o evaluar las 
+lesiones sufridas durante la reanimación. 
+Realizar una ecografía o la ecocardiografía 
+en el punto de atención puede ser razonable 
+para identificar diagnósticos clínicamente 
+significativos que requieran intervención.
+Manejo continuado
+Trate las etiologías y complicaciones del 
+paro.
+Evalúe realizar una intervención cardiaca 
+de emergencia: 
+ • Presencia de elevación persistente del 
+segmento ST
+ • Shock cardiogénico
+ • Arritmias ventriculares recurrentes o 
+refractarias
+ • Isquemia miocárdica grave
+Control de la temperatura: Si el paciente 
+no sigue instrucciones tras la sedación y 
+el bloqueo neuromuscular o es incapaz de 
+evaluar, inicie una estrategia deliberada de 
+control de la temperatura con un objetivo de 
+32 °C-37,5 °C lo antes posible.
+Evalúe si hay convulsiones: Evaluar si hay 
+convulsiones clínicas y obtener EEG para 
+evaluar si hay convulsiones en pacientes 
+que no siguen instrucciones.
+Pronóstico: Abordaje multimodal con 
+impresiones diferidas (≥72 horas desde el 
+RCE o el logro de la normotermia). 
+Entre los cuidados críticos continuos se 
+incluye lo siguiente:
+ • Alcanzar una Pao2 de 60-105 mmHg y una 
+Pco2 de 35-45 mmHg (salvo en casos de 
+acidosis grave); evitar la hipoglucemia 
+(glucosa <70 mg/dl) y la hiperglucemia 
+(glucosa >180 mg/dl); conseguir una PAM 
+≥65 mmHg.
+ • Evalúe emplear antibióticos.
+© 2025 American Heart Association
+
+
+=== PAGE 20 ===
+eccguidelines.heart.org	
+ 19
+Aspectos destacados de 2025
+Control de la temperatura en 
+adultos tras un paro cardíaco 
+2025 (actualización): Es razonable que el 
+control de la temperatura se mantenga 
+durante al menos 36 horas en pacientes 
+adultos que siguen sin responder 
+a instrucciones verbales tras el RCE. 
+Motivo: El control de la temperatura incluye 
+el control de la hipotermia (32 °C-34 °C) 
+y de la normotermia o prevención de la 
+fiebre (36 °C-37,5 °C). Reconociendo la 
+evolución de la evidencia y las definiciones 
+con respecto al control de la temperatura, 
+36 horas de control total de la temperatura 
+es la duración más corta recomendada. 
+Intervención coronaria percutánea 
+en adultos tras paro cardíaco 
+2025 (actualización): Se recomienda realizar 
+una angiografía coronaria antes del alta 
+hospitalaria a los adultos supervivientes de 
+un paro cardíaco en los que se sospeche 
+una etiología cardiaca, especialmente en 
+presencia de un ritmo inicial desfibrilable, 
+disfunción sistólica sin causa aparente 
+del ventrículo izquierdo o evidencia 
+de isquemia miocárdica grave. 
+Motivo: La enfermedad de las arterias 
+coronarias suele identificarse en pacientes 
+que han sufrido un PCEH. Se ha demostrado 
+que identificar y tratar la enfermedad 
+coronaria inestable mejora los resultados. 
+Asistencia circulatoria 
+mecánica temporal en adultos 
+tras un paro cardíaco 
+2025 (nuevo): En un grupo muy selecto 
+de pacientes adultos con shock 
+cardiogénico refractario tras paro cardíaco 
+y RCE, puede considerarse la asistencia 
+circulatoria mecánica temporal. 
+Motivo: El shock cardiogénico suele 
+producirse como causa o consecuencia 
+de un paro cardíaco. Los dispositivos 
+circulatorios mecánicos temporales pueden 
+proporcionar estabilización hemodinámica 
+en el shock cardiogénico refractario. 
+Diagnóstico y tratamiento de mioclonías 
+en adultos tras un paro cardíaco 
+2025 (nuevo): El tratamiento para suprimir 
+las mioclonías sin un correlato en el 
+EEG no se recomienda en adultos 
+supervivientes de un paro cardíaco. 
+Motivo: No hay evidencia que implique la 
+mioclonia sin correlato electroencefalográfico 
+como factor en la patogénesis de la lesión 
+cerebral secundaria tras un paro cardíaco. 
+Por lo tanto, el riesgo de efectos secundarios 
+supera el beneficio desconocido de suprimir 
+las mioclonías sin un correlato en el EEG 
+con los resultados de los pacientes.
+Pronóstico neurológico 
+2025 (nuevo): Cuando se evalúa con 
+otras pruebas pronósticas, puede ser 
+razonable considerar un fondo de EEG 
+continuo sin descargas en las 72 horas 
+siguientes al paro cardíaco para apoyar 
+el pronóstico de resultado neurológico 
+favorable en pacientes adultos que 
+permanecen en coma tras el RCE. 
+Motivo: La sección sobre pronóstico 
+neurológico se actualizó para incluir 
+factores predictivos de resultados 
+favorables. Una revisión sistemática 
+de 2022 del ILCOR investigó la 
+predicción de resultados favorables. 
+Recuperación y supervivencia 
+tras un paro cardíaco 
+2025 (actualización): Se recomienda que 
+los supervivientes de un paro cardíaco y 
+sus cuidadores reciban una evaluación 
+estructurada y un tratamiento o derivación 
+por angustia emocional tras la estabilización 
+médica y antes del alta hospitalaria. 
+Motivo: Aproximadamente una cuarta 
+parte de los supervivientes de un paro 
+cardíaco y sus cuidadores experimentan 
+angustia emocional. Los estudios en 
+parejas superviviente-cuidador y en 
+supervivientes mostraron mejoras en 
+la angustia emocional de aquellos que 
+recibieron una intervención psicosocial. 
+pAro 
+cArdíAco por 
+cIrcunstAncIAs 
+especIAles
+Varias circunstancias especiales pueden 
+justificar un tratamiento adicional más 
+allá de la atención SVB y SVA estándar. 
+Estas recomendaciones pretenden cubrir 
+el manejo tanto de pediatría como de 
+adultos con afecciones potencialmente 
+mortales, incluida el paro cardíaco. 
+Resumen de los aspectos 
+clave y los principales 
+cambios realizados
+•	 Aunque el soporte vital extracorpóreo 
+(SVEC) no está disponible en todos los 
+entornos, los adultos y los niños en paro 
+cardíaco o en estado cercano al paro 
+cardíaco con una etiología potencialmente 
+reversible están recibiendo soporte con 
+dispositivos de SVEC, como la oxigenación 
+por membrana extracorpórea venoarterial.
+•	 Las compresiones torácicas, ventilación 
+con bolsa mascarilla, la desfibrilación, la 
+aspiración y la intubación endotraqueal 
+deben considerarse procedimientos 
+generadores de aerosoles, que 
+suponen un riesgo de infección para los 
+miembros del equipo de reanimación.
+•	 El tratamiento del paro cardíaco durante 
+el embarazo es un escenario clínico 
+complejo que requiere estrategias 
+de reanimación que se adapten a los 
+cambios fisiológicos del embarazo.
+•	 Debe administrarse un antagonista 
+opiáceo (p. ej., naloxona) a las personas 
+con paro respiratorio por sospecha 
+de sobredosis de opiáceos. Tanto 
+los rescatadores entrenados como 
+los legos y el público en general 
+pueden administrar naloxona.
+
+
+=== PAGE 21 ===
+20	
+American Heart Association
+Principales recomendaciones 
+nuevas y actualizadas 
+Exacerbación asmática 
+potencialmente mortal
+2025 (nuevo): Puede ser razonable 
+utilizar el SVEC en adultos y niños 
+con asma potencialmente mortal 
+refractario a las terapias estándar. 
+2025 (nuevo): Puede considerarse el 
+tratamiento con anestésicos volátiles para 
+adultos y niños con asma potencialmente 
+mortal refractario a las terapias estándar. 
+Motivo: El asma puede provocar un paro 
+cardíaco por la obstrucción de la vía 
+aérea inferior que provoca hipoxemia, 
+hipercapnia, acidosis respiratoria y aumento 
+de la presión intratorácica, lo que conlleva 
+una disminución del gasto cardíaco. Los 
+estudios observacionales pediátricos y en 
+adultos sobre SVEC o anestésicos volátiles 
+demuestran tasas de supervivencia de entre 
+el 83,5% y el 100%. Puede considerarse la 
+oxigenación por membrana extracorpórea 
+venovenosa o venoarterial en función 
+de las necesidades de cada paciente. 
+Hiperpotasemia potencialmente mortal 
+2025 (actualización): La eficacia de la 
+administración de calcio IV en adultos 
+y niños en paro cardíaco por sospecha de 
+hiperpotasemia no está bien establecida. 
+Motivo: Para adultos y niños en paro 
+cardíaco por sospecha de hiperpotasemia, 
+la evidencia humana de una mejora de la 
+supervivencia o de un estado neurológico 
+favorable tras la administración de calcio 
+IV es limitada. La administración de calcio 
+por vía IV debe sopesarse cuidadosamente 
+frente a la posibilidad de que pueda 
+restar tiempo a las intervenciones de 
+reanimación urgentes y recomendadas 
+por las guías, como la RCP de alta calidad, 
+la desfibrilación de ritmos desfibrilables 
+y la administración de adrenalina. 
+Hipotermia potencialmente mortal 
+2025 (nuevo): Es razonable utilizar escalas de 
+pronóstico para guiar la decisión de iniciar 
+el recalentamiento con SVEC en adultos y 
+niños en paro cardíaco por hipotermia. 
+2025 (nuevo): Puede ser razonable recalentar 
+con SVEC a adultos y niños con hipotermia 
+ambiental grave (temperatura central, <28 °C 
+[84 °F]) y que no estén en paro cardíaco. 
+Motivo: La hipotermia ambiental grave 
+(temperatura central, <30 °C [86 °F]) puede 
+causar paro cardíaco, así como síntomas 
+que simulan la muerte. La reducción de la 
+tasa metabólica y del consumo de oxígeno 
+aumenta la probabilidad de supervivencia 
+neurológicamente intacta. Los estudios 
+muestran una mejor supervivencia en el 
+paro cardíaco por hipotermia cuando se 
+administra SVEC en comparación con 
+cuando se administra RCP convencional. 
+El recalentamiento de adultos y niños que 
+no están en paro cardíaco con SVEC puede 
+ser más rápido, pero conlleva el riesgo de 
+complicaciones relacionadas con su uso. 
+La escala de probabilidad HOPE y la de 
+supervivencia ICE están mejor validadas 
+para predecir la supervivencia tras un paro 
+cardíaco por hipotermia en comparación 
+con otros factores pronósticos aislados.
+Hipertermia potencialmente mortal 
+2025 (nuevo): Es razonable elegir la 
+inmersión en agua helada (1 °C-5 °C 
+[33,8 °F-41 °F]) frente a otros métodos 
+de enfriamiento en adultos y niños con 
+hipertermia potencialmente mortal. 
+2025 (nuevo): Es razonable enfriar 
+a los adultos y niños con hipertermia 
+potencialmente mortal lo más 
+rápidamente posible con un descenso 
+de al menos 0,15 °C/min (0,27 °F/min). 
+Motivo: El paro cardíaco por hipertermia 
+potencialmente mortal (>40 °C [104 °F]) 
+puede prevenirse mediante enfriamiento 
+rápido. Una revisión sistemática de estudios 
+clínicos y observacionales en humanos halló 
+que el enfriamiento por inmersión en agua 
+helada es el más eficaz y el que tiene más 
+probabilidades de alcanzar la velocidad de 
+enfriamiento óptima de al menos 0,15 °C/min  
+(0,27 °F/min) en comparación con otras 
+estrategias. Estas recomendaciones se 
+aplican a la hipertermia ambiental, así como 
+a la hipertermia asociada a la intoxicación 
+por simpaticomiméticos y cocaína. 
+Dispositivos de asistencia 
+ventricular izquierda 
+2025 (nuevo): En adultos y niños 
+inconscientes con dispositivos de 
+asistencia ventricular izquierda (DAVI) 
+permanentes y perfusión deficiente, se 
+deben realizar compresiones torácicas. 
+2025 (nuevo): En adultos y niños inconscientes 
+con DAVI permanentes y perfusión deficiente, 
+puede ser razonable iniciar inmediatamente 
+las compresiones torácicas mientras 
+se evalúan simultáneamente las causas 
+reversibles relacionadas con el dispositivo. 
+Motivo: La ausencia de pulso palpable 
+puede dificultar la confirmación del paro 
+cardíaco en adultos y niños con un DAVI. 
+La perfusión se evalúa mediante el color de 
+la piel, la temperatura de la piel, el relleno 
+capilar, la PAM y la presión parcial de dióxido 
+de carbono al final de la espiración. Si la 
+perfusión está alterada, es probable que se 
+produzca un paro cardíaco. Los resultados 
+del paro cardíaco con y sin RCP en esta 
+población son difíciles de evaluar debido al 
+sesgo de estos estudios, pero el beneficio 
+potencial de la RCP supera el riesgo teórico 
+de desprendimiento del dispositivo. El 
+tratamiento debe dar prioridad a la RCP al 
+tiempo que se intenta restablecer la función 
+del DAVI si se dispone de un segundo 
+reanimador. El algoritmo del DAVI (Figura 8)  
+detalla los pasos del tratamiento. 
+Paro cardíaco durante el embarazo 
+2025 (actualización): La preparación para 
+el parto durante la reanimación de una 
+paciente embarazada con paro cardíaco 
+debe comenzar en el momento en que se 
+detecta el paro cardíaco, con el objetivo 
+de completar la cesárea en 5 minutos. 
+2025 (nuevo): Es razonable utilizar la RCP-EC 
+en pacientes embarazadas o en el periodo 
+periparto que sufren un paro cardíaco y no 
+responden a la reanimación estándar. 
+2025 (nuevo): Debe utilizarse un protocolo de 
+transfusión masiva con una estrategia de 
+transfusión equilibrada para las pacientes 
+en periparto con sospecha de embolia de 
+líquido amniótico potencialmente mortal. 
+
+
+=== PAGE 22 ===
+eccguidelines.heart.org	
+ 21
+Aspectos destacados de 2025
+Motivo: Además de la planificación en 
+equipo, el desplazamiento lateral uterino 
+izquierdo manual y la reanimación estándar, 
+el parto debe completarse en 5 minutos 
+para mejorar los resultados de la paciente 
+embarazada. Los estudios sobre la RCP-EC 
+indican tasas de supervivencia de entre el 
+55% y el 75% en pacientes embarazadas. 
+La embolia de líquido amniótico en pacientes 
+periparto puede provocar paro cardíaco y se 
+caracteriza por compromiso hemodinámico, 
+dificultad respiratoria y coagulación 
+intravascular diseminada con hemorragia 
+resultante. Una estrategia equilibrada de 
+transfusión masiva de glóbulos rojos, plasma 
+y plaquetas equivalentes reduce el riesgo de 
+muerte. El Algoritmo de paro cardíaco en el 
+embarazo detalla los pasos del tratamiento.
+Toxicología: Sobredosis de opiáceos 
+2025 (nuevo): Para los rescatadores legos y 
+entrenados, la administración de antagonistas 
+opiáceos puede ser razonable para adultos 
+y niños en paro cardíaco con sospecha de 
+sobredosis de opiáceos, siempre que la 
+administración de antagonistas opiáceos 
+(p. ej., naloxona) no interfiera con la realización 
+de la reanimación estándar, incluida la 
+RCP de alta calidad con ventilaciones. 
+2025 (nuevo): Los adultos y niños 
+tratados por sobredosis de opiáceos 
+deben recibir un antagonista opiáceo 
+(p. ej., naloxona) e instrucciones sobre 
+cómo utilizarlo en el momento del alta 
+de un centro de atención médica. 
+Motivo: Los antagonistas opiáceos 
+restauran los reflejos protectores de la vía 
+aérea y revierten el paro respiratorio por 
+sobredosis de opiáceos en adultos y niños. 
+Además, deben administrarse siempre que 
+se sospeche una sobredosis de opiáceos. 
+Ningún ensayo clínico ha evaluado el papel 
+de los antagonistas opiáceos en adultos 
+o niños con paro cardíaco. La eficacia de 
+la administración de naloxona en estudios 
+con animales y estudios observacionales en 
+adultos para el paro cardíaco indiferenciado o 
+el paro cardíaco con sospecha de sobredosis 
+de opiáceos es contradictoria. Sin embargo, 
+no se conoce ningún daño derivado de la 
+administración de naloxona a una persona en 
+paro cardíaco, siempre que la administración 
+del antagonista opiáceo no interfiera con la 
+reanimación estándar. 
+Figura 8. Algoritmo de DAVI permanente en adultos y niños.
+© 2025 American Heart Association
+Adultos y niños que no responden con un DAVI 
+permanente
+ • Proporcionar ventilación si es necesario
+ • Evaluar la perfusión
+No realizar compresiones 
+torácicas externas
+ • Evaluar y tratar las causas 
+de falta de respuesta no 
+relacionadas con DAVI
+Transporte
+Contactar con el centro 
+del DAV
+ • Continúe monitorizando 
+la perfusión
+Monitoree la perfusión
+No
+Sí
+Realizar compresiones 
+torácicas externas
+ • Evaluar la función del DAVI, 
+si se dispone de un segundo 
+reanimador
+ • Evaluar y tratar las causas 
+de falta de respuesta no 
+relacionadas con DAVI
+¿Perfusión adecuada?
+Continúe con el SVB o SVA
+Evaluación de la perfusión
+Hay perfusión adecuada* si 
+se presenta alguno de los 
+siguientes casos:
+ • Color y temperatura normales 
+de la piel
+ • Llenado capilar normal
+ • PAM >50 mmHg (si el manguito 
+de PA no invasiva no funciona, 
+utilizar doppler o una vía arterial, 
+si se dispone de ella)
+ • Petco2 >20 mmHg 
+*Los pacientes pueden no tener pulso 
+palpable
+Causas de falta de respuesta no 
+relacionadas con DAVI
+ • Arritmia
+ • Hemorragia/hipovolemia
+ • Hipoglucemia
+ • Hipoxia
+ • Sobredosis
+ • Insuficiencia ventricular derecha
+ • Sepsis
+ • ACV
+Evalúe e intente reiniciar la 
+función del DAVI
+ • Buscar/escuchar alarmas
+ • Buscar escuchar si el DAVI 
+emite un zumbido
+ • ¿El sistema de transmisión está 
+conectado?
+ • ¿La fuente de alimentación está 
+conectada?
+ • ¿Necesita sustituir el 
+controlador del sistema?
+
+
+=== PAGE 23 ===
+22	
+American Heart Association
+Las personas que sobreviven a una 
+sobredosis de opiáceos corren un alto riesgo 
+de sufrir una sobredosis posterior. Además 
+de las intervenciones psicosociales breves 
+y la derivación a programas de tratamiento 
+basados en la evidencia, proporcionar 
+dosis de antagonistas de opiáceos “para 
+llevar a casa” o “para dejar” junto con 
+la enseñanza correspondiente puede 
+prevenir futuras sobredosis mortales.
+cIencIA de lA 
+educAcIón
+La ciencia de la educación y el entrenamiento, 
+así como la tecnología de apoyo al 
+entrenamiento siguen evolucionando, y una 
+revisión exhaustiva de la bibliografía dio lugar 
+a varias actualizaciones nuevas e importantes 
+que repercuten en el entrenamiento tanto 
+de los profesionales de la salud como 
+de los reanimadores legos. Entre las 
+actualizaciones más significativas figuran las 
+recomendaciones sobre los dispositivos de 
+retroalimentación durante el entrenamiento, 
+las disparidades en la enseñanza de la 
+RCP, el uso de la realidad virtual (RV) y el 
+entrenamiento de rescatadores legos 
+en caso de sobredosis de opiáceos. 
+•	 La tecnología sigue cambiando el 
+panorama educativo y las fuerzas del 
+mercado de la atención médica han 
+impulsado la aplicación de nuevas 
+estrategias para reducir costos.
+•	 El creciente corpus de conocimientos 
+científicos en materia de educación ha 
+dado lugar a diferentes recomendaciones 
+en cuanto a la tecnología y las técnicas 
+para enseñar información cognitiva 
+y habilidades psicomotoras, así como 
+para diferentes públicos (profesionales 
+de la salud y reanimadores legos).
+•	 A pesar de las innovaciones en el 
+entrenamiento en soporte vital, siguen 
+sin observarse mejoras en los resultados 
+de los pacientes, aunque estos siguen 
+siendo el objetivo final del entrenamiento.
+Uso de dispositivos de retroalimentación
+durante el entrenamiento en RCP
+ 
+2025 (actualización): Se recomienda el uso 
+de dispositivos de retroalimentación 
+durante el entrenamiento en RCP 
+para profesionales de la salud. 
+2025 (actualización): Se recomienda el uso 
+de dispositivos de retroalimentación 
+durante el entrenamiento en RCP 
+para reanimadores legos.
+Motivo: En un metaanálisis de varios ECA 
+nuevos realizados con profesionales de la 
+salud se demostró que los dispositivos de 
+retroalimentación de la RCP tenían un efecto 
+de moderado a grande en todas las métricas 
+de calidad de la RCP. En tres ECA realizados 
+con reanimadores legos se demostró 
+que los dispositivos de retroalimentación 
+eran eficaces para aumentar las 
+métricas medias de calidad de la RCP. 
+Práctica deliberada de ciclo rápido 
+2025 (nuevo): Puede ser razonable incorporar 
+la práctica deliberada de ciclo rápido 
+como parte del entrenamiento en SVB 
+o SVA de los profesionales de la salud. 
+Motivo: La práctica deliberada de ciclo rápido 
+es un método de entrenamiento basado en la 
+simulación que incorpora el debriefing dentro 
+del evento. Los estudios han descubierto que 
+la práctica deliberada de ciclo rápido mejora 
+el rendimiento de múltiples habilidades de 
+RCP y las puntuaciones de la carga de trabajo.
+Entrenamiento de trabajo 
+en equipo y liderazgo
+2025 (actualización): Se recomienda 
+que el entrenamiento en soporte 
+vital de los profesionales de la salud 
+incluya un énfasis específico en las 
+competencias de trabajo en equipo.
+Motivo: Doce de los 14 ECA revisados 
+informaron de un rendimiento superior tras 
+un entrenamiento específico de trabajo en 
+equipo en cuanto a resultados relacionados 
+con la comunicación, el comportamiento 
+de liderazgo, las habilidades no técnicas, 
+la gestión de la carga de trabajo y el trabajo 
+en equipo en general al finalizar el curso.
+Aprendizaje gamificado
+2025 (nuevo): Puede ser razonable utilizar 
+elementos de aprendizaje gamificados 
+como componente del entrenamiento en 
+reanimación para profesionales de la salud.
+2025 (nuevo): Puede ser razonable utilizar 
+elementos de aprendizaje gamificados 
+como componente del entrenamiento 
+en RCP para reanimadores legos.
+Motivo: Dado que la evidencia sobre el 
+aprendizaje gamificado, así como sobre 
+la RV aumentada, es cada vez mayor, se 
+separaron las recomendaciones para estas 
+técnicas y se añadió una recomendación 
+específica para la realidad aumentada. 
+El aprendizaje gamificado se asocia con 
+una mejora en los conocimientos sobre 
+RCP, la ejecución de las habilidades y la 
+confianza de los reanimadores legos y los 
+profesionales de la salud; sin embargo, 
+la evidencia actual para respaldar el 
+aprendizaje gamificado es escasa.
+Realidad virtual y realidad aumentada
+2025 (nuevo): Puede ser razonable utilizar la RV 
+para apoyar la adquisición de conocimientos 
+en el entrenamiento en SVB y SVA de 
+reanimadores legos y profesionales de la salud.
+2025 (nuevo): El uso de la realidad aumentada 
+para proporcionar información en tiempo 
+real sobre la RCP puede considerarse para 
+el entrenamiento en SVB de reanimadores 
+legos y profesionales de la salud.
+2025 (nuevo): La RV no debe utilizarse para 
+enseñar técnicas de RCP a reanimadores 
+legos ni a profesionales de la salud.
+Motivo: Trece estudios exploraron el uso de la 
+RV para el entrenamiento en conocimientos 
+de soporte vital en profesionales de la salud, 
+con resultados dispares sobre la adquisición 
+de conocimientos en comparación con el 
+entrenamiento tradicional. Es importante 
+destacar que los nuevos datos muestran 
+una diferencia en la utilidad de la RV para 
+apoyar la adquisición de conocimientos 
+frente al entrenamiento de habilidades, lo 
+que lleva a recomendaciones opuestas 
+para estos 2 ámbitos. Varios estudios 
+analizaron parámetros de habilidades de 
+RCP medidos cuantitativamente (p. ej., 
+profundidad, frecuencia) y descubrieron 
+que el entrenamiento basado en RV era 
+inferior o no difería de otras formas de 
+entrenamiento en RCP para estos resultados.
+
+
+=== PAGE 24 ===
+Entrenamiento en sobredosis de 
+opiáceos para reanimadores legos
+2025 (actualización): Se recomienda 
+que los reanimadores legos reciban 
+entrenamiento sobre el reconocimiento 
+y los pasos iniciales del tratamiento 
+del PCEH asociado a opiáceos.
+2025 (actualización): No se ha establecido 
+el método de entrenamiento óptimo 
+para que los reanimadores legos 
+reconozcan e intervengan en caso 
+de sobredosis de opiáceos.
+Motivo: Tres revisiones sistemáticas 
+recientes de más de 140 estudios 
+resumieron el impacto del entrenamiento 
+de reanimadores legos en el reconocimiento 
+y tratamiento de la sobredosis de opiáceos 
+y descubrieron que este entrenamiento 
+aumentaba los conocimientos, mejoraba 
+la disposición a actuar y aumentaba la 
+probabilidad de uso de naloxona.
+Disparidades en la educación
+2025 (actualización): Se recomienda centrar 
+y adaptar el entrenamiento en RCP 
+para reanimadores legos a poblaciones 
+raciales y étnicas específicas, así como 
+a barrios con alta densidad de estas 
+poblaciones, e incorporar iniciativas 
+de concienciación en estas áreas.
+2025 (actualización): Se recomienda abordar 
+las barreras que dificultan la administración 
+de RCP a mujeres por parte de reanimadores 
+legos mediante entrenamiento e 
+iniciativas de concienciación pública.
+2025 (actualización): Se recomienda 
+centrarse en las poblaciones y barrios 
+de bajo nivel socioeconómico para 
+el entrenamiento y concienciación 
+de reanimadores legos en RCP. 
+2025 (actualización): Es razonable 
+abordar las barreras a las comunidades 
+lingüísticamente aisladas aumentando la 
+disponibilidad y el acceso a materiales de 
+entrenamiento en RCP en diversos idiomas.
+2025 (actualización): Es razonable considerar 
+métodos rentables para el entrenamiento 
+en RCP y promover el acceso seguro 
+a dicho entrenamiento para poblaciones 
+y entornos de bajo nivel socioeconómico. 
+Motivo: Se sabe que existen disparidades 
+debidas a factores sociales tanto en 
+los pacientes que reciben RCP fuera 
+del hospital como en la disponibilidad 
+de entrenamiento en RCP. Centrarse en 
+poblaciones específicas para la instrucción 
+en RCP y modificar dicha instrucción para 
+abordar las diferencias podría eliminar 
+las disparidades en el entrenamiento en 
+RCP y en la RCP de reanimadores legos, 
+mejorando potencialmente los resultados 
+del paro cardíaco en estas poblaciones. 
+Se han hecho recomendaciones específicas 
+para el entrenamiento en barrios de bajos 
+ingresos y comunidades lingüísticamente 
+aisladas y para métodos de entrenamiento 
+en RCP rentables en estas poblaciones.
+Entrenamiento en RCP para 
+niños en edad escolar
+2025 (nuevo): Se recomienda iniciar el 
+entrenamiento en RCP en niños menores de 
+12 años para aumentar la disposición y la 
+confianza en sí mismos en años posteriores.
+Motivo: La evidencia demuestra que 
+empezar a introducir antes los conceptos 
+de llamadas de emergencia, necesidad 
+de RCP y desfibriladores externos 
+automáticos a niños pequeños mejora la 
+socialización de la respuesta oportuna de 
+los reanimadores legos y su importancia.
+Objetos alternativos para el 
+entrenamiento en compresión 
+torácica en reanimadores legos
+2025 (nuevo): La utilidad de objetos alternativos 
+para entrenar a reanimadores legos en 
+compresiones torácicas, en comparación 
+con un maniquí, no está bien establecida.
+Motivo: Recientemente se han descrito 
+datos preliminares sobre la viabilidad del 
+uso de objetos domésticos comunes 
+(p. ej., almohadas, rollos de papel higiénico, 
+bloques de espuma) para entrenar 
+y practicar compresiones torácicas. 
+Se identificaron siete estudios en los que 
+los alumnos utilizaban objetos alternativos 
+para practicar compresiones torácicas, 
+con resultados dispares. Por ello, la evidencia 
+aún no es lo suficientemente sólida 
+como para hacer una recomendación.
+Debriefing guionado
+2025 (nuevo): Puede ser razonable que un 
+instructor utilice un guion de debriefing 
+durante el entrenamiento en reanimación.
+Motivo: El debriefing guionado implica 
+la creación de un plan escrito para 
+retroalimentar a los alumnos durante o 
+después del entrenamiento en soporte 
+vital. Los debriefings estandarizados 
+ayudan a mantener la coherencia en 
+la realización de los debriefings en los 
+distintos centros de entrenamiento y 
+programas de reanimación. Se identificaron 
+seis estudios con resultados diversos.
+Uso de ayudas cognitivas
+2025 (nuevo): Puede ser razonable que los 
+profesionales de la salud utilicen ayudas 
+cognitivas durante la reanimación. 
+2025 (nuevo): No se recomienda que los 
+reanimadores legos utilicen ayudas 
+cognitivas durante la reanimación.
+Motivo: Las ayudas cognitivas son recursos 
+que proporcionan indicaciones destinadas 
+a fomentar la evocación de información 
+y aumentar la probabilidad de que el 
+desempeño y los comportamientos sean 
+correctos. Los datos publicados sobre 
+simulación sugieren que el uso de ayudas 
+cognitivas por parte de los profesionales 
+de la salud puede mejorar el rendimiento 
+de la reanimación. En los reanimadores 
+legos, el uso de ayudas cognitivas se 
+asoció a retrasos significativos en el inicio 
+de la RCP, lo que llevó a recomendar no 
+utilizarlas en reanimadores legos. 
+eccguidelines.heart.org	
+ 23
+Aspectos destacados de 2025
+
+
+=== PAGE 25 ===
+Si desea más información sobre los cursos y programas 
+para salvar vidas de la American Heart Association o ver 
+opciones de compra, visite:  
+international.heart.org
+JN-1582    10/25
+7272 Greenville Avenue
+Dallas, Texas 75231-4596, USA
+heart.org

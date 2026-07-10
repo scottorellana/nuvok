@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:prepper_pad/modules/maps/map_overlays.dart';
+import 'package:nuvok/modules/maps/map_overlays.dart';
 
 // Verifies overlays survive a GeoJSON round-trip (persistence format).
 void main() {

@@ -9,7 +9,7 @@ import 'dart:collection';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import '../emergency/sos_alarm.dart';
 import '../maps/location_service.dart';
 import '../maps/map_overlays.dart';
@@ -50,7 +50,7 @@ class MeshService {
   List<MeshTransport>? _transportsOverride;
 
   String get dirPath =>
-      _dirPath ??= '${PrepperLibrary.instance.root.path}/mesh';
+      _dirPath ??= '${NuvokLibrary.instance.root.path}/mesh';
 
   MeshIdentity? identity;
   MeshRouter? _router;
@@ -87,7 +87,7 @@ class MeshService {
   bool get hasIdentity => (identity ??= MeshIdentity.load(dirPath)) != null;
 
   /// Boot the mesh with zero setup: mint an automatic identity on first run,
-  /// then start. Called at app launch so EVERY Prepper Pad is discoverable
+  /// then start. Called at app launch so EVERY Nuvok is discoverable
   /// from the moment it opens — nobody is invisible for not having configured
   /// anything. The user can still rename the device later in Comunicación.
   Future<void> ensureStartedAuto() async {
@@ -140,10 +140,10 @@ class MeshService {
   /// survives restarts. Toggling restarts the mesh so the transport list is
   /// rebuilt with/without LoRa.
   static bool get loraEnabled =>
-      PrepperLibrary.instance.settings['meshLoraEnabled'] == true;
+      NuvokLibrary.instance.settings['meshLoraEnabled'] == true;
 
   Future<void> setLoraEnabled(bool enabled) async {
-    await PrepperLibrary.instance.saveSetting('meshLoraEnabled', enabled);
+    await NuvokLibrary.instance.saveSetting('meshLoraEnabled', enabled);
     if (running.value) {
       await stop();
       await start();
@@ -263,7 +263,7 @@ class MeshService {
   }
 
   /// Call when the device loses internet connectivity. In an emergency the
-  /// grid often dies first — the instant it does, every Prepper Pad relaunches
+  /// grid often dies first — the instant it does, every Nuvok relaunches
   /// discovery so the local mesh forms in seconds without any action.
   void onConnectivityLost() {
     if (!running.value) return;
@@ -544,7 +544,7 @@ class MeshService {
   }
 
   /// SOS: broadcast position+note on the open emergency channel now and
-  /// every minute until cancelled. Reaches every Prepper Pad in range,
+  /// every minute until cancelled. Reaches every Nuvok in range,
   /// authenticated or not.
   Future<void> startSos({String note = ''}) async {
     sosNote = note;

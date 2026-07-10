@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/locale_service.dart';
+import 'package:nuvok/core/locale_service.dart';
 
 // El asistente debe hablar el idioma de la app: cada idioma soportado tiene
 // su system prompt que FIJA el idioma de respuesta (los modelos 1B obedecen

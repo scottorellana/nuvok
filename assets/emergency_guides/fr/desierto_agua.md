@@ -1,57 +1,57 @@
 ---
-title: L'Eau dans le Désert
-keywords: [eau, désert, soif, déshydratation, oued, rosée, alambic solaire]
+title: Eau dans le désert
+keywords: [eau, désert, soif, déshydratation, lit de cours d’eau, rosée, distillateur]
 priority: 1
 mode: [desierto]
 category: supervivencia
 ---
 
-# L'Eau dans le Désert
+# Eau dans le désert
 
-Dans le désert, l'eau EST la vie : sans elle il vous reste **1 à 2 jours par chaleur extrême**. Chaque décision se mesure en sueur.
+Dans le désert, l’eau EST la vie : sans elle, il te reste **1-2 jours en chaleur extrême**. Chaque décision se mesure en sueur.
 
 ## Étapes critiques
 
-1. **Buvez l'eau que vous avez.** L'erreur mortelle classique est de « l'économiser » : des gens meurent déshydratés avec de l'eau dans la gourde. Votre corps la stocke mieux que votre bouteille.
-2. **Rationnez la SUEUR, pas l'eau.** Déplacez-vous seulement à l'aube, au crépuscule ou la nuit ; reposez-vous à l'ombre le reste du temps. Marcher à midi coûte 1 litre par heure.
-3. **Cherchez dans les oueds à sec.** Creusez 30-60 cm dans la courbe EXTERNE d'un lit asséché, là où le sable paraît plus sombre ou où pousse la végétation. Si le sable devient humide, attendez que l'eau filtre dans le trou.
-4. **Suivez les signes de vie.** Les oiseaux à l'aube/au crépuscule volent VERS l'eau ; essaims d'insectes, pistes d'animaux qui convergent et taches vertes de végétation indiquent l'eau proche.
-5. **Récoltez la rosée à l'aube.** Avant le lever du soleil, traînez un tissu absorbant dans la végétation et essorez-le ; par nuit froide, roches lisses et surfaces métalliques condensent aussi.
-6. **Vérifiez les vasques rocheuses.** Creux et fentes ombragées dans les formations rocheuses gardent l'eau de pluie des semaines après l'orage.
-7. **Purifiez CHAQUE fois que possible.** Eau de vasque ou de trou creusé : faites bouillir ou utilisez les gouttes de chlore du kit (2 gouttes/litre à 5 %, 30 min). La diarrhée au désert est une condamnation.
+1. **Bois l’eau que tu as.** L’erreur mortelle classique est de « l’économiser » : des gens meurent déshydratés avec de l’eau dans la gourde. Ton corps la stocke mieux que ta bouteille.
+2. **Rationne la SUEUR, pas l’eau.** Déplace-toi seulement à l’aube, au crépuscule ou la nuit ; repose-toi à l’ombre le reste du temps. Marcher à midi consomme 1 litre par heure.
+3. **Cherche dans les lits secs.** Creuse 30-60 cm dans la courbe EXTERNE d’un ruisseau sec, là où le sable paraît plus sombre ou où la végétation pousse. Si le sable devient humide, attends que l’eau filtre dans le trou.
+4. **Suis les signes de vie.** Les oiseaux à l’aube/au crépuscule volent VERS l’eau ; les essaims d’insectes, les traces d’animaux qui convergent et les taches vertes de végétation indiquent de l’eau à proximité.
+5. **Récolte la rosée à l’aube.** Avant le lever du soleil, traîne un tissu absorbant sur la végétation et essore-le ; lors des nuits froides, les surfaces métalliques et les roches lisses condensent aussi.
+6. **Vérifie les pièges rocheux.** Les creux et fissures ombragés dans les formations rocheuses (vasques) gardent l’eau de pluie des semaines après la pluie.
+7. **Purifie TOUJOURS quand tu peux.** Eau de vasque ou de puits creusé : fais bouillir ou utilise les gouttes de chlore de ton kit (2 gouttes/litre à 5%, 30 min). La diarrhée dans le désert est une condamnation.
 
-## À NE PAS faire
+## Ce qu’il ne faut PAS faire
 
 | ❌ Erreur | ✅ Correct |
-|-----------|-----------|
-| « Garder » l'eau en marchant assoiffé | Boire avec la soif ; rationner l'effort |
-| Boire le jus de cactus — le mythe qui tue | La plupart provoquent vomissements et diarrhée : vous perdez PLUS d'eau |
-| Marcher à midi pour chercher de l'eau | Chercher à l'aube/au crépuscule ; ombre à midi |
-| Boire l'urine ou l'eau du radiateur | Elles accélèrent la déshydratation et empoisonnent |
-| Manger avec moins d'un litre en réserve | Digérer consomme de l'eau : pas d'eau, pas de repas |
-| Tout miser sur l'alambic solaire | Faible rendement (une tasse/jour) ; un appui, pas un salut |
+|----------|------------|
+| « Garder » l’eau en marchant assoiffé | Boire quand on a soif ; rationner l’effort |
+| Boire du jus de cactus — le mythe qui tue | La plupart provoquent vomissements et diarrhée : tu perds PLUS d’eau |
+| Marcher à midi pour chercher de l’eau | Chercher à l’aube/au crépuscule ; ombre à midi |
+| Boire de l’urine ou de l’eau de radiateur | Accélèrent la déshydratation et empoisonnent |
+| Manger avec moins de 1 litre de réserve | Digérer consomme de l’eau : sans eau, ne mange pas |
+| Tout miser sur le distillateur solaire | Produit peu (une tasse/jour) ; c’est un soutien, pas un salut |
 
-## Alambic solaire (un appui, pas un miracle)
+## Distillateur solaire (soutien, pas miracle)
 
-1. Creusez un trou de 60 cm de large × 40 cm de profondeur dans un sol humide (oued) ou ajoutez de la végétation verte écrasée.
-2. Centrez un récipient propre au fond.
-3. Couvrez le trou d'un plastique transparent scellé de pierres/sable sur les bords.
-4. Posez un caillou au centre du plastique, juste au-dessus du récipient : le cône fait goutter la condensation dedans.
-5. Attendez 6-12 h. Rendement ~1 tasse/jour : faites-en plusieurs si vous en dépendez.
+1. Creuse un trou de 60 cm de largeur × 40 cm de profondeur dans un sol humide (lit sec) ou mets-y de la végétation verte écrasée.
+2. Centre un récipient propre au fond.
+3. Couvre le trou avec du plastique transparent scellé avec des pierres/du sable sur les bords.
+4. Pose une petite pierre au centre du plastique, juste au-dessus du récipient : le cône fait goutter la condensation à l’intérieur.
+5. Attends 6-12 h. Produit ~1 tasse par jour : fais-en plusieurs si tu en dépends.
 
 ## Signes de déshydratation dangereuse
 
-- Urine foncée ou aucune urine en 8 h et plus.
-- Vertige en se levant, mal de tête lancinant.
-- Peau qui ne rebondit pas au pincement, bouche pâteuse sans salive.
-- Confusion ou irritabilité → passez au guide du coup de chaleur : urgence IMMÉDIATE.
+- Urine foncée ou aucune urine en 8+ heures.
+- Vertige en se levant, mal de tête pulsatile.
+- Peau qui ne reprend pas sa place quand on la pince, bouche pâteuse sans salive.
+- Confusion ou irritabilité → passe au guide du coup de chaleur : c’est une urgence MAINTENANT.
 
-## Exemple : L'Eau dans le Désert
+## Exemple pratique : Eau dans le désert
 
-**Situation :** Votre véhicule est en panne sur une piste désertique ; il reste 1 litre par personne et les secours peuvent tarder plus d'un jour.
+**Situation :** Ton véhicule est tombé en panne sur une piste désertique ; il reste 1 litre par personne et les secours peuvent mettre plus d’une journée.
 
-**Faites :** 1. Restez près du véhicule (ombre + visibilité). 2. Buvez avec la soif, sans « économiser ». 3. Aux premières et dernières lueurs, cherchez les oueds proches et creusez dans la courbe externe. 4. Montez un alambic solaire par personne avec vos plastiques. 5. Marquez votre position et déclenchez le SOS du mesh.
+**Fais :** 1. Reste avec le véhicule (ombre + visibilité). 2. Bois quand tu as soif, ne « garde » pas l’eau. 3. Aux premières et dernières lueurs, cherche les lits secs proches et creuse dans la courbe externe. 4. Monte un distillateur solaire par personne avec les plastiques que tu as. 5. Marque ta position et active le SOS du mesh.
 
-**Évitez :** Ne marchez pas à midi, ne buvez ni cactus ni urine, ne mangez pas si l'eau manque, ne quittez pas le véhicule sans marquer le cap.
+**Évite :** Ne marche pas à midi, ne bois ni cactus ni urine, ne mange pas s’il te reste peu d’eau, ne t’éloigne pas du véhicule sans marquer la direction.
 
-**Escaladez :** Si quelqu'un cesse de transpirer, devient confus ou s'effondre : coup de chaleur — ombre IMMÉDIATE, mouillez ses vêtements, éventez et passez à ce guide : c'est l'urgence numéro un du désert.
+**Escalade :** Si quelqu’un cesse de transpirer, devient confus ou s’effondre, c’est un coup de chaleur : ombre MAINTENANT, mouille ses vêtements, évente et passe à ce guide — c’est l’urgence numéro un du désert.

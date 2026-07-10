@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/connection_advisor.dart';
-import 'package:prepper_pad/modules/mesh/transport_health.dart';
+import 'package:nuvok/modules/mesh/connection_advisor.dart';
+import 'package:nuvok/modules/mesh/transport_health.dart';
 
 TransportHealth _h(String name, TransportState s, {int peers = 0}) =>
     TransportHealth(name: name, state: s, peers: peers);

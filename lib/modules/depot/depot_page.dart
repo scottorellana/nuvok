@@ -6,7 +6,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/build_flags.dart';
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import '../update/update_page.dart';
 import 'download_manager.dart';
 import 'kiwix_catalog.dart';
@@ -154,7 +154,7 @@ class _StarterPackTabState extends State<_StarterPackTab>
       final fileName = Uri.parse(c.result.url).pathSegments.last;
       DownloadManager.instance.enqueue(
         c.result.url,
-        '${PrepperLibrary.instance.zimDir.path}/$fileName',
+        '${NuvokLibrary.instance.zimDir.path}/$fileName',
         totalBytes: c.result.sizeBytes,
       );
     }
@@ -203,7 +203,7 @@ class _StarterPackTabState extends State<_StarterPackTab>
               const SizedBox(height: 4),
               Text(
                 'Primeros auxilios, supervivencia, agua, desastres y alimentos. '
-                'Con internet se descargan directo desde Prepper Pad; después '
+                'Con internet se descargan directo desde Nuvok; después '
                 'quedan disponibles sin conexión.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -252,7 +252,7 @@ class _StarterPackTabState extends State<_StarterPackTab>
                               trailing: _DownloadButton(
                                 url: c.result.url,
                                 destPath:
-                                    '${PrepperLibrary.instance.zimDir.path}/${Uri.parse(c.result.url).pathSegments.last}',
+                                    '${NuvokLibrary.instance.zimDir.path}/${Uri.parse(c.result.url).pathSegments.last}',
                                 totalBytes: c.result.sizeBytes,
                               ),
                             ),
@@ -418,7 +418,7 @@ class _CatalogTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fileName = Uri.parse(item.url).pathSegments.last;
-    final dest = '${PrepperLibrary.instance.zimDir.path}/$fileName';
+    final dest = '${NuvokLibrary.instance.zimDir.path}/$fileName';
     return Card(
       child: ListTile(
         leading: const Icon(Icons.menu_book_outlined),
@@ -473,7 +473,7 @@ class _ModelsTabState extends State<_ModelsTab> {
 
   @override
   Widget build(BuildContext context) {
-    final installedFiles = PrepperLibrary.instance.listModels();
+    final installedFiles = NuvokLibrary.instance.listModels();
     final installedNames =
         installedFiles.map((f) => f.path.split('/').last).toSet();
 
@@ -540,7 +540,7 @@ class _ModelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final destPath =
-        '${PrepperLibrary.instance.modelsDir.path}/${model.fileName}';
+        '${NuvokLibrary.instance.modelsDir.path}/${model.fileName}';
 
     return Card(
       child: Padding(
@@ -839,17 +839,17 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
       return;
     }
     final name = Uri.parse(url).pathSegments.last;
-    _manager.enqueue(url, '${PrepperLibrary.instance.mapsDir.path}/$name');
+    _manager.enqueue(url, '${NuvokLibrary.instance.mapsDir.path}/$name');
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Descargando $name — mira la pestaña Descargas')));
   }
 
-  /// Lists and downloads maps from the Prepper Pad server running on the same
+  /// Lists and downloads maps from the Nuvok server running on the same
   /// WiFi (installer-server). No internet needed — this is how a phone/tablet
   /// gets maps that a nearby computer prepared. Works even where on-device
   /// extraction isn't available (Android has no pmtiles CLI).
   Future<void> _localServerMaps() async {
-    final saved = PrepperLibrary.instance.settings['localMapServer'] as String?;
+    final saved = NuvokLibrary.instance.settings['localMapServer'] as String?;
     final ctrl = TextEditingController(text: saved ?? 'http://');
     final localServerWidth =
         (MediaQuery.of(context).size.width - 48).clamp(320.0, 480.0).toDouble();
@@ -863,7 +863,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'Escribe la dirección que muestra el instalador de Prepper '
+                'Escribe la dirección que muestra el instalador de Nuvok '
                 'Pad en la computadora de tu red (misma WiFi). Descarga '
                 'mapas sin internet.',
                 style: TextStyle(fontSize: 13, color: Colors.grey),
@@ -892,7 +892,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
     );
     if (base == null || base.isEmpty || base == 'http://' || !mounted) return;
     final baseUrl = base.replaceAll(RegExp(r'/+$'), '');
-    await PrepperLibrary.instance.saveSetting('localMapServer', baseUrl);
+    await NuvokLibrary.instance.saveSetting('localMapServer', baseUrl);
 
     List<dynamic> maps;
     try {
@@ -920,7 +920,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content:
               Text('El servidor no tiene mapas. Extrae uno en la computadora '
-                  'primero (queda en la carpeta PrepperPad/maps).')));
+                  'primero (queda en la carpeta Nuvok/maps).')));
       return;
     }
     await showDialog<void>(
@@ -942,7 +942,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
                     final name = m['name'] as String;
                     final url = '$baseUrl${m['url']}';
                     _manager.enqueue(
-                        url, '${PrepperLibrary.instance.mapsDir.path}/$name');
+                        url, '${NuvokLibrary.instance.mapsDir.path}/$name');
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
@@ -977,7 +977,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
         XTypeGroup(label: 'Mapas PMTiles', extensions: ['pmtiles']);
     final file = await openFile(acceptedTypeGroups: const [typeGroup]);
     if (file == null || !mounted) return;
-    final dest = '${PrepperLibrary.instance.mapsDir.path}/${file.name}';
+    final dest = '${NuvokLibrary.instance.mapsDir.path}/${file.name}';
     setState(() => _extracting['_import'] = 'Copiando ${file.name}…');
     try {
       // Copy through a .part so the Maps module never sees a half file.
@@ -1024,7 +1024,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
           runSpacing: 8,
           children: [
             // The key path for phones/tablets: pull ready maps from the
-            // Prepper Pad server on the same WiFi — no internet, one tap.
+            // Nuvok server on the same WiFi — no internet, one tap.
             FilledButton.tonalIcon(
               onPressed: _localServerMaps,
               icon: const Icon(Icons.lan, size: 18),
@@ -1056,7 +1056,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
                   'área del mundo. Solo se usa internet al instalar.'
               : 'En este dispositivo no se recortan mapas. Usa "Servidor '
                   'local" para bajar los mapas listos desde una computadora '
-                  'con Prepper Pad en tu WiFi (sin internet), o "Por URL" / '
+                  'con Nuvok en tu WiFi (sin internet), o "Por URL" / '
                   '"Importar" un .pmtiles.',
           style: const TextStyle(color: Colors.grey, fontSize: 13),
         ),
@@ -1092,7 +1092,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
         ],
         const SizedBox(height: 12),
         Text(
-          'Carpeta de mapas: ${PrepperLibrary.instance.mapsDir.path}\n'
+          'Carpeta de mapas: ${NuvokLibrary.instance.mapsDir.path}\n'
           'Datos de mapa © OpenStreetMap contributors (ODbL) · '
           'tiles por Protomaps.',
           style: const TextStyle(color: Colors.grey, fontSize: 12),
@@ -1127,7 +1127,7 @@ class _MapsInstallTabState extends State<_MapsInstallTab> {
                     ? FilledButton.icon(
                         onPressed: () {
                           _manager.enqueue(r.url!,
-                              '${PrepperLibrary.instance.mapsDir.path}/${r.fileName}');
+                              '${NuvokLibrary.instance.mapsDir.path}/${r.fileName}');
                           setState(() {});
                         },
                         icon: const Icon(Icons.download, size: 18),

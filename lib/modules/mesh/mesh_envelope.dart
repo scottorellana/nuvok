@@ -1,4 +1,4 @@
-// The Prepper Mesh wire format. One compact binary envelope for every
+// The Nuvok Link wire format. One compact binary envelope for every
 // transport (WiFi now, BLE and LoRa later): fixed header + UTF-8 sender name
 // + payload. Payloads are AES-256-GCM sealed with the channel key, except on
 // the EMERGENCY channel which is deliberately plaintext.

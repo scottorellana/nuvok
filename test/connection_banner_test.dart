@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/connection_banner.dart';
-import 'package:prepper_pad/modules/mesh/transport_health.dart';
+import 'package:nuvok/modules/mesh/connection_banner.dart';
+import 'package:nuvok/modules/mesh/transport_health.dart';
 
 Widget _wrap(Widget child) => MaterialApp(home: Scaffold(body: child));
 

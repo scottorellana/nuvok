@@ -1,0 +1,274 @@
+[
+  {
+    "slug": "abrigo_refugio",
+    "size": 3387405,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "agua_survival",
+    "size": 2841553,
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "ok": true
+  },
+  {
+    "slug": "alimentacion_supervivencia",
+    "size": 2281846,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "atragantamiento",
+    "size": 2012912,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "balsa_improvisada",
+    "size": 2482970,
+    "width": 1807,
+    "height": 870,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "bosque_agua",
+    "size": 2858428,
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "ok": true
+  },
+  {
+    "slug": "bosque_orientacion",
+    "size": 3120693,
+    "width": 1797,
+    "height": 875,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "bosque_peligros",
+    "size": 2555687,
+    "width": 1823,
+    "height": 863,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "botiquin",
+    "size": 2147809,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "convulsiones",
+    "size": 2058888,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "cruce_rios",
+    "size": 2838381,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "fracturas_inmovilizacion",
+    "size": 2030257,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "fuego_supervivencia",
+    "size": 2600562,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "hemorragia_severa",
+    "size": 1748514,
+    "width": 1773,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "hipotermia_golpe_calor",
+    "size": 2586819,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "huracan",
+    "size": 2627526,
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "ok": true
+  },
+  {
+    "slug": "infarto_acv",
+    "size": 2317322,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "intoxicaciones",
+    "size": 2178515,
+    "width": 1822,
+    "height": 863,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "inundacion",
+    "size": 2270226,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "mordeduras_picaduras",
+    "size": 2555207,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "navegacion",
+    "size": 2196948,
+    "width": 1823,
+    "height": 863,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "nudos_supervivencia",
+    "size": 2731056,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "parto_emergencia",
+    "size": 2148837,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "pesca_trampas_supervivencia",
+    "size": 2446175,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "primeros_auxilios_extremos",
+    "size": 2325443,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "quemaduras",
+    "size": 2184332,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "rcp_adulto",
+    "size": 1916738,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "rcp_nino_bebe",
+    "size": 1794506,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "refugio_naturaleza",
+    "size": 3575540,
+    "width": 1823,
+    "height": 863,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "senas_rescate",
+    "size": 2400716,
+    "width": 1693,
+    "height": 929,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "shock",
+    "size": 2381614,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "terremoto",
+    "size": 1816460,
+    "width": 1881,
+    "height": 836,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "trauma_cabeza_columna",
+    "size": 2359204,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  },
+  {
+    "slug": "triaje_multivictima",
+    "size": 2633822,
+    "width": 1774,
+    "height": 887,
+    "mode": "RGB",
+    "ok": false
+  }
+]

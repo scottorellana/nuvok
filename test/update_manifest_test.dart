@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/update/update_manifest.dart';
+import 'package:nuvok/modules/update/update_manifest.dart';
 
 // El comparador semver decide si mostramos el banner de actualización — un
 // error aquí implica molestar al usuario de más, o peor, no avisarle nunca.
@@ -37,13 +37,13 @@ void main() {
         'notes': 'Batería real y linterna con LED.',
         'platforms': {
           'macos': {
-            'url': 'https://example.com/PrepperPad-0.2.1.dmg',
+            'url': 'https://example.com/Nuvok-0.2.1.dmg',
             'sha256':
                 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
             'sizeBytes': 33500000,
           },
           'android': {
-            'url': 'https://example.com/prepper-pad-0.2.1.apk',
+            'url': 'https://example.com/Nuvok-pad-0.2.1.apk',
             'sha256':
                 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
             'sizeBytes': 70487939,
@@ -72,7 +72,7 @@ void main() {
         'version': '0.2.5',
         'platforms': {
           'android': {
-            'url': '/download/prepper-pad-v0.2.5.apk',
+            'url': '/download/Nuvok-pad-v0.2.5.apk',
             'sha256':
                 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
             'size': 70487939,

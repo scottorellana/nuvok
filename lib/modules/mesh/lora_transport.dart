@@ -1,4 +1,4 @@
-// LoRa transport — the long-range radio path for Prepper Mesh.
+// LoRa transport — the long-range radio path for Nuvok Link.
 //
 // This file contains the production wire protocol and a hardware-driver seam.
 // The app can test LoRa end-to-end today with an injected driver, while real

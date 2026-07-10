@@ -34,15 +34,15 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Prepper Pad usa tu ubicación para mostrarte en el mapa offline y calcular distancias.</string>
+	<string>Nuvok usa tu ubicación para mostrarte en el mapa offline y calcular distancias.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Prepper Pad usa tu ubicación para mostrarte en el mapa offline y calcular distancias.</string>
-	<!-- Prepper Mesh (BLE transport): Bluetooth para chat offline entre dispositivos. -->
+	<string>Nuvok usa tu ubicación para mostrarte en el mapa offline y calcular distancias.</string>
+	<!-- Nuvok Link (BLE transport): Bluetooth para chat offline entre dispositivos. -->
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Prepper Pad usa Bluetooth para conectar con otros dispositivos cercanos y permitir chat mesh sin internet ni router.</string>
+	<string>Nuvok usa Bluetooth para conectar con otros dispositivos cercanos y permitir chat mesh sin internet ni router.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Prepper Pad usa Bluetooth para conectar con otros dispositivos cercanos y permitir chat mesh sin internet ni router.</string>
+	<string>Nuvok usa Bluetooth para conectar con otros dispositivos cercanos y permitir chat mesh sin internet ni router.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Prepper Pad usa el micrófono para enviar notas de voz por la red local de emergencia (walkie-talkie sin internet).</string>
+	<string>Nuvok usa el micrófono para enviar notas de voz por la red local de emergencia (walkie-talkie sin internet).</string>
 </dict>
 </plist>

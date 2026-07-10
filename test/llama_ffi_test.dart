@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/ai/llama_ffi.dart';
+import 'package:nuvok/modules/ai/llama_ffi.dart';
 
 // El motor de IA embebido (llama.cpp in-process via FFI) es lo que hace que
 // el asistente funcione en iPhone. Este test lo ejercita DE VERDAD: carga la
@@ -10,8 +10,11 @@ import 'package:prepper_pad/modules/ai/llama_ffi.dart';
 // nativo o sin modelo descargado).
 void main() {
   final dylib = File('native/out/macos/libppllm.dylib');
-  final model = File(
-      '${Platform.environment['HOME']}/PrepperPad/models/qwen2.5-0.5b-instruct-q4_k_m.gguf');
+  final installedModel = File(
+      '${Platform.environment['HOME']}/Nuvok/models/qwen2.5-0.5b-instruct-q4_k_m.gguf');
+  final bundledModel =
+      File('assets/bundled_library/models/qwen2.5-0.5b-instruct-q4_k_m.gguf');
+  final model = installedModel.existsSync() ? installedModel : bundledModel;
 
   test('el motor FFI carga un modelo y genera texto real', () async {
     if (!dylib.existsSync() || !model.existsSync()) {

@@ -28,16 +28,24 @@ class MeshChannel {
 
   bool get isEmergency => identical(this, emergency) || id == emergency.id;
 
-  /// Shareable code (QR / copy-paste): PPMESH1:base64url(name\nkeyhex)
+  /// Shareable code (QR / copy-paste): NUVOK1:base64url(name\nkeyhex)
   String toCode() {
     final keyHex = key.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
-    return 'PPMESH1:${base64Url.encode(utf8.encode('$name\n$keyHex'))}';
+    return 'NUVOK1:${base64Url.encode(utf8.encode('$name\n$keyHex'))}';
   }
 
   static MeshChannel? fromCode(String code) {
     try {
-      if (!code.startsWith('PPMESH1:')) return null;
-      final raw = utf8.decode(base64Url.decode(code.substring(8).trim()));
+      const currentPrefix = 'NUVOK1:';
+      const legacyPrefix = 'PPMESH1:';
+      final prefix = code.startsWith(currentPrefix)
+          ? currentPrefix
+          : code.startsWith(legacyPrefix)
+              ? legacyPrefix
+              : null;
+      if (prefix == null) return null;
+      final raw =
+          utf8.decode(base64Url.decode(code.substring(prefix.length).trim()));
       final nl = raw.indexOf('\n');
       if (nl <= 0) return null;
       final name = raw.substring(0, nl);

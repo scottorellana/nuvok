@@ -1,16 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/mesh_identity.dart';
+import 'package:nuvok/modules/mesh/mesh_identity.dart';
 
-// La identidad automática es lo que hace que TODO Prepper Pad esté en el mesh
+// La identidad automática es lo que hace que TODO Nuvok esté en el mesh
 // desde que se instala, sin que el usuario tenga que configurar nada — en una
 // emergencia nadie debe ser invisible por no haber abierto Comunicación.
 void main() {
   test('auto() crea identidad con nombre humano derivado del id', () {
     final a = MeshIdentity.auto();
     expect(a.id.length, 16, reason: 'id de 16 hex como el resto');
-    expect(a.name, startsWith('Prepper-'),
+    expect(a.name, startsWith('Nuvok-'),
         reason: 'nombre reconocible sin pedir nada al usuario');
     // El sufijo del nombre son los últimos 4 hex del id → estable y visible.
     expect(a.name, endsWith(a.id.substring(a.id.length - 4).toUpperCase()));
@@ -27,7 +27,7 @@ void main() {
     expect(MeshIdentity.load(tmp.path), isNull);
 
     final first = MeshIdentity.ensureAuto(tmp.path);
-    expect(first.name, startsWith('Prepper-'));
+    expect(first.name, startsWith('Nuvok-'));
     // Segunda llamada: MISMA identidad (no re-mintea en cada arranque).
     final second = MeshIdentity.ensureAuto(tmp.path);
     expect(second.id, first.id);

@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/maps/composite_tile_provider.dart';
-import 'package:prepper_pad/modules/maps/hybrid_tile_provider.dart';
+import 'package:nuvok/modules/maps/composite_tile_provider.dart';
+import 'package:nuvok/modules/maps/hybrid_tile_provider.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 class FakeVectorProvider extends VectorTileProvider {

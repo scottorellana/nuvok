@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/emergency_numbers.dart';
+import 'package:nuvok/modules/emergency/emergency_numbers.dart';
 
 void main() {
   test('devuelve el número correcto por país', () {

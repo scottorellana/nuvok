@@ -5,7 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../core/bundled_library.dart';
 import '../../core/locale_service.dart';
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -87,7 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
           // ── About ──
           _SectionCard(
             icon: Icons.info_outline,
-            title: 'Prepper Pad',
+            title: 'Nuvok',
             color: const Color(0xFF5EB89E),
           ),
           const SizedBox(height: 8),
@@ -177,7 +177,7 @@ class _SettingsInfo {
         packageInfo.buildNumber.isEmpty ? '' : ' (${packageInfo.buildNumber})';
     return _SettingsInfo(
       versionLabel: '${packageInfo.version}$buildSuffix',
-      libraryPath: PrepperLibrary.instance.root.path,
+      libraryPath: NuvokLibrary.instance.root.path,
       offlineSummary: summary,
     );
   }
@@ -210,8 +210,8 @@ class _AboutStatusCard extends StatelessWidget {
             leading: const Icon(Icons.backpack, color: Color(0xFF8C9E5E)),
             title: Text(
               loading
-                  ? 'Prepper Pad'
-                  : 'Prepper Pad v${loadedInfo!.versionLabel}',
+                  ? 'Nuvok'
+                  : 'Nuvok v${loadedInfo!.versionLabel}',
               style: const TextStyle(color: Color(0xFFE8F0D8)),
             ),
             subtitle: const Text(

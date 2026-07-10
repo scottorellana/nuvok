@@ -5,9 +5,9 @@ import UIKit
 /// iPhone compass bridge (mirror of Android's CompassStreamHandler in
 /// MainActivity.kt). Speaks the exact same channel protocol so the Dart
 /// CompassService is one code path everywhere:
-///   MethodChannel "prepper/sensors":         hasCompass / hasMagnetometer /
+///   MethodChannel "Nuvok/sensors":         hasCompass / hasMagnetometer /
 ///                                            calibrateCompass
-///   EventChannel  "prepper/sensors/compass": {heading, accuracy,
+///   EventChannel  "Nuvok/sensors/compass": {heading, accuracy,
 ///                                            needsCalibration, sensorType,
 ///                                            timestampNanos}
 ///
@@ -24,7 +24,7 @@ class CompassBridge: NSObject, FlutterStreamHandler, CLLocationManagerDelegate {
     static func register(messenger: FlutterBinaryMessenger) {
         let bridge = CompassBridge()
         let methods = FlutterMethodChannel(
-            name: "prepper/sensors", binaryMessenger: messenger)
+            name: "Nuvok/sensors", binaryMessenger: messenger)
         methods.setMethodCallHandler { call, result in
             switch call.method {
             case "hasCompass", "hasMagnetometer":
@@ -38,7 +38,7 @@ class CompassBridge: NSObject, FlutterStreamHandler, CLLocationManagerDelegate {
             }
         }
         let events = FlutterEventChannel(
-            name: "prepper/sensors/compass", binaryMessenger: messenger)
+            name: "Nuvok/sensors/compass", binaryMessenger: messenger)
         events.setStreamHandler(bridge)
     }
 

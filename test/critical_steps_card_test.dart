@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/emergency_guides.dart';
-import 'package:prepper_pad/modules/emergency/medical_diagrams.dart';
+import 'package:nuvok/modules/emergency/emergency_guides.dart';
+import 'package:nuvok/modules/emergency/medical_diagrams.dart';
 
 /// Finds every rendered Text string in the widget tree.
 Iterable<String> _allTexts(WidgetTester tester) sync* {

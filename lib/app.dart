@@ -7,7 +7,7 @@ import 'package:flutter/semantics.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'core/locale_service.dart';
-import 'core/prepper_colors.dart';
+import 'core/nuvok_colors.dart';
 import 'core/shell_nav.dart';
 import 'main.dart';
 import 'modules/ai/ai_page.dart';
@@ -28,8 +28,8 @@ import 'modules/tools/battery_saver.dart';
 import 'modules/tools/tools_page.dart';
 import 'modules/update/update_page.dart';
 
-class PrepperPadApp extends StatelessWidget {
-  const PrepperPadApp({super.key, required this.firstRun});
+class NuvokApp extends StatelessWidget {
+  const NuvokApp({super.key, required this.firstRun});
   final bool firstRun;
 
   @override
@@ -44,7 +44,7 @@ class PrepperPadApp extends StatelessWidget {
     return ListenableBuilder(
       listenable: LocaleService.instance,
       builder: (context, _) => MaterialApp(
-      title: 'Prepper Pad',
+      title: 'Nuvok',
       debugShowCheckedModeBanner: false,
       locale: LocaleService.instance.locale,
       supportedLocales: [
@@ -69,7 +69,7 @@ class PrepperPadApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: scheme,
         useMaterial3: true,
-        scaffoldBackgroundColor: PrepperColors.background,
+        scaffoldBackgroundColor: NuvokColors.background,
         // Tablet-optimized: larger touch targets and text
         visualDensity: VisualDensity.standard,
         textTheme: const TextTheme(
@@ -376,7 +376,7 @@ class _HomeShellState extends State<HomeShell> {
                               size: 34,
                               color: Theme.of(context).colorScheme.primary),
                           const SizedBox(height: 4),
-                          Text('Prepper\nPad',
+                          Text('Nuvok\nPad',
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.labelSmall),
                         ],

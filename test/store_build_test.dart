@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/build_flags.dart';
-import 'package:prepper_pad/modules/depot/depot_page.dart';
+import 'package:nuvok/core/build_flags.dart';
+import 'package:nuvok/modules/depot/depot_page.dart';
 
 // Store builds (App Store / Google Play) must not self-update — the stores
 // own updates (Apple 2.5.2). Direct builds keep the LAN update system.

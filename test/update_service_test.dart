@@ -5,15 +5,15 @@ import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
-import 'package:prepper_pad/core/prepper_library.dart';
-import 'package:prepper_pad/modules/update/update_service.dart';
+import 'package:nuvok/core/nuvok_library.dart';
+import 'package:nuvok/modules/update/update_service.dart';
 
 /// download() asks path_provider for the app-support directory to stash
 /// updates in; the plugin has no real implementation in a widget test
 /// (there's no OS to ask), so we back it with an actual temp folder.
 class _FakePathProvider extends PathProviderPlatform {
   final String tempPath =
-      Directory.systemTemp.createTempSync('prepper_update_test_').path;
+      Directory.systemTemp.createTempSync('Nuvok_update_test_').path;
 
   @override
   Future<String?> getApplicationSupportPath() async => tempPath;
@@ -41,7 +41,7 @@ void main() {
       'macos'; // this test suite runs on the host OS (macOS CI runner or dev Mac)
 
   setUp(() async {
-    await PrepperLibrary.init();
+    await NuvokLibrary.init();
     server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
     port = server.port;
     server.listen((req) async {
@@ -137,13 +137,13 @@ void main() {
           'platforms': {
             'macos': {
               'url':
-                  '/download/PrepperPad-v9.9.9.dmg?from=dist%2FPrepperPad-v9.9.9.dmg',
+                  '/download/Nuvok-v9.9.9.dmg?from=dist%2FNuvok-v9.9.9.dmg',
               'sha256': assetSha256,
               'size': assetBytes.length,
             },
           },
         }));
-      } else if (req.uri.path == '/download/PrepperPad-v9.9.9.dmg') {
+      } else if (req.uri.path == '/download/Nuvok-v9.9.9.dmg') {
         req.response.add(assetBytes);
       } else {
         req.response.statusCode = 404;
@@ -162,7 +162,7 @@ void main() {
     expect(svc.latest!.platforms['macos']!.sizeBytes, assetBytes.length);
     await svc.download();
     expect(svc.state, UpdateState.downloaded);
-    expect(svc.downloadedFile!.path, endsWith('PrepperPad-v9.9.9.dmg'));
+    expect(svc.downloadedFile!.path, endsWith('Nuvok-v9.9.9.dmg'));
     expect(await svc.downloadedFile!.readAsBytes(), assetBytes);
   });
 

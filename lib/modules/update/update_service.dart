@@ -15,7 +15,7 @@ import 'package:open_filex/open_filex.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import 'update_manifest.dart';
 
 enum UpdateState {
@@ -33,7 +33,7 @@ class UpdateService extends ChangeNotifier {
   static final UpdateService instance = UpdateService._();
 
   /// LAN-first by design: this build keeps everything private, so updates are
-  /// served by the Prepper Pad "installer-server" running on a computer on the
+  /// served by the Nuvok "installer-server" running on a computer on the
   /// same WiFi (it already exposes /version.json + the binaries). There is no
   /// public host. The address is derived from the local server the user set
   /// for maps, or set explicitly here — see [resolveManifestUrl].
@@ -66,7 +66,7 @@ class UpdateService extends ChangeNotifier {
   /// installer-server serves /version.json too). Keeps a single "your computer
   /// on the WiFi" address for both maps and updates.
   String _resolveManifestUrl() {
-    final settings = PrepperLibrary.instance.settings;
+    final settings = NuvokLibrary.instance.settings;
     final explicit = settings['updateManifestUrl'] as String?;
     if (explicit != null && explicit.isNotEmpty) return explicit;
     final localServer = settings['localMapServer'] as String?;
@@ -80,14 +80,14 @@ class UpdateService extends ChangeNotifier {
   /// Shared with the maps installer so the user configures it once.
   Future<void> setLocalServer(String baseUrl) async {
     final clean = baseUrl.trim().replaceAll(RegExp(r'/+$'), '');
-    await PrepperLibrary.instance.saveSetting('localMapServer', clean);
+    await NuvokLibrary.instance.saveSetting('localMapServer', clean);
     _manifestUrl = clean.isEmpty ? defaultManifestUrl : '$clean/version.json';
     notifyListeners();
   }
 
   Future<void> setManifestUrl(String url) async {
     _manifestUrl = url.trim();
-    await PrepperLibrary.instance
+    await NuvokLibrary.instance
         .saveSetting('updateManifestUrl', _manifestUrl);
     notifyListeners();
   }
@@ -183,7 +183,7 @@ class UpdateService extends ChangeNotifier {
   String _downloadFileName(Uri uri) {
     final segments = uri.pathSegments;
     if (segments.isEmpty || segments.last.isEmpty) {
-      return 'prepper-pad-update.bin';
+      return 'Nuvok-pad-update.bin';
     }
     final name = segments.last;
     final safe = RegExp(r'^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$');

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/lan_transport.dart';
-import 'package:prepper_pad/modules/mesh/transport_health.dart';
+import 'package:nuvok/modules/mesh/lan_transport.dart';
+import 'package:nuvok/modules/mesh/transport_health.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

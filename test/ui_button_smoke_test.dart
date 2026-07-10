@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/locale_service.dart';
+import 'package:nuvok/core/locale_service.dart';
 
 String _read(String path) => File(path).readAsStringSync();
 

@@ -1,6 +1,6 @@
 // Persistence for the mesh: message history as JSONL per channel (append-only,
 // crash-safe, human-inspectable) and the store-and-forward outbox. Lives in
-// the portable library (~/PrepperPad/mesh) so history travels with it.
+// the portable library (~/Nuvok/mesh) so history travels with it.
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';

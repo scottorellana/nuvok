@@ -3,11 +3,11 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/mesh_envelope.dart';
-import 'package:prepper_pad/modules/mesh/mesh_identity.dart';
-import 'package:prepper_pad/modules/mesh/mesh_service.dart';
-import 'package:prepper_pad/modules/mesh/mesh_transport.dart';
-import 'package:prepper_pad/modules/tools/sos_beacon.dart';
+import 'package:nuvok/modules/mesh/mesh_envelope.dart';
+import 'package:nuvok/modules/mesh/mesh_identity.dart';
+import 'package:nuvok/modules/mesh/mesh_service.dart';
+import 'package:nuvok/modules/mesh/mesh_transport.dart';
+import 'package:nuvok/modules/tools/sos_beacon.dart';
 
 class _Cap implements MeshTransport {
   final sent = <Uint8List>[];

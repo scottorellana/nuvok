@@ -1,4 +1,4 @@
-// Bluetooth Low Energy transport for Prepper Mesh.
+// Bluetooth Low Energy transport for Nuvok Link.
 //
 // Carries mesh datagrams over BLE when there is no WiFi / LAN — two devices
 // pair directly and exchange the same binary MeshEnvelope frames the WiFi
@@ -6,7 +6,7 @@
 // in the woods with zero infrastructure.
 //
 // Design:
-//   • Advertise a private Prepper Pad GATT service (see [serviceUuid]) so two
+//   • Advertise a private Nuvok GATT service (see [serviceUuid]) so two
 //     devices can find each other without SDP name matching.
 //   • Scan for that service, connect, and exchange frames through a TX
 //     characteristic (we write to peer) and an RX characteristic (peer writes
@@ -30,7 +30,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'mesh_transport.dart';
 import 'transport_health.dart';
 
-/// Wire UUIDs for the Prepper Pad BLE GATT service.
+/// Wire UUIDs for the Nuvok BLE GATT service.
 ///
 /// Service: 0000ffe0-0000-1000-8000-00805f9b34fb  (vendor 16-bit alias range,
 ///   same family as the Nordic UART Service — maximises compatibility).
@@ -358,14 +358,14 @@ class _NativeBlePeer implements BlePeer {
 /// Native BLE mesh link (Android + iOS + macOS).
 ///
 /// Runs both halves required for phone-to-phone Bluetooth with no internet:
-/// advertise a Prepper GATT service + scan/connect/write to nearby devices.
+/// advertise a Nuvok GATT service + scan/connect/write to nearby devices.
 /// The native side lives in BleMeshBridge.kt (Android) and
 /// BleMeshBridge.swift (iOS/macOS) speaking the same channel protocol, so an
 /// iPhone and an Android discover each other and exchange the exact same
 /// frames. Android also requests its 12+ runtime Bluetooth permissions.
 class NativeBleMeshLink implements BleLink {
-  static const _methods = MethodChannel('prepper/ble_mesh');
-  static const _events = EventChannel('prepper/ble_mesh/events');
+  static const _methods = MethodChannel('nuvok/ble_mesh');
+  static const _events = EventChannel('nuvok/ble_mesh/events');
 
   final _disc = StreamController<BlePeer>.broadcast();
   final _state = StreamController<String>.broadcast();
@@ -519,8 +519,8 @@ class BleTransport implements MeshTransport, HealthReporting {
 
   void _onAdapterState(String s) {
     health.value = switch (s) {
-      'off' => health.value
-          .copyWith(state: TransportState.off, hint: 'bluetooth_off'),
+      'off' =>
+        health.value.copyWith(state: TransportState.off, hint: 'bluetooth_off'),
       'unauthorized' => health.value.copyWith(
           state: TransportState.noPermission, hint: 'bluetooth_permission'),
       'unsupported' => health.value
@@ -607,8 +607,8 @@ class BleTransport implements MeshTransport, HealthReporting {
     _running = false;
     await _stateSub?.cancel();
     _stateSub = null;
-    health.value = health.value
-        .copyWith(state: TransportState.unavailable, peers: 0);
+    health.value =
+        health.value.copyWith(state: TransportState.unavailable, peers: 0);
     await _discoverSub?.cancel();
     _discoverSub = null;
     for (final sub in _rxSubs.values) {

@@ -17,7 +17,7 @@
 		<string>ht</string>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>Prepper Pad</string>
+	<string>Nuvok</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -25,7 +25,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>prepper_pad</string>
+	<string>nuvok</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -41,14 +41,14 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Prepper Pad usa Bluetooth para el chat de emergencia entre tus dispositivos cuando no hay internet ni señal.</string>
+	<string>Nuvok usa Bluetooth para el chat de emergencia entre tus dispositivos cuando no hay internet ni señal.</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Prepper Pad se comunica con tus otros dispositivos Prepper Pad en tu red WiFi, sin internet. Nada sale de tu red.</string>
+	<string>Nuvok se comunica con tus otros dispositivos Nuvok en tu red WiFi, sin internet. Nada sale de tu red.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Prepper Pad usa el micrófono para enviar notas de voz por la red local de emergencia (walkie-talkie sin internet).</string>
+	<string>Nuvok usa el micrófono para enviar notas de voz por la red local de emergencia (walkie-talkie sin internet).</string>
 	<key>NSBonjourServices</key>
 	<array>
-		<string>_prepperpad._udp</string>
+		<string>_Nuvokpad._udp</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Tu posición se usa para mostrarte en el mapa offline y compartirla en un SOS. Nunca sale de tus dispositivos.</string>

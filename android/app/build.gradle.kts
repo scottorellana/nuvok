@@ -4,10 +4,10 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-val releaseKeystorePath = System.getenv("PREPPER_PAD_KEYSTORE")
-val releaseKeyAlias = System.getenv("PREPPER_PAD_KEY_ALIAS")
-val releaseStorePassword = System.getenv("PREPPER_PAD_STORE_PASSWORD")
-val releaseKeyPassword = System.getenv("PREPPER_PAD_KEY_PASSWORD") ?: releaseStorePassword
+val releaseKeystorePath = System.getenv("NUVOK_KEYSTORE")
+val releaseKeyAlias = System.getenv("NUVOK_KEY_ALIAS")
+val releaseStorePassword = System.getenv("NUVOK_STORE_PASSWORD")
+val releaseKeyPassword = System.getenv("NUVOK_KEY_PASSWORD") ?: releaseStorePassword
 val hasReleaseSigning = !releaseKeystorePath.isNullOrBlank() &&
     !releaseKeyAlias.isNullOrBlank() &&
     !releaseStorePassword.isNullOrBlank() &&
@@ -15,7 +15,7 @@ val hasReleaseSigning = !releaseKeystorePath.isNullOrBlank() &&
     file(releaseKeystorePath!!).exists()
 
 android {
-    namespace = "com.prepperpad.prepper_pad"
+    namespace = "org.nuvok.nuvok"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -28,6 +28,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        // Must remain stable so installed Prepper Pad builds can update to NUVOK.
         applicationId = "com.prepperpad.prepper_pad"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
@@ -50,8 +51,8 @@ android {
 
     buildTypes {
         release {
-            // Production builds should set PREPPER_PAD_KEYSTORE,
-            // PREPPER_PAD_KEY_ALIAS and PREPPER_PAD_STORE_PASSWORD. Local
+            // Production builds should set NUVOK_KEYSTORE,
+            // NUVOK_KEY_ALIAS and NUVOK_STORE_PASSWORD. Local
             // unsigned-key builds keep the debug fallback so QA APK generation
             // still works without checking secrets into the repo.
             signingConfig = signingConfigs.getByName(

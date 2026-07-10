@@ -1,5 +1,5 @@
 // ═════════════════════════════════════════════════════════════
-// Prepper Pad — Local Installer Server
+// Nuvok — Local Installer Server
 // Serves installers + content packages to any device on the LAN.
 // No internet required. Pure Node.js, zero dependencies.
 // ═════════════════════════════════════════════════════════════
@@ -16,7 +16,7 @@ const HOST = '0.0.0.0'; // Listen on all interfaces (LAN accessible)
 const ROOT = path.resolve(import.meta.dirname, '..');
 const DIST_DIR = path.join(ROOT, 'dist');
 const DOWNLOADS_DIR = path.join(import.meta.dirname, 'downloads');
-const PREPPERPAD_DIR = path.join(os.homedir(), 'PrepperPad');
+const NUVOK_DIR = path.join(os.homedir(), 'Nuvok');
 const PUBLIC_DIR = path.join(import.meta.dirname, 'public');
 
 // ── Ensure downloads dir exists ──
@@ -25,7 +25,7 @@ fs.mkdirSync(PUBLIC_DIR, { recursive: true });
 
 // True if `child` is `parent` itself or a path underneath it. A bare
 // startsWith() on strings would also accept a sibling like
-// "PrepperPadEvil" when parent is "PrepperPad" — this checks the real
+// "NuvokEvil" when parent is "Nuvok" — this checks the real
 // directory boundary instead.
 function isInside(child, parent) {
   const rel = path.relative(parent, child);
@@ -109,7 +109,7 @@ function scanInstallers() {
   }
 
   // Only expose the latest/current app version per platform. Prefer files whose
-  // filename carries the pubspec version (e.g. PrepperPad-v0.2.2.dmg) so the
+  // filename carries the pubspec version (e.g. Nuvok-v0.2.2.dmg) so the
   // page never shows both "latest" and an older/versioned artifact. If a
   // platform has no versioned file yet, fall back to its newest file.
   const current = pubspecVersion();
@@ -269,7 +269,7 @@ function scanContent() {
 
   const packages = [];
   for (const cat of categories) {
-    const dir = path.join(PREPPERPAD_DIR, cat.dir);
+    const dir = path.join(NUVOK_DIR, cat.dir);
     if (!fs.existsSync(dir)) continue;
     for (const file of fs.readdirSync(dir)) {
       const full = path.join(dir, file);
@@ -317,7 +317,7 @@ function handleAPI(req, res, url) {
   if (p === '/api/status') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({
-      server: 'Prepper Pad Installer',
+      server: 'Nuvok Installer',
       version: '1.0.0',
       ips: getLanIPs(),
       port: PORT,
@@ -350,7 +350,7 @@ function isTopLevelDistAsset(urlPathname) {
 
 function handleDownload(req, res, url) {
   // /download/:filename?from=relative/path, or direct top-level dist assets
-  // like /prepper-pad-v0.2.8.apk and /CHECKSUMS-v0.2.8.txt.
+  // like /nuvok-v0.2.8.apk and /CHECKSUMS-v0.2.8.txt.
   const from = url.searchParams.get('from');
   let filePath;
   if (from) {
@@ -365,7 +365,7 @@ function handleDownload(req, res, url) {
 
   // Prevent path traversal and arbitrary repo reads. /download may only serve
   // release artifacts staged in dist/ or installer-server/downloads/; content
-  // files under ~/PrepperPad are exposed exclusively via /content/:type/:file.
+  // files under ~/Nuvok are exposed exclusively via /content/:type/:file.
   const resolved = path.resolve(filePath);
   if (!isInside(resolved, DIST_DIR) && !isInside(resolved, DOWNLOADS_DIR)) {
     res.writeHead(403);
@@ -417,7 +417,7 @@ function handleDownload(req, res, url) {
 // ── Content package download ──
 function handleContent(req, res, url) {
   // /content/:type/:filename — only public content packages are served.
-  // Never expose ~/PrepperPad wholesale: it also contains settings, notes and
+  // Never expose ~/Nuvok wholesale: it also contains settings, notes and
   // mesh identity/channel keys that must stay local to the device.
   const parts = url.pathname.split('/');
   if (parts.length !== 4) return false;
@@ -440,10 +440,10 @@ function handleContent(req, res, url) {
     res.end('Forbidden');
     return true;
   }
-  const filePath = path.join(PREPPERPAD_DIR, type, filename);
+  const filePath = path.join(NUVOK_DIR, type, filename);
 
   const resolved = path.resolve(filePath);
-  if (!isInside(resolved, PREPPERPAD_DIR)) {
+  if (!isInside(resolved, NUVOK_DIR)) {
     res.writeHead(403);
     res.end('Forbidden');
     return true;
@@ -569,7 +569,7 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, HOST, () => {
   const ips = getLanIPs();
   console.log('\n╔══════════════════════════════════════════════════╗');
-  console.log('║   🎒 Prepper Pad — Installer Server              ║');
+  console.log('║   🎒 Nuvok — Installer Server              ║');
   console.log('╠══════════════════════════════════════════════════╣');
   console.log('║                                                  ║');
   console.log('║  Abre cualquiera de estas URLs en tu navegador:  ║');

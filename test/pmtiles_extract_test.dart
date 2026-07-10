@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pmtiles/pmtiles.dart' as pm;
-import 'package:prepper_pad/modules/depot/pmtiles_extract_dart.dart';
+import 'package:nuvok/modules/depot/pmtiles_extract_dart.dart';
 
 // El extractor client-side es LO que permite descargar mapas por país en un
 // iPhone/Android de producción sin servidores propios: recorta la región del

@@ -1,4 +1,4 @@
 /* 简体中文 - 权限使用说明 */
-"NSBluetoothAlwaysUsageDescription" = "Prepper Pad 在没有互联网或信号时使用蓝牙进行设备间紧急聊天。";
-"NSLocalNetworkUsageDescription" = "Prepper Pad 在您的 WiFi 网络上与其他 Prepper Pad 设备通信，无需互联网。没有数据离开您的网络。";
+"NSBluetoothAlwaysUsageDescription" = "Nuvok 在没有互联网或信号时使用蓝牙进行设备间紧急聊天。";
+"NSLocalNetworkUsageDescription" = "Nuvok 在您的 WiFi 网络上与其他 Nuvok 设备通信，无需互联网。没有数据离开您的网络。";
 "NSLocationWhenInUseUsageDescription" = "您的位置用于在离线地图上显示您的位置并在 SOS 中共享。它永远不会离开您的设备。";

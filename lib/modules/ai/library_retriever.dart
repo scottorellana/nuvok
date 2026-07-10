@@ -6,7 +6,7 @@ import 'dart:convert';
 
 import 'package:html/parser.dart' as html;
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import '../../zim/zim_file.dart';
 
 class RetrievedSource {
@@ -100,7 +100,7 @@ class LibraryRetriever {
     if (terms.isEmpty) return [];
 
     final results = <RetrievedSource>[];
-    final files = PrepperLibrary.instance.listZims();
+    final files = NuvokLibrary.instance.listZims();
 
     for (final file in files) {
       if (results.length >= maxSources) break;
@@ -176,7 +176,7 @@ class LibraryRetriever {
   static String buildGroundedSystemPrompt(List<RetrievedSource> sources) {
     final buffer = StringBuffer()
       ..writeln(
-          'Eres el asistente de Prepper Pad. Responde SOLO con base en las '
+          'Eres el asistente de Nuvok. Responde SOLO con base en las '
           'FUENTES de la biblioteca offline que se listan abajo. Cita cada '
           'afirmación con su número entre corchetes, por ejemplo [1]. Si las '
           'fuentes no contienen la respuesta, dilo claramente y no inventes. '

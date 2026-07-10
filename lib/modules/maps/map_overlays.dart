@@ -1,5 +1,5 @@
 // User-created map overlays persisted as GeoJSON in the portable library
-// (~/PrepperPad/maps/overlays.geojson). Covers custom POIs (shelter, water,
+// (~/Nuvok/maps/overlays.geojson). Covers custom POIs (shelter, water,
 // meeting point, resources) and tactical layers (safe zones, risk zones,
 // evacuation routes). Being GeoJSON, overlays travel with the library and
 // can be shared or edited by hand.
@@ -10,7 +10,7 @@ import 'dart:io';
 
 import 'package:latlong2/latlong.dart';
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 
 /// What an overlay represents. Drives icon, color and geometry kind.
 enum OverlayKind {
@@ -158,7 +158,7 @@ class OverlayStore extends ChangeNotifier {
   bool _loaded = false;
 
   File get _file =>
-      File('${PrepperLibrary.instance.mapsDir.path}/overlays.geojson');
+      File('${NuvokLibrary.instance.mapsDir.path}/overlays.geojson');
 
   Future<void> load() async {
     if (_loaded) return;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/emergency_guides.dart';
-import 'package:prepper_pad/modules/emergency/emergency_page.dart';
+import 'package:nuvok/modules/emergency/emergency_guides.dart';
+import 'package:nuvok/modules/emergency/emergency_page.dart';
 
 // En un iPhone la columna de bloques fijos (CTA, buscador, botones, directorio)
 // consumía casi toda la altura y solo el grid interior scrolleaba, aplastado
@@ -24,7 +24,7 @@ void main() {
     expect(find.text('MODO EMERGENCIA'), findsOneWidget);
 
     // Deslizar hacia arriba repetidamente sobre la zona del encabezado.
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 45; i++) {
       await tester.dragFrom(const Offset(195, 500), const Offset(0, -500));
       await tester.pumpAndSettle();
     }

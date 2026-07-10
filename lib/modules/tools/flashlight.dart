@@ -13,7 +13,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:torch_light/torch_light.dart';
 
-import '../../core/prepper_colors.dart';
+import '../../core/nuvok_colors.dart';
 
 enum FlashlightMode { off, on, sos }
 
@@ -440,7 +440,7 @@ class _ModeButton extends StatelessWidget {
                   ),
                   child: Icon(
                     icon,
-                    color: isActive ? PrepperColors.black : PrepperColors.white,
+                    color: isActive ? NuvokColors.black : NuvokColors.white,
                     size: isLarge ? 36 : 28,
                   ),
                 ),

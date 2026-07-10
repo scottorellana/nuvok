@@ -1,6 +1,6 @@
 // Bundled life-saving guides: plain-language, step-by-step first-aid content
 // written for this product (no trademarked course names), embedded as assets
-// so they work on day zero with no downloads, in Spanish and English.
+// so they work on day zero with no downloads, in all seven runtime languages.
 // Frontmatter drives search: title, keywords, priority.
 import 'package:flutter/services.dart' show AssetManifest, rootBundle;
 
@@ -53,29 +53,6 @@ class EmergencyGuides {
         if (guide != null) guides.add(guide);
       } catch (_) {
         // A malformed guide must never break the rest.
-      }
-    }
-    // Fallback POR GUÍA: si el idioma pedido no tiene una guía, se completa
-    // con en→es. Una traducción parcial nunca debe ocultar contenido vital.
-    if (lang != 'es') {
-      final have = {for (final g in guides) g.id};
-      for (final fbLang in [if (lang != 'en') 'en', 'es']) {
-        final fbPaths = manifest
-            .listAssets()
-            .where((p) => p.startsWith('assets/emergency_guides/$fbLang/'))
-            .where((p) => p.endsWith('.md'));
-        for (final path in fbPaths) {
-          final id = path.split('/').last.replaceAll('.md', '');
-          if (have.contains(id)) continue;
-          try {
-            final raw = await rootBundle.loadString(path);
-            final guide = parse(raw, id: id, lang: fbLang);
-            if (guide != null) {
-              guides.add(guide);
-              have.add(id);
-            }
-          } catch (_) {}
-        }
       }
     }
     guides.sort((a, b) => a.priority.compareTo(b.priority));

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/prep/checklist.dart';
+import 'package:nuvok/modules/prep/checklist.dart';
 
 void main() {
   group('ChecklistProgress', () {

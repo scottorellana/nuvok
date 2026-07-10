@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/ble_transport.dart';
-import 'package:prepper_pad/modules/mesh/lora_transport.dart';
-import 'package:prepper_pad/modules/mesh/wifi_direct_transport.dart';
+import 'package:nuvok/modules/mesh/ble_transport.dart';
+import 'package:nuvok/modules/mesh/lora_transport.dart';
+import 'package:nuvok/modules/mesh/wifi_direct_transport.dart';
 
 void main() {
   group('production discovery timing', () {

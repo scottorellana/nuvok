@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:prepper_pad/modules/maps/roads_router.dart';
+import 'package:nuvok/modules/maps/roads_router.dart';
 
 // Reglas puras de ruteo por perfil: qué aristas se permiten, con qué peso,
 // y cómo afectan portones y zonas de riesgo. Sin .pmtiles — unit tests.

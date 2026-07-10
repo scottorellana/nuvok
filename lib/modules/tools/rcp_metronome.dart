@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../core/prepper_colors.dart';
+import '../../core/nuvok_colors.dart';
 
 class RcpMetronomeController extends ChangeNotifier {
   RcpMetronomeController._();
@@ -107,8 +107,8 @@ class RcpMetronomePage extends StatelessWidget {
           backgroundColor: ctrl.showBreathCue
               ? const Color(0xFF0D47A1)
               : isPlaying
-                  ? PrepperColors.emergencyDeep
-                  : PrepperColors.background,
+                  ? NuvokColors.emergencyDeep
+                  : NuvokColors.background,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             title: const Text('RCP Metrónomo'),
@@ -156,13 +156,13 @@ class RcpMetronomePage extends StatelessWidget {
                           key: ValueKey('breath-cue'),
                           children: [
                             Icon(Icons.air,
-                                color: PrepperColors.white, size: 88),
+                                color: NuvokColors.white, size: 88),
                             SizedBox(height: 8),
                             Text(
                               '2 RESPIRACIONES',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: PrepperColors.white,
+                                color: NuvokColors.white,
                                 fontSize: 42,
                                 fontWeight: FontWeight.w900,
                               ),
@@ -173,7 +173,7 @@ class RcpMetronomePage extends StatelessWidget {
                           '${ctrl.compressionCount}',
                           key: const ValueKey('compression-count'),
                           style: const TextStyle(
-                              color: PrepperColors.white,
+                              color: NuvokColors.white,
                               fontSize: 120,
                               fontWeight: FontWeight.bold),
                         ),
@@ -205,7 +205,7 @@ class RcpMetronomePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 12),
                     decoration: BoxDecoration(
-                      color: PrepperColors.info,
+                      color: NuvokColors.info,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: const Row(
@@ -236,7 +236,7 @@ class RcpMetronomePage extends StatelessWidget {
                         label: 'Reiniciar contador de compresiones',
                         child: FloatingActionButton(
                           heroTag: 'reset',
-                          backgroundColor: PrepperColors.cardElevated,
+                          backgroundColor: NuvokColors.cardElevated,
                           onPressed: ctrl.reset,
                           child: const Icon(Icons.refresh, color: Colors.white),
                         ),
@@ -251,8 +251,8 @@ class RcpMetronomePage extends StatelessWidget {
                         child: FloatingActionButton.large(
                           heroTag: 'play',
                           backgroundColor: isPlaying
-                              ? PrepperColors.emergency
-                              : PrepperColors.safe,
+                              ? NuvokColors.emergency
+                              : NuvokColors.safe,
                           onPressed: isPlaying ? ctrl.stop : ctrl.play,
                           child: Icon(isPlaying ? Icons.stop : Icons.play_arrow,
                               color: Colors.white, size: 48),

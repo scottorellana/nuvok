@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/lora_ble_uart.dart';
-import 'package:prepper_pad/modules/mesh/lora_transport.dart';
+import 'package:nuvok/modules/mesh/lora_ble_uart.dart';
+import 'package:nuvok/modules/mesh/lora_transport.dart';
 
 // El driver LoRa BLE-UART es lo que enchufa un adaptador LoRa real (tipo
 // Meshtastic/Nordic UART) al mesh: la app escanea el módulo, se conecta y el

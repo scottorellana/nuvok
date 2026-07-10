@@ -38,7 +38,7 @@ class LlamaServer extends ChangeNotifier {
       candidates.add('${exe.parent.path}/bin/llama-server');
     }
     final home = Platform.environment['HOME'] ?? '';
-    candidates.add('$home/prepper-pad/native/out/macos/llama-server');
+    candidates.add('$home/Nuvok-pad/native/out/macos/llama-server');
     candidates.add('$home/development/llama.cpp/build/bin/llama-server');
     for (final c in candidates) {
       if (File(c).existsSync()) return c;

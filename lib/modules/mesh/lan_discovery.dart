@@ -6,7 +6,7 @@
 // phone hotspots filter multicast but forward mDNS).
 import 'package:bonsoir/bonsoir.dart';
 
-/// Announces `_prepperpad._udp` (TXT: device id) and browses for the same
+/// Announces `_Nuvokpad._udp` (TXT: device id) and browses for the same
 /// type. Every foreign resolved service triggers [onPeer] so the transport
 /// can seed its unicast address book.
 ///
@@ -20,7 +20,7 @@ class LanDiscovery {
     required this.onPeer,
   });
 
-  static const String serviceType = '_prepperpad._udp';
+  static const String serviceType = '_Nuvokpad._udp';
 
   final String deviceId;
   final int port;
@@ -43,7 +43,7 @@ class LanDiscovery {
       final service = BonsoirService(
         // The service name must be unique per device on the network; the
         // device id already is. TXT carries it for self-filtering.
-        name: 'PrepperPad-$deviceId',
+        name: 'Nuvok-$deviceId',
         type: serviceType,
         port: port,
         attributes: {'id': deviceId},

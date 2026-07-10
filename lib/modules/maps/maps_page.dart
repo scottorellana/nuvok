@@ -11,8 +11,8 @@ import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_map_tiles_pmtiles/vector_map_tiles_pmtiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart' as vtr;
 
-import '../../core/prepper_library.dart';
-import '../../core/prepper_colors.dart';
+import '../../core/nuvok_library.dart';
+import '../../core/nuvok_colors.dart';
 import '../../core/locale_service.dart';
 import '../../core/shell_nav.dart';
 import '../depot/map_catalog.dart';
@@ -57,7 +57,7 @@ Directory tileCacheDirFor(File mapFile) {
   final stat = mapFile.statSync();
   final name = mapFile.uri.pathSegments.last.replaceAll('.pmtiles', '');
   final key = '$name-${stat.size}-${stat.modified.millisecondsSinceEpoch}';
-  return Directory('${PrepperLibrary.instance.root.path}/.tilecache/$key');
+  return Directory('${NuvokLibrary.instance.root.path}/.tilecache/$key');
 }
 
 class MapsPage extends StatefulWidget {
@@ -442,13 +442,13 @@ class _MapsPageState extends State<MapsPage> {
   void _refresh({bool clearCache = false}) {
     if (clearCache) {
       final cacheRoot =
-          Directory('${PrepperLibrary.instance.root.path}/.tilecache');
+          Directory('${NuvokLibrary.instance.root.path}/.tilecache');
       try {
         if (cacheRoot.existsSync()) cacheRoot.deleteSync(recursive: true);
       } catch (_) {}
     }
     setState(() {
-      _regions = PrepperLibrary.instance.listMaps();
+      _regions = NuvokLibrary.instance.listMaps();
     });
     // Load all installed maps as a single composite surface.
     if (_regions.isNotEmpty) {
@@ -766,7 +766,7 @@ class _MapsPageState extends State<MapsPage> {
                 ),
       body: _regions.isEmpty
           ? _EmptyMaps(
-              dir: PrepperLibrary.instance.mapsDir.path,
+              dir: NuvokLibrary.instance.mapsDir.path,
               onInstalled: () => _refresh(clearCache: true))
           : _error != null
               ? Center(child: Text(_error!))
@@ -803,7 +803,7 @@ class _MapsPageState extends State<MapsPage> {
                               }),
                               maximumZoom: 15,
                               cacheFolder: () async => Directory(
-                                  '${PrepperLibrary.instance.root.path}/.tilecache/composite'),
+                                  '${NuvokLibrary.instance.root.path}/.tilecache/composite'),
                             ),
                             // Downloaded-area outlines (subtle blue rectangles).
                             if (_coverages.isNotEmpty)
@@ -1039,7 +1039,7 @@ class _MapsPageState extends State<MapsPage> {
                             right: 12,
                             top: 12,
                             child: Card(
-                              color: PrepperColors.cautionSurface,
+                              color: NuvokColors.cautionSurface,
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Text(
@@ -1047,7 +1047,7 @@ class _MapsPageState extends State<MapsPage> {
                                   '${_drawPoints.length} puntos. Toca el mapa '
                                   'para agregar, ✓ para terminar.',
                                   style: const TextStyle(
-                                    color: PrepperColors.text,
+                                    color: NuvokColors.text,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                   ),

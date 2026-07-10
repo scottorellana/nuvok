@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/depot/map_catalog.dart';
+import 'package:nuvok/modules/depot/map_catalog.dart';
 
 // El catálogo debe cargar un mundo razonable y las regiones grandes deben
 // venir con maxZoom para que no pesen de más.

@@ -1,7 +1,7 @@
 // Modos de supervivencia: el usuario declara SU entorno (bosque, desierto,
 // mar…) y toda la app se especializa — el paquete de guías del entorno se
 // destaca y la IA prioriza técnicas de ESE lugar.
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 
 enum SurvivalMode {
   none,
@@ -29,13 +29,11 @@ extension SurvivalModeInfo on SurvivalMode {
       };
 
   /// Clave i18n del nombre del modo (modeBosque, modeDesierto, …).
-  String get nameKey =>
-      'mode${name[0].toUpperCase()}${name.substring(1)}';
+  String get nameKey => 'mode${name[0].toUpperCase()}${name.substring(1)}';
 
   /// Paquete completo escrito y con ilustraciones. Los no-listos igualmente
   /// muestran las guías generales etiquetadas para su entorno.
-  bool get ready =>
-      this == SurvivalMode.bosque || this == SurvivalMode.desierto;
+  bool get ready => this != SurvivalMode.none;
 }
 
 SurvivalMode survivalModeFromSetting(String? name) {
@@ -50,10 +48,10 @@ SurvivalMode survivalModeFromSetting(String? name) {
 /// app debe recordar dónde estás).
 class SurvivalModeStore {
   static SurvivalMode get active => survivalModeFromSetting(
-      PrepperLibrary.instance.settings['survivalMode'] as String?);
+      NuvokLibrary.instance.settings['survivalMode'] as String?);
 
   static Future<void> setActive(SurvivalMode m) async {
-    await PrepperLibrary.instance
+    await NuvokLibrary.instance
         .saveSetting('survivalMode', m == SurvivalMode.none ? null : m.name);
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/frag.dart';
+import 'package:nuvok/modules/mesh/frag.dart';
 
 // BLE moves ~180 usable bytes per notification; mesh envelopes are 200-600.
 // This layer splits and rebuilds them — a bug here silently corrupts every

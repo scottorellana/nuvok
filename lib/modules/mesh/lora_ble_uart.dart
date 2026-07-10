@@ -1,5 +1,5 @@
 // LoRa over BLE-UART: the production driver that plugs a real long-range
-// radio into Prepper Mesh. Consumer LoRa adapters (Meshtastic T-Beam/Heltec,
+// radio into Nuvok Link. Consumer LoRa adapters (Meshtastic T-Beam/Heltec,
 // RAK, generic nRF52 boards) expose the Nordic UART Service (NUS) over BLE —
 // a TX characteristic you write to and an RX characteristic that notifies.
 // This driver scans for such a module, connects, and hands raw LoRa frames

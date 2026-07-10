@@ -1,4 +1,4 @@
-# Perfiles de país para instaladores de Prepper Pad
+# Perfiles de país para instaladores de Nuvok
 #
 # Cada perfil define qué mapa (.pmtiles) e idioma se incluyen
 # pre-cargados en el instalador de ese país. El script de build
@@ -13,12 +13,12 @@
 #   3. Copia el mapa a assets/bundled_library/maps/
 #   4. Actualiza el manifest del bundle
 #   5. Compila el APK con Flutter
-#   6. Copia a dist/prepper-pad-v<version>-<country>.apk
+#   6. Copia a dist/Nuvok-pad-v<version>-<country>.apk
 
 profiles:
   # ── Perfil por defecto (Honduras + El Salvador) ──
   default:
-    name: "Prepper Pad (Centroamérica)"
+    name: "Nuvok (Centroamérica)"
     language: es
     maps:
       - honduras
@@ -29,7 +29,7 @@ profiles:
 
   # ── Honduras ──
   honduras:
-    name: "Prepper Pad Honduras"
+    name: "Nuvok Honduras"
     language: es
     maps:
       - honduras
@@ -39,7 +39,7 @@ profiles:
 
   # ── El Salvador ──
   el-salvador:
-    name: "Prepper Pad El Salvador"
+    name: "Nuvok El Salvador"
     language: es
     maps:
       - el-salvador
@@ -49,7 +49,7 @@ profiles:
 
   # ── Guatemala ──
   guatemala:
-    name: "Prepper Pad Guatemala"
+    name: "Nuvok Guatemala"
     language: es
     maps:
       - guatemala
@@ -59,7 +59,7 @@ profiles:
 
   # ── Nicaragua ──
   nicaragua:
-    name: "Prepper Pad Nicaragua"
+    name: "Nuvok Nicaragua"
     language: es
     maps:
       - nicaragua
@@ -69,7 +69,7 @@ profiles:
 
   # ── Costa Rica ──
   costa-rica:
-    name: "Prepper Pad Costa Rica"
+    name: "Nuvok Costa Rica"
     language: es
     maps:
       - costa-rica
@@ -79,7 +79,7 @@ profiles:
 
   # ── Panamá ──
   panama:
-    name: "Prepper Pad Panamá"
+    name: "Nuvok Panamá"
     language: es
     maps:
       - panama
@@ -89,7 +89,7 @@ profiles:
 
   # ── Estados Unidos (inglés) ──
   usa:
-    name: "Prepper Pad USA"
+    name: "Nuvok USA"
     language: en
     maps:
       - usa-northeast
@@ -99,7 +99,7 @@ profiles:
 
   # ── México ──
   mexico:
-    name: "Prepper Pad México"
+    name: "Nuvok México"
     language: es
     maps:
       - mexico
@@ -109,7 +109,7 @@ profiles:
 
   # ── Haití (francés/creole) ──
   haiti:
-    name: "Prepper Pad Haïti"
+    name: "Nuvok Haïti"
     language: fr
     maps:
       - haiti
@@ -119,7 +119,7 @@ profiles:
 
   # ── República Dominicana ──
   dominican-republic:
-    name: "Prepper Pad República Dominicana"
+    name: "Nuvok República Dominicana"
     language: es
     maps:
       - dominican-republic

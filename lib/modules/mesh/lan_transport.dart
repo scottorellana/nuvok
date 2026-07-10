@@ -18,13 +18,13 @@ class LanTransport implements MeshTransport, HealthReporting {
 
   final int port;
 
-  /// When set, the transport also announces/browses `_prepperpad._udp` via
+  /// When set, the transport also announces/browses `_Nuvokpad._udp` via
   /// Bonjour — the only LAN discovery path available on iOS without Apple's
   /// multicast entitlement. Null (tests, LoRa-only builds) skips it.
   final String? deviceId;
 
   static final InternetAddress _group = InternetAddress('239.255.77.77');
-  static const _lock = MethodChannel('prepper/multicast');
+  static const _lock = MethodChannel('nuvok/multicast');
 
   LanDiscovery? _discovery;
 
@@ -153,8 +153,8 @@ class LanTransport implements MeshTransport, HealthReporting {
 
   @override
   Future<void> stop() async {
-    health.value = health.value
-        .copyWith(state: TransportState.unavailable, peers: 0);
+    health.value =
+        health.value.copyWith(state: TransportState.unavailable, peers: 0);
     await _discovery?.stop();
     _discovery = null;
     try {

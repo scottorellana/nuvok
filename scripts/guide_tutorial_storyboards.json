@@ -1,0 +1,979 @@
+{
+  "abrigo_refugio": {
+    "title": "Emergency debris shelter",
+    "context": "same adult survivor in an olive jacket, gray backpack, dry pine forest clearing at late afternoon",
+    "panels": [
+      "Select dry wind-protected ground with no dead branches overhead; lay a 20–30 cm thick bed of dry pine boughs",
+      "Build a stable compact lean-to frame with a low ridgepole and sturdy angled branches",
+      "Cover the frame with dense overlapping leaves and boughs; show the dry insulated bed and entrance facing away from wind"
+    ],
+    "es": [
+      "Elige terreno seco y aísla el suelo",
+      "Construye un armazón bajo y estable",
+      "Cubre bien y orienta la entrada contra el viento"
+    ],
+    "en": [
+      "Choose dry ground and insulate it",
+      "Build a low, stable frame",
+      "Cover it densely and face the entrance away from wind"
+    ],
+    "avoid": "fire inside the shelter, unstable branches, dead branch overhead, impossible knots"
+  },
+  "agua_survival": {
+    "title": "Emergency water purification",
+    "context": "same adult in blue on one dry stream bank, same clean bottle, folded cloth, stainless pot, lid and stable outdoor stove",
+    "panels": [
+      "hold clean bottle above gravel and collect from a clear flowing section upstream without any clean item touching mud or streambed",
+      "on dry bank stretch clean folded cloth securely over pot and pour slowly; pot rim and clean side stay off ground",
+      "show pot at vigorous rolling boil with large bubbles and steam on stable outdoor stove, clean lid beside it"
+    ],
+    "es": [
+      "Recolecta de agua corriente sin contaminarla",
+      "Prefiltra el sedimento con tela limpia",
+      "Hierve vigorosamente y deja enfriar tapada"
+    ],
+    "en": [
+      "Collect from flowing water without contaminating it",
+      "Prefilter sediment through clean cloth",
+      "Bring to a rolling boil and cool covered"
+    ],
+    "avoid": "cloth or clean container on dirt, stagnant pool, drinking untreated water, dirty hands in water, indoor stove"
+  },
+  "alimentacion_supervivencia": {
+    "title": "Safe emergency fish preparation",
+    "context": "same adult in olive shirt, same whole fish, clean board, knife, waste bag and small camp stove on one dry riverside work surface",
+    "panels": [
+      "on stable board hold fish with non-cutting hand far behind blade and cut away from fingers and body",
+      "remove entrails into separate open waste bag far from edible flesh and water source; clean fillets stay on board",
+      "cook same fish pieces in covered metal pan on stable stove until opaque, flaky and visibly steaming"
+    ],
+    "es": [
+      "Limpia el pescado lejos del agua potable",
+      "Retira vísceras y separa los desechos",
+      "Cocina completamente antes de comer"
+    ],
+    "en": [
+      "Clean the fish away from drinking water",
+      "Remove entrails and isolate waste",
+      "Cook thoroughly before eating"
+    ],
+    "avoid": "knife toward fingers, raw fish consumption, guts mixed with fillets, waste near water, contaminated board"
+  },
+  "atragantamiento": {
+    "title": "Adult choking response training",
+    "context": "same life-size adult first-aid training manikin dressed blue and same female instructor in gray, empty training room, fixed side camera, freeze-action",
+    "panels": [
+      "instructor supports manikin chest with one forearm, leans it clearly forward and places open heel of other hand between shoulder blades for one back blow",
+      "upright same manikin; instructor behind forms one visible fist just above navel and below breastbone, other hand grasps fist for inward-upward thrust",
+      "same single manikin lies once on firm floor; instructor kneels at side with exactly two stacked hands centered on chest to begin CPR"
+    ],
+    "es": [
+      "Inclina hacia delante y da 5 golpes interescapulares",
+      "Alterna con 5 compresiones abdominales",
+      "Si pierde respuesta, llama e inicia RCP"
+    ],
+    "en": [
+      "Lean forward and give 5 back blows",
+      "Alternate with 5 abdominal thrusts",
+      "If unresponsive, call and start CPR"
+    ],
+    "avoid": "real choking patient, duplicate manikin or instructor, ghosting, motion blur, fist on ribs or sternum, slap on neck, two bodies on floor"
+  },
+  "balsa_improvisada": {
+    "title": "Improvised raft construction for calm water",
+    "context": "same two adults both wearing visible red PFDs in all panels, same dry logs, sealed jugs, rope and calm shallow shore",
+    "panels": [
+      "at shore one adult submerges one sealed jug to confirm watertight while other tests one dry log; no raft yet",
+      "on dry shore both build one rigid rectangular log frame and lash even row of sealed jugs underneath",
+      "tether completed empty raft and test in knee-deep still water; then one PFD-wearing adult kneels centered while second PFD-wearing adult holds safety line ashore"
+    ],
+    "es": [
+      "Úsala solo en agua calma y prueba los flotadores",
+      "Arma un marco rígido y distribuye la flotación",
+      "Prueba vacía, con cuerda y chaleco salvavidas"
+    ],
+    "en": [
+      "Use only on calm water and test every float",
+      "Build a rigid frame and distribute buoyancy",
+      "Test it empty, tethered and with a life jacket"
+    ],
+    "avoid": "rapids, deep-water first test, missing PFD, extra people, standing passenger, loose open containers, impossible lashings"
+  },
+  "bosque_agua": {
+    "title": "Finding and making forest water safe",
+    "context": "same adult hiker with map, bottle, cloth and metal pot in one temperate forest valley",
+    "panels": [
+      "Stop and listen, then follow a shaded gully downhill toward denser green vegetation and audible flowing water",
+      "Collect from a moving upstream section using a clean bottle without disturbing muddy sediment",
+      "Prefilter through clean cloth and boil in a metal pot on a stable outdoor stove"
+    ],
+    "es": [
+      "Busca agua siguiendo cauces y vegetación cuesta abajo",
+      "Recolecta de una corriente clara sin remover lodo",
+      "Prefiltra y hierve antes de beber"
+    ],
+    "en": [
+      "Follow gullies and greener vegetation downhill",
+      "Collect from clear moving water without stirring mud",
+      "Prefilter and boil before drinking"
+    ],
+    "avoid": "drinking directly, stagnant green water, collecting downstream of contamination, improvised poisonous plants"
+  },
+  "bosque_orientacion": {
+    "title": "STOP protocol when lost in a forest",
+    "context": "same adult hiker in orange shell with same backpack at one forest trail junction near sunset",
+    "panels": [
+      "hiker immediately stops, sits on dry rock beside exact junction and calms down instead of continuing",
+      "at same rock hiker studies one map beside real compass and checks water, headlamp and phone",
+      "hiker stays beside junction, ties one large bright orange signal cloth at eye level and finishes one compact low emergency tarp shelter before dark"
+    ],
+    "es": [
+      "Detente y evita caminar por pánico",
+      "Ubica el último punto seguro y revisa recursos",
+      "Señaliza y prepara refugio antes de oscurecer"
+    ],
+    "en": [
+      "Stop and do not panic-walk",
+      "Identify the last certain point and check resources",
+      "Signal and prepare shelter before dark"
+    ],
+    "avoid": "random wandering, absent signal, no shelter, night travel, changed location, illegible compass"
+  },
+  "bosque_peligros": {
+    "title": "Preventing common forest injuries",
+    "context": "same adult hiker wearing boots, gloves and long trousers at one forest campsite",
+    "panels": [
+      "Step onto a fallen log and look beyond it before stepping down; use a hiking pole to inspect leaf litter",
+      "Shake boots and clothing upside down before putting them on, revealing a small insect falling away",
+      "Use fine tweezers to grasp a tick close to skin and pull straight upward without twisting"
+    ],
+    "es": [
+      "Mira antes de pisar o meter las manos",
+      "Sacude botas y ropa antes de usarlas",
+      "Retira garrapatas recto desde la base"
+    ],
+    "en": [
+      "Look before stepping or reaching",
+      "Shake boots and clothing before use",
+      "Pull ticks straight up from the base"
+    ],
+    "avoid": "bare hands in holes, stepping blindly over logs, burning or twisting tick, dangerous animal attack"
+  },
+  "botiquin": {
+    "title": "Build and maintain an emergency first-aid kit",
+    "context": "same red first-aid pouch and realistic supplies on one clean olive table, fixed overhead camera, only one pair of adult hands",
+    "panels": [
+      "lay out gloves, gauze, pressure bandage, tape, shears, triangular bandage, splint and blanket in separated groups",
+      "compare one intact sealed gauze packet with one visibly torn stained packet and set damaged packet aside beside empty blister",
+      "pack intact supplies into separate transparent waterproof pouches by category, with gloves and gauze accessible on top"
+    ],
+    "es": [
+      "Reúne material esencial por función",
+      "Revisa sellos, cantidades y vencimientos",
+      "Empaca por categorías y protege del agua"
+    ],
+    "en": [
+      "Gather essential supplies by function",
+      "Check seals, quantities and expiry dates",
+      "Pack by category and protect from water"
+    ],
+    "avoid": "more than two hands, loose pills, readable labels, open sterile supplies kept, duplicate impossible tools"
+  },
+  "convulsiones": {
+    "title": "Safe seizure first aid",
+    "context": "same adult role-playing a seizure and same trained rescuer in uncluttered living room, same clothes, one phone timer and folded sweater",
+    "panels": [
+      "casualty lies once; rescuer starts visible phone timer on floor, moves chair away and slides folded sweater under head without touching arms or legs",
+      "during simulated convulsions rescuer stays an arm length away with open empty hands, area clear, nothing in mouth and no restraint",
+      "after movement stops rescuer uses shoulder and hip to roll same casualty into stable recovery position with mouth downward and watches breathing"
+    ],
+    "es": [
+      "Mide el tiempo, despeja el área y protege la cabeza",
+      "No sujetes ni pongas nada en la boca",
+      "Al terminar, posición lateral y vigila respiración"
+    ],
+    "en": [
+      "Time it, clear the area and protect the head",
+      "Do not restrain or place anything in the mouth",
+      "When it stops, recovery position and monitor breathing"
+    ],
+    "avoid": "restraint, hand on chest or limbs during convulsions, object in mouth, water, recovery position during active convulsions, duplicate body"
+  },
+  "cruce_rios": {
+    "title": "Safe river crossing decision and technique",
+    "context": "same adult hiker with backpack, chest-high pole and PFD at one shallow wide river in daylight",
+    "panels": [
+      "Walk the bank and choose the widest shallow straight section, rejecting a nearby foamy fast channel",
+      "Unclip backpack hip and chest straps and plant a strong pole upstream before entering",
+      "Cross diagonally facing upstream with two feet and the pole forming three points of contact, water below the knees"
+    ],
+    "es": [
+      "Busca la zona más ancha, baja y lenta",
+      "Suelta las correas y usa un bastón fuerte",
+      "Cruza de lado con tres apoyos"
+    ],
+    "en": [
+      "Choose the widest, shallowest, slowest section",
+      "Release pack straps and use a strong pole",
+      "Cross sideways with three points of contact"
+    ],
+    "avoid": "waist-deep current, linked group chain, clipped hip belt, pole downstream, rapids"
+  },
+  "fracturas_inmovilizacion": {
+    "title": "Improvised splinting training",
+    "context": "same adult casualty and rescuer using realistic forearm simulator, same two padded rigid boards, broad ties and triangular sling",
+    "panels": [
+      "check finger warmth, color, sensation and movement beyond simulated forearm injury",
+      "without straightening place one padded rigid board on each side spanning beyond wrist and elbow, both boards fully visible",
+      "fasten broad ties above and below injury without knots over it, recheck fingers, support fully splinted arm in sling"
+    ],
+    "es": [
+      "Revisa circulación y sensibilidad distal",
+      "Acolcha e inmoviliza como está",
+      "Sujeta arriba y abajo; vuelve a revisar"
+    ],
+    "en": [
+      "Check distal circulation and sensation",
+      "Pad and splint in the position found",
+      "Tie above and below, then recheck"
+    ],
+    "avoid": "single missing splint, straightening deformity, knot over injury, splint only as bandage, impossible arm"
+  },
+  "fuego_supervivencia": {
+    "title": "Starting a survival fire with a ferro rod",
+    "context": "same adult survivor with tan gloves, ferro rod, fixed-blade knife and sheltered bare-soil fire site in daylight",
+    "panels": [
+      "Prepare separate piles of fluffy dry tinder, pencil-thin kindling, finger-thick sticks and larger dry wood before making a spark",
+      "Scrape the ferro rod with the back spine of the knife, directing sparks into the tinder bundle with stable safe hand positions",
+      "Feed a contained small flame gradually with thin kindling while larger wood waits nearby and water is ready"
+    ],
+    "es": [
+      "Prepara yesca y leña por tamaños",
+      "Dirige chispas a la yesca con postura segura",
+      "Alimenta la llama de menor a mayor"
+    ],
+    "en": [
+      "Prepare tinder and wood by size",
+      "Direct sparks safely into the tinder",
+      "Feed the flame from small to larger fuel"
+    ],
+    "avoid": "gasoline, indoor fire, wet wood, scraping with sharp blade edge, forest fire, malformed hands"
+  },
+  "hemorragia_severa": {
+    "title": "Severe bleeding control training",
+    "context": "same full-length realistic bleeding-control leg simulator oriented with hip at left and foot at right, same trained rescuer wearing blue nitrile gloves, white gauze and one black commercial windlass tourniquet in a bright training room",
+    "panels": [
+      "expose one simulated bleeding wound on middle of thigh and apply firm direct pressure with thick folded gauze using both stacked gloved hands",
+      "pack one continuous strip of gauze tightly into same wound cavity and keep one gloved hand pressing over packed gauze",
+      "place commercial windlass tourniquet on bare thigh 5–7 cm toward hip from wound, never over wound or joint; pull strap tight and twist clearly visible rigid windlass rod"
+    ],
+    "es": [
+      "Expón la herida y presiona con fuerza",
+      "Rellena con gasa y mantén presión",
+      "Si no cede en una extremidad, coloca torniquete sobre la herida"
+    ],
+    "en": [
+      "Expose the wound and press hard",
+      "Pack with gauze and maintain pressure",
+      "If limb bleeding persists, place a tourniquet above it"
+    ],
+    "avoid": "tourniquet distal to wound, over wound or joint, missing windlass rod, loose cord, cotton balls, bare hands, real gore, malformed limb"
+  },
+  "hipotermia_golpe_calor": {
+    "title": "Temperature emergency first aid",
+    "context": "two clearly separate scenarios: panels 1 and 2 same hypothermia casualty inside cold shelter; panel 3 different heat-stroke casualty under shade in hot daylight",
+    "panels": [
+      "inside shelter remove same casualty wet outer jacket while immediately covering body with dry blankets",
+      "same casualty dry and fully wrapped above and below; cloth-wrapped warm bottles only at chest armpits and groin",
+      "separate hot-weather casualty lies confused under shade while rescuer removes outer clothing, soaks skin, fans and applies wrapped cold packs at neck armpits and groin while phone calls"
+    ],
+    "es": [
+      "Hipotermia: refugia, seca y quita ropa mojada",
+      "Recalienta gradualmente el centro del cuerpo",
+      "Golpe de calor: enfría rápido y busca ayuda"
+    ],
+    "en": [
+      "Hypothermia: shelter, dry and remove wet clothing",
+      "Rewarm the body core gradually",
+      "Heat stroke: cool rapidly and get help"
+    ],
+    "avoid": "hot bath, rubbing cold limbs, naked casualty, direct heat or ice on skin, confused heat casualty drinking"
+  },
+  "huracan": {
+    "title": "Hurricane preparation and shelter",
+    "context": "same family and home across hurricane timeline: calm daylight, darkening sky before winds, storm outside while all indoors",
+    "panels": [
+      "well before storm in calm weather adults bring furniture inside and fasten proper shutters; no wind or rain",
+      "before wind family carries water, first-aid kit, flashlight, radio and document pouch into interior windowless room",
+      "during strongest winds every family member shelters low inside that room away from windows using battery lights and radio"
+    ],
+    "es": [
+      "Asegura el exterior y protege ventanas",
+      "Lleva suministros al cuarto interior",
+      "Refúgiate lejos de ventanas y monitorea alertas"
+    ],
+    "en": [
+      "Secure outdoors and protect windows",
+      "Move supplies to an interior room",
+      "Shelter away from windows and monitor alerts"
+    ],
+    "avoid": "working outdoors in wind or rain, taping windows, candles, standing at windows, generator indoors"
+  },
+  "infarto_acv": {
+    "title": "Recognize heart attack and stroke and act",
+    "context": "same older man in blue seated in one living room and same female rescuer in green, same phone, clock and closed AED case",
+    "panels": [
+      "seated man has asymmetric facial droop, cannot keep one arm raised and presses center of chest; rescuer observes without medicine or drink",
+      "rescuer stops activity, supports him semi-reclined, points to wall clock for symptom start time and calls on speaker",
+      "same man calm and still; rescuer loosens collar, watches breathing and places closed AED nearby without attaching it while conscious"
+    ],
+    "es": [
+      "Reconoce dolor de pecho o signos FAST",
+      "Detén actividad, anota la hora y llama",
+      "Mantén reposo y vigila respiración"
+    ],
+    "en": [
+      "Recognize chest pain or FAST signs",
+      "Stop activity, note the time and call",
+      "Keep at rest and monitor breathing"
+    ],
+    "avoid": "extra people, both arms weak, walking patient, food, drink, pills, AED pads on conscious patient, delayed call"
+  },
+  "intoxicaciones": {
+    "title": "Suspected poisoning response",
+    "context": "same drowsy but breathing adult and same gloved rescuer in kitchen with one tipped cleaner bottle, open exterior door and speakerphone",
+    "panels": [
+      "without entering visible fumes or touching spill rescuer opens route and guides walking casualty into clean outdoor air",
+      "in fresh air rescuer leaves original container upright at safe distance and calls poison control or emergency services on speaker",
+      "when same casualty becomes drowsy but still breathing rescuer places them once on side in stable recovery position and monitors breathing"
+    ],
+    "es": [
+      "Aléjate de la fuente sin exponerte",
+      "Identifica el producto y llama con el envase a mano",
+      "Vigila respiración; no induzcas vómito"
+    ],
+    "en": [
+      "Move away from the source without exposure",
+      "Identify the product and call with the container",
+      "Monitor breathing; do not induce vomiting"
+    ],
+    "avoid": "rescuer in fumes, carrying duplicate casualty, spraying or mixing chemicals, milk, water, vomiting, bare-hand contact"
+  },
+  "inundacion": {
+    "title": "Flood evacuation safety",
+    "context": "same family, same two-story home and neighborhood during a rising-flood timeline; panel 1 completely dry interior, panel 2 completely dry elevated evacuation route with floodwater only far in background, panel 3 trapped home",
+    "panels": [
+      "before water arrives while floor and electrical panel are completely dry, one adult switches off main breaker as family moves documents, medicines and emergency kit upstairs",
+      "family evacuates early on a clearly elevated dry sidewalk with dry shoes and small go-bags; moving floodwater is visible only in a distant lower street and nobody steps into it",
+      "if trapped later, family moves to highest safe upper-level balcony and waves one bright cloth for rescue while far from power lines and floodwater"
+    ],
+    "es": [
+      "Sube documentos y corta energía solo en seco",
+      "Evacúa temprano por una ruta sin agua",
+      "Si quedas atrapado, sube y señaliza"
+    ],
+    "en": [
+      "Elevate documents and shut power only while dry",
+      "Evacuate early by a dry route",
+      "If trapped, go high and signal"
+    ],
+    "avoid": "feet in any water during evacuation, walking or driving through floodwater, wet electrical panel, rooftop near power lines, duplicate people"
+  },
+  "mordeduras_picaduras": {
+    "title": "Snakebite first aid",
+    "context": "same adult hiker with simulated lower-leg snakebite and same two trained rescuers at trailhead, padded splint, rigid litter and phone",
+    "panels": [
+      "seat casualty still while one rescuer removes ankle jewelry and loosens footwear; nobody searches for snake",
+      "immobilize bitten leg as found with softly padded splint and loose broad ties, at or slightly below heart level",
+      "two rescuers carry casualty level on rigid litter without walking while phone calls for urgent transport"
+    ],
+    "es": [
+      "Aléjate, mantén calma y quita objetos apretados",
+      "Inmoviliza sin apretar ni elevar",
+      "No camines: pide traslado urgente"
+    ],
+    "en": [
+      "Move away, stay calm and remove tight items",
+      "Immobilize without tight wrapping or elevation",
+      "Do not walk; arrange urgent transport"
+    ],
+    "avoid": "single-person carry, walking casualty, tourniquet, tight pressure bandage, cutting, suction, ice, catching snake"
+  },
+  "navegacion": {
+    "title": "Improvised compass with a magnetized needle",
+    "context": "same pair of hands, steel needle, bar magnet, flat cork disk, wide glass bowl of still water and ordinary compass on level outdoor table, fixed overhead camera",
+    "panels": [
+      "stroke one needle end in one direction with same magnet pole while free hand safely holds opposite end",
+      "lay magnetized needle horizontal across center of dry flat cork disk with equal overhang and magnet away",
+      "float cork and needle at center of perfectly still water with both hands and magnet removed; compare settled axis with nearby ordinary compass needle"
+    ],
+    "es": [
+      "Imanta la aguja siempre en un sentido",
+      "Equilíbrala sobre corcho en agua quieta",
+      "Deja que se alinee y confirma con una referencia"
+    ],
+    "en": [
+      "Magnetize the needle in one direction",
+      "Balance it on cork in still water",
+      "Let it align and verify with a reference"
+    ],
+    "avoid": "needle absent or sinking, spinning water, hands touching final bowl, magnet beside bowl, metal container, false labels"
+  },
+  "nudos_supervivencia": {
+    "title": "Photorealistic bowline knot sequence",
+    "context": "same single thick orange rope on matte dark tabletop, fixed directly overhead, same two tan gloved hands, sharp focus",
+    "panels": [
+      "form one small loop in standing part while leaving one large open fixed-loop bight; exactly two rope ends and no knot yet",
+      "pass working end up through small loop, around behind standing part and back down through same loop with crossings visible",
+      "pull standing part and working end to dress completed bowline: one compact knot, one large fixed loop and long working tail, exactly two rope ends"
+    ],
+    "es": [
+      "Forma el seno y un bucle pequeño",
+      "Pasa el chicote, rodea el firme y regresa",
+      "Ordena y aprieta el lazo fijo"
+    ],
+    "en": [
+      "Form the bight and a small loop",
+      "Pass the end through, around and back",
+      "Dress and tighten the fixed loop"
+    ],
+    "avoid": "overhand final knot, slip knot, impossible topology, hidden crossing, disconnected rope, more than two ends"
+  },
+  "parto_emergencia": {
+    "title": "Emergency childbirth simulation training",
+    "context": "same obviously molded plastic obstetric birth simulator and newborn training doll, fixed clinical training table, only one pair of blue-gloved instructor hands, instructor body and face never visible",
+    "panels": [
+      "overhead clean towels, blanket, gloves and phone arranged beside covered obstetric simulator; gloved hands open one clean towel, no birth anatomy visible yet",
+      "close side view of synthetic baby-doll head crowning from molded simulator; two open gloved hands only support head without pulling, no blood",
+      "same newborn training doll fully delivered, visibly dried and lying on simulator chest skin-to-skin under one dry blanket with face uncovered; only two gloved hands adjust blanket"
+    ],
+    "es": [
+      "Prepara un área limpia, tibia y con guantes",
+      "Sostén suavemente; nunca jales al bebé",
+      "Seca, piel con piel, abriga y vigila"
+    ],
+    "en": [
+      "Prepare a clean warm area and wear gloves",
+      "Support gently; never pull the baby",
+      "Dry, skin-to-skin, cover and monitor"
+    ],
+    "avoid": "real person, instructor face or body, blood, gore, extra baby, fused anatomy, smoke, ghosting, motion blur, pulling head, hands covering airway"
+  },
+  "pesca_trampas_supervivencia": {
+    "title": "Build and use a bottle fish trap",
+    "context": "same clear plastic bottle, utility knife, stable cutting board, cord, bait and shallow slow stream, same adult wearing intact gloves",
+    "panels": [
+      "on stable board cut top third from bottle with blade moving away from bracing hand far behind cutting line",
+      "invert cut top as centered funnel, make matched holes and tie parts securely, place bait inside",
+      "anchor completed trap underwater beside calm bank with funnel opening downstream and retrieval cord tied to stake above water; hands out of stream"
+    ],
+    "es": [
+      "Corta la botella con control y lejos de las manos",
+      "Invierte la boca, átala y añade carnada",
+      "Ancla en agua calma y deja cuerda de recuperación"
+    ],
+    "en": [
+      "Cut the bottle safely away from hands",
+      "Invert and tie the funnel, then add bait",
+      "Anchor in calm water with a retrieval line"
+    ],
+    "avoid": "hand in blade path, rapids, loose sharp plastic, impossible bottle geometry, person holding trap underwater, missing line"
+  },
+  "primeros_auxilios_extremos": {
+    "title": "MARCH/XABCDE first-look trauma sequence training",
+    "context": "same realistic trauma manikin, same trained rescuer in gloves and same safe outdoor training scene",
+    "panels": [
+      "Pause at the edge and check for traffic, fire, wires and other scene hazards before approaching the manikin",
+      "Identify simulated massive limb bleeding and apply immediate hard direct pressure with gloved hands and gauze",
+      "Open and assess the airway while maintaining head alignment, then look-listen-feel for breathing and expose only what is necessary"
+    ],
+    "es": [
+      "Primero confirma que la escena sea segura",
+      "Controla hemorragia masiva de inmediato",
+      "Después revisa vía aérea y respiración"
+    ],
+    "en": [
+      "First confirm the scene is safe",
+      "Control massive bleeding immediately",
+      "Then assess airway and breathing"
+    ],
+    "avoid": "real gore, rescuer in traffic, skipping massive bleeding, blind neck hyperextension, invasive airway tool, extra limbs"
+  },
+  "quemaduras": {
+    "title": "Correct first aid for a thermal burn",
+    "context": "same adult casualty, same kitchen sink and trained helper, non-graphic simulated forearm burn, same clothing",
+    "panels": [
+      "Stop the heat source and move the forearm safely away; remove a watch and ring before swelling",
+      "Cool the simulated burn under gentle clean cool-to-lukewarm running water for 20 minutes, not ice",
+      "Cover loosely with clean non-stick dressing or plastic film and keep the casualty warm while seeking help"
+    ],
+    "es": [
+      "Detén la causa y retira joyas",
+      "Enfría con agua corriente durante 20 minutos",
+      "Cubre suelto y busca atención"
+    ],
+    "en": [
+      "Stop the cause and remove jewelry",
+      "Cool under running water for 20 minutes",
+      "Cover loosely and seek care"
+    ],
+    "avoid": "ice, toothpaste, butter, broken blisters, fluffy cotton, tight wrapping, graphic burn, malformed arm"
+  },
+  "rcp_adulto": {
+    "title": "Adult CPR and AED training sequence",
+    "context": "same clearly plastic adult CPR manikin with bare chest on same firm gray mat, fixed high overhead-oblique camera; only one instructor pair of forearms/hands enters, no instructor face or full body",
+    "panels": [
+      "one hand taps manikin shoulder while black phone on speaker lies visible beside head; second hand is outside frame and chest is unobstructed",
+      "exactly two hands stacked at center of lower half sternum, fingers interlocked, both elbows straight and shoulders vertically aligned but instructor face cropped out",
+      "no person touches manikin: exactly two adhesive AED pads connected by visible cables to open yellow AED; one pad upper right chest below collarbone and one lower left lateral chest below armpit"
+    ],
+    "es": [
+      "Comprueba respuesta y respiración; llama",
+      "Comprime en el centro con brazos rectos",
+      "Coloca el DEA y nadie toca durante el análisis"
+    ],
+    "en": [
+      "Check response and breathing; call",
+      "Compress the center with straight arms",
+      "Attach the AED and keep clear during analysis"
+    ],
+    "avoid": "instructor face or duplicate body, ghosting, motion blur, pad over nipple or abdomen, missing cable, disconnected AED, hands touching during analysis"
+  },
+  "rcp_nino_bebe": {
+    "title": "Infant CPR training sequence updated for AHA 2025",
+    "context": "same clearly plastic infant CPR manikin in white diaper on same firm gray mat, fixed overhead camera; only one instructor pair of bare forearms and hands enters frame, instructor face and body never visible",
+    "panels": [
+      "tight close-up of the underside of one raised manikin foot: one instructor index finger visibly presses the center of the sole, far from toes; other hand completely outside frame; black speakerphone lies beside mat and head remains neutral",
+      "tight overhead-oblique crop from manikin shoulders to upper abdomen, diaper outside frame: ONLY the heel at the base of ONE open adult palm contacts the center of the lower half of the sternum just below nipple line; a clearly visible air gap separates all five naturally arched fingers from the chest; wrist straight, fingers point toward head, other hand and arm completely outside image",
+      "tight side-profile close-up: adult mouth is centered over and visibly encloses BOTH the small manikin nose and open mouth inside one continuous lip seal, not nose-only; manikin head neutral to very slightly extended, one adult hand supports forehead, chest only slightly elevated, no other hand near chest or abdomen"
+    ],
+    "es": [
+      "Comprueba respuesta y deja la cabeza neutral",
+      "Comprime con la base de una mano en el esternón",
+      "Da ventilación suave: solo debe elevarse el pecho"
+    ],
+    "en": [
+      "Check response and keep the head neutral",
+      "Compress with the heel of one hand on the sternum",
+      "Give a gentle breath for slight chest rise"
+    ],
+    "avoid": "touching toes instead of center sole, two-finger compressions, two hands on chest, whole palm flat on chest, any finger touching chest, fingers or palm on abdomen, contact near diaper, second hand or second arm in compression panel, adult chest contact in response check, neck hyperextension, nose-only breath, mouth-only breath, nose outside rescue-breath seal, pinched nose, aggressive ventilation, real infant, duplicated mannequin, extra hands, ghosting, motion blur, split screen within any panel, illustration, vector art, CGI or 3D render"
+  },
+  "refugio_naturaleza": {
+    "title": "Wilderness lean-to shelter construction",
+    "context": "same adult survivor with tarp-free natural materials in one pine forest, same ridgepole, cord and daylight progression",
+    "panels": [
+      "Before any frame exists, choose flat dry ground protected from wind, visibly look upward to check for dead branches, then build only a thick dry insulated sleeping bed on the ground; absolutely no ridgepole, upright frame or shelter structure yet",
+      "Secure a strong ridgepole between stable supports and lean closely spaced ribs at about 45 degrees",
+      "Layer branches, leaves and debris from bottom upward like roof shingles until the shelter is rain-shedding and compact"
+    ],
+    "es": [
+      "Elige lugar seguro y aísla el suelo primero",
+      "Fija la viga y coloca costillas estables",
+      "Cubre de abajo hacia arriba como tejas"
+    ],
+    "en": [
+      "Choose a safe site and insulate the ground first",
+      "Secure the ridgepole and stable ribs",
+      "Cover bottom-up like roof shingles"
+    ],
+    "avoid": "ridgepole or standing frame in first panel, dead branch overhead, giant open shelter, sparse roofing, fire inside, impossible unsupported ridgepole"
+  },
+  "senas_rescate": {
+    "title": "Visible and audible rescue signaling",
+    "context": "same single adult survivor in orange jacket at one open clearing with whistle, signal mirror and large orange ground panel",
+    "panels": [
+      "single survivor lays one very large high-contrast orange ground signal in clearing",
+      "same survivor blows one clearly visible whistle and raises one hand to listen between groups of blasts",
+      "same survivor alone holds signal mirror near face, extends other hand with two fingers as sight toward one distant helicopter and aims reflected spot through them"
+    ],
+    "es": [
+      "Haz una señal grande en un área visible",
+      "Emite tres silbidos, pausa y repite",
+      "Dirige el reflejo del espejo hacia el rescate"
+    ],
+    "en": [
+      "Make a large signal in a visible area",
+      "Give three whistle blasts, pause and repeat",
+      "Aim a mirror flash toward rescuers"
+    ],
+    "avoid": "duplicated survivor, two people, fire, missing mirror, random waving, cliff edge, impossible helicopter scale"
+  },
+  "shock": {
+    "title": "First aid for suspected shock",
+    "context": "same pale conscious adult casualty and rescuer with gloves, blanket and phone in one safe outdoor training scene",
+    "panels": [
+      "Identify and control a visible simulated bleeding source with firm pressure before changing position",
+      "Lay the casualty flat on an insulated surface, keep head and spine aligned, and do not elevate legs when injury is suspected",
+      "Cover with a dry blanket, call emergency services, reassure and continuously monitor breathing without giving food or drink"
+    ],
+    "es": [
+      "Trata primero la causa visible",
+      "Acuesta y mantén alineado sin movimientos innecesarios",
+      "Abriga, llama y vigila respiración"
+    ],
+    "en": [
+      "Treat the visible cause first",
+      "Lay flat and aligned without unnecessary movement",
+      "Keep warm, call and monitor breathing"
+    ],
+    "avoid": "automatic leg elevation with trauma, seated casualty, food or drink, direct heat, leaving casualty alone"
+  },
+  "terremoto": {
+    "title": "Drop, Cover and Hold On",
+    "context": "same adult, same clothing, same sturdy dining table and same interior room during one earthquake",
+    "panels": [
+      "At the first shaking, immediately drop low beside the sturdy table, away from windows and tall unsecured furniture",
+      "Move fully under the table and cover head and neck with one arm, keeping the whole body below the tabletop",
+      "Hold firmly to a table leg and remain under cover until shaking stops"
+    ],
+    "es": [
+      "Agáchate al comenzar el movimiento",
+      "Cúbrete bajo una mesa resistente",
+      "Sujétate y permanece cubierto"
+    ],
+    "en": [
+      "Drop when shaking starts",
+      "Cover under a sturdy table",
+      "Hold on and stay covered"
+    ],
+    "avoid": "running outside, doorway myth, standing, glass near casualty, impossible table, changing room"
+  },
+  "trauma_cabeza_columna": {
+    "title": "Suspected head and spine injury stabilization training",
+    "context": "same adult trauma manikin on firm backboard and same gloved rescuer at safe roadside training scene, fixed overhead-oblique camera",
+    "panels": [
+      "conscious simulated casualty lies still; rescuer behind head tells them not to move and keeps neck exactly as found without traction",
+      "rescuer places open hands on both sides of head with ears between fingers and maintains manual in-line stabilization",
+      "while monitoring airway rescuer places two equal rolled towels snugly on both sides of head as temporary lateral supports; nothing crosses neck"
+    ],
+    "es": [
+      "Indica que no se mueva",
+      "Estabiliza la cabeza en la posición encontrada",
+      "Improvisa apoyos laterales sin apretar el cuello"
+    ],
+    "en": [
+      "Tell the casualty not to move",
+      "Stabilize the head in the position found",
+      "Use gentle side supports without neck pressure"
+    ],
+    "avoid": "neck traction, rotating or lifting head, sitting casualty, one side support, strap across throat, helmet removal, real gore"
+  },
+  "triaje_multivictima": {
+    "title": "Basic mass-casualty triage sequence",
+    "context": "same trained responder in vest, same four casualty simulators and safe outdoor disaster drill, consistent colored blank tags without text",
+    "panels": [
+      "From a safe position, call all people who can walk to move to one marked safe area; those walking receive green tags for now",
+      "Rapidly assess each non-walker for breathing, circulation and ability to follow commands without performing prolonged treatment",
+      "Apply red, yellow, green or black blank color tags, move to the next casualty and set a timer for reassessment"
+    ],
+    "es": [
+      "Primero reúne a quienes pueden caminar",
+      "Evalúa rápido respiración, circulación y respuesta",
+      "Marca prioridad y reevalúa"
+    ],
+    "en": [
+      "First gather everyone who can walk",
+      "Rapidly assess breathing, circulation and commands",
+      "Tag priority and reassess"
+    ],
+    "avoid": "graphic injuries, treating one person for long, written gibberish on tags, confusing tag colors, unsafe scene entry"
+  },
+  "desierto_agua": {
+    "context": "Practical hot-desert survival training with the same adult, tan field clothing and compact survival kit in all three panels. Topic: Agua en el Desierto.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Dig at the outside bend of the dry wash. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Build the solar still with a pebble at the center. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Purify: boil or 2 chlorine drops per liter. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "desierto_calor_refugio": {
+    "context": "Practical hot-desert survival training with the same adult, tan field clothing and compact survival kit in all three panels. Topic: Calor y Refugio en el Desierto.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: From 10 to 16 h: full shade and stillness. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Double roof with an air gap, body off the ground. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Prepare fire and warmth before sunset. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "desierto_peligros": {
+    "context": "Practical hot-desert survival training with the same adult, tan field clothing and compact survival kit in all three panels. Topic: Peligros del Desierto.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Camp high, never in the dry wash. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Shake your boots and look before touching. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Sandstorm: mark heading, cover up and wait. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "mar_flotacion": {
+    "context": "Practical coastal and open-water survival training with the same adult, same flotation equipment, shoreline and daylight conditions in all three panels. Topic: Flotar y Sobrevivir en el Mar.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Float on your back and control your breathing. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: HELP position: knees to chest on your float. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: In a rip current: swim parallel to the beach. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "mar_agua": {
+    "context": "Practical coastal and open-water survival training with the same adult, same flotation equipment, shoreline and daylight conditions in all three panels. Topic: Agua Potable en el Mar y la Costa.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Rig rain capture before it rains. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Dig behind the dune: the fresh layer floats. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Never drink seawater. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "mar_peligros": {
+    "context": "Practical coastal and open-water survival training with the same adult, same flotation equipment, shoreline and daylight conditions in all three panels. Topic: Peligros del Mar y la Costa.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Spot the calm channel of the rip. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Shuffle your feet entering the water. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Jellyfish: seawater and heat, never fresh water. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "montana_frio_refugio": {
+    "context": "Practical mountain survival training with the same equipped hiker, backpack and alpine weather in all three panels. Topic: Frío y Refugio en la Montaña.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Cut the wind: sheltered mid-slope. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Insulate the ground with 30 cm of boughs. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Change out of wet clothes before sleeping. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "montana_descenso": {
+    "context": "Practical mountain survival training with the same equipped hiker, backpack and alpine weather in all three panels. Topic: Perderse y Descender en la Montaña.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: STOP: sit, observe, plan. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Descend ridges, never gullies. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Mark your trail with cairns. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "montana_peligros": {
+    "context": "Practical mountain survival training with the same equipped hiker, backpack and alpine weather in all three panels. Topic: Peligros de la Montaña.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Storm: crouch on your pack, spread out. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Loaded 30-45° snow slope: go around. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Altitude sickness: the cure is descending. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "rio_agua": {
+    "context": "Practical river survival training with the same hiker, trekking pole and clearly visible river terrain in all three panels. Topic: Agua de Río Segura.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Take from fast stretches, not still pools. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Settle and filter before disinfecting. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Boil 1 minute or chlorinate 30. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "rio_crecidas": {
+    "context": "Practical river survival training with the same hiker, trekking pole and clearly visible river terrain in all three panels. Topic: Crecidas de Río.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Camp 5 m above the river. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Marker stick at the water's edge. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Suddenly murky water: everyone uphill. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "rio_viajar": {
+    "context": "Practical river survival training with the same hiker, trekking pole and clearly visible river terrain in all three panels. Topic: Viajar Siguiendo el Río.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Walk the high bench, river in sight. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Canyon closing in: climb and go around. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Follow game trails down the valley. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "ciudad_derrumbes": {
+    "context": "Practical post-disaster urban survival training with the same prepared adult, same clothing and damaged-but-stable environment in all three panels. Topic: Derrumbes y Edificios Colapsados.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Trapped: 3 taps on metal, save your voice. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Organized silence to listen. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Work from the edges, never on top. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "ciudad_agua_recursos": {
+    "context": "Practical post-disaster urban survival training with the same prepared adult, same clothing and damaged-but-stable environment in all three panels. Topic: Agua y Recursos en la Ciudad.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Fill everything while there's pressure. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Drain the water heater: 50 hidden liters. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Disinfect anything doubtful. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "ciudad_peligros": {
+    "context": "Practical post-disaster urban survival training with the same prepared adult, same clothing and damaged-but-stable environment in all three panels. Topic: Peligros de la Ciudad Colapsada.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Gas: ventilate and shut off, no sparks. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Downed wire: 10 meters away. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: X-shaped cracks: don't sleep inside. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "pantano_moverse": {
+    "context": "Practical wetland survival training with the same protected adult, long clothing, boots and walking staff in all three panels. Topic: Moverse en Pantano y Manglar.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Probe every step with your pole. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Step on roots and clumps, not open mud. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Stuck: lie flat and crawl backward. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "pantano_agua_insectos": {
+    "context": "Practical wetland survival training with the same protected adult, long clothing, boots and walking staff in all three panels. Topic: Agua e Insectos en el Pantano.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Capture rain: the safest source. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Settle, filter and always boil. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Steady smoke against mosquitoes. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "pantano_peligros": {
+    "context": "Practical wetland survival training with the same protected adult, long clothing, boots and walking staff in all three panels. Topic: Peligros del Pantano.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Camp 5+ m from open water. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Leech: slide a nail under, don't burn. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Wash and cover every scratch today. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "artico_frio_refugio": {
+    "context": "Practical Arctic survival training in snow and wind with the same properly insulated adult, same cold-weather clothing and equipment in all three panels. Topic: Frío Extremo y Refugio en Nieve.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Snow trench with a low roof. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Vent hole always open. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Work without sweating, brush off snow. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "artico_agua_comida": {
+    "context": "Practical Arctic survival training in snow and wind with the same properly insulated adult, same cold-weather clothing and equipment in all three panels. Topic: Agua y Comida en Frío Extremo.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Never eat snow: melt it. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Blue ice yields double. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Fat and double rations against cold. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "artico_peligros": {
+    "context": "Practical Arctic survival training in snow and wind with the same properly insulated adult, same cold-weather clothing and equipment in all three panels. Topic: Peligros del Hielo y la Nieve.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Ice: clear is strong, gray is no. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Ice picks on your neck, cross spread out. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: If you fall in: kick, slide out, roll. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "incendio_forestal": {
+    "context": "Practical household disaster training with the same adult or family, same clothing, home or evacuation environment and emergency kit in all three panels. Topic: Incendio Forestal.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: At the first sign of distant smoke, one adult carrying a compact emergency backpack evacuates early along a clear road that runs laterally away from the distant hazard; smoke and a faint orange glow remain far on the horizon, with no nearby flames. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Head for burned or clear ground. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Smoke: stay low with a wet cloth. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "tornado": {
+    "context": "Practical household disaster training with the same adult or family, same clothing, home or evacuation environment and emergency kit in all three panels. Topic: Tornado.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Inner ground-floor room. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Crouch, cover head and neck. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Wait: another vortex may come. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "tsunami": {
+    "context": "Practical household disaster training with the same adult or family, same clothing, home or evacuation environment and emergency kit in all three panels. Topic: Tsunami.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Strong coastal quake: go up now. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: On foot to 30 m elevation. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Stay up for 12 hours. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "tormenta_invernal": {
+    "context": "Practical household disaster training with the same adult or family, same clothing, home or evacuation environment and emergency kit in all three panels. Topic: Tormenta Invernal.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: One room for the whole family. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Generator always outside: CO kills. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: In the car: stay inside and signal. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "sequia": {
+    "context": "Practical household disaster training with the same adult or family, same clothing, home or evacuation environment and emergency kit in all three panels. Topic: Sequía y Escasez de Agua.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Inventory and ration starting today. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Reuse every liter in cascade. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Harvest every drop from the roof. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "recon_primeras_72h": {
+    "context": "Practical community recovery training with the same small team of three adults and the same simple hand tools in all three panels. Topic: Las Primeras 72 Horas.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Count people and mark hazards. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Water and latrines before anything. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Roles, shifts and a common board. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "recon_agua_comunitaria": {
+    "context": "Practical community recovery training with the same small team of three adults and the same simple hand tools in all three panels. Topic: Agua Potable Comunitaria.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: One protected source for all. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Settle, filter, chlorinate measured. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Distribution with measure and logbook. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "recon_letrinas_saneamiento": {
+    "context": "Practical community recovery training with the same small team of three adults and the same simple hand tools in all three panels. Topic: Letrinas y Saneamiento.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Trench 30 m from water, downhill. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Soil or ash after every use. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Tippy-tap with soap at the exit. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "recon_huerto_emergencia": {
+    "context": "Practical community recovery training with the same small team of three adults and the same simple hand tools in all three panels. Topic: Huerto de Emergencia.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Plant fast crops today: radish, greens. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Stagger plantings every 2 weeks. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Harvest leaves without killing the plant. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "recon_energia_solar": {
+    "context": "Practical community recovery training with the same small team of three adults and the same simple hand tools in all three panels. Topic: Energía Solar Básica.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Panel in the sun, battery in the shade. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Polarity marked: red with red. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Mesh phones charge first. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "recon_conservar_alimentos": {
+    "context": "Practical community recovery training with the same small team of three adults and the same simple hand tools in all three panels. Topic: Conservar Alimentos sin Refrigeración.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Thin strips, no fat, well salted. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: Sun-dry until it snaps. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Smells off: toss it untasted. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  },
+  "recon_organizacion": {
+    "context": "Practical community recovery training with the same small team of three adults and the same simple hand tools in all three panels. Topic: Organización Comunitaria.",
+    "panels": [
+      "Panel 1: show only this primary action in a clear medium view: Short assembly today: inventory and roles. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 2: show only this primary action in a clear medium view: The public board kills rumor. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible.",
+      "Panel 3: show only this primary action in a clear medium view: Distribution always in the open. Keep hands, tools, body position and physical cause-and-effect fully visible and anatomically plausible."
+    ],
+    "avoid": "embedded text, letters, numbers, captions, arrows, diagrams, icons, logos, watermarks, maps with readable labels, split screens inside a panel, extra panels, merged or duplicated anatomy, extra fingers or limbs, ghosted people, motion blur, floating tools, unsafe exposure, contradictory actions, or equipment changing between panels"
+  }
+}

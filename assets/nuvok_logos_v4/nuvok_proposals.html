@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuvok — Logo Proposals v4</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#06080F; color:#E2E8F0; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif; padding:60px 40px; }
+  h1 { font-size:32px; font-weight:700; letter-spacing:-0.5px; color:#fff; margin-bottom:4px; }
+  h1 span { color:#00E5FF; }
+  .tagline { color:#64748B; font-size:15px; margin-bottom:50px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:40px; max-width:1200px; margin:0 auto; }
+  .card { background:#0C1220; border:1px solid #1A2333; border-radius:20px; padding:36px 28px; text-align:center; }
+  .icon-wrap { width:200px; height:200px; margin:0 auto 24px; position:relative; }
+  .icon-wrap.dark { background:#06080F; border-radius:44px; }
+  .icon-wrap.light { background:#F8FAFC; border-radius:44px; }
+  .card h2 { font-size:17px; font-weight:600; color:#00E5FF; margin-bottom:6px; }
+  .card p { color:#64748B; font-size:13px; line-height:1.6; }
+  .swatches { margin-top:16px; display:flex; justify-content:center; gap:8px; }
+  .sw { width:28px; height:28px; border-radius:8px; border:1px solid #1A2333; }
+  .row { display:flex; gap:16px; justify-content:center; margin-top:20px; }
+  .mini { width:60px; height:60px; border-radius:14px; opacity:0.9; }
+  .mini-wrap { text-align:center; }
+  .mini-label { font-size:10px; color:#475569; margin-top:4px; }
+  .footer { text-align:center; margin-top:60px; color:#334155; font-size:12px; }
+</style>
+</head>
+<body>
+
+<h1>Nuvok <span>—</span> Propuestas de Logo</h1>
+<p class="tagline">Vectorial · Escalable · Diseño profesional</p>
+
+<div class="grid">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CONCEPTO A: SIGNAL N — Monoline que se transforma en onda
+     La N es una señal. El trazo diagonal se vuelve onda de beacon.
+     Inspiración: Stripe, Linear, Vercel — minimalismo geométrico.
+═══════════════════════════════════════════════════════════════ -->
+<div class="card">
+<div class="icon-wrap dark">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradA" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00B8D4"/>
+      <stop offset="100%" stop-color="#00E5FF"/>
+    </linearGradient>
+  </defs>
+  <!-- N como trazo continuo monoline -->
+  <!-- Pilar izquierdo -->
+  <path d="M 62 148 L 62 62" stroke="url(#gradA)" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <!-- Diagonal que se transforma en onda -->
+  <path d="M 62 62 Q 100 80 100 100 Q 100 120 110 100 Q 120 80 138 62"
+        stroke="url(#gradA)" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <!-- Pilar derecho -->
+  <path d="M 138 62 L 138 148" stroke="url(#gradA)" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <!-- Punto de señal en el pico de la onda -->
+  <circle cx="100" cy="100" r="6" fill="#FFFFFF"/>
+</svg>
+</div>
+<h2>A — Signal N</h2>
+<p>La letra N dibujada en un solo trazo continuo. La diagonal central se transforma en una onda de señal. Un punto blanco marca el pulso.</p>
+<div class="swatches">
+  <div class="sw" style="background:#00E5FF"></div>
+  <div class="sw" style="background:#00B8D4"></div>
+  <div class="sw" style="background:#06080F"></div>
+</div>
+<div class="row">
+  <div class="mini-wrap"><div class="mini" style="background:#06080F;border-radius:14px;display:flex;align-items:center;justify-content:center;">
+    <svg width="40" height="40" viewBox="0 0 200 200"><path d="M 62 148 L 62 62" stroke="#00E5FF" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M 62 62 Q 100 80 100 100 Q 100 120 110 100 Q 120 80 138 62" stroke="#00E5FF" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M 138 62 L 138 148" stroke="#00E5FF" stroke-width="12" stroke-linecap="round" fill="none"/><circle cx="100" cy="100" r="6" fill="#FFFFFF"/></svg>
+  </div><div class="mini-label">16px</div></div>
+  <div class="mini-wrap"><div class="mini" style="background:#06080F;border-radius:14px;display:flex;align-items:center;justify-content:center;">
+    <svg width="44" height="44" viewBox="0 0 200 200"><path d="M 62 148 L 62 62" stroke="#fff" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M 62 62 Q 100 80 100 100 Q 100 120 110 100 Q 120 80 138 62" stroke="#fff" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M 138 62 L 138 148" stroke="#fff" stroke-width="12" stroke-linecap="round" fill="none"/><circle cx="100" cy="100" r="6" fill="#00E5FF"/></svg>
+  </div><div class="mini-label">mono</div></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CONCEPTO B: COMPASS HEX — Hexágono + N por espacio negativo
+     Un badge hexagonal (como cara de brújula) con N recortada.
+     Inspiración: Patagonia, Arc'teryx, Life360.
+═══════════════════════════════════════════════════════════════ -->
+<div class="card">
+<div class="icon-wrap dark">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradB" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#0288D1"/>
+    </linearGradient>
+  </defs>
+  <!-- Hexágono sólido -->
+  <path d="M 100 30 L 160 65 L 160 135 L 100 170 L 40 135 L 40 65 Z"
+        fill="url(#gradB)"/>
+  <!-- N recortada por espacio negativo (más ancha en el centro) -->
+  <path d="M 70 140 L 70 70 L 82 70 L 118 115 L 118 70 L 130 70 L 130 140 L 118 140 L 82 95 L 82 140 Z"
+        fill="#06080F"/>
+</svg>
+</div>
+<h2>B — Compass Hex</h2>
+<p>Insignia hexagonal (como cara de brújula) con la N en espacio negativo. Transmite protección, orientación y solidez. Funciona perfecto como grabado en hardware.</p>
+<div class="swatches">
+  <div class="sw" style="background:#00E5FF"></div>
+  <div class="sw" style="background:#0288D1"></div>
+  <div class="sw" style="background:#06080F"></div>
+</div>
+<div class="row">
+  <div class="mini-wrap"><div class="mini" style="background:#06080F;border-radius:14px;display:flex;align-items:center;justify-content:center;">
+    <svg width="44" height="44" viewBox="0 0 200 200"><path d="M 100 30 L 160 65 L 160 135 L 100 170 L 40 135 L 40 65 Z" fill="#00E5FF"/><path d="M 70 140 L 70 70 L 82 70 L 118 115 L 118 70 L 130 70 L 130 140 L 118 140 L 82 95 L 82 140 Z" fill="#06080F"/></svg>
+  </div><div class="mini-label">16px</div></div>
+  <div class="mini-wrap"><div class="mini" style="background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;">
+    <svg width="44" height="44" viewBox="0 0 200 200"><path d="M 100 30 L 160 65 L 160 135 L 100 170 L 40 135 L 40 65 Z" fill="#0288D1"/><path d="M 70 140 L 70 70 L 82 70 L 118 115 L 118 70 L 130 70 L 130 140 L 118 140 L 82 95 L 82 140 Z" fill="#fff"/></svg>
+  </div><div class="mini-label">claro</div></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CONCEPTO C: PULSE LINE — Línea continua que forma N + latido
+     Un solo trazo elegante que dibuja la N y termina en pulso vital.
+     Inspiración: Nike swoosh, Airbnb, una sola línea con significado.
+═══════════════════════════════════════════════════════════════ -->
+<div class="card">
+<div class="icon-wrap dark">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradC" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#00B8D4"/>
+      <stop offset="60%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+  </defs>
+  <!-- Trazo continuo: entra por abajo, sube pilar izq, diagonal, baja pilar der, pulso -->
+  <path d="M 50 155
+           L 50 65
+           L 70 65
+           L 130 125
+           L 130 55
+           L 150 55
+           L 150 100
+           L 158 100
+           L 163 85
+           L 168 115
+           L 173 100
+           L 180 100"
+        stroke="url(#gradC)" stroke-width="8" stroke-linecap="round"
+        stroke-linejoin="round" fill="none"/>
+</svg>
+</div>
+<h2>C — Pulse Line</h2>
+<p>Una sola línea continua que dibuja la N y se transforma en un latido al final. Representa vida, señal y continuidad. Elegante y memorable como el swoosh de Nike.</p>
+<div class="swatches">
+  <div class="sw" style="background:#00B8D4"></div>
+  <div class="sw" style="background:#00E5FF"></div>
+  <div class="sw" style="background:#FFFFFF"></div>
+</div>
+<div class="row">
+  <div class="mini-wrap"><div class="mini" style="background:#06080F;border-radius:14px;display:flex;align-items:center;justify-content:center;">
+    <svg width="48" height="48" viewBox="0 0 200 200"><path d="M 50 155 L 50 65 L 70 65 L 130 125 L 130 55 L 150 55 L 150 100 L 158 100 L 163 85 L 168 115 L 173 100 L 180 100" stroke="#00E5FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  </div><div class="mini-label">16px</div></div>
+  <div class="mini-wrap"><div class="mini" style="background:#06080F;border-radius:14px;display:flex;align-items:center;justify-content:center;">
+    <svg width="48" height="48" viewBox="0 0 200 200"><path d="M 50 155 L 50 65 L 70 65 L 130 125 L 130 55 L 150 55 L 150 100 L 158 100 L 163 85 L 168 115 L 173 100 L 180 100" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  </div><div class="mini-label">mono</div></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CONCEPTO D: STACKED BLOCKS — Bloques que forman N + arquitectura
+     Bloques geométricos sólidos que forman la N. Evoca construcción,
+     preparación, algo que se ensambla. Para el dispositivo físico.
+═══════════════════════════════════════════════════════════════ -->
+<div class="card">
+<div class="icon-wrap dark">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pilar izquierdo: 4 bloques apilados -->
+  <rect x="48" y="50" width="22" height="100" rx="6" fill="#00E5FF"/>
+  <!-- Pilar derecho: 4 bloques apilados -->
+  <rect x="130" y="50" width="22" height="100" rx="6" fill="#0288D1"/>
+  <!-- Diagonal: 3 bloques inclinados conectando ambos pilares -->
+  <g transform="rotate(34.7 100 100)">
+    <rect x="89" y="74" width="22" height="52" rx="6" fill="#00B8D4"/>
+  </g>
+  <!-- Punto de conexión brillante -->
+  <circle cx="100" cy="100" r="7" fill="#FFFFFF"/>
+</svg>
+</div>
+<h2>D — Stacked Blocks</h2>
+<p>La N construida con bloques geométricos sólidos. Evoca preparación, ensamblaje, algo que se construye para durar. Perfecto para grabar en el hardware físico.</p>
+<div class="swatches">
+  <div class="sw" style="background:#00E5FF"></div>
+  <div class="sw" style="background:#00B8D4"></div>
+  <div class="sw" style="background:#0288D1"></div>
+</div>
+<div class="row">
+  <div class="mini-wrap"><div class="mini" style="background:#06080F;border-radius:14px;display:flex;align-items:center;justify-content:center;">
+    <svg width="44" height="44" viewBox="0 0 200 200"><rect x="48" y="50" width="22" height="100" rx="6" fill="#00E5FF"/><rect x="130" y="50" width="22" height="100" rx="6" fill="#0288D1"/><g transform="rotate(34.7 100 100)"><rect x="89" y="74" width="22" height="52" rx="6" fill="#00B8D4"/></g><circle cx="100" cy="100" r="7" fill="#FFFFFF"/></svg>
+  </div><div class="mini-label">16px</div></div>
+  <div class="mini-wrap"><div class="mini" style="background:#06080F;border-radius:14px;display:flex;align-items:center;justify-content:center;">
+    <svg width="44" height="44" viewBox="0 0 200 200"><rect x="48" y="50" width="22" height="100" rx="6" fill="#fff"/><rect x="130" y="50" width="22" height="100" rx="6" fill="#94A3B8"/><g transform="rotate(34.7 100 100)"><rect x="89" y="74" width="22" height="52" rx="6" fill="#CBD5E1"/></g><circle cx="100" cy="100" r="7" fill="#00E5FF"/></svg>
+  </div><div class="mini-label">mono</div></div>
+</div>
+</div>
+
+</div>
+
+<div class="footer">
+  Nuvok — Contigo cuando más importa<br>
+  Todos los conceptos son SVG vectorial · escalables a cualquier resolución
+</div>
+
+</body>
+</html>

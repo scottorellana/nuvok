@@ -1,4 +1,4 @@
-# Auditoría de Accesibilidad WCAG 2.1 AA — Prepper Pad
+# Auditoría de Accesibilidad WCAG 2.1 AA — Nuvok
 **Fecha:** 2026-07-04
 **Alcance:** App Flutter (`lib/`), sitio web ventas (`website/`), LAN installer (`installer-server/public/`), demo server (`demo-server/public/`).
 **Estándar:** WCAG 2.1 Level AA (mínimo).

@@ -11,7 +11,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile/vector_tile.dart';
 
-/// Prepper-relevant POI categories, each mapping to the raw Protomaps
+/// Nuvok-relevant POI categories, each mapping to the raw Protomaps
 /// `kind` values that belong to it.
 enum PoiCategory { health, pharmacy, fuel, food, safety, water }
 

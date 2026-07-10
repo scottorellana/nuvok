@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/bundled_library.dart';
-import 'package:prepper_pad/modules/settings/settings_page.dart';
+import 'package:nuvok/core/bundled_library.dart';
+import 'package:nuvok/modules/settings/settings_page.dart';
 
 void main() {
   test('settings offline status summarizes the bundled starter pack', () {
@@ -29,6 +29,6 @@ void main() {
         File('lib/modules/settings/settings_page.dart').readAsStringSync();
 
     expect(source, contains('PackageInfo.fromPlatform'));
-    expect(source, isNot(contains('Prepper Pad v0.2.8')));
+    expect(source, isNot(contains('Nuvok v0.2.8')));
   });
 }

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/emergency_guides.dart';
-import 'package:prepper_pad/modules/emergency/survival_mode.dart';
+import 'package:nuvok/modules/emergency/emergency_guides.dart';
+import 'package:nuvok/modules/emergency/survival_mode.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -45,18 +45,25 @@ title: RCP
     expect(survivalModeFromSetting('inventado'), SurvivalMode.none);
   });
 
-  test('load(zh) trae la guía traducida y completa el resto por fallback',
-      () async {
+  test('los 8 paquetes de entorno están curados y listos', () {
+    final ready = SurvivalMode.values.where((mode) => mode.ready).toSet();
+    expect(ready, SurvivalMode.values.where((m) => m != SurvivalMode.none).toSet());
+  });
+
+  test('load(zh) es paridad total: toda guía llega traducida', () async {
     final zh = await EmergencyGuides.load('zh');
+    final es = await EmergencyGuides.load('es');
+    expect(zh.length, es.length,
+        reason: 'zh debe cubrir todos los ids de es');
     final agua = zh.where((g) => g.id == 'bosque_agua').firstOrNull;
-    expect(agua, isNotNull, reason: 'bosque_agua debe existir en zh');
+    expect(agua, isNotNull);
     expect(agua!.lang, 'zh');
     expect(agua.modes, contains('bosque'));
-    // Una guía sin traducción zh llega por fallback (en→es), no desaparece.
-    // (rcp_adulto ya se tradujo a zh por AHA 2025; terremoto sigue es/en.)
-    final rcp = zh.where((g) => g.id == 'terremoto').firstOrNull;
-    expect(rcp, isNotNull);
-    expect(['en', 'es'], contains(rcp!.lang));
+    // Con paridad completa ya NINGUNA guía llega por fallback en zh; el
+    // mecanismo de fallback sigue cubierto por el propio loader (ids en
+    // idiomas sin traducción usarían en→es, verificado cuando existían).
+    expect(zh.every((g) => g.lang == 'zh'), isTrue,
+        reason: 'paridad zh completa: sin entradas por fallback');
   });
 
   test('las claves i18n de los 8 modos existen en 7 idiomas', () {

@@ -1,0 +1,2026 @@
+{
+  "abrigo_refugio": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Dry pine bough bed is visible, but wind-protected site selection and absence of dead branches overhead are not plainly demonstrated."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Lean-to frame is visible, but there is significant ghosting/duplicated body imagery around the worker, creating unsafe ambiguity."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Covered shelter and insulated bed are visible, but the entrance facing away from wind is not plainly shown."
+      }
+    ],
+    "note": "Regenerate: required safety/site-orientation details are unclear and panel 2 has visual ghosting.",
+    "risks": [
+      "Learner cannot verify wind-protected placement or safe overhead clearance",
+      "Ghosted/duplicated anatomy in panel 2 may confuse the construction action",
+      "Wind direction and entrance orientation are not visibly established"
+    ],
+    "sha256": "b2ee6c7fc31781a301882dd4707905fbacee187bb7067bbcfcc018707264044f",
+    "image": ".hermes/tutorial_candidates/abrigo_refugio.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:13:03.239936+00:00"
+  },
+  "agua_survival": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Bottle collection is not plainly safe: the bottle/hand appear in the shallow stream near gravel and may be touching waterbed or sediment; upstream clean collection above gravel is unclear."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Filtering is shown on wet gravel/stream area, not a dry bank; pot and cloth are very close to or resting on ground/rocks, so clean side and rim cleanliness are unsafe/ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Rolling boil and stove are visible, but the clean lid is placed on ground/rock, making cleanliness unsafe; person is also very close to steam."
+      }
+    ],
+    "note": "Regenerate: all panels contain unsafe ambiguity or contradict required clean-water handling technique.",
+    "risks": [
+      "collecting water while bottle may touch streambed sediment",
+      "filtering on wet ground instead of dry bank",
+      "clean cloth or pot rim contamination from ground contact",
+      "placing clean lid on ground/rock",
+      "learner may put face too close to steam"
+    ],
+    "sha256": "7d1ec5184862e8dd3bfd77d09200a9f4877143438d08e57403baf41eed006258",
+    "image": ".hermes/tutorial_candidates/agua_survival.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:13:04.346930+00:00"
+  },
+  "alimentacion_supervivencia": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Knife, fish, and hands are blurred; non-cutting hand appears close to the blade and the cut direction is not plainly away from fingers/body."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Entrails/waste handling is unclear; black waste bag is adjacent to the board and edible flesh, not visibly far from food or water source."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Pan is not covered; lid is held aside. Fish pieces are not clearly identifiable as the same fillets or visibly opaque/flaky despite steam."
+      }
+    ],
+    "note": "Required safe food-preparation sequence is not plainly and safely shown across panels.",
+    "risks": [
+      "unsafe hand placement near knife",
+      "unclear cut direction",
+      "waste bag too close to edible flesh",
+      "possible contamination near water source",
+      "uncovered cooking pan contradicts expected technique",
+      "blur/ghosting obscures tool and anatomy"
+    ],
+    "sha256": "ef7263da766916208b763c775264751bf2ab7c18e7ae68b385d5768aa36d3435",
+    "image": ".hermes/tutorial_candidates/alimentacion_supervivencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:13:00.067743+00:00"
+  },
+  "atragantamiento": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Back blow action is obscured by heavy ghosting; multiple/merged arms and limbs make support forearm and open heel strike unclear."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Upright abdominal thrust setup is present, but the required single visible fist grasped by the other hand is not plainly defined."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "CPR position is unsafe/ambiguous due to severe blur and duplicated/merged manikin anatomy; single manikin on floor is not clearly reliable."
+      }
+    ],
+    "note": "Regenerate: all panels contain unsafe ambiguity or unclear required technique.",
+    "risks": [
+      "motion ghosting creates extra limbs",
+      "unclear hand placement for back blow",
+      "fist for abdominal thrust not visibly distinct",
+      "duplicated or merged manikin anatomy in CPR panel",
+      "learner could misread CPR subject orientation and hand placement"
+    ],
+    "sha256": "18cd0a6ae0e2c28fcd79a9f643d0c9c649b2b50259a442ff8df000af58be8d6e",
+    "image": ".hermes/tutorial_candidates/atragantamiento.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:13:40.823649+00:00"
+  },
+  "balsa_improvisada": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Watertight jug test is not plainly visible; no sealed jug can be identified, and multiple logs/raft-like materials are already present in water."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Build occurs on wet shoreline/shallow water rather than dry shore; heavy blur/ghosting obscures hands, lashings, and whether jugs are evenly secured underneath."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Occupied raft test is visible, but no separate empty tethered test is shown; safety-line holder appears in water at the edge rather than clearly ashore, and line geometry is ambiguous."
+      }
+    ],
+    "note": "Regenerate: required actions are unclear or contradicted across panels with significant blur and unsafe ambiguity.",
+    "risks": [
+      "Learner may skip visible sealed-jug watertight testing",
+      "Learner may build or lash raft in water instead of on dry shore",
+      "Ambiguous lashings and jug placement could lead to unstable flotation",
+      "Safety-line holder position and tether use are unclear",
+      "Motion blur/ghosting obscures anatomy, tools, and cause-effect"
+    ],
+    "sha256": "02d934df51286b27337cb300a4fb05d821ffccf2b59906cf70044a6c43732c0f",
+    "image": ".hermes/tutorial_candidates/balsa_improvisada.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:13:34.201910+00:00"
+  },
+  "bosque_agua": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Person stands in forest gully but stopping/listening and following downhill toward water are not plainly visible; object in hands is ambiguous/ghosted."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Clean bottle is not plainly visible; person appears to reach into the stream by hand, creating unsafe ambiguity about collection and sediment disturbance."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Cloth prefilter into metal pot on stove is visible, but a clear rolling boil is not visible; filtering over an active flame creates unsafe ambiguity."
+      }
+    ],
+    "note": "Regenerate: key tutorial actions are unclear or incomplete across panels.",
+    "risks": [
+      "Learner may think listening/following water can be skipped because panel 1 only shows standing.",
+      "Learner may collect water by hand or from disturbed sediment because no clean bottle is visible in panel 2.",
+      "Learner may think heating is sufficient without a visible boil, and may handle cloth over an active stove flame."
+    ],
+    "sha256": "3285581583e8d4bd5b57ee3a2625b072b739119a54f95f60c562408154ffd24c",
+    "image": ".hermes/tutorial_candidates/bosque_agua.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:13:50.804046+00:00"
+  },
+  "bosque_orientacion": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Hiker is seated on a rock, but an exact trail junction is not plainly visible; only a single trail is clear."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Map, compass and water bottle are visible, but headlamp and phone are not clearly identifiable; same junction context is also not visible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Orange marking on tree is visible and tarp shelter is present, but the signal cloth is not clearly a tied large cloth, the junction is not visible, and the hiker/arms show ghosting or duplication."
+      }
+    ],
+    "note": "Regenerate: required junction context and several equipment/action details are unclear, with visible ghosting in the final panel.",
+    "risks": [
+      "Learner may not understand to stop at the exact junction rather than along any trail",
+      "Missing or ambiguous phone and headlamp check",
+      "Signal cloth tying technique unclear and may be mistaken for paint or banding",
+      "Ghosted limbs/duplicated anatomy in panel 3",
+      "Cause-and-effect continuity across panels is weak"
+    ],
+    "sha256": "a78d91272e88976ca2522351c7547aeee967d07a39c3d722861884f3a203f91b",
+    "image": ".hermes/tutorial_candidates/bosque_orientacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:14:02.700254+00:00"
+  },
+  "bosque_peligros": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Action is obscured by heavy ghosting and merged limbs; stepping onto a fallen log, looking beyond it, and using a hiking pole to inspect leaf litter are not plainly visible."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Boots/clothing are indistinct and not clearly upside down; no small insect falling away is plainly visible, with duplicated/blurred hands and gear."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Tweezers contact the leg, but the tick is not clearly identifiable and the pull direction/close-to-skin grasp is ambiguous; hand/tool geometry is blurred."
+      }
+    ],
+    "note": "Overall image requires regeneration due to unclear actions, ghosting, and unsafe ambiguity across panels.",
+    "risks": [
+      "Learner may not understand to inspect beyond a log before stepping down",
+      "Learner may not see the need to shake boots/clothing upside down or identify falling insects",
+      "Ambiguous tick removal angle could imply pulling sideways or using imprecise technique",
+      "Ghosted/merged anatomy and tools make the demonstrated procedures unreliable"
+    ],
+    "sha256": "85a843d6e9ef9f85d35a0bd0a3bb792b9f6f8eeec817d307460214f6ca8d2ee1",
+    "image": ".hermes/tutorial_candidates/bosque_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:14:01.184639+00:00"
+  },
+  "botiquin": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Supplies are laid out, but splint and blanket are not plainly identifiable, and shears/tool shapes are blurred and ambiguous."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Intact gauze and stained/torn material are visible, but the damaged packet is not clearly set aside beside an empty blister; the empty blister is faint and ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Transparent pouches are visible, but categories are mixed/unclear, gloves and gauze accessibility is ambiguous, and hand/object ghosting obscures the packing action."
+      }
+    ],
+    "note": "Regenerate: required actions are not clearly and safely depicted across all panels.",
+    "risks": [
+      "Learner may not identify all required kit items before packing",
+      "Damaged or contaminated gauze disposal/set-aside step is unclear",
+      "Mixed or unclear pouch organization could teach incorrect packing",
+      "Blurred hands/tools create unsafe ambiguity about actions and equipment"
+    ],
+    "sha256": "f43aeb3445fb0bda549a7d15821a73a7705ae2cc9b23540642cf5c9397b52819",
+    "image": ".hermes/tutorial_candidates/botiquin.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:14:11.234786+00:00"
+  },
+  "convulsiones": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Phone timer is not plainly visible, phone shows readable/gibberish text, rescuer appears to touch the casualty's face/head, and chair/sweater action is blurred/ambiguous with ghosting."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Rescuer is duplicated/ghosted, distance is ambiguous, and the phone shows text; convulsion scene is too blurred to confirm clear no-contact/no-restraint technique."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Recovery position is partially shown, but rolling by shoulder and hip and breathing check are not plainly visible; phone text remains visible and anatomy/action blur creates ambiguity."
+      }
+    ],
+    "note": "Regenerate: required first-aid actions are not clear and multiple unsafe ambiguities/ghosting defects are visible.",
+    "risks": [
+      "learner may think touching the head/face during a seizure is appropriate",
+      "visible phone does not clearly show a timer",
+      "duplicated/ghosted rescuer figures imply extra people or unclear motion",
+      "blurred anatomy obscures whether restraint or safe distance is maintained",
+      "readable/gibberish phone text violates no-text requirement"
+    ],
+    "sha256": "1cd814630287bee2ad55a03162a96831af6941891d4d2196f65728bf5bf6610b",
+    "image": ".hermes/tutorial_candidates/convulsiones.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:14:22.625427+00:00"
+  },
+  "cruce_rios": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Hiker is standing near the bank with a pole, but choosing the widest shallow straight section and explicitly rejecting the nearby foamy fast channel is not plainly visible."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Unclipping hip and chest straps is unclear; straps appear messy/possibly still attached, and the pole is not clearly planted upstream before entry."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Crossing posture is visible, but there is ghosting/duplicated arms and pole geometry, and facing upstream/three stable contact points are ambiguous."
+      }
+    ],
+    "note": "Regenerate: required instructional actions are not clear and the figure/equipment show unsafe ambiguity and ghosting.",
+    "risks": [
+      "learner may not understand how to select and reject crossing locations",
+      "unclear backpack strap release before entering water",
+      "unclear upstream pole placement",
+      "duplicated/ghosted arms and pole could teach unstable technique",
+      "crossing direction and three-point contact are ambiguous"
+    ],
+    "sha256": "e899967d25be72502aa5bee55af29be972af1b96a04dc53f60e0d9d253e5c06d",
+    "image": ".hermes/tutorial_candidates/cruce_rios.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:14:27.087109+00:00"
+  },
+  "fracturas_inmovilizacion": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Finger assessment is not plainly visible; hands and fingers are blurred/merged and the specific warmth/color/sensation/movement checks cannot be distinguished."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Required two padded rigid boards spanning beyond wrist and elbow are not clearly visible; equipment appears as distorted vertical fragments/ghosting rather than side splints."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Sling is visible, but tie placement, knots, splint geometry, and finger recheck are obscured by blur/merged hands and unclear bandaging."
+      }
+    ],
+    "note": "Regenerate: all panels contain unsafe ambiguity and distorted anatomy/equipment that could mislead learners.",
+    "risks": [
+      "Merged/ghosted hands and fingers obscure assessment technique",
+      "Splint boards are not fully visible or correctly positioned",
+      "Tie placement above and below injury is unclear",
+      "Knots over injury cannot be ruled out",
+      "Blurred equipment geometry may teach incorrect immobilization"
+    ],
+    "sha256": "01db346606b1af83f970284598eef8c6e9b6287d89da710b3aea81a34d05ebd6",
+    "image": ".hermes/tutorial_candidates/fracturas_inmovilizacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:14:37.882643+00:00"
+  },
+  "fuego_supervivencia": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Separate piles of fluffy tinder, thin kindling, thicker sticks, and larger split wood are visible before ignition."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Spark action is visible, but the knife/ferro-rod geometry is ambiguous; the back spine of the knife and safe stable hand positions are not plainly shown."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Small flame and nearby wood/water are visible, but the fire is not clearly contained and hands appear dangerously close while feeding material."
+      }
+    ],
+    "note": "Regenerate due to ambiguous ferro-rod technique and unsafe/unclear flame containment.",
+    "risks": [
+      "Learner may scrape with the wrong knife edge because spine contact is not visible",
+      "Hands are shown too close to sparks/flame",
+      "Fire appears on bare ground without a clear containment boundary"
+    ],
+    "sha256": "ea1971be78bbc53cae7a966e6b8270a8349ce654e1a968715a1819a946b3ba64",
+    "image": ".hermes/tutorial_candidates/fuego_supervivencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:15:09.878355+00:00"
+  },
+  "hemorragia_severa": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Direct pressure is shown on a thigh wound with gauze, but the gloved hands are side-by-side rather than plainly stacked as required."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "One continuous gauze strip is visibly being packed into the wound while one gloved hand maintains pressure over the wound area."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Tourniquet band is proximal to the wound, but the commercial windlass mechanism is not clearly visible or connected; hands appear to manipulate a small object near the wound instead of clearly twisting a rigid windlass rod."
+      }
+    ],
+    "note": "Regenerate due to unclear required hand position in panel 1 and unsafe/ambiguous tourniquet technique in panel 3.",
+    "risks": [
+      "Panel 1 may teach two-hand side-by-side pressure instead of stacked firm pressure.",
+      "Panel 3 does not clearly show pulling the strap tight and twisting a rigid windlass rod.",
+      "Panel 3 tool geometry is ambiguous and could imply manipulating equipment at or near the wound rather than operating the tourniquet."
+    ],
+    "sha256": "6113ece1193a080828a329ac0f52853deed3b0d927e909e247075ae05d026003",
+    "image": ".hermes/tutorial_candidates/hemorragia_severa.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:14:49.200109+00:00"
+  },
+  "hipotermia_golpe_calor": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Wet outer jacket removal is not plainly visible; blanket coverage and rescuer hands are blurred/ghosted, creating unsafe ambiguity."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Casualty appears wrapped with white bundles, but warm bottles at only chest/armpits/groin are not clearly identifiable; rescuer face/hands and pack geometry are distorted/ghosted."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Phone call and shade are visible, but removing outer clothing, soaking skin, and fanning are not plainly shown; casualty remains clothed and cooling packs/hand action are ambiguous."
+      }
+    ],
+    "note": "Regenerate: required tutorial actions are unclear and multiple panels show ghosting/distorted anatomy or equipment.",
+    "risks": [
+      "Learner may not understand to remove wet outer layers while keeping casualty covered",
+      "Warm bottles/cold packs are not clearly distinguishable from cloth bundles",
+      "Heat illness care omits or obscures clothing removal, active soaking, and fanning",
+      "Blurred/ghosted hands and tools create unsafe ambiguity"
+    ],
+    "sha256": "8c2fab8b2687a2b98ff96b35e2c3a73de11997ac063c8364d418adf45ec5231d",
+    "image": ".hermes/tutorial_candidates/hipotermia_golpe_calor.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:15:10.908822+00:00"
+  },
+  "huracan": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Adults are visibly moving outdoor furniture and fastening metal shutters in calm, dry weather."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Water, flashlight, and radio are visible, but the first-aid kit and document pouch are not plainly identifiable; the destination as an interior windowless safe room is ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Family members are low inside a windowless room with battery lights, radio, water, and supplies visible."
+      }
+    ],
+    "note": "Regenerate because panel 2 lacks clearly identifiable required emergency items and safe-room clarity.",
+    "risks": [
+      "Learners may not understand to bring a clearly marked first-aid kit and document pouch.",
+      "Panel 2 could be read as storing supplies in a closet near exterior openings rather than moving into an interior windowless room."
+    ],
+    "sha256": "35444a672b17371e28f71e84cb24f6f5f31fa0934872c9923a60e730dcfeafff",
+    "image": ".hermes/tutorial_candidates/huracan.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:15:27.978728+00:00"
+  },
+  "infarto_acv": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Chest pressing is visible, but facial droop and failed arm raise are not plainly clear; heavy ghosting creates duplicated/blurred arms and unsafe anatomy ambiguity."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Pointing toward clock and holding a phone-like object are visible, but speaker call is not clear and rescuer is not plainly supporting him; severe motion ghosting duplicates hands/arms."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Collar handling is visible, but the man appears possibly unconscious rather than calm/conscious; red bag is not clearly a closed AED, and ghosting blurs limbs and action."
+      }
+    ],
+    "note": "Regenerate: required stroke/heart-attack actions are not unambiguous and panels contain unsafe ghosting/anatomy blur.",
+    "risks": [
+      "blurred duplicated limbs may teach incorrect hand/arm positions",
+      "speaker emergency call not visibly confirmed",
+      "AED not clearly identifiable as a closed AED",
+      "patient consciousness and breathing-monitoring status unclear",
+      "facial droop and failed arm raise not plainly visible"
+    ],
+    "sha256": "4483aaa2f1d65f87523b4041d35eabd11f5e1551760e41cbd1851ac8b5876e8f",
+    "image": ".hermes/tutorial_candidates/infarto_acv.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:15:58.119388+00:00"
+  },
+  "intoxicaciones": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Doorway and outdoor exit are visible, but the rescuer/casualty anatomy is blurred with ghosted arms and the spill remains nearby indoors; safe avoidance of spill/fumes is not plainly clear."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "No clearly visible original container upright at safe distance and no clearly visible phone or speaker call; multiple ghosted/duplicated people make the action ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Casualty appears on the ground but recovery position and breathing monitoring are unclear due to heavy blur, ghosting, and unstable/ambiguous limb placement."
+      }
+    ],
+    "note": "Regenerate: required actions are not plainly visible and panels contain unsafe ambiguity and ghosted anatomy.",
+    "risks": [
+      "missing visible poison container in panel 2",
+      "missing visible emergency/poison-control phone call in panel 2",
+      "ghosted duplicated people and limbs",
+      "unclear recovery position technique",
+      "spill proximity and hazard avoidance unclear"
+    ],
+    "sha256": "a04dbe84d03753409a370074df3777c1601019d049663d6dcef9c84a5d8ec13d",
+    "image": ".hermes/tutorial_candidates/intoxicaciones.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:15:50.297147+00:00"
+  },
+  "inundacion": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Dry floor and electrical panel are visible, but the finger appears on an ordinary breaker and the main breaker is not plainly identifiable; family holds supplies near stairs but is not clearly moving them upstairs."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Family is evacuating on a dry elevated sidewalk with dry shoes and small bags; floodwater is visible only in the lower distant street."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Family is on an upper balcony above floodwater and one adult waves a bright cloth; no power lines are visible nearby."
+      }
+    ],
+    "note": "Regenerate because panel 1 does not plainly show the required main-breaker shutoff and upstairs movement.",
+    "risks": [
+      "Learner may think switching any individual breaker is the required main shutoff",
+      "Supplies relocation upstairs is ambiguous rather than visibly demonstrated"
+    ],
+    "sha256": "ffaebc66c8a37796a27cc3443c1d7c4c09af4c0d352a4d46e51a570e9a59098c",
+    "image": ".hermes/tutorial_candidates/inundacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:16:05.034291+00:00"
+  },
+  "mordeduras_picaduras": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Casualty is seated, but there are two rescuers at the leg area and the removal of ankle jewelry/loosening footwear is not plainly visible; heavy ghosting blurs hands, ankle, and equipment."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Leg immobilization is suggested but not clear enough: splint padding and loose broad ties are ambiguous, with duplicated/blurred hands and distorted tool geometry."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Casualty is on a litter with a rescuer using a phone, but two rescuers are not visibly carrying the casualty level; they appear standing beside the litter rather than transporting."
+      }
+    ],
+    "note": "Regenerate: required actions are unclear and multiple panels contain ghosting, ambiguous equipment, and unsafe instructional ambiguity.",
+    "risks": [
+      "Learner may not understand jewelry/footwear removal step",
+      "Blurred duplicated hands and merged anatomy obscure correct technique",
+      "Splint padding and loose tie placement are not reliably visible",
+      "Final transport action is not shown as a level carry by two rescuers"
+    ],
+    "sha256": "d5ebf3ee759fea48b3f972f4587e373caad02874c35f33c212a36532681133de",
+    "image": ".hermes/tutorial_candidates/mordeduras_picaduras.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:16:22.005684+00:00"
+  },
+  "navegacion": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Magnet is near the needle, but a one-direction stroke with the same pole is not plainly visible; the free hand does not clearly hold the opposite needle end safely."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Needle is visibly placed horizontally across the cork center with roughly equal overhang, and the magnet is away from the cork."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Cork and needle float in the bowl with hands removed, but a visible red guide/line connects toward the compass, and still-water/settled-axis comparison is not cleanly shown without that aid."
+      }
+    ],
+    "note": "Regenerate due unclear magnetizing action and prohibited/ambiguous guide line in final comparison panel.",
+    "risks": [
+      "Learner may not understand to stroke only one direction with one magnet pole.",
+      "Unsafe ambiguity around where to hold the needle during magnetizing.",
+      "Visible guide/line in panel 3 functions like an embedded label/arrow and obscures natural compass comparison.",
+      "Water surface and compass comparison are visually ambiguous."
+    ],
+    "sha256": "d4afb697debb3af99c56154d94a90e4320f0193fd324dcf6f3caf3f2d90120d0",
+    "image": ".hermes/tutorial_candidates/navegacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:16:26.882373+00:00"
+  },
+  "nudos_supervivencia": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Small loop and large bight are not cleanly defined; rope crossings already resemble a partial knot, with ghosted/extra rope segments and unclear end count."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Working-end path through the loop, behind the standing part, and back down is not plainly visible; crossings are merged and obscured by blur/ghosting."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Finished knot is a compact blob with unclear bowline structure; the dressing and exit paths of standing part, loop, and tail are not reliably readable."
+      }
+    ],
+    "note": "Regenerate: all panels contain ambiguous rope geometry and ghosting that would make the bowline steps unsafe to learn from.",
+    "risks": [
+      "learner may copy an incorrect crossing sequence",
+      "unclear distinction between standing part, working end, and fixed loop",
+      "ghosted extra rope segments suggest duplicated or impossible geometry",
+      "completed knot structure is not visibly verifiable as a bowline"
+    ],
+    "sha256": "1ad5e7ac059bd52fad91890e97453679b6a59691b24f3229fd314b4a0ce6c0e7",
+    "image": ".hermes/tutorial_candidates/nudos_supervivencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:16:30.876963+00:00"
+  },
+  "parto_emergencia": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Supplies and covered simulator are visible, but the gloved hands/towel-opening action is blurred and not plainly readable."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Crowning head is visible, but gloved hands are motion-blurred/merged and appear to cover or manipulate the head, making support-without-pulling unclear."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Newborn doll is visible with face uncovered, but skin-to-skin placement and drying under one dry blanket are unclear; gloved hands are blurred and appear duplicated/merged."
+      }
+    ],
+    "note": "Regenerate: required actions are not unambiguous due to blur, ghosting, and unclear hand technique.",
+    "risks": [
+      "motion blur obscures hand positions",
+      "merged or duplicated gloved hands",
+      "unsafe ambiguity about pulling or covering the crowning head",
+      "skin-to-skin and drying step not plainly visible"
+    ],
+    "sha256": "8c7443e18942dec6931833e320812fd1fc4810128ce4cfd83cada2a429b8a85f",
+    "image": ".hermes/tutorial_candidates/parto_emergencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:16:40.166351+00:00"
+  },
+  "pesca_trampas_supervivencia": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Bottle cutting is blurred; blade direction and cutting line are not plainly visible, and the bracing hand appears too close to the cut path."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Inverted funnel and bait are visible, but matched holes and secure ties between bottle parts are not plainly visible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Submerged trap is visible, but funnel opening direction and retrieval cord tied from trap to stake above water are not plainly visible."
+      }
+    ],
+    "note": "Required safety-critical details are ambiguous across all panels.",
+    "risks": [
+      "Learner may cut toward or too near the bracing hand",
+      "Trap assembly may be unsecured due unclear holes/ties",
+      "Trap may be placed with wrong funnel orientation",
+      "Retrieval cord and stake anchoring are not clearly demonstrated"
+    ],
+    "sha256": "152498b26086bc4b0d90df060a978dade404d00116b933bb8e9025ac3a4759fe",
+    "image": ".hermes/tutorial_candidates/pesca_trampas_supervivencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:16:49.729554+00:00"
+  },
+  "primeros_auxilios_extremos": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Responder is paused before contact with the manikin, facing the roadway with visible smoke/fire and overhead wires as scene hazards."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Simulated limb bleeding is visible and the responder applies hard direct pressure with blue-gloved hands over gauze."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Airway opening, head alignment, and look-listen-feel are not plainly visible; hands appear on the chest/neck area, the torso is overexposed, and blurred/merged hand anatomy creates unsafe ambiguity."
+      }
+    ],
+    "note": "Regenerate because panel 3 does not clearly show the required airway and breathing assessment technique.",
+    "risks": [
+      "Learner may interpret panel 3 as chest pressure instead of airway assessment",
+      "Look-listen-feel for breathing is not visibly demonstrated",
+      "Head/neck alignment is unclear",
+      "Excess exposure of the torso may teach unnecessary exposure",
+      "Blurred/merged hands obscure safe technique"
+    ],
+    "sha256": "4b6d826408e49e88337166812426a6ed0a010a20b2e4fb05804ef016473eff67",
+    "image": ".hermes/tutorial_candidates/primeros_auxilios_extremos.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:17:05.082467+00:00"
+  },
+  "quemaduras": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Heat source control and safe movement away are not clear; watch and ring removal are not plainly visible, and hands/forearm are smeared/merged."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Cooling under running water is visible, but the required 20 minutes is not shown by any visible timer or equivalent; hand/anatomy and water geometry are ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Covering is blurry and may be plastic film, but it is not clearly loose/non-stick; casualty warmth is partly shown by towel, but seeking help is not plainly visible."
+      }
+    ],
+    "note": "Regenerate: multiple required actions are unclear or missing, with unsafe ambiguity and distorted anatomy.",
+    "risks": [
+      "Learner may not remove jewelry before swelling",
+      "Learner may not understand cooling must continue for 20 minutes",
+      "Learner may not seek help after covering the burn",
+      "Blurred merged hands and unclear materials could teach incorrect technique"
+    ],
+    "sha256": "975c159d1a2c28f74597f1adf63dab82797006e1c211f0ea44c3fa9a8fd5300f",
+    "image": ".hermes/tutorial_candidates/quemaduras.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:17:06.066298+00:00"
+  },
+  "rcp_adulto": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "One hand is visible at the shoulder, black phone lies beside the head, and the chest is unobstructed."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Hands are blurred/ghosted and not plainly exactly two interlocked hands; elbow/shoulder alignment is not fully visible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "AED setup is incomplete/incorrect: three white pad-like areas are visible, no clear cables connect pads to the yellow AED, and pad placement is ambiguous."
+      }
+    ],
+    "note": "Regenerate because panels 2 and 3 do not clearly show required safe technique.",
+    "risks": [
+      "Blurred/duplicated compression hands could teach unclear hand placement",
+      "Interlocked fingers and straight elbows are not plainly visible",
+      "AED pads appear duplicated or misplaced",
+      "AED cables are missing or not visible"
+    ],
+    "sha256": "f9b8c15527921f75eff1795c2f15d291efe94e5954d04ffc07a826125866edc0",
+    "image": ".hermes/tutorial_candidates/rcp_adulto.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:17:15.422264+00:00"
+  },
+  "rcp_nino_bebe": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Hand appears to grasp/cover the foot rather than plainly tapping only the sole; contact is ambiguous."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Crop includes head and much of torso, not shoulders-to-upper-abdomen only; hand anatomy/contact is unclear and may touch with more than heel/fingers."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Mouth-to-mouth/nose seal is not plainly visible; red markings near neck/chest and unclear hand/face geometry create unsafe ambiguity."
+      }
+    ],
+    "note": "Multiple panels do not plainly show the required CPR training actions.",
+    "risks": [
+      "foot stimulation shown as grasping instead of sole tap",
+      "compression hand placement and contact geometry unclear",
+      "rescue breath seal over both mouth and nose not clearly visible",
+      "extra red markings/labels in panel 3 could mislead learners"
+    ],
+    "sha256": "636a54e59ce45fa65a8537edeb71ae212c5d30746abd0d883efdb8c84beaa594",
+    "image": ".hermes/tutorial_candidates/rcp_nino_bebe.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:17:20.852566+00:00"
+  },
+  "senas_rescate": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Single survivor visibly laying one large high-contrast orange ground signal in a clearing."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Whistle is not clearly visible, listening pause/one raised hand is unclear, and ghosted duplicated body/limbs create apparent extra person."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Signal mirror is not plainly visible, two-finger sighting technique is unclear, and hands/arms are ghosted while aiming at the helicopter."
+      }
+    ],
+    "note": "Regenerate due to unclear equipment, ghosting, and failed technique visibility in panels 2 and 3.",
+    "risks": [
+      "Panel 2 appears to show duplicated/merged person or limbs",
+      "Panel 2 whistle use cannot be verified visually",
+      "Panel 3 lacks a clearly visible mirror near the face",
+      "Panel 3 does not clearly show two fingers used as a sight",
+      "Ghosted anatomy may teach incorrect hand placement or technique"
+    ],
+    "sha256": "1bc2f366984051078a8c1f69bbb22f66543aa3106c662aef353cb5a662268c92",
+    "image": ".hermes/tutorial_candidates/senas_rescate.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:17:42.422737+00:00"
+  },
+  "shock": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Bleeding source and firm pressure are not plainly identifiable due to heavy blur/ghosting; casualty positioning is ambiguous."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Casualty is flat on a mat with legs not elevated, but severe ghosting/blur around rescuer and anatomy makes spinal alignment/handling unclear."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Blanket covering is visible, but emergency call is not plainly shown because no phone is visible; reassurance and breathing monitoring are ambiguous."
+      }
+    ],
+    "note": "Regenerate: required actions are not all clearly visible and image has unsafe ambiguity/ghosting.",
+    "risks": [
+      "Blurred/ghosted hands and faces obscure technique",
+      "Panel 1 bleeding source unclear",
+      "Panel 3 could teach calling without a visible phone or clear emergency contact action",
+      "Monitoring breathing is not clearly demonstrated"
+    ],
+    "sha256": "40477226e553c4490f2a4dc1d20565cf7201571055521dafd555356301b328be",
+    "image": ".hermes/tutorial_candidates/shock.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:17:48.765809+00:00"
+  },
+  "refugio_naturaleza": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Person appears to look upward and an oval ground bed is present, but wind protection and identifiable dead-branch check are not plainly visible; the insulated bed does not appear clearly thick."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Ridgepole is visibly supported between a tree and forked support, with many ribs leaned against it at roughly 45 degrees."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Covered shelter is visible, but bottom-up shingle-style layering is not plainly shown; the person is adding material high on the shelter, which could imply incorrect layering order."
+      }
+    ],
+    "note": "Regenerate because required safety/site-selection details and debris-layering technique are ambiguous.",
+    "risks": [
+      "wind protection not visibly demonstrated",
+      "overhead dead-branch hazard check is unclear",
+      "sleeping bed thickness is ambiguous",
+      "debris layering order could teach top-down placement instead of bottom-up shingles"
+    ],
+    "sha256": "0ed5c50a5b8bb19dfb4c9ea0956d8079a925e64d3c9c7d63e67c82aa6b16bcbf",
+    "image": ".hermes/tutorial_candidates/refugio_naturaleza.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:17:54.753465+00:00"
+  },
+  "terremoto": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Person is low beside the table, but the scene is visibly next to a window and tall bookcase; severe ghosting/blur makes limbs and posture ambiguous."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Person appears under the table with an arm near the head, but ghosted anatomy obscures the head/neck cover and the room remains close to window and tall furniture."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Person appears to hold a table leg under cover, but hands/arms are blurred and merged, and table/limb geometry is not clean enough for a safety tutorial."
+      }
+    ],
+    "note": "Regenerate due unsafe ambiguity, ghosting, and proximity to window/tall unsecured furniture.",
+    "risks": [
+      "learner may think sheltering beside a window or tall bookcase is acceptable",
+      "motion ghosting creates duplicated or merged limbs",
+      "covered head/neck position is not plainly clear",
+      "table and hand geometry are blurred around the hold point"
+    ],
+    "sha256": "567925d7c011dbb487772bdbfb8da54b0ca083307b389c5c0df9df9364c6110d",
+    "image": ".hermes/tutorial_candidates/terremoto.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:18:03.013119+00:00"
+  },
+  "trauma_cabeza_columna": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Rescuer is not visibly stabilizing the head/neck; raised ghosted hands do not keep neck exactly as found, and the instruction not to move is not visible without text."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Rescuer's gloved hands are visibly placed on both sides of the head/neck area for manual in-line stabilization."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Rolled towels are visible on both sides, but there are ghosted/duplicated limb-like artifacts near the lower sides and the rescuer's airway monitoring action is not plainly shown."
+      }
+    ],
+    "note": "Regenerate required due to missing/ambiguous stabilization in panel 1 and ghosting/unclear action in panel 3.",
+    "risks": [
+      "Learner may think hovering hands are acceptable instead of manual stabilization",
+      "Ghosted/duplicated limbs or artifacts create unsafe visual ambiguity",
+      "Airway monitoring is not clearly demonstrated in the towel-support panel"
+    ],
+    "sha256": "40fe77b0225918b5234db05a4af9ed8a875e3fc54dcf9b6aef5f0bf4be2198c8",
+    "image": ".hermes/tutorial_candidates/trauma_cabeza_columna.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:18:11.016222+00:00"
+  },
+  "triaje_multivictima": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Walking people with green cards and a coned area are visible, but the scene has heavy ghosting/duplicated bodies and the safe-area call action is ambiguous."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Responder is interacting with one seated casualty, but breathing, circulation, and command-following checks are not plainly visible; multiple blurred/merged limbs create unsafe ambiguity."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Colored tags and a reassessment timer are not clearly visible or applied; responder has not plainly moved to the next casualty, and heavy ghosting obscures actions."
+      }
+    ],
+    "note": "Regenerate: required triage steps are not clearly and safely depicted across panels.",
+    "risks": [
+      "heavy motion ghosting and duplicated/merged anatomy",
+      "unclear assessment technique for non-walkers",
+      "missing visible timer for reassessment",
+      "triage tags not clearly applied to casualties",
+      "cause-and-effect between calling walkers, tagging, and moving on is ambiguous"
+    ],
+    "sha256": "162d5b56aa8f84910aff983dfa7406595de3d16ebcebbae86afc12be4bc52b0f",
+    "image": ".hermes/tutorial_candidates/triaje_multivictima.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:18:19.380526+00:00"
+  },
+  "desierto_calor_refugio": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Person is visibly still in rock shade under harsh sun; no extra people, text, arrows, or conflicting action."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Double overhead layers with a visible air gap and a person raised on a cot are plainly shown; anatomy and supports appear plausible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Shows night with moon and an already burning fire, not preparation before sunset; no visible fire-preparation tools or cause-and-effect steps."
+      }
+    ],
+    "note": "Regenerate because panel 3 does not show the required pre-sunset preparation action.",
+    "risks": [
+      "Learner may infer it is acceptable to wait until night to make fire and warmth preparations.",
+      "Panel 3 shows warmth use rather than preparation, omitting visible fuel/tool setup steps."
+    ],
+    "sha256": "9fe2e0c6a390a5ada032462b001fe30006ff32ddd2e265939b06eb753a63a3b6",
+    "image": ".hermes/tutorial_candidates/desierto_calor_refugio.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:18:31.702690+00:00"
+  },
+  "desierto_agua": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Digging at the outside bend of a dry wash is not plainly visible; no tool is shown and the wash bend/cause-and-effect location is unclear."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Solar still appears completed, but the building action is not shown; no hands/body/tools are visible and the center pebble/collection setup is ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "A dropper is held over a bottle, but no visible drops or exact 2-drops-per-liter dosing is clear; boil option is not shown."
+      }
+    ],
+    "note": "Required actions are not fully and safely visible across panels; regenerate.",
+    "risks": [
+      "Panel 1 may teach digging in an arbitrary sandy hole rather than the outside bend of a dry wash.",
+      "Panel 2 lacks visible construction steps and may not clearly show proper solar-still setup.",
+      "Panel 3 shows ambiguous chemical dosing that could lead to unsafe over- or under-treatment."
+    ],
+    "sha256": "dc581f30fbeee5b61f4dd0d537f70a8fdeaa8063f109baa639b22b270392c39a",
+    "image": ".hermes/tutorial_candidates/desierto_agua.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:18:31.724366+00:00"
+  },
+  "desierto_peligros": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Camp is visibly set on higher ground above a dry wash, with the wash clearly below and no conflicting action."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Boot shaking is visible, but 'look before touching' is not plainly shown; no face/eye line or inspection into the boot is visible before handling it."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Covered person is crouched waiting near a rock heading marker with a sandstorm visible ahead; action is understandable without text."
+      }
+    ],
+    "note": "Regenerate due to panel 2 missing the required inspection-before-touching action.",
+    "risks": [
+      "Learner may think it is acceptable to grab and shake a boot without first visually checking for hazards inside or around it."
+    ],
+    "sha256": "f1092c6c71fc79f95b111b80abebc161a994c6357d705d2d65878e8c7cdfe694",
+    "image": ".hermes/tutorial_candidates/desierto_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:18:45.239058+00:00"
+  },
+  "mar_flotacion": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Back floating posture is clear, with one person, visible life jacket, relaxed supine body position, and plausible anatomy."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "HELP position is clear: knees drawn to chest, arms holding legs, and flotation support visible with plausible body geometry."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Swimming parallel to the beach is only partially suggested; the rip current is not plainly identifiable, so the cause-and-effect training context is ambiguous."
+      }
+    ],
+    "note": "Regenerate because panel 3 does not clearly show an identifiable rip current context without ambiguity.",
+    "risks": [
+      "Learner may not understand when or why to swim parallel because the rip current is not visibly distinct.",
+      "Panel 3 could be read as ordinary swimming in surf rather than rip-current escape technique."
+    ],
+    "sha256": "d2aa2564aa96ad9e82c13dd102b07b1e083fd7331384f8b25f90852a24ec11a8",
+    "image": ".hermes/tutorial_candidates/mar_flotacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:19:11.005805+00:00"
+  },
+  "mar_peligros": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Person points at surf, but the calm rip channel is not plainly identifiable without interpretation; cause-and-effect is ambiguous."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Person is wading, but foot shuffling is not visibly demonstrated; it could be normal stepping."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Jellyfish sting care is unclear and potentially contradictory: liquid type is not visibly seawater, heat is not evident, and the blue pack may imply cold treatment."
+      }
+    ],
+    "note": "Required techniques are not clearly and safely conveyed in multiple panels.",
+    "risks": [
+      "Learner may not be able to identify a rip current calm channel",
+      "Learner may walk normally instead of shuffling feet",
+      "Learner may rinse jellyfish sting with fresh water or apply cold instead of heat"
+    ],
+    "sha256": "d8755d76baf1218b376306230f4d06b82689d8c3e4ff898e22569a87c8bde493",
+    "image": ".hermes/tutorial_candidates/mar_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:19:24.563612+00:00"
+  },
+  "mar_agua": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Rain-catch tarp is visibly rigged to drain into a jar; hands, supports, and cause-effect are clear."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Digging behind dune is visible, but the claimed fresh floating layer is not plainly shown; only muddy seep water appears."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Refusal gesture is visible, but the glass contents are ambiguous and not visibly sourced from seawater, so the safety message is unclear without captions."
+      }
+    ],
+    "note": "Regenerate due to unclear freshwater-layer concept and ambiguous seawater warning.",
+    "risks": [
+      "Learner may think any muddy dune seep water is safe to drink.",
+      "Learner may not understand the held glass is seawater or unsafe.",
+      "Panel 3 relies on symbolic refusal rather than visible cause-and-effect."
+    ],
+    "sha256": "d8d1bca1fd93ca50f6a1115709c4d2002792af972acc3bfeca3ee15d5f8c0737",
+    "image": ".hermes/tutorial_candidates/mar_agua.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:19:28.563313+00:00"
+  },
+  "montana_descenso": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Seated hiker is observing terrain while holding a compass/map tool; single clear action with plausible anatomy."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Hiker is moving along a rocky ridge with poles; no gully descent shown and anatomy/equipment appear coherent."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Hands are visibly placing a rock on a cairn beside the trail; action is clear and equipment/anatomy are plausible."
+      }
+    ],
+    "note": "All three panels show the expected survival descent actions without text, arrows, extra people, or obvious anatomical/tool defects.",
+    "risks": [],
+    "sha256": "a739e7d84de20db9563235d6f65eb7d41ddf73aa4d5897a4c45141d412e14162",
+    "image": ".hermes/tutorial_candidates/montana_descenso.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:19:59.016467+00:00"
+  },
+  "montana_peligros": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Person is crouched on a pack in storm conditions, but the required 'spread out' action is not visibly demonstrated with spacing or other party members."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Loaded snow slope is visible, but the climber appears to be on or approaching the slope rather than plainly going around it; avoidance route is unclear."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "A tired hiker is being assisted, but descending as the cure for altitude sickness is not unmistakably shown; the helper is only partially visible as cropped limbs/body."
+      }
+    ],
+    "note": "All panels need clearer, unambiguous depiction of the specified safety actions.",
+    "risks": [
+      "Panel 1 may teach only crouching on a pack without showing group spacing during a storm.",
+      "Panel 2 may imply entering or traversing a loaded 30-45° snow slope instead of avoiding it.",
+      "Panel 3 does not clearly show descent as the treatment and includes a cropped partial helper that creates visual ambiguity."
+    ],
+    "sha256": "5fd808d707a0d4a7550e85463d7f66e1cdfbf5d43bf12f68fa82dca7f5ca9ac0",
+    "image": ".hermes/tutorial_candidates/montana_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:20:08.815095+00:00"
+  },
+  "montana_frio_refugio": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Windbreak/shelter is visibly placed beside a large rock on a snowy slope, with person securing it; action is clear."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Person is arranging boughs, but the required 30 cm insulating thickness is not plainly visible or verifiable; layer appears potentially too thin."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Person is removing a wet shirt near sleeping gear, but no dry replacement clothing is clearly visible, making the safe full action ambiguous."
+      }
+    ],
+    "note": "Regenerate because panels 2 and 3 do not fully and unambiguously show the required survival technique.",
+    "risks": [
+      "Thin bough layer may teach inadequate ground insulation.",
+      "Removing wet clothes without clearly showing dry replacement layers could imply unsafe exposure in cold conditions."
+    ],
+    "sha256": "beed4efba8968268b59992daef3f65ea3a65e2ee59a87723d184d733fba8bb96",
+    "image": ".hermes/tutorial_candidates/montana_frio_refugio.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:20:09.163345+00:00"
+  },
+  "rio_agua": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Fast-moving stream collection is plainly visible with one person and a bottle; no labels or extra panels."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Filtering through cloth is visible, but settling is not plainly shown; cloudy water appears to be poured directly, making the required settle-then-filter sequence ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Boiling and chlorination are shown simultaneously, but the required timing of 1 minute or 30 minutes is not visually established and the either/or choice is unclear without captions."
+      }
+    ],
+    "note": "Regenerate because panels 2 and 3 do not clearly show the required safe sequence and timing without ambiguity.",
+    "risks": [
+      "Learner may skip settling before filtering muddy water.",
+      "Learner may think boiling and chlorination must be done simultaneously or may miss required contact/boil time.",
+      "Timing requirements are not visually conveyed without prohibited text or labels."
+    ],
+    "sha256": "5a658d1bb7aafd16738dcacd1a53a397ed83f958148332d8fdce961648fca3f5",
+    "image": ".hermes/tutorial_candidates/rio_agua.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:20:42.180056+00:00"
+  },
+  "rio_viajar": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of a single hiker walking a high bench trail with the river visible below; anatomy and equipment appear plausible."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Shows the hiker scrambling on steep wet rock directly above fast water, not clearly climbing safely up and around the closing canyon; unsafe technique is ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Shows a hiker on a narrow riverside trail, but it is not plainly identifiable as a game trail or clearly descending down the valley; head/body are also partially cropped."
+      }
+    ],
+    "note": "Regenerate because panels 2 and 3 do not clearly and safely depict the required actions.",
+    "risks": [
+      "Panel 2 could teach scrambling on slick canyon rock beside fast water instead of a safe go-around.",
+      "Panel 3 lacks visible evidence of game trails, causing learner ambiguity about what route to follow.",
+      "Panel 3 cropping reduces full body-position clarity."
+    ],
+    "sha256": "2de4e2133f45d78e0296eee50b11ff055f51635f8313fa4c6aef6b163be7f98c",
+    "image": ".hermes/tutorial_candidates/rio_viajar.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:21:00.354270+00:00"
+  },
+  "ciudad_derrumbes": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Trapped person and metal beam are visible, but the required '3 taps' sequence is not plainly visible in a still image; the rock/hand contact with metal is ambiguous."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Single rescuer appears to be listening, but 'organized silence' is not visibly established; no team or clear silence-control action is shown."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Rescuer is positioned beside the rubble and working from the edge rather than standing on top; action is clear enough."
+      }
+    ],
+    "note": "Regenerate because panels 1 and 2 do not plainly show the required techniques without relying on captions.",
+    "risks": [
+      "Learner may not understand the specific 3-tap signaling pattern",
+      "Learner may think individual listening is sufficient instead of organized silence",
+      "Ambiguous cause-and-effect in the tapping panel"
+    ],
+    "sha256": "b7dc6524612944669852b02a52486e420d5540ddf5a6de36cf2499ea82243b4f",
+    "image": ".hermes/tutorial_candidates/ciudad_derrumbes.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:21:13.271588+00:00"
+  },
+  "rio_crecidas": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Camp is visibly above the river, but it is placed very close to a cliff edge, creating unsafe ambiguity about camping location."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Marker stick is clearly being placed at the water's edge with plausible hands and tool geometry."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Two people are moving uphill from murky water, but a cropped extra person/limb appears at the right edge, creating ambiguity."
+      }
+    ],
+    "note": "Regenerate due to unsafe campsite ambiguity and extra cropped person/limb in panel 3.",
+    "risks": [
+      "Learner may think camping near a cliff edge is acceptable",
+      "Extra cropped person/limb in panel 3 creates unclear group action"
+    ],
+    "sha256": "c5682f8b11e9e2a7af99484a70e34fde41b28c0bd4c339b5ba311332d4480d07",
+    "image": ".hermes/tutorial_candidates/rio_crecidas.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:21:15.337510+00:00"
+  },
+  "ciudad_agua_recursos": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Shows a person filling a large container from a running tap with multiple empty containers nearby; action and cause-effect are visible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Shows water being drained from a water heater valve into a basin with hand/tool interaction visible and plausible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Pouring an unlabeled clear liquid into a jar is ambiguous; disinfectant and correct disinfection technique are not plainly visible without relying on context."
+      }
+    ],
+    "note": "Panels 1 and 2 are clear, but Panel 3 lacks visible confirmation of disinfectant or safe method.",
+    "risks": [
+      "Unlabeled clear liquid in Panel 3 could be mistaken for water or another chemical",
+      "Disinfection dose and substance are visually ambiguous, risking incorrect learner action"
+    ],
+    "sha256": "35e5b40bc611a7e39a3d6287c6be5f6b1081b51a17cf8ed23beff5f39601f5c3",
+    "image": ".hermes/tutorial_candidates/ciudad_agua_recursos.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:21:22.464029+00:00"
+  },
+  "ciudad_peligros": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Ventilation is suggested by louver, but shutoff is unclear: wrench appears on pipe/fitting rather than a visible gas shutoff valve, creating unsafe ambiguity."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Downed wire is visible, but the person appears too close and no clear 10-meter separation is visually established."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "X-shaped wall cracks and removal of bedding from the room are plainly visible, indicating not sleeping inside."
+      }
+    ],
+    "note": "Regenerate: panels 1 and 2 do not clearly teach the required safe actions.",
+    "risks": [
+      "Panel 1 may teach using a wrench on a gas pipe/fitting instead of shutting off a valve safely.",
+      "Panel 2 may teach standing near a downed wire rather than staying 10 meters away."
+    ],
+    "sha256": "411625c60b4137817631d12bedf121953c54ebacd0834787865c8abfac715139",
+    "image": ".hermes/tutorial_candidates/ciudad_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:21:59.296712+00:00"
+  },
+  "pantano_moverse": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Pole probing into water/mud is plainly visible with hands, feet, and contact point shown."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Boot placement on exposed roots/clumps is visible, avoiding open mud."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Person is prone in mud, but crawling backward is not plainly visible; pose could be forward crawling or simply stuck, and the pole is discarded aside."
+      }
+    ],
+    "note": "Panel 3 does not clearly demonstrate the required backward crawl recovery technique.",
+    "risks": [
+      "Learner may not understand to crawl backward while lying flat",
+      "Discarded pole may imply abandoning useful support",
+      "Direction of movement is ambiguous"
+    ],
+    "sha256": "c69c2220f3eb62333faf7808b3bedc6060e7c4eb3402b6b9912ad1d1693f8329",
+    "image": ".hermes/tutorial_candidates/pantano_moverse.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:22:05.396392+00:00"
+  },
+  "pantano_agua_insectos": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Rain runoff from a sloped sheet is visibly draining into a metal cup; hands, container, and water flow are clear."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Settled dirty water, cloth filtration into a pot, and a separate pot boiling on a stove are all plainly visible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "A small smoldering container produces steady smoke around visible mosquitoes; hand and setup are clear."
+      }
+    ],
+    "note": "All three panels show the expected survival-water and mosquito-smoke actions without text, arrows, extra panels, or obvious anatomy/tool failures.",
+    "risks": [],
+    "sha256": "abb6297f654cc23a410a3f70f2189a6f6010633c2c28833304af97cdafe3f673",
+    "image": ".hermes/tutorial_candidates/pantano_agua_insectos.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:22:09.190284+00:00"
+  },
+  "pantano_peligros": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Tent is near marsh water but the required 5+ m separation is not plainly measurable or unambiguous; action is mostly standing by camp, not clearly demonstrating safe distance."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Leech removal technique is unsafe/ambiguous: no separate nail/tool is clearly slid under the leech, and the visible grip suggests pulling or pinching instead."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Washing scratches with water and holding dressing/cover material is clearly visible with first-aid supplies present."
+      }
+    ],
+    "note": "Regenerate because panels 1 and 2 do not clearly teach the required actions without ambiguity.",
+    "risks": [
+      "Learner may camp too close to open water because safe distance is not visually established.",
+      "Learner may pull or pinch a leech instead of sliding a nail under it."
+    ],
+    "sha256": "cb37f3e021ff898509a0d2098b7fc1042797fa8f56cb2b1ad0ef476928d8f487",
+    "image": ".hermes/tutorial_candidates/pantano_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:22:36.791364+00:00"
+  },
+  "artico_agua_comida": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of snow being placed into a pot on a lit stove for melting; no eating shown."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Blue ice collection is visible, but the claimed double yield is not plainly demonstrated; containers do not show a clear cause-and-effect water-volume comparison."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Fatty foods and rations are visible, but double rations and the protective cold-weather purpose are not clearly shown as an action without relying on interpretation."
+      }
+    ],
+    "note": "Only panel 1 clearly communicates the required training action; panels 2 and 3 need clearer visible cause and effect.",
+    "risks": [
+      "Panel 2 may teach simply chopping ice without showing why blue ice yields more usable water.",
+      "Panel 2 hand and knife placement near ice could be interpreted as unsafe cutting technique.",
+      "Panel 3 does not visibly indicate doubled ration quantity, which could mislead learners about the required intake."
+    ],
+    "sha256": "cd8deb9049c1c41e3a2394ac147c2ba2759af99efdb65f5085feafbef0ca69bd",
+    "image": ".hermes/tutorial_candidates/artico_agua_comida.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:22:42.716747+00:00"
+  },
+  "artico_frio_refugio": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Snow trench with a low roof is plainly visible; single person, shovel, hands, and shelter geometry are clear enough."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Open vent hole is clearly shown on the shelter roof with a tool checking or clearing it; no extra panels or labels."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Person is visibly brushing snow off clothing while holding a shovel; no sweating is depicted and anatomy/equipment are plausible."
+      }
+    ],
+    "note": "All three panels match the expected visible actions without text, arrows, duplicated anatomy, or extra people.",
+    "risks": [],
+    "sha256": "21eb43328d9aa437894467fd7c256c74de4ed0392c5cb9ddbb8f4d420a8d1054",
+    "image": ".hermes/tutorial_candidates/artico_frio_refugio.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:22:43.773984+00:00"
+  },
+  "incendio_forestal": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Adult with compact backpack is evacuating on a clear road with distant smoke and faint orange glow; no nearby flames or extra people visible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Adult is visibly moving onto burned/blackened clear ground with plausible posture and no duplicated anatomy or extra panels."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Person is low in smoke holding a cloth to the face, but the cloth is not visibly wet, so the required wet-cloth technique is ambiguous."
+      }
+    ],
+    "note": "Regenerate because panel 3 does not plainly show a wet cloth without relying on assumption.",
+    "risks": [
+      "Learner may use a dry cloth because wetness is not visibly indicated in panel 3."
+    ],
+    "sha256": "644ed798d8af751f5213d737e67d9241f61af32373578b7defe7112039f65c8a",
+    "image": ".hermes/tutorial_candidates/incendio_forestal.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:23:03.133849+00:00"
+  },
+  "tornado": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Shows a person crouching and covering head, duplicating Panel 2 rather than plainly showing only the inner ground-floor room action; ground-floor status is not visually verifiable."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Crouched posture with hands covering head and neck is plainly visible and anatomically plausible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Waiting for another vortex is not plainly visible without caption; seated person with supplies does not clearly communicate the required cause-and-effect action."
+      }
+    ],
+    "note": "Regenerate because Panels 1 and 3 do not clearly match the required actions without interpretation.",
+    "risks": [
+      "Panel 1 duplicates protective crouch action instead of clearly establishing inner ground-floor room",
+      "Panel 3 could be misread as general emergency kit use rather than waiting for a possible second tornado",
+      "Ground-floor location is not visually confirmed"
+    ],
+    "sha256": "d91e5dab977a7bdefa1131e90922bb1666e1af476b81de61f359e312769f3123",
+    "image": ".hermes/tutorial_candidates/tornado.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:23:10.091123+00:00"
+  },
+  "artico_peligros": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Shows a person pointing at mixed dark/gray ice, but the safety meaning clear=strong and gray=no is not plainly visible without labels or other cause-effect indication."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Shows large crossed ice tools held near the face, not clearly wearable neck ice picks spread out for self-rescue; tool placement is unsafe and ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Shows a person partly out of a hole, but the full kick-slide-roll technique is not plainly visible; rolling away from the hole is missing."
+      }
+    ],
+    "note": "Regenerate: all panels have unsafe ambiguity or incomplete technique visibility.",
+    "risks": [
+      "Learner may not understand which ice color is safe or unsafe",
+      "Wrong equipment depicted for neck ice picks",
+      "Sharp tools shown dangerously close to face/neck",
+      "Fall-in recovery omits the roll-away step"
+    ],
+    "sha256": "7e173e0b9e9f0e67d65f738183181468c38d0cb84149b6386731d39ca782c37c",
+    "image": ".hermes/tutorial_candidates/artico_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:23:17.530172+00:00"
+  },
+  "tormenta_invernal": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Only one adult is visible arranging bedding and supplies; the required 'whole family in one room' action is not plainly shown."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Generator is outside, but it is shown very close to the house, door, and windows, creating unsafe ambiguity about required CO-safe placement distance."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Person is visibly inside the car using a flashlight to signal through the snowy window."
+      }
+    ],
+    "note": "Regenerate required because panels 1 and 2 do not clearly and safely depict the required actions.",
+    "risks": [
+      "Panel 1 lacks visible family grouping, so learners may not understand the one-room whole-family instruction.",
+      "Panel 2 may teach unsafe generator placement too close to doors/windows, increasing carbon monoxide poisoning risk."
+    ],
+    "sha256": "643287829b37010ff5a63322963928bf5db0092fef60fb8919389c158ed56985",
+    "image": ".hermes/tutorial_candidates/tormenta_invernal.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:23:41.863466+00:00"
+  },
+  "tsunami": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "People are climbing indoor stairs, but a strong coastal quake is not plainly visible and the scene could imply simply going upstairs inside any building."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Walking uphill on foot is visible with coast below, but 30 m elevation is not visibly established without assumption."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Man sits with supplies, but staying at elevation for 12 hours is not visibly shown; no clear duration or elevated-safe context."
+      }
+    ],
+    "note": "Required tsunami actions are ambiguous or incomplete across panels.",
+    "risks": [
+      "Learner may think any indoor upstairs movement is sufficient after a tsunami-generating quake.",
+      "Exact 30 m elevation is not visually verifiable.",
+      "12-hour waiting period is not communicated visually."
+    ],
+    "sha256": "06524606a261188765ecd967c6118b7edbdfa9d198b3f961136d1c46ff3221af",
+    "image": ".hermes/tutorial_candidates/tsunami.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:23:46.777104+00:00"
+  },
+  "sequia": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Water containers and a blank notebook are visible, but inventorying or rationing is not plainly shown; no writing, counting, measuring, or ration allocation is visible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Water is visibly poured from one basin through a strainer into a bucket with a catch basin below, showing a clear cascade reuse setup."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Roof runoff is visibly directed from a downspout into a covered bucket, clearly showing rainwater harvesting."
+      }
+    ],
+    "note": "Regenerate because panel 1 does not clearly depict the required rationing/inventory action without relying on interpretation.",
+    "risks": [
+      "Learner may not understand how to inventory or ration water because panel 1 only shows containers and a blank notebook, not the action."
+    ],
+    "sha256": "75ddea116f68ba052a8ce653f886c79e7a38a2fd80e27c54547361d3f54ff96b",
+    "image": ".hermes/tutorial_candidates/sequia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:23:46.989429+00:00"
+  },
+  "recon_primeras_72h": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Hazard marking with cone is visible, but counting people is ambiguous; extra broom/cleanup element distracts from the required single action."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Water handling and latrine digging are visible, but they are shown too close together, creating unsafe contamination ambiguity; open pit edge is also unsafe."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Common board is visible, but roles and shifts are not plainly communicated without labels or readable text; colored cards alone are ambiguous."
+      }
+    ],
+    "note": "Regenerate: required actions are ambiguous and panel 2 shows unsafe water-latrine proximity.",
+    "risks": [
+      "Learner may not understand people-counting step in panel 1",
+      "Water preparation appears adjacent to latrine excavation, implying contamination risk",
+      "Open latrine pit creates fall/edge hazard",
+      "Roles and shifts are unclear from unlabeled colored notes"
+    ],
+    "sha256": "3c348aadcddb7da27752c378955a518ca04179dc98a6b7234ad687f1ea6442e4",
+    "image": ".hermes/tutorial_candidates/recon_primeras_72h.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:24:24.777088+00:00"
+  },
+  "recon_letrinas_saneamiento": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Trench digging is visible, but the required 30 m distance from water and downhill placement are not plainly verifiable; stream appears nearby, creating unsafe ambiguity."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Ash/soil is clearly being poured into the latrine opening with plausible tool and hand positions."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Tippy-tap handwashing with soap at the exit is visible, but extra partial people/limbs and a shovel in the panel add ambiguity outside the single required action."
+      }
+    ],
+    "note": "Regenerate due to unverifiable siting in panel 1 and extra ambiguous elements in panel 3.",
+    "risks": [
+      "Learner may place trench too close to surface water",
+      "Downhill relationship from water source is not visually established",
+      "Extra partial people/limbs and unrelated shovel may confuse the intended handwashing action"
+    ],
+    "sha256": "09b639a108e90916ed158bfc82f9f18e10ba76f11d142fc38268464098b4a632",
+    "image": ".hermes/tutorial_candidates/recon_letrinas_saneamiento.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:24:34.114564+00:00"
+  },
+  "recon_agua_comunitaria": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Protected covered source with outlet flow to a bucket is visible; people and tools are plausible, with no extra embedded panels or text."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Settling and cloth filtering are visible, but chlorination is ambiguous: the dropper bottle contents and measured dose are not plainly identifiable without a label/caption."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Distribution from tank tap, measuring container, and logbook writing are visible and anatomically plausible; no readable text or arrows."
+      }
+    ],
+    "note": "Regenerate because panel 2 does not clearly show measured chlorination without relying on interpretation.",
+    "risks": [
+      "Learner may not understand that a measured chlorine dose is required after filtering",
+      "Unidentified dropper liquid could be mistaken for any additive"
+    ],
+    "sha256": "c0af85de49b5bc0cdda29cdf45e3a6a951d24414c17c2f92ee3d84de46e75254",
+    "image": ".hermes/tutorial_candidates/recon_agua_comunitaria.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:24:43.039492+00:00"
+  },
+  "recon_huerto_emergencia": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Seeding action is visible, but radish/greens are not plainly identifiable; multiple bystanders also add ambiguity to the single required action."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Staggering plantings every 2 weeks is not visually provable without captions; the panel only shows seedlings, holes, and planting activity."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Outer-leaf harvest with scissors is visible while the central plant remains intact."
+      }
+    ],
+    "note": "Regenerate because panels 1 and 2 do not plainly show the required actions without inference.",
+    "risks": [
+      "Learner cannot identify intended crops in panel 1 from visible pixels.",
+      "Panel 2 fails to communicate the 2-week staggered timing visually.",
+      "Extra people/hands may distract from the primary action in panel 1."
+    ],
+    "sha256": "edc8f55b2cd82a8b12a6568c31c62b63aac63ce67b9bcc04d2b9609210afaff9",
+    "image": ".hermes/tutorial_candidates/recon_huerto_emergencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:24:51.723263+00:00"
+  },
+  "recon_energia_solar": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Panel and battery placement are visible, but the battery worker is using a screwdriver on terminals, adding an unsafe extra action beyond simply keeping the battery in shade."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Red-to-red connection is visible, but extra uninvolved hands/people crowd the panel and create ambiguity about who is performing the action."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Phones are shown charging, but there is no visible indication that they are mesh phones or that they charge first; charging priority is not visually demonstrated."
+      }
+    ],
+    "note": "Regenerate: required actions are not isolated and panel 3 lacks visible cause-and-effect for priority mesh-phone charging.",
+    "risks": [
+      "Unsafe implied battery terminal work with screwdriver",
+      "Extra hands/people create action ambiguity",
+      "No visible way to identify mesh phones or charging order"
+    ],
+    "sha256": "eb1ccc8e0c62436bd203884acd8fc0d5c3177bffef47023ca286c06de22352e8",
+    "image": ".hermes/tutorial_candidates/recon_energia_solar.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:25:07.753890+00:00"
+  },
+  "recon_conservar_alimentos": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Salting thin strips is visible, but extra cropped hands/people intrude and the primary actor/tool relationship is ambiguous; body position is not fully clear."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Dried strips on a rack and a strip being broken are plainly visible with plausible hands and equipment."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Food is being dumped into a trash can, but the 'smells off' cause is not visibly established without caption; multiple bystanders add ambiguity."
+      }
+    ],
+    "note": "Regenerate required due to ambiguous actors in panel 1 and unclear cause-and-effect in panel 3.",
+    "risks": [
+      "Learner may not know the spoilage cue is smell before discarding",
+      "Extra cropped hands/people may confuse who is performing the salting action",
+      "Panel 1 does not clearly isolate one safe primary action"
+    ],
+    "sha256": "8e3ada2a85244b9743eada0ef6bbcdbbfa80b6f35e58b8d856d11d3990c0c75d",
+    "image": ".hermes/tutorial_candidates/recon_conservar_alimentos.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:25:21.518195+00:00"
+  },
+  "recon_organizacion": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Inventory meeting is suggested by tools and clipboard, but role assignment is not plainly visible without text or labels."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "A person pins blank papers to a board, but the action of stopping rumors is not visibly demonstrated without captions or readable content."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Open distribution of water and food from a box is visible with plausible handoff and public setting."
+      }
+    ],
+    "note": "Regenerate because panels 1 and 2 do not visibly communicate the required actions without relying on abstract interpretation.",
+    "risks": [
+      "Role assignment is ambiguous in panel 1.",
+      "Rumor control/public information effect is ambiguous in panel 2.",
+      "Utility knife or cutter is visible near food distribution supplies in panel 3."
+    ],
+    "sha256": "acd5a0cd76bf42f3f7bb19c6152f648ff17076a6b727a62e3e96edafe443d629",
+    "image": ".hermes/tutorial_candidates/recon_organizacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-10T19:25:24.307684+00:00"
+  }
+}

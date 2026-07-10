@@ -1,5 +1,5 @@
-name: prepper_pad
-description: Biblioteca de conocimiento offline — Wikipedia, mapas, IA local y notas en una sola app.
+name: nuvok
+description: Nuvok — Contigo cuando más importa. Biblioteca de conocimiento offline, mapas, IA local y comunicación mesh en una sola app + dispositivo.
 publish_to: 'none'
 version: 0.4.0+1
 
@@ -81,6 +81,7 @@ flutter:
     - assets/emergency_guides/ja/
     - assets/emergency_guides/ht/
     - assets/emergency_guides/images/
+    - assets/emergency_guides/tutorials/
     - assets/bundled_library/manifest.json
     - assets/bundled_library/maps/
     - assets/bundled_library/zim/

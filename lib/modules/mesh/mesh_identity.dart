@@ -41,14 +41,14 @@ class MeshIdentity {
   }
 
   /// A ready-to-use identity with an automatic, human-recognizable name
-  /// ("Prepper-A3F2") derived from the last 4 hex of its own id. This is what
-  /// lets EVERY Prepper Pad join the mesh from the moment it's installed,
+  /// ("Nuvok-A3F2") derived from the last 4 hex of its own id. This is what
+  /// lets EVERY Nuvok join the mesh from the moment it's installed,
   /// with zero setup — nobody is invisible in an emergency because they never
   /// opened the Comunicación tab. The user can rename it later.
   static MeshIdentity auto() {
     final base = create('');
     final suffix = base.id.substring(base.id.length - 4).toUpperCase();
-    return MeshIdentity(id: base.id, name: 'Prepper-$suffix');
+    return MeshIdentity(id: base.id, name: 'Nuvok-$suffix');
   }
 
   /// Loads the saved identity, or mints and persists an automatic one on the

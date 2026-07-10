@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/locale_service.dart';
+import 'package:nuvok/core/locale_service.dart';
 
 // Reproduce el bug visto en vivo: al cambiar idioma, las páginas (Ajustes)
 // se repintaban pero el NavigationRail del shell seguía en español. El shell

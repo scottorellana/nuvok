@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/locale_service.dart';
-import 'package:prepper_pad/modules/emergency/decision_tree.dart';
-import 'package:prepper_pad/modules/emergency/emergency_guides.dart';
+import 'package:nuvok/core/locale_service.dart';
+import 'package:nuvok/modules/emergency/decision_tree.dart';
+import 'package:nuvok/modules/emergency/emergency_guides.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

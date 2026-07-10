@@ -1,7 +1,7 @@
 #!/bin/bash
 # Builds zstd as a dynamic framework for iOS (device arm64 + simulator arm64)
 # and packages it as native/out/ios/zstd.xcframework, consumed by the Runner
-# via the local prepper_native pod. Dynamic (not static) because Dart FFI
+# via the local Nuvok_native pod. Dynamic (not static) because Dart FFI
 # resolves symbols at runtime and the static linker would dead-strip them;
 # a bare .dylib is not allowed on iOS, so it ships wrapped in a .framework.
 # liblzma is NOT built: Apple's SDK provides it on iOS.

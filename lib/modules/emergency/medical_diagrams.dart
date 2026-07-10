@@ -5,7 +5,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-import '../../core/prepper_colors.dart';
+import '../../core/nuvok_colors.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Critical Steps Card — extracts the most important actions from the guide's
@@ -61,19 +61,19 @@ class CriticalStepsCard extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  PrepperColors.emergencyDark.withValues(alpha: 0.85),
-                  PrepperColors.emergencyDeep.withValues(alpha: 0.7),
+                  NuvokColors.emergencyDark.withValues(alpha: 0.85),
+                  NuvokColors.emergencyDeep.withValues(alpha: 0.7),
                 ],
               ),
             ),
             child: Row(
               children: [
-                const Icon(Icons.flash_on, color: PrepperColors.white, size: 22),
+                const Icon(Icons.flash_on, color: NuvokColors.white, size: 22),
                 const SizedBox(width: 8),
                 Text(
                   es ? 'PASOS CRÍTICOS' : 'CRITICAL STEPS',
                   style: const TextStyle(
-                    color: PrepperColors.white,
+                    color: NuvokColors.white,
                     fontWeight: FontWeight.w900,
                     fontSize: 15,
                     letterSpacing: 0.5,
@@ -120,14 +120,14 @@ class CriticalStepsCard extends StatelessWidget {
                       child: Row(
                         children: [
                           const Icon(Icons.block,
-                              color: PrepperColors.emergency, size: 18),
+                              color: NuvokColors.emergency, size: 18),
                           const SizedBox(width: 6),
                           Text(
                             es ? 'NO HAGAS:' : 'DO NOT:',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
-                              color: PrepperColors.emergency,
+                              color: NuvokColors.emergency,
                             ),
                           ),
                         ],
@@ -143,7 +143,7 @@ class CriticalStepsCard extends StatelessWidget {
                           children: [
                             const Text('✗  ',
                                 style: TextStyle(
-                                    color: PrepperColors.emergency,
+                                    color: NuvokColors.emergency,
                                     fontWeight: FontWeight.bold)),
                             Expanded(
                               child: Text(w,
@@ -281,16 +281,16 @@ class _StepRow extends StatelessWidget {
             height: 30,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: PrepperColors.emergencyDark,
+              color: NuvokColors.emergencyDark,
               border: Border.all(
-                  color: PrepperColors.emergency.withValues(alpha: 0.4),
+                  color: NuvokColors.emergency.withValues(alpha: 0.4),
                   width: 2),
             ),
             child: Center(
               child: Text(
                 '$number',
                 style: const TextStyle(
-                  color: PrepperColors.white,
+                  color: NuvokColors.white,
                   fontWeight: FontWeight.w900,
                   fontSize: 15,
                 ),

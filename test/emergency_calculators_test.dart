@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/emergency_calculators.dart';
+import 'package:nuvok/modules/emergency/emergency_calculators.dart';
 
 void main() {
   group('dosis pediátrica (OMS: paracetamol 10-15 mg/kg, ibuprofeno 5-10)', () {

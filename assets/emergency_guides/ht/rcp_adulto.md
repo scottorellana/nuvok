@@ -1,71 +1,83 @@
 ---
-title: RCP pou granmoun — AHA 2025
-keywords: [rcp, are kadyak, pa respire, souf gaspiye, san reyaksyon, konpresyon, dea, defibrilate]
+title: RCP lakay granmoun — AHA 2025
+keywords: [rcp, reyanimasyon, arè kadyak, pa respire, ap pran souf an gaspiyaj, san konesans, konpresyon, dea, defibrilatè]
 priority: 1
 ---
 
-# RCP pou granmoun — AHA 2025
+# RCP lakay granmoun — AHA 2025
 
-> ⚠️ Aktive sistèm ijans lokal la pi vit posib. Gid sa a pou sekouris ki pa pwofesyonèl pa ranplase fòmasyon pratik ni swen pwofesyonèl.
+> ⚠️ Aktive sistèm ijans lokal la kou sa posib. Gid sa a pou reyanimatè òdinè pa ranplase yon kou pratik ni swen pwofesyonèl.
 
-## Aji lè moun nan pa reyaji epi li pa respire nòmalman
+## Aji si li pa reponn epi li pa respire nòmalman
 
-Kèk souf gaspiye izole **pa yon respirasyon nòmal**. Si moun nan pa reyaji epi li pa respire nòmalman, sipoze li fè yon arè kadyak epi kòmanse RCP. Yon sekouris ki pa pwofesyonèl **pa dwe retade RCP pou chèche batman kè**.
+Souf an gaspiyaj izole oswa bouch k ap chèche lè **pa respirasyon nòmal**. Si moun nan pa reponn epi li pa respire nòmalman, sipoze se arè kadyak epi kòmanse RCP. Yon reyanimatè òdinè **pa dwe pèdi tan ap chèche batman**.
 
 ## Sekans rapid
 
-1. **Asire kote a an sekirite.** Deplase moun nan sèlman si li danjere pou rete la.
-2. **Verifye reyaksyon ak respirasyon.** Tape zepòl yo, rele fò, epi gade si moun nan respire nòmalman pandan pa plis pase 10 segonn.
-3. **Rele epi al chèche yon DEA.** Si ou gen yon telefòn, rele sou opalè pandan w ap kòmanse. Bay yon lòt moun lòd pou rele epi pote yon defibrilatè ekstèn otomatik (DEA). Si ou poukont ou nèt san telefòn, kite kote a pou rele epi chèche yon DEA, epi retounen touswit.
-4. **Mete moun nan kouche sou do sou yon sifas di ak plat.** Dekouvri pwatrin lan.
-5. **Kòmanse konpresyon yo.** Mete baz pla yon men nan mitan pwatrin lan sou mwatye anba estènòm nan; mete lòt men an anlè, kwaze dwèt yo epi kenbe bra yo dwat.
+1. **Verifye sèn nan san danje.** Deplase moun nan sèlman si rete la a reprezante danje.
+2. **Verifye repons ak respirasyon.** Manyen zepòl yo, pale fò epi obsève si li respire nòmalman pandan pa plis pase 10 segonn.
+3. **Rele epi jwenn yon DEA.** Si ou gen telefòn, rele sou opalè pandan w ap kòmanse. Lonje dwèt sou yon lòt moun pou rele epi pote yon defibrilatè ekstèn otomatik (DEA). Si ou nèt poukont ou epi san telefòn, ale chèche èd ak yon DEA, epi retounen imedyatman.
+4. **Mete li kouche sou do sou yon sifas fèm ak plat.** Dekouvri pwatrin lan.
+5. **Kòmanse konpresyon.** Mete talon yon men nan sant pwatrin lan, sou mwatye enferyè estènòm nan; lòt men an anlè, dwèt yo kwaze epi bra yo dwat.
 
-## Konpresyon bon kalite
+## Konpresyon kalite siperyè
 
 | Paramèt | Objektif AHA 2025 |
 |---|---|
-| Vitès | **100–120 pa minit** |
+| Ritm | **100–120 pa minit** |
 | Pwofondè | **5–6 cm** |
-| Pozisyon | Zepòl anlè men yo, bra dwat |
-| Retou | Kite pwatrin lan retounen nèt apre chak konpresyon |
+| Pozisyon | Zepòl sou men yo, bra dwat |
+| Ekspansyon | Kite pwatrin lan retounen nèt nan pozisyon li |
 | Poz | Diminye yo otank posib; chak poz dwe dire **mwens pase 10 segonn** |
-| Sifas | Di ak plat |
+| Sifas | Fèm ak plat |
 
 ### Sik 30:2
 
-Bay **30 konpresyon epi 2 souf (30:2)** anvan yo mete yon pasaj respiratwa avanse.
+Fè **30 konpresyon ak 2 vantilasyon (30:2)** anvan yon chemen respiratwa avanse.
 
-- Louvri pasaj lè a lè ou panche tèt la dèyè epi leve manton an.
-- Pense nen an, fè yon sele, epi bay chak souf pandan anviwon 1 segonn, sèlman ase pou pwatrin lan monte yon fason vizib.
-- Evite souf ki twò rapid, twò souvan oswa twò fò.
-- Si ou pa resevwa fòmasyon, ou pa kapab oswa ou pa vle bay souf, fè **RCP ak men sèlman**, avèk konpresyon san rete a 100–120/min.
+- Ouvri chemen respiratwa a ak ekstansyon tèt la epi leve manton an.
+- Pense nen an, sele bouch ou epi bay chak vantilasyon pandan anviwon 1 segonn, sèlman jiskaske ou wè pwatrin lan leve.
+- Evite vantilasyon ki twò rapid, twò souvan oswa twò fò.
+- Si ou pa gen fòmasyon, ou pa kapab oswa ou pa vle vantile, fè **RCP sèlman ak men yo**, ak konpresyon kontinyèl nan 100–120/min.
 
-## Sèvi ak DEA a kou li rive
+## Itilize DEA a kou li rive
 
 1. Limen li epi swiv enstriksyon vwa li yo.
-2. Seche pwatrin lan si li mouye epi mete plak yo dirèkteman sou po toutouni jan desen yo montre a.
-3. Asire pèsonn pa manyen moun nan pandan analiz la oswa pandan chòk la.
-4. Rekòmanse konpresyon yo touswit apre yon chòk oswa yon enstriksyon ki di “yo pa konseye chòk”.
+2. Seche pwatrin lan si li mouye epi mete plak yo dirèkteman sou po a jan desen yo montre.
+3. Pèsonn pa dwe manyen moun nan pandan analiz la oswa chòk elektrik la.
+4. Rekòmanse konpresyon yo imedyatman apre chòk elektrik la oswa apre endikasyon “chòk pa rekòmande”.
 
 ## Kontinye jiskaske
 
 - moun nan montre siy lavi klè epi li respire nòmalman;
-- sekouris ki resevwa fòmasyon pran relèv la;
-- yon lòt sekouris kapab ranplase ou; oswa
-- kote a vin danjere oswa ou pa kapab kontinye fizikman.
+- pèsonèl fòme rive epi pran plas ou;
+- yon lòt reyanimatè kapab ranplase ou; oswa
+- sèn nan vin pa an sekirite oswa ou fizikman pa kapab kontinye.
 
-Si respirasyon nòmal retounen men moun nan toujou pa reyaji, mete li sou kote si pa gen okenn blesi yo sispèk ki anpeche sa, kenbe li cho epi siveye respirasyon an san rete. Rekòmanse RCP si respirasyon nòmal la sispann.
+Si li rekòmanse respire nòmalman men li pa reveye, mete li sou kote si ou pa sispèk blesi ki anpeche sa, kenbe li cho epi siveye respirasyon an san rete. Si li sispann respire nòmalman, rekòmanse RCP.
 
-## Erè ki danjere
+## Erè danjere
 
-- Pa pran souf gaspiye pou respirasyon nòmal.
-- Pa retade konpresyon pou tcheke batman kè si ou pa yon pwofesyonèl lasante ki resevwa fòmasyon.
-- Pa fè konpresyon sou yon kabann mou si ou ka mete moun nan an sekirite sou yon sifas di.
+- Pa konfonn souf an gaspiyaj ak respirasyon nòmal.
+- Pa retade konpresyon yo pou chèche batman si ou pa yon pwofesyonèl fòme.
+- Pa fè konpresyon sou yon kabann mou si ou ka deplase moun nan san danje sou yon sifas fèm.
 - Pa apiye sou pwatrin lan ant konpresyon yo.
-- Pa sispann RCP plizyè fwa pou tcheke si moun nan “reprann li”.
+- Pa entèwonp RCP pou tcheke repete si “li deja reyaji”.
 
 ## Sous klinik
 
-Kontni an verifye dapre **AHA 2025 Guidelines for CPR and ECC**: rapò 30:2, vitès konpresyon 100–120/min, pwofondè 5–6 cm pou granmoun, retou konplè pwatrin lan, poz ki mwens pase 10 segonn, vantilasyon jiskaske pwatrin lan monte yon fason vizib, ak defibrilasyon bonè.
+Kontni revize selon **AHA 2025 Guidelines for CPR and ECC**: rapò 30:2, konpresyon 100–120/min, pwofondè granmoun 5–6 cm, ekspansyon konplè, poz ki pi kout pase 10 segonn, vantilasyon jiskaske pwatrin lan leve vizib epi defibrilasyon bonè.
 
 - https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
+
+## Egzanp pratik: RCP Granmoun
+
+**Sitiyasyon:** Yon granmoun tonbe plat atè nan mache a; li pa reponn lè ou rele sou li ak lè ou souke li, epi li pa respire nòmalman.
+
+**Fè:** 1. Rele fò pou èd, mande yo rele ijans epi pote yon DEA. 2. Mete ajenou, talon yon men nan sant pwatrin lan epi lòt la anlè. 3. Peze fò epi vit nan 100–120 pa minit, fè pwatrin lan desann 5–6 cm, pandan ou kite pwatrin lan remonte. 4. Si ou konnen vantile: 30:2 ak chemen respiratwa ouvè; si ou pa konnen, fè konpresyon san rete. 5. Itilize DEA a kou li rive epi swiv enstriksyon li yo.
+
+**Evite:** Pa entèwonp plis pase 10 segonn, pa fè konpresyon ak laperèz (kòt kase geri, arè kadyak pa geri), pa tann "pou wè si li reyaji", pa vantile san sele si gen baryè enpwovize disponib.
+
+**Eskalade:** Si gen plis moun, pran tou chak 2 minit pou pa pèdi kalite; kontinye jiskaske èd pwofesyonèl rive, moun nan respire oswa DEA a endike sa.
+
+> **Enpwovizasyon san danje:** RCP pa bezwen ekipman — sèlman men ou; yon twal fen sèvi kòm baryè pou vantile epi, san baryè, fè konpresyon san vantile sove lavi tou.

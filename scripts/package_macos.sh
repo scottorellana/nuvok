@@ -1,6 +1,6 @@
 #!/bin/bash
 # Builds the release .app, embeds the native engines, and produces
-# dist/PrepperPad.dmg ready to distribute (Hermes-style: download, drag,
+# dist/Nuvok.dmg ready to distribute (Hermes-style: download, drag,
 # right-click → Open the first time).
 set -euo pipefail
 
@@ -16,14 +16,14 @@ DIST="$REPO_DIR/dist"
 cd "$REPO_DIR"
 flutter build macos --release
 
-APP_SRC="$REPO_DIR/build/macos/Build/Products/Release/prepper_pad.app"
-[ -d "$APP_SRC" ] || APP_SRC="$REPO_DIR/build/macos/Build/Products/Release/Prepper Pad.app"
+APP_SRC="$REPO_DIR/build/macos/Build/Products/Release/nuvok.app"
+[ -d "$APP_SRC" ] || APP_SRC="$REPO_DIR/build/macos/Build/Products/Release/Nuvok.app"
 
 mkdir -p "$DIST"
-rm -rf "$DIST/Prepper Pad.app" "$DIST/PrepperPad.dmg" "$DIST/dmg-root"
-cp -R "$APP_SRC" "$DIST/Prepper Pad.app"
+rm -rf "$DIST/Nuvok.app" "$DIST/Nuvok.dmg" "$DIST/dmg-root"
+cp -R "$APP_SRC" "$DIST/Nuvok.app"
 
-APP="$DIST/Prepper Pad.app"
+APP="$DIST/Nuvok.app"
 mkdir -p "$APP/Contents/Frameworks"
 # The AI engine is libppllm (llama.cpp in-process, Metal) — the same engine
 # the app runs on iPhone and Android.
@@ -37,8 +37,8 @@ codesign --force --deep -s - "$APP"
 mkdir -p "$DIST/dmg-root"
 cp -R "$APP" "$DIST/dmg-root/"
 ln -s /Applications "$DIST/dmg-root/Applications"
-hdiutil create -volname "Prepper Pad" -srcfolder "$DIST/dmg-root" \
-  -ov -format UDZO "$DIST/PrepperPad.dmg"
+hdiutil create -volname "Nuvok" -srcfolder "$DIST/dmg-root" \
+  -ov -format UDZO "$DIST/Nuvok.dmg"
 rm -rf "$DIST/dmg-root"
 
-echo "==> Listo: $DIST/PrepperPad.dmg"
+echo "==> Listo: $DIST/Nuvok.dmg"

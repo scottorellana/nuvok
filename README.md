@@ -1,4 +1,4 @@
-# Prepper Pad
+# Nuvok
 
 **Conocimiento que no se apaga.** Una sola app nativa con tu biblioteca de
 supervivencia offline: Wikipedia completa, mapas, asistente de IA local y
@@ -22,10 +22,10 @@ servidor Docker: se instala con doble clic en cualquier dispositivo.
 
 ## La biblioteca portable
 
-Todo el contenido vive en una carpeta `PrepperPad/` en tu usuario:
+Todo el contenido vive en una carpeta `Nuvok/` en tu usuario:
 
 ```
-PrepperPad/
+Nuvok/
 ├── zim/      ← biblioteca (.zim)
 ├── maps/     ← mapas (.pmtiles)
 ├── models/   ← modelos IA (.gguf)
@@ -33,7 +33,7 @@ PrepperPad/
 └── notes/    ← tus notas (.md)
 ```
 
-Cópiala por USB a otro dispositivo con Prepper Pad y todo tu contenido viaja
+Cópiala por USB a otro dispositivo con Nuvok y todo tu contenido viaja
 con ella — nunca se descarga dos veces.
 
 ## Estado por plataforma
@@ -49,7 +49,7 @@ con ella — nunca se descarga dos veces.
 ## Instalación (macOS)
 
 1. Descarga el `.dmg` de la última release.
-2. Arrastra **Prepper Pad** a Aplicaciones.
+2. Arrastra **Nuvok** a Aplicaciones.
 3. Primera vez: clic derecho → Abrir (la app no está firmada por Apple aún).
 
 ## Instalador web local
@@ -85,7 +85,7 @@ flutter test                      # incluye tests del parser ZIM con fixture rea
 flutter run -d macos
 ```
 
-Empaquetado: `./scripts/package_macos.sh` produce `dist/PrepperPad.dmg`.
+Empaquetado: `./scripts/package_macos.sh` produce `dist/Nuvok.dmg`.
 
 ## Licencia
 

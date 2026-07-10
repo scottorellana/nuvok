@@ -8,7 +8,7 @@ import 'app.dart';
 import 'core/build_flags.dart';
 import 'core/bundled_library.dart';
 import 'core/locale_service.dart';
-import 'core/prepper_library.dart';
+import 'core/nuvok_library.dart';
 import 'modules/ai/llama_server.dart';
 import 'modules/mesh/mesh_envelope.dart';
 import 'modules/mesh/mesh_notifications.dart';
@@ -19,15 +19,15 @@ import 'modules/update/update_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await PrepperLibrary.init();
+  await NuvokLibrary.init();
   // Language: a saved explicit choice wins; otherwise follow the DEVICE
   // language (this is what makes the app come up in the user's own language
-  // the very first time). Must run after PrepperLibrary.init (prefs live in
+  // the very first time). Must run after NuvokLibrary.init (prefs live in
   // the library root) and before runApp (first frame already localized).
   LocaleService.instance
       .init(deviceLocale: PlatformDispatcher.instance.locale);
-  final firstRun = !PrepperLibrary.instance.existedBefore;
-  await PrepperLibrary.instance.ensure();
+  final firstRun = !NuvokLibrary.instance.existedBefore;
+  await NuvokLibrary.instance.ensure();
   // Seed the bundled starter library WITHOUT blocking the first frame: the
   // bundle can be gigabytes (tablet single-install), and awaiting it here
   // left the user staring at a white screen for the whole copy. The UI
@@ -36,7 +36,7 @@ Future<void> main() async {
   // Local notifications so an incoming SOS/chat reaches the user with the app
   // in the background. Non-blocking; no-ops where unsupported.
   unawaited(MeshNotifications.instance.init());
-  // Start the mesh at boot with an automatic identity: every Prepper Pad is
+  // Start the mesh at boot with an automatic identity: every Nuvok is
   // discoverable from the moment it opens, so in an emergency nobody is
   // invisible for not having configured anything. Non-blocking; the radios
   // self-degrade where hardware/permission is missing.
@@ -53,7 +53,7 @@ Future<void> main() async {
         .init()
         .then((_) => UpdateService.instance.check()));
   }
-  runApp(PrepperPadApp(firstRun: firstRun));
+  runApp(NuvokApp(firstRun: firstRun));
 }
 
 /// Stops the embedded llama server when the app quits.

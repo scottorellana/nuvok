@@ -1,6 +1,6 @@
 // Smoke real del motor FFI: carga Qwen 0.5B y genera una respuesta.
 import 'dart:io';
-import 'package:prepper_pad/modules/ai/llama_ffi.dart';
+import 'package:nuvok/modules/ai/llama_ffi.dart';
 
 Future<void> main() async {
   FfiLlamaEngine.debugSetLibraryPath(

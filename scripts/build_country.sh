@@ -1,5 +1,5 @@
 #!/bin/bash
-# build_country.sh — Build a country-specific Prepper Pad installer.
+# build_country.sh — Build a country-specific Nuvok installer.
 #
 # Usage: ./scripts/build_country.sh <country-id> [--no-map-download]
 #
@@ -7,9 +7,9 @@
 # bundled assets for that country (map + language), and builds the APK.
 #
 # The resulting APK is placed at:
-#   dist/prepper-pad-v<version>-<country>.apk
+#   dist/Nuvok-pad-v<version>-<country>.apk
 #
-# If the country's .pmtiles is not already in ~/PrepperPad/maps/ or
+# If the country's .pmtiles is not already in ~/Nuvok/maps/ or
 # assets/bundled_library/maps/, the script tries to download it from
 # the Protomaps daily builds using the pmtiles CLI tool.
 
@@ -23,7 +23,7 @@ SKIP_DOWNLOAD="${2:-}"
 
 # ── Read version ──
 VERSION=$(grep '^version:' pubspec.yaml | head -1 | sed 's/version:\s*//' | cut -d'+' -f1)
-echo "==> Building Prepper Pad v${VERSION} for country: ${COUNTRY}"
+echo "==> Building Nuvok v${VERSION} for country: ${COUNTRY}"
 
 # ── Read profile ──
 PROFILE_FILE="scripts/country-profiles.yaml"
@@ -73,7 +73,7 @@ mkdir -p "$BUNDLED_MAPS"
 # Clean previous maps (keep the ones we're about to use)
 for MAP_ID in $MAPS; do
   PMTILES_FILE="$BUNDLED_MAPS/${MAP_ID}.pmtiles"
-  SOURCE_MAP="$HOME/PrepperPad/maps/${MAP_ID}.pmtiles"
+  SOURCE_MAP="$HOME/Nuvok/maps/${MAP_ID}.pmtiles"
 
   if [ -f "$PMTILES_FILE" ]; then
     echo "==> Map already bundled: ${MAP_ID}.pmtiles ($(du -h "$PMTILES_FILE" | cut -f1))"
@@ -81,7 +81,7 @@ for MAP_ID in $MAPS; do
   fi
 
   if [ -f "$SOURCE_MAP" ]; then
-    echo "==> Copying map from PrepperPad: ${MAP_ID}.pmtiles ($(du -h "$SOURCE_MAP" | cut -f1))"
+    echo "==> Copying map from Nuvok: ${MAP_ID}.pmtiles ($(du -h "$SOURCE_MAP" | cut -f1))"
     cp "$SOURCE_MAP" "$PMTILES_FILE"
     continue
   fi
@@ -137,20 +137,20 @@ export PATH="$HOME/development/flutter/bin:$PATH"
 
 # Set the default language for first launch
 # (The app auto-detects device locale, but we can hint the preferred language)
-export PREPPER_PAD_DEFAULT_LANG="$LANG"
+export NUVOK_DEFAULT_LANG="$LANG"
 
 echo "==> Building APK..."
 flutter build apk --release 2>&1 | tail -5
 
 # ── Copy to dist with country suffix ──
 APK_SRC="build/app/outputs/flutter-apk/app-release.apk"
-APK_DST="dist/prepper-pad-v${VERSION}-${COUNTRY}.apk"
+APK_DST="dist/Nuvok-pad-v${VERSION}-${COUNTRY}.apk"
 mkdir -p dist
 cp "$APK_SRC" "$APK_DST"
 
 # SHA-256
 SHA=$(shasum -a 256 "$APK_DST" | cut -d' ' -f1)
-echo "$SHA  prepper-pad-v${VERSION}-${COUNTRY}.apk" > "dist/CHECKSUMS-v${VERSION}-${COUNTRY}.txt"
+echo "$SHA  Nuvok-pad-v${VERSION}-${COUNTRY}.apk" > "dist/CHECKSUMS-v${VERSION}-${COUNTRY}.txt"
 
 echo ""
 echo "==> Done!"

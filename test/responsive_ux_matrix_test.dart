@@ -2,20 +2,20 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/locale_service.dart';
-import 'package:prepper_pad/core/prepper_library.dart';
+import 'package:nuvok/core/locale_service.dart';
+import 'package:nuvok/core/nuvok_library.dart';
 
-import 'package:prepper_pad/modules/ai/ai_page.dart';
-import 'package:prepper_pad/modules/depot/depot_page.dart';
-import 'package:prepper_pad/modules/emergency/emergency_page.dart';
-import 'package:prepper_pad/modules/library/library_page.dart';
-import 'package:prepper_pad/modules/maps/maps_page.dart';
-import 'package:prepper_pad/modules/mesh/mesh_page.dart';
-import 'package:prepper_pad/modules/notes/notes_page.dart';
-import 'package:prepper_pad/modules/prep/checklist_page.dart';
-import 'package:prepper_pad/modules/settings/settings_page.dart';
-import 'package:prepper_pad/modules/tools/tools_page.dart';
-import 'package:prepper_pad/modules/update/update_page.dart';
+import 'package:nuvok/modules/ai/ai_page.dart';
+import 'package:nuvok/modules/depot/depot_page.dart';
+import 'package:nuvok/modules/emergency/emergency_page.dart';
+import 'package:nuvok/modules/library/library_page.dart';
+import 'package:nuvok/modules/maps/maps_page.dart';
+import 'package:nuvok/modules/mesh/mesh_page.dart';
+import 'package:nuvok/modules/notes/notes_page.dart';
+import 'package:nuvok/modules/prep/checklist_page.dart';
+import 'package:nuvok/modules/settings/settings_page.dart';
+import 'package:nuvok/modules/tools/tools_page.dart';
+import 'package:nuvok/modules/update/update_page.dart';
 
 // Matriz responsive: cada pantalla principal debe montarse y renderizar sin
 // overflow ni excepciones de layout en teléfonos (iOS/Android), tablets y
@@ -25,8 +25,8 @@ void main() {
 
   setUpAll(() async {
     // Mismo arranque que main(): las páginas dependen de estos singletons.
-    await PrepperLibrary.init();
-    await PrepperLibrary.instance.ensure();
+    await NuvokLibrary.init();
+    await NuvokLibrary.instance.ensure();
     LocaleService.instance
         .init(deviceLocale: PlatformDispatcher.instance.locale);
   });

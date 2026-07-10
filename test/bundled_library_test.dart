@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart' show AssetManifest, rootBundle;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/core/bundled_library.dart';
+import 'package:nuvok/core/bundled_library.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -65,7 +65,7 @@ void main() {
     }
   });
 
-  test('bundled library resolves entries into the portable PrepperPad library',
+  test('bundled library resolves entries into the portable Nuvok library',
       () {
     final entry = BundledLibraryEntry(
       kind: 'maps',
@@ -76,7 +76,7 @@ void main() {
       sha256: '0' * 64,
     );
 
-    final root = Directory('/tmp/prepper-pad-test-root');
+    final root = Directory('/tmp/Nuvok-pad-test-root');
     final resolved = entry.resolveTarget(root);
     expect(resolved.path, '${root.path}/maps/honduras.pmtiles');
   });

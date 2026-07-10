@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../core/locale_service.dart';
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import '../mesh/mesh_channel.dart';
 import '../mesh/mesh_service.dart';
 import 'tourniquet.dart';
@@ -23,7 +23,7 @@ class TourniquetPage extends StatefulWidget {
 
 class _TourniquetPageState extends State<TourniquetPage> {
   late final TourniquetStore _store = widget.storeOverride ??
-      TourniquetStore('${PrepperLibrary.instance.root.path}/emergency');
+      TourniquetStore('${NuvokLibrary.instance.root.path}/emergency');
   Timer? _tick;
 
   @override

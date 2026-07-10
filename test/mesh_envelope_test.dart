@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/mesh_channel.dart';
-import 'package:prepper_pad/modules/mesh/mesh_envelope.dart';
+import 'package:nuvok/modules/mesh/mesh_channel.dart';
+import 'package:nuvok/modules/mesh/mesh_envelope.dart';
 
-// Sobre binario de Prepper Mesh + canales cifrados. El mismo sobre viaja por
+// Sobre binario de Nuvok Link + canales cifrados. El mismo sobre viaja por
 // WiFi/BT/LoRa, así que el formato debe ser estable y compacto.
 void main() {
   group('MeshChannel', () {
@@ -20,7 +20,7 @@ void main() {
     });
 
     test('código corrupto devuelve null', () {
-      expect(MeshChannel.fromCode('PPMESH1:basura!!'), isNull);
+      expect(MeshChannel.fromCode('NUVOK1:basura!!'), isNull);
       expect(MeshChannel.fromCode('otracosa'), isNull);
     });
 

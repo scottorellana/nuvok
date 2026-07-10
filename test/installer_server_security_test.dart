@@ -47,16 +47,16 @@ void main() {
       return;
     }
 
-    final tempHome = Directory.systemTemp.createTempSync('prepper_home_');
-    final prepper = Directory('${tempHome.path}/PrepperPad')..createSync();
-    File('${prepper.path}/.settings.json')
+    final tempHome = Directory.systemTemp.createTempSync('nuvok_home_');
+    final nuvokDir = Directory('${tempHome.path}/Nuvok')..createSync();
+    File('${nuvokDir.path}/.settings.json')
         .writeAsStringSync('{"secret":"local"}');
-    Directory('${prepper.path}/notes').createSync();
-    File('${prepper.path}/notes/private.md').writeAsStringSync('nota privada');
-    Directory('${prepper.path}/mesh').createSync();
-    File('${prepper.path}/mesh/channels.json').writeAsStringSync('[]');
-    Directory('${prepper.path}/maps').createSync();
-    File('${prepper.path}/maps/ok.pmtiles').writeAsBytesSync([1, 2, 3, 4]);
+    Directory('${nuvokDir.path}/notes').createSync();
+    File('${nuvokDir.path}/notes/private.md').writeAsStringSync('nota privada');
+    Directory('${nuvokDir.path}/mesh').createSync();
+    File('${nuvokDir.path}/mesh/channels.json').writeAsStringSync('[]');
+    Directory('${nuvokDir.path}/maps').createSync();
+    File('${nuvokDir.path}/maps/ok.pmtiles').writeAsBytesSync([1, 2, 3, 4]);
 
     final port = await _freePort();
     final proc = await Process.start(

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/emergency/ice_profile.dart';
+import 'package:nuvok/modules/emergency/ice_profile.dart';
 
 void main() {
   test('persiste y recarga la ficha', () {

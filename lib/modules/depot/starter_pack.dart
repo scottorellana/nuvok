@@ -1,5 +1,5 @@
 // The "Paquete inicial": a curated set of survival and first-aid references
-// that Prepper Pad offers to download on first run, matched to the user's
+// that Nuvok offers to download on first run, matched to the user's
 // language. We resolve titles against the live Kiwix catalog instead of
 // hardcoding filenames, so it keeps working as content is re-versioned.
 import 'dart:io';
@@ -77,11 +77,11 @@ class StarterPack {
             : 'Survival & self-reliance',
         // Kiwix has little survival content in Spanish, so we search Spanish
         // terms first and let resolve()'s language-agnostic fallback pick up
-        // the English manuals (Learning Self-Reliance / Canadian prepper)
+        // the English manuals (Learning Self-Reliance / Canadian Nuvok)
         // when no localized ZIM exists.
         queries: isEs
-            ? ['supervivencia', 'Learning Self-Reliance', 'Canadian prepper']
-            : ['Learning Self-Reliance', 'Canadian prepper', 'survival'],
+            ? ['supervivencia', 'Learning Self-Reliance', 'Canadian Nuvok']
+            : ['Learning Self-Reliance', 'Canadian Nuvok', 'survival'],
         description: isEs
             ? 'Guías de supervivencia, autosuficiencia y preparación.'
             : 'Guides on survival, self-reliance and preparedness.',
@@ -180,7 +180,7 @@ class StarterPack {
     final hasSurvival = names.any((n) =>
         n.contains('surv') ||
         n.contains('reliance') ||
-        n.contains('prepper') ||
+        n.contains('Nuvok') ||
         n.contains('superviv'));
     return hasMed && hasSurvival;
   }

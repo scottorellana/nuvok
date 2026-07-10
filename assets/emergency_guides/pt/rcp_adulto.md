@@ -1,71 +1,83 @@
 ---
 title: RCP em adultos — AHA 2025
-keywords: [rcp, parada cardiaca, nao respira, respiracao agonica, inconsciente, compressoes, dea, desfibrilador]
+keywords: [rcp, reanimacao, parada cardiaca, nao respira, ofega, inconsciente, compressoes, dea, desfibrilador]
 priority: 1
 ---
 
 # RCP em adultos — AHA 2025
 
-> ⚠️ Acione o sistema local de emergência assim que possível. Este guia para socorristas leigos não substitui treinamento prático nem atendimento profissional.
+> ⚠️ Acione o sistema local de emergências assim que possível. Este guia para socorristas leigos não substitui um curso prático nem o atendimento profissional.
 
-## Aja quando a pessoa não responder e não respirar normalmente
+## Aja se não responde e não respira normalmente
 
-Suspiros agônicos isolados **não são respiração normal**. Se a pessoa não responder e não respirar normalmente, presuma parada cardíaca e inicie a RCP. Um socorrista leigo **não deve atrasar a RCP para procurar pulso**.
+Ofegadas isoladas ou gasps **não são respiração normal**. Se a pessoa não responde e não respira normalmente, presuma parada cardíaca e inicie RCP. Um socorrista leigo **não deve perder tempo procurando pulso**.
 
 ## Sequência rápida
 
-1. **Certifique-se de que o local é seguro.** Mova a pessoa somente se permanecer ali for perigoso.
-2. **Verifique a resposta e a respiração.** Toque nos ombros, chame em voz alta e observe a respiração normal por no máximo 10 segundos.
-3. **Ligue e obtenha um DEA.** Se tiver um telefone, ligue no viva-voz enquanto começa. Peça diretamente a outra pessoa que ligue e traga um desfibrilador externo automático (DEA). Se estiver completamente só e sem telefone, saia para ligar e buscar um DEA e volte imediatamente.
-4. **Coloque a pessoa de costas sobre uma superfície firme e plana.** Exponha o tórax.
-5. **Inicie as compressões.** Coloque a base de uma mão no centro do tórax, sobre a metade inferior do esterno; coloque a outra mão por cima, entrelace os dedos e mantenha os braços retos.
+1. **Verifique se a cena é segura.** Mova a pessoa somente se permanecer ali implicar perigo.
+2. **Verifique resposta e respiração.** Toque os ombros, fale alto e observe se respira normalmente por não mais de 10 segundos.
+3. **Ligue e consiga um DEA.** Se tiver telefone, ligue no viva-voz enquanto começa. Aponte para outra pessoa para ligar e trazer um desfibrilador externo automático (DEA). Se estiver completamente sozinho e sem telefone, vá buscar ajuda e um DEA, e volte imediatamente.
+4. **Coloque-a de barriga para cima sobre uma superfície firme e plana.** Descubra o peito.
+5. **Inicie compressões.** Coloque a base de uma mão no centro do peito, sobre a metade inferior do esterno; a outra mão por cima, dedos entrelaçados e braços retos.
 
 ## Compressões de alta qualidade
 
-| Parâmetro | Meta AHA 2025 |
+| Parâmetro | Objetivo AHA 2025 |
 |---|---|
-| Frequência | **100–120 por minuto** |
+| Ritmo | **100–120 por minuto** |
 | Profundidade | **5–6 cm** |
 | Posição | Ombros sobre as mãos, braços retos |
-| Retorno | Permita que o tórax retorne completamente após cada compressão |
-| Pausas | Minimize-as; cada pausa deve ser de **menos de 10 segundos** |
+| Expansão | Deixe o peito voltar completamente à sua posição |
+| Pausas | Reduza-as ao mínimo; cada pausa deve durar **menos de 10 segundos** |
 | Superfície | Firme e plana |
 
 ### Ciclos 30:2
 
-Faça **30 compressões seguidas de 2 ventilações (30:2)** antes da colocação de uma via aérea avançada.
+Realize **30 compressões e 2 ventilações (30:2)** antes de uma via aérea avançada.
 
-- Abra a via aérea inclinando a cabeça e elevando o queixo.
-- Aperte o nariz, faça uma vedação e administre cada ventilação durante cerca de 1 segundo, apenas o suficiente para produzir elevação visível do tórax.
-- Evite ventilações rápidas, frequentes ou fortes demais.
-- Se não tiver treinamento, não puder ou não quiser fazer ventilações, realize **RCP somente com as mãos**, com compressões contínuas a 100–120/min.
+- Abra a via aérea com extensão da cabeça e elevação do queixo.
+- Pince o nariz, sele sua boca e dê cada ventilação por aproximadamente 1 segundo, somente até ver o peito elevar.
+- Evite ventilações rápidas demais, frequentes demais ou fortes demais.
+- Se você não tem treinamento, não pode ou não quer ventilar, realize **RCP somente com as mãos**, com compressões contínuas a 100–120/min.
 
-## Use o DEA assim que ele chegar
+## Use o DEA assim que chegar
 
-1. Ligue-o e siga as instruções de voz.
-2. Seque o tórax molhado e coloque as pás diretamente sobre a pele nua, conforme os diagramas.
-3. Certifique-se de que ninguém toque na pessoa durante a análise ou a aplicação do choque.
-4. Retome imediatamente as compressões após um choque ou a indicação “choque não recomendado”.
+1. Ligue-o e siga suas instruções de voz.
+2. Seque o peito se estiver molhado e coloque os adesivos diretamente sobre a pele como mostram os desenhos.
+3. Ninguém deve tocar a pessoa durante a análise ou a descarga.
+4. Retome as compressões imediatamente após a descarga ou após a indicação “descarga não recomendada”.
 
 ## Continue até que
 
 - a pessoa mostre sinais claros de vida e respire normalmente;
-- socorristas treinados assumam;
+- chegue pessoal capacitado e assuma seu lugar;
 - outro socorrista possa substituí-lo; ou
-- o local se torne inseguro ou você esteja fisicamente incapaz de continuar.
+- a cena se torne insegura ou você esteja fisicamente incapaz de continuar.
 
-Se a respiração normal voltar, mas a pessoa continuar inconsciente, coloque-a de lado se nenhuma suspeita de lesão impedir, mantenha-a aquecida e monitore continuamente a respiração. Reinicie a RCP se a respiração normal parar.
+Se voltar a respirar normalmente mas não acordar, coloque-a de lado se não suspeitar de lesão que impeça isso, mantenha-a aquecida e vigie continuamente a respiração. Se parar de respirar normalmente, reinicie a RCP.
 
 ## Erros perigosos
 
-- Não confunda respiração agônica com respiração normal.
-- Não atrase as compressões para verificar o pulso se você não for um profissional de saúde treinado.
-- Não faça compressões sobre uma cama macia se a pessoa puder ser colocada com segurança em uma superfície firme.
-- Não se apoie sobre o tórax entre as compressões.
-- Não interrompa repetidamente a RCP para verificar se a pessoa “voltou a si”.
+- Não confunda ofegadas com respiração normal.
+- Não atrase as compressões para procurar pulso se você não for profissional capacitado.
+- Não comprima sobre uma cama macia se puder transferir com segurança para uma superfície firme.
+- Não se apoie sobre o peito entre compressões.
+- Não interrompa a RCP para verificar repetidamente se “já reagiu”.
 
 ## Fonte clínica
 
-Revisado de acordo com as **AHA 2025 Guidelines for CPR and ECC**: relação 30:2, frequência de compressões de 100–120/min, profundidade em adultos de 5–6 cm, retorno completo do tórax, pausas de menos de 10 segundos, ventilação até a elevação visível do tórax e desfibrilação precoce.
+Conteúdo revisado segundo **AHA 2025 Guidelines for CPR and ECC**: relação 30:2, compressões de 100–120/min, profundidade adulta de 5–6 cm, expansão completa, pausas menores que 10 segundos, ventilação até elevação visível do peito e desfibrilação precoce.
 
 - https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
+
+## Exemplo prático: RCP Adulto
+
+**Situação:** Um adulto desaba no mercado; não responde quando você grita e o sacode, e não respira normalmente.
+
+**Faça:** 1. Grite por ajuda, peça que liguem para a emergência e tragam um DEA. 2. Ajoelhe-se, base de uma mão no centro do peito e a outra por cima. 3. Comprima forte e rápido a 100–120 por minuto, afundando 5–6 cm, deixando o peito retornar. 4. Se souber ventilar: 30:2 com via aérea aberta; se não, comprima sem parar. 5. Use o DEA assim que chegar e siga suas instruções.
+
+**Evite:** Não interrompa por mais de 10 segundos, não comprima com medo (costelas quebradas cicatrizam, a parada não), não espere "para ver se reage", não ventile sem vedação se houver barreira improvisada disponível.
+
+**Escalone:** Se houver mais pessoas, revezem a cada 2 minutos para não perder qualidade; continue até chegar ajuda profissional, a pessoa respirar ou o DEA indicar.
+
+> **Improvisação segura:** a RCP não precisa de equipamento — só suas mãos; um pano fino serve de barreira para ventilar e, sem barreira, comprimir sem ventilar também salva.

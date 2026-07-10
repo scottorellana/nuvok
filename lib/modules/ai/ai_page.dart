@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../../core/prepper_library.dart';
+import '../../core/nuvok_library.dart';
 import '../emergency/survival_mode.dart';
 import 'emergency_retriever.dart';
 import 'library_retriever.dart';
@@ -56,7 +56,7 @@ class _AiPageState extends State<AiPage> {
 
   void _refreshModels() {
     setState(() {
-      _models = PrepperLibrary.instance.listModels();
+      _models = NuvokLibrary.instance.listModels();
       if (_models.isNotEmpty &&
           (_selectedModel == null ||
               !_models.any((m) => m.path == _selectedModel))) {
@@ -101,18 +101,18 @@ class _AiPageState extends State<AiPage> {
   /// language", so each UI language pins the reply language too.
   String _systemPromptForLanguage() {
     const prompts = {
-      'es': 'Eres el asistente de Prepper Pad, una app de conocimiento '
+      'es': 'Eres el asistente de Nuvok, una app de conocimiento '
           'offline. Responde de forma útil y concisa, siempre en español.',
-      'en': 'You are the Prepper Pad assistant, an offline knowledge app. '
+      'en': 'You are the Nuvok assistant, an offline knowledge app. '
           'Reply helpfully and concisely, always in English.',
-      'pt': 'Você é o assistente do Prepper Pad, um app de conhecimento '
+      'pt': 'Você é o assistente do Nuvok, um app de conhecimento '
           'offline. Responda de forma útil e concisa, sempre em português.',
-      'fr': 'Tu es l\'assistant de Prepper Pad, une app de connaissances '
+      'fr': 'Tu es l\'assistant de Nuvok, une app de connaissances '
           'hors ligne. Réponds utilement et brièvement, toujours en français.',
-      'zh': '你是 Prepper Pad 的助手，一款离线知识应用。请始终用中文简明有用地回答。',
-      'ja': 'あなたはオフライン知識アプリ Prepper Pad のアシスタントです。'
+      'zh': '你是 Nuvok 的助手，一款离线知识应用。请始终用中文简明有用地回答。',
+      'ja': 'あなたはオフライン知識アプリ Nuvok のアシスタントです。'
           '常に日本語で簡潔かつ役立つ回答をしてください。',
-      'ht': 'Ou se asistan Prepper Pad, yon aplikasyon konesans san entènèt. '
+      'ht': 'Ou se asistan Nuvok, yon aplikasyon konesans san entènèt. '
           'Reponn yon fason itil e kout, toujou an kreyòl.',
     };
     final code = LocaleService.instance.language.code;
@@ -170,7 +170,7 @@ class _AiPageState extends State<AiPage> {
             ..sources = sources;
         });
       }
-    } else if (_useLibrary && PrepperLibrary.instance.listZims().isNotEmpty) {
+    } else if (_useLibrary && NuvokLibrary.instance.listZims().isNotEmpty) {
       setState(() =>
           _messages.last.text = '🔎 ${tr(context, 'aiSearchingLibrary')}');
       try {
@@ -337,7 +337,7 @@ class _AiPageState extends State<AiPage> {
                 constraints: const BoxConstraints(maxWidth: 480),
                 child: Text(
                   '${tr(context, 'aiNoModels')}\n'
-                  '${PrepperLibrary.instance.modelsDir.path}',
+                  '${NuvokLibrary.instance.modelsDir.path}',
                   textAlign: TextAlign.center,
                 ),
               ),

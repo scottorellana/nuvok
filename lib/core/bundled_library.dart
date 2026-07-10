@@ -5,9 +5,9 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
 
-import 'prepper_library.dart';
+import 'nuvok_library.dart';
 
-const _bundledAssetsChannel = MethodChannel('prepper/bundled_assets');
+const _bundledAssetsChannel = MethodChannel('nuvok/bundled_assets');
 
 class BundledLibraryManifest {
   BundledLibraryManifest({required this.version, required this.entries});
@@ -113,10 +113,10 @@ class BundledLibrarySeeder {
   const BundledLibrarySeeder._();
 
   static Future<BundledSeedResult> seed({
-    PrepperLibrary? library,
+    NuvokLibrary? library,
     bool overwrite = false,
   }) async {
-    final lib = library ?? PrepperLibrary.instance;
+    final lib = library ?? NuvokLibrary.instance;
     await lib.ensure();
     // iOS: no seeding in v1. There is no direct-distribution channel on
     // iPhone (every install goes through the store path, whose builds ship

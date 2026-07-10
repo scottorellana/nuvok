@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prepper_pad/modules/mesh/lan_discovery.dart';
+import 'package:nuvok/modules/mesh/lan_discovery.dart';
 
 // Bonjour discovery glue: platform plumbing (bonsoir) can't run in a unit
 // test, so the resolution logic is exercised directly — it must seed unicast

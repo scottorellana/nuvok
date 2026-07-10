@@ -1,6 +1,6 @@
 ---
 title: Agua Potable
-keywords: [agua, potable, purificar, hervir, filtrar, deshidratación]
+keywords: [agua, agua potable, purificar agua, potable, purificar, hervir, filtrar, deshidratación]
 priority: 1
 mode: [bosque, desierto, montana, rio]
 category: supervivencia

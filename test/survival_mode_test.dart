@@ -45,6 +45,19 @@ title: RCP
     expect(survivalModeFromSetting('inventado'), SurvivalMode.none);
   });
 
+  test('load(zh) trae la guía traducida y completa el resto por fallback',
+      () async {
+    final zh = await EmergencyGuides.load('zh');
+    final agua = zh.where((g) => g.id == 'bosque_agua').firstOrNull;
+    expect(agua, isNotNull, reason: 'bosque_agua debe existir en zh');
+    expect(agua!.lang, 'zh');
+    expect(agua.modes, contains('bosque'));
+    // Una guía sin traducción zh llega por fallback (en→es), no desaparece.
+    final rcp = zh.where((g) => g.id == 'rcp_adulto').firstOrNull;
+    expect(rcp, isNotNull);
+    expect(['en', 'es'], contains(rcp!.lang));
+  });
+
   test('las claves i18n de los 8 modos existen en 7 idiomas', () {
     // Se valida vía coreKeys en locale_service_test; aquí la referencia:
     for (final m in SurvivalMode.values) {

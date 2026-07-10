@@ -75,6 +75,11 @@ flutter:
     - assets/emergency_directory/
     - assets/emergency_guides/es/
     - assets/emergency_guides/en/
+    - assets/emergency_guides/pt/
+    - assets/emergency_guides/fr/
+    - assets/emergency_guides/zh/
+    - assets/emergency_guides/ja/
+    - assets/emergency_guides/ht/
     - assets/emergency_guides/images/
     - assets/bundled_library/manifest.json
     - assets/bundled_library/maps/

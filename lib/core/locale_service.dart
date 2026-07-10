@@ -111,6 +111,9 @@ class AppStrings {
     'tqOkHint', 'tqWarnHint', 'tqCritHint', 'tqShare', 'tqShared', 'tqResolve',
     'iceTitle', 'iceIntro', 'iceName', 'iceBlood', 'iceAllergies', 'iceMeds',
     'iceConditions', 'iceContact1', 'iceContact2', 'iceShow', 'iceShareMesh',
+    'dtTitle', 'dtResponds', 'dtBreathing', 'dtHadImpact', 'dtWhatHappens',
+    'dtYes', 'dtNo', 'dtChoking', 'dtBleeding', 'dtBurn', 'dtChest',
+    'dtSeizure', 'dtPoison',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -1361,6 +1364,72 @@ class AppStrings {
       'es': 'Compartir al grupo por el mesh', 'en': 'Share to the group over the mesh',
       'pt': 'Compartilhar com o grupo pelo mesh', 'fr': 'Partager au groupe via le mesh',
       'zh': '通过网状网络分享给小组', 'ja': 'メッシュでグループに共有', 'ht': 'Pataje ak gwoup la sou mesh la',
+    },
+    'dtTitle': {
+      'es': '¿Qué hago? — Guía rápida', 'en': 'What do I do? — Quick guide',
+      'pt': 'O que faço? — Guia rápido', 'fr': 'Que faire ? — Guide rapide',
+      'zh': '我该怎么办？——快速指引', 'ja': 'どうすれば？——クイックガイド', 'ht': 'Kisa pou m fè? — Gid rapid',
+    },
+    'dtResponds': {
+      'es': '¿La persona RESPONDE?\n(háblale fuerte y sacúdela suave)',
+      'en': 'Does the person RESPOND?\n(speak loudly and shake gently)',
+      'pt': 'A pessoa RESPONDE?\n(fale alto e sacuda de leve)',
+      'fr': 'La personne RÉPOND-elle ?\n(parlez fort, secouez doucement)',
+      'zh': '这个人有反应吗？\n（大声呼喊并轻摇）',
+      'ja': '反応はありますか？\n（大声で呼びかけ、軽く揺する）',
+      'ht': 'Èske moun nan REPONN?\n(pale fò epi souke l dousman)',
+    },
+    'dtBreathing': {
+      'es': '¿RESPIRA normalmente?\n(mira el pecho 10 segundos)',
+      'en': 'Is the person BREATHING normally?\n(watch the chest for 10 seconds)',
+      'pt': 'RESPIRA normalmente?\n(olhe o peito por 10 segundos)',
+      'fr': 'RESPIRE-t-elle normalement ?\n(regardez le thorax 10 secondes)',
+      'zh': '呼吸正常吗？\n（观察胸部10秒）',
+      'ja': '正常に呼吸していますか？\n（胸を10秒観察）',
+      'ht': 'Èske l ap RESPIRE nòmalman?\n(gade pwatrin li 10 segond)',
+    },
+    'dtHadImpact': {
+      'es': '¿Hubo golpe fuerte o caída?', 'en': 'Was there a hard impact or fall?',
+      'pt': 'Houve pancada forte ou queda?', 'fr': 'Y a-t-il eu un choc violent ou une chute ?',
+      'zh': '有剧烈撞击或坠落吗？', 'ja': '強い衝撃や転落はありましたか？', 'ht': 'Èske te gen gwo frap oswa tonbe?',
+    },
+    'dtWhatHappens': {
+      'es': '¿Qué está pasando?', 'en': 'What is happening?',
+      'pt': 'O que está acontecendo?', 'fr': 'Que se passe-t-il ?',
+      'zh': '发生了什么？', 'ja': '何が起きていますか？', 'ht': 'Kisa k ap pase?',
+    },
+    'dtYes': {
+      'es': 'SÍ', 'en': 'YES', 'pt': 'SIM', 'fr': 'OUI',
+      'zh': '是', 'ja': 'はい', 'ht': 'WI',
+    },
+    'dtNo': {
+      'es': 'NO', 'en': 'NO', 'pt': 'NÃO', 'fr': 'NON',
+      'zh': '否', 'ja': 'いいえ', 'ht': 'NON',
+    },
+    'dtChoking': {
+      'es': 'Se atraganta', 'en': 'Choking', 'pt': 'Engasgado',
+      'fr': 'S\'étouffe', 'zh': '噎住了', 'ja': '喉に詰まった', 'ht': 'L ap trangle',
+    },
+    'dtBleeding': {
+      'es': 'Sangra mucho', 'en': 'Heavy bleeding', 'pt': 'Sangra muito',
+      'fr': 'Saigne beaucoup', 'zh': '大出血', 'ja': '大量出血', 'ht': 'L ap senyen anpil',
+    },
+    'dtBurn': {
+      'es': 'Quemadura', 'en': 'Burn', 'pt': 'Queimadura',
+      'fr': 'Brûlure', 'zh': '烧伤', 'ja': 'やけど', 'ht': 'Boule',
+    },
+    'dtChest': {
+      'es': 'Dolor de pecho / habla raro', 'en': 'Chest pain / odd speech',
+      'pt': 'Dor no peito / fala estranha', 'fr': 'Douleur thoracique / parole étrange',
+      'zh': '胸痛/言语异常', 'ja': '胸痛・ろれつが回らない', 'ht': 'Doulè pwatrin / pale dwòl',
+    },
+    'dtSeizure': {
+      'es': 'Convulsiona', 'en': 'Seizure', 'pt': 'Convulsão',
+      'fr': 'Convulsions', 'zh': '抽搐', 'ja': 'けいれん', 'ht': 'Kriz',
+    },
+    'dtPoison': {
+      'es': 'Intoxicación', 'en': 'Poisoning', 'pt': 'Intoxicação',
+      'fr': 'Intoxication', 'zh': '中毒', 'ja': '中毒', 'ht': 'Anpwazonnman',
     },
     'callEmergency': {
       'es': 'LLAMAR', 'en': 'CALL', 'pt': 'LIGAR', 'fr': 'APPELER',

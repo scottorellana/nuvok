@@ -16,6 +16,7 @@ import '../tools/rcp_metronome.dart';
 import 'emergency_directory.dart';
 import 'emergency_guide_media.dart';
 import 'guide_voice.dart';
+import 'decision_tree_page.dart';
 import 'emergency_call_button.dart';
 import 'ice_page.dart';
 import 'tourniquet_page.dart';
@@ -203,6 +204,35 @@ class _EmergencyPageState extends State<EmergencyPage> {
                 // Llamada real al número de emergencias del país (offline
                 // se resuelve el número; la llamada usa la red si vive).
                 const EmergencyCallButton(),
+                // Árbol de decisión estilo 911: convierte pánico en el
+                // procedimiento exacto con una pregunta por pantalla.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                  child: FilledButton.icon(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.red.shade800,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size.fromHeight(52),
+                      textStyle: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w800),
+                    ),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => DecisionTreePage(
+                          openGuide: (ctx, id) {
+                            final g =
+                                _all.where((g) => g.id == id).firstOrNull;
+                            if (g == null) return;
+                            Navigator.of(ctx).push(MaterialPageRoute(
+                                builder: (_) => _GuideReader(guide: g)));
+                          },
+                        ),
+                      ),
+                    ),
+                    icon: const Icon(Icons.quiz),
+                    label: Text(tr(context, 'dtTitle')),
+                  ),
+                ),
                 // Timer de torniquete: la hora de aplicación salva el miembro.
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),

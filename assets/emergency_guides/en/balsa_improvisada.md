@@ -1,6 +1,6 @@
 ---
 title: Improvised Raft
-keywords: [raft, flotation, river, flood, water, logs, jugs, crossing]
+keywords: [raft, flotation, river, flood, water, logs, jerrycans, cross]
 priority: 3
 mode: [rio, mar]
 category: supervivencia
@@ -8,55 +8,55 @@ category: supervivencia
 
 # Improvised Raft
 
-**The honest question first:** do you truly need to cross the water? An improvised raft is a LAST resort — waiting for rescue on land is almost always safer than entering the water.
+**First, the honest question:** do you really need to cross the water? An improvised raft is the LAST resort — waiting for rescue on land is almost always safer than entering the water.
 
 ## Critical steps
 
-1. **Judge whether the water allows it.** CALM water only: lagoons, slow rivers, flooded areas with no current. If you see foam, eddies, or the water "roars", no raft will hold.
-2. **Gather floats.** Things that float and don't fill with water: SEALED jugs and PET bottles with caps, dry logs (green wood floats poorly), planks, coolers, tires. Test every piece: it must float WITH weight on it.
-3. **Build a rectangular frame.** Two long logs/poles parallel + two short ones crossed at the ends. The frame gives stiffness; the floats give buoyancy.
-4. **Lash every crossing in an X.** Rope, cables, straps, braided cloth strips. Each joint gets a cross (X) lashing finished with a double knot. Rafts fail at the lashings, not the logs.
-5. **Distribute floats symmetrically.** Jugs/bottles lashed UNDER the frame, caps up, spread evenly side to side — an unbalanced raft flips.
-6. **Test at the shore.** Push the raft into waist-deep water and climb on. It must hold you with 10 cm to spare. If one side sinks, add flotation BEFORE setting out.
-7. **Travel diagonally, never against the current.** Push with a long pole (touching bottom) or paddle with a plank. Aim for a point on the far bank DOWNSTREAM.
+1. **Assess whether the water allows it.** Only CALM water: lagoons, slow rivers, flooded areas with no current. If you see foam, whirlpools, or the water "sounds" loud, NO raft will hold up.
+2. **Gather flotation.** Things that float and do not fill with water: CLOSED jerrycans and PET bottles with caps, dry logs (green ones float poorly), planks, coolers, tires. Test each piece: it must float WITH weight on top.
+3. **Build a rectangular frame.** Two long parallel logs/tubes + two short ones crossed at the ends. The frame provides rigidity; the floats provide flotation.
+4. **Tie each crossing in an X.** Rope, cables, straps, strips of braided fabric. Each joint is tied in a cross (X) and finished with a double knot. A raft comes apart because of the lashings, not because of the logs.
+5. **Distribute the floats symmetrically.** Jerrycans/bottles tied UNDER the frame, opening upward, distributed equally on both sides — an unbalanced raft flips.
+6. **Test at the shore.** Push the raft into water that reaches your waist and climb on. It must support you with 10 cm of margin. If it sinks on one side, add flotation BEFORE leaving.
+7. **Navigate diagonally, never against the current.** Propel yourself with a long pole (touch the bottom) or paddle with a board. Aim for a point on the other shore DOWNSTREAM.
 
 ## What NOT to do
 
 | ❌ Mistake | ✅ Correct |
-|-----------|-----------|
-| Crossing fast or flooded water "because the raft can take it" | Calm water only; when in doubt, do NOT cross |
-| Tying yourself to the raft | NEVER tie in: if it flips, it drowns you |
-| Overloading with people and packs at once | Multiple trips; cargo first, people after |
-| Using green or rotten logs | Dry, sound wood that floats on its own |
-| Launching without testing with your weight | Always test at the shore |
-| Crossing at night or in fog | Wait for full light and visibility |
+|----------|------------|
+| Crossing fast or flood-swollen water "because the raft can handle it" | Only calm water; if in doubt, DO NOT cross |
+| Tying yourself to the raft | NEVER tie yourself: if it flips, it drowns you |
+| Overloading it with people and backpacks at the same time | Multiple trips; cargo first, then people |
+| Using green or rotten logs | Dry, sound wood that floats by itself |
+| Leaving without testing the raft with your weight | Test at the shore ALWAYS |
+| Crossing at night or in fog | Wait for light and full visibility |
 
 ## Realistic capacity
 
-- One sealed 20 L jug ≈ supports 18 kg.
-- Six 20 L jugs ≈ one adult with margin.
-- One dry log 30 cm × 3 m ≈ 40-60 kg depending on the wood.
-- Plan for DOUBLE the flotation you think you need.
+- 1 20 L closed jerrycan ≈ supports 18 kg.
+- 6 20 L jerrycans ≈ one adult with margin.
+- 1 dry log of 30 cm × 3 m ≈ 40-60 kg depending on the wood.
+- Calculate TWICE the flotation you think you need.
 
-## If you fall in
+## If you fall into the water
 
-1. Do NOT fight the current: float on your back, feet DOWNSTREAM.
+1. DO NOT fight the current: float on your back, feet DOWNSTREAM.
 2. Use your feet to bounce off rocks.
-3. Swim diagonally to shore when the current eases.
-4. Cold steals your strength in minutes: get out, wring clothes, keep moving.
+3. Swim diagonally toward the shore when the current eases.
+4. Cold steals strength in minutes: get out, wring out clothing, move.
 
 ## Children and non-swimmers
 
-- They ride in the CENTER of the raft, seated, gripping the frame.
-- Anything that floats tied to the chest as an improvised vest (PET bottles in a knotted shirt).
-- If someone cannot hold on by themselves, do NOT cross: find another way.
+- They go in the CENTER of the raft, seated, holding onto the frame.
+- Anything that floats tied to the chest as an improvised life jacket (PET bottles in a knotted T-shirt).
+- If someone cannot hold on by themselves, DO NOT cross: find another route.
 
 ## Example: Improvised Raft
 
-**Situation:** A flood cut you off; calm water separates you from safety, with jugs and rope at hand.
+**Situation:** A flood has isolated you; there is calm water between you and the safe area, with jerrycans and rope at hand.
 
-**Do:** 1. Confirm the water is truly calm. 2. Frame of dry logs + 6 sealed jugs lashed underneath. 3. Lash every crossing in an X with double knots. 4. Test with your weight at the shore. 5. Cross diagonally with a pole, aiming downstream.
+**Do:** 1. Confirm that the water is truly calm. 2. Frame of dry logs + 6 closed jerrycans tied underneath. 3. Tie each crossing in an X with a double knot. 4. Test with your weight at the shore. 5. Cross diagonally with a pole, aiming downstream.
 
-**Avoid:** Don't tie yourself to the raft, don't overload it, don't cross at night or in current, don't use green logs.
+**Avoid:** Do not tie yourself to the raft, do not overload it, do not cross at night or with current, do not use green logs.
 
-**Escalate:** If the water rises, turns murky or current appears, abort the crossing and return to high ground; trigger the mesh SOS and wait for rescue — moving water is non-negotiable.
+**Escalate:** If the water rises, becomes muddy, or current appears, abort the crossing and return to high ground; activate the mesh SOS and wait for rescue — moving water is not negotiable.

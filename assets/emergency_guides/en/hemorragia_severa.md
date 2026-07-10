@@ -1,68 +1,112 @@
 ---
-title: Severe bleeding (won't stop)
-keywords: [bleeding, hemorrhage, blood, cut, wound, tourniquet, pressure, bleeding out, artery]
+title: Severe hemorrhage (bleeding that does not stop)
+keywords: [hemorrhage, bleeding, blood, cut, wound, tourniquet, pressure, bleeding out, artery]
 priority: 1
 ---
 
-# Severe bleeding
+# Severe hemorrhage
 
-> ⚠️ This guide does not replace professional medical care. Get medical help as soon as possible.
+> ⚠️ This guide does not replace professional medical care. Seek medical help as soon as possible.
 
-A person can bleed to death in **under 5 minutes**. After breathing, stopping the bleed is the most urgent thing there is.
+A person can bleed to death in **less than 5 minutes**. Stopping the bleeding is the most urgent thing after they are breathing.
 
-## When to suspect it
+## Rapid assessment
 
-- Blood **spurts or pulses** (artery) or flows without stopping.
-- Clothes or floor soak through and it doesn't ease.
-- The person goes pale, sweaty, dizzy (already lost a lot).
+| Type of bleeding | Dangerous? | Action |
+|-----------------|------------|--------|
+| Spurts or pulses (artery) | 🚨 Fatal in minutes | Immediate pressure |
+| Flows continuously, soaks clothing | 🚨 Severe | Immediate pressure |
+| Drips a little, clots on its own | ⚠️ Minor | Wash and bandage |
+| Bruise with no blood coming out | ✅ Internal | Watch for shock |
 
 ## What NOT to do
 
-- ❌ DON'T remove the first soaked cloth/gauze: add another ON TOP (removing it rips off the forming clot).
-- ❌ DON'T pull out embedded objects (knife, rebar, glass): pad and bandage AROUND them. The object is plugging the hole.
-- ❌ DON'T tourniquet the neck, torso or head (arms and legs only).
-- ❌ DON'T loosen a placed tourniquet "to let blood flow": it comes off at the hospital only.
-- ❌ DON'T waste time washing a spurting wound: stop it first, clean later.
+| ❌ Mistake | ✅ Correct |
+|----------|------------|
+| Remove soaked cloth | Put ANOTHER on top |
+| Pull out an embedded object | SECURE IT with bandages around it |
+| Tourniquet on neck/torso/head | Arms and legs only |
+| Loosen a tourniquet already applied | It is loosened only in the hospital |
+| Wash a wound that is spurting blood | Stop bleeding FIRST |
 
-## Steps
+## Treatment escalation
 
-1. **Protect yourself if you can:** gloves or plastic bags on your hands — other people's blood carries disease. Nothing available? Act anyway: life first.
-2. **Expose the wound** (cut or tear clothing). You must SEE where it comes from.
-3. **HARD DIRECT PRESSURE:** gauze, clean cloth or your bare hand right on the bleeding point, pressing with your FULL weight. Not timidly — truly hard; it hurts, that's OK.
-4. **Don't let go.** Minimum **10 straight minutes** without lifting to peek. Soaked through? Add layers on top and keep pressing.
-5. **Arm or leg:** raise it above heart level while pressing (helps, doesn't replace pressure).
-6. **Deep wound that won't yield (neck, groin, armpit):** PACK it — push clean gauze or cloth INTO the cavity with your fingers, all the way, then press on top. Wound packing saves lives.
-7. **Tourniquet (arm/leg, life-threatening bleeding):** use early if bleeding does not stop quickly, pressure cannot be maintained, or there is amputation.
-   - Commercial tourniquet if available; otherwise strong cloth 4-5 cm wide (tie, rolled T-shirt — never wire or thin cord).
-   - Place it **5-8 cm ABOVE the wound** (closer to the heart), never over a joint. If you cannot see the wound, place it high and tight on the limb.
-   - Tie a knot, lay a stick/rod on it, tie another knot over the stick and **TWIST** until bleeding STOPS completely (it hurts a lot: that means it's working).
-   - Secure the stick. **Write down the TIME** on the tourniquet or the person's forehead.
-8. **Treat for shock while waiting:** lie them down, keep them warm, nothing to eat or drink (guide "Shock").
+```
+Step 1: PROTECTION
+├── Gloves or plastic bag (someone else's blood = diseases)
+└── If there are none: act anyway, life first
+     │
+     ▼
+Step 2: EXPOSE
+├── Cut or tear the clothing
+└── You need to SEE where it is coming from
+     │
+     ▼
+Step 3: STRONG DIRECT PRESSURE ← start here if you can maintain pressure
+├── Gauze/clean cloth over the bleeding point
+├── Press with ALL your weight (it hurts and that is okay)
+├── Minimum 10 minutes WITHOUT lifting to look
+└── If it soaks through → another cloth ON TOP and continue
+     │
+     ▼ Does it not stop in an arm/leg?
+Step 4: IF IT IS AN ARM/LEG AND IS MASSIVE
+└── Early tourniquet if it does not stop quickly, amputation, or you cannot maintain pressure
+     │
+     ▼ If it is the neck/armpit/groin junction or a deep wound
+Step 5: PACK (neck, groin, armpit)
+├── Put gauze/cloth INSIDE the cavity
+├── All the way to the bottom with your fingers
+└── Press on top
+     │
+     ▼ If it still bleeds in an arm/leg
+Step 6: TOURNIQUET
+├── Strong cloth 4-5 cm (never wire)
+├── 5-8 cm ABOVE the wound
+├── Knot → stick → knot → TWIST until it stops
+├── Secure the stick so it does not unwind
+└── WRITE DOWN THE TIME
+```
 
-## When to get help / transport
+## Tourniquet — detail
 
-- ALWAYS for severe bleeding, tourniquets or packed wounds: hospital urgently.
-- Minor bleeds: see a doctor if it won't close, something's inside, it was a bite, or the object was dirty/rusty (tetanus).
+| Parameter | Value |
+|-----------|-------|
+| Material | Cloth 4-5 cm wide (tie, rolled-up T-shirt) |
+| NEVER | Wire, thin cord, narrow belt |
+| Location | 5-8 cm above the wound, closer to the heart; if you cannot see the wound, high and tight on the limb |
+| Avoid | Over joints (elbow, knee) |
+| Goal | Bleeding STOPS completely |
+| Time | Write it on the tourniquet or on the person's forehead |
 
-## Signs of deterioration
+> ⚠️ It will hurt A LOT when applied — this is normal and means it is working
 
-- Pallor, cold sweat, confusion, intense thirst, fast weak pulse → blood-loss shock: lie them down NOW, legs raised, keep warm.
-- Bleeding restarts → back to direct pressure immediately.
+## Blood-loss shock table
 
-## Example practice: Severe bleeding (won't stop)
+| Phase | Signs | Action |
+|------|---------|--------|
+| Compensated | Anxiety, cold skin | Stop bleeding, lay down |
+| Progressive | Pallor, sweating, thirst, rapid pulse | Elevate legs, keep warm |
+| Severe | Confusion, weak pulse, bluish lips | URGENT transport |
 
-**Situation:** In a yard, someone is cut by sheet metal and a towel becomes soaked within seconds.
+## When to seek help / transport
 
-**Do:** 1. Make the scene safe and assign one specific person to call emergency services. 2. Follow the large steps in this guide in order instead of jumping to the most dramatic action. 3. Use gloves, barriers, or clean cloth if available. 4. Recheck every minute: breathing, responsiveness, bleeding, temperature, or worsening signs.
+- **ALWAYS** with severe hemorrhage, tourniquet, or packing → urgent hospital
+- Minor bleeding: doctor if it does not close, if it was a bite, or if the object was dirty/rusty (tetanus)
 
-**Avoid:** Do not improvise advanced procedures, do not move the neck/spine if injury is suspected, do not give food or drink to a confused person, and do not delay calling because you are searching for perfect equipment.
+## Example: Severe hemorrhage (bleeding that does not stop)
 
-**Escalate:** Call or evacuate immediately if breathing is not normal, chest pain appears, bleeding does not stop, confusion worsens, a burn is large, poisoning is possible, pregnancy is advanced, or there are multiple victims.
+**Situation:** In the yard, someone cuts themselves with a sheet of metal and the blood soaks a towel in seconds.
 
-**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.
+**Do:** 1. Secure the scene and ask a specific person to call emergency services. 2. Follow the major steps of the guide in order, without skipping to the step that seems more dramatic. 3. Use gloves, barriers, or clean cloths if they are available. 4. Reassess every minute: breathing, consciousness, bleeding, temperature, or worsening.
 
-## Evidence base and improvisation
+**Avoid:** Do not improvise advanced maneuvers, do not move the neck/spine if you suspect injury, do not give food/drink to someone who is confused, and do not delay the call while looking for perfect equipment.
 
-- Based on STOP THE BLEED/ACS: direct pressure, wound packing for deep junctional wounds, and limb tourniquets for life-threatening bleeding.
-- An improvised tourniquet must be wide (4-5 cm) and tightened until bleeding stops; wire, shoelace, or cable can cause damage and often fail.
-- Do not remove soaked layers or loosen a placed tourniquet; add material on top, write the time, and transport.
+**Escalate:** Call or transport immediately if they are not breathing normally, there is chest pain, bleeding that does not stop, confusion, extensive burn, possible poison, advanced pregnancy, or multiple victims.
+
+**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who remains responsible. This example is guided practice; adapt the steps to your environment and prioritize professional help when it exists.
+
+## Scientific basis and improvisation
+
+- Based on STOP THE BLEED/ACS: direct pressure, packing in deep junctional wounds, and tourniquet on limbs for life-threatening bleeding.
+- An improvised tourniquet must be wide (4-5 cm) and tightened until the bleeding stops; wire, cord, or cable increases damage and often fails.
+- Do not remove soaked layers or loosen a tourniquet that has been placed; add material on top, write down the time, and transport.

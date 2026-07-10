@@ -1,81 +1,91 @@
 ---
-title: RCP pou timoun ak tibebe — AHA 2025
-keywords: [rcp, timoun, tibebe, bebe, are kadyak, pa respire, neye, asfiksi, dea]
+title: RCP kay timoun ak tibebe — AHA 2025
+keywords: [rcp, timoun, tibebe, bebe, arè kadyak, pa respire, neye, toufe, dea]
 priority: 1
 ---
 
-# RCP pou timoun ak tibebe — AHA 2025
+# RCP kay timoun ak tibebe — AHA 2025
 
-**Tibebe:** pi piti pase 1 an, san konte yon tibebe ki fèk fèt nan moman nesans lan. **Timoun:** soti 1 an rive nan kòmansman pibète.
+**Tibebe:** pi piti pase 1 ane, eksepte tibebe ki fèk fèt nan moman akouchman an. **Timoun:** depi 1 ane jiska pibète.
 
-> ⚠️ Aktive sistèm ijans lokal la. RCP pedyatrik avèk konpresyon ak souf pi bon lè sekouris la kapab fè li; gid sa a pa ranplase fòmasyon pratik.
+> ⚠️ Aktive sistèm ijans lokal la. RCP pedyatrik ak konpresyon ak vantilasyon pi preferab lè moun k ap reyanime a konnen kijan pou fè li; gid sa a pa ranplase fòmasyon pratik.
 
-## Rekonèt arè kadyak
+## Rekonèt arè a
 
-Aji lè yon timoun oswa tibebe pa reyaji epi li pa respire nòmalman oswa li sèlman ap pran souf gaspiye. Yon sekouris ki pa pwofesyonèl pa dwe retade RCP pou tcheke batman kè.
+Aji si timoun nan oswa tibebe a pa reponn epi li pa respire nòmalman oswa li sèlman ap rale souf anmwe. Yon moun òdinè k ap reyanime pa dwe retade RCP pou verifye batman kè.
 
-## Sekans pou yon sèl sekouris
+## Sekans pou yon sèl moun k ap reyanime
 
-1. **Sekirite ak reyaksyon.** Verifye kote a. Rele timoun nan epi tape zepòl li; pou yon tibebe, tape pla pye a dousman. Pa souke tibebe a.
-2. **Rele pou èd ak yon DEA.** Si ou gen yon telefòn, rele sou opalè san ou pa kite pasyan an. Voye yon lòt moun chèche yon DEA.
-3. **Si ou poukont ou san telefòn:**
-   - pou yon tonbe toudenkou ou te wè, aktive sistèm ijans lan epi chèche DEA a an premye;
-   - pou yon tonbe pèsonn pa t wè oswa ki sanble soti nan mank oksijèn, fè anviwon 2 minit RCP anvan ou kite pou rele epi chèche yon DEA.
-4. **Mete timoun nan oswa tibebe a kouche sou do sou yon sifas di ak plat.**
-5. **Kòmanse avèk konpresyon.** AHA itilize sekans konpresyon-pasaj lè-respirasyon; algorit sa a **pa mande** 5 premye souf sekou.
+1. **Sekirite ak repons.** Verifye sèn nan. Rele timoun nan epi manyen zepòl li; pou yon tibebe, manyen pla pye a dousman. Pa souke li.
+2. **Mande èd ak yon DEA.** Si ou gen telefòn, rele sou opalè san ou pa kite pasyan an. Voye yon lòt moun al chèche yon DEA.
+3. **Si ou poukont ou epi ou pa gen telefòn:**
+   - si gen yon tonbe atè toudenkou ou te temwen, aktive ijans epi jwenn DEA a an premye;
+   - si ou pa t temwen tonbe atè a oswa li pwobableman te kòmanse akoz mank oksijèn, fè anviwon 2 minit RCP anvan ou ale rele epi chèche DEA a.
+4. **Mete li kouche sou do sou yon sifas fèm ak plat.**
+5. **Kòmanse ak konpresyon.** AHA itilize sekans konpresyon-vwa respiratwa-vantilasyon; **li pa endike 5 vantilasyon inisyal** nan algoritm sa a.
 
-## Konpresyon bon kalite
+## Konpresyon kalite siperyè
 
-Fè konpresyon a **100–120 pa minit**, kite pwatrin lan retounen nèt epi kenbe chak poz pi kout pase 10 segonn.
+Fè konpresyon a **100–120 pa minit**, pèmèt pwatrin nan elaji nèt epi limite chak poz a mwens pase 10 segonn.
 
-### Timoun soti 1 an rive nan pibète
+### Timoun depi 1 ane jiska pibète
 
-- Mete baz pla **youn oswa de men** nan mitan pwatrin lan sou mwatye anba estènòm nan.
-- Pwofondè: omwen yon tyè nan dyamèt devan-dèyè pwatrin lan, anviwon **5 cm**; evite ale twò fon.
+- Talon **yon men oswa de men** nan sant pwatrin lan, sou mwatye anba estènòm nan.
+- Pwofondè: omwen yon tyè dyamèt anteroposteryè pwatrin lan, apeprè **5 cm**; evite pwofondè twòp.
 
-### Tibebe ki pi piti pase 1 an
+### Tibebe ki pi piti pase 1 ane
 
-- Peze estènòm nan avèk **baz pla yon men** oswa sèvi ak **teknik 2 pous ak men yo antoure pwatrin lan**.
-- Si ou pa kapab antoure pwatrin lan, sèvi ak baz pla yon men.
-- Pwofondè: omwen yon tyè pwatrin lan, anviwon **4 cm**.
-- Ansyen teknik 2 dwèt la **pa rekòmande ankò pou RCP tibebe nan AHA 2025**.
+- Konprime estènòm nan ak **baz pla yon men** oswa ak teknik **2 pous ak men toutotou tòks la**.
+- Si ou pa kapab antoure tòks la, itilize baz yon men.
+- Pwofondè: omwen yon tyè pwatrin lan, apeprè **4 cm**.
+- Ansyen teknik de dwèt la **pa rekòmande ankò pou RCP tibebe nan AHA 2025**.
 
-## Rapò konpresyon ak souf
+## Rapò konpresyon-vantilasyon
 
-| Sekouris | Rapò |
+| Moun k ap reyanime | Rapò |
 |---|---|
 | Youn | **30:2** |
-| De sekouris ki resevwa fòmasyon | **15:2** |
+| De moun k ap reyanime ki resevwa fòmasyon | **15:2** |
 
-Pou bay souf:
+Pou vantile:
 
-- Timoun: panche tèt la dousman dèyè epi leve manton an, pense nen an epi fè yon sele sou bouch la.
-- Tibebe: kenbe tèt la dwat oswa nan yon ti pozisyon tankou l ap santi yon sant, epi fè yon sele sou bouch ak nen ansanm.
-- Bay chak souf pandan anviwon 1 segonn, sèlman jiskaske pwatrin lan monte yon fason vizib. Si li pa monte, repozisyone pasaj lè a anvan ou eseye ankò.
+- Timoun: fè tèt la lonje dousman epi leve manton an; pense nen an epi sele bouch la.
+- Tibebe: kenbe tèt la nan pozisyon net oswa pozisyon pran sant dousman epi sele bouch ak nen ak bouch ou.
+- Bay chak vantilasyon pandan apeprè 1 segonn, sèlman jiskaske ou wè pwatrin lan monte. Si li pa monte, repoze vwa respiratwa a anvan ou eseye ankò.
 
-Si ou pa kapab bay souf, fè konpresyon san rete; sa pi bon pase pa fè RCP ditou.
+Si ou pa kapab bay vantilasyon, fè konpresyon san ou pa kanpe: li pi bon pase pa fè RCP.
 
 ## DEA
 
-- Limen li epi swiv enstriksyon li kou li disponib.
-- Sèvi ak plak pedyatrik/yon reduktè si yo disponib. Sinon, ou ka sèvi ak plak granmoun si yo antre san yo pa manyen youn lòt.
-- Si plak yo ta manyen, mete youn sou pwatrin lan epi youn sou do a.
-- Rekòmanse konpresyon yo touswit apre chak analiz oswa chòk.
+- Limen li epi swiv enstriksyon li yo dèske li disponib.
+- Itilize patch pedyatrik/atenuatè si yo egziste. Si yo pa egziste, yo ka itilize patch granmoun si yo antre san yo pa touche youn ak lòt.
+- Si patch yo ta touche youn ak lòt, mete youn sou pwatrin lan ak lòt la sou do a.
+- Rekòmanse konpresyon yo imedyatman apre chak analiz oswa chòk.
 
 ## Kontinye epi siveye
 
-Kontinye jiskaske respirasyon nòmal ak siy lavi retounen, èd ki resevwa fòmasyon pran relèv la, yon lòt sekouris ranplase ou, oswa ou pa kapab kontinye. Si respirasyon retounen men timoun nan toujou pa reyaji, mete li sou kote sèlman si pa gen okenn blesi yo sispèk ki anpeche sa epi siveye respirasyon an san rete.
+Kontinye jiskaske li respire nòmalman epi li montre siy lavi, èd ki resevwa fòmasyon rive, yon moun ranplase ou oswa ou pa kapab kontinye. Si li reprann respirasyon men li pa reveye, mete li sou kote sèlman si pa gen yon blesi ki anpeche sa epi siveye respirasyon an san poz.
 
-## Erè ki danjere
+## Erè danjere
 
-- Pa souke yon tibebe ni fwote estènòm li avèk fòs.
-- Pa lonje kou yon tibebe twòp dèyè.
-- Pa sèvi ak teknik 2 dwèt ki demode a pou konpresyon RCP.
-- Pa retade konpresyon pou tcheke batman kè si ou se yon sekouris ki pa pwofesyonèl.
-- Pa bay gwo souf oswa souf rapid; li sifi pou pwatrin lan monte yon fason vizib.
+- Pa souke yon tibebe ni pa fwote fò sou estènòm nan.
+- Pa ipè-ekstann kou tibebe a.
+- Pa itilize teknik de dwèt demode a pou konpresyon RCP.
+- Pa retade konpresyon pou chèche batman kè si ou se yon moun òdinè k ap reyanime.
+- Pa bay vantilasyon gwo oswa rapid; leve pwatrin ki vizib sifi.
 
 ## Sous klinik
 
-Kontni an verifye dapre **AHA 2025 Guidelines for CPR and ECC**, ansanm ak nouvo teknik konpresyon pou tibebe, vitès 100–120/min, pwofondè anviwon 4 cm ak 5 cm, rapò 30:2 ak 15:2, poz ki mwens pase 10 segonn, ak itilizasyon DEA bonè.
+Kontni revize selon **AHA 2025 Guidelines for CPR and ECC**, enkli chanjman teknik pou tibebe yo, ritm 100–120/min, pwofondè apwoksimatif 4 cm ak 5 cm, rapò 30:2 ak 15:2, poz ki pi piti pase 10 segonn ak itilizasyon bonè DEA a.
 
 - https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
+
+## Egzanp pratik: RCP kay Timoun ak Tibebe
+
+**Sitiyasyon:** Yon bebe 8 mwa vin mou epi san repons apre yon epizòd toufe; li pa respire nòmalman.
+
+**Fè:** 1. Rele fò pou mande èd epi mande pou yo rele ijans sou opalè. 2. Mete li sou yon sifas fèm. 3. Konprime nan sant pwatrin lan ak baz yon men, anviwon 4 cm pwofondè, a 100–120 pa minit. 4. Poukont ou: 30:2; ak de sekouris ki antrene: 15:2. 5. Apre 2 minit, si pèsonn pa rele, rele ou menm epi retounen imedyatman.
+
+**Evite:** Pa souke bebe a, pa konprime sou vant lan ni sou kòt yo, pa entèwonp plis pase 10 segonn, pa konsidere yon bebe ki frèt oswa vyolèt kòm pèdi: kontinye.
+
+**Eskalade:** Si pwatrin lan pa monte ak vantilasyon yo, repoze tèt la (pozisyon net pou bebe); si gen yon objè vizib nan bouch la retire li ak yon dwèt an kwòk SÈLMAN si ou wè li; kontinye jiskaske èd pwofesyonèl oswa respirasyon efikas.

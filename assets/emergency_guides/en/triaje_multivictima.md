@@ -1,69 +1,75 @@
 ---
-title: Multiple victims at once (basic triage)
-keywords: [triage, multiple victims, mass casualty, earthquake, collapse, sorting wounded, disaster]
-priority: 4
+title: Multi-victim triage (who to treat first?)
+keywords: [triage, multiple, victims, disaster, mass emergency, priority, start, who to treat first]
+priority: 3
 ---
 
-# Basic triage with multiple victims
+# Triage — Who to treat first?
 
-> ⚠️ This guide does not replace professional medical care or formal training. Get help as soon as possible.
+> Simplified START method for emergencies with many injured people and few rescuers.
 
-When the injured outnumber the helpers, the goal changes: **do the most good for the most people.** That demands fast sorting — and NOT staying with the first victim you meet.
+## Decision tree
 
-## What NOT to do
+```
+                        Walking and talking?
+                       /                \
+                    YES                 NO
+                     │                  │
+                  🟢 GREEN           Breathing?
+                  (Can wait)        /        \
+                                  YES        NO
+                                   │          │
+                              Bleeding a lot? Open airway
+                              /         \       by tilting head
+                            YES         NO      Breathing now?
+                            │           │      /          \
+                        🟠 ORANGE    🟡 YELLOW  YES         NO
+                        (Hemorrhage) (Stable)   │            │
+                                              Has a pulse?     │
+                                              /          \      NO
+                                            YES          NO     │
+                                         🟠 ORANGE     ⚫ BLACK  │
+                                                                      │
+                                                    🔴 RED
+                                                  (CPR NOW)
+```
 
-- ❌ DON'T rush to the loudest screamer: **screaming means breathing.** The silent, motionless ones get checked first.
-- ❌ DON'T do prolonged CPR on one person while five bleed out: in mass casualties, someone who doesn't breathe after you open their airway is tagged black (brutal, but it saves the savable).
-- ❌ DON'T move victims before checking the scene (secondary collapse, wires, fire, traffic).
+## Triage categories
 
-## Step 0 — The scene (30 seconds)
+| Color | Status | Action | Examples |
+|-------|--------|--------|----------|
+| 🔴 **RED** | Critical, may survive with immediate help | Treat FIRST | Not breathing (with airway open), severe shock |
+| 🟠 **ORANGE** | Serious, needs help but can wait 1h | Stop hemorrhage | Severe bleeding, open fracture |
+| 🟡 **YELLOW** | Stable, can wait hours | Immobilize, observe | Closed fracture, minor wounds |
+| 🟢 **GREEN** | Minor, walking | Self-care | Minor cuts, bruises |
+| ⚫ **BLACK** | Does not respond after opening airway | Prioritize the living | Arrest without recovery |
 
-1. **Is it safe to enter?** If not, don't: get help and control what you can from outside.
-2. Shout: **"Everyone who can walk, come to ME!"** → all walkers are GREEN (minor) for now. Group them somewhere safe; they're your helpers.
-3. Assign out loud: "YOU: go get help/signal. YOU: bring the first-aid kit. YOU TWO: come with me."
+## Golden rules
 
-## Step 1 — Sort those who did NOT walk (30-60 seconds each, max)
+1. **Do not waste time on one patient when there are many**
+2. **Reassess every 15 minutes** — a GREEN can become RED
+3. **Mark each victim** with the color (tape, marker, clothing)
+4. **DO NOT move the BLACK until all the living have been treated**
 
-Check one by one where they lie, in this mental order:
+## Protocol in 60 seconds
 
-1. **Breathing?**
-   - NO → open the airway (forehead back, chin up). Breathing now? → **RED** (place on their side). Still not? → **BLACK** (not savable here; move to the next — only if hands are SPARE consider CPR).
-2. **Breathing VERY fast (gasping >30/min) or barely?** → **RED.**
-3. **Spurting blood?** → direct pressure NOW: put a GREEN helper on it (teach them in 10 seconds) → **RED.**
-4. **Follows simple commands** ("squeeze my hand")? Doesn't → **RED.** Follows but can't walk → **YELLOW.**
-5. Mark each one (pen on the forehead, tape, cloth): R / Y / G / B.
+| Step | Time | Action |
+|------|--------|--------|
+| 1 | 0-10s | Shout: **"Who can walk?"** → those are GREEN |
+| 2 | 10-30s | For those remaining: are they breathing? Those who are not → open airway |
+| 3 | 30-50s | Those who are breathing: are they bleeding a lot? → ORANGE |
+| 4 | 50-60s | Everyone else → YELLOW. Those who are not breathing after airway opening → BLACK |
 
-## Step 2 — Act by color
+> 💡 The goal is NOT to save everyone. It is to save as MANY as you can.
 
-- **REDS first:** airway open (on their side), bleeding controlled with pressure/tourniquet (guide "Severe bleeding"), kept warm, and FIRST into any vehicle to the hospital.
-- **YELLOWS:** splint fractures, re-check every few minutes (they can turn red). Second wave of transport.
-- **GREENS:** have them help each other; check them last (they sometimes hide injuries).
-- **Re-triage continuously:** walk the rounds every 5-10 minutes — people change color.
+## Example: Multi-victim triage (who to treat first?)
 
-## Step 3 — Organize evacuation
+**Situation:** After an earthquake, several people are asking for help and you only have a small first aid kit.
 
-- Vehicles leave FULL of reds first, with someone aboard who can keep pressure on wounds.
-- Send written info with each wave: how many remain and what colors.
-- Note (or mark on your Prepper Pad map) where each group is.
+**Do:** 1. Secure the scene and ask a specific person to call emergency services. 2. Follow the major steps of the guide in order, without jumping to the step that seems most dramatic. 3. Use gloves, barriers, or clean cloths if available. 4. Reassess every minute: breathing, consciousness, bleeding, temperature, or worsening.
 
-## When to get help
+**Avoid:** Do not improvise advanced maneuvers, do not move the neck/spine if you suspect injury, do not give food/drink to someone who is confused, and do not delay the call while looking for perfect equipment.
 
-- From second zero: send a specific person with clear info: "Collapse at X, about 8 injured, 2 critical, we need transport and supplies."
-- Use this app's SOS and the EMERGENCY channel to alert nearby devices with your position.
+**Escalate:** Call or transport immediately if they are not breathing normally, there is chest pain, bleeding that does not stop, confusion, extensive burn, possible poison, advanced pregnancy, or multiple victims.
 
-## Signs of deterioration (re-triage rounds)
-
-- A green turning pale/confused → likely internal bleeding: RED.
-- A yellow who stops obeying → RED; recheck airway and bleeding.
-
-## Example practice: Multiple victims at once (basic triage)
-
-**Situation:** After an earthquake several people ask for help and you have only a small first-aid kit.
-
-**Do:** 1. Make the scene safe and assign one specific person to call emergency services. 2. Follow the large steps in this guide in order instead of jumping to the most dramatic action. 3. Use gloves, barriers, or clean cloth if available. 4. Recheck every minute: breathing, responsiveness, bleeding, temperature, or worsening signs.
-
-**Avoid:** Do not improvise advanced procedures, do not move the neck/spine if injury is suspected, do not give food or drink to a confused person, and do not delay calling because you are searching for perfect equipment.
-
-**Escalate:** Call or evacuate immediately if breathing is not normal, chest pain appears, bleeding does not stop, confusion worsens, a burn is large, poisoning is possible, pregnancy is advanced, or there are multiple victims.
-
-**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.
+**Quick check:** before closing the guide, say out loud what happened, what you did, what remains, and who is left responsible. This example is guided practice; adapt the steps to your environment and prioritize professional help when it exists.

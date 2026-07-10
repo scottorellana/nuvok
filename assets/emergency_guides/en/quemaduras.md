@@ -1,62 +1,93 @@
 ---
-title: Burns (fire, liquids, electricity, chemicals)
-keywords: [burn, burned, fire, boiling water, oil, electricity, chemical, blister, scald]
+title: Burns
+keywords: [burn, fire, heat, burned, blister, skin, steam, boiling liquid, sun, electrocution]
 priority: 2
 ---
 
 # Burns
 
-> ⚠️ This guide does not replace professional medical care. Get medical help as soon as possible.
+> ⚠️ This guide does not replace professional medical care. Seek medical help as soon as possible.
 
-## When to suspect it
+## Severity classification
 
-- Contact with fire, hot liquids, steam, hot surfaces, electricity, chemicals or extreme sun.
-- **Depth:** red and painful = superficial; blisters = partial; white/black/leathery skin with NO pain = deep (nerve endings died — the worst one even though "it doesn't hurt").
+| Degree | Appearance | Pain | Example | Doctor? |
+|-------|-----------|-------|---------|----------|
+| **1st** | Red, dry, no blisters | Painful | Sunburn | If it is large |
+| **2nd** | Blisters, moist, red | Hurts A LOT | Boiling water | ALWAYS |
+| **3rd** | White/charred, dry | **Does NOT hurt** (dead nerves) | Direct fire | URGENT |
+| **4th** | Visible bone/muscle | Does not hurt | Electricity, prolonged fire | CRITICAL |
 
-## What NOT to do
+## What to do IMMEDIATELY
 
-- ❌ NO ice (it burns tissue further), no toothpaste, butter, coffee, cobwebs or home remedies. WATER only.
-- ❌ DON'T pop blisters (they're a natural sterile dressing).
-- ❌ DON'T rip off clothing STUCK to the burn: cut around it.
-- ❌ NO loose cotton directly on it, no tight bandages.
-- ❌ DON'T cool a big burn (>20% of the body) with water more than a few minutes: hypothermia sets in. Cover and transport.
+```
+1. STOP the burn
+   └── Move away from heat/electricity/chemical
 
-## Steps
+2. COOL (DO NOT FREEZE)
+   ├── Running cool/lukewarm water for 15-20 minutes
+   ├── NO direct ice (damages the skin more)
+   └── NO ice-cold water (may cause hypothermia)
 
-1. **Stop the cause:**
-   - Clothes on fire: "STOP, DROP, ROLL" or smother with a thick blanket.
-   - Electricity: **cut the power BEFORE touching** (breaker, unplug with a dry stick). Can't cut it? Don't touch.
-   - Dry chemical powder: brush it off first (gloved/cloth); then plenty of water 20 minutes. Liquid chemical: water right away, 20 minutes.
-2. **Cool with clean, cool-to-lukewarm running water for 10-20 minutes.** Tap water is fine. It genuinely limits damage and pain — worth the time.
-3. **Remove rings, watches, belts** from the area BEFORE it swells.
-4. **Cover** with sterile gauze or clean lint-free cloth, loose — or clean kitchen plastic film laid on gently without wrapping tight: an excellent emergency dressing.
-5. **Pain:** over-the-counter painkiller following the label.
-6. **Electrical burns:** the mark may be small but internal damage big, and the heart can fail hours later → always see a doctor; unconscious or odd pulse → CPR ready, urgent transport.
+3. REMOVE clothing/jewelry
+   ├── Cut around anything stuck (DO NOT pull it off)
+   └── Rings and watch before swelling occurs
 
-## When to get help / transport
+4. COVER
+   ├── Sterile gauze or clean cloth, loose
+   ├── NO cotton (it sticks)
+   └── NO creams, toothpaste, lard, ice
 
-Hospital ALWAYS if the burn:
-- Is bigger than the victim's palm.
-- Involves face, neck, hands, feet, genitals or joints.
-- Is deep (white/black/painless) or goes all the way around a limb.
-- Is electrical or chemical.
-- Is on a baby, small child or elderly person.
-- Involved smoke in a closed space: cough, hoarse voice, singed nose hairs = burned airway that can CLOSE within hours → urgent.
+5. RELIEF
+   └── Pain reliever (acetaminophen/ibuprofen)
+```
 
-## Signs of deterioration
+## What you should NEVER put on a burn
 
-- Hoarse voice or wheezing after smoke → airway swelling: go NOW.
-- Pallor, cold sweat, confusion → shock (guide "Shock").
-- Days later: growing pain, pus, bad smell, fever → infection: see a doctor.
+| ❌ DO NOT use | Why |
+|------------|---------|
+| Direct ice | Freezes the tissue, more damage |
+| Toothpaste | Irritates and traps heat |
+| Lard/oil | Traps heat, causes infection |
+| Cotton | Sticks to the wound |
+| Antibiotic cream on a ruptured blister | May trap bacteria |
 
-## Example practice: Burns (fire, liquids, electricity, chemicals)
+## When to go to the hospital URGENTLY?
 
-**Situation:** In a kitchen, hot water spills over a forearm and the skin hurts intensely.
+| Danger sign | Reason |
+|-------------------|-------|
+| Any 3rd degree burn | Risk of shock and infection |
+| 2nd degree larger than the palm of the hand | Risk of dehydration |
+| Face, hands, feet, genitals, joints | May limit movement |
+| Circumferential burn (surrounds a limb) | May cut off circulation when swelling occurs |
+| Chemical or electrical | Invisible internal damage |
+| Very young or older person | More vulnerable skin |
 
-**Do:** 1. Make the scene safe and assign one specific person to call emergency services. 2. Follow the large steps in this guide in order instead of jumping to the most dramatic action. 3. Use gloves, barriers, or clean cloth if available. 4. Recheck every minute: breathing, responsiveness, bleeding, temperature, or worsening signs.
+## Chemical burns
 
-**Avoid:** Do not improvise advanced procedures, do not move the neck/spine if injury is suspected, do not give food or drink to a confused person, and do not delay calling because you are searching for perfect equipment.
+1. Use gloves if possible
+2. **Brush off** dry chemical powder before washing
+3. Rinse with plenty of water for **20+ minutes**
+4. Remove contaminated clothing carefully
+5. **DO NOT apply neutralizers** (the reaction generates more heat)
 
-**Escalate:** Call or evacuate immediately if breathing is not normal, chest pain appears, bleeding does not stop, confusion worsens, a burn is large, poisoning is possible, pregnancy is advanced, or there are multiple victims.
+## Electrical burns
 
-**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.
+> ⚠️ A small electrical burn on the outside can be enormous on the inside
+
+| Action | Detail |
+|--------|---------|
+| Turn off the current BEFORE touching | Electrocuting yourself does not help anyone |
+| Look for 2 wounds | Entry and exit of the current |
+| Evaluate the heart | May cause arrhythmias → ECG required |
+
+## Example: Burns
+
+**Situation:** In the kitchen, hot water falls onto a person's forearm and the skin hurts intensely.
+
+**Do:** 1. Secure the scene and ask a specific person to call emergency services. 2. Follow the guide’s major steps in order, without skipping to the step that seems most dramatic. 3. Use gloves, barriers, or clean cloths if available. 4. Reassess every minute: breathing, consciousness, bleeding, temperature, or worsening.
+
+**Avoid:** Do not improvise advanced maneuvers, do not move the neck/spine if you suspect injury, do not give food/drink to someone who is confused, and do not delay the call to look for perfect equipment.
+
+**Escalate:** Call or transport immediately if the person is not breathing normally, has chest pain, bleeding that does not stop, confusion, an extensive burn, possible poison, advanced pregnancy, or multiple victims.
+
+**Quick check:** before closing the guide, say out loud what happened, what you did, what is still needed, and who remains responsible. This example is guided practice; adapt the steps to your environment and prioritize professional help when it exists.

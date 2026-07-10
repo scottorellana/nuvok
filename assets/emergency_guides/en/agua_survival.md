@@ -1,66 +1,66 @@
 ---
-title: Safe Water
-keywords: [water, drinking water, purify water, safe, purify, boil, filter, dehydration]
+title: Drinking Water
+keywords: [water, drinking water, purify water, potable, purify, boil, filter, dehydration]
 priority: 1
 mode: [bosque, desierto, montana, rio]
 category: supervivencia
 ---
 
-# Safe Water in Emergencies
+# Drinking Water in Emergencies
 
-## ABSOLUTE PRIORITY
+## ABSOLUTE Priority
 
-Without water you die in 3 days. With water but no food you can survive 30+ days.
+Without water you die in 3 days. With water but without food you can survive 30+ days.
 
-## Finding Water
+## How to find water
 
 ### Natural sources
-- **Rivers and streams** — always boil 1 min minimum
+- **Rivers and streams** — always boil at least 1 min
 - **Rainwater** — collect with any clean surface
-- **Groundwater** — dig in river bends
-- **Dew** — absorb with cloth in morning
+- **Underground water sources** — dig in river bends
+- **Dew** — absorb with cloth in the morning
 - **Plant water** — cactus, bamboo, vines
 
 ### DO NOT drink
 - Seawater (deadly salt)
 - Urine (toxic)
 - Stagnant water with dead animals
-- Green-tinted pond water
+- Water from radars/bright green puddles
 
 ## Purification
 
 ### Boiling (safest method)
 1. Boil 1 minute at sea level
-2. 3 minutes if above 2000m altitude
-3. Let cool covered
+2. 3 minutes if you are above 2000m altitude
+3. Let cool while covered
 
 ### Iodine/Bleach
 - Iodine: 5 drops per liter, wait 30 min
 - Bleach (2%): 8 drops per liter, wait 30 min
 
-### DIY Filter
+### Homemade filter
 1. Fine sand + activated charcoal + gravel
-2. Pass water through 3 times minimum
-3. Does NOT remove viruses
+2. Pass the water through at least 3 times
+3. DOES NOT eliminate viruses
 
-### UV / SODIS
-- Fill transparent bottle
-- 6 hours direct sunlight (2 days cloudy)
+### UV light / SODIS
+- Fill a clear bottle
+- 6 hours of direct sunlight (2 days if cloudy)
 
 ## Dehydration
 
 ### Signs
-- Dark or little urine
+- Dark or scant urine
 - Dry mouth, cracked lips
 - Dizziness, confusion
 - Rapid pulse
 
 ### Treatment
-- Sip small amounts
-- Don't drink all at once
-- Add salts if possible
+- Drink in small sips
+- Do not drink everything at once
+-补充 salts if possible
 
-## Water Needs Calculation
+## Needs calculation
 
 | Temperature | Minimum liters/day |
 |-------------|-------------------|
@@ -68,16 +68,16 @@ Without water you die in 3 days. With water but no food you can survive 30+ days
 | Warm (20-30°C) | 3-4 liters |
 | Hot (>30°C) | 5-6 liters |
 
-### In active emergency: double the amount
+### In an active emergency: double the amount
 
-## Example practice: Safe Water
+## Example: Drinking Water
 
-**Situation:** After flooding, only cloudy river water and clean empty bottles are available.
+**Situation:** After a flood, there is only murky river water and clean empty bottles.
 
-**Do:** 1. Pause for 30 seconds and name the main danger. 2. Gather water, warmth, light, communication, and a safe route. 3. Take the simplest action that reduces risk right now. 4. Record what you did in notes/checklists so another person can continue.
+**Do:** 1. Stop for 30 seconds and define the main danger. 2. Gather water, insulation, light, communication, and a safe route. 3. Carry out the simplest action that reduces risk now. 4. Mark what was done in notes/checklist so another person can continue.
 
-**Avoid:** Do not drain battery without a plan, do not cross moving water, do not eat unknown plants, do not split the group, and do not wait until dark to build shelter.
+**Avoid:** Do not spend battery without a plan, do not cross moving water, do not eat unknown plants, do not separate from the group, and do not wait until dark to set up shelter.
 
-**Escalate:** Change plans if weather worsens, body temperature drops, safe water is running out, vulnerable people are present, or you lose orientation.
+**Escalate:** Change plans if the weather worsens, body temperature drops, safe water is lacking, there are vulnerable children/older adults, or you lose your orientation.
 
-**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.
+**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who remains responsible. This example is guided practice; adapt the steps to your environment and prioritize professional help when it exists.

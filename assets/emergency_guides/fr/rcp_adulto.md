@@ -1,71 +1,83 @@
 ---
-title: RCP de l’adulte — AHA 2025
-keywords: [rcp, arret cardiaque, ne respire pas, respiration agonique, inconscient, compressions, dea, defibrillateur]
+title: RCP chez l’adulte — AHA 2025
+keywords: [rcp, réanimation, arrêt cardiaque, ne respire pas, halète, inconscient, compressions, dea, défibrillateur]
 priority: 1
 ---
 
-# RCP de l’adulte — AHA 2025
+# RCP chez l’adulte — AHA 2025
 
-> ⚠️ Alertez les services d’urgence locaux dès que possible. Ce guide destiné aux secouristes non professionnels ne remplace ni une formation pratique ni des soins professionnels.
+> ⚠️ Active le système local d’urgence dès que possible. Ce guide destiné aux secouristes non professionnels ne remplace pas une formation pratique ni une prise en charge professionnelle.
 
-## Agissez si la personne ne répond pas et ne respire pas normalement
+## Agis si la personne ne répond pas et ne respire pas normalement
 
-Des gasps isolés **ne constituent pas une respiration normale**. Si la personne ne répond pas et ne respire pas normalement, supposez un arrêt cardiaque et commencez la RCP. Un secouriste non professionnel **ne doit pas retarder la RCP pour rechercher un pouls**.
+Les halètements isolés ou les gasps **ne sont pas une respiration normale**. Si la personne ne répond pas et ne respire pas normalement, présume un arrêt cardiaque et commence la RCP. Un secouriste non professionnel **ne doit pas perdre de temps à chercher le pouls**.
 
 ## Séquence rapide
 
-1. **Assurez-vous que les lieux sont sûrs.** Ne déplacez la personne que s’il est dangereux de rester sur place.
-2. **Vérifiez la réaction et la respiration.** Tapotez les épaules, appelez à voix haute et recherchez une respiration normale pendant 10 secondes au maximum.
-3. **Appelez et procurez-vous un DEA.** Si vous avez un téléphone, appelez en mode haut-parleur pendant que vous commencez. Demandez directement à une autre personne d’appeler et d’apporter un défibrillateur externe automatisé (DEA). Si vous êtes complètement seul sans téléphone, partez appeler et chercher un DEA, puis revenez immédiatement.
-4. **Placez la personne sur le dos, sur une surface ferme et plane.** Dégagez la poitrine.
-5. **Commencez les compressions.** Placez le talon d’une main au centre de la poitrine, sur la moitié inférieure du sternum ; posez l’autre main par-dessus, entrelacez les doigts et gardez les bras tendus.
+1. **Vérifie que la scène est sûre.** Déplace la personne uniquement si rester sur place implique un danger.
+2. **Vérifie la réponse et la respiration.** Touche les épaules, parle fort et observe si la personne respire normalement pendant pas plus de 10 secondes.
+3. **Appelle et procure-toi un DAE.** Si tu as un téléphone, appelle en haut-parleur pendant que tu commences. Désigne une autre personne pour appeler et apporter un défibrillateur externe automatisé (DAE). Si tu es complètement seul et sans téléphone, va chercher de l’aide et un DAE, puis reviens immédiatement.
+4. **Place-la sur le dos sur une surface ferme et plane.** Découvre la poitrine.
+5. **Commence les compressions.** Place le talon d’une main au centre de la poitrine, sur la moitié inférieure du sternum ; l’autre main par-dessus, doigts entrelacés et bras tendus.
 
 ## Compressions de haute qualité
 
 | Paramètre | Objectif AHA 2025 |
 |---|---|
-| Fréquence | **100–120 par minute** |
+| Rythme | **100–120 par minute** |
 | Profondeur | **5–6 cm** |
 | Position | Épaules au-dessus des mains, bras tendus |
-| Relâchement | Laissez la poitrine revenir complètement après chaque compression |
-| Interruptions | Réduisez-les au minimum ; chaque interruption doit durer **moins de 10 secondes** |
+| Expansion | Laisse la poitrine revenir complètement à sa position |
+| Pauses | Réduis-les au minimum ; chaque pause doit durer **moins de 10 secondes** |
 | Surface | Ferme et plane |
 
 ### Cycles 30:2
 
-Effectuez **30 compressions suivies de 2 insufflations (30:2)** avant la mise en place d’une voie aérienne avancée.
+Réalise **30 compressions et 2 insufflations (30:2)** avant une voie aérienne avancée.
 
-- Ouvrez les voies aériennes en basculant la tête et en soulevant le menton.
-- Pincez le nez, assurez l’étanchéité et donnez chaque insufflation pendant environ 1 seconde, juste assez pour obtenir un soulèvement visible de la poitrine.
-- Évitez les insufflations trop rapides, trop fréquentes ou trop fortes.
-- Si vous n’êtes pas formé, ne pouvez pas ou ne voulez pas pratiquer les insufflations, effectuez une **RCP par compressions seules**, avec des compressions continues à 100–120/min.
+- Ouvre la voie aérienne par extension de la tête et élévation du menton.
+- Pince le nez, scelle ta bouche et donne chaque insufflation pendant environ 1 seconde, seulement jusqu’à voir la poitrine se soulever.
+- Évite les insufflations trop rapides, trop fréquentes ou trop fortes.
+- Si tu n’es pas formé, ne peux pas ou ne veux pas insuffler, réalise une **RCP avec les mains seules**, avec des compressions continues à 100–120/min.
 
-## Utilisez le DEA dès son arrivée
+## Utilise le DAE dès qu’il arrive
 
-1. Allumez-le et suivez ses instructions vocales.
-2. Séchez la poitrine si elle est mouillée et placez les électrodes directement sur la peau nue comme indiqué sur les schémas.
-3. Assurez-vous que personne ne touche la personne pendant l’analyse ou la délivrance du choc.
-4. Reprenez immédiatement les compressions après un choc ou l’instruction « choc non recommandé ».
+1. Allume-le et suis ses indications vocales.
+2. Sèche la poitrine si elle est mouillée et place les électrodes directement sur la peau comme le montrent les dessins.
+3. Personne ne doit toucher la personne pendant l’analyse ou le choc.
+4. Reprends les compressions immédiatement après le choc ou après l’indication « choc non recommandé ».
 
-## Continuez jusqu’à ce que
+## Continue jusqu’à ce que
 
-- la personne montre des signes évidents de vie et respire normalement ;
-- des secouristes formés prennent le relais ;
-- un autre secouriste puisse vous remplacer ; ou
-- les lieux deviennent dangereux ou vous soyez physiquement incapable de continuer.
+- la personne montre des signes clairs de vie et respire normalement ;
+- du personnel formé arrive et te relaie ;
+- un autre secouriste puisse te remplacer ; ou
+- la scène devienne dangereuse ou que tu sois physiquement incapable de continuer.
 
-Si une respiration normale reprend mais que la personne reste inconsciente, placez-la sur le côté si aucune suspicion de blessure ne l’empêche, gardez-la au chaud et surveillez continuellement sa respiration. Recommencez la RCP si la respiration normale cesse.
+Si elle recommence à respirer normalement mais ne se réveille pas, place-la sur le côté si tu ne suspectes pas de lésion qui l’empêche, garde-la au chaud et surveille continuellement la respiration. Si elle cesse de respirer normalement, recommence la RCP.
 
 ## Erreurs dangereuses
 
-- Ne confondez pas les gasps avec une respiration normale.
-- Ne retardez pas les compressions pour rechercher un pouls si vous n’êtes pas un professionnel de santé formé.
-- N’effectuez pas de compressions sur un lit mou si la personne peut être placée sans danger sur une surface ferme.
-- Ne vous appuyez pas sur la poitrine entre les compressions.
-- N’interrompez pas la RCP à plusieurs reprises pour vérifier si la personne « revient à elle ».
+- Ne confonds pas les gasps avec une respiration normale.
+- Ne retarde pas les compressions pour chercher le pouls si tu n’es pas un professionnel formé.
+- Ne comprime pas sur un lit mou si tu peux transférer la personne en sécurité vers une surface ferme.
+- Ne t’appuie pas sur la poitrine entre les compressions.
+- N’interromps pas la RCP pour vérifier à répétition si elle « a déjà réagi ».
 
 ## Source clinique
 
-Contenu vérifié selon les **AHA 2025 Guidelines for CPR and ECC** : rapport 30:2, fréquence des compressions de 100–120/min, profondeur chez l’adulte de 5–6 cm, relâchement complet, interruptions de moins de 10 secondes, ventilation jusqu’au soulèvement visible de la poitrine et défibrillation précoce.
+Contenu révisé selon les **AHA 2025 Guidelines for CPR and ECC** : ratio 30:2, compressions de 100–120/min, profondeur adulte de 5–6 cm, expansion complète, pauses inférieures à 10 secondes, ventilation jusqu’à élévation visible de la poitrine et défibrillation précoce.
 
 - https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
+
+## Exemple pratique : RCP adulte
+
+**Situation :** Un adulte s’effondre au marché ; il ne répond pas quand tu lui cries dessus et le secoues, et il ne respire pas normalement.
+
+**Fais :** 1. Crie pour demander de l’aide, demande qu’on appelle les urgences et qu’on apporte un DAE. 2. Agenouille-toi, talon d’une main au centre de la poitrine et l’autre main par-dessus. 3. Comprime fort et vite à 100–120 par minute en enfonçant de 5–6 cm, en laissant la poitrine remonter. 4. Si tu sais insuffler : 30:2 avec la voie aérienne ouverte ; sinon, comprime sans t’arrêter. 5. Utilise le DAE dès qu’il arrive et suis ses instructions.
+
+**Évite :** N’interromps pas plus de 10 secondes, ne comprime pas avec peur (les côtes cassées guérissent, l’arrêt cardiaque non), n’attends pas « pour voir si elle réagit », ne ventile pas sans étanchéité si une barrière improvisée est disponible.
+
+**Escalade :** S’il y a plus de personnes, relayez-vous toutes les 2 minutes pour ne pas perdre en qualité ; continue jusqu’à l’arrivée de l’aide professionnelle, jusqu’à ce que la personne respire ou jusqu’à ce que le DAE l’indique.
+
+> **Improvisation sûre :** la RCP ne nécessite pas d’équipement — seulement tes mains ; un tissu fin sert de barrière pour insuffler et, sans barrière, comprimer sans insuffler sauve aussi.

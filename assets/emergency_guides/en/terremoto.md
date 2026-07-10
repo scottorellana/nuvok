@@ -1,6 +1,6 @@
 ---
 title: Earthquake
-keywords: [earthquake, quake, tremor, collapse, structural]
+keywords: [seism, tremor, earthquake, collapse, structural]
 priority: 1
 mode: [ciudad]
 category: clima
@@ -8,44 +8,44 @@ category: clima
 
 # Earthquake
 
-## During the quake
-1. **DO NOT run** — Stay away from windows, glass and falling objects
-2. **DROP and COVER** — Under a sturdy table or next to an interior wall
-3. **HOLD ON** — Grab onto something stable until shaking stops
-4. **If in a car** — Stop in a safe place, away from bridges and poles
-5. **If outdoors** — Move away from buildings, poles and power lines
+## During the tremor
+1. **DO NOT run** — Move away from windows, glass, and objects that could fall
+2. **Take cover** — Under a sturdy table or next to an interior wall
+3. **Hold on** — Hold on to something fixed until the tremor passes
+4. **If you are in a car** — Stop in a safe place, away from bridges and utility poles
+5. **If you are on the street** — Move away from buildings, utility poles, and electrical wires
 
-## After the quake
-1. **Check for injuries** — Assess yourself and others
-2. **Expect aftershocks** — Can occur for hours or days
-3. **Stay away from damaged buildings** — Don't enter unstable structures
-4. **If trapped** — Make noise on hollow objects, shout only as last resort
-5. **Use flashlight** — Don't light matches if there's possible gas leak
+## After the tremor
+1. **Verify your safety** — Check whether you are injured
+2. **Expect aftershocks** — Aftershocks may occur for hours or days
+3. **Stay away from damaged buildings** — Do not enter unstable structures
+4. **Seek help if you are trapped** — Strike hollow objects; shout only as a last resort
+5. **Use a flashlight** — Do not light matches if there is a possible gas leak
 
-## Preparation
-- [ ] Identify safe spots (under sturdy tables, interior walls)
+## Prior preparation
+- [ ] Identify safe areas at home (under tables, next to interior walls)
 - [ ] Secure tall furniture to walls
-- [ ] Keep flashlight, whistle and first aid kit accessible
-- [ ] Know how to shut off gas, water and electricity
+- [ ] Keep a flashlight, whistle, and first aid kit accessible
+- [ ] Know how to shut off gas, water, and electricity
 - [ ] Practice family drills
 
-## Suggested kit
+##emergency kit suggests
 - Flashlight with spare batteries
 - Emergency whistle
-- First aid kit
+- Complete first aid kit
 - Water (1 gallon per person per day, 3 days minimum)
-- Non-perishable food
+- Nonperishable food
 - Battery-powered radio
-- Important documents in waterproof bag
+- Important documents in a waterproof bag
 
-## Example practice: Earthquake
+## Example: Earthquake
 
-**Situation:** During a drill, the family is in the living room and must react without running to the doorway.
+**Situation:** During a drill, the family is in the living room and must react without running to the door.
 
-**Do:** 1. Pause for 30 seconds and name the main danger. 2. Gather water, warmth, light, communication, and a safe route. 3. Take the simplest action that reduces risk right now. 4. Record what you did in notes/checklists so another person can continue.
+**Do:** 1. Stop for 30 seconds and identify the main danger. 2. Gather water, warm clothing, light, communication, and a safe route. 3. Carry out the simplest action that reduces risk now. 4. Mark what has been done in notes/checklist so another person can continue.
 
-**Avoid:** Do not drain battery without a plan, do not cross moving water, do not eat unknown plants, do not split the group, and do not wait until dark to build shelter.
+**Avoid:** Do not use up battery without a plan, do not cross moving water, do not eat unknown plants, do not separate from the group, and do not wait until dark to set up shelter.
 
-**Escalate:** Change plans if weather worsens, body temperature drops, safe water is running out, vulnerable people are present, or you lose orientation.
+**Escalate:** Change the plan if the weather worsens, body temperature drops, safe water is lacking, there are vulnerable children/older adults, or you lose orientation.
 
-**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.
+**Quick check:** before closing the guide, say out loud what happened, what you did, what remains, and who is responsible. This example is a guided practice; adapt the steps to your environment and prioritize professional help when available.

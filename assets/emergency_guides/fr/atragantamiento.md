@@ -1,73 +1,83 @@
 ---
 title: Étouffement grave — AHA 2025
-keywords: [etouffement, asphyxie, obstruction des voies aeriennes par corps etranger, claques dans le dos, compressions abdominales, nourrisson]
+keywords: [étouffement, asphyxie, obstruction, voie aérienne, tapes dans le dos, compressions abdominales, nourrisson]
 priority: 1
 ---
 
 # Étouffement grave — AHA 2025
 
-> ⚠️ En cas d’obstruction grave, alertez immédiatement les services d’urgence locaux, idéalement avec le téléphone en mode haut-parleur. Ce guide ne remplace pas une formation pratique.
+> ⚠️ Si l’obstruction est grave, active immédiatement le système local d’urgence, idéalement avec le téléphone en haut-parleur. Ce guide ne remplace pas une formation pratique.
 
 ## Distinguer une toux efficace d’une obstruction grave
 
-### Si la personne peut parler, pleurer ou tousser vigoureusement
+### S’il peut parler, pleurer ou tousser fortement
 
-- Encouragez-la à continuer de tousser.
-- Surveillez-la attentivement.
-- Ne donnez ni claques ni compressions tant que la toux reste vigoureuse.
+- Encourage-le à continuer de tousser.
+- Surveille-le de près.
+- Ne donne pas de tapes ni de compressions tant que la toux est forte.
 
-### Signes d’une obstruction grave
+### Signes d’obstruction grave
 
 - toux faible ou absente ;
-- incapacité à parler, pleurer ou respirer ;
+- ne peut pas parler, pleurer ou respirer ;
 - son aigu ou absence de son ;
-- coloration bleue ou grise ;
-- confusion, diminution de la réactivité ou apnée.
+- couleur bleutée ou grise ;
+- confusion, perte progressive de réponse ou apnée.
 
 ## Adulte ou enfant conscient
 
-1. Penchez le torse vers l’avant et soutenez la poitrine d’une main.
-2. Donnez **5 claques dans le dos** avec le talon de l’autre main, entre les omoplates.
-3. Si l’obstruction persiste, effectuez **5 compressions abdominales** : placez un poing juste au-dessus du nombril et sous le sternum, saisissez-le et tirez vers l’intérieur et vers le haut.
-4. Alternez des cycles de **5 claques dans le dos et 5 compressions abdominales** jusqu’à l’expulsion de l’objet ou jusqu’à ce que la personne perde connaissance.
-5. Pour une personne à un stade avancé de la grossesse, ou si vous ne pouvez pas encercler l’abdomen, remplacez les compressions abdominales par **5 compressions thoraciques**.
+1. Incline le torse vers l’avant et soutiens la poitrine avec une main.
+2. Donne **5 claques dans le dos** avec le talon de l’autre main, entre les omoplates.
+3. Si l’objet n’est pas expulsé, donne **5 compressions abdominales** : poing juste au-dessus du nombril et sous le sternum ; saisis le poing et tire vers l’intérieur et vers le haut.
+4. Alterne des cycles de **5 tapes dans le dos et 5 compressions abdominales** jusqu’à ce que l’objet sorte ou que la personne cesse de répondre.
+5. Si elle est à un stade avancé de grossesse ou si tu ne peux pas entourer son abdomen, remplace les compressions abdominales par **5 pressions sur la poitrine**.
 
-N’arrêtez pas les cycles uniquement pour inspecter la bouche. Retirez un objet seulement s’il est clairement visible et accessible sans risque de l’enfoncer davantage.
+N’arrête pas les cycles seulement pour regarder la bouche. Retire un objet uniquement s’il est clairement visible et peut être atteint sans l’enfoncer davantage.
 
 ## Nourrisson conscient de moins de 1 an
 
-1. Asseyez-vous ou agenouillez-vous. Placez le nourrisson face vers le bas sur votre avant-bras ou votre cuisse tout en soutenant la mâchoire et la tête ; gardez la tête plus basse que le tronc sans comprimer le cou.
-2. Donnez **5 claques dans le dos** entre les omoplates avec le talon d’une main.
-3. Soutenez la tête, retournez le nourrisson face vers le haut et gardez la tête plus basse que le tronc.
-4. Effectuez **5 compressions thoraciques avec le talon d’une main** sur le sternum, juste sous la ligne des mamelons.
-5. Alternez 5 claques dans le dos et 5 compressions thoraciques jusqu’à l’expulsion de l’objet ou jusqu’à ce que le nourrisson perde connaissance.
+1. Assieds-toi ou mets-toi à genoux. Place le nourrisson face vers le bas sur ton avant-bras ou ta cuisse, en soutenant la mâchoire et la tête ; maintiens la tête plus basse que le tronc sans comprimer le cou.
+2. Donne **5 claques dans le dos** entre les omoplates avec le talon d’une main.
+3. Soutiens la tête, retourne-le face vers le haut et maintiens-la plus basse que le tronc.
+4. Donne **5 pressions sur la poitrine avec la base d’une main** sur le sternum, juste sous la ligne des mamelons.
+5. Alterne 5 tapes et 5 pressions jusqu’à ce que l’objet sorte ou que le nourrisson cesse de répondre.
 
-**Ne pratiquez jamais de compressions abdominales sur un nourrisson.** L’AHA 2025 ne recommande plus d’utiliser deux doigts pour ces compressions thoraciques ; utilisez le talon d’une main.
+**Ne fais jamais de compressions abdominales à un nourrisson.** AHA 2025 ne recommande plus deux doigts pour ces pressions sur la poitrine ; utilise la base d’une main.
 
-## Si la personne perd connaissance
+## S’il cesse de répondre
 
-1. Placez-la avec précaution sur le dos, sur une surface ferme et plane.
-2. Alertez les urgences et demandez un DEA si cela n’a pas déjà été fait.
-3. Commencez la RCP **en débutant par les compressions**. Utilisez des cycles **30:2** si vous êtes le seul secouriste.
-4. Avant chaque tentative d’insufflation, ouvrez la bouche et retirez l’objet **uniquement s’il est clairement visible**.
-5. **N’effectuez pas de balayage à l’aveugle avec le doigt.**
-6. Utilisez le DEA dès qu’il est disponible et continuez jusqu’au retour d’une respiration normale ou jusqu’à ce que des secours formés prennent le relais.
+1. Place-le avec précaution sur le dos sur une surface ferme et plane.
+2. Active les urgences et demande un DEA si cela n’a pas encore été fait.
+3. Commence la RCP **en commençant par les compressions**. Utilise des cycles **30:2** si tu es le seul sauveteur.
+4. Avant chaque tentative de ventilation, ouvre la bouche et retire l’objet **seulement si tu le vois clairement**.
+5. **Ne fais pas de balayage à l’aveugle** avec les doigts.
+6. Utilise le DEA dès qu’il est disponible et continue jusqu’à ce qu’il respire normalement ou que de l’aide formée arrive.
 
 ## Après l’expulsion de l’objet
 
-- Surveillez la respiration et l’état mental jusqu’à l’arrivée des secours.
-- Demandez une évaluation médicale si la personne a perdu connaissance, si la toux/la douleur/les difficultés respiratoires persistent, ou si des compressions abdominales ou thoraciques ont été pratiquées.
+- Surveille la respiration et l’état mental jusqu’à l’arrivée de l’aide.
+- Recherche une évaluation médicale s’il y a eu une perte de réponse, si la toux/la douleur/la difficulté respiratoire persistent, ou si des compressions abdominales ou des pressions sur la poitrine ont été réalisées.
 
 ## Erreurs dangereuses
 
-- Ne donnez ni eau, ni pain, ni autre aliment.
-- Ne suspendez pas un enfant ou un nourrisson à l’envers par les pieds.
-- N’introduisez ni doigts ni outils si l’objet n’est pas visible.
-- Ne pratiquez pas de compressions abdominales sur un nourrisson.
-- N’attendez pas que cela « passe » lorsque la toux faiblit ou que la parole devient impossible.
+- Ne donne pas d’eau, de pain ni d’autres aliments.
+- Ne suspends pas un enfant ou un nourrisson par les pieds.
+- N’introduis pas de doigts ni d’outils si tu ne vois pas l’objet.
+- Ne fais pas de compressions abdominales à un nourrisson.
+- N’attends pas que « ça passe » lorsque la toux devient faible ou qu’il ne peut plus parler.
 
 ## Source clinique
 
-Contenu vérifié selon les **AHA 2025 Guidelines for CPR and ECC** : en cas d’obstruction grave chez l’adulte et l’enfant, cycles de 5 claques dans le dos suivies de 5 compressions abdominales ; chez le nourrisson, 5 claques dans le dos alternées avec 5 compressions thoraciques réalisées avec le talon d’une main ; en cas de perte de connaissance, commencez la RCP par les compressions et ne retirez que les objets visibles.
+Contenu révisé selon les **AHA 2025 Guidelines for CPR and ECC** : pour une obstruction grave chez les adultes et les enfants, cycles de 5 tapes dans le dos suivies de 5 compressions abdominales ; pour les nourrissons, 5 tapes alternées avec 5 pressions sur la poitrine en utilisant la base d’une main ; s’il perd la réponse, RCP en commençant par les compressions et retrait uniquement des objets visibles.
 
 - https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
+
+## Exemple pratique : Étouffement
+
+**Situation :** Au dîner, un adulte porte les mains à sa gorge : il ne peut pas parler, ni tousser, ni respirer.
+
+**Fais :** 1. Demande « tu t’étouffes ? » — s’il acquiesce et n’émet aucun son, agis MAINTENANT. 2. Donne 5 tapes dans le dos avec le talon de la main, entre les omoplates, en l’inclinant vers l’avant. 3. Si cela ne sort pas : 5 compressions abdominales (poing au-dessus du nombril, vers l’intérieur et vers le haut). 4. Alterne 5 et 5 jusqu’à ce qu’il expulse l’objet ou perde connaissance. 5. S’il s’évanouit : au sol, appelle les urgences et commence la RCP.
+
+**Évite :** Ne donne pas d’eau ni de pain « pour que ça passe », ne mets pas les doigts à l’aveugle, ne le laisse pas seul « pendant qu’il récupère », ne tape pas avec la personne debout.
+
+**Escalade :** S’il perd connaissance, passe immédiatement à la RCP en regardant la bouche avant chaque ventilation ; femmes enceintes ou personnes obèses : compressions sur la poitrine, pas sur l’abdomen.

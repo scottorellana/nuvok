@@ -1,73 +1,83 @@
 ---
 title: Toufe grav — AHA 2025
-keywords: [toufe, asfiksi, blokaj pasaj le ak obje, frap nan do, pouse vant, tibebe]
+keywords: [toufe, asfiksi, obstriksyon, chemen respiratwa, kou nan do, konpresyon nan vant, tibebe]
 priority: 1
 ---
 
 # Toufe grav — AHA 2025
 
-> ⚠️ Pou yon blokaj grav, aktive sistèm ijans lokal la touswit, depreferans avèk telefòn nan sou opalè. Gid sa a pa ranplase fòmasyon pratik.
+> ⚠️ Si obstriksyon an grav, aktive sistèm ijans lokal la touswit, depreferans ak telefòn nan sou opalè. Gid sa a pa ranplase fòmasyon pratik.
 
-## Fè diferans ant yon tous efikas ak yon blokaj grav
+## Fè diferans ant tous efikas ak obstriksyon grav
 
-### Si moun nan kapab pale, kriye oswa touse avèk fòs
+### Si li ka pale, kriye oswa touse ak fòs
 
 - Ankouraje li kontinye touse.
-- Siveye li ak anpil atansyon.
-- Pa bay frap ni fè pouse pandan tous la toujou fò.
+- Siveye li de pre.
+- Pa bay kou ni konpresyon pandan tous la fò.
 
-### Siy blokaj grav
+### Siy obstriksyon grav
 
 - tous fèb oswa pa gen tous;
-- pa kapab pale, kriye oswa respire;
-- son pike oswa pa gen son;
+- li pa ka pale, kriye oswa respire;
+- son file oswa pa gen son;
 - koulè ble oswa gri;
-- konfizyon, reyaksyon k ap diminye oswa respirasyon ki kanpe.
+- konfizyon, pèt repons pwogresif oswa apne.
 
-## Granmoun oswa timoun ki toujou reyaji
+## Granmoun oswa timoun ki konsyan
 
-1. Panche kò a devan epi soutni pwatrin lan avèk yon men.
-2. Bay **5 frap nan do** avèk baz pla lòt men an ant omoplat yo.
-3. Si blokaj la rete, bay **5 pouse vant**: mete yon pwen jis anlè lonbrit la epi anba estènòm nan, kenbe li epi rale anndan ak anlè.
-4. Altène sik **5 frap nan do ak 5 pouse vant** jiskaske obje a soti oswa moun nan pa reyaji ankò.
-5. Pou yon moun nan fen gwosès, oswa lè ou pa kapab antoure vant lan, ranplase pouse vant yo avèk **5 pouse pwatrin**.
+1. Panche tòs la pou pi devan epi soutni pwatrin lan ak yon men.
+2. Bay **5 frap nan do** ak baz pla lòt men an, ant omoplat yo.
+3. Si li pa degaje, bay **5 konpresyon nan vant**: pwen an jis anlè lonbrit la epi anba estènòm nan; kenbe pwen an epi rale anndan ak anlè.
+4. Altène sik **5 kou nan do ak 5 konpresyon nan vant** jiskaske objè a soti oswa moun nan sispann reponn.
+5. Si li nan yon etap avanse gwosès oswa ou pa ka pase bra w toutotou vant li, ranplase konpresyon nan vant yo ak **5 presyon sou pwatrin**.
 
-Pa sispann sik yo sèlman pou gade nan bouch la. Retire yon obje sèlman lè ou wè li klè epi ou ka rive jwenn li san ou pa pouse li pi fon.
+Pa sispann sik yo sèlman pou gade bouch la. Retire yon objè sèlman si ou wè li klèman epi ou ka rive jwenn li san pouse li pi fon.
 
-## Tibebe ki pi piti pase 1 an epi ki toujou reyaji
+## Tibebe konsyan ki gen mwens pase 1 ane
 
-1. Chita oswa mete ajenou. Mete tibebe a fas anba sou avanbra oswa kwis ou pandan w ap soutni machwè ak tèt li; kenbe tèt la pi ba pase kò a san ou pa peze kou a.
-2. Bay **5 frap nan do** ant omoplat yo avèk baz pla yon men.
-3. Soutni tèt la, vire tibebe a fas anlè, epi kenbe tèt la pi ba pase kò a.
-4. Bay **5 pouse pwatrin avèk baz pla yon men** sou estènòm nan jis anba liy pwent tete yo.
-5. Altène 5 frap nan do ak 5 pouse pwatrin jiskaske obje a soti oswa tibebe a pa reyaji ankò.
+1. Chita oswa mete ajenou. Mete tibebe a fas anba sou avanbra w oswa kwis ou, pandan w ap soutni machwè ak tèt li; kenbe tèt la pi ba pase kòf la san konprime kou a.
+2. Bay **5 frap nan do** ant omoplat yo ak baz pla yon men.
+3. Kenbe tèt la, vire li fas anlè epi kenbe tèt la pi ba pase kòf la.
+4. Bay **5 presyon sou pwatrin ak baz yon men** sou estènòm nan, jis anba liy pwent tete yo.
+5. Altène 5 kou ak 5 presyon jiskaske objè a soti oswa tibebe a sispann reponn.
 
-**Pa janm fè pouse vant sou yon tibebe.** AHA 2025 pa rekòmande de dwèt ankò pou pouse pwatrin sa yo; sèvi ak baz pla yon men.
+**Pa janm fè konpresyon nan vant sou yon tibebe.** AHA 2025 pa rekòmande de dwèt ankò pou presyon sa yo sou pwatrin; sèvi ak baz yon men.
 
-## Si moun nan pa reyaji ankò
+## Si li sispann reponn
 
-1. Mete li avèk prekosyon kouche sou do sou yon sifas di ak plat.
-2. Aktive sistèm ijans lan epi mande yon DEA si sa poko fèt.
-3. Kòmanse RCP **avèk konpresyon an premye**. Sèvi ak sik **30:2** lè ou se sèl sekouris la.
-4. Anvan chak tantativ pou bay souf, ouvri bouch la epi retire obje a **sèlman si ou wè li klè**.
-5. **Pa pase dwèt avèg nan bouch la.**
-6. Sèvi ak DEA a kou li disponib epi kontinye jiskaske respirasyon nòmal retounen oswa èd ki resevwa fòmasyon pran relèv la.
+1. Mete li ak prekosyon fas anlè sou yon sifas fèm ak plat.
+2. Aktive ijans epi mande yon DEA si sa poko fèt.
+3. Kòmanse RCP **kòmanse ak konpresyon**. Sèvi ak sik **30:2** si se ou menm sèl ki ap reanime.
+4. Anvan chak tantativ vantilasyon, louvri bouch la epi retire objè a **sèlman si ou wè li klèman**.
+5. **Pa fè yon bale avèg** ak dwèt yo.
+6. Sèvi ak DEA a kou li disponib epi kontinye jiskaske li respire nòmalman oswa èd ki fòme rive.
 
-## Apre obje a soti
+## Apre objè a fin soti
 
-- Siveye respirasyon ak eta mantal la jiskaske èd rive.
-- Chèche yon evalyasyon medikal si moun nan te sispann reyaji, tous/doulè/difikilte pou respire pèsiste, oswa si yo te fè pouse vant oswa pouse pwatrin.
+- Siveye respirasyon ak eta mantal jiskaske èd rive.
+- Chèche evalyasyon medikal si te gen pèt repons, si tous/doulè/difikilte respiratwa pèsiste oswa si yo te fè konpresyon nan vant oswa presyon sou pwatrin.
 
-## Erè ki danjere
+## Erè danjere
 
-- Pa bay dlo, pen oswa lòt manje.
-- Pa pann yon timoun oswa tibebe tèt anba nan pye li.
-- Pa mete dwèt oswa zouti si ou pa wè obje a.
-- Pa fè pouse vant sou yon tibebe.
-- Pa tann li “pase poukont li” lè tous la vin fèb oswa moun nan pa kapab pale.
+- Pa bay dlo, pen ni lòt manje.
+- Pa pann yon timoun oswa tibebe nan pye.
+- Pa mete dwèt ni zouti si ou pa wè objè a.
+- Pa fè konpresyon nan vant sou yon tibebe.
+- Pa tann pou “li pase” lè tous la vin fèb oswa li pa ka pale ankò.
 
 ## Sous klinik
 
-Kontni an verifye dapre **AHA 2025 Guidelines for CPR and ECC**: blokaj grav kay granmoun ak timoun sèvi ak sik 5 frap nan do epi 5 pouse vant; tibebe resevwa 5 frap nan do altène avèk 5 pouse pwatrin avèk baz pla yon men; si moun nan pa reyaji, kòmanse RCP avèk konpresyon epi retire sèlman obje ou ka wè.
+Kontni revize dapre **AHA 2025 Guidelines for CPR and ECC**: pou obstriksyon grav lakay granmoun ak timoun, sik 5 kou nan do ki swiv ak 5 konpresyon nan vant; pou tibebe, 5 kou altène ak 5 presyon sou pwatrin avèk baz yon men; si li pèdi repons, RCP kòmanse ak konpresyon epi retire sèlman objè ki vizib.
 
 - https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
+
+## Egzanp pratik: Toufe
+
+**Sitiyasyon:** Pandan dine, yon granmoun pote men li nan gòj li: li pa ka pale, ni touse, ni respire.
+
+**Fè:** 1. Mande "èske w ap toufe?" — si li fè siy wi epi li pa fè okenn son, aji KOUNYE A. 2. Bay 5 kou nan do ak talon men an, ant omoplat yo, pandan w ap panche li pou pi devan. 3. Si li pa soti: 5 konpresyon nan vant (pwen sou lonbrit la, anndan ak anlè). 4. Altène 5 ak 5 jiskaske li ekspilse objè a oswa li pèdi konesans. 5. Si li endispoze: mete li atè, rele ijans epi kòmanse RCP.
+
+**Evite:** Pa bay dlo ni pen "pou fè l pase", pa mete dwèt yo avèg, pa kite li poukont li "pandan l ap refè", pa frape lè moun nan kanpe dwat.
+
+**Ogmante nivo entèvansyon:** Si li pèdi konesans, pase nan RCP touswit pandan w ap gade bouch la anvan chak vantilasyon; fanm ansent oswa moun ki obèz: konpresyon sou pwatrin, pa sou vant.

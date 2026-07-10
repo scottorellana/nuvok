@@ -7,6 +7,7 @@ import 'battery_saver.dart';
 import 'compass.dart';
 import 'flashlight.dart';
 import 'rcp_metronome.dart';
+import 'sos_beacon.dart';
 import 'whistle.dart';
 import '../emergency/calculators_page.dart';
 import '../maps/gpx_recorder.dart';
@@ -92,6 +93,18 @@ class ToolsPage extends StatelessWidget {
           ),
 
           // ── Flashlight ──
+          // ── Baliza SOS ultra-ahorro ──
+          _ToolCard(
+            icon: Icons.podcasts,
+            iconColor: const Color(0xFFE57373),
+            title: 'Baliza SOS (ultra-ahorro)',
+            subtitle: 'Pantalla negra al mínimo, SOS del mesh cada minuto y '
+                'estimación de horas de señal. Con batería crítica envía tu '
+                'última posición sola.',
+            buttonText: 'Activar',
+            onPressed: () => _push(context, const SosBeaconPage()),
+          ),
+
           // ── Calculadoras de emergencia (OMS) ──
           _ToolCard(
             icon: Icons.calculate,

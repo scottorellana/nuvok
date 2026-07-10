@@ -115,6 +115,7 @@ class AppStrings {
     'dtYes', 'dtNo', 'dtChoking', 'dtBleeding', 'dtBurn', 'dtChest',
     'dtSeizure', 'dtPoison',
     'mpTitle', 'mpGo', 'mpArrived', 'mpPending', 'mpNoPositions',
+    'beaconActive', 'beaconHint', 'beaconExit', 'beaconOpen',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -1457,6 +1458,30 @@ class AppStrings {
       'zh': '尚无小组位置（开启位置共享后经网状网络同步）。',
       'ja': 'グループの位置情報はまだありません（位置共有をオンにするとメッシュ経由で共有）。',
       'ht': 'Poko gen pozisyon gwoup la (yo pataje sou mesh la lè pozisyon aktive).',
+    },
+    'beaconActive': {
+      'es': 'BALIZA SOS ACTIVA', 'en': 'SOS BEACON ACTIVE',
+      'pt': 'BALIZA SOS ATIVA', 'fr': 'BALISE SOS ACTIVE',
+      'zh': 'SOS信标已启动', 'ja': 'SOSビーコン作動中', 'ht': 'BALIZ SOS AKTIF',
+    },
+    'beaconHint': {
+      'es': 'Pantalla al mínimo y radio emitiendo tu posición cada minuto. Deja el teléfono quieto y visible; con batería crítica envía tu última posición sola.',
+      'en': 'Screen at minimum and radio transmitting your position every minute. Keep the phone still and visible; on critical battery it sends your last position by itself.',
+      'pt': 'Tela no mínimo e rádio transmitindo sua posição a cada minuto. Deixe o telefone quieto e visível; com bateria crítica envia sua última posição sozinho.',
+      'fr': 'Écran au minimum et radio émettant votre position chaque minute. Laissez le téléphone immobile et visible ; sur batterie critique il envoie seul votre dernière position.',
+      'zh': '屏幕调至最低，无线电每分钟发送您的位置。保持手机静止且可见；电量危急时会自动发送最后位置。',
+      'ja': '画面は最小、電波は毎分あなたの位置を送信。電話は動かさず見える所に。電池切れ寸前には最後の位置を自動送信します。',
+      'ht': 'Ekran nan minimòm epi radyo a ap voye pozisyon ou chak minit. Kite telefòn nan an plas e vizib; ak batri kritik li voye dènye pozisyon ou poukont li.',
+    },
+    'beaconExit': {
+      'es': 'Salir del modo baliza', 'en': 'Exit beacon mode',
+      'pt': 'Sair do modo baliza', 'fr': 'Quitter le mode balise',
+      'zh': '退出信标模式', 'ja': 'ビーコンモードを終了', 'ht': 'Soti nan mòd baliz',
+    },
+    'beaconOpen': {
+      'es': 'Modo baliza SOS (ultra-ahorro)', 'en': 'SOS beacon mode (ultra-saver)',
+      'pt': 'Modo baliza SOS (ultra-economia)', 'fr': 'Mode balise SOS (ultra-éco)',
+      'zh': 'SOS信标模式（超级省电）', 'ja': 'SOSビーコン（超省電力）', 'ht': 'Mòd baliz SOS (ultra-ekonomi)',
     },
     'callEmergency': {
       'es': 'LLAMAR', 'en': 'CALL', 'pt': 'LIGAR', 'fr': 'APPELER',

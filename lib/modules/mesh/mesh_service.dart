@@ -555,6 +555,30 @@ class MeshService {
         Timer.periodic(const Duration(seconds: 60), (_) => _broadcastSos());
   }
 
+  /// Burst final de posición: cuando la batería agoniza, un último SOS con
+  /// coordenadas por TODOS los transportes + registro en disco por si el
+  /// teléfono se apaga y los rescatistas lo recuperan después.
+  Future<bool> sendLastPositionBurst({
+    required double lat,
+    required double lon,
+    String note = '',
+  }) async {
+    final router = _router;
+    if (identity == null || router == null) return false;
+    try {
+      File('$dirPath/last_position.json').writeAsStringSync(
+          '{"lat": $lat, "lon": $lon, "note": "$note", '
+          '"ts": ${DateTime.now().millisecondsSinceEpoch}}');
+    } catch (_) {}
+    await router.broadcast(await _envelope(
+      MeshChannel.emergency,
+      MeshType.sos,
+      {'note': note, 'lat': lat, 'lon': lon},
+      hopLimit: 5,
+    ));
+    return true;
+  }
+
   Future<void> _broadcastSos() async {
     final router = _router;
     if (identity == null || router == null || !sosActive.value) return;

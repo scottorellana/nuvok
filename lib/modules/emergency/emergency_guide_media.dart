@@ -163,6 +163,30 @@ class EmergencyGuideMedia {
     'triaje_multivictima':
         'Cuatro etiquetas de triaje apiladas: roja urgente, amarilla menos '
             'urgente, verde leve y negra fallecido.',
+    'refugio_naturaleza':
+        'Refugio lean-to terminado en un bosque de pinos: viga entre dos '
+            'árboles con ramas inclinadas techadas con hojas y cama de '
+            'ramas de pino en el suelo.',
+    'balsa_improvisada':
+        'Balsa improvisada flotando en la orilla de un lago: marco de '
+            'troncos amarrados en X con bidones azules sellados como '
+            'flotadores y una vara larga encima.',
+    'fuego_supervivencia':
+        'Manos encendiendo fuego sin fósforos: una sostiene un ferrocerio '
+            'sobre un nido de yesca seca y la otra lo raspa con el lomo de '
+            'una navaja soltando chispas.',
+    'cruce_rios':
+        'Excursionista vadeando un río rocoso hasta la rodilla, de lado a '
+            'la corriente, apoyado en un bastón plantado aguas arriba como '
+            'tercera pierna.',
+    'nudos_supervivencia':
+        'Manos terminando un as de guía en cuerda naranja gruesa sobre un '
+            'tronco: el lazo fijo abierto y bien formado, cada vuelta del '
+            'nudo visible.',
+    'pesca_trampas_supervivencia':
+        'Trampa de pesca improvisada con una botella plástica en la orilla '
+            'de un arroyo: el tercio superior invertido como embudo hacia '
+            'adentro, anclada con piedras.',
   };
 
   static EmergencyGuideMediaSpec forGuide(String id) {

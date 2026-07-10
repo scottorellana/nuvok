@@ -11,8 +11,8 @@ void main() {
       ...await EmergencyGuides.load('es'),
       ...await EmergencyGuides.load('en'),
     ];
-    // 31 guías × 2 idiomas (25 originales + 6 de supervivencia 2026-07-09).
-    expect(guides, hasLength(62));
+    // 34 guías × 2 idiomas (25 originales + 6 supervivencia + 3 bosque).
+    expect(guides, hasLength(68));
 
     for (final guide in guides) {
       final media = EmergencyGuideMedia.forGuide(guide.id);

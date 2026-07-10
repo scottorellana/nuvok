@@ -13,7 +13,7 @@ void main() {
     'es/hemorragia_severa': 'STOP THE BLEED',
     'en/hemorragia_severa': 'STOP THE BLEED',
     'es/primeros_auxilios_extremos': 'ATLS 2025',
-    'en/extreme_first_aid': 'ATLS 2025',
+    'en/primeros_auxilios_extremos': 'ATLS 2025',
   };
 
   test('guías críticas declaran evidencia científica actualizada', () async {
@@ -35,7 +35,7 @@ void main() {
     final en = await EmergencyGuides.load('en');
 
     expect(es.map((g) => g.id), contains('primeros_auxilios_extremos'));
-    expect(en.map((g) => g.id), contains('extreme_first_aid'));
+    expect(en.map((g) => g.id), contains('primeros_auxilios_extremos'));
     expect(
       EmergencyGuides.search(es, 'improvisar torniquete').first.id,
       anyOf('primeros_auxilios_extremos', 'hemorragia_severa'),

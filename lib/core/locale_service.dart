@@ -106,6 +106,7 @@ class AppStrings {
     'calcIbuNotUnder5', 'calcOrsTitle', 'calcLiters', 'calcSugar',
     'calcSalt', 'calcTspNote', 'calcChlorineTitle', 'calcBleachPct',
     'calcCloudy', 'calcDrops', 'calcWait30', 'calcDisclaimer',
+    'voiceRead', 'voiceStopRead',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -1215,6 +1216,16 @@ class AppStrings {
       'zh': '世卫/CDC标准配方。不能替代医疗：一旦有条件请立即就医。',
       'ja': 'WHO/CDC標準式。医療の代わりにはなりません：可能になり次第、専門家の助けを求めてください。',
       'ht': 'Fòmil estanda OMS/CDC. Yo pa ranplase swen medikal: chèche èd pwofesyonèl kou li posib.',
+    },
+    'voiceRead': {
+      'es': 'Leer en voz alta (manos libres)', 'en': 'Read aloud (hands-free)',
+      'pt': 'Ler em voz alta (mãos livres)', 'fr': 'Lire à voix haute (mains libres)',
+      'zh': '朗读（解放双手）', 'ja': '読み上げ（ハンズフリー）', 'ht': 'Li awotvwa (men lib)',
+    },
+    'voiceStopRead': {
+      'es': 'Detener lectura', 'en': 'Stop reading',
+      'pt': 'Parar leitura', 'fr': 'Arrêter la lecture',
+      'zh': '停止朗读', 'ja': '読み上げを停止', 'ht': 'Rete lekti a',
     },
     'callEmergency': {
       'es': 'LLAMAR', 'en': 'CALL', 'pt': 'LIGAR', 'fr': 'APPELER',

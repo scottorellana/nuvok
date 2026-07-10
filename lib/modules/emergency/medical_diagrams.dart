@@ -14,6 +14,28 @@ import '../../core/prepper_colors.dart';
 // animation which looked the same for every guide.
 // ─────────────────────────────────────────────────────────────────────────────
 
+/// Extrae los pasos numerados accionables del markdown de una guía.
+/// Compartida por CriticalStepsCard (visual) y GuideVoice (lectura en voz
+/// alta manos libres).
+List<String> extractCriticalSteps(String body) {
+  final steps = <String>[];
+  for (final line in body.split('\n')) {
+    final trimmed = line.trim();
+    final match = RegExp(r'^\d+\.\s*(.+)$').firstMatch(trimmed);
+    if (match != null) {
+      var text = match.group(1)!;
+      text =
+          text.replaceAllMapped(RegExp(r'\*\*(.+?)\*\*'), (m) => m.group(1)!);
+      text = text.split(RegExp(r'\s+[—–-]\s')).first.trim();
+      text = text.replaceAll('|', '').trim();
+      if (text.isNotEmpty && text.length > 3 && text.length < 120) {
+        steps.add(text);
+      }
+    }
+  }
+  return steps;
+}
+
 class CriticalStepsCard extends StatelessWidget {
   const CriticalStepsCard({super.key, required this.title, required this.body});
 
@@ -147,30 +169,8 @@ class CriticalStepsCard extends StatelessWidget {
 
   /// Extracts short, actionable steps from the markdown body.
   /// Parses numbered lists and bold-prefixed lines.
-  List<String> _extractSteps(String body) {
-    final steps = <String>[];
-    for (final line in body.split('\n')) {
-      final trimmed = line.trim();
-      // Match "1. **Action** — detail" or "1. Action"
-      final match = RegExp(r'^\d+\.\s*(.+)$').firstMatch(trimmed);
-      if (match != null) {
-        var text = match.group(1)!;
-        // Clean markdown: **bold** → text, strip excessive detail after —.
-        // NOTE: Dart's replaceAll takes the replacement LITERALLY ($1 is not a
-        // backreference); we must use replaceAllMapped to keep the captured text.
-        text = text.replaceAllMapped(
-            RegExp(r'\*\*(.+?)\*\*'), (m) => m.group(1)!);
-        // Keep only the actionable part (before em-dash or pipe)
-        text = text.split(RegExp(r'\s+[—–-]\s')).first.trim();
-        // Remove table pipes
-        text = text.replaceAll('|', '').trim();
-        if (text.isNotEmpty && text.length > 3 && text.length < 120) {
-          steps.add(text);
-        }
-      }
-    }
-    return steps;
-  }
+  List<String> _extractSteps(String body) => extractCriticalSteps(body);
+
 
   /// Extracts "what NOT to do" items.
   ///

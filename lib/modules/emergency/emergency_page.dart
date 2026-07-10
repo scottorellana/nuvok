@@ -15,6 +15,7 @@ import '../tools/flashlight.dart';
 import '../tools/rcp_metronome.dart';
 import 'emergency_directory.dart';
 import 'emergency_guide_media.dart';
+import 'guide_voice.dart';
 import 'emergency_call_button.dart';
 import 'emergency_guides.dart';
 import 'medical_diagrams.dart';
@@ -802,7 +803,33 @@ class _GuideReader extends StatelessWidget {
   Widget build(BuildContext context) {
     final aids = _visualAids(context);
     return Scaffold(
-      appBar: AppBar(title: Text(guide.title)),
+      appBar: AppBar(
+        title: Text(guide.title),
+        actions: [
+          // RCP: el metrónomo de compresiones a un toque desde la guía.
+          if (guide.id.startsWith('rcp'))
+            IconButton(
+              tooltip: tr(context, 'rcpMetronome'),
+              icon: const Icon(Icons.music_note),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const RcpMetronomePage())),
+            ),
+          // Manos libres: lee el título y los pasos críticos en voz alta.
+          ValueListenableBuilder<bool>(
+            valueListenable: GuideVoice.instance.speaking,
+            builder: (context, speaking, _) => IconButton(
+              tooltip: tr(context, speaking ? 'voiceStopRead' : 'voiceRead'),
+              icon: Icon(speaking ? Icons.stop_circle : Icons.record_voice_over,
+                  color: speaking ? Colors.red : null),
+              onPressed: () => GuideVoice.instance.speakSteps(
+                title: guide.title,
+                steps: extractCriticalSteps(guide.body),
+                appLangCode: LocaleService.instance.language.code,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: SelectionArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 40),

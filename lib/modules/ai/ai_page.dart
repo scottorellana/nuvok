@@ -75,11 +75,9 @@ class _AiPageState extends State<AiPage> {
         context: context,
         builder: (context) => AlertDialog(
           title: Text(tr(context, 'tightMemory')),
-          content: Text(
-            'Este modelo pesa ${humanSize(size)} y tu memoria libre '
-            'aproximada es ${humanSize(free)}. Cargarlo puede hacer lenta '
-            'la máquina. ¿Continuar?',
-          ),
+          content: Text(tr(context, 'aiRamWarn')
+              .replaceFirst('{size}', humanSize(size))
+              .replaceFirst('{free}', humanSize(free))),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
@@ -193,9 +191,8 @@ class _AiPageState extends State<AiPage> {
       if (_emergencyMode) {
         final strict = await EmergencyRetriever.strictAnswer(text);
         setState(() {
-          _messages.last.text = strict ??
-              '⚠️ Sin IA local y sin guía que coincida. Abre la pestaña '
-                  'Emergencia y busca ahí. ($e)';
+          _messages.last.text =
+              strict ?? '⚠️ ${tr(context, 'aiNoAiNoGuide')} ($e)';
         });
       } else {
         setState(() {
@@ -227,7 +224,7 @@ class _AiPageState extends State<AiPage> {
               Icon(Icons.emergency,
                   size: 18, color: _emergencyMode ? Colors.red : null),
               const SizedBox(width: 4),
-              Text('Emergencia',
+              Text(tr(context, 'emergency'),
                   style: TextStyle(
                       color: _emergencyMode ? Colors.red : null,
                       fontWeight: _emergencyMode ? FontWeight.bold : null)),
@@ -247,7 +244,7 @@ class _AiPageState extends State<AiPage> {
             ],
           ),
           IconButton(
-            tooltip: 'Actualizar modelos',
+            tooltip: tr(context, 'aiRefreshModels'),
             icon: const Icon(Icons.refresh),
             onPressed: _refreshModels,
           ),
@@ -294,8 +291,7 @@ class _AiPageState extends State<AiPage> {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 480),
                 child: Text(
-                  'No hay modelos de IA todavía.\n\nDescarga uno desde el '
-                  'Depósito o copia un archivo .gguf a:\n'
+                  '${tr(context, 'aiNoModels')}\n'
                   '${PrepperLibrary.instance.modelsDir.path}',
                   textAlign: TextAlign.center,
                 ),
@@ -328,6 +324,36 @@ class _AiPageState extends State<AiPage> {
                           itemBuilder: (context, i) => _Bubble(message: _messages[i]),
                         ),
                 ),
+                // En pánico nadie redacta: un toque envía la pregunta
+                // crítica ya escrita en el idioma de la app.
+                if (_emergencyMode && !_generating)
+                  SizedBox(
+                    height: 44,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      children: [
+                        for (final key in const [
+                          'aiQuickRcp',
+                          'aiQuickChoking',
+                          'aiQuickBleeding',
+                          'aiQuickBurn',
+                        ])
+                          Padding(
+                            padding: const EdgeInsets.only(right: 6),
+                            child: ActionChip(
+                              avatar: const Icon(Icons.emergency,
+                                  size: 16, color: Colors.red),
+                              label: Text(tr(context, key)),
+                              onPressed: () {
+                                _input.text = tr(context, key);
+                                _send();
+                              },
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
                 SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
@@ -336,12 +362,15 @@ class _AiPageState extends State<AiPage> {
                         Expanded(
                           child: TextField(
                             controller: _input,
-                            enabled: _server.status == LlamaStatus.running,
+                            enabled: _server.status == LlamaStatus.running ||
+                                _emergencyMode,
                             onSubmitted: (_) => _send(),
                             decoration: InputDecoration(
                               hintText: _server.status == LlamaStatus.running
-                                  ? 'Escribe tu pregunta…'
-                                  : 'Carga un modelo para chatear',
+                                  ? tr(context, 'aiHintAsk')
+                                  : _emergencyMode
+                                      ? tr(context, 'aiHintEmergency')
+                                      : tr(context, 'aiHintLoad'),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(24),
                               ),
@@ -381,13 +410,13 @@ class AiEmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final modelName = selectedModelPath == null
-        ? 'sin modelo seleccionado'
+        ? tr(context, 'aiNoModelSelected')
         : File(selectedModelPath!).uri.pathSegments.last;
     final status = switch (server.status) {
-      LlamaStatus.stopped => 'Pulsa Cargar arriba para iniciar el modelo local.',
-      LlamaStatus.starting => 'Cargando el modelo local… puede tardar varios minutos.',
-      LlamaStatus.running => 'Modelo listo. Escribe tu pregunta abajo.',
-      LlamaStatus.error => server.lastError ?? 'El motor de IA reportó un error.',
+      LlamaStatus.stopped => tr(context, 'aiStatusStopped'),
+      LlamaStatus.starting => tr(context, 'aiStatusStarting'),
+      LlamaStatus.running => tr(context, 'aiStatusReady'),
+      LlamaStatus.error => server.lastError ?? tr(context, 'aiStatusError'),
     };
     return Center(
       child: SingleChildScrollView(
@@ -407,7 +436,7 @@ class AiEmptyState extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Modelo local encontrado',
+                    tr(context, 'aiModelFound'),
                     style: Theme.of(context).textTheme.titleLarge,
                     textAlign: TextAlign.center,
                   ),
@@ -424,8 +453,7 @@ class AiEmptyState extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Si ves la pantalla oscura, espera a que el estado cambie o vuelve atrás; '
-                    'la app ya no debe quedarse sin mensaje visible.',
+                    tr(context, 'aiEmptyHint'),
                     style: Theme.of(context).textTheme.bodySmall,
                     textAlign: TextAlign.center,
                   ),
@@ -508,7 +536,7 @@ class _Bubble extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 4, bottom: 2),
-                    child: Text('Fuentes de la biblioteca:',
+                    child: Text(tr(context, 'aiSources'),
                         style: Theme.of(context).textTheme.labelSmall),
                   ),
                   Wrap(

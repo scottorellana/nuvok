@@ -109,6 +109,8 @@ class AppStrings {
     'voiceRead', 'voiceStopRead',
     'tqTitle', 'tqApplied', 'tqWhere', 'tqWhereHint', 'tqStart', 'tqEmpty',
     'tqOkHint', 'tqWarnHint', 'tqCritHint', 'tqShare', 'tqShared', 'tqResolve',
+    'iceTitle', 'iceIntro', 'iceName', 'iceBlood', 'iceAllergies', 'iceMeds',
+    'iceConditions', 'iceContact1', 'iceContact2', 'iceShow', 'iceShareMesh',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -1304,6 +1306,61 @@ class AppStrings {
       'es': 'Resuelto', 'en': 'Resolved',
       'pt': 'Resolvido', 'fr': 'Résolu',
       'zh': '已处理', 'ja': '解決', 'ht': 'Rezoud',
+    },
+    'iceTitle': {
+      'es': 'Ficha médica ICE', 'en': 'ICE medical card',
+      'pt': 'Ficha médica ICE', 'fr': 'Fiche médicale ICE',
+      'zh': '紧急医疗卡（ICE）', 'ja': '緊急医療カード（ICE）', 'ht': 'Fich medikal ICE',
+    },
+    'iceIntro': {
+      'es': 'Si te encuentran inconsciente, esta ficha habla por ti. Muéstrala grande, compártela al grupo o imprime el QR para tu billetera.',
+      'en': 'If you are found unconscious, this card speaks for you. Show it big, share it with the group, or print the QR for your wallet.',
+      'pt': 'Se te encontrarem inconsciente, esta ficha fala por você. Mostre-a grande, compartilhe com o grupo ou imprima o QR para a carteira.',
+      'fr': 'Si l\'on vous trouve inconscient, cette fiche parle pour vous. Affichez-la en grand, partagez-la au groupe ou imprimez le QR pour votre portefeuille.',
+      'zh': '若你被发现昏迷，这张卡替你说话。放大显示、分享给小组，或打印二维码放入钱包。',
+      'ja': '意識不明で発見されたとき、このカードがあなたの代わりに伝えます。大きく表示、グループに共有、またはQRを印刷して財布に。',
+      'ht': 'Si yo jwenn ou san konesans, fich sa a pale pou ou. Montre l gwo, pataje l ak gwoup la, oswa enprime QR a pou bous ou.',
+    },
+    'iceName': {
+      'es': 'Nombre', 'en': 'Name', 'pt': 'Nome', 'fr': 'Nom',
+      'zh': '姓名', 'ja': '氏名', 'ht': 'Non',
+    },
+    'iceBlood': {
+      'es': 'Tipo de sangre', 'en': 'Blood type', 'pt': 'Tipo sanguíneo',
+      'fr': 'Groupe sanguin', 'zh': '血型', 'ja': '血液型', 'ht': 'Gwoup san',
+    },
+    'iceAllergies': {
+      'es': 'Alergias', 'en': 'Allergies', 'pt': 'Alergias',
+      'fr': 'Allergies', 'zh': '过敏', 'ja': 'アレルギー', 'ht': 'Alèji',
+    },
+    'iceMeds': {
+      'es': 'Medicamentos', 'en': 'Medications', 'pt': 'Medicamentos',
+      'fr': 'Médicaments', 'zh': '用药', 'ja': '服用中の薬', 'ht': 'Medikaman',
+    },
+    'iceConditions': {
+      'es': 'Condiciones médicas', 'en': 'Medical conditions',
+      'pt': 'Condições médicas', 'fr': 'Antécédents médicaux',
+      'zh': '疾病史', 'ja': '既往症', 'ht': 'Kondisyon medikal',
+    },
+    'iceContact1': {
+      'es': 'Contacto de emergencia', 'en': 'Emergency contact',
+      'pt': 'Contato de emergência', 'fr': 'Contact d\'urgence',
+      'zh': '紧急联系人', 'ja': '緊急連絡先', 'ht': 'Kontak ijans',
+    },
+    'iceContact2': {
+      'es': 'Contacto 2 (opcional)', 'en': 'Contact 2 (optional)',
+      'pt': 'Contato 2 (opcional)', 'fr': 'Contact 2 (facultatif)',
+      'zh': '联系人2（可选）', 'ja': '連絡先2（任意）', 'ht': 'Kontak 2 (si ou vle)',
+    },
+    'iceShow': {
+      'es': 'Mostrar al rescatista (grande + QR)', 'en': 'Show to rescuer (big + QR)',
+      'pt': 'Mostrar ao socorrista (grande + QR)', 'fr': 'Montrer au secouriste (grand + QR)',
+      'zh': '向救援者展示（大字+二维码）', 'ja': '救助者に表示（大きく＋QR）', 'ht': 'Montre sekouris la (gwo + QR)',
+    },
+    'iceShareMesh': {
+      'es': 'Compartir al grupo por el mesh', 'en': 'Share to the group over the mesh',
+      'pt': 'Compartilhar com o grupo pelo mesh', 'fr': 'Partager au groupe via le mesh',
+      'zh': '通过网状网络分享给小组', 'ja': 'メッシュでグループに共有', 'ht': 'Pataje ak gwoup la sou mesh la',
     },
     'callEmergency': {
       'es': 'LLAMAR', 'en': 'CALL', 'pt': 'LIGAR', 'fr': 'APPELER',

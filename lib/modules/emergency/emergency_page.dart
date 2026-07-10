@@ -17,6 +17,7 @@ import 'emergency_directory.dart';
 import 'emergency_guide_media.dart';
 import 'guide_voice.dart';
 import 'emergency_call_button.dart';
+import 'ice_page.dart';
 import 'tourniquet_page.dart';
 import 'emergency_guides.dart';
 import 'medical_diagrams.dart';
@@ -215,6 +216,18 @@ class _EmergencyPageState extends State<EmergencyPage> {
                             builder: (_) => const TourniquetPage())),
                     icon: const Icon(Icons.timer),
                     label: Text('🩸 ${tr(context, 'tqTitle')}'),
+                  ),
+                ),
+                // Ficha ICE: habla por ti si estás inconsciente.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                  child: OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(44)),
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const IcePage())),
+                    icon: const Icon(Icons.badge_outlined),
+                    label: Text('🆔 ${tr(context, 'iceTitle')}'),
                   ),
                 ),
                 // Quick-access emergency buttons (4 most critical)

@@ -1,136 +1,83 @@
 ---
-title: RCP en adultos (no respira / sin pulso)
-keywords: [rcp, reanimacion, paro, cardiaco, corazon, no respira, inconsciente, desmayado, no responde, compresiones, boca a boca, dea, desfibrilador]
+title: RCP en adultos — AHA 2025
+keywords: [rcp, reanimacion, paro cardiaco, no respira, jadea, inconsciente, compresiones, dea, desfibrilador]
 priority: 1
 ---
 
-# RCP en adultos
+# RCP en adultos — AHA 2025
 
-> ⚠️ Esta guía no sustituye atención médica profesional ni un curso práctico presencial. Busca ayuda médica en cuanto sea posible.
+> ⚠️ Activa el sistema local de emergencias en cuanto sea posible. Esta guía para reanimadores legos no reemplaza un curso práctico ni la atención profesional.
 
-## Cuándo sospecharlo
+## Actúa si no responde y no respira normalmente
 
-| Señal | Detalle |
-|-------|---------|
-| 🔇 **No responde** | No reacciona al grito ni al sacudir los hombros |
-| 😶 **No respira normal** | No respira o solo "boquea" (jadeos espaciados = paro) |
-| 👽 **Color gris/morado** | Piel, labios o uñas azulados o pálidos |
-| 💥 **Colapso súbito** | Se desplomó, casi ahogado, o descarga eléctrica |
+Los jadeos aislados o boqueadas **no son respiración normal**. Si la persona no responde y no respira normalmente, presume paro cardíaco e inicia RCP. Un reanimador lego **no debe perder tiempo buscando pulso**.
 
-**Si no responde y no respira normal: tiene un paro cardíaco. Cada minuto sin RCP baja su probabilidad de sobrevivir ~10%. Empieza YA.**
+## Secuencia rápida
 
-## Qué NO hacer
+1. **Comprueba que la escena sea segura.** Mueve a la persona sólo si permanecer allí implica peligro.
+2. **Comprueba respuesta y respiración.** Toca los hombros, habla fuerte y observa si respira normalmente durante no más de 10 segundos.
+3. **Llama y consigue un DEA.** Si tienes teléfono, llama en altavoz mientras empiezas. Señala a otra persona para llamar y traer un desfibrilador externo automático (DEA). Si estás completamente solo y sin teléfono, ve por ayuda y un DEA, y vuelve de inmediato.
+4. **Ponla boca arriba sobre una superficie firme y plana.** Descubre el pecho.
+5. **Inicia compresiones.** Coloca el talón de una mano en el centro del pecho, sobre la mitad inferior del esternón; la otra mano encima, dedos entrelazados y brazos rectos.
 
-| ❌ Error | ✅ Correcto |
-|----------|------------|
-| Buscar pulso (se pierde tiempo) | Si no responde y no respira → RCP YA |
-| Echar agua, abofetear, esperar | Iniciar compresiones inmediatamente |
-| Interrumpir compresiones >10s | Solo pausar para ventilaciones o DEA |
-| Miedo a romper costillas | Preferible costilla rota a muerte |
+## Compresiones de alta calidad
 
-## Pasos
+| Parámetro | Objetivo AHA 2025 |
+|---|---|
+| Ritmo | **100–120 por minuto** |
+| Profundidad | **5–6 cm** |
+| Posición | Hombros sobre las manos, brazos rectos |
+| Expansión | Deja que el pecho vuelva completamente a su posición |
+| Pausas | Redúcelas al mínimo; cada pausa debe durar **menos de 10 segundos** |
+| Superficie | Firme y plana |
 
-### 1️⃣ Seguridad (3 segundos)
-Mira alrededor: ¿cables eléctricos, tráfico, agua, gas, humo? **No te conviertas en la segunda víctima.** Mueve a la persona SOLO si el lugar es peligroso.
+### Ciclos 30:2
 
-### 2️⃣ Comprueba respuesta
-Arrodíllate, sacude sus hombros con firmeza y grita: **"¿Me oyes? ¡Abre los ojos!"**
+Realiza **30 compresiones y 2 ventilaciones (30:2)** antes de una vía aérea avanzada.
 
-### 3️⃣ Pide ayuda AHORA
-Grita a alguien concreto: **"¡TÚ, el de camisa azul: llama a emergencias y busca un desfibrilador (DEA)!"**
+- Abre la vía aérea con extensión de la cabeza y elevación del mentón.
+- Pinza la nariz, sella tu boca y da cada ventilación durante aproximadamente 1 segundo, sólo hasta ver elevarse el pecho.
+- Evita ventilaciones demasiado rápidas, frecuentes o fuertes.
+- Si no tienes entrenamiento, no puedes o no quieres ventilar, realiza **RCP sólo con las manos**, con compresiones continuas a 100–120/min.
 
-- Si estás solo con teléfono: llama con altavoz activado mientras empiezas
-- Si estás solo sin teléfono y es un adulto: ve por ayuda/DEA rápido y vuelve a comprimir; en niños o ahogamiento/asfixia, 2 minutos de RCP antes de ir por ayuda
+## Usa el DEA en cuanto llegue
 
-### 4️⃣ Posición correcta
-- Boca arriba sobre superficie **DURA** (suelo, NO cama)
-- Descubre el pecho
+1. Enciéndelo y sigue sus indicaciones de voz.
+2. Seca el pecho si está mojado y coloca los parches directamente sobre la piel como muestran los dibujos.
+3. Nadie debe tocar a la persona durante el análisis o la descarga.
+4. Reanuda las compresiones inmediatamente después de la descarga o de la indicación “no se recomienda descarga”.
 
-### 5️⃣ Manos en el centro del pecho
+## Continúa hasta que
 
-| Elemento | Detalle |
-|----------|---------|
-| **Ubicación** | Centro del pecho, mitad inferior del esternón, entre las tetillas |
-| **Mano 1** | Talón de una mano en el esternón |
-| **Mano 2** | Encima, dedos entrelazados, dedos levantados del pecho |
-| **Brazos** | RECTOS, hombros directamente sobre las manos |
+- la persona muestre signos claros de vida y respire normalmente;
+- llegue personal capacitado y te releve;
+- otro reanimador pueda sustituirte; o
+- la escena se vuelva insegura o estés físicamente incapaz de seguir.
 
-### 6️⃣ Comprime FUERTE y RÁPIDO
+Si vuelve a respirar normalmente pero no despierta, colócala de lado si no sospechas lesión que lo impida, mantenla abrigada y vigila continuamente la respiración. Si deja de respirar normalmente, reinicia RCP.
 
-| Parámetro | Valor |
-|-----------|-------|
-| **Profundidad** | 5 a 6 cm (un tercio del pecho) |
-| **Ritmo** | 100 a 120 por minuto |
-| **Técnica** | Peso del cuerpo, brazos rectos |
-| **Rebote** | Deja que el pecho suba COMPLETO entre compresiones |
+## Errores peligrosos
 
-> 💡 El ritmo de "Stayin' Alive" de Bee Gees = exactamente 100-120 BPM
+- No confundas jadeos con respiración normal.
+- No retrases las compresiones para buscar pulso si no eres profesional capacitado.
+- No comprimas sobre una cama blanda si puedes trasladar con seguridad a una superficie firme.
+- No te apoyes sobre el pecho entre compresiones.
+- No interrumpas la RCP para revisar repetidamente si “ya reaccionó”.
 
-### 7️⃣ Ciclo 30:2
+## Fuente clínica
 
-```
-┌─────────────────────────────────────────┐
-│  30 compresiones  →  2 soplos  →  repetir │
-│  Sin parar hasta que:                     │
-│  • La persona respire, tosa o se mueva    │
-│  • Alguien te reemplace                    │
-│  • Llegue ayuda profesional                │
-│  • Estés agotado por completo              │
-└─────────────────────────────────────────┘
-```
+Contenido revisado según **AHA 2025 Guidelines for CPR and ECC**: relación 30:2, compresiones de 100–120/min, profundidad adulta de 5–6 cm, expansión completa, pausas menores de 10 segundos, ventilación hasta elevación visible del pecho y desfibrilación temprana.
 
-**Ventilaciones (si sabes y quieres):** después de 30 compresiones, da **2 soplos**: inclina la frente, levanta el mentón, tapa la nariz, sella tu boca sobre la suya y sopla 1 segundo hasta que el pecho suba.
+- https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
 
-> **¿No sabes o te da impresión? SOLO COMPRESIONES SIN PARAR. También salva vidas.**
+## Ejemplo práctico: RCP Adulto
 
-### 8️⃣ Si llega un DEA (desfibrilador)
-1. Enciéndelo y **haz lo que dice su voz**
-2. Pecho desnudo y seco
-3. Parches donde muestra el dibujo
-4. **NADIE toca a la persona** cuando analiza o descarga
-5. Reanuda compresiones inmediatamente después de cada descarga
+**Situación:** Un adulto se desploma en el mercado; no responde cuando le gritas y lo sacudes, y no respira con normalidad.
 
-## Si vuelve a respirar
+**Haz:** 1. Grita por ayuda, pide que llamen a emergencias y traigan un DEA. 2. Arrodíllate, talón de una mano en el centro del pecho y la otra encima. 3. Comprime fuerte y rápido a 100–120 por minuto hundiendo 5–6 cm, dejando que el pecho rebote. 4. Si sabes ventilar: 30:2 con vía aérea abierta; si no, comprime sin parar. 5. Usa el DEA en cuanto llegue y sigue sus instrucciones.
 
-Ponla en **posición de recuperación** (posición lateral de seguridad):
-- Brazo cercano en ángulo recto
-- Dorso de la otra mano bajo su mejilla
-- Dobla su rodilla lejana y gírala hacia ti
-- Vigila la respiración TODO el tiempo
+**Evita:** No interrumpas más de 10 segundos, no comprimas con miedo (las costillas rotas se curan, el paro no), no esperes "a ver si reacciona", no ventiles sin sello si hay barrera improvisada disponible.
 
-## Cronograma de supervivencia
+**Escala:** Si hay más personas, túrnense cada 2 minutos para no perder calidad; continúa hasta que llegue ayuda profesional, la persona respire o el DEA lo indique.
 
-```
-Minuto 0:  Paro cardíaco → 100% probabilidad con RCP
-Minuto 1:  Sin RCP → ~90% probabilidad
-Minuto 3:  Sin RCP → ~70% probabilidad
-Minuto 5:  Sin RCP → ~50% probabilidad
-Minuto 10: Sin RCP → ~0% probabilidad
-           CON RCP + DEA en <5min: hasta 70% supervivencia
-```
-
-## Señales de deterioro
-
-| Señal | Acción |
-|-------|--------|
-| Deja de respirar otra vez | Reiniciar compresiones YA |
-| Vomita | Girar de lado, limpiar boca con dedo envuelto en tela |
-| Cambia a color normal | Mantener posición, vigilar respiración |
-
-## Ejemplo práctico: RCP en adultos (no respira / sin pulso)
-
-**Situación:** Un adulto cae al suelo en una sala, no responde al hablarle fuerte ni al tocar sus hombros y solo jadea de vez en cuando.
-
-**Haz:** 1. Asegura la escena y pide a una persona específica llamar a emergencias. 2. Sigue los pasos grandes de la guía en orden, sin saltar al paso que parece más dramático. 3. Usa guantes, barreras o telas limpias si están disponibles. 4. Reevalúa cada minuto: respiración, conciencia, sangrado, temperatura o empeoramiento.
-
-**Evita:** No improvises maniobras avanzadas, no muevas cuello/columna si sospechas lesión, no des comida/bebida a alguien confundido y no retrases la llamada por buscar equipo perfecto.
-
-**Escala:** Llama o traslada de inmediato si no respira normal, hay dolor de pecho, sangrado que no cede, confusión, quemadura extensa, posible veneno, embarazo avanzado o múltiples víctimas.
-
-**Chequeo rápido:** antes de cerrar la guía, di en voz alta qué pasó, qué hiciste, qué falta y quién queda responsable. Este ejemplo es una práctica guiada; adapta los pasos a tu entorno y prioriza ayuda profesional cuando exista.
-
-## Base científica e improvisación
-
-- Basado en AHA 2025: compresiones 100-120/min, profundidad adulta 5-6 cm, rebote completo, pausas mínimas y DEA temprano.
-- Si no sabes o no quieres ventilar, haz RCP solo con manos sin parar hasta que llegue ayuda o un DEA.
-- Improvisa ritmo con el metrónomo de la app, una canción de 100-120 BPM o conteo en voz alta; no improvises buscando pulso si no estás entrenado.
+> **Improvisación segura:** la RCP no necesita equipo — solo tus manos; una tela fina sirve de barrera para ventilar y, sin barrera, comprimir sin ventilar también salva.

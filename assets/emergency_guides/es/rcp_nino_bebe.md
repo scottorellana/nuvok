@@ -1,64 +1,91 @@
 ---
-title: RCP en niños y bebés
-keywords: [rcp, bebe, nino, infantil, paro, no respira, ahogado, inconsciente, reanimacion, lactante]
+title: RCP en niños y lactantes — AHA 2025
+keywords: [rcp, nino, lactante, bebe, paro cardiaco, no respira, ahogamiento, asfixia, dea]
 priority: 1
 ---
 
-# RCP en niños (1 año a pubertad) y bebés (menos de 1 año)
+# RCP en niños y lactantes — AHA 2025
 
-> ⚠️ Esta guía no sustituye atención médica profesional ni un curso práctico. Busca ayuda médica en cuanto sea posible.
+**Lactante:** menor de 1 año, excepto el recién nacido en el momento del parto. **Niño:** desde 1 año hasta la pubertad.
 
-En niños el paro casi siempre empieza por **falta de oxígeno** (ahogamiento, atragantamiento, asfixia), no por el corazón. Por eso aquí las **ventilaciones importan más** que en adultos.
+> ⚠️ Activa el sistema local de emergencias. La RCP pediátrica con compresiones y ventilaciones es preferible cuando el reanimador sabe hacerla; esta guía no reemplaza entrenamiento práctico.
 
-## Cuándo sospecharlo
+## Reconoce el paro
 
-- No responde a tu voz ni a estímulos (frota su esternón con los nudillos, dale palmaditas en la planta del pie a un bebé).
-- No respira o solo boquea.
-- Color azulado en labios o cara, cuerpo flácido.
+Actúa si el niño o lactante no responde y no respira normalmente o sólo jadea. Un reanimador lego no debe retrasar la RCP para comprobar pulso.
 
-## Qué NO hacer
+## Secuencia para un reanimador
 
-- ❌ NO sacudas violentamente a un bebé (puede causar daño cerebral).
-- ❌ NO uses la fuerza de un adulto: en bebés se comprime con DOS DEDOS.
-- ❌ NO inclines demasiado la cabeza de un bebé hacia atrás (su vía aérea se cierra); posición neutral u "olfateo" suave.
-- ❌ NO abandones la RCP para correr a buscar ayuda antes de 2 minutos si estás solo.
+1. **Seguridad y respuesta.** Comprueba la escena. Llama al niño y toca sus hombros; en un lactante, toca suavemente la planta del pie. No lo sacudas.
+2. **Pide ayuda y un DEA.** Si tienes teléfono, llama en altavoz sin abandonar al paciente. Envía a otra persona a buscar un DEA.
+3. **Si estás solo y no tienes teléfono:**
+   - ante un colapso súbito presenciado, activa emergencias y consigue el DEA primero;
+   - si el colapso no fue presenciado o probablemente comenzó por falta de oxígeno, realiza unos 2 minutos de RCP antes de ir a llamar y buscar el DEA.
+4. **Ponlo boca arriba sobre una superficie firme y plana.**
+5. **Empieza con compresiones.** AHA usa la secuencia compresiones-vía aérea-ventilación; **no indica 5 ventilaciones iniciales** en este algoritmo.
 
-## Pasos
+## Compresiones de alta calidad
 
-1. **Seguridad y respuesta.** Estimula: llámalo, frota el esternón. Bebé: palmadas en la planta del pie.
-2. **Si estás solo: haz 2 MINUTOS de RCP ANTES de ir a buscar ayuda o llamar.** (En niños el oxígeno inmediato es lo que salva.) Si hay alguien más, que llame ya y busque un DEA.
-3. **Abre la vía aérea:** inclina la frente ligeramente atrás y levanta el mentón. En bebés: posición neutral (como oliendo una flor), NO hiperextender.
-4. **Da 5 soplos de rescate iniciales:**
-   - Niño: tapa la nariz, sella tu boca sobre la suya, sopla 1 segundo hasta que el pecho suba.
-   - Bebé: cubre CON TU BOCA su boca Y su nariz a la vez; soplos suaves, solo el aire de tus mejillas.
-5. **30 compresiones:**
-   - **Niño:** talón de UNA mano (o dos si es grande) en el centro del pecho. Profundidad: **un tercio del pecho (~5 cm)**. Ritmo 100-120/min.
-   - **Bebé:** **DOS DEDOS** en el centro del pecho, justo bajo la línea de las tetillas (o técnica de dos pulgares abrazando el tórax si hay dos rescatistas). Profundidad: **un tercio del pecho (~4 cm)**. Ritmo 100-120/min.
-6. **Ciclo 30 compresiones : 2 soplos** sin parar (15:2 si son dos rescatistas entrenados).
-7. **DEA:** úsalo en cuanto llegue; si tiene parches pediátricos úsalos, si no, usa los de adulto (uno en el pecho y otro en la ESPALDA del bebé).
-8. **No pares** hasta que respire, te releven, o llegue ayuda.
+Realiza compresiones a **100–120 por minuto**, permite la expansión completa y limita cada pausa a menos de 10 segundos.
 
-## Si vuelve a respirar
+### Niño de 1 año a pubertad
 
-De lado (posición de recuperación). A un bebé sostenlo en tus brazos de lado, cabeza ligeramente más baja que el cuerpo, vigilando la respiración constantemente.
+- Talón de **una o dos manos** en el centro del pecho, sobre la mitad inferior del esternón.
+- Profundidad: al menos un tercio del diámetro anteroposterior del pecho, aproximadamente **5 cm**; evita profundidad excesiva.
 
-## Cuándo buscar ayuda / trasladar
+### Lactante menor de 1 año
 
-- SIEMPRE, aunque se recupere. Los niños pueden deteriorarse horas después.
+- Comprime el esternón con la **base de una mano** o con la técnica de **2 pulgares y manos alrededor del tórax**.
+- Si no puedes rodear el tórax, usa la base de una mano.
+- Profundidad: al menos un tercio del pecho, aproximadamente **4 cm**.
+- La antigua técnica de dos dedos **ya no se recomienda para la RCP de lactantes en AHA 2025**.
 
-## Señales de deterioro
+## Relación compresiones-ventilaciones
 
-- Vuelve a quedar flácido o azul → reinicia soplos y compresiones ya.
-- Vomita → de lado, limpia la boca en 2 segundos, continúa.
+| Reanimadores | Relación |
+|---|---|
+| Uno | **30:2** |
+| Dos reanimadores capacitados | **15:2** |
 
-## Ejemplo práctico: RCP en niños y bebés
+Para ventilar:
 
-**Situación:** Un niño pequeño se desploma después de jugar y no respira normal; hay dos adultos presentes y un teléfono cargado.
+- Niño: extensión suave de la cabeza y elevación del mentón; pinza la nariz y sella la boca.
+- Lactante: mantén la cabeza en posición neutral o de olfateo suave y sella boca y nariz con tu boca.
+- Da cada ventilación durante aproximadamente 1 segundo, sólo hasta observar elevación del pecho. Si no se eleva, recoloca la vía aérea antes de intentar otra vez.
 
-**Haz:** 1. Asegura la escena y pide a una persona específica llamar a emergencias. 2. Sigue los pasos grandes de la guía en orden, sin saltar al paso que parece más dramático. 3. Usa guantes, barreras o telas limpias si están disponibles. 4. Reevalúa cada minuto: respiración, conciencia, sangrado, temperatura o empeoramiento.
+Si no puedes dar ventilaciones, realiza compresiones sin detenerte: es mejor que no hacer RCP.
 
-**Evita:** No improvises maniobras avanzadas, no muevas cuello/columna si sospechas lesión, no des comida/bebida a alguien confundido y no retrases la llamada por buscar equipo perfecto.
+## DEA
 
-**Escala:** Llama o traslada de inmediato si no respira normal, hay dolor de pecho, sangrado que no cede, confusión, quemadura extensa, posible veneno, embarazo avanzado o múltiples víctimas.
+- Enciéndelo y sigue sus indicaciones en cuanto esté disponible.
+- Usa parches pediátricos/atenuador si existen. Si no existen, pueden usarse parches de adulto si caben sin tocarse.
+- Si los parches se tocarían, coloca uno en el pecho y otro en la espalda.
+- Reanuda las compresiones inmediatamente después de cada análisis o descarga.
 
-**Chequeo rápido:** antes de cerrar la guía, di en voz alta qué pasó, qué hiciste, qué falta y quién queda responsable. Este ejemplo es una práctica guiada; adapta los pasos a tu entorno y prioriza ayuda profesional cuando exista.
+## Continúa y vigila
+
+Continúa hasta que respire normalmente y muestre signos de vida, llegue ayuda capacitada, alguien te releve o no puedas continuar. Si recupera respiración pero no despierta, colócalo de lado sólo si no hay una lesión que lo impida y vigila la respiración sin pausa.
+
+## Errores peligrosos
+
+- No sacudas a un lactante ni hagas fricción fuerte sobre el esternón.
+- No hiperextiendas el cuello del lactante.
+- No uses la técnica obsoleta de dos dedos para compresiones de RCP.
+- No retrases compresiones para buscar pulso si eres reanimador lego.
+- No des ventilaciones grandes o rápidas; basta con elevación visible del pecho.
+
+## Fuente clínica
+
+Contenido revisado según **AHA 2025 Guidelines for CPR and ECC**, incluido el cambio de técnica para lactantes, el ritmo de 100–120/min, profundidades aproximadas de 4 cm y 5 cm, relaciones 30:2 y 15:2, pausas menores de 10 segundos y uso temprano del DEA.
+
+- https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
+
+## Ejemplo práctico: RCP en Niños y Bebés
+
+**Situación:** Un bebé de 8 meses queda flácido y sin respuesta tras un episodio de ahogo; no respira con normalidad.
+
+**Haz:** 1. Grita por ayuda y pide llamar a emergencias con altavoz. 2. Apóyalo sobre una superficie firme. 3. Comprime en el centro del pecho con la base de una mano, unos 4 cm de profundidad, a 100–120 por minuto. 4. Solo: 30:2; con dos rescatistas entrenados: 15:2. 5. Tras 2 minutos, si nadie ha llamado, llama tú y vuelve de inmediato.
+
+**Evita:** No sacudas al bebé, no comprimas sobre el abdomen ni las costillas, no interrumpas más de 10 segundos, no des por perdido a un bebé frío o morado: continúa.
+
+**Escala:** Si el pecho no sube con las ventilaciones, reposiciona la cabeza (posición neutra en bebés); si hay objeto visible en la boca retíralo con un dedo en gancho SOLO si lo ves; continúa hasta ayuda profesional o respiración efectiva.

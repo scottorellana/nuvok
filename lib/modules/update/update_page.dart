@@ -174,20 +174,25 @@ class _UpdatePageState extends State<UpdatePage> {
                             height: 20,
                             child: CircularProgressIndicator(strokeWidth: 2))
                       else
-                        Wrap(
-                          spacing: 8,
-                          children: [
-                            OutlinedButton.icon(
-                              onPressed: _configureServer,
-                              icon: const Icon(Icons.lan, size: 18),
-                              label: Text(tr(context, 'server')),
-                            ),
-                            OutlinedButton.icon(
-                              onPressed: () => u.check(),
-                              icon: const Icon(Icons.refresh, size: 18),
-                              label: Text(tr(context, 'search')),
-                            ),
-                          ],
+                        // Flexible: en pantallas angostas los dos botones
+                        // deben poder envolverse en vez de desbordar la fila.
+                        Flexible(
+                          child: Wrap(
+                            spacing: 8,
+                            alignment: WrapAlignment.end,
+                            children: [
+                              OutlinedButton.icon(
+                                onPressed: _configureServer,
+                                icon: const Icon(Icons.lan, size: 18),
+                                label: Text(tr(context, 'server')),
+                              ),
+                              OutlinedButton.icon(
+                                onPressed: () => u.check(),
+                                icon: const Icon(Icons.refresh, size: 18),
+                                label: Text(tr(context, 'search')),
+                              ),
+                            ],
+                          ),
                         ),
                     ],
                   ),

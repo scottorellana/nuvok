@@ -15,6 +15,7 @@ import '../tools/flashlight.dart';
 import '../tools/rcp_metronome.dart';
 import 'emergency_directory.dart';
 import 'emergency_guide_media.dart';
+import 'emergency_guide_tutorials.dart';
 import 'guide_voice.dart';
 import 'decision_tree_page.dart';
 import 'emergency_call_button.dart';
@@ -129,9 +130,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
         child: Icon(
           _iconFor(g.id),
           size: 48,
-          color: critical
-              ? PrepperColors.emergency
-              : PrepperColors.olive,
+          color: critical ? PrepperColors.emergency : PrepperColors.olive,
         ),
       ),
     );
@@ -180,236 +179,250 @@ class _EmergencyPageState extends State<EmergencyPage> {
           const SizedBox(width: 12),
         ],
       ),
+      // Un solo scroll para toda la página: en un iPhone los bloques fijos
+      // (CTA, buscador, botones, directorio) consumían casi toda la altura y
+      // el grid quedaba aplastado en una franja donde apenas se podía
+      // deslizar — en SE directamente desbordaba.
       body: _loading
           ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                _buildEmergencyModeCta(),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-                  child: TextField(
-                    controller: _searchCtrl,
-                    autofocus: false,
-                    style: const TextStyle(fontSize: 18),
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      hintText: _lang == 'es'
-                          ? '¿Qué está pasando? (ej: no respira, sangrado…)'
-                          : 'What is happening? (e.g. not breathing…)',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                    ),
-                    onChanged: _search,
-                  ),
-                ),
-                // Llamada real al número de emergencias del país (offline
-                // se resuelve el número; la llamada usa la red si vive).
-                const EmergencyCallButton(),
-                // Árbol de decisión estilo 911: convierte pánico en el
-                // procedimiento exacto con una pregunta por pantalla.
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
-                  child: FilledButton.icon(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Colors.red.shade800,
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size.fromHeight(52),
-                      textStyle: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w800),
-                    ),
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => DecisionTreePage(
-                          openGuide: (ctx, id) {
-                            final g =
-                                _all.where((g) => g.id == id).firstOrNull;
-                            if (g == null) return;
-                            Navigator.of(ctx).push(MaterialPageRoute(
-                                builder: (_) => _GuideReader(guide: g)));
-                          },
+          : CustomScrollView(
+              slivers: [
+                SliverList.list(
+                  children: [
+                    _buildEmergencyModeCta(),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+                      child: TextField(
+                        controller: _searchCtrl,
+                        autofocus: false,
+                        style: const TextStyle(fontSize: 18),
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.search),
+                          hintText: _lang == 'es'
+                              ? '¿Qué está pasando? (ej: no respira, sangrado…)'
+                              : 'What is happening? (e.g. not breathing…)',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
                         ),
+                        onChanged: _search,
                       ),
                     ),
-                    icon: const Icon(Icons.quiz),
-                    label: Text(tr(context, 'dtTitle')),
-                  ),
-                ),
-                // Modos de supervivencia: tu entorno especializa la app.
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
-                  child: OutlinedButton.icon(
-                    style: OutlinedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(44)),
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => SurvivalModesPage(
-                          openGuide: (ctx, id) {
-                            final g =
-                                _all.where((g) => g.id == id).firstOrNull;
-                            if (g == null) return;
-                            Navigator.of(ctx).push(MaterialPageRoute(
-                                builder: (_) => _GuideReader(guide: g)));
-                          },
+                    // Llamada real al número de emergencias del país (offline
+                    // se resuelve el número; la llamada usa la red si vive).
+                    const EmergencyCallButton(),
+                    // Árbol de decisión estilo 911: convierte pánico en el
+                    // procedimiento exacto con una pregunta por pantalla.
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                      child: FilledButton.icon(
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Colors.red.shade800,
+                          foregroundColor: Colors.white,
+                          minimumSize: const Size.fromHeight(52),
+                          textStyle: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w800),
                         ),
-                      ),
-                    ),
-                    icon: const Icon(Icons.terrain),
-                    label: Text('🌲 ${tr(context, 'modesTitle')}'),
-                  ),
-                ),
-                // Timer de torniquete: la hora de aplicación salva el miembro.
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
-                  child: OutlinedButton.icon(
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(44),
-                      foregroundColor: Colors.red.shade400,
-                    ),
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (_) => const TourniquetPage())),
-                    icon: const Icon(Icons.timer),
-                    label: Text('🩸 ${tr(context, 'tqTitle')}'),
-                  ),
-                ),
-                // Ficha ICE: habla por ti si estás inconsciente.
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
-                  child: OutlinedButton.icon(
-                    style: OutlinedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(44)),
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => const IcePage())),
-                    icon: const Icon(Icons.badge_outlined),
-                    label: Text('🆔 ${tr(context, 'iceTitle')}'),
-                  ),
-                ),
-                // Quick-access emergency buttons (4 most critical)
-                _buildQuickAccess(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.info_outline,
-                          size: 16, color: PrepperColors.dimText),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          _lang == 'es'
-                              ? 'Estas guías no sustituyen atención médica '
-                                  'profesional.'
-                              : 'These guides do not replace professional '
-                                  'medical care.',
-                          style: const TextStyle(
-                              fontSize: 14, color: PrepperColors.dimText),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                _buildEmergencyDirectory(),
-                Expanded(
-                  child: _shown.isEmpty
-                      ? Center(
-                          child: Text(_lang == 'es'
-                              ? 'Sin resultados — prueba otra palabra'
-                              : 'No results — try another word'))
-                      : GridView.builder(
-                          padding: const EdgeInsets.all(16),
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 280,
-                            mainAxisExtent: 200,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => DecisionTreePage(
+                              openGuide: (ctx, id) {
+                                final g =
+                                    _all.where((g) => g.id == id).firstOrNull;
+                                if (g == null) return;
+                                Navigator.of(ctx).push(MaterialPageRoute(
+                                    builder: (_) => _GuideReader(guide: g)));
+                              },
+                            ),
                           ),
-                          itemCount: _shown.length,
-                          itemBuilder: (context, i) {
-                            final g = _shown[i];
-                            final critical = g.priority <= 1;
-                            final media = EmergencyGuideMedia.forGuide(g.id);
-                            final hasImage = media.imageAssetPath != null;
-                            return Card(
-                              clipBehavior: Clip.antiAlias,
-                              color: critical
-                                  ? PrepperColors.emergencyDeep
-                                      .withValues(alpha: 0.35)
-                                  : null,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(12),
-                                onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute<void>(
-                                      builder: (_) => _GuideReader(guide: g)),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    // Thumbnail: photorealistic image if available,
-                                    // otherwise icon fallback with gradient.
-                                    Expanded(
-                                      flex: 3,
-                                      child: hasImage
-                                          ? Stack(
-                                              fit: StackFit.expand,
-                                              children: [
-                                                Image.asset(
-                                                  media.imageAssetPath!,
-                                                  fit: BoxFit.cover,
-                                                  errorBuilder: (_, __, ___) =>
-                                                      _iconFallback(g, critical),
-                                                ),
-                                                if (critical)
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      gradient: LinearGradient(
-                                                        begin: Alignment.topCenter,
-                                                        end: Alignment.bottomCenter,
-                                                        colors: [
-                                                          Colors.transparent,
-                                                          PrepperColors.emergencyDeep
-                                                              .withValues(alpha: 0.6),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                              ],
-                                            )
-                                          : _iconFallback(g, critical),
-                                    ),
-                                    // Title bar
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 8),
-                                      child: Row(
-                                        children: [
-                                          Icon(_iconFor(g.id),
-                                              size: 18,
-                                              color: critical
-                                                  ? PrepperColors.emergency
-                                                  : Theme.of(context)
-                                                      .colorScheme
-                                                      .primary),
-                                          const SizedBox(width: 6),
-                                          Expanded(
-                                            child: Text(
-                                              g.title,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
                         ),
+                        icon: const Icon(Icons.quiz),
+                        label: Text(tr(context, 'dtTitle')),
+                      ),
+                    ),
+                    // Modos de supervivencia: tu entorno especializa la app.
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                      child: OutlinedButton.icon(
+                        style: OutlinedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(44)),
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => SurvivalModesPage(
+                              openGuide: (ctx, id) {
+                                final g =
+                                    _all.where((g) => g.id == id).firstOrNull;
+                                if (g == null) return;
+                                Navigator.of(ctx).push(MaterialPageRoute(
+                                    builder: (_) => _GuideReader(guide: g)));
+                              },
+                            ),
+                          ),
+                        ),
+                        icon: const Icon(Icons.terrain),
+                        label: Text('🌲 ${tr(context, 'modesTitle')}'),
+                      ),
+                    ),
+                    // Timer de torniquete: la hora de aplicación salva el miembro.
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                      child: OutlinedButton.icon(
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(44),
+                          foregroundColor: Colors.red.shade400,
+                        ),
+                        onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (_) => const TourniquetPage())),
+                        icon: const Icon(Icons.timer),
+                        label: Text('🩸 ${tr(context, 'tqTitle')}'),
+                      ),
+                    ),
+                    // Ficha ICE: habla por ti si estás inconsciente.
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                      child: OutlinedButton.icon(
+                        style: OutlinedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(44)),
+                        onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => const IcePage())),
+                        icon: const Icon(Icons.badge_outlined),
+                        label: Text('🆔 ${tr(context, 'iceTitle')}'),
+                      ),
+                    ),
+                    // Quick-access emergency buttons (4 most critical)
+                    _buildQuickAccess(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.info_outline,
+                              size: 16, color: PrepperColors.dimText),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              _lang == 'es'
+                                  ? 'Estas guías no sustituyen atención médica '
+                                      'profesional.'
+                                  : 'These guides do not replace professional '
+                                      'medical care.',
+                              style: const TextStyle(
+                                  fontSize: 14, color: PrepperColors.dimText),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _buildEmergencyDirectory(),
+                  ],
                 ),
+                if (_shown.isEmpty)
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                        child: Text(_lang == 'es'
+                            ? 'Sin resultados — prueba otra palabra'
+                            : 'No results — try another word')),
+                  )
+                else
+                  SliverPadding(
+                    padding: const EdgeInsets.all(16),
+                    sliver: SliverGrid.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 280,
+                        mainAxisExtent: 200,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                      ),
+                      itemCount: _shown.length,
+                      itemBuilder: (context, i) {
+                        final g = _shown[i];
+                        final critical = g.priority <= 1;
+                        final media = EmergencyGuideMedia.forGuide(g.id);
+                        final hasImage = media.imageAssetPath != null;
+                        return Card(
+                          clipBehavior: Clip.antiAlias,
+                          color: critical
+                              ? PrepperColors.emergencyDeep
+                                  .withValues(alpha: 0.35)
+                              : null,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(12),
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute<void>(
+                                  builder: (_) => _GuideReader(guide: g)),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                // Thumbnail: photorealistic image if available,
+                                // otherwise icon fallback with gradient.
+                                Expanded(
+                                  flex: 3,
+                                  child: hasImage
+                                      ? Stack(
+                                          fit: StackFit.expand,
+                                          children: [
+                                            Image.asset(
+                                              media.imageAssetPath!,
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (_, __, ___) =>
+                                                  _iconFallback(g, critical),
+                                            ),
+                                            if (critical)
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    colors: [
+                                                      Colors.transparent,
+                                                      PrepperColors
+                                                          .emergencyDeep
+                                                          .withValues(
+                                                              alpha: 0.6),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                          ],
+                                        )
+                                      : _iconFallback(g, critical),
+                                ),
+                                // Title bar
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 8),
+                                  child: Row(
+                                    children: [
+                                      Icon(_iconFor(g.id),
+                                          size: 18,
+                                          color: critical
+                                              ? PrepperColors.emergency
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .primary),
+                                      const SizedBox(width: 6),
+                                      Expanded(
+                                        child: Text(
+                                          g.title,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
               ],
             ),
     );
@@ -809,6 +822,11 @@ class _GuideReader extends StatelessWidget {
       body: guide.body,
     ));
 
+    final tutorial = EmergencyGuideTutorials.forGuide(id);
+    if (tutorial != null) {
+      widgets.add(_GuideTutorialCard(tutorial: tutorial, lang: guide.lang));
+    }
+
     // Imágenes de paso adicionales (2-3 por guía en los paquetes nuevos).
     for (final (path, alt) in EmergencyGuideMedia.extraImagesFor(id)) {
       widgets.add(
@@ -832,8 +850,8 @@ class _GuideReader extends StatelessWidget {
 
     // CPR guides get the animated compression diagram
     if (id.startsWith('rcp')) {
-      widgets.add(_visualCard(
-          context, _guideReaderLabel(id, 'Técnica de compresión'), CprAnimation()));
+      widgets.add(_visualCard(context,
+          _guideReaderLabel(id, 'Técnica de compresión'), CprAnimation()));
     }
     // Choking guides get the Heimlich animation
     if (id.contains('atragant')) {
@@ -875,11 +893,21 @@ class _GuideReader extends StatelessWidget {
   String _guideReaderLabel(String id, String fallback) {
     // The reader doesn't have lang context; use the guide's lang field.
     final es = guide.lang == 'es';
-    if (fallback.contains('compresión')) return es ? 'Técnica de compresión' : 'Compression technique';
-    if (fallback.contains('Heimlich')) return es ? 'Maniobra de Heimlich' : 'Heimlich maneuver';
-    if (fallback.contains('torniquete')) return es ? 'Aplicación de torniquete' : 'Tourniquet application';
-    if (fallback.contains('recuperación')) return es ? 'Posición de recuperación' : 'Recovery position';
-    if (fallback.contains('Resumen')) return es ? 'Resumen visual' : 'Visual summary';
+    if (fallback.contains('compresión')) {
+      return es ? 'Técnica de compresión' : 'Compression technique';
+    }
+    if (fallback.contains('Heimlich')) {
+      return es ? 'Maniobra de Heimlich' : 'Heimlich maneuver';
+    }
+    if (fallback.contains('torniquete')) {
+      return es ? 'Aplicación de torniquete' : 'Tourniquet application';
+    }
+    if (fallback.contains('recuperación')) {
+      return es ? 'Posición de recuperación' : 'Recovery position';
+    }
+    if (fallback.contains('Resumen')) {
+      return es ? 'Resumen visual' : 'Visual summary';
+    }
     return fallback;
   }
 
@@ -915,8 +943,8 @@ class _GuideReader extends StatelessWidget {
             IconButton(
               tooltip: tr(context, 'rcpMetronome'),
               icon: const Icon(Icons.music_note),
-              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => const RcpMetronomePage())),
+              onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const RcpMetronomePage())),
             ),
           // Manos libres: lee el título y los pasos críticos en voz alta.
           ValueListenableBuilder<bool>(
@@ -953,6 +981,162 @@ class _GuideReader extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GuideTutorialCard extends StatelessWidget {
+  const _GuideTutorialCard({required this.tutorial, required this.lang});
+
+  final EmergencyGuideTutorial tutorial;
+  final String lang;
+
+  bool get _es => lang == 'es';
+
+  @override
+  Widget build(BuildContext context) {
+    final semanticLabel =
+        tutorial.steps.map((step) => step.altFor(lang)).join('. ');
+
+    return Card(
+      key: ValueKey('guide-tutorial-${tutorial.id}'),
+      margin: const EdgeInsets.only(bottom: 16),
+      clipBehavior: Clip.antiAlias,
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            LayoutBuilder(
+              builder: (context, constraints) => Row(
+                children: [
+                  const Icon(Icons.photo_library_outlined,
+                      color: PrepperColors.caution),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      _es
+                          ? 'Tutorial visual · 3 pasos'
+                          : 'Visual tutorial · 3 steps',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(fontWeight: FontWeight.w800),
+                    ),
+                  ),
+                  if (constraints.maxWidth >= 400)
+                    Text(
+                      _es ? 'Toca para ampliar' : 'Tap to enlarge',
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            Semantics(
+              label: semanticLabel,
+              image: true,
+              button: true,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => _showZoom(context, semanticLabel),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(
+                    tutorial.assetPath,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, __, ___) => Container(
+                      height: 180,
+                      color: PrepperColors.cardElevated,
+                      alignment: Alignment.center,
+                      child: Text(_es
+                          ? 'Tutorial visual no disponible'
+                          : 'Visual tutorial unavailable'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            for (final step in tutorial.steps) ...[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 28,
+                    height: 28,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: PrepperColors.caution,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      '${step.number}',
+                      style: const TextStyle(
+                        color: PrepperColors.black,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 3),
+                      child: Text(
+                        step.captionFor(lang),
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          height: 1.3,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              if (step.number < tutorial.steps.length)
+                const SizedBox(height: 8),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showZoom(BuildContext context, String semanticLabel) {
+    showDialog<void>(
+      context: context,
+      barrierColor: Colors.black87,
+      builder: (dialogContext) => Dialog(
+        backgroundColor: PrepperColors.black,
+        insetPadding: const EdgeInsets.all(8),
+        child: Stack(
+          children: [
+            Semantics(
+              label: semanticLabel,
+              image: true,
+              child: InteractiveViewer(
+                minScale: 1,
+                maxScale: 5,
+                child: Image.asset(
+                  tutorial.assetPath,
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 4,
+              right: 4,
+              child: IconButton.filled(
+                tooltip: _es ? 'Cerrar' : 'Close',
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                icon: const Icon(Icons.close),
+              ),
+            ),
+          ],
         ),
       ),
     );

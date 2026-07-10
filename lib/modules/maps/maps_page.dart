@@ -619,11 +619,16 @@ class _MapsPageState extends State<MapsPage> {
       key: _scaffoldKey,
       endDrawer: _regions.isEmpty ? null : _buildLayersDrawer(),
       appBar: AppBar(
+        // En teléfonos los 4-5 iconos de acción dejan ~100px para el título:
+        // el texto debe ceder (ellipsis) y el chip de regiones no cabe.
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Mapas offline'),
-            if (_regions.length > 1)
+            const Flexible(
+              child: Text('Mapas offline',
+                  maxLines: 1, overflow: TextOverflow.ellipsis),
+            ),
+            if (_regions.length > 1 && MediaQuery.of(context).size.width >= 560)
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Chip(
@@ -1631,21 +1636,63 @@ class _EmptyMapsState extends State<_EmptyMaps> {
 
   /// ISO country code (from the device locale) → catalog region id.
   static const _isoToRegion = <String, String>{
-    'HN': 'honduras', 'SV': 'el-salvador', 'GT': 'guatemala',
-    'NI': 'nicaragua', 'CR': 'costa-rica', 'PA': 'panama', 'BZ': 'belize',
-    'MX': 'mexico', 'US': 'usa', 'CA': 'canada', 'CU': 'cuba',
-    'DO': 'rep-dominicana', 'HT': 'haiti', 'PR': 'puerto-rico',
-    'CO': 'colombia', 'VE': 'venezuela', 'EC': 'ecuador', 'PE': 'peru',
-    'BO': 'bolivia', 'BR': 'brasil', 'CL': 'chile', 'AR': 'argentina',
-    'UY': 'uruguay', 'PY': 'paraguay', 'ES': 'espana', 'PT': 'portugal',
-    'FR': 'francia', 'GB': 'reino-unido', 'IE': 'irlanda', 'DE': 'alemania',
-    'IT': 'italia', 'NL': 'paises-bajos', 'BE': 'belgica', 'CH': 'suiza',
-    'AT': 'austria', 'PL': 'polonia', 'SE': 'suecia', 'NO': 'noruega',
-    'GR': 'grecia', 'UA': 'ucrania', 'MA': 'marruecos', 'EG': 'egipto',
-    'NG': 'nigeria', 'ZA': 'sudafrica', 'KE': 'kenia', 'ET': 'etiopia',
-    'CN': 'china', 'IN': 'india', 'JP': 'japon', 'KR': 'corea-sur',
-    'PH': 'filipinas', 'ID': 'indonesia', 'TH': 'tailandia', 'VN': 'vietnam',
-    'TR': 'turquia', 'SA': 'arabia-saudita', 'AU': 'australia',
+    'HN': 'honduras',
+    'SV': 'el-salvador',
+    'GT': 'guatemala',
+    'NI': 'nicaragua',
+    'CR': 'costa-rica',
+    'PA': 'panama',
+    'BZ': 'belize',
+    'MX': 'mexico',
+    'US': 'usa',
+    'CA': 'canada',
+    'CU': 'cuba',
+    'DO': 'rep-dominicana',
+    'HT': 'haiti',
+    'PR': 'puerto-rico',
+    'CO': 'colombia',
+    'VE': 'venezuela',
+    'EC': 'ecuador',
+    'PE': 'peru',
+    'BO': 'bolivia',
+    'BR': 'brasil',
+    'CL': 'chile',
+    'AR': 'argentina',
+    'UY': 'uruguay',
+    'PY': 'paraguay',
+    'ES': 'espana',
+    'PT': 'portugal',
+    'FR': 'francia',
+    'GB': 'reino-unido',
+    'IE': 'irlanda',
+    'DE': 'alemania',
+    'IT': 'italia',
+    'NL': 'paises-bajos',
+    'BE': 'belgica',
+    'CH': 'suiza',
+    'AT': 'austria',
+    'PL': 'polonia',
+    'SE': 'suecia',
+    'NO': 'noruega',
+    'GR': 'grecia',
+    'UA': 'ucrania',
+    'MA': 'marruecos',
+    'EG': 'egipto',
+    'NG': 'nigeria',
+    'ZA': 'sudafrica',
+    'KE': 'kenia',
+    'ET': 'etiopia',
+    'CN': 'china',
+    'IN': 'india',
+    'JP': 'japon',
+    'KR': 'corea-sur',
+    'PH': 'filipinas',
+    'ID': 'indonesia',
+    'TH': 'tailandia',
+    'VN': 'vietnam',
+    'TR': 'turquia',
+    'SA': 'arabia-saudita',
+    'AU': 'australia',
     'NZ': 'nueva-zelanda',
   };
 
@@ -1660,9 +1707,8 @@ class _EmptyMapsState extends State<_EmptyMaps> {
     if (!mounted) return;
     // Suggest the device's country ("es_HN" → HN → honduras).
     final locale = Platform.localeName;
-    final cc = locale.contains('_')
-        ? locale.split('_').last.toUpperCase()
-        : null;
+    final cc =
+        locale.contains('_') ? locale.split('_').last.toUpperCase() : null;
     final suggestedId = cc == null ? null : _isoToRegion[cc];
     setState(() {
       _regions = regions;
@@ -1710,8 +1756,7 @@ class _EmptyMapsState extends State<_EmptyMaps> {
                   style: Theme.of(context).textTheme.headlineSmall,
                   textAlign: TextAlign.center),
               const SizedBox(height: 8),
-              Text(tr(context, 'emptyMapsBody'),
-                  textAlign: TextAlign.center),
+              Text(tr(context, 'emptyMapsBody'), textAlign: TextAlign.center),
               const SizedBox(height: 20),
               if (regions == null)
                 const CircularProgressIndicator()

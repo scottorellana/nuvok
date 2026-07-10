@@ -143,8 +143,8 @@ class _AiPageState extends State<AiPage> {
     List<RetrievedSource> sources = const [];
     String systemPrompt = _systemPromptForLanguage();
     if (_emergencyMode) {
-      setState(() =>
-          _messages.last.text = '🚨 ${tr(context, 'aiSearchingGuides')}');
+      setState(
+          () => _messages.last.text = '🚨 ${tr(context, 'aiSearchingGuides')}');
       try {
         sources = await EmergencyRetriever.retrieve(
           text,
@@ -247,28 +247,38 @@ class _AiPageState extends State<AiPage> {
 
   @override
   Widget build(BuildContext context) {
+    // En teléfonos los dos switches con etiqueta + refresh desbordan el
+    // AppBar: en compacto quedan icono + switch (el tooltip explica cuál es).
+    final compactBar = MediaQuery.of(context).size.width < 560;
     return Scaffold(
       appBar: AppBar(
         title: Text(tr(context, 'assistant')),
         actions: [
           Row(
             children: [
-              Icon(Icons.emergency,
-                  size: 18, color: _emergencyMode ? Colors.red : null),
+              Tooltip(
+                message: tr(context, 'emergency'),
+                child: Icon(Icons.emergency,
+                    size: 18, color: _emergencyMode ? Colors.red : null),
+              ),
               const SizedBox(width: 4),
-              Text(tr(context, 'emergency'),
-                  style: TextStyle(
-                      color: _emergencyMode ? Colors.red : null,
-                      fontWeight: _emergencyMode ? FontWeight.bold : null)),
+              if (!compactBar)
+                Text(tr(context, 'emergency'),
+                    style: TextStyle(
+                        color: _emergencyMode ? Colors.red : null,
+                        fontWeight: _emergencyMode ? FontWeight.bold : null)),
               Switch(
                 value: _emergencyMode,
                 activeTrackColor: Colors.red,
                 onChanged: (v) => setState(() => _emergencyMode = v),
               ),
               const SizedBox(width: 8),
-              const Icon(Icons.menu_book_outlined, size: 18),
+              Tooltip(
+                message: tr(context, 'library'),
+                child: const Icon(Icons.menu_book_outlined, size: 18),
+              ),
               const SizedBox(width: 4),
-              Text(tr(context, 'library')),
+              if (!compactBar) Text(tr(context, 'library')),
               Switch(
                 value: _useLibrary,
                 onChanged: (v) => setState(() => _useLibrary = v),
@@ -292,6 +302,9 @@ class _AiPageState extends State<AiPage> {
                     key: ValueKey(_selectedModel),
                     initialValue: _selectedModel,
                     isDense: true,
+                    // Los nombres de modelo (.gguf) son largos: sin esto el
+                    // valor seleccionado desborda el campo en móvil/tablet.
+                    isExpanded: true,
                     decoration: InputDecoration(
                       labelText: tr(context, 'model'),
                       border: OutlineInputBorder(),
@@ -353,7 +366,8 @@ class _AiPageState extends State<AiPage> {
                           controller: _scroll,
                           padding: const EdgeInsets.all(16),
                           itemCount: _messages.length,
-                          itemBuilder: (context, i) => _Bubble(message: _messages[i]),
+                          itemBuilder: (context, i) =>
+                              _Bubble(message: _messages[i]),
                         ),
                 ),
                 // En pánico nadie redacta: un toque envía la pregunta
@@ -455,7 +469,8 @@ class _AiPageState extends State<AiPage> {
 }
 
 class AiEmptyState extends StatelessWidget {
-  const AiEmptyState({super.key, required this.selectedModelPath, required this.server});
+  const AiEmptyState(
+      {super.key, required this.selectedModelPath, required this.server});
 
   final String? selectedModelPath;
   final AiEngine server;

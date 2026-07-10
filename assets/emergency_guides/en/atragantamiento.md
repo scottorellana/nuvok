@@ -1,72 +1,83 @@
 ---
-title: Choking (can't breathe or speak)
-keywords: [choking, suffocation, food stuck, cant breathe, cough, heimlich, airway obstruction, abdominal thrusts]
+title: Severe choking — AHA 2025
+keywords: [choking, asphyxia, foreign body airway obstruction, back blows, abdominal thrusts, infant]
 priority: 1
 ---
 
-# Choking
+# Severe choking — AHA 2025
 
-> ⚠️ This guide does not replace professional medical care. Get medical help as soon as possible.
+> ⚠️ For severe obstruction, activate the local emergency response system immediately, ideally on speakerphone. This guide does not replace hands-on training.
 
-## When to suspect it
+## Tell an effective cough from severe obstruction
 
-- They were eating, or a child was playing with small objects, and suddenly:
-- **Hands to the throat** (the universal sign).
-- **Can't speak, can't cough forcefully, can't breathe**, or makes a high whistling sound.
-- Red face turning bluish.
+### If the person can speak, cry, or cough forcefully
 
-**Golden rule: if they COUGH HARD or can talk → the airway isn't fully blocked. Encourage coughing and DON'T hit them yet. If the cough goes weak or silent, or they can't speak → act NOW.**
+- Encourage continued coughing.
+- Watch closely.
+- Do not give blows or thrusts while the cough remains forceful.
 
-## What NOT to do
+### Signs of severe obstruction
 
-- ❌ DON'T give water or bread "to push it down".
-- ❌ DON'T blind-sweep the throat with your fingers (you push it deeper). Only remove something you can SEE and pinch.
-- ❌ DON'T lay them on their back while conscious.
-- ❌ DON'T waste time: without air there are ~4 minutes before brain damage.
+- weak or absent cough;
+- unable to speak, cry, or breathe;
+- high-pitched sound or no sound;
+- blue or gray color;
+- confusion, decreasing responsiveness, or apnea.
 
-## Steps — conscious ADULT or CHILD
+## Responsive adult or child
 
-1. Ask: **"Are you choking? Can you speak?"** If they can't, say: "I'm going to help you."
-2. Stand BEHIND, slightly to the side. Support their chest with one hand and lean them FORWARD.
-3. **5 sharp back blows** with the heel of your hand, between the shoulder blades, hard and upward. Check the mouth after each: if the object is out, done.
-4. If not: **5 abdominal thrusts**: hug them from behind, one fist thumb-side in JUST ABOVE the navel (well below the breastbone), grab the fist with your other hand and pull **inward and UPWARD** hard, like lifting them.
-   - Pregnant or obese: thrust on the **center of the CHEST** instead.
-5. **Alternate 5 back blows / 5 thrusts** until it comes out or they pass out.
-6. **If they pass out:** lower them gently, **start CPR** (guide "CPR for adults"), plus: before each set of breaths LOOK in the mouth and remove the object only if you SEE it.
+1. Lean the torso forward and support the chest with one hand.
+2. Give **5 back blows** with the heel of the other hand between the shoulder blades.
+3. If the obstruction remains, give **5 abdominal thrusts**: place a fist just above the navel and below the sternum, grasp it, and pull inward and upward.
+4. Alternate cycles of **5 back blows and 5 abdominal thrusts** until the object is expelled or the person becomes unresponsive.
+5. For a person in late pregnancy, or when you cannot encircle the abdomen, replace abdominal thrusts with **5 chest thrusts**.
 
-## Steps — conscious BABY (under 1 year)
+Do not stop the cycles merely to inspect the mouth. Remove an object only when it is clearly visible and reachable without pushing it deeper.
 
-1. Sit down. Lay the baby **face-down along your forearm** resting on your thigh, head LOWER than the body, supporting the jaw with your fingers (don't squeeze the throat).
-2. **5 back blows** between the shoulder blades with the heel of your hand — firm but measured.
-3. Turn face-up on your other forearm, head lower than body.
-4. **5 chest compressions with TWO FINGERS** (CPR spot, just below the nipple line), slower and deeper than CPR pushes.
-5. Check the mouth between cycles; remove only what you can see. **Alternate 5 and 5** until it's out or the baby goes limp.
-6. **If unconscious:** baby CPR (guide "CPR for children and babies") checking the mouth before each breath.
-7. ❌ NEVER abdominal thrusts (Heimlich) on a baby — they injure organs.
+## Responsive infant younger than 1 year
 
-## If YOU are choking and ALONE
+1. Sit or kneel. Place the infant face down over your forearm or thigh while supporting the jaw and head; keep the head lower than the trunk without compressing the neck.
+2. Give **5 back blows** between the shoulder blades with the heel of one hand.
+3. Support the head, turn the infant face up, and keep the head lower than the trunk.
+4. Give **5 chest thrusts with the heel of one hand** on the sternum just below the nipple line.
+5. Alternate 5 back blows and 5 chest thrusts until the object is expelled or the infant becomes unresponsive.
 
-- Don't lock yourself in a bathroom (stay visible).
-- Fist above navel, pull up hard; if it fails, **drop your abdomen hard against a chair back** or table edge, repeatedly.
+**Never give abdominal thrusts to an infant.** AHA 2025 no longer recommends two fingers for these chest thrusts; use the heel of one hand.
 
-## When to get help / transport
+## If the person becomes unresponsive
 
-- After abdominal thrusts: medical check ALWAYS (internal organs can be hurt without obvious signs).
-- Object came out but coughing, pain or wheezing remains: see a doctor — a fragment may remain.
+1. Carefully place them face up on a firm, flat surface.
+2. Activate emergency response and request an AED if this has not already been done.
+3. Start CPR **beginning with compressions**. Use **30:2** cycles when you are the only rescuer.
+4. Before each attempt to give breaths, open the mouth and remove the object **only if it is clearly visible**.
+5. **Do not perform a blind finger sweep.**
+6. Use the AED as soon as it is available and continue until normal breathing returns or trained help takes over.
 
-## Signs of deterioration
+## After the object is expelled
 
-- Fading cough, bluish lips, drowsiness → the airway closed: treat as complete obstruction.
-- Unconscious → CPR now.
+- Monitor breathing and mental status until help arrives.
+- Seek medical evaluation if the person became unresponsive, cough/pain/breathing difficulty persists, or abdominal or chest thrusts were performed.
 
-## Example practice: Choking (can't breathe or speak)
+## Dangerous mistakes
 
-**Situation:** During a meal, someone grabs their throat, cannot speak, and stops coughing forcefully.
+- Do not give water, bread, or other food.
+- Do not hang a child or infant upside down by the feet.
+- Do not insert fingers or tools when the object is not visible.
+- Do not give abdominal thrusts to an infant.
+- Do not wait for it to “pass” when the cough weakens or speech becomes impossible.
 
-**Do:** 1. Make the scene safe and assign one specific person to call emergency services. 2. Follow the large steps in this guide in order instead of jumping to the most dramatic action. 3. Use gloves, barriers, or clean cloth if available. 4. Recheck every minute: breathing, responsiveness, bleeding, temperature, or worsening signs.
+## Clinical source
 
-**Avoid:** Do not improvise advanced procedures, do not move the neck/spine if injury is suspected, do not give food or drink to a confused person, and do not delay calling because you are searching for perfect equipment.
+Reviewed against the **AHA 2025 Guidelines for CPR and ECC**: severe obstruction in adults and children uses cycles of 5 back blows followed by 5 abdominal thrusts; infants receive 5 back blows alternating with 5 chest thrusts using the heel of one hand; if unresponsive, start CPR with compressions and remove only visible objects.
 
-**Escalate:** Call or evacuate immediately if breathing is not normal, chest pain appears, bleeding does not stop, confusion worsens, a burn is large, poisoning is possible, pregnancy is advanced, or there are multiple victims.
+- https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
 
-**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.
+## Example: Choking
+
+**Situation:** At dinner, an adult grabs his throat: he can't speak, cough or breathe.
+
+**Do:** 1. Ask "are you choking?" — if he nods and makes no sound, act NOW. 2. Give 5 back blows with the heel of your hand between the shoulder blades, leaning him forward. 3. If it doesn't come out: 5 abdominal thrusts (fist above the navel, inward and upward). 4. Alternate 5 and 5 until the object comes out or he passes out. 5. If he collapses: to the floor, call emergency services and start CPR.
+
+**Avoid:** Don't give water or bread "to push it down", don't sweep the mouth blindly, don't leave him alone "to recover", don't strike with the person upright.
+
+**Escalate:** If he loses consciousness switch to CPR immediately, checking the mouth before each breath; pregnant or obese: chest thrusts, not abdominal.

@@ -1,76 +1,83 @@
 ---
-title: CPR for adults (not breathing / no pulse)
-keywords: [cpr, resuscitation, cardiac arrest, heart, not breathing, unconscious, unresponsive, compressions, mouth to mouth, aed, defibrillator]
+title: Adult CPR — AHA 2025
+keywords: [cpr, cardiac arrest, not breathing, gasping, unresponsive, compressions, aed, defibrillator]
 priority: 1
 ---
 
-# CPR for adults
+# Adult CPR — AHA 2025
 
-> ⚠️ This guide does not replace professional medical care or hands-on training. Get medical help as soon as possible.
+> ⚠️ Activate the local emergency response system as soon as possible. This lay-rescuer guide does not replace hands-on training or professional care.
 
-## When to suspect it
+## Act when the person is unresponsive and not breathing normally
 
-- The person **does not respond** when you shout and shake their shoulders.
-- **Not breathing**, or only gasping (odd, noisy, spaced-out gulps — that is NOT breathing, it's a sign of arrest).
-- Gray, purple or very pale.
-- Just collapsed, was pulled from water, or got an electric shock.
+Isolated gasps are **not normal breathing**. If the person is unresponsive and is not breathing normally, presume cardiac arrest and start CPR. A lay rescuer should **not delay CPR to look for a pulse**.
 
-**If they don't respond and aren't breathing normally: it's cardiac arrest. Every minute without CPR cuts survival by ~10%. Start NOW.**
+## Rapid sequence
 
-## What NOT to do
+1. **Make sure the scene is safe.** Move the person only if staying there is dangerous.
+2. **Check responsiveness and breathing.** Tap the shoulders, shout, and look for normal breathing for no more than 10 seconds.
+3. **Call and get an AED.** If you have a phone, call on speaker while you begin. Direct another person to call and bring an automated external defibrillator (AED). If you are completely alone without a phone, leave to call and get an AED, then return immediately.
+4. **Place the person face up on a firm, flat surface.** Expose the chest.
+5. **Start compressions.** Put the heel of one hand in the center of the chest on the lower half of the sternum; place the other hand on top, interlock the fingers, and keep the arms straight.
 
-- ❌ DON'T waste time hunting for a pulse if you're not trained (unresponsive + not breathing normally is enough to start).
-- ❌ DON'T splash water, slap them, or wait "to see if they come around".
-- ❌ DON'T do compressions on someone awake or breathing normally.
-- ❌ DON'T interrupt compressions for more than 10 seconds for any reason.
-- ❌ DON'T fear breaking a rib: it happens often and beats death. Keep compressing.
+## High-quality compressions
 
-## Steps
+| Parameter | AHA 2025 target |
+|---|---|
+| Rate | **100–120 per minute** |
+| Depth | **5–6 cm** |
+| Position | Shoulders over hands, arms straight |
+| Recoil | Allow the chest to return fully after every compression |
+| Pauses | Minimize them; each pause should be **less than 10 seconds** |
+| Surface | Firm and flat |
 
-1. **Safety first (3 seconds).** Look around: wires, traffic, water, gas, smoke? Don't become victim two. Move the person ONLY if the scene is dangerous.
-2. **Check response.** Kneel, shake their shoulders firmly, shout: "Can you hear me? Open your eyes!"
-3. **Get help NOW.** Point at someone specific: "YOU, blue shirt: call emergency services and find a defibrillator (AED)!" Alone with a phone: call on speaker while you start. Alone with no phone and an adult victim: go get help/AED fast and return to compressions; for children or drowning/asphyxia, do 2 minutes of CPR before leaving.
-4. **Flat on their back on a HARD surface** (floor, not bed). Bare the chest.
-5. **Hand position:** heel of one hand on the **center of the chest** (lower half of the breastbone, between the nipples). Other hand on top, fingers interlaced and lifted off the chest.
-6. **Push HARD and FAST:**
-   - Depth: **5 to 6 cm / 2 to 2.4 inches** (a third of the chest). More than you think.
-   - Rate: **100 to 120 per minute** (the beat of "Stayin' Alive").
-   - Arms STRAIGHT, shoulders right above your hands, use your body weight.
-   - **Let the chest rise fully** between pushes (don't lean on it).
-7. **Rescue breaths (if you know how and are willing):** after **30 compressions**, give **2 breaths**: tilt the head back, lift the chin, pinch the nose, seal your mouth over theirs and blow 1 second until the chest rises. If air won't go in, reposition the head and try once more — then go back to compressions.
-   - **If you can't or won't: HANDS-ONLY, NON-STOP COMPRESSIONS. That saves lives too.**
-8. **Cycle:** 30 compressions : 2 breaths, no stopping. With a second rescuer, **swap every 2 minutes** (you tire sooner than you think and quality drops).
-9. **When an AED arrives:** turn it on and **do exactly what the voice says**. Bare dry chest, pads where the pictures show, NOBODY touching during analysis or shock. Resume compressions immediately after every shock.
-10. **Don't stop until:** (a) they move, cough or breathe normally, (b) someone relieves you, (c) professionals take over, or (d) you're completely exhausted.
+### 30:2 cycles
 
-## If breathing returns
+Give **30 compressions followed by 2 breaths (30:2)** before an advanced airway is in place.
 
-Roll them onto their side (recovery position): near arm at a right angle, back of the far hand under their cheek, bend the far knee and roll them toward you. Watch the breathing THE WHOLE TIME — it can stop again.
+- Open the airway with a head tilt–chin lift.
+- Pinch the nose, make a seal, and give each breath over about 1 second, only enough to create visible chest rise.
+- Avoid breaths that are too fast, frequent, or forceful.
+- If you are untrained, unable, or unwilling to give breaths, perform **Hands-Only CPR** with continuous compressions at 100–120/min.
 
-## When to get help / transport
+## Use the AED as soon as it arrives
 
-- ALWAYS. Cardiac arrest needs a hospital even if they "recover".
-- No ambulance available: organize transport to the nearest health center WITHOUT interrupting CPR (two people taking turns in the back of a vehicle).
+1. Turn it on and follow its voice prompts.
+2. Dry a wet chest and place the pads directly on bare skin as shown in the diagrams.
+3. Make sure no one touches the person during analysis or shock delivery.
+4. Resume compressions immediately after a shock or a “no shock advised” prompt.
 
-## Signs of deterioration
+## Continue until
 
-- Breathing stops again → restart compressions immediately.
-- Vomiting → roll to the side, sweep the mouth quickly with a cloth-wrapped finger, continue.
+- the person shows clear signs of life and breathes normally;
+- trained responders take over;
+- another rescuer can replace you; or
+- the scene becomes unsafe or you are physically unable to continue.
 
-## Example practice: CPR for adults (not breathing / no pulse)
+If normal breathing returns but the person remains unresponsive, place them on their side if no suspected injury prevents it, keep them warm, and monitor breathing continuously. Restart CPR if normal breathing stops.
 
-**Situation:** An adult collapses in a living room, does not respond to a loud voice or shoulder tap, and only gasps occasionally.
+## Dangerous mistakes
 
-**Do:** 1. Make the scene safe and assign one specific person to call emergency services. 2. Follow the large steps in this guide in order instead of jumping to the most dramatic action. 3. Use gloves, barriers, or clean cloth if available. 4. Recheck every minute: breathing, responsiveness, bleeding, temperature, or worsening signs.
+- Do not mistake gasping for normal breathing.
+- Do not delay compressions for a pulse check if you are not a trained healthcare professional.
+- Do not compress on a soft bed if the person can safely be placed on a firm surface.
+- Do not lean on the chest between compressions.
+- Do not repeatedly stop CPR to check whether the person has “come around.”
 
-**Avoid:** Do not improvise advanced procedures, do not move the neck/spine if injury is suspected, do not give food or drink to a confused person, and do not delay calling because you are searching for perfect equipment.
+## Clinical source
 
-**Escalate:** Call or evacuate immediately if breathing is not normal, chest pain appears, bleeding does not stop, confusion worsens, a burn is large, poisoning is possible, pregnancy is advanced, or there are multiple victims.
+Reviewed against the **AHA 2025 Guidelines for CPR and ECC**: 30:2 ratio, compression rate of 100–120/min, adult depth of 5–6 cm, full recoil, pauses under 10 seconds, ventilation to visible chest rise, and early defibrillation.
 
-**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.
+- https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
 
-## Evidence base and improvisation
+## Example: Adult CPR
 
-- Based on AHA 2025: compressions 100-120/min, adult depth 5-6 cm, full recoil, minimal pauses, and early AED.
-- If you do not know or do not want to give breaths, use hands-only CPR without stopping until help or an AED arrives.
-- Improvise rhythm with the app metronome, a 100-120 BPM song, or counting out loud; do not improvise by hunting for a pulse if untrained.
+**Situation:** An adult collapses at the market; he doesn't respond when you shout and shake him, and he isn't breathing normally.
+
+**Do:** 1. Shout for help, have someone call emergency services and bring an AED. 2. Kneel, heel of one hand on the center of the chest, other hand on top. 3. Push hard and fast at 100–120 per minute, 5–6 cm deep, letting the chest recoil. 4. If trained in breaths: 30:2 with an open airway; if not, compress without stopping. 5. Use the AED as soon as it arrives and follow its prompts.
+
+**Avoid:** Don't pause more than 10 seconds, don't compress timidly (broken ribs heal, cardiac arrest doesn't), don't wait "to see if he reacts", don't give breaths without a seal when an improvised barrier is available.
+
+**Escalate:** With more people, switch every 2 minutes to keep quality; continue until professionals arrive, the person breathes, or the AED says otherwise.
+
+> **Safe improvisation:** CPR needs no equipment — only your hands; a thin cloth works as a breathing barrier and, without one, compression-only CPR still saves lives.

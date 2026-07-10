@@ -53,7 +53,8 @@ title: RCP
     expect(agua!.lang, 'zh');
     expect(agua.modes, contains('bosque'));
     // Una guía sin traducción zh llega por fallback (en→es), no desaparece.
-    final rcp = zh.where((g) => g.id == 'rcp_adulto').firstOrNull;
+    // (rcp_adulto ya se tradujo a zh por AHA 2025; terremoto sigue es/en.)
+    final rcp = zh.where((g) => g.id == 'terremoto').firstOrNull;
     expect(rcp, isNotNull);
     expect(['en', 'es'], contains(rcp!.lang));
   });

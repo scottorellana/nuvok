@@ -1,64 +1,91 @@
 ---
-title: CPR for children and babies
-keywords: [cpr, baby, infant, child, arrest, not breathing, drowned, unconscious, resuscitation]
+title: Child and infant CPR — AHA 2025
+keywords: [cpr, child, infant, baby, cardiac arrest, not breathing, drowning, asphyxia, aed]
 priority: 1
 ---
 
-# CPR for children (1 year to puberty) and babies (under 1 year)
+# Child and infant CPR — AHA 2025
 
-> ⚠️ This guide does not replace professional medical care or hands-on training. Get medical help as soon as possible.
+**Infant:** younger than 1 year, excluding a newborn at birth. **Child:** 1 year to the onset of puberty.
 
-In children, arrest almost always starts with **lack of oxygen** (drowning, choking, suffocation), not the heart. That's why **rescue breaths matter more** here than in adults.
+> ⚠️ Activate the local emergency response system. Pediatric CPR with compressions and breaths is preferred when the rescuer can provide it; this guide does not replace hands-on training.
 
-## When to suspect it
+## Recognize cardiac arrest
 
-- No response to your voice or to stimulation (rub the breastbone with your knuckles; tap a baby's foot soles).
-- Not breathing, or only gasping.
-- Bluish lips or face, floppy body.
+Act when a child or infant is unresponsive and is not breathing normally or is only gasping. A lay rescuer should not delay CPR to check for a pulse.
 
-## What NOT to do
+## One-rescuer sequence
 
-- ❌ DON'T shake a baby violently (it can cause brain damage).
-- ❌ DON'T use adult force: babies get TWO-FINGER compressions.
-- ❌ DON'T tilt a baby's head far back (it closes their airway); neutral "sniffing" position.
-- ❌ DON'T run for help before doing 2 minutes of CPR if you're alone.
+1. **Safety and response.** Check the scene. Call to the child and tap the shoulders; for an infant, gently tap the sole of the foot. Do not shake the infant.
+2. **Call for help and an AED.** If you have a phone, call on speaker without leaving the patient. Send someone else to get an AED.
+3. **If you are alone without a phone:**
+   - for a sudden witnessed collapse, activate emergency response and get the AED first;
+   - for an unwitnessed collapse or one likely caused by lack of oxygen, provide about 2 minutes of CPR before leaving to call and get an AED.
+4. **Place the child or infant face up on a firm, flat surface.**
+5. **Start with compressions.** AHA uses the compressions-airway-breathing sequence; this algorithm does **not** call for 5 initial rescue breaths.
 
-## Steps
+## High-quality compressions
 
-1. **Safety and response.** Stimulate: call them, rub the breastbone. Baby: tap the soles.
-2. **Alone? Do 2 MINUTES of CPR BEFORE going for help or calling.** (In children immediate oxygen is what saves.) If someone else is there, they call and fetch an AED now.
-3. **Open the airway:** tilt the forehead slightly back, lift the chin. Babies: neutral position (like sniffing a flower), do NOT overextend.
-4. **Give 5 initial rescue breaths:**
-   - Child: pinch the nose, seal your mouth over theirs, blow 1 second until the chest rises.
-   - Baby: cover their mouth AND nose with YOUR mouth; gentle puffs, just your cheeks' air.
-5. **30 compressions:**
-   - **Child:** heel of ONE hand (two if the child is big) center of the chest. Depth: **one third of the chest (~5 cm / 2 in)**. Rate 100-120/min.
-   - **Baby:** **TWO FINGERS** center of the chest just below the nipple line (or two-thumbs-encircling technique with two rescuers). Depth: **one third of the chest (~4 cm / 1.5 in)**. Rate 100-120/min.
-6. **Cycle 30 compressions : 2 breaths** without stopping (15:2 if two trained rescuers).
-7. **AED:** use it as soon as it arrives; pediatric pads if available, otherwise adult pads (one on the chest, one on the BACK for a baby).
-8. **Don't stop** until they breathe, you're relieved, or help arrives.
+Compress at **100–120 per minute**, allow full chest recoil, and keep each pause under 10 seconds.
 
-## If breathing returns
+### Child from 1 year to puberty
 
-Recovery position on their side. Hold a baby on your arms lying on their side, head slightly lower than the body, watching the breathing constantly.
+- Place the heel of **one or two hands** in the center of the chest on the lower half of the sternum.
+- Depth: at least one third of the chest’s anterior-posterior diameter, about **5 cm**; avoid excessive depth.
 
-## When to get help / transport
+### Infant younger than 1 year
 
-- ALWAYS, even if they recover. Children can deteriorate hours later.
+- Compress the sternum with the **heel of one hand** or use the **2-thumb encircling-hands technique**.
+- If you cannot encircle the chest, use the heel of one hand.
+- Depth: at least one third of the chest, about **4 cm**.
+- The old 2-finger technique **is no longer recommended for infant CPR in AHA 2025**.
 
-## Signs of deterioration
+## Compression-to-breath ratio
 
-- Goes floppy or blue again → restart breaths and compressions now.
-- Vomits → onto the side, clear the mouth in 2 seconds, continue.
+| Rescuers | Ratio |
+|---|---|
+| One | **30:2** |
+| Two trained rescuers | **15:2** |
 
-## Example practice: CPR for children and babies
+To give breaths:
 
-**Situation:** A small child collapses after playing and is not breathing normally; two adults and a charged phone are available.
+- Child: use a gentle head tilt–chin lift, pinch the nose, and seal over the mouth.
+- Infant: keep the head neutral or in a slight sniffing position and seal over both mouth and nose.
+- Give each breath over about 1 second, only until the chest visibly rises. If it does not rise, reposition the airway before trying again.
 
-**Do:** 1. Make the scene safe and assign one specific person to call emergency services. 2. Follow the large steps in this guide in order instead of jumping to the most dramatic action. 3. Use gloves, barriers, or clean cloth if available. 4. Recheck every minute: breathing, responsiveness, bleeding, temperature, or worsening signs.
+If you cannot provide breaths, give continuous compressions; that is better than no CPR.
 
-**Avoid:** Do not improvise advanced procedures, do not move the neck/spine if injury is suspected, do not give food or drink to a confused person, and do not delay calling because you are searching for perfect equipment.
+## AED
 
-**Escalate:** Call or evacuate immediately if breathing is not normal, chest pain appears, bleeding does not stop, confusion worsens, a burn is large, poisoning is possible, pregnancy is advanced, or there are multiple victims.
+- Turn it on and follow its prompts as soon as it is available.
+- Use pediatric pads/an attenuator if available. If not, adult pads may be used if they fit without touching.
+- If pads would touch, place one on the chest and one on the back.
+- Resume compressions immediately after every analysis or shock.
 
-**Quick check:** before closing the guide, say out loud what happened, what you did, what is missing, and who is responsible next. This is a guided practice example; adapt it to your environment and prioritize professional help when available.
+## Continue and monitor
+
+Continue until normal breathing and signs of life return, trained help takes over, another rescuer relieves you, or you cannot continue. If breathing returns but the child remains unresponsive, place them on their side only when no suspected injury prevents it and monitor breathing continuously.
+
+## Dangerous mistakes
+
+- Do not shake an infant or use a forceful sternal rub.
+- Do not hyperextend an infant’s neck.
+- Do not use the obsolete 2-finger technique for CPR compressions.
+- Do not delay compressions for a pulse check if you are a lay rescuer.
+- Do not give large or rapid breaths; visible chest rise is enough.
+
+## Clinical source
+
+Reviewed against the **AHA 2025 Guidelines for CPR and ECC**, including the updated infant compression technique, rate of 100–120/min, approximate depths of 4 cm and 5 cm, 30:2 and 15:2 ratios, pauses under 10 seconds, and early AED use.
+
+- https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
+
+## Example: Child and Infant CPR
+
+**Situation:** An 8-month-old goes limp and unresponsive after a choking episode; she isn't breathing normally.
+
+**Do:** 1. Shout for help and have someone call emergency services on speaker. 2. Place her on a firm surface. 3. Compress the center of the chest with the heel of one hand, about 4 cm deep, at 100–120 per minute. 4. Alone: 30:2; two trained rescuers: 15:2. 5. After 2 minutes, if nobody has called, call yourself and return immediately.
+
+**Avoid:** Don't shake the infant, don't compress the abdomen or ribs, don't pause more than 10 seconds, don't give up on a cold or blue infant: keep going.
+
+**Escalate:** If the chest doesn't rise with breaths, reposition the head (neutral position for infants); sweep the mouth with a hooked finger ONLY if you can see the object; continue until professional help or effective breathing.

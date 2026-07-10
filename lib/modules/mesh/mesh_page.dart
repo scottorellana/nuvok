@@ -74,8 +74,7 @@ class _MeshPageState extends State<MeshPage> {
         content: TextField(
           controller: nameCtrl,
           autofocus: true,
-          decoration: InputDecoration(
-              labelText: tr(context, 'groupNameHint')),
+          decoration: InputDecoration(labelText: tr(context, 'groupNameHint')),
           onSubmitted: (v) => Navigator.pop(context, v),
         ),
         actions: [
@@ -172,15 +171,15 @@ class _MeshPageState extends State<MeshPage> {
     if (code == null || !mounted) return;
     final channel = MeshChannel.fromCode(code.trim());
     if (channel == null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(tr(context, 'invalidCode'))));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(tr(context, 'invalidCode'))));
       return;
     }
     await _service.joinChannel(channel);
     if (mounted) {
       setState(() {});
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('${tr(context, 'joinedChannel')} "${channel.name}"')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${tr(context, 'joinedChannel')} "${channel.name}"')));
     }
   }
 
@@ -198,8 +197,8 @@ class _MeshPageState extends State<MeshPage> {
             const SizedBox(height: 12),
             TextField(
               controller: noteCtrl,
-              decoration: InputDecoration(
-                  labelText: tr(context, 'sosNoteHint')),
+              decoration:
+                  InputDecoration(labelText: tr(context, 'sosNoteHint')),
             ),
           ],
         ),
@@ -229,16 +228,27 @@ class _MeshPageState extends State<MeshPage> {
         actions: [
           ValueListenableBuilder(
             valueListenable: _service.peerCount,
-            builder: (context, count, _) => Padding(
-              padding: const EdgeInsets.only(right: 12),
-              child: Chip(
-                avatar: Icon(Icons.podcasts,
-                    size: 18,
-                    color: count > 0 ? Colors.greenAccent : Colors.grey),
-                label:
-                    Text(count > 0 ? '$count ${tr(context, 'nearby')}' : tr(context, 'searchingDevices')),
-              ),
-            ),
+            builder: (context, count, _) {
+              // En teléfonos el chip con texto completo no cabe junto al
+              // título: queda el número (o "…") con tooltip explicativo.
+              final compact = MediaQuery.of(context).size.width < 480;
+              final fullLabel = count > 0
+                  ? '$count ${tr(context, 'nearby')}'
+                  : tr(context, 'searchingDevices');
+              return Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: Tooltip(
+                  message: fullLabel,
+                  child: Chip(
+                    avatar: Icon(Icons.podcasts,
+                        size: 18,
+                        color: count > 0 ? Colors.greenAccent : Colors.grey),
+                    label: Text(
+                        compact ? (count > 0 ? '$count' : '…') : fullLabel),
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -263,44 +273,45 @@ class _MeshPageState extends State<MeshPage> {
 
   Widget _buildMainList(BuildContext context) {
     return ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          _buildSosCard(),
-          const SizedBox(height: 12),
-          _buildStatusRow(),
-          const SizedBox(height: 8),
-          // Punto de encuentro: quién llegó / quién falta (si está marcado).
-          const MeetingPointCard(),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Text(tr(context, 'channels'), style: Theme.of(context).textTheme.titleMedium),
-              const Spacer(),
-              TextButton.icon(
-                  onPressed: _joinChannel,
-                  icon: const Icon(Icons.input, size: 18),
-                  label: Text(tr(context, 'join'))),
-              const SizedBox(width: 4),
-              FilledButton.icon(
-                  onPressed: _createChannel,
-                  icon: const Icon(Icons.add, size: 18),
-                  label: Text(tr(context, 'create'))),
-            ],
-          ),
-          const SizedBox(height: 4),
-          _channelTile(MeshChannel.emergency,
-              subtitle: tr(context, 'emergencyChannelSubtitle')),
-          for (final c in _service.channels) _channelTile(c, showCode: true),
-          if (_service.channels.isEmpty)
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                tr(context, 'noChannelsHint'),
-                style: const TextStyle(color: Colors.grey),
-              ),
+      padding: const EdgeInsets.all(16),
+      children: [
+        _buildSosCard(),
+        const SizedBox(height: 12),
+        _buildStatusRow(),
+        const SizedBox(height: 8),
+        // Punto de encuentro: quién llegó / quién falta (si está marcado).
+        const MeetingPointCard(),
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            Text(tr(context, 'channels'),
+                style: Theme.of(context).textTheme.titleMedium),
+            const Spacer(),
+            TextButton.icon(
+                onPressed: _joinChannel,
+                icon: const Icon(Icons.input, size: 18),
+                label: Text(tr(context, 'join'))),
+            const SizedBox(width: 4),
+            FilledButton.icon(
+                onPressed: _createChannel,
+                icon: const Icon(Icons.add, size: 18),
+                label: Text(tr(context, 'create'))),
+          ],
+        ),
+        const SizedBox(height: 4),
+        _channelTile(MeshChannel.emergency,
+            subtitle: tr(context, 'emergencyChannelSubtitle')),
+        for (final c in _service.channels) _channelTile(c, showCode: true),
+        if (_service.channels.isEmpty)
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              tr(context, 'noChannelsHint'),
+              style: const TextStyle(color: Colors.grey),
             ),
-        ],
-      );
+          ),
+      ],
+    );
   }
 
   Widget _buildOnboarding(BuildContext context) {
@@ -427,8 +438,10 @@ class _MeshPageState extends State<MeshPage> {
                   children: [
                     Icon(Icons.offline_bolt, color: Colors.green.shade700),
                     const SizedBox(width: 8),
-                    Text(tr(context, 'meshOnboardSubtitle'),
-                        style: Theme.of(context).textTheme.titleSmall),
+                    Expanded(
+                      child: Text(tr(context, 'meshOnboardSubtitle'),
+                          style: Theme.of(context).textTheme.titleSmall),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -475,17 +488,22 @@ class _MeshPageState extends State<MeshPage> {
         const SizedBox(height: 8),
         Row(
           children: [
-            ValueListenableBuilder(
-              valueListenable: _service.queuedCount,
-              builder: (context, queued, _) => queued == 0
-                  ? const SizedBox.shrink()
-                  : Chip(
-                      avatar: const Icon(Icons.schedule_send, size: 18),
-                      label: Text('$queued ${tr(context, 'queuedNoReach')}'),
-                    ),
+            Flexible(
+              child: ValueListenableBuilder(
+                valueListenable: _service.queuedCount,
+                builder: (context, queued, _) => queued == 0
+                    ? const SizedBox.shrink()
+                    : Chip(
+                        avatar: const Icon(Icons.schedule_send, size: 18),
+                        label: Text('$queued ${tr(context, 'queuedNoReach')}'),
+                      ),
+              ),
             ),
             const Spacer(),
-            Text(tr(context, 'shareMyPosition')),
+            Flexible(
+              child: Text(tr(context, 'shareMyPosition'),
+                  maxLines: 1, overflow: TextOverflow.ellipsis),
+            ),
             ValueListenableBuilder(
               valueListenable: _service.sharingPosition,
               builder: (context, sharing, _) => Switch(
@@ -514,7 +532,8 @@ class _MeshPageState extends State<MeshPage> {
           child: Icon(isEmergency ? Icons.campaign : Icons.forum,
               color: Colors.white, size: 20),
         ),
-        title: Text(isEmergency ? tr(context, 'emergencyChannelTitle') : channel.name),
+        title: Text(
+            isEmergency ? tr(context, 'emergencyChannelTitle') : channel.name),
         subtitle: Text(preview, maxLines: 1, overflow: TextOverflow.ellipsis),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,

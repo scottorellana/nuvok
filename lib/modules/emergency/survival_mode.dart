@@ -34,7 +34,8 @@ extension SurvivalModeInfo on SurvivalMode {
 
   /// Paquete completo escrito y con ilustraciones. Los no-listos igualmente
   /// muestran las guías generales etiquetadas para su entorno.
-  bool get ready => this == SurvivalMode.bosque;
+  bool get ready =>
+      this == SurvivalMode.bosque || this == SurvivalMode.desierto;
 }
 
 SurvivalMode survivalModeFromSetting(String? name) {

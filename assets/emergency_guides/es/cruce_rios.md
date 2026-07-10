@@ -1,6 +1,6 @@
 ---
 title: Cruzar Ríos con Seguridad
-keywords: [río, cruzar, corriente, vadear, ahogamiento, agua, quebrada, crecida]
+keywords: [río, cruzar, corriente, vadear, atrapamiento, agua, quebrada, crecida]
 priority: 2
 mode: [bosque, montana, rio]
 category: supervivencia

@@ -1,7 +1,7 @@
 name: prepper_pad
 description: Biblioteca de conocimiento offline — Wikipedia, mapas, IA local y notas en una sola app.
 publish_to: 'none'
-version: 0.3.0+1
+version: 0.4.0+1
 
 environment:
   sdk: ^3.5.0

@@ -107,6 +107,8 @@ class AppStrings {
     'calcSalt', 'calcTspNote', 'calcChlorineTitle', 'calcBleachPct',
     'calcCloudy', 'calcDrops', 'calcWait30', 'calcDisclaimer',
     'voiceRead', 'voiceStopRead',
+    'tqTitle', 'tqApplied', 'tqWhere', 'tqWhereHint', 'tqStart', 'tqEmpty',
+    'tqOkHint', 'tqWarnHint', 'tqCritHint', 'tqShare', 'tqShared', 'tqResolve',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -1226,6 +1228,82 @@ class AppStrings {
       'es': 'Detener lectura', 'en': 'Stop reading',
       'pt': 'Parar leitura', 'fr': 'Arrêter la lecture',
       'zh': '停止朗读', 'ja': '読み上げを停止', 'ht': 'Rete lekti a',
+    },
+    'tqTitle': {
+      'es': 'Timer de torniquete', 'en': 'Tourniquet timer',
+      'pt': 'Timer de torniquete', 'fr': 'Minuteur de garrot',
+      'zh': '止血带计时器', 'ja': '止血帯タイマー', 'ht': 'Kwonomèt tounikè',
+    },
+    'tqApplied': {
+      'es': 'APLIQUÉ TORNIQUETE', 'en': 'TOURNIQUET APPLIED',
+      'pt': 'APLIQUEI TORNIQUETE', 'fr': 'GARROT POSÉ',
+      'zh': '已上止血带', 'ja': '止血帯を装着', 'ht': 'MWEN METE TOUNIKÈ',
+    },
+    'tqWhere': {
+      'es': '¿Dónde y a quién?', 'en': 'Where and on whom?',
+      'pt': 'Onde e em quem?', 'fr': 'Où et sur qui ?',
+      'zh': '部位和伤者？', 'ja': '部位と対象者は？', 'ht': 'Ki kote e sou kilès?',
+    },
+    'tqWhereHint': {
+      'es': 'Pierna derecha - Juan', 'en': 'Right leg - John',
+      'pt': 'Perna direita - João', 'fr': 'Jambe droite - Jean',
+      'zh': '右腿 - 小明', 'ja': '右脚 - 田中', 'ht': 'Janm dwat - Jan',
+    },
+    'tqStart': {
+      'es': 'Iniciar timer', 'en': 'Start timer',
+      'pt': 'Iniciar timer', 'fr': 'Démarrer',
+      'zh': '开始计时', 'ja': '計測開始', 'ht': 'Kòmanse',
+    },
+    'tqEmpty': {
+      'es': 'Sin torniquetes activos.\n\nAl aplicar uno, toca el botón rojo: la HORA de aplicación es un dato que el médico necesitará.',
+      'en': 'No active tourniquets.\n\nWhen you apply one, tap the red button: the time of application is data the doctor will need.',
+      'pt': 'Sem torniquetes ativos.\n\nAo aplicar um, toque no botão vermelho: a HORA de aplicação é um dado que o médico precisará.',
+      'fr': 'Aucun garrot actif.\n\nQuand vous en posez un, touchez le bouton rouge : l\'heure de pose est une donnée dont le médecin aura besoin.',
+      'zh': '没有活动的止血带。\n\n上止血带后请点红色按钮：上带时间是医生需要的数据。',
+      'ja': '使用中の止血帯はありません。\n\n装着したら赤いボタンを：装着時刻は医師に必要なデータです。',
+      'ht': 'Pa gen tounikè aktif.\n\nLè ou mete youn, peze bouton wouj la: LÈ ou mete l se yon done doktè a ap bezwen.',
+    },
+    'tqOkHint': {
+      'es': 'Anota la hora en la piel o cinta si puedes.',
+      'en': 'Write the time on skin or tape if you can.',
+      'pt': 'Anote a hora na pele ou fita se puder.',
+      'fr': 'Notez l\'heure sur la peau ou du ruban si possible.',
+      'zh': '如有可能，把时间写在皮肤或胶带上。',
+      'ja': '可能なら皮膚かテープに時刻を書いてください。',
+      'ht': 'Ekri lè a sou po a oswa yon riban si ou kapab.',
+    },
+    'tqWarnHint': {
+      'es': '⚠️ +90 min: prioriza llegar a atención médica YA.',
+      'en': '⚠️ +90 min: prioritize reaching medical care NOW.',
+      'pt': '⚠️ +90 min: priorize chegar a atendimento médico JÁ.',
+      'fr': '⚠️ +90 min : priorité absolue aux soins médicaux MAINTENANT.',
+      'zh': '⚠️ 超过90分钟：立即优先送医。',
+      'ja': '⚠️ 90分超：今すぐ医療機関へ。',
+      'ht': '⚠️ +90 min: pryorite rive kay doktè KOUNYE A.',
+    },
+    'tqCritHint': {
+      'es': '🔴 +2 h: riesgo del miembro. SOLO personal médico decide aflojarlo.',
+      'en': '🔴 +2 h: limb at risk. ONLY medical personnel decide to loosen it.',
+      'pt': '🔴 +2 h: risco do membro. SÓ pessoal médico decide afrouxá-lo.',
+      'fr': '🔴 +2 h : membre en danger. SEUL le personnel médical décide de le desserrer.',
+      'zh': '🔴 超过2小时：肢体有风险。只有医务人员能决定放松。',
+      'ja': '🔴 2時間超：四肢のリスク。緩める判断は医療者のみ。',
+      'ht': '🔴 +2 è: manm nan an danje. SÈLMAN pèsonèl medikal deside lache l.',
+    },
+    'tqShare': {
+      'es': 'Avisar al grupo', 'en': 'Alert the group',
+      'pt': 'Avisar o grupo', 'fr': 'Alerter le groupe',
+      'zh': '通知小组', 'ja': 'グループに通知', 'ht': 'Avèti gwoup la',
+    },
+    'tqShared': {
+      'es': 'Enviado al canal de emergencia', 'en': 'Sent to the emergency channel',
+      'pt': 'Enviado ao canal de emergência', 'fr': 'Envoyé sur le canal d\'urgence',
+      'zh': '已发送到紧急频道', 'ja': '緊急チャンネルに送信済み', 'ht': 'Voye nan kanal ijans lan',
+    },
+    'tqResolve': {
+      'es': 'Resuelto', 'en': 'Resolved',
+      'pt': 'Resolvido', 'fr': 'Résolu',
+      'zh': '已处理', 'ja': '解決', 'ht': 'Rezoud',
     },
     'callEmergency': {
       'es': 'LLAMAR', 'en': 'CALL', 'pt': 'LIGAR', 'fr': 'APPELER',

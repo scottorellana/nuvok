@@ -17,6 +17,7 @@ import 'emergency_directory.dart';
 import 'emergency_guide_media.dart';
 import 'guide_voice.dart';
 import 'emergency_call_button.dart';
+import 'tourniquet_page.dart';
 import 'emergency_guides.dart';
 import 'medical_diagrams.dart';
 
@@ -201,6 +202,21 @@ class _EmergencyPageState extends State<EmergencyPage> {
                 // Llamada real al número de emergencias del país (offline
                 // se resuelve el número; la llamada usa la red si vive).
                 const EmergencyCallButton(),
+                // Timer de torniquete: la hora de aplicación salva el miembro.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                  child: OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(44),
+                      foregroundColor: Colors.red.shade400,
+                    ),
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (_) => const TourniquetPage())),
+                    icon: const Icon(Icons.timer),
+                    label: Text('🩸 ${tr(context, 'tqTitle')}'),
+                  ),
+                ),
                 // Quick-access emergency buttons (4 most critical)
                 _buildQuickAccess(),
                 Padding(

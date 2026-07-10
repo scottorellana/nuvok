@@ -88,7 +88,15 @@ si el intento foto sale derretido. Alt-text en emergency_guide_media.dart.
 Tests existentes cubren automáticamente las guías nuevas (iteran el
 manifest: cero $1, cero **, imagen decodificable).
 
-## Fases 3-11
+## Estado (2026-07-10)
 
-Se especifican en detalle al llegar a cada una (una fase = un plan). El
-orden puede ajustarse por pedido del usuario.
+TODAS las fases implementadas, testeadas (319 tests) y desplegadas:
+1 walkie-talkie de voz ✅ · 2 guías supervivencia (6 nuevas, 31×2) ✅ ·
+3 LLAMAR por país ✅ · 4 calculadoras OMS ✅ · 5 voz manos libres (TTS) ✅ ·
+6 timer torniquete + aviso mesh ✅ · 7 ficha ICE + QR ✅ · 8 árbol 911 ✅ ·
+9 mapa táctico por mesh ✅ · 10 punto de encuentro con quién llegó ✅ ·
+11 baliza SOS ultra-ahorro + burst final ✅. Además: IA i18n completa (7
+idiomas) + modo emergencia sin modelo + chips de un toque.
+
+Pendiente de campo: prueba física multi-dispositivo (walkie-talkie,
+overlays por mesh, BLE Windows en la PC del usuario).

@@ -55,6 +55,7 @@ dependencies:
   # en pantalla (radios BLE siguen activos en segundo plano).
   flutter_local_notifications: ^18.0.1
   record: ^7.1.1
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

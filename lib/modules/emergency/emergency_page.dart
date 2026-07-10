@@ -15,6 +15,7 @@ import '../tools/flashlight.dart';
 import '../tools/rcp_metronome.dart';
 import 'emergency_directory.dart';
 import 'emergency_guide_media.dart';
+import 'emergency_call_button.dart';
 import 'emergency_guides.dart';
 import 'medical_diagrams.dart';
 
@@ -196,6 +197,9 @@ class _EmergencyPageState extends State<EmergencyPage> {
                     onChanged: _search,
                   ),
                 ),
+                // Llamada real al número de emergencias del país (offline
+                // se resuelve el número; la llamada usa la red si vive).
+                const EmergencyCallButton(),
                 // Quick-access emergency buttons (4 most critical)
                 _buildQuickAccess(),
                 Padding(

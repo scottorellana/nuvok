@@ -98,7 +98,7 @@ class AppStrings {
     'advisorTitle', 'advisorBtOff', 'advisorBtOffBody',
     'advisorBtPerm', 'advisorBtPermBody', 'advisorHotspot',
     'advisorHotspotBody', 'advisorLora', 'advisorLoraBody',
-    'voiceHold', 'voiceMicPermission',
+    'voiceHold', 'voiceMicPermission', 'callEmergency',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -985,6 +985,10 @@ class AppStrings {
       'fr': 'Besoin de kilomètres de portée ?',
       'zh': '需要数公里的通信距离？', 'ja': '数kmの通信距離が必要？',
       'ht': 'Bezwen plizyè kilomèt distans?',
+    },
+    'callEmergency': {
+      'es': 'LLAMAR', 'en': 'CALL', 'pt': 'LIGAR', 'fr': 'APPELER',
+      'zh': '拨打', 'ja': '発信', 'ht': 'RELE',
     },
     'voiceHold': {
       'es': 'Mantén presionado para hablar', 'en': 'Hold to talk',

@@ -12,14 +12,23 @@ class EmergencyGuide {
     required this.keywords,
     required this.priority,
     required this.body,
+    this.modes = const [],
+    this.category = 'emergencia',
   });
 
   final String id; // filename without extension
-  final String lang; // 'es' | 'en'
+  final String lang; // 'es' | 'en' | 'pt' | 'fr' | 'zh' | 'ja' | 'ht'
   final String title;
   final List<String> keywords;
   final int priority; // 1 = most critical, shown first
   final String body; // markdown without the frontmatter
+
+  /// Entornos de supervivencia donde esta guía aplica ('bosque', 'mar', …).
+  /// Vacío = guía general (emergencias médicas, desastres).
+  final List<String> modes;
+
+  /// 'emergencia' | 'supervivencia' | 'clima' | 'reconstruccion'.
+  final String category;
 }
 
 class EmergencyGuides {
@@ -46,6 +55,29 @@ class EmergencyGuides {
         // A malformed guide must never break the rest.
       }
     }
+    // Fallback POR GUÍA: si el idioma pedido no tiene una guía, se completa
+    // con en→es. Una traducción parcial nunca debe ocultar contenido vital.
+    if (lang != 'es') {
+      final have = {for (final g in guides) g.id};
+      for (final fbLang in [if (lang != 'en') 'en', 'es']) {
+        final fbPaths = manifest
+            .listAssets()
+            .where((p) => p.startsWith('assets/emergency_guides/$fbLang/'))
+            .where((p) => p.endsWith('.md'));
+        for (final path in fbPaths) {
+          final id = path.split('/').last.replaceAll('.md', '');
+          if (have.contains(id)) continue;
+          try {
+            final raw = await rootBundle.loadString(path);
+            final guide = parse(raw, id: id, lang: fbLang);
+            if (guide != null) {
+              guides.add(guide);
+              have.add(id);
+            }
+          } catch (_) {}
+        }
+      }
+    }
     guides.sort((a, b) => a.priority.compareTo(b.priority));
     _cache[lang] = guides;
     return guides;
@@ -57,6 +89,8 @@ class EmergencyGuides {
     var title = id;
     var keywords = <String>[];
     var priority = 9;
+    var modes = <String>[];
+    var category = 'emergencia';
     var body = raw;
     if (raw.startsWith('---')) {
       final end = raw.indexOf('\n---', 3);
@@ -74,6 +108,18 @@ class EmergencyGuides {
               break;
             case 'priority':
               priority = int.tryParse(value) ?? 9;
+              break;
+            case 'mode':
+              modes = value
+                  .replaceAll('[', '')
+                  .replaceAll(']', '')
+                  .split(',')
+                  .map((s) => s.trim().toLowerCase())
+                  .where((s) => s.isNotEmpty)
+                  .toList();
+              break;
+            case 'category':
+              category = value.toLowerCase();
               break;
             case 'keywords':
               keywords = value
@@ -96,6 +142,8 @@ class EmergencyGuides {
       keywords: keywords,
       priority: priority,
       body: body,
+      modes: modes,
+      category: category,
     );
   }
 

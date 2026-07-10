@@ -2,6 +2,8 @@
 title: Flood
 keywords: [flood, water, evacuation, flooding]
 priority: 2
+mode: [rio]
+category: clima
 ---
 
 # Flood

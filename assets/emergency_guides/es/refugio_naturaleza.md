@@ -2,6 +2,8 @@
 title: Refugio en la Naturaleza
 keywords: [refugio, monte, bosque, intemperie, noche, frío, lean-to, choza]
 priority: 2
+mode: [bosque, montana, pantano]
+category: supervivencia
 ---
 
 # Refugio en la Naturaleza

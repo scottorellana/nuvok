@@ -2,6 +2,8 @@
 title: Land Navigation
 keywords: [navigation, orientation, compass, GPS, star, sun]
 priority: 2
+mode: [bosque, desierto, montana]
+category: supervivencia
 ---
 
 # Land Navigation

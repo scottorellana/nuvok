@@ -2,6 +2,8 @@
 title: Emergency Food: Fishing and Traps
 keywords: [fishing, trap, food, hook, hunger, survival, fish]
 priority: 4
+mode: [bosque, rio, pantano, mar]
+category: supervivencia
 ---
 
 # Emergency Food: Fishing and Traps

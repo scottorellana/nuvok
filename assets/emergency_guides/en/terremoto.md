@@ -2,6 +2,8 @@
 title: Earthquake
 keywords: [earthquake, quake, tremor, collapse, structural]
 priority: 1
+mode: [ciudad]
+category: clima
 ---
 
 # Earthquake

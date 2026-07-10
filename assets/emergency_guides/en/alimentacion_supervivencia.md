@@ -2,6 +2,8 @@
 title: Survival Food
 keywords: [food, edible, plants, hunting, fishing, survival]
 priority: 1
+mode: [bosque, desierto, montana]
+category: supervivencia
 ---
 
 # Survival Food

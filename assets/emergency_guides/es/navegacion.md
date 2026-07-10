@@ -2,6 +2,8 @@
 title: Navegación Terrestre
 keywords: [navegación, orientación, brújula, GPS, estrella, sol]
 priority: 2
+mode: [bosque, desierto, montana]
+category: supervivencia
 ---
 
 # Navegación Terrestre

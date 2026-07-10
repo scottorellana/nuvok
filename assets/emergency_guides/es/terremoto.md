@@ -2,6 +2,8 @@
 title: Terremoto
 keywords: [sismo, temblor, terremoto, colapso, estructural]
 priority: 1
+mode: [ciudad]
+category: clima
 ---
 
 # Terremoto

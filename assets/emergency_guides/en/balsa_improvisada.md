@@ -2,6 +2,8 @@
 title: Improvised Raft
 keywords: [raft, flotation, river, flood, water, logs, jugs, crossing]
 priority: 3
+mode: [rio, mar]
+category: supervivencia
 ---
 
 # Improvised Raft

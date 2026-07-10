@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../core/prepper_library.dart';
+import '../emergency/survival_mode.dart';
 import 'emergency_retriever.dart';
 import 'library_retriever.dart';
 import 'ai_engine.dart';
@@ -115,7 +116,14 @@ class _AiPageState extends State<AiPage> {
           'Reponn yon fason itil e kout, toujou an kreyòl.',
     };
     final code = LocaleService.instance.language.code;
-    return prompts[code] ?? prompts['en']!;
+    var prompt = prompts[code] ?? prompts['en']!;
+    final mode = SurvivalModeStore.active;
+    if (mode != SurvivalMode.none) {
+      // Los modelos pequeños obedecen mejor el contexto pegado al rol.
+      prompt += ' Contexto: el usuario está en modo supervivencia '
+          '"${mode.name}"; prioriza técnicas de ese entorno.';
+    }
+    return prompt;
   }
 
   Future<void> _send() async {
@@ -138,10 +146,22 @@ class _AiPageState extends State<AiPage> {
       setState(() =>
           _messages.last.text = '🚨 ${tr(context, 'aiSearchingGuides')}');
       try {
-        sources = await EmergencyRetriever.retrieve(text);
+        sources = await EmergencyRetriever.retrieve(
+          text,
+          lang: LocaleService.instance.language.code,
+          mode: SurvivalModeStore.active == SurvivalMode.none
+              ? null
+              : SurvivalModeStore.active.name,
+        );
       } catch (_) {}
       if (sources.isNotEmpty) {
-        systemPrompt = EmergencyRetriever.buildEmergencySystemPrompt(sources);
+        systemPrompt = EmergencyRetriever.buildEmergencySystemPrompt(
+          sources,
+          replyLang: LocaleService.instance.language.code,
+          mode: SurvivalModeStore.active == SurvivalMode.none
+              ? null
+              : SurvivalModeStore.active.name,
+        );
       }
       if (mounted) {
         setState(() {
@@ -182,14 +202,26 @@ class _AiPageState extends State<AiPage> {
       // A model that answered nothing helps nobody in an emergency: fall
       // back to the raw guide.
       if (_emergencyMode && _messages.last.text.trim().isEmpty) {
-        final strict = await EmergencyRetriever.strictAnswer(text);
+        final strict = await EmergencyRetriever.strictAnswer(
+          text,
+          appLang: LocaleService.instance.language.code,
+          mode: SurvivalModeStore.active == SurvivalMode.none
+              ? null
+              : SurvivalModeStore.active.name,
+        );
         if (strict != null) setState(() => _messages.last.text = strict);
       }
     } catch (e) {
       // No local model (Android today) or it crashed: in emergency mode the
       // guides answer directly — no generation, no hallucination, no delay.
       if (_emergencyMode) {
-        final strict = await EmergencyRetriever.strictAnswer(text);
+        final strict = await EmergencyRetriever.strictAnswer(
+          text,
+          appLang: LocaleService.instance.language.code,
+          mode: SurvivalModeStore.active == SurvivalMode.none
+              ? null
+              : SurvivalModeStore.active.name,
+        );
         setState(() {
           _messages.last.text =
               strict ?? '⚠️ ${tr(context, 'aiNoAiNoGuide')} ($e)';
@@ -333,6 +365,28 @@ class _AiPageState extends State<AiPage> {
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       children: [
+                        if (SurvivalModeStore.active != SurvivalMode.none)
+                          for (final key in const [
+                            'aiQuickModeWater',
+                            'aiQuickModeDanger',
+                          ])
+                            Padding(
+                              padding: const EdgeInsets.only(right: 6),
+                              child: ActionChip(
+                                avatar: Text(SurvivalModeStore.active.emoji),
+                                label: Text(tr(context, key).replaceFirst(
+                                    '{mode}',
+                                    tr(context,
+                                        SurvivalModeStore.active.nameKey))),
+                                onPressed: () {
+                                  _input.text = tr(context, key).replaceFirst(
+                                      '{mode}',
+                                      tr(context,
+                                          SurvivalModeStore.active.nameKey));
+                                  _send();
+                                },
+                              ),
+                            ),
                         for (final key in const [
                           'aiQuickRcp',
                           'aiQuickChoking',

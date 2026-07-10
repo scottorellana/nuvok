@@ -2,6 +2,8 @@
 title: Hurricane
 keywords: [hurricane, storm, cyclone, wind, tropical]
 priority: 2
+mode: [mar, rio]
+category: clima
 ---
 
 # Hurricane

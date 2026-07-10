@@ -2,6 +2,8 @@
 title: Hypothermia and heat stroke
 keywords: [hypothermia, cold, freezing, shivering, heat stroke, heat exhaustion, overheated, dehydrated]
 priority: 3
+mode: [montana, artico, desierto]
+category: emergencia
 ---
 
 # Hypothermia and heat stroke

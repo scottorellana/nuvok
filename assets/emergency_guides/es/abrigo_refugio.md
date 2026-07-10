@@ -2,6 +2,8 @@
 title: Abrigo y Refugio
 keywords: [refugio, abrigo, hypothermia, hypothermia, tienda, temperatura]
 priority: 1
+mode: [ciudad, montana, artico]
+category: supervivencia
 ---
 
 # Abrigo y Refugio en Emergencias

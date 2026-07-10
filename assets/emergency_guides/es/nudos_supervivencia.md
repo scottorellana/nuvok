@@ -2,6 +2,8 @@
 title: Nudos que Salvan Vidas
 keywords: [nudos, cuerda, amarre, as de guía, ballestrinque, tensor, rescate]
 priority: 3
+mode: [bosque, desierto, mar, montana, ciudad, rio, pantano, artico]
+category: supervivencia
 ---
 
 # Nudos que Salvan Vidas

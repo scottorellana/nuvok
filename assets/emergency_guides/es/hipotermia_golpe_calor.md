@@ -2,6 +2,8 @@
 title: Hipotermia y golpe de calor
 keywords: [hipotermia, frio, congelado, temblando, golpe de calor, insolacion, calor, fiebre ambiente, deshidratado]
 priority: 3
+mode: [montana, artico, desierto]
+category: emergencia
 ---
 
 # Hipotermia y golpe de calor

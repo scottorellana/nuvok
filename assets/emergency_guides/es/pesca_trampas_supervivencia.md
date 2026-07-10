@@ -2,6 +2,8 @@
 title: Comida de Emergencia: Pesca y Trampas
 keywords: [pesca, trampa, comida, anzuelo, hambre, supervivencia, pez]
 priority: 4
+mode: [bosque, rio, pantano, mar]
+category: supervivencia
 ---
 
 # Comida de Emergencia: Pesca y Trampas

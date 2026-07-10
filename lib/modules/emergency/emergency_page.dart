@@ -19,6 +19,7 @@ import 'guide_voice.dart';
 import 'decision_tree_page.dart';
 import 'emergency_call_button.dart';
 import 'ice_page.dart';
+import 'survival_modes_page.dart';
 import 'tourniquet_page.dart';
 import 'emergency_guides.dart';
 import 'medical_diagrams.dart';
@@ -231,6 +232,29 @@ class _EmergencyPageState extends State<EmergencyPage> {
                     ),
                     icon: const Icon(Icons.quiz),
                     label: Text(tr(context, 'dtTitle')),
+                  ),
+                ),
+                // Modos de supervivencia: tu entorno especializa la app.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                  child: OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(44)),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => SurvivalModesPage(
+                          openGuide: (ctx, id) {
+                            final g =
+                                _all.where((g) => g.id == id).firstOrNull;
+                            if (g == null) return;
+                            Navigator.of(ctx).push(MaterialPageRoute(
+                                builder: (_) => _GuideReader(guide: g)));
+                          },
+                        ),
+                      ),
+                    ),
+                    icon: const Icon(Icons.terrain),
+                    label: Text('🌲 ${tr(context, 'modesTitle')}'),
                   ),
                 ),
                 // Timer de torniquete: la hora de aplicación salva el miembro.

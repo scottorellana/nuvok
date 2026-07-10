@@ -2,6 +2,8 @@
 title: Knots that Save Lives
 keywords: [knots, rope, lashing, bowline, clove hitch, taut-line, rescue]
 priority: 3
+mode: [bosque, desierto, mar, montana, ciudad, rio, pantano, artico]
+category: supervivencia
 ---
 
 # Knots that Save Lives

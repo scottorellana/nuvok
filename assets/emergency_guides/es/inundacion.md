@@ -2,6 +2,8 @@
 title: Inundación
 keywords: [inundación, agua, evacuación, inundar, inundación]
 priority: 2
+mode: [rio]
+category: clima
 ---
 
 # Inundación

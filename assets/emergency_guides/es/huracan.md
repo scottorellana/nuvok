@@ -2,6 +2,8 @@
 title: Huracán
 keywords: [huracán, tormenta, ciclón, viento, cyclone]
 priority: 2
+mode: [mar, rio]
+category: clima
 ---
 
 # Huracán

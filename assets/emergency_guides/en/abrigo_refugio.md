@@ -2,6 +2,8 @@
 title: Shelter and Warmth
 keywords: [shelter, warmth, hypothermia, shelter, tent, temperature]
 priority: 1
+mode: [ciudad, montana, artico]
+category: supervivencia
 ---
 
 # Shelter and Warmth in Emergencies

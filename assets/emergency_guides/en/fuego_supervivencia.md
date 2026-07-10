@@ -2,6 +2,8 @@
 title: Fire Without Matches
 keywords: [fire, campfire, tinder, ferro rod, lens, friction, heat, signal]
 priority: 2
+mode: [bosque, desierto, montana, rio, pantano, artico]
+category: supervivencia
 ---
 
 # Fire Without Matches

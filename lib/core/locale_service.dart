@@ -116,6 +116,10 @@ class AppStrings {
     'dtSeizure', 'dtPoison',
     'mpTitle', 'mpGo', 'mpArrived', 'mpPending', 'mpNoPositions',
     'beaconActive', 'beaconHint', 'beaconExit', 'beaconOpen',
+    'modeBosque', 'modeDesierto', 'modeMar', 'modeMontana', 'modeCiudad',
+    'modeRio', 'modePantano', 'modeArtico', 'modesTitle', 'modesIntro',
+    'modeActivate', 'modeActive', 'modeDeactivate', 'modeComingSoon',
+    'aiQuickModeWater', 'aiQuickModeDanger',
   ];
 
   static const Map<String, Map<String, String>> allKeys = {
@@ -1482,6 +1486,84 @@ class AppStrings {
       'es': 'Modo baliza SOS (ultra-ahorro)', 'en': 'SOS beacon mode (ultra-saver)',
       'pt': 'Modo baliza SOS (ultra-economia)', 'fr': 'Mode balise SOS (ultra-éco)',
       'zh': 'SOS信标模式（超级省电）', 'ja': 'SOSビーコン（超省電力）', 'ht': 'Mòd baliz SOS (ultra-ekonomi)',
+    },
+    'modeBosque': {
+      'es': 'Bosque / Selva', 'en': 'Forest / Jungle', 'pt': 'Floresta / Selva',
+      'fr': 'Forêt / Jungle', 'zh': '森林/丛林', 'ja': '森林・ジャングル', 'ht': 'Forè / Jeng',
+    },
+    'modeDesierto': {
+      'es': 'Desierto', 'en': 'Desert', 'pt': 'Deserto', 'fr': 'Désert',
+      'zh': '沙漠', 'ja': '砂漠', 'ht': 'Dezè',
+    },
+    'modeMar': {
+      'es': 'Mar / Costa', 'en': 'Sea / Coast', 'pt': 'Mar / Costa',
+      'fr': 'Mer / Côte', 'zh': '海洋/海岸', 'ja': '海・海岸', 'ht': 'Lanmè / Kòt',
+    },
+    'modeMontana': {
+      'es': 'Montaña / Nieve', 'en': 'Mountain / Snow', 'pt': 'Montanha / Neve',
+      'fr': 'Montagne / Neige', 'zh': '山地/雪地', 'ja': '山岳・雪', 'ht': 'Mòn / Nèj',
+    },
+    'modeCiudad': {
+      'es': 'Ciudad colapsada', 'en': 'Collapsed city', 'pt': 'Cidade colapsada',
+      'fr': 'Ville effondrée', 'zh': '瘫痪城市', 'ja': '崩壊した都市', 'ht': 'Vil kraze',
+    },
+    'modeRio': {
+      'es': 'Río / Inundación', 'en': 'River / Flood', 'pt': 'Rio / Inundação',
+      'fr': 'Rivière / Inondation', 'zh': '河流/洪水', 'ja': '河川・洪水', 'ht': 'Rivyè / Inondasyon',
+    },
+    'modePantano': {
+      'es': 'Pantano / Manglar', 'en': 'Swamp / Mangrove', 'pt': 'Pântano / Mangue',
+      'fr': 'Marais / Mangrove', 'zh': '沼泽/红树林', 'ja': '湿地・マングローブ', 'ht': 'Marekaj / Mangwov',
+    },
+    'modeArtico': {
+      'es': 'Ártico / Frío extremo', 'en': 'Arctic / Extreme cold', 'pt': 'Ártico / Frio extremo',
+      'fr': 'Arctique / Froid extrême', 'zh': '极地/极寒', 'ja': '極地・極寒', 'ht': 'Aktik / Fredi ekstrèm',
+    },
+    'modesTitle': {
+      'es': 'Modos de supervivencia', 'en': 'Survival modes',
+      'pt': 'Modos de sobrevivência', 'fr': 'Modes de survie',
+      'zh': '生存模式', 'ja': 'サバイバルモード', 'ht': 'Mòd siviv',
+    },
+    'modesIntro': {
+      'es': 'Elige TU entorno: verás su paquete de guías y la IA priorizará técnicas de ese lugar.',
+      'en': 'Pick YOUR environment: you get its guide pack and the AI prioritizes techniques for that place.',
+      'pt': 'Escolha SEU ambiente: verá seu pacote de guias e a IA priorizará técnicas desse lugar.',
+      'fr': 'Choisissez VOTRE environnement : vous verrez son pack de guides et l\'IA priorisera ce lieu.',
+      'zh': '选择你所处的环境：将显示该环境的指南包，AI也会优先该环境的技巧。',
+      'ja': '自分の環境を選択：その環境のガイドパックが表示され、AIもその場所の技術を優先します。',
+      'ht': 'Chwazi anviwònman OU: w ap wè pakè gid li yo epi IA a ap bay teknik kote sa a priyorite.',
+    },
+    'modeActivate': {
+      'es': 'Activar este modo', 'en': 'Activate this mode',
+      'pt': 'Ativar este modo', 'fr': 'Activer ce mode',
+      'zh': '启用此模式', 'ja': 'このモードを有効化', 'ht': 'Aktive mòd sa a',
+    },
+    'modeActive': {
+      'es': 'MODO ACTIVO', 'en': 'ACTIVE MODE', 'pt': 'MODO ATIVO',
+      'fr': 'MODE ACTIF', 'zh': '当前模式', 'ja': '有効なモード', 'ht': 'MÒD AKTIF',
+    },
+    'modeDeactivate': {
+      'es': 'Desactivar', 'en': 'Deactivate', 'pt': 'Desativar',
+      'fr': 'Désactiver', 'zh': '停用', 'ja': '無効化', 'ht': 'Dezaktive',
+    },
+    'modeComingSoon': {
+      'es': 'Paquete completo en camino — ya incluye las guías generales de este entorno',
+      'en': 'Full pack on the way — already includes the general guides for this environment',
+      'pt': 'Pacote completo a caminho — já inclui os guias gerais deste ambiente',
+      'fr': 'Pack complet en route — inclut déjà les guides généraux de cet environnement',
+      'zh': '完整包即将推出——已包含此环境的通用指南',
+      'ja': '完全パックは準備中——この環境の一般ガイドはすでに利用可能',
+      'ht': 'Pakè konplè ap vini — li deja gen gid jeneral anviwònman sa a',
+    },
+    'aiQuickModeWater': {
+      'es': '¿Dónde encuentro agua en {mode}?', 'en': 'Where do I find water in {mode}?',
+      'pt': 'Onde encontro água em {mode}?', 'fr': 'Où trouver de l\'eau en {mode} ?',
+      'zh': '在{mode}哪里能找到水？', 'ja': '{mode}で水はどこで見つかる？', 'ht': 'Ki kote pou m jwenn dlo nan {mode}?',
+    },
+    'aiQuickModeDanger': {
+      'es': '¿Peligros mortales en {mode}?', 'en': 'Deadly dangers in {mode}?',
+      'pt': 'Perigos mortais em {mode}?', 'fr': 'Dangers mortels en {mode} ?',
+      'zh': '{mode}有哪些致命危险？', 'ja': '{mode}の致命的な危険は？', 'ht': 'Danje mòtèl nan {mode}?',
     },
     'callEmergency': {
       'es': 'LLAMAR', 'en': 'CALL', 'pt': 'LIGAR', 'fr': 'APPELER',

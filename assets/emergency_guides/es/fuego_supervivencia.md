@@ -2,6 +2,8 @@
 title: Fuego sin Fósforos
 keywords: [fuego, fogata, yesca, ferrocerio, lupa, fricción, calor, señal]
 priority: 2
+mode: [bosque, desierto, montana, rio, pantano, artico]
+category: supervivencia
 ---
 
 # Fuego sin Fósforos

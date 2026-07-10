@@ -2,6 +2,8 @@
 title: Balsa Improvisada
 keywords: [balsa, flotación, río, inundación, agua, troncos, bidones, cruzar]
 priority: 3
+mode: [rio, mar]
+category: supervivencia
 ---
 
 # Balsa Improvisada

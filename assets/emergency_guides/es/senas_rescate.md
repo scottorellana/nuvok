@@ -2,6 +2,8 @@
 title: Señales de Rescate
 keywords: [rescate, señal, SOS, señalizar, visualizar, helicopter]
 priority: 1
+mode: [bosque, desierto, mar, montana, rio, pantano, artico]
+category: supervivencia
 ---
 
 # Señales de Rescate

@@ -2,6 +2,8 @@
 title: Crossing Rivers Safely
 keywords: [river, crossing, current, ford, drowning, water, creek, flood]
 priority: 2
+mode: [bosque, montana, rio]
+category: supervivencia
 ---
 
 # Crossing Rivers Safely

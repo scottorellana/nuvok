@@ -2,6 +2,8 @@
 title: Wilderness Shelter
 keywords: [shelter, woods, forest, exposure, night, cold, lean-to, debris hut]
 priority: 2
+mode: [bosque, montana, pantano]
+category: supervivencia
 ---
 
 # Wilderness Shelter

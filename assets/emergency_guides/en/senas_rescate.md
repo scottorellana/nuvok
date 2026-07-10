@@ -2,6 +2,8 @@
 title: Rescue Signals
 keywords: [rescue, signal, SOS, signal, visualize, helicopter]
 priority: 1
+mode: [bosque, desierto, mar, montana, rio, pantano, artico]
+category: supervivencia
 ---
 
 # Rescue Signals

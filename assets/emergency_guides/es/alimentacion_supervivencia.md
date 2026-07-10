@@ -2,6 +2,8 @@
 title: Alimentación de Supervivencia
 keywords: [alimentos, comida, edible, plantas, caza, pesca, supervivencia]
 priority: 1
+mode: [bosque, desierto, montana]
+category: supervivencia
 ---
 
 # Alimentación de Supervivencia

@@ -2,6 +2,8 @@
 title: Agua Potable
 keywords: [agua, potable, purificar, hervir, filtrar, deshidratación]
 priority: 1
+mode: [bosque, desierto, montana, rio]
+category: supervivencia
 ---
 
 # Agua Potable en Emergencias

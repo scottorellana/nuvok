@@ -1,7 +1,7 @@
 name: nuvok
 description: Nuvok — Contigo cuando más importa. Biblioteca de conocimiento offline, mapas, IA local y comunicación mesh en una sola app + dispositivo.
 publish_to: 'none'
-version: 0.4.0+1
+version: 0.5.0+1
 
 environment:
   sdk: ^3.5.0

@@ -1,4 +1,4 @@
-// Prepper Pad — Interactions & Animations
+// Nuvok — Interactions & Animations
 
 // ── Gate reveal animations on JS availability ──
 // CSS hides `.js .reveal` (opacity 0). We add the `.js` class to <html> on

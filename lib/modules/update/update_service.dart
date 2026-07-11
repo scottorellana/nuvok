@@ -32,12 +32,11 @@ class UpdateService extends ChangeNotifier {
   UpdateService._();
   static final UpdateService instance = UpdateService._();
 
-  /// LAN-first by design: this build keeps everything private, so updates are
-  /// served by the Nuvok "installer-server" running on a computer on the
-  /// same WiFi (it already exposes /version.json + the binaries). There is no
-  /// public host. The address is derived from the local server the user set
-  /// for maps, or set explicitly here — see [resolveManifestUrl].
-  static const String defaultManifestUrl = '';
+  /// Fuente pública oficial de actualizaciones. Prioridad de resolución:
+  /// override explícito > servidor LAN configurado (installer-server) >
+  /// nuvok.org. Así una instalación sin configurar se actualiza sola cuando
+  /// hay internet, y una red local privada sigue mandando si se configuró.
+  static const String defaultManifestUrl = 'https://nuvok.org/version.json';
 
   String _manifestUrl = defaultManifestUrl;
   String get manifestUrl => _manifestUrl;
@@ -65,8 +64,12 @@ class UpdateService extends ChangeNotifier {
   /// we reuse the local map/content server the user already configured (the
   /// installer-server serves /version.json too). Keeps a single "your computer
   /// on the WiFi" address for both maps and updates.
-  String _resolveManifestUrl() {
-    final settings = NuvokLibrary.instance.settings;
+  String _resolveManifestUrl() =>
+      resolveManifestFrom(NuvokLibrary.instance.settings);
+
+  /// Pura y testeable: la política de resolución sin tocar singletons.
+  @visibleForTesting
+  static String resolveManifestFrom(Map<String, dynamic> settings) {
     final explicit = settings['updateManifestUrl'] as String?;
     if (explicit != null && explicit.isNotEmpty) return explicit;
     final localServer = settings['localMapServer'] as String?;

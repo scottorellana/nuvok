@@ -1,0 +1,21 @@
+{
+  "version": "0.5.0",
+  "generatedAt": "2026-07-10T21:00:00.000000+00:00",
+  "notes": "v0.5.0: manual mundial completo — 8 modos de supervivencia, catástrofes climáticas y Reconstrucción, 67 guías en 7 idiomas con tutoriales fotográficos, chat mesh con notas de voz e IA local.",
+  "platforms": {
+    "android": {
+      "url": "/downloads/nuvok-android-v0.5.0.apk",
+      "sha256": "96005627964c9438c227e3b6657c07deb4fe17107804389e3b0dbb5a13c3c910",
+      "sizeBytes": 1718620719
+    },
+    "macos": {
+      "url": "/downloads/Nuvok-macOS-v0.5.0.dmg",
+      "sha256": "e9052524b33bREPLACED_BY_PACKAGE_SCRIPT",
+      "sizeBytes": 1675829815
+    }
+  },
+  "signing": {
+    "scheme": "APK Signature Scheme v2",
+    "certificateSha256": "6ce8a12be0e3f08e70df492a4c9b4d8bfaf439c18fc4546390f1e303b5c8fb4b"
+  }
+}

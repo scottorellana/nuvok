@@ -1,4 +1,4 @@
-// Prepper Pad — i18n system (ES/EN)
+// Nuvok — i18n system (ES/EN)
 // Lightweight, no dependencies. Falls back to ES.
 const I18N = {
   es: {
@@ -57,7 +57,7 @@ const I18N = {
     // Offline stats
     'offline.eyebrow': 'Diseñado para el peor día',
     'offline.title': 'Cuando no hay señal, sigue funcionando',
-    'offline.lead': 'Huracán, apagón, zona remota, desastre: Prepper Pad no necesita internet, ni cobertura, ni electricidad de red para ayudarte.',
+    'offline.lead': 'Huracán, apagón, zona remota, desastre: Nuvok no necesita internet, ni cobertura, ni electricidad de red para ayudarte.',
     'offline.stat1': '0',
     'offline.stat1l': 'datos móviles necesarios',
     'offline.stat2': '100%',
@@ -72,7 +72,7 @@ const I18N = {
     'pricing.title': 'Una inversión que preparas una vez',
     'pricing.lead': 'La tablet viene lista para usar. Suma el radio LoRa cuando quieras alcance de kilómetros sin ninguna red.',
     'pricing.tablet.tag': 'MÁS POPULAR',
-    'pricing.tablet.name': 'Tablet Prepper Pad',
+    'pricing.tablet.name': 'Tablet Nuvok',
     'pricing.tablet.desc': 'El sistema completo, preinstalado y precargado. Enciéndela y ya funciona.',
     'pricing.tablet.f1': 'Tablet Android lista para usar',
     'pricing.tablet.f2': 'Los 6 módulos preinstalados',
@@ -98,7 +98,7 @@ const I18N = {
     'final.note': 'Tablet $599 · Radio LoRa +$150 · Precios en dólares',
 
     // Footer
-    'footer.copy': '© 2026 Prepper Pad · Conocimiento offline que salva vidas',
+    'footer.copy': '© 2026 Nuvok · Conocimiento offline que salva vidas',
     'footer.disclaimer': 'Las guías de primeros auxilios son material educativo y no sustituyen la atención médica profesional ni un curso presencial certificado; busca ayuda médica siempre que sea posible. El radio LoRa es un accesorio en desarrollo; su disponibilidad, alcance y compatibilidad finales se confirmarán en el lanzamiento. Datos de mapa © OpenStreetMap contributors.',
   },
 
@@ -153,7 +153,7 @@ const I18N = {
 
     'offline.eyebrow': 'Built for the worst day',
     'offline.title': 'When there\'s no signal, it still works',
-    'offline.lead': 'Hurricane, blackout, remote area, disaster: Prepper Pad needs no internet, no coverage, no grid power to help you.',
+    'offline.lead': 'Hurricane, blackout, remote area, disaster: Nuvok needs no internet, no coverage, no grid power to help you.',
     'offline.stat1': '0',
     'offline.stat1l': 'mobile data needed',
     'offline.stat2': '100%',
@@ -167,7 +167,7 @@ const I18N = {
     'pricing.title': 'One investment, prepared once',
     'pricing.lead': 'The tablet comes ready to use. Add the LoRa radio for kilometer-range communication without any network.',
     'pricing.tablet.tag': 'MOST POPULAR',
-    'pricing.tablet.name': 'Prepper Pad Tablet',
+    'pricing.tablet.name': 'Nuvok Tablet',
     'pricing.tablet.desc': 'The complete system, pre-installed and pre-loaded. Turn it on and it works.',
     'pricing.tablet.f1': 'Android tablet ready to use',
     'pricing.tablet.f2': 'All 6 modules pre-installed',
@@ -191,7 +191,7 @@ const I18N = {
     'final.cta': 'Reserve by email',
     'final.note': 'Tablet $599 · LoRa Radio +$150 · Prices in USD',
 
-    'footer.copy': '© 2026 Prepper Pad · Offline knowledge that saves lives',
+    'footer.copy': '© 2026 Nuvok · Offline knowledge that saves lives',
     'footer.disclaimer': 'First-aid guides are educational material and do not replace professional medical care or a certified in-person course; always seek medical help when possible. The LoRa radio is an accessory in development; final availability, range and compatibility will be confirmed at launch. Map data © OpenStreetMap contributors.',
   }
 };

@@ -93,17 +93,17 @@ nav.scrolled {
 
 .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.15rem; letter-spacing: -.02em; cursor: pointer; }
 
-.brand .logo-mark {
+/* Emblema oficial Nuvok (assets/brand/nuvok/BRAND.md) — ya trae su propio
+   fondo negro/oro, solo necesita esquinas suaves y el mismo efecto hover
+   que tenía el badge genérico anterior. */
+.logo-mark-img {
   width: 36px; height: 36px;
-  display: grid; place-items: center;
-  background: linear-gradient(135deg, var(--olive), var(--olive-bright));
   border-radius: 10px;
+  display: block;
   transition: transform .3s var(--ease-spring);
   box-shadow: 0 4px 20px -5px var(--olive-dim);
 }
-.brand:hover .logo-mark { transform: rotate(-8deg) scale(1.08); }
-
-.brand .logo-mark svg { width: 22px; height: 22px; }
+.brand:hover .logo-mark-img { transform: rotate(-8deg) scale(1.08); }
 
 .nav-right { display: flex; align-items: center; gap: 24px; }
 .nav-links { display: flex; gap: 28px; align-items: center; font-size: .95rem; color: var(--ink-dim); }

@@ -66,12 +66,35 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   test: ^1.31.0
   path_provider_platform_interface: ^2.1.3
+  flutter_launcher_icons: ^0.14.4
+
+flutter_launcher_icons:
+  # Emblema oficial de Nuvok (ver assets/brand/nuvok/BRAND.md) recortado
+  # edge-to-edge para que cada plataforma aplique su propio máscara de
+  # esquinas. iOS/macOS/Windows usan la versión aplanada sobre negro sólido
+  # (no admiten transparencia); Android usa un adaptive icon con la misma
+  # imagen de fondo sólido negro + el emblema como foreground con margen de
+  # zona segura (algunos launchers recortan agresivo el centro).
+  image_path: "assets/branding/app_icon.png"
+  android: true
+  ios: true
+  macos:
+    generate: true
+    image_path: "assets/branding/app_icon.png"
+  windows:
+    generate: true
+    image_path: "assets/branding/app_icon.png"
+  adaptive_icon_background: "#0b0b0a"
+  adaptive_icon_foreground: "assets/branding/app_icon_foreground.png"
+  remove_alpha_ios: true
 
 flutter:
   uses-material-design: true
   assets:
     - assets/map_theme_light_v4.json
     - assets/map_catalog.json
+    - assets/brand/nuvok/
+    - assets/branding/
     - assets/emergency_directory/
     - assets/emergency_guides/es/
     - assets/emergency_guides/en/

@@ -23,6 +23,8 @@ mkdir -p "$OUT/site" "$OUT/downloads"
 
 # ── Archivos chicos del sitio ── (Pages)
 cp website/index.html website/styles.css website/i18n.js website/app.js "$OUT/site/"
+# Iconos/favicon/logo oficial de Nuvok (referenciados desde index.html).
+cp -R website/icons "$OUT/site/"
 
 # ── Binarios ── (R2), hardlink para no duplicar 3.2 GB en disco
 ln "$APK" "$OUT/downloads/$APK_NAME"

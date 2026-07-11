@@ -9,9 +9,9 @@ import Flutter
 ///
 /// Speaks the exact same channel protocol as the Android bridge so the Dart
 /// transport is one code path everywhere:
-///   MethodChannel  "Nuvok/ble_mesh":        start / stop / connect(id) /
+///   MethodChannel  "nuvok/ble_mesh":        start / stop / connect(id) /
 ///                                             disconnect(id) / send(id, bytes)
-///   EventChannel   "Nuvok/ble_mesh/events": {type:"peer", id}
+///   EventChannel   "nuvok/ble_mesh/events": {type:"peer", id}
 ///                                             {type:"data", id, bytes}
 ///
 /// Both halves run at once: CBPeripheralManager advertises the Nuvok GATT
@@ -38,11 +38,11 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
 
     static func register(messenger: FlutterBinaryMessenger) {
         let bridge = BleMeshBridge()
-        let methods = FlutterMethodChannel(name: "Nuvok/ble_mesh", binaryMessenger: messenger)
+        let methods = FlutterMethodChannel(name: "nuvok/ble_mesh", binaryMessenger: messenger)
         methods.setMethodCallHandler { call, result in
             bridge.handle(call: call, result: result)
         }
-        let events = FlutterEventChannel(name: "Nuvok/ble_mesh/events", binaryMessenger: messenger)
+        let events = FlutterEventChannel(name: "nuvok/ble_mesh/events", binaryMessenger: messenger)
         events.setStreamHandler(bridge)
     }
 

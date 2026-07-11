@@ -40,7 +40,7 @@ class MainFlutterWindow: NSWindow {
     }
 
     let sensorChannel = FlutterMethodChannel(
-      name: "Nuvok/sensors",
+      name: "nuvok/sensors",
       binaryMessenger: flutterViewController.engine.binaryMessenger)
     sensorChannel.setMethodCallHandler { call, result in
       switch call.method {
@@ -52,7 +52,7 @@ class MainFlutterWindow: NSWindow {
     }
 
     let compassEvents = FlutterEventChannel(
-      name: "Nuvok/sensors/compass",
+      name: "nuvok/sensors/compass",
       binaryMessenger: flutterViewController.engine.binaryMessenger)
     compassEvents.setStreamHandler(NoCompassStreamHandler())
 

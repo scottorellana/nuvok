@@ -36,59 +36,31 @@ Cloudflare te mostrará **dos nameservers** (algo como `xxx.ns.cloudflare.com`).
 
 ---
 
-## PARTE B — Instalar las 2 herramientas (una sola vez, ~5 min)
+## PARTE B — Herramientas (ya listas)
 
-Ya tienes `node`. Faltan `wrangler` (para el sitio) y `rclone` (para subir los
-archivos grandes a R2). Copia y pega en la Terminal:
+- **wrangler**: se usa vía `npx wrangler …` — no hace falta instalar nada.
+- **rclone**: **ya quedó instalado** en `~/bin/rclone` (está en tu PATH, o sea
+  que puedes escribir `rclone` directo).
 
-```bash
-# wrangler (CLI oficial de Cloudflare)
-npm install -g wrangler
-
-# rclone (sube archivos de GB a R2 sin fallar; sin necesidad de Homebrew)
-cd /tmp && curl -O https://downloads.rclone.org/rclone-current-osx-arm64.zip \
-  && unzip -o rclone-current-osx-arm64.zip \
-  && sudo cp rclone-*-osx-arm64/rclone /usr/local/bin/ \
-  && sudo chmod +x /usr/local/bin/rclone \
-  && rclone version
-```
-
-(El `sudo` te pedirá la contraseña de tu Mac.)
+No tienes que instalar nada en esta parte. Sigue a la C.
 
 ---
 
-## PARTE C — Subir el SITIO a Pages (~3 min)
+## PARTE C — Autenticarte + dar tus llaves de R2 (una sola vez, ~5 min)
 
+Estos son los **dos únicos pasos manuales** que quedan; después el deploy es
+un solo comando (PARTE D).
+
+### C1. Autoriza Cloudflare
 ```bash
-cd ~/prepper-pad
-npx wrangler login          # abre el navegador, dale "Allow"
-npx wrangler pages deploy dist/website-deploy/site --project-name nuvok
+npx wrangler login          # abre el navegador → dale "Allow"
 ```
 
-Cuando termine, conéctale tu dominio:
-- Panel Cloudflare → **Workers & Pages** → proyecto **nuvok** → pestaña
-  **Custom domains** → **Set up a custom domain** → escribe `nuvok.org` →
-  confirma. (Repite para `www.nuvok.org` si quieres.)
-
-Ya con esto `https://nuvok.org` muestra la página.
-
----
-
-## PARTE D — Subir las DESCARGAS a R2 (~10 min según tu internet)
-
-### D1. Crea el bucket
-```bash
-npx wrangler r2 bucket create nuvok-downloads
-```
-
-### D2. Consigue las llaves de R2
+### C2. Consigue las llaves de R2 y configura rclone
 Panel Cloudflare → **R2** → **Manage R2 API Tokens** → **Create API token** →
-permiso **Object Read & Write** → **Create**. Copia:
-- **Access Key ID**
-- **Secret Access Key**
-- Tu **Account ID** (aparece en la página principal de R2, arriba a la derecha).
+permiso **Object Read & Write** → **Create**. Copia el **Access Key ID**, el
+**Secret Access Key** y tu **Account ID** (arriba a la derecha en R2). Luego:
 
-### D3. Configura rclone (pega tus 3 valores)
 ```bash
 rclone config create r2 s3 \
   provider Cloudflare \
@@ -98,16 +70,29 @@ rclone config create r2 s3 \
   acl private
 ```
 
-### D4. Sube los binarios (esto tarda; rclone reanuda si se corta)
+---
+
+## PARTE D — Publicar TODO con un comando
+
 ```bash
 cd ~/prepper-pad
-rclone copy dist/website-deploy/downloads/ r2:nuvok-downloads/ --progress
+./scripts/deploy_website.sh
 ```
 
-### D5. Conecta el subdominio de descargas
-Panel Cloudflare → **R2** → bucket **nuvok-downloads** → **Settings** →
-**Public access → Custom Domains** → **Connect Domain** → escribe
-`downloads.nuvok.org` → confirma. Cloudflare crea el DNS solo.
+Ese script hace, en orden y sin que toques nada más:
+1. Arma el paquete si falta.
+2. Sube el sitio a **Pages** (crea el proyecto `nuvok` si no existe).
+3. Crea el bucket **R2** `nuvok-downloads` si no existe.
+4. Sube los binarios a R2 con rclone (reanuda si se corta).
+
+Es **idempotente**: si algo falla a mitad, corrígelo y vuelve a correrlo.
+
+### D1. Conecta los dominios (solo la PRIMERA vez, en el panel)
+El script te lo recuerda al final. En el panel de Cloudflare:
+- **Sitio**: Workers & Pages → **nuvok** → **Custom domains** → añade
+  `nuvok.org` (y `www.nuvok.org` si quieres).
+- **Descargas**: R2 → **nuvok-downloads** → **Settings** → **Public access →
+  Custom Domains** → conecta `downloads.nuvok.org`. Cloudflare crea el DNS solo.
 
 ---
 
@@ -136,15 +121,14 @@ Luego, en la vida real:
 ```bash
 cd ~/prepper-pad
 ./scripts/build_android_release_signed.sh    # nuevo APK
+cp build/app/outputs/flutter-apk/app-release.apk dist/prepper-pad-full-v0.5.0.apk
 ./scripts/package_macos.sh                   # nuevo DMG
 # edita website/version.json (sube "version" y "notes") y los nombres en
 # website/index.html si cambió el número
-./scripts/package_website.sh                 # re-arma site/ + downloads/
-
-npx wrangler pages deploy dist/website-deploy/site --project-name nuvok
-rclone copy dist/website-deploy/downloads/ r2:nuvok-downloads/ --progress
+./scripts/deploy_website.sh                  # re-arma y publica sitio + R2
 ```
-Cada Nuvok con internet verá la actualización en Depósito.
+El `deploy_website.sh` re-arma el paquete (SHA-256 nuevos) y sube todo. Cada
+Nuvok con internet verá la actualización en Depósito.
 
 ---
 

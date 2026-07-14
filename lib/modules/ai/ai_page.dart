@@ -9,6 +9,11 @@ import 'library_retriever.dart';
 import 'ai_engine.dart';
 import 'llama_server.dart' show LlamaStatus;
 import '../../core/locale_service.dart';
+import '../depot/download_manager.dart';
+import 'agents/agent_spec.dart';
+import 'agents/agent_catalog.dart';
+import 'agents/agent_runtime.dart';
+import 'agents/model_catalog.dart';
 
 class ChatMessage {
   ChatMessage(this.role, this.text, {this.sources = const []});
@@ -17,6 +22,10 @@ class ChatMessage {
   List<RetrievedSource> sources;
 }
 
+/// The Assistant tab: a grid of named specialists. Picking one opens a chat
+/// bound to that specialist's expert prompt, sources and model. This replaces
+/// the old raw .gguf dropdown + library/emergency switches (the manual model
+/// path now lives in Settings → advanced).
 class AiPage extends StatefulWidget {
   const AiPage({super.key});
 
@@ -25,21 +34,239 @@ class AiPage extends StatefulWidget {
 }
 
 class _AiPageState extends State<AiPage> {
+  AgentSpec? _agent; // null = showing the specialist grid
+
+  @override
+  Widget build(BuildContext context) {
+    if (_agent == null) {
+      return _AgentGrid(onPick: (a) => setState(() => _agent = a));
+    }
+    return _AgentChat(
+      agent: _agent!,
+      onBack: () => setState(() => _agent = null),
+    );
+  }
+}
+
+/// Returns the set of installed model file names (e.g. {'qwen3-1.7b...gguf'}).
+Set<String> _installedModelFileNames() =>
+    NuvokLibrary.instance.listModels().map((f) => f.uri.pathSegments.last).toSet();
+
+class _AgentGrid extends StatefulWidget {
+  const _AgentGrid({required this.onPick});
+  final void Function(AgentSpec) onPick;
+
+  @override
+  State<_AgentGrid> createState() => _AgentGridState();
+}
+
+class _AgentGridState extends State<_AgentGrid> {
+  final _dm = DownloadManager.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    // Redraw cards as downloads progress and finish.
+    _dm.addListener(_onChanged);
+  }
+
+  @override
+  void dispose() {
+    _dm.removeListener(_onChanged);
+    super.dispose();
+  }
+
+  void _onChanged() {
+    if (mounted) setState(() {});
+  }
+
+  void _startDownload(AgentSpec agent) {
+    final m = ModelCatalog.byId(agent.modelId);
+    if (m == null) return;
+    _dm.enqueue(
+      m.url,
+      '${NuvokLibrary.instance.modelsDir.path}/${m.fileName}',
+      totalBytes: m.sizeBytes,
+      // While the catalog hash is the upload marker, skip verification so
+      // dev/self-hosted builds still install; real hashes turn it on.
+      sha256Hex: m.sha256 == 'TO_FILL_ON_UPLOAD' ? null : m.sha256,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(tr(context, 'agentsTitle'))),
+      body: FutureBuilder<int?>(
+        future: AiEngine.freeRamBytes(),
+        builder: (context, snap) {
+          final freeRam = snap.data;
+          final installed = _installedModelFileNames();
+          final width = MediaQuery.of(context).size.width;
+          final cols = width < 560 ? 2 : (width < 900 ? 3 : 4);
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(tr(context, 'agentPick'),
+                      style: Theme.of(context).textTheme.titleMedium),
+                ),
+              ),
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: cols,
+                  padding: const EdgeInsets.all(16),
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 0.92,
+                  children: [
+                    for (final agent in AgentCatalog.all)
+                      _AgentCard(
+                        agent: agent,
+                        status: _statusFor(agent, installed, freeRam),
+                        downloadProgress: _progressFor(agent),
+                        onOpen: () => widget.onPick(agent),
+                        onDownload: () => _startDownload(agent),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  AgentStatus _statusFor(
+      AgentSpec agent, Set<String> installed, int? freeRam) {
+    final model = ModelCatalog.byId(agent.modelId)!;
+    return AgentRuntime.resolve(
+      model: model,
+      installedFileNames: installed,
+      freeRamBytes: freeRam,
+    );
+  }
+
+  /// Active download progress (0..1) for this agent's model, or null.
+  double? _progressFor(AgentSpec agent) {
+    final m = ModelCatalog.byId(agent.modelId);
+    if (m == null) return null;
+    final task = _dm.taskFor(m.url);
+    return task?.progress;
+  }
+}
+
+class _AgentCard extends StatelessWidget {
+  const _AgentCard({
+    required this.agent,
+    required this.status,
+    required this.downloadProgress,
+    required this.onOpen,
+    required this.onDownload,
+  });
+
+  final AgentSpec agent;
+  final AgentStatus status;
+  final double? downloadProgress;
+  final VoidCallback onOpen;
+  final VoidCallback onDownload;
+
+  @override
+  Widget build(BuildContext context) {
+    final lang = LocaleService.instance.language.code;
+    final downloading = downloadProgress != null;
+    final ready = status.state == AgentInstallState.ready;
+    final (label, color) = switch (status.state) {
+      AgentInstallState.ready => (
+          status.usingLiteFallback
+              ? tr(context, 'agentLiteMode')
+              : tr(context, 'agentReady'),
+          Colors.green,
+        ),
+      AgentInstallState.needsDownload => (tr(context, 'agentDownload'), null),
+      AgentInstallState.needsLite => (tr(context, 'agentLiteMode'), null),
+    };
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: ready ? onOpen : (downloading ? null : onDownload),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 26,
+                backgroundColor: agent.accent,
+                child: Icon(agent.avatar, color: Colors.white, size: 26),
+              ),
+              const SizedBox(height: 10),
+              Text(agent.nameProper,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  textAlign: TextAlign.center),
+              Text(agent.role(lang),
+                  style: Theme.of(context).textTheme.bodySmall,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis),
+              const SizedBox(height: 8),
+              if (downloading)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: LinearProgressIndicator(value: downloadProgress),
+                )
+              else
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      ready ? Icons.check_circle : Icons.download,
+                      size: 14,
+                      color: color,
+                    ),
+                    const SizedBox(width: 4),
+                    Flexible(
+                      child: Text(label,
+                          style: TextStyle(fontSize: 12, color: color),
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AgentChat extends StatefulWidget {
+  const _AgentChat({required this.agent, required this.onBack});
+  final AgentSpec agent;
+  final VoidCallback onBack;
+
+  @override
+  State<_AgentChat> createState() => _AgentChatState();
+}
+
+class _AgentChatState extends State<_AgentChat> {
   final _server = AiEngine.instance;
   final _input = TextEditingController();
   final _scroll = ScrollController();
   final List<ChatMessage> _messages = [];
-  List<File> _models = [];
-  String? _selectedModel;
   bool _generating = false;
-  bool _useLibrary = true; // ground answers in the offline library
-  bool _emergencyMode = false; // guides-first grounding + strict fallback
+  bool _loadingModel = true;
+
+  bool get _hasGrounding => widget.agent.grounding != GroundingMode.none;
 
   @override
   void initState() {
     super.initState();
     _server.addListener(_onServerChanged);
-    _refreshModels();
+    _prepareModel();
   }
 
   @override
@@ -54,177 +281,135 @@ class _AiPageState extends State<AiPage> {
     if (mounted) setState(() {});
   }
 
-  void _refreshModels() {
-    setState(() {
-      _models = NuvokLibrary.instance.listModels();
-      if (_models.isNotEmpty &&
-          (_selectedModel == null ||
-              !_models.any((m) => m.path == _selectedModel))) {
-        _selectedModel = _models.first.path;
-      }
-    });
-  }
-
-  Future<void> _loadModel() async {
-    final path = _selectedModel;
-    if (path == null) return;
-    final size = File(path).lengthSync();
-    final free = await AiEngine.freeRamBytes();
+  /// Resolve the effective model (RAM guard may pick the lite fallback) and
+  /// load it. If the model is not installed, the chat stays disabled and the
+  /// header explains why — the grid is where installs are started.
+  Future<void> _prepareModel() async {
+    final model = ModelCatalog.byId(widget.agent.modelId);
+    if (model == null) {
+      setState(() => _loadingModel = false);
+      return;
+    }
+    final status = AgentRuntime.resolve(
+      model: model,
+      installedFileNames: _installedModelFileNames(),
+      freeRamBytes: await AiEngine.freeRamBytes(),
+    );
     if (!mounted) return;
-    if (free != null && size > free * 0.8) {
-      final proceed = await showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(tr(context, 'tightMemory')),
-          content: Text(tr(context, 'aiRamWarn')
-              .replaceFirst('{size}', humanSize(size))
-              .replaceFirst('{free}', humanSize(free))),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: Text(tr(context, 'cancel')),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: Text(tr(context, 'loadAnyway')),
-            ),
-          ],
-        ),
-      );
-      if (proceed != true) return;
+    if (status.state == AgentInstallState.ready) {
+      final path =
+          '${NuvokLibrary.instance.modelsDir.path}/${status.effectiveModel.fileName}';
+      await _server.start(path);
     }
-    await _server.start(path);
+    if (mounted) setState(() => _loadingModel = false);
   }
 
-  /// System prompt in the app's active language. Small models follow an
-  /// explicit language instruction far better than "reply in the user's
-  /// language", so each UI language pins the reply language too.
-  String _systemPromptForLanguage() {
-    const prompts = {
-      'es': 'Eres el asistente de Nuvok, una app de conocimiento '
-          'offline. Responde de forma útil y concisa, siempre en español.',
-      'en': 'You are the Nuvok assistant, an offline knowledge app. '
-          'Reply helpfully and concisely, always in English.',
-      'pt': 'Você é o assistente do Nuvok, um app de conhecimento '
-          'offline. Responda de forma útil e concisa, sempre em português.',
-      'fr': 'Tu es l\'assistant de Nuvok, une app de connaissances '
-          'hors ligne. Réponds utilement et brièvement, toujours en français.',
-      'zh': '你是 Nuvok 的助手，一款离线知识应用。请始终用中文简明有用地回答。',
-      'ja': 'あなたはオフライン知識アプリ Nuvok のアシスタントです。'
-          '常に日本語で簡潔かつ役立つ回答をしてください。',
-      'ht': 'Ou se asistan Nuvok, yon aplikasyon konesans san entènèt. '
-          'Reponn yon fason itil e kout, toujou an kreyòl.',
-    };
-    final code = LocaleService.instance.language.code;
-    var prompt = prompts[code] ?? prompts['en']!;
-    final mode = SurvivalModeStore.active;
-    if (mode != SurvivalMode.none) {
-      // Los modelos pequeños obedecen mejor el contexto pegado al rol.
-      prompt += ' Contexto: el usuario está en modo supervivencia '
-          '"${mode.name}"; prioriza técnicas de ese entorno.';
+  /// Builds the grounding-aware system prompt for this agent in the app's
+  /// language. Reuses the emergency/library retrievers already in the app.
+  Future<(String, List<RetrievedSource>)> _buildContext(String text) async {
+    final lang = LocaleService.instance.language.code;
+    final mode = SurvivalModeStore.active == SurvivalMode.none
+        ? null
+        : SurvivalModeStore.active.name;
+    var systemPrompt = widget.agent.system(lang);
+    List<RetrievedSource> sources = const [];
+
+    switch (widget.agent.grounding) {
+      case GroundingMode.guidesFirst:
+        try {
+          sources =
+              await EmergencyRetriever.retrieve(text, lang: lang, mode: mode);
+        } catch (_) {}
+        if (sources.isNotEmpty) {
+          systemPrompt = EmergencyRetriever.buildEmergencySystemPrompt(
+            sources,
+            replyLang: lang,
+            mode: mode,
+          );
+        }
+      case GroundingMode.library:
+        if (NuvokLibrary.instance.listZims().isNotEmpty) {
+          try {
+            sources = await LibraryRetriever.retrieve(text);
+          } catch (_) {}
+          if (sources.isNotEmpty) {
+            systemPrompt = LibraryRetriever.buildGroundedSystemPrompt(
+              sources,
+              replyLang: lang,
+            );
+          }
+        }
+      case GroundingMode.none:
+        break;
     }
-    return prompt;
+    return (systemPrompt, sources);
   }
 
   Future<void> _send() async {
     final text = _input.text.trim();
     if (text.isEmpty || _generating) return;
     _input.clear();
+
+    // Psychologist guardrail: on crisis language, lead with the SOS notice
+    // and never bury it under generated text.
+    final crisis =
+        widget.agent.crisisGuardrails && AgentRuntime.looksLikeCrisis(text);
+
     setState(() {
       _messages.add(ChatMessage('user', text));
-      _messages.add(ChatMessage('assistant', ''));
+      _messages.add(ChatMessage('assistant',
+          crisis ? '🆘 ${tr(context, 'agentCrisisNotice')}\n\n' : ''));
       _generating = true;
     });
     _scrollToEnd();
 
-    // When grounding is on, retrieve evidence from the installed ZIMs and
-    // build a system prompt that lists those sources and requires citations.
-    // Emergency mode retrieves from the bundled guides FIRST.
-    List<RetrievedSource> sources = const [];
-    String systemPrompt = _systemPromptForLanguage();
-    if (_emergencyMode) {
-      setState(
-          () => _messages.last.text = '🚨 ${tr(context, 'aiSearchingGuides')}');
-      try {
-        sources = await EmergencyRetriever.retrieve(
-          text,
-          lang: LocaleService.instance.language.code,
-          mode: SurvivalModeStore.active == SurvivalMode.none
-              ? null
-              : SurvivalModeStore.active.name,
-        );
-      } catch (_) {}
-      if (sources.isNotEmpty) {
-        systemPrompt = EmergencyRetriever.buildEmergencySystemPrompt(
-          sources,
-          replyLang: LocaleService.instance.language.code,
-          mode: SurvivalModeStore.active == SurvivalMode.none
-              ? null
-              : SurvivalModeStore.active.name,
-        );
-      }
-      if (mounted) {
-        setState(() {
-          _messages.last
-            ..text = ''
-            ..sources = sources;
-        });
-      }
-    } else if (_useLibrary && NuvokLibrary.instance.listZims().isNotEmpty) {
-      setState(() =>
-          _messages.last.text = '🔎 ${tr(context, 'aiSearchingLibrary')}');
-      try {
-        sources = await LibraryRetriever.retrieve(text);
-      } catch (_) {}
-      if (sources.isNotEmpty) {
-        systemPrompt = LibraryRetriever.buildGroundedSystemPrompt(sources);
-      }
-      if (mounted) {
-        setState(() {
-          _messages.last
-            ..text = ''
-            ..sources = sources;
-        });
-      }
+    if (_hasGrounding) {
+      setState(() => _messages.last.text +=
+          '🔎 ${tr(context, 'aiSearchingLibrary')}');
     }
+    final (systemPrompt, sources) = await _buildContext(text);
+    if (!mounted) return;
+    setState(() {
+      _messages.last
+        ..text = crisis ? '🆘 ${tr(context, 'agentCrisisNotice')}\n\n' : ''
+        ..sources = sources;
+    });
 
+    final lang = LocaleService.instance.language.code;
+    final reminder = LibraryRetriever.languageReminder(lang);
     try {
+      final visible = _messages
+          .where((m) => m.role == 'user' || m.text.isNotEmpty)
+          .toList();
+      final current = visible.last; // the just-sent question
       final history = [
         {'role': 'system', 'content': systemPrompt},
-        for (final m
-            in _messages.where((m) => m.role == 'user' || m.text.isNotEmpty))
-          {'role': m.role, 'content': m.text},
+        for (final m in visible)
+          if (m.role == 'user')
+            {
+              'role': 'user',
+              'content':
+                  identical(m, current) ? '${m.text}\n\n$reminder' : m.text,
+            }
+          else
+            {'role': m.role, 'content': m.text},
       ];
       await for (final token in _server.chat(history)) {
         setState(() => _messages.last.text += token);
         _scrollToEnd();
       }
-      // A model that answered nothing helps nobody in an emergency: fall
-      // back to the raw guide.
-      if (_emergencyMode && _messages.last.text.trim().isEmpty) {
-        final strict = await EmergencyRetriever.strictAnswer(
-          text,
-          appLang: LocaleService.instance.language.code,
-          mode: SurvivalModeStore.active == SurvivalMode.none
-              ? null
-              : SurvivalModeStore.active.name,
-        );
-        if (strict != null) setState(() => _messages.last.text = strict);
-      }
     } catch (e) {
-      // No local model (Android today) or it crashed: in emergency mode the
-      // guides answer directly — no generation, no hallucination, no delay.
-      if (_emergencyMode) {
+      // Guides-first agents stay useful with no model: answer from the guide.
+      if (widget.agent.grounding == GroundingMode.guidesFirst) {
         final strict = await EmergencyRetriever.strictAnswer(
           text,
-          appLang: LocaleService.instance.language.code,
+          appLang: lang,
           mode: SurvivalModeStore.active == SurvivalMode.none
               ? null
               : SurvivalModeStore.active.name,
         );
         setState(() {
-          _messages.last.text =
-              strict ?? '⚠️ ${tr(context, 'aiNoAiNoGuide')} ($e)';
+          _messages.last.text = strict ?? '⚠️ $e';
         });
       } else {
         setState(() {
@@ -247,227 +432,191 @@ class _AiPageState extends State<AiPage> {
 
   @override
   Widget build(BuildContext context) {
-    // En teléfonos los dos switches con etiqueta + refresh desbordan el
-    // AppBar: en compacto quedan icono + switch (el tooltip explica cuál es).
-    final compactBar = MediaQuery.of(context).size.width < 560;
+    final agent = widget.agent;
+    final lang = LocaleService.instance.language.code;
+    final running = _server.status == LlamaStatus.running;
+    // Guides-first agents (Vera, Norte, Elías) answer from the guides even
+    // with no model, so their input stays enabled.
+    final canType =
+        running || agent.grounding == GroundingMode.guidesFirst;
     return Scaffold(
       appBar: AppBar(
-        title: Text(tr(context, 'assistant')),
-        actions: [
-          Row(
-            children: [
-              Tooltip(
-                message: tr(context, 'emergency'),
-                child: Icon(Icons.emergency,
-                    size: 18, color: _emergencyMode ? Colors.red : null),
-              ),
-              const SizedBox(width: 4),
-              if (!compactBar)
-                Text(tr(context, 'emergency'),
-                    style: TextStyle(
-                        color: _emergencyMode ? Colors.red : null,
-                        fontWeight: _emergencyMode ? FontWeight.bold : null)),
-              Switch(
-                value: _emergencyMode,
-                activeTrackColor: Colors.red,
-                onChanged: (v) => setState(() => _emergencyMode = v),
-              ),
-              const SizedBox(width: 8),
-              Tooltip(
-                message: tr(context, 'library'),
-                child: const Icon(Icons.menu_book_outlined, size: 18),
-              ),
-              const SizedBox(width: 4),
-              if (!compactBar) Text(tr(context, 'library')),
-              Switch(
-                value: _useLibrary,
-                onChanged: (v) => setState(() => _useLibrary = v),
-              ),
-            ],
+        leading: BackButton(onPressed: widget.onBack),
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            CircleAvatar(
+              radius: 16,
+              backgroundColor: agent.accent,
+              child: Icon(agent.avatar, color: Colors.white, size: 16),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(agent.nameProper,
+                    style: Theme.of(context).textTheme.titleMedium),
+                Text(agent.role(lang),
+                    style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ),
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          if (_loadingModel) const LinearProgressIndicator(),
+          if (_server.status == LlamaStatus.error &&
+              _server.lastError != null)
+            MaterialBanner(
+              content: Text(_server.lastError!),
+              leading: const Icon(Icons.error_outline),
+              actions: [
+                TextButton(
+                  onPressed: () => _server.stop(),
+                  child: Text(tr(context, 'discard')),
+                ),
+              ],
+            ),
+          Expanded(
+            child: _messages.isEmpty
+                ? _AgentIntro(agent: agent, running: running)
+                : ListView.builder(
+                    controller: _scroll,
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _messages.length,
+                    itemBuilder: (context, i) => _Bubble(message: _messages[i]),
+                  ),
           ),
-          IconButton(
-            tooltip: tr(context, 'aiRefreshModels'),
-            icon: const Icon(Icons.refresh),
-            onPressed: _refreshModels,
+          if (agent.quickChipKeys.isNotEmpty && !_generating)
+            SizedBox(
+              height: 44,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  for (final key in agent.quickChipKeys)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 6),
+                      child: ActionChip(
+                        avatar: Icon(agent.avatar, size: 16, color: agent.accent),
+                        label: Text(_chipLabel(context, key)),
+                        onPressed: () {
+                          _input.text = _chipLabel(context, key);
+                          _send();
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _input,
+                      enabled: canType,
+                      onSubmitted: (_) => _send(),
+                      decoration: InputDecoration(
+                        hintText: running
+                            ? tr(context, 'aiHintAsk')
+                            : (agent.grounding == GroundingMode.guidesFirst
+                                ? tr(context, 'aiHintEmergency')
+                                : tr(context, 'aiHintLoad')),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        isDense: true,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton.filled(
+                    onPressed: _generating ? null : _send,
+                    icon: _generating
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.send),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(64),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    key: ValueKey(_selectedModel),
-                    initialValue: _selectedModel,
-                    isDense: true,
-                    // Los nombres de modelo (.gguf) son largos: sin esto el
-                    // valor seleccionado desborda el campo en móvil/tablet.
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      labelText: tr(context, 'model'),
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
-                    items: [
-                      for (final m in _models)
-                        DropdownMenuItem(
-                          value: m.path,
-                          child: Text(
-                            '${m.uri.pathSegments.last} '
-                            '(${humanSize(m.lengthSync())})',
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                    ],
-                    onChanged: (v) => setState(() => _selectedModel = v),
+      ),
+    );
+  }
+
+  /// Quick-chip labels reuse existing i18n; the survival-mode chips fill in
+  /// the active environment name like the old emergency quick actions did.
+  String _chipLabel(BuildContext context, String key) {
+    final raw = tr(context, key);
+    if (raw.contains('{mode}')) {
+      return raw.replaceFirst(
+          '{mode}', tr(context, SurvivalModeStore.active.nameKey));
+    }
+    return raw;
+  }
+}
+
+/// Intro shown before the first message: who the agent is + engine status.
+class _AgentIntro extends StatelessWidget {
+  const _AgentIntro({required this.agent, required this.running});
+  final AgentSpec agent;
+  final bool running;
+
+  @override
+  Widget build(BuildContext context) {
+    final lang = LocaleService.instance.language.code;
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 480),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: agent.accent,
+                    child: Icon(agent.avatar, color: Colors.white, size: 30),
                   ),
-                ),
-                const SizedBox(width: 12),
-                _ServerButton(server: _server, onLoad: _loadModel),
-              ],
+                  const SizedBox(height: 12),
+                  Text(agent.nameProper,
+                      style: Theme.of(context).textTheme.titleLarge),
+                  Text(agent.role(lang),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      textAlign: TextAlign.center),
+                  const SizedBox(height: 12),
+                  Text(
+                    running
+                        ? tr(context, 'aiHintAsk')
+                        : tr(context, 'aiEmptyHint'),
+                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
-      body: _models.isEmpty
-          ? Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 480),
-                child: Text(
-                  '${tr(context, 'aiNoModels')}\n'
-                  '${NuvokLibrary.instance.modelsDir.path}',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            )
-          : Column(
-              children: [
-                if (_server.status == LlamaStatus.error &&
-                    _server.lastError != null)
-                  MaterialBanner(
-                    content: Text(_server.lastError!),
-                    leading: const Icon(Icons.error_outline),
-                    actions: [
-                      TextButton(
-                        onPressed: () => _server.stop(),
-                        child: Text(tr(context, 'discard')),
-                      ),
-                    ],
-                  ),
-                Expanded(
-                  child: _messages.isEmpty
-                      ? AiEmptyState(
-                          selectedModelPath: _selectedModel,
-                          server: _server,
-                        )
-                      : ListView.builder(
-                          controller: _scroll,
-                          padding: const EdgeInsets.all(16),
-                          itemCount: _messages.length,
-                          itemBuilder: (context, i) =>
-                              _Bubble(message: _messages[i]),
-                        ),
-                ),
-                // En pánico nadie redacta: un toque envía la pregunta
-                // crítica ya escrita en el idioma de la app.
-                if (_emergencyMode && !_generating)
-                  SizedBox(
-                    height: 44,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      children: [
-                        if (SurvivalModeStore.active != SurvivalMode.none)
-                          for (final key in const [
-                            'aiQuickModeWater',
-                            'aiQuickModeDanger',
-                          ])
-                            Padding(
-                              padding: const EdgeInsets.only(right: 6),
-                              child: ActionChip(
-                                avatar: Text(SurvivalModeStore.active.emoji),
-                                label: Text(tr(context, key).replaceFirst(
-                                    '{mode}',
-                                    tr(context,
-                                        SurvivalModeStore.active.nameKey))),
-                                onPressed: () {
-                                  _input.text = tr(context, key).replaceFirst(
-                                      '{mode}',
-                                      tr(context,
-                                          SurvivalModeStore.active.nameKey));
-                                  _send();
-                                },
-                              ),
-                            ),
-                        for (final key in const [
-                          'aiQuickRcp',
-                          'aiQuickChoking',
-                          'aiQuickBleeding',
-                          'aiQuickBurn',
-                        ])
-                          Padding(
-                            padding: const EdgeInsets.only(right: 6),
-                            child: ActionChip(
-                              avatar: const Icon(Icons.emergency,
-                                  size: 16, color: Colors.red),
-                              label: Text(tr(context, key)),
-                              onPressed: () {
-                                _input.text = tr(context, key);
-                                _send();
-                              },
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _input,
-                            enabled: _server.status == LlamaStatus.running ||
-                                _emergencyMode,
-                            onSubmitted: (_) => _send(),
-                            decoration: InputDecoration(
-                              hintText: _server.status == LlamaStatus.running
-                                  ? tr(context, 'aiHintAsk')
-                                  : _emergencyMode
-                                      ? tr(context, 'aiHintEmergency')
-                                      : tr(context, 'aiHintLoad'),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              isDense: true,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        IconButton.filled(
-                          onPressed: _generating ? null : _send,
-                          icon: _generating
-                              ? const SizedBox(
-                                  width: 18,
-                                  height: 18,
-                                  child:
-                                      CircularProgressIndicator(strokeWidth: 2),
-                                )
-                              : const Icon(Icons.send),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
     );
   }
 }
 
+/// Empty-state card shown when a model is present but not yet loaded. Kept for
+/// the manual-model flow (Settings → advanced) and back-compat tests.
 class AiEmptyState extends StatelessWidget {
   const AiEmptyState(
       {super.key, required this.selectedModelPath, required this.server});
@@ -533,40 +682,6 @@ class AiEmptyState extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _ServerButton extends StatelessWidget {
-  const _ServerButton({required this.server, required this.onLoad});
-  final AiEngine server;
-  final Future<void> Function() onLoad;
-
-  @override
-  Widget build(BuildContext context) {
-    switch (server.status) {
-      case LlamaStatus.stopped:
-      case LlamaStatus.error:
-        return FilledButton.icon(
-          onPressed: onLoad,
-          icon: const Icon(Icons.play_arrow),
-          label: Text(tr(context, 'load')),
-        );
-      case LlamaStatus.starting:
-        return const FilledButton(
-          onPressed: null,
-          child: SizedBox(
-            width: 18,
-            height: 18,
-            child: CircularProgressIndicator(strokeWidth: 2),
-          ),
-        );
-      case LlamaStatus.running:
-        return OutlinedButton.icon(
-          onPressed: () => server.stop(),
-          icon: const Icon(Icons.stop),
-          label: Text(tr(context, 'stop')),
-        );
-    }
   }
 }
 

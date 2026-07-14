@@ -43,32 +43,48 @@ class AgentRuntime {
     final liteInstalled =
         lite != null && installedFileNames.contains(lite.fileName);
 
-    if (!mainInstalled) {
-      return AgentStatus(
-        state: AgentInstallState.needsDownload,
-        effectiveModel: model,
-        usingLiteFallback: false,
-      );
-    }
-    if (_fits(model, freeRamBytes)) {
+    final liteUsable =
+        lite != null && liteInstalled && _fits(lite, freeRamBytes);
+
+    // Main model present and fits: the ideal path.
+    if (mainInstalled && _fits(model, freeRamBytes)) {
       return AgentStatus(
         state: AgentInstallState.ready,
         effectiveModel: model,
         usingLiteFallback: false,
       );
     }
-    // Does not fit: try the lighter model.
-    if (lite != null && liteInstalled && _fits(lite, freeRamBytes)) {
+    // Main present but too big for RAM: run on the lighter model if it's here.
+    if (mainInstalled && liteUsable) {
       return AgentStatus(
         state: AgentInstallState.ready,
         effectiveModel: lite,
         usingLiteFallback: true,
       );
     }
+    // Main present but too big and no usable fallback installed.
+    if (mainInstalled) {
+      return AgentStatus(
+        state: AgentInstallState.needsLite,
+        effectiveModel: lite ?? model,
+        usingLiteFallback: lite != null,
+      );
+    }
+    // Main not installed, but the lighter model is already here: run on it
+    // now and treat downloading the main model as an optional upgrade. This
+    // is what makes a device with only the small model work out of the box.
+    if (liteUsable) {
+      return AgentStatus(
+        state: AgentInstallState.ready,
+        effectiveModel: lite,
+        usingLiteFallback: true,
+      );
+    }
+    // Nothing usable installed: the main model must be downloaded.
     return AgentStatus(
-      state: AgentInstallState.needsLite,
-      effectiveModel: lite ?? model,
-      usingLiteFallback: lite != null,
+      state: AgentInstallState.needsDownload,
+      effectiveModel: model,
+      usingLiteFallback: false,
     );
   }
 

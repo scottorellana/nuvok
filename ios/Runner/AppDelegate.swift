@@ -26,5 +26,12 @@ import UIKit
         engineBridge.pluginRegistry.registrar(forPlugin: "NuvokCompass") {
       CompassBridge.register(messenger: registrar.messenger())
     }
+    // Bundled assets: streams the offline AI model out of the app bundle into
+    // the portable library so the IA specialists run offline on iPhone (mirror
+    // of the Android/macOS copyAsset handler).
+    if let registrar =
+        engineBridge.pluginRegistry.registrar(forPlugin: "NuvokBundledAssets") {
+      BundledAssetsBridge.register(messenger: registrar.messenger())
+    }
   }
 }

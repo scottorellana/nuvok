@@ -112,26 +112,34 @@ class BundledSeedResult {
 class BundledLibrarySeeder {
   const BundledLibrarySeeder._();
 
+  /// Which bundled entries a given platform should seed.
+  ///
+  /// iOS seeds ONLY the AI model: every bundled asset already ships inside the
+  /// .app, so copying it into the library doubles storage. On a phone the maps
+  /// (~270MB) + medical ZIM (~650MB) doubling is not worth it yet, but the AI
+  /// model is what powers the specialists and must be installed for them to
+  /// run offline. Android/macOS (single-install desktops/tablets) seed
+  /// everything. Pure so the per-platform choice is unit-testable without
+  /// touching Platform or doing IO.
+  static List<BundledLibraryEntry> entriesToSeed(
+    List<BundledLibraryEntry> all, {
+    required bool isIOS,
+  }) =>
+      isIOS ? all.where((e) => e.kind == 'models').toList() : all;
+
   static Future<BundledSeedResult> seed({
     NuvokLibrary? library,
     bool overwrite = false,
   }) async {
     final lib = library ?? NuvokLibrary.instance;
     await lib.ensure();
-    // iOS: no seeding in v1. There is no direct-distribution channel on
-    // iPhone (every install goes through the store path, whose builds ship
-    // without the bundle), and the fallback copy path loads each asset whole
-    // into memory — a 600MB ZIM would get the app killed. Content arrives
-    // via in-app downloads instead.
-    if (Platform.isIOS) {
-      return BundledSeedResult(copied: const [], skipped: const [], errors: const {});
-    }
     final manifest = await BundledLibraryManifest.load();
+    final entries = entriesToSeed(manifest.entries, isIOS: Platform.isIOS);
     final copied = <String>[];
     final skipped = <String>[];
     final errors = <String, String>{};
 
-    for (final entry in manifest.entries) {
+    for (final entry in entries) {
       final target = entry.resolveTarget(lib.root);
       try {
         if (!overwrite && _looksInstalled(target, entry)) {
@@ -139,7 +147,9 @@ class BundledLibrarySeeder {
           continue;
         }
         await target.parent.create(recursive: true);
-        if (Platform.isAndroid || Platform.isMacOS) {
+        if (Platform.isAndroid || Platform.isMacOS || Platform.isIOS) {
+          // Native streaming copy: reads the asset in 1MB chunks on the OS
+          // side so a ~500MB model never lands whole in RAM (iOS jetsam).
           await _copyNativeAsset(entry, target);
         } else {
           await _copyFlutterAsset(entry, target);

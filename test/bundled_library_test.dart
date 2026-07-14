@@ -94,4 +94,33 @@ void main() {
       throwsArgumentError,
     );
   });
+
+  group('platform seeding scope', () {
+    BundledLibraryEntry entry(String kind, String name) => BundledLibraryEntry(
+          kind: kind,
+          label: name,
+          assetPath: 'assets/bundled_library/$kind/$name',
+          targetRelativePath: '$kind/$name',
+          bytes: 1,
+          sha256: '0' * 64,
+        );
+
+    final all = [
+      entry('maps', 'honduras.pmtiles'),
+      entry('zim', 'wikipedia.zim'),
+      entry('models', 'qwen.gguf'),
+    ];
+
+    test('iOS seeds only the AI model (not the multi-GB maps/zim)', () {
+      final selected = BundledLibrarySeeder.entriesToSeed(all, isIOS: true);
+      expect(selected.map((e) => e.kind), ['models'],
+          reason: 'iOS: solo el modelo IA, para no duplicar >1GB de mapas/zim');
+    });
+
+    test('non-iOS platforms seed the whole bundle', () {
+      final selected = BundledLibrarySeeder.entriesToSeed(all, isIOS: false);
+      expect(selected, equals(all),
+          reason: 'Android/macOS: instalación única completa, sin cambios');
+    });
+  });
 }

@@ -1114,6 +1114,47 @@ class AppStrings {
       'pt': 'Fontes da biblioteca:', 'fr': 'Sources de la bibliothèque :',
       'zh': '图书馆来源：', 'ja': 'ライブラリの出典：', 'ht': 'Sous bibliyotèk:',
     },
+    // ── Especialistas (agentes locales) ──
+    'agentsTitle': {
+      'es': 'Especialistas', 'en': 'Specialists', 'pt': 'Especialistas',
+      'fr': 'Spécialistes', 'zh': '专家', 'ja': 'スペシャリスト', 'ht': 'Espesyalis',
+    },
+    'agentPick': {
+      'es': 'Elige un especialista', 'en': 'Choose a specialist',
+      'pt': 'Escolha um especialista', 'fr': 'Choisis un spécialiste',
+      'zh': '选择一位专家', 'ja': 'スペシャリストを選ぶ', 'ht': 'Chwazi yon espesyalis',
+    },
+    'agentReady': {
+      'es': 'Listo', 'en': 'Ready', 'pt': 'Pronto',
+      'fr': 'Prêt', 'zh': '就绪', 'ja': '準備完了', 'ht': 'Pare',
+    },
+    'agentDownload': {
+      'es': 'Descargar', 'en': 'Download', 'pt': 'Baixar',
+      'fr': 'Télécharger', 'zh': '下载', 'ja': 'ダウンロード', 'ht': 'Telechaje',
+    },
+    'agentLiteMode': {
+      'es': 'Modo ligero', 'en': 'Lite mode', 'pt': 'Modo leve',
+      'fr': 'Mode léger', 'zh': '轻量模式', 'ja': '軽量モード', 'ht': 'Mòd lejè',
+    },
+    'agentSwitching': {
+      'es': 'Cambiando de especialista…', 'en': 'Switching specialist…',
+      'pt': 'Trocando de especialista…', 'fr': 'Changement de spécialiste…',
+      'zh': '正在切换专家…', 'ja': 'スペシャリストを切り替え中…', 'ht': 'Chanje espesyalis…',
+    },
+    'agentAdvancedModel': {
+      'es': 'Modelo manual (avanzado)', 'en': 'Manual model (advanced)',
+      'pt': 'Modelo manual (avançado)', 'fr': 'Modèle manuel (avancé)',
+      'zh': '手动模型（高级）', 'ja': '手動モデル（詳細）', 'ht': 'Modèl manyèl (avanse)',
+    },
+    'agentCrisisNotice': {
+      'es': 'Si estás en peligro, pulsa SOS o busca ayuda de inmediato.',
+      'en': 'If you are in danger, tap SOS or seek help immediately.',
+      'pt': 'Se você está em perigo, toque em SOS ou busque ajuda imediatamente.',
+      'fr': "Si tu es en danger, appuie sur SOS ou cherche de l'aide immédiatement.",
+      'zh': '如果你有危险，请按 SOS 或立即求助。',
+      'ja': '危険を感じたら SOS を押すか、すぐに助けを求めてください。',
+      'ht': 'Si ou an danje, peze SOS oswa chèche èd touswit.',
+    },
     'aiQuickRcp': {
       'es': '¿Cómo hago RCP a un adulto?', 'en': 'How do I do CPR on an adult?',
       'pt': 'Como faço RCP em um adulto?', 'fr': 'Comment faire un massage cardiaque à un adulte ?',

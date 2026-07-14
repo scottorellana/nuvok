@@ -5,16 +5,25 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 
 enum DownloadStatus { queued, downloading, paused, done, error }
 
 class DownloadTask {
-  DownloadTask({required this.url, required this.destPath, this.totalBytes});
+  DownloadTask({
+    required this.url,
+    required this.destPath,
+    this.totalBytes,
+    this.sha256Hex,
+  });
 
   final String url;
   final String destPath;
   int? totalBytes;
+
+  /// Expected content hash; verified before the final rename. null = skip.
+  final String? sha256Hex;
   int received = 0;
   DownloadStatus status = DownloadStatus.queued;
   String? error;
@@ -32,14 +41,18 @@ class DownloadManager extends ChangeNotifier {
   final List<DownloadTask> tasks = [];
   bool _running = false;
 
-  void enqueue(String url, String destPath, {int? totalBytes}) {
+  void enqueue(String url, String destPath,
+      {int? totalBytes, String? sha256Hex}) {
     if (File(destPath).existsSync()) return; // already downloaded
     if (tasks.any(
         (t) => t.destPath == destPath && t.status != DownloadStatus.error)) {
       return; // already queued
     }
-    tasks.add(
-        DownloadTask(url: url, destPath: destPath, totalBytes: totalBytes));
+    tasks.add(DownloadTask(
+        url: url,
+        destPath: destPath,
+        totalBytes: totalBytes,
+        sha256Hex: sha256Hex));
     notifyListeners();
     _pump();
   }
@@ -167,6 +180,20 @@ class DownloadManager extends ChangeNotifier {
   }
 
   Future<void> _finish(DownloadTask task) async {
+    // Verify integrity before exposing the file: a corrupt .gguf crashes the
+    // native model load, so a bad download must never be renamed into place.
+    if (task.sha256Hex != null) {
+      final digest = await sha256.bind(task.partFile.openRead()).first;
+      if (digest.toString() != task.sha256Hex) {
+        try {
+          task.partFile.deleteSync();
+        } catch (_) {}
+        task.status = DownloadStatus.error;
+        task.error = 'Verificación fallida: el archivo llegó corrupto';
+        notifyListeners();
+        return;
+      }
+    }
     // Ensure the destination directory exists (it may have been deleted).
     final slash = task.destPath.lastIndexOf('/');
     if (slash > 0) {

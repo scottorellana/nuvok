@@ -20,9 +20,15 @@ void main() {
   });
 
   test('la cadena de fallback termina en el modelo más chico', () {
-    final chain = ModelCatalog.chainFrom(ModelCatalog.byId('general-3b')!);
-    expect(chain.map((m) => m.id).toList(),
-        ['general-3b', 'general-1.5b', 'general-1b', 'general-0.5b']);
+    final chain = ModelCatalog.chainFrom(ModelCatalog.byId('general-e4b')!);
+    expect(chain.map((m) => m.id).toList(), [
+      'general-e4b',
+      'general-e2b',
+      'general-3b',
+      'general-1.5b',
+      'general-1b',
+      'general-0.5b',
+    ]);
     // Estrictamente decreciente en tamaño.
     for (var i = 1; i < chain.length; i++) {
       expect(chain[i].sizeBytes, lessThan(chain[i - 1].sizeBytes));

@@ -88,6 +88,32 @@ void * ppllm_load(const char * model_path, int32_t n_ctx, int32_t n_gpu_layers) 
     return h;
 }
 
+// Gemma 4 usa un formato de turnos nuevo (<|turn>rol\n…<turn|>\n) que la API
+// C llama_chat_apply_template no reconoce (caería al fallback ChatML y el
+// modelo respondería degradado). Renderizamos a mano el formato EXACTO que
+// produce el motor Jinja del servidor con enable_thinking=false — verificado
+// contra /apply-template de llama.cpp (2026-07-15):
+//   '<|turn>system\nSYS<turn|>\n<|turn>user\nU<turn|>\n<|turn>model\n'
+// Sin token <|think|>: en un aparato de emergencias la respuesta debe salir
+// directa, no tras minutos de razonamiento interno.
+static char * apply_gemma4_template(const char ** roles,
+                                    const char ** contents, int32_t n_msgs) {
+    std::string out;
+    for (int32_t i = 0; i < n_msgs; i++) {
+        const char * role = roles[i];
+        if (strcmp(role, "assistant") == 0) role = "model";
+        out += "<|turn>";
+        out += role;
+        out += "\n";
+        out += contents[i];
+        out += "<turn|>\n";
+    }
+    out += "<|turn>model\n";
+    char * res = (char *) malloc(out.size() + 1);
+    memcpy(res, out.c_str(), out.size() + 1);
+    return res;
+}
+
 char * ppllm_apply_template(void * handle, const char ** roles,
                             const char ** contents, int32_t n_msgs) {
     auto * h = (PpLlm *) handle;
@@ -104,6 +130,9 @@ char * ppllm_apply_template(void * handle, const char ** roles,
     const char * tmpl = llama_model_chat_template(h->model, nullptr);
     // Models without an embedded template still deserve a sane prompt.
     if (!tmpl) tmpl = "chatml";
+    if (strstr(tmpl, "<|turn>") != nullptr) {
+        return apply_gemma4_template(roles, contents, n_msgs);
+    }
 
     std::vector<char> buf(total * 2 + 256);
     int32_t n = llama_chat_apply_template(tmpl, chat.data(), chat.size(), true,

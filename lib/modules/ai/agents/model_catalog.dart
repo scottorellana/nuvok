@@ -43,8 +43,34 @@ class ModelCatalog {
   // contra descarga real. Si algún día migramos a downloads.nuvok.org (R2),
   // solo cambian estas URLs — fileName y sha256 quedan iguales.
   static const List<ModelEntry> all = [
-    // Desktop tier: a 3B is a genuinely solid specialist and a 18GB Mac runs
-    // it comfortably.
+    // Desktop tier: Gemma 4 E4B — el mejor especialista que cabe en una
+    // computadora de 16-18GB. GGUF comunitario (lmstudio): el QAT oficial de
+    // Google NO carga en llama.cpp (assert de vocabulario, verificado).
+    ModelEntry(
+      id: 'general-e4b',
+      fileName: 'gemma-4-E4B-it-Q4_K_M.gguf',
+      url: 'https://huggingface.co/lmstudio-community/gemma-4-E4B-it-GGUF/'
+          'resolve/main/gemma-4-E4B-it-Q4_K_M.gguf',
+      sizeBytes: 5335289664,
+      sha256:
+          '3f72a20a06f626c78e6c475ae07a64c88b2663149c0f6197b56bf7cf1f37585c',
+      liteFallbackId: 'general-e2b',
+    ),
+    // Phone tier: Gemma 4 E2B — diseñado por Google para dispositivos;
+    // respuestas de nivel especialista verificadas vía FFI (pp_llm renderiza
+    // su plantilla <|turn> sin thinking). El RAM guard manda a los teléfonos
+    // que no lo aguanten a la cadena Qwen de abajo.
+    ModelEntry(
+      id: 'general-e2b',
+      fileName: 'gemma-4-E2B-it-Q4_K_M.gguf',
+      url: 'https://huggingface.co/lmstudio-community/gemma-4-E2B-it-GGUF/'
+          'resolve/main/gemma-4-E2B-it-Q4_K_M.gguf',
+      sizeBytes: 3427877696,
+      sha256:
+          '6c950d754366dd8b372fd17a40497ba5f130a46d833b4c5bccc9f6bb6382ce1e',
+      liteFallbackId: 'general-3b',
+    ),
+    // Qwen 3B: sólido y más liviano que E2B; primer respaldo.
     ModelEntry(
       id: 'general-3b',
       fileName: 'qwen2.5-3b-instruct-q4_k_m.gguf',
@@ -104,7 +130,7 @@ class ModelCatalog {
   static ModelEntry resolveClass(ModelClass cls, {required bool isDesktop}) {
     switch (cls) {
       case ModelClass.general:
-        return byId(isDesktop ? 'general-3b' : 'general-1.5b')!;
+        return byId(isDesktop ? 'general-e4b' : 'general-e2b')!;
     }
   }
 

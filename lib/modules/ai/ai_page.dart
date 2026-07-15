@@ -53,6 +53,16 @@ class _AiPageState extends State<AiPage> {
 Set<String> _installedModelFileNames() =>
     NuvokLibrary.instance.listModels().map((f) => f.uri.pathSegments.last).toSet();
 
+/// Desktops (more RAM) get the bigger specialist model; phones start a tier
+/// down. See ModelCatalog.resolveClass.
+bool _isDesktop() =>
+    Platform.isMacOS || Platform.isWindows || Platform.isLinux;
+
+/// The device-appropriate model an agent asks for (before install/RAM
+/// fallback, which AgentRuntime.resolve then applies).
+ModelEntry _modelFor(AgentSpec agent) =>
+    ModelCatalog.resolveClass(agent.modelClass, isDesktop: _isDesktop());
+
 class _AgentGrid extends StatefulWidget {
   const _AgentGrid({required this.onPick});
   final void Function(AgentSpec) onPick;
@@ -82,8 +92,7 @@ class _AgentGridState extends State<_AgentGrid> {
   }
 
   void _startDownload(AgentSpec agent) {
-    final m = ModelCatalog.byId(agent.modelId);
-    if (m == null) return;
+    final m = _modelFor(agent);
     _dm.enqueue(
       m.url,
       '${NuvokLibrary.instance.modelsDir.path}/${m.fileName}',
@@ -143,7 +152,7 @@ class _AgentGridState extends State<_AgentGrid> {
 
   AgentStatus _statusFor(
       AgentSpec agent, Set<String> installed, int? freeRam) {
-    final model = ModelCatalog.byId(agent.modelId)!;
+    final model = _modelFor(agent);
     return AgentRuntime.resolve(
       model: model,
       installedFileNames: installed,
@@ -153,9 +162,7 @@ class _AgentGridState extends State<_AgentGrid> {
 
   /// Active download progress (0..1) for this agent's model, or null.
   double? _progressFor(AgentSpec agent) {
-    final m = ModelCatalog.byId(agent.modelId);
-    if (m == null) return null;
-    final task = _dm.taskFor(m.url);
+    final task = _dm.taskFor(_modelFor(agent).url);
     return task?.progress;
   }
 }
@@ -291,13 +298,8 @@ class _AgentChatState extends State<_AgentChat> {
   /// load it. If the model is not installed, the chat stays disabled and the
   /// header explains why — the grid is where installs are started.
   Future<void> _prepareModel() async {
-    final model = ModelCatalog.byId(widget.agent.modelId);
-    if (model == null) {
-      setState(() => _loadingModel = false);
-      return;
-    }
     final status = AgentRuntime.resolve(
-      model: model,
+      model: _modelFor(widget.agent),
       installedFileNames: _installedModelFileNames(),
       freeRamBytes: await AiEngine.freeRamBytes(),
     );
@@ -405,7 +407,8 @@ class _AgentChatState extends State<_AgentChat> {
           else
             {'role': m.role, 'content': m.text},
       ];
-      await for (final token in _server.chat(history)) {
+      await for (final token
+          in _server.chat(history, temp: widget.agent.temperature)) {
         setState(() => _messages.last.text += token);
         _scrollToEnd();
       }

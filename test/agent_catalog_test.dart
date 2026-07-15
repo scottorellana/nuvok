@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nuvok/modules/ai/agents/agent_spec.dart';
 import 'package:nuvok/modules/ai/agents/agent_catalog.dart';
+import 'package:nuvok/modules/ai/agents/model_catalog.dart';
 
 void main() {
   test('AgentSpec expone rol y system prompt por idioma con fallback', () {
@@ -11,7 +12,7 @@ void main() {
       roleByLang: {'es': 'Rol', 'en': 'Role'},
       avatar: Icons.person,
       accent: Color(0xFF000000),
-      modelId: 'general-1.7b',
+      modelClass: ModelClass.general,
       grounding: GroundingMode.none,
       temperature: 0.7,
       systemByLang: {'es': 'sys es', 'en': 'sys en'},

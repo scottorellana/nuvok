@@ -77,12 +77,12 @@ class AiEngine extends ChangeNotifier {
     }
   }
 
-  Stream<String> chat(List<Map<String, String>> history) {
-    if (!_useFfi) return LlamaServer.instance.chat(history);
+  Stream<String> chat(List<Map<String, String>> history, {double temp = 0.7}) {
+    if (!_useFfi) return LlamaServer.instance.chat(history, temp: temp);
     final engine = _ffi;
     if (engine == null) {
       return Stream.error(StateError('modelo no cargado'));
     }
-    return engine.chat(history, maxTokens: 512, temp: 0.7);
+    return engine.chat(history, maxTokens: 512, temp: temp);
   }
 }

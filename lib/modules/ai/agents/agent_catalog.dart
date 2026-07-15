@@ -3,6 +3,7 @@
 // natively and the UI also appends a short reminder next to the question.
 import 'package:flutter/material.dart';
 import 'agent_spec.dart';
+import 'model_catalog.dart';
 
 /// Language pin written IN the target language (small models obey a native
 /// instruction far better than a Spanish coda inside an English prompt).
@@ -38,7 +39,7 @@ class AgentCatalog {
       },
       avatar: Icons.emergency,
       accent: const Color(0xFFD32F2F),
-      modelId: 'general-1.7b',
+      modelClass: ModelClass.general,
       grounding: GroundingMode.guidesFirst,
       temperature: 0.5,
       systemByLang: _medicSys,
@@ -63,7 +64,7 @@ class AgentCatalog {
       },
       avatar: Icons.self_improvement,
       accent: const Color(0xFF6A1B9A),
-      modelId: 'general-1.7b',
+      modelClass: ModelClass.general,
       grounding: GroundingMode.guidesFirst,
       temperature: 0.7,
       systemByLang: _psychSys,
@@ -84,7 +85,7 @@ class AgentCatalog {
       },
       avatar: Icons.build,
       accent: const Color(0xFF00695C),
-      modelId: 'general-1.7b',
+      modelClass: ModelClass.general,
       grounding: GroundingMode.library,
       temperature: 0.6,
       systemByLang: _engineerSys,
@@ -104,7 +105,7 @@ class AgentCatalog {
       },
       avatar: Icons.terrain,
       accent: const Color(0xFF2E7D32),
-      modelId: 'general-1.7b',
+      modelClass: ModelClass.general,
       grounding: GroundingMode.guidesFirst,
       temperature: 0.6,
       systemByLang: _survivalSys,
@@ -124,7 +125,7 @@ class AgentCatalog {
       },
       avatar: Icons.translate,
       accent: const Color(0xFF1565C0),
-      modelId: 'translate-0.6b',
+      modelClass: ModelClass.general,
       grounding: GroundingMode.none,
       temperature: 0.3,
       systemByLang: _translatorSys,
@@ -144,7 +145,7 @@ class AgentCatalog {
       },
       avatar: Icons.menu_book,
       accent: const Color(0xFF8D6E63),
-      modelId: 'general-1.7b',
+      modelClass: ModelClass.general,
       grounding: GroundingMode.library,
       temperature: 0.6,
       systemByLang: _librarianSys,

@@ -36,51 +36,33 @@ class AgentRuntime {
     required Set<String> installedFileNames,
     required int? freeRamBytes,
   }) {
+    final chain = ModelCatalog.chainFrom(model); // [main, lite, lite.lite, …]
     final mainInstalled = installedFileNames.contains(model.fileName);
-    final lite = model.liteFallbackId == null
-        ? null
-        : ModelCatalog.byId(model.liteFallbackId!);
-    final liteInstalled =
-        lite != null && installedFileNames.contains(lite.fileName);
 
-    final liteUsable =
-        lite != null && liteInstalled && _fits(lite, freeRamBytes);
+    // Walk the chain for the first model that is both installed AND fits RAM.
+    // The head is the ideal model; anything below it is a lighter fallback.
+    for (final m in chain) {
+      if (installedFileNames.contains(m.fileName) && _fits(m, freeRamBytes)) {
+        return AgentStatus(
+          state: AgentInstallState.ready,
+          effectiveModel: m,
+          usingLiteFallback: m.id != model.id,
+        );
+      }
+    }
 
-    // Main model present and fits: the ideal path.
-    if (mainInstalled && _fits(model, freeRamBytes)) {
-      return AgentStatus(
-        state: AgentInstallState.ready,
-        effectiveModel: model,
-        usingLiteFallback: false,
-      );
-    }
-    // Main present but too big for RAM: run on the lighter model if it's here.
-    if (mainInstalled && liteUsable) {
-      return AgentStatus(
-        state: AgentInstallState.ready,
-        effectiveModel: lite,
-        usingLiteFallback: true,
-      );
-    }
-    // Main present but too big and no usable fallback installed.
+    // Nothing in the chain is usable.
     if (mainInstalled) {
+      // The main model is here but too big for this device's RAM, and no
+      // lighter fallback is installed to fall back to.
+      final smaller = chain.length > 1 ? chain[1] : null;
       return AgentStatus(
         state: AgentInstallState.needsLite,
-        effectiveModel: lite ?? model,
-        usingLiteFallback: lite != null,
+        effectiveModel: smaller ?? model,
+        usingLiteFallback: smaller != null,
       );
     }
-    // Main not installed, but the lighter model is already here: run on it
-    // now and treat downloading the main model as an optional upgrade. This
-    // is what makes a device with only the small model work out of the box.
-    if (liteUsable) {
-      return AgentStatus(
-        state: AgentInstallState.ready,
-        effectiveModel: lite,
-        usingLiteFallback: true,
-      );
-    }
-    // Nothing usable installed: the main model must be downloaded.
+    // Main not installed and no usable fallback: it must be downloaded.
     return AgentStatus(
       state: AgentInstallState.needsDownload,
       effectiveModel: model,

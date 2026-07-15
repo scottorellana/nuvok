@@ -3,10 +3,29 @@ import 'package:nuvok/modules/ai/agents/model_catalog.dart';
 import 'package:nuvok/modules/ai/agents/agent_catalog.dart';
 
 void main() {
-  test('cada modelId de agente existe en el catálogo de modelos', () {
+  test('la clase de modelo de cada agente resuelve en ambas plataformas', () {
     for (final a in AgentCatalog.all) {
-      expect(ModelCatalog.byId(a.modelId), isNotNull,
-          reason: '${a.id} apunta a modelId inexistente ${a.modelId}');
+      for (final desktop in [true, false]) {
+        final m = ModelCatalog.resolveClass(a.modelClass, isDesktop: desktop);
+        expect(m.fileName.endsWith('.gguf'), isTrue,
+            reason: '${a.id} desktop=$desktop no resolvió a un .gguf');
+      }
+    }
+  });
+
+  test('desktop resuelve a un modelo mayor que el de teléfono', () {
+    final d = ModelCatalog.resolveClass(ModelClass.general, isDesktop: true);
+    final p = ModelCatalog.resolveClass(ModelClass.general, isDesktop: false);
+    expect(d.sizeBytes, greaterThan(p.sizeBytes));
+  });
+
+  test('la cadena de fallback termina en el modelo más chico', () {
+    final chain = ModelCatalog.chainFrom(ModelCatalog.byId('general-3b')!);
+    expect(chain.map((m) => m.id).toList(),
+        ['general-3b', 'general-1.5b', 'general-1b', 'general-0.5b']);
+    // Estrictamente decreciente en tamaño.
+    for (var i = 1; i < chain.length; i++) {
+      expect(chain[i].sizeBytes, lessThan(chain[i - 1].sizeBytes));
     }
   });
 

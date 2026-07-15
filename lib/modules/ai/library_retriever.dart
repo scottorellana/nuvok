@@ -171,9 +171,43 @@ class LibraryRetriever {
     return lastStop > maxChars ~/ 2 ? cut.substring(0, lastStop + 1) : '$cut…';
   }
 
+  /// Nombre nativo de cada idioma para fijar el idioma de RESPUESTA en el
+  /// prompt (los modelos pequeños obedecen mejor una instrucción explícita
+  /// que "responde en el idioma del usuario").
+  static const Map<String, String> langNames = {
+    'es': 'español',
+    'en': 'English',
+    'pt': 'português',
+    'fr': 'français',
+    'zh': '中文',
+    'ja': '日本語',
+    'ht': 'kreyòl ayisyen',
+  };
+
+  /// Recordatorio corto que se pega al FINAL del mensaje del usuario. Medido
+  /// con Qwen 0.5B + fuentes en inglés: el pin solo en el system prompt da
+  /// 1/4 respuestas en español; con este recordatorio como últimos tokens
+  /// antes de generar, 4/4. En modelos pequeños manda lo último que leen.
+  static const Map<String, String> _replyReminders = {
+    'es': 'Responde en español.',
+    'en': 'Reply in English.',
+    'pt': 'Responda em português.',
+    'fr': 'Réponds en français.',
+    'zh': '请用中文回答。',
+    'ja': '日本語で答えてください。',
+    'ht': 'Reponn an kreyòl ayisyen.',
+  };
+
+  static String languageReminder(String replyLang) =>
+      _replyReminders[replyLang] ?? _replyReminders['es']!;
+
   /// Builds the system prompt that grounds the model in the retrieved
-  /// sources and requires citations.
-  static String buildGroundedSystemPrompt(List<RetrievedSource> sources) {
+  /// sources and requires citations. [replyLang] pins the answer language:
+  /// the sources are often English Wikipedia, and without an explicit pin a
+  /// small model drifts into the sources' language.
+  static String buildGroundedSystemPrompt(List<RetrievedSource> sources,
+      {String replyLang = 'es'}) {
+    final langName = langNames[replyLang] ?? 'español';
     final buffer = StringBuffer()
       ..writeln(
           'Eres el asistente de Nuvok. Responde SOLO con base en las '
@@ -181,8 +215,11 @@ class LibraryRetriever {
           'afirmación con su número entre corchetes, por ejemplo [1]. Si las '
           'fuentes no contienen la respuesta, dilo claramente y no inventes. '
           'Para temas médicos o de emergencia, recuerda al usuario buscar '
-          'ayuda profesional cuando sea posible. Responde en el idioma del '
-          'usuario.\n')
+          'ayuda profesional cuando sea posible. NUNCA cambies ni inventes '
+          'cifras (tiempos, dosis, cantidades): usa EXACTAMENTE las de las '
+          'fuentes — un número equivocado puede ser peligroso. Las fuentes '
+          'pueden estar en otro idioma: TRADUCE y responde SIEMPRE en '
+          '$langName.\n')
       ..writeln('=== FUENTES ===');
     for (var i = 0; i < sources.length; i++) {
       final s = sources[i];
@@ -191,7 +228,12 @@ class LibraryRetriever {
         ..writeln(s.text)
         ..writeln();
     }
-    buffer.writeln('=== FIN DE FUENTES ===');
+    buffer
+      ..writeln('=== FIN DE FUENTES ===')
+      // Los modelos pequeños pesan más lo último que leen: repetir el idioma
+      // después de páginas de fuentes evita que contesten en el idioma de
+      // la fuente.
+      ..writeln('Recuerda: responde SIEMPRE en $langName.');
     return buffer.toString();
   }
 }

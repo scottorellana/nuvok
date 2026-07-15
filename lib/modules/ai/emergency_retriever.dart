@@ -70,22 +70,11 @@ class EmergencyRetriever {
 
   /// System prompt for emergency mode: actionable numbered steps, scene
   /// safety first, citations required, always close with seeking real help.
-  /// Nombre nativo de cada idioma para fijar el idioma de RESPUESTA en el
-  /// prompt (los modelos pequeños obedecen mejor una instrucción explícita).
-  static const Map<String, String> _langNames = {
-    'es': 'español',
-    'en': 'English',
-    'pt': 'português',
-    'fr': 'français',
-    'zh': '中文',
-    'ja': '日本語',
-    'ht': 'kreyòl ayisyen',
-  };
-
   static String buildEmergencySystemPrompt(List<RetrievedSource> sources,
       {String replyLang = 'es', String? mode}) {
-    final grounded = LibraryRetriever.buildGroundedSystemPrompt(sources);
-    final langName = _langNames[replyLang] ?? 'español';
+    final grounded =
+        LibraryRetriever.buildGroundedSystemPrompt(sources, replyLang: replyLang);
+    final langName = LibraryRetriever.langNames[replyLang] ?? 'español';
     final modeLine = mode == null || mode.isEmpty
         ? ''
         : 'El usuario declaró estar en el entorno: $mode. Prioriza '

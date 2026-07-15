@@ -180,7 +180,8 @@ class LlamaServer extends ChangeNotifier {
   }
 
   /// Streams assistant tokens for the given conversation.
-  Stream<String> chat(List<Map<String, String>> messages) async* {
+  Stream<String> chat(List<Map<String, String>> messages,
+      {double temp = 0.7}) async* {
     if (status != LlamaStatus.running) {
       throw StateError('El motor de IA no está activo');
     }
@@ -192,7 +193,7 @@ class LlamaServer extends ChangeNotifier {
       req.write(jsonEncode({
         'messages': messages,
         'stream': true,
-        'temperature': 0.7,
+        'temperature': temp,
       }));
       final res = await req.close();
       if (res.statusCode != 200) {

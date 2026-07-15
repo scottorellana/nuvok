@@ -4,6 +4,8 @@
 // wire the engine.
 import 'package:flutter/material.dart';
 
+import 'model_catalog.dart';
+
 /// Where the agent draws its evidence from before generating.
 enum GroundingMode {
   /// Emergency guides first, then the library (Vera, Norte, Elías).
@@ -23,7 +25,7 @@ class AgentSpec {
     required this.roleByLang,
     required this.avatar,
     required this.accent,
-    required this.modelId,
+    required this.modelClass,
     required this.grounding,
     required this.temperature,
     required this.systemByLang,
@@ -36,7 +38,7 @@ class AgentSpec {
   final Map<String, String> roleByLang;
   final IconData avatar;
   final Color accent;
-  final String modelId; // key into ModelCatalog
+  final ModelClass modelClass; // resolved per-device by ModelCatalog
   final GroundingMode grounding;
   final double temperature;
   final Map<String, String> systemByLang;

@@ -1136,6 +1136,25 @@ class AppStrings {
       'es': 'Modo ligero', 'en': 'Lite mode', 'pt': 'Modo leve',
       'fr': 'Mode léger', 'zh': '轻量模式', 'ja': '軽量モード', 'ht': 'Mòd lejè',
     },
+    'agentUpgrade': {
+      'es': 'Mejorar IA', 'en': 'Upgrade AI', 'pt': 'Melhorar IA',
+      'fr': "Améliorer l'IA", 'zh': '升级AI', 'ja': 'AIを強化',
+      'ht': 'Amelyore AI',
+    },
+    'agentLiteBanner': {
+      'es': 'Respuestas básicas (modelo ligero). Descarga el especialista '
+          'completo para respuestas de verdad.',
+      'en': 'Basic answers (lite model). Download the full specialist for '
+          'real answers.',
+      'pt': 'Respostas básicas (modelo leve). Baixe o especialista completo '
+          'para respostas de verdade.',
+      'fr': 'Réponses basiques (modèle léger). Télécharge le spécialiste '
+          'complet pour de vraies réponses.',
+      'zh': '基础回答（轻量模型）。下载完整专家以获得真正的回答。',
+      'ja': '基本的な回答（軽量モデル）。本格的な回答には完全版をダウンロード。',
+      'ht': 'Repons debaz (modèl lejè). Telechaje espesyalis konplè a pou '
+          'vrè repons.',
+    },
     'agentSwitching': {
       'es': 'Cambiando de especialista…', 'en': 'Switching specialist…',
       'pt': 'Trocando de especialista…', 'fr': 'Changement de spécialiste…',

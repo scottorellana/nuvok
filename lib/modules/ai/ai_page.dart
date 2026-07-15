@@ -231,6 +231,31 @@ class _AgentCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   child: LinearProgressIndicator(value: downloadProgress),
                 )
+              else if (ready && status.usingLiteFallback)
+                // Corre en el modelo ligero: la fila de estado se vuelve la
+                // oferta de mejora. Sin esto el usuario se queda para siempre
+                // con el 0.5B incoherente sin saber que hay algo mejor (el
+                // toque en el resto de la tarjeta sigue abriendo el chat).
+                GestureDetector(
+                  key: ValueKey('upgrade-${agent.id}'),
+                  onTap: onDownload,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.upgrade,
+                          size: 14, color: Theme.of(context).colorScheme.primary),
+                      const SizedBox(width: 4),
+                      Flexible(
+                        child: Text(tr(context, 'agentUpgrade'),
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.w600),
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                    ],
+                  ),
+                )
               else
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -267,11 +292,16 @@ class _AgentChat extends StatefulWidget {
 
 class _AgentChatState extends State<_AgentChat> {
   final _server = AiEngine.instance;
+  final _dm = DownloadManager.instance;
   final _input = TextEditingController();
   final _scroll = ScrollController();
   final List<ChatMessage> _messages = [];
   bool _generating = false;
   bool _loadingModel = true;
+
+  /// Resolución modelo/RAM del último _prepareModel — alimenta el banner de
+  /// mejora cuando el chat corre sobre el fallback ligero.
+  AgentStatus? _status;
 
   bool get _hasGrounding => widget.agent.grounding != GroundingMode.none;
 
@@ -279,19 +309,33 @@ class _AgentChatState extends State<_AgentChat> {
   void initState() {
     super.initState();
     _server.addListener(_onServerChanged);
+    _dm.addListener(_onServerChanged); // progreso de la mejora en vivo
     _prepareModel();
   }
 
   @override
   void dispose() {
     _server.removeListener(_onServerChanged);
+    _dm.removeListener(_onServerChanged);
     _input.dispose();
     _scroll.dispose();
     super.dispose();
   }
 
   void _onServerChanged() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    // ¿Terminó la descarga de mejora mientras chateamos en modo ligero?
+    // Recargar con el modelo completo (fuera de build, aquí es seguro).
+    final status = _status;
+    if (status != null && status.usingLiteFallback) {
+      final main = _modelFor(widget.agent);
+      if (_installedModelFileNames().contains(main.fileName)) {
+        _status = null;
+        _loadingModel = true;
+        _prepareModel();
+      }
+    }
+    setState(() {});
   }
 
   /// Resolve the effective model (RAM guard may pick the lite fallback) and
@@ -304,12 +348,57 @@ class _AgentChatState extends State<_AgentChat> {
       freeRamBytes: await AiEngine.freeRamBytes(),
     );
     if (!mounted) return;
+    _status = status;
     if (status.state == AgentInstallState.ready) {
       final path =
           '${NuvokLibrary.instance.modelsDir.path}/${status.effectiveModel.fileName}';
       await _server.start(path);
     }
     if (mounted) setState(() => _loadingModel = false);
+  }
+
+  /// Banner de mejora: visible mientras el chat corre en el modelo ligero.
+  /// Ofrece descargar el especialista completo y muestra el progreso; al
+  /// terminar la descarga, _prepareModel recarga con el modelo bueno.
+  Widget? _upgradeBanner(BuildContext context) {
+    final status = _status;
+    if (status == null || !status.usingLiteFallback) return null;
+    final main = _modelFor(widget.agent);
+    final task = _dm.taskFor(main.url);
+    return Material(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        child: task != null
+            ? Row(children: [
+                Expanded(
+                    child: LinearProgressIndicator(value: task.progress)),
+                const SizedBox(width: 8),
+                Text(
+                    task.progress == null
+                        ? '…'
+                        : '${(task.progress! * 100).round()}%',
+                    style: const TextStyle(fontSize: 12)),
+              ])
+            : Row(children: [
+                Expanded(
+                  child: Text(tr(context, 'agentLiteBanner'),
+                      style: const TextStyle(fontSize: 12)),
+                ),
+                TextButton(
+                  onPressed: () => _dm.enqueue(
+                    main.url,
+                    '${NuvokLibrary.instance.modelsDir.path}/${main.fileName}',
+                    totalBytes: main.sizeBytes,
+                    sha256Hex: main.sha256 == 'TO_FILL_ON_UPLOAD'
+                        ? null
+                        : main.sha256,
+                  ),
+                  child: Text(tr(context, 'agentUpgrade')),
+                ),
+              ]),
+      ),
+    );
   }
 
   /// Builds the grounding-aware system prompt for this agent in the language
@@ -481,6 +570,7 @@ class _AgentChatState extends State<_AgentChat> {
       body: Column(
         children: [
           if (_loadingModel) const LinearProgressIndicator(),
+          if (_upgradeBanner(context) case final banner?) banner,
           if (_server.status == LlamaStatus.error &&
               _server.lastError != null)
             MaterialBanner(

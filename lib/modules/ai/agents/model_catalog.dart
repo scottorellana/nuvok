@@ -38,44 +38,56 @@ class ModelEntry {
 enum ModelClass { general }
 
 class ModelCatalog {
-  static const String _base = 'https://nuvok.org/models';
-
+  // Los modelos se sirven desde los repos GGUF oficiales en Hugging Face
+  // (CDN global, gratis). SHA-256 = LFS oid publicado por HF, verificado
+  // contra descarga real. Si algún día migramos a downloads.nuvok.org (R2),
+  // solo cambian estas URLs — fileName y sha256 quedan iguales.
   static const List<ModelEntry> all = [
     // Desktop tier: a 3B is a genuinely solid specialist and a 18GB Mac runs
     // it comfortably.
     ModelEntry(
       id: 'general-3b',
       fileName: 'qwen2.5-3b-instruct-q4_k_m.gguf',
-      url: '$_base/qwen2.5-3b-instruct-q4_k_m.gguf',
-      sizeBytes: 1930000000,
-      sha256: 'TO_FILL_ON_UPLOAD',
+      url: 'https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/'
+          'resolve/main/qwen2.5-3b-instruct-q4_k_m.gguf',
+      sizeBytes: 2104932768,
+      sha256:
+          '626b4a6678b86442240e33df819e00132d3ba7dddfe1cdc4fbb18e0a9615c62d',
       liteFallbackId: 'general-1.5b',
     ),
     // Phone tier: 1.5B is coherent and fits mid-range phones.
     ModelEntry(
       id: 'general-1.5b',
       fileName: 'qwen2.5-1.5b-instruct-q4_k_m.gguf',
-      url: '$_base/qwen2.5-1.5b-instruct-q4_k_m.gguf',
-      sizeBytes: 1120000000,
-      sha256: 'TO_FILL_ON_UPLOAD',
+      url: 'https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/'
+          'resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf',
+      sizeBytes: 1117320736,
+      sha256:
+          '6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e',
       liteFallbackId: 'general-1b',
     ),
     // 1B fallback: verified coherent as a specialist; last resort before 0.5B.
     ModelEntry(
       id: 'general-1b',
       fileName: 'google_gemma-3-1b-it-Q4_K_M.gguf',
-      url: '$_base/google_gemma-3-1b-it-Q4_K_M.gguf',
-      sizeBytes: 806000000,
-      sha256: 'TO_FILL_ON_UPLOAD',
+      url: 'https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF/'
+          'resolve/main/google_gemma-3-1b-it-Q4_K_M.gguf',
+      sizeBytes: 806058496,
+      sha256:
+          '12bf0fff8815d5f73a3c9b586bd8fee8e7b248c935de70dec367679873d0f29d',
       liteFallbackId: 'general-0.5b',
     ),
     // 0.5B: only as an absolute last resort (incoherent as a specialist).
+    // Mismo archivo que viaja empaquetado en la app (SHA idéntico al del
+    // manifest de assets/bundled_library).
     ModelEntry(
       id: 'general-0.5b',
       fileName: 'qwen2.5-0.5b-instruct-q4_k_m.gguf',
-      url: '$_base/qwen2.5-0.5b-instruct-q4_k_m.gguf',
-      sizeBytes: 492000000,
-      sha256: 'TO_FILL_ON_UPLOAD',
+      url: 'https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/'
+          'resolve/main/qwen2.5-0.5b-instruct-q4_k_m.gguf',
+      sizeBytes: 491400032,
+      sha256:
+          '74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db',
     ),
   ];
 

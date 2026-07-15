@@ -208,11 +208,16 @@ class _AgentCard extends StatelessWidget {
               Text(agent.nameProper,
                   style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center),
-              Text(agent.role(lang),
-                  style: Theme.of(context).textTheme.bodySmall,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis),
+              // Flexible: en teléfonos angostos la celda queda a milímetros
+              // del contenido; el rol es lo único que puede ceder (elipsis)
+              // sin perder el nombre ni el estado.
+              Flexible(
+                child: Text(agent.role(lang),
+                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis),
+              ),
               const SizedBox(height: 8),
               if (downloading)
                 Padding(

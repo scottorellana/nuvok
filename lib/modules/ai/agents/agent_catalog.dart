@@ -4,23 +4,22 @@
 import 'package:flutter/material.dart';
 import 'agent_spec.dart';
 
-/// Native language name used to pin the REPLY language (small models obey an
-/// explicit instruction far better than "the user's language").
-const _langName = {
-  'es': 'español',
-  'en': 'English',
-  'pt': 'português',
-  'fr': 'français',
-  'zh': '中文',
-  'ja': '日本語',
-  'ht': 'kreyòl ayisyen',
+/// Language pin written IN the target language (small models obey a native
+/// instruction far better than a Spanish coda inside an English prompt).
+const _replyPin = {
+  'es': 'Responde SIEMPRE en español.',
+  'en': 'ALWAYS reply in English.',
+  'pt': 'Responda SEMPRE em português.',
+  'fr': 'Réponds TOUJOURS en français.',
+  'zh': '请务必始终用中文回答。',
+  'ja': '必ず日本語で答えてください。',
+  'ht': 'Toujou reponn an kreyòl ayisyen.',
 };
 
 /// Wraps a per-language personality line with the language pin so we don't
 /// repeat the coda across 7 languages × 6 agents by hand.
 Map<String, String> _sys(Map<String, String> core) => {
-      for (final e in core.entries)
-        e.key: '${e.value} Responde SIEMPRE en ${_langName[e.key]}.',
+      for (final e in core.entries) e.key: '${e.value} ${_replyPin[e.key]}',
     };
 
 class AgentCatalog {

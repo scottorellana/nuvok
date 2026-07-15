@@ -43,11 +43,16 @@ void main() {
     }
   });
 
-  test('el system prompt fija el idioma de respuesta por su nombre nativo', () {
+  test('el system prompt fija el idioma de respuesta EN el idioma destino',
+      () {
+    // El pin va escrito en el idioma de la respuesta (un modelo chico obedece
+    // mejor una instrucción nativa que una coda en español dentro de un
+    // prompt inglés).
     final vera = AgentCatalog.byId('medic')!;
-    expect(vera.system('es'), contains('SIEMPRE en español'));
-    expect(vera.system('fr'), contains('SIEMPRE en français'));
-    expect(vera.system('ja'), contains('SIEMPRE en 日本語'));
+    expect(vera.system('es'), contains('Responde SIEMPRE en español'));
+    expect(vera.system('en'), contains('ALWAYS reply in English'));
+    expect(vera.system('fr'), contains('Réponds TOUJOURS en français'));
+    expect(vera.system('ja'), contains('必ず日本語で'));
   });
 
   test('byId encuentra y devuelve null si no existe', () {

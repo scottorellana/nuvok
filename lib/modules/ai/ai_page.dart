@@ -14,6 +14,7 @@ import 'agents/agent_spec.dart';
 import 'agents/agent_catalog.dart';
 import 'agents/agent_runtime.dart';
 import 'agents/model_catalog.dart';
+import 'reply_lang.dart';
 
 class ChatMessage {
   ChatMessage(this.role, this.text, {this.sources = const []});
@@ -304,10 +305,13 @@ class _AgentChatState extends State<_AgentChat> {
     if (mounted) setState(() => _loadingModel = false);
   }
 
-  /// Builds the grounding-aware system prompt for this agent in the app's
-  /// language. Reuses the emergency/library retrievers already in the app.
+  /// Builds the grounding-aware system prompt for this agent in the language
+  /// the QUESTION was written in (app language as fallback), so a Spanish
+  /// question gets a Spanish answer even on a phone set to English. Reuses
+  /// the emergency/library retrievers already in the app.
   Future<(String, List<RetrievedSource>)> _buildContext(String text) async {
-    final lang = LocaleService.instance.language.code;
+    final lang = detectReplyLang(text,
+        appLang: LocaleService.instance.language.code);
     final mode = SurvivalModeStore.active == SurvivalMode.none
         ? null
         : SurvivalModeStore.active.name;
@@ -375,7 +379,9 @@ class _AgentChatState extends State<_AgentChat> {
         ..sources = sources;
     });
 
-    final lang = LocaleService.instance.language.code;
+    // Reply in the language of the question, not of the phone's UI.
+    final lang = detectReplyLang(text,
+        appLang: LocaleService.instance.language.code);
     final reminder = LibraryRetriever.languageReminder(lang);
     try {
       final visible = _messages

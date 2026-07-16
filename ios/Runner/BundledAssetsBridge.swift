@@ -150,6 +150,13 @@ enum BundledAssetsBridge {
       candidates.append(
         resources.appendingPathComponent("flutter_assets/").appendingPathComponent(asset))
       candidates.append(resources.appendingPathComponent(lookupKey))
+      // Recursos XL (p.ej. el modelo Gemma 4 de 3.4GB): van como recurso
+      // nativo del bundle — NO como asset de Flutter, porque el empaquetado
+      // de assets de Android no soporta archivos >2GB y los assets de
+      // pubspec son globales. Aterrizan en la raíz de Resources con su
+      // nombre de archivo.
+      candidates.append(resources.appendingPathComponent(
+        URL(fileURLWithPath: asset).lastPathComponent))
     }
     for candidate in candidates where FileManager.default.fileExists(atPath: candidate.path) {
       return candidate

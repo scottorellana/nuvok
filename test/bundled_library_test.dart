@@ -61,6 +61,10 @@ void main() {
 
     expect(registered, contains(BundledLibraryManifest.assetPath));
     for (final entry in manifest.entries) {
+      // models_xl/ NO son assets de Flutter: van como recurso nativo del
+      // bundle en iOS/macOS (Android no puede empaquetar >2GB en el APK y
+      // los assets de pubspec son globales a todas las plataformas).
+      if (entry.assetPath.contains('/models_xl/')) continue;
       expect(registered, contains(entry.assetPath), reason: entry.assetPath);
     }
   });
@@ -120,7 +124,22 @@ void main() {
     test('non-iOS platforms seed the whole bundle', () {
       final selected = BundledLibrarySeeder.entriesToSeed(all, isIOS: false);
       expect(selected, equals(all),
-          reason: 'Android/macOS: instalación única completa, sin cambios');
+          reason: 'macOS: instalación única completa, sin cambios');
+    });
+
+    test('Android salta los assets que su APK no puede llevar (>2GB)', () {
+      final big = BundledLibraryEntry(
+        kind: 'models',
+        label: 'Gemma 4 E2B',
+        assetPath: 'assets/bundled_library/models/gemma.gguf',
+        targetRelativePath: 'models/gemma.gguf',
+        bytes: 3427877696, // excluido del APK por build.gradle
+        sha256: '0' * 64,
+      );
+      final selected = BundledLibrarySeeder.entriesToSeed([...all, big],
+          isIOS: false, isAndroid: true);
+      expect(selected, equals(all),
+          reason: 'el asset >2GB no está en el APK; sembrarlo fallaría');
     });
   });
 }

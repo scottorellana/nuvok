@@ -112,20 +112,32 @@ class BundledSeedResult {
 class BundledLibrarySeeder {
   const BundledLibrarySeeder._();
 
+  /// Los assets mayores a esto no viajan en el APK de Android (el formato
+  /// APK tiene un techo práctico de ~4GB y la compresión de assets de AGP
+  /// revienta con arrays >2GB); el build.gradle los excluye del paquete.
+  static const int androidAssetLimitBytes = 2 * 1024 * 1024 * 1024;
+
   /// Which bundled entries a given platform should seed.
   ///
-  /// iOS seeds ONLY the AI model: every bundled asset already ships inside the
-  /// .app, so copying it into the library doubles storage. On a phone the maps
-  /// (~270MB) + medical ZIM (~650MB) doubling is not worth it yet, but the AI
-  /// model is what powers the specialists and must be installed for them to
-  /// run offline. Android/macOS (single-install desktops/tablets) seed
-  /// everything. Pure so the per-platform choice is unit-testable without
-  /// touching Platform or doing IO.
+  /// iOS seeds ONLY the AI models: every bundled asset already ships inside
+  /// the .app, so copying it into the library doubles storage. On a phone the
+  /// maps (~270MB) + medical ZIM (~650MB) doubling is not worth it yet, but
+  /// the AI models are what power the specialists and must be installed for
+  /// them to run offline. Android seeds everything EXCEPT the assets that its
+  /// APK cannot ship (see [androidAssetLimitBytes]) — those arrive via the
+  /// in-app "Mejorar IA" download. macOS seeds everything. Pure so the
+  /// per-platform choice is unit-testable without touching Platform or IO.
   static List<BundledLibraryEntry> entriesToSeed(
     List<BundledLibraryEntry> all, {
     required bool isIOS,
-  }) =>
-      isIOS ? all.where((e) => e.kind == 'models').toList() : all;
+    bool isAndroid = false,
+  }) {
+    if (isIOS) return all.where((e) => e.kind == 'models').toList();
+    if (isAndroid) {
+      return all.where((e) => e.bytes <= androidAssetLimitBytes).toList();
+    }
+    return all;
+  }
 
   static Future<BundledSeedResult> seed({
     NuvokLibrary? library,
@@ -134,7 +146,8 @@ class BundledLibrarySeeder {
     final lib = library ?? NuvokLibrary.instance;
     await lib.ensure();
     final manifest = await BundledLibraryManifest.load();
-    final entries = entriesToSeed(manifest.entries, isIOS: Platform.isIOS);
+    final entries = entriesToSeed(manifest.entries,
+        isIOS: Platform.isIOS, isAndroid: Platform.isAndroid);
     final copied = <String>[];
     final skipped = <String>[];
     final errors = <String, String>{};

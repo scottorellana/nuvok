@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		GEMMAXL02BUILD00000000000 /* gemma-4-E2B-it-Q4_K_M.gguf in Resources */ = {isa = PBXBuildFile; fileRef = GEMMAXL01FILE000000000000 /* gemma-4-E2B-it-Q4_K_M.gguf */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
@@ -24,9 +25,9 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		A471CF4A890F22F010A567A6 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A48C4CCF17DBF4AC364A18 /* Pods_Runner.framework */; };
+		BDLIOS02ASSETS0BRIDGE0BLD /* BundledAssetsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDLIOS01ASSETS0BRIDGE0FIL /* BundledAssetsBridge.swift */; };
 		BLEIOS02MESH0BRIDGE0BUILD /* BleMeshBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BLEIOS01MESH0BRIDGE0FILE0 /* BleMeshBridge.swift */; };
 		CMPIOS02COMPASS0BRIDGEBLD /* CompassBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = CMPIOS01COMPASS0BRIDGEFIL /* CompassBridge.swift */; };
-		BDLIOS02ASSETS0BRIDGE0BLD /* BundledAssetsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDLIOS01ASSETS0BRIDGE0FIL /* BundledAssetsBridge.swift */; };
 		F2F9512A616640C1C3800535 /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E6D055944961D1025133D75 /* Pods_RunnerTests.framework */; };
 		PRIVACY02INFO0BUILD000000 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = PRIVACY01INFO0FILE0000000 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		GEMMAXL01FILE000000000000 /* gemma-4-E2B-it-Q4_K_M.gguf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "gemma-4-E2B-it-Q4_K_M.gguf"; path = "../assets/bundled_library/models_xl/gemma-4-E2B-it-Q4_K_M.gguf"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		14F339BC950642C5878DE114 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
@@ -85,10 +87,10 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A7E4B112EAC7D6578BA1EA2 /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
 		A9A48C4CCF17DBF4AC364A18 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BLEIOS01MESH0BRIDGE0FILE0 /* BleMeshBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BleMeshBridge.swift; sourceTree = "<group>"; };
-		CMPIOS01COMPASS0BRIDGEFIL /* CompassBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassBridge.swift; sourceTree = "<group>"; };
 		BDLIOS01ASSETS0BRIDGE0FIL /* BundledAssetsBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundledAssetsBridge.swift; sourceTree = "<group>"; };
+		BLEIOS01MESH0BRIDGE0FILE0 /* BleMeshBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BleMeshBridge.swift; sourceTree = "<group>"; };
 		CD6F1C0F2F9A2DE35FCB095F /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CMPIOS01COMPASS0BRIDGEFIL /* CompassBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassBridge.swift; sourceTree = "<group>"; };
 		F2FA3384BFECC303E30672CB /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
 		PRIVACY01INFO0FILE0000000 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -368,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
+				GEMMAXL02BUILD00000000000 /* gemma-4-E2B-it-Q4_K_M.gguf in Resources */,
 				46ED264A2FFDBEFC00F407DE /* InfoPlist.strings in Resources */,
 				46ED263E2FFDBEF800F407DE /* InfoPlist.strings in Resources */,
 				46ED263B2FFDBEF800F407DE /* InfoPlist.strings in Resources */,

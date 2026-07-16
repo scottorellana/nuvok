@@ -36,6 +36,14 @@
     },
     {
       "kind": "models",
+      "label": "Modelo IA Gemma 4 E2B offline (especialistas)",
+      "asset": "assets/bundled_library/models_xl/gemma-4-E2B-it-Q4_K_M.gguf",
+      "target": "models/gemma-4-E2B-it-Q4_K_M.gguf",
+      "bytes": 3427877696,
+      "sha256": "6c950d754366dd8b372fd17a40497ba5f130a46d833b4c5bccc9f6bb6382ce1e"
+    },
+    {
+      "kind": "models",
       "label": "Modelo IA Qwen 0.5B GGUF offline",
       "asset": "assets/bundled_library/models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
       "target": "models/qwen2.5-0.5b-instruct-q4_k_m.gguf",

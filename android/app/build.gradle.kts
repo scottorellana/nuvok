@@ -19,6 +19,17 @@ android {
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
+    androidResources {
+        // Los .gguf van SIN comprimir: un gguf cuantizado casi no comprime y
+        // el sembrador nativo lo streamea directo del APK.
+        noCompress += "gguf"
+        // El Gemma 4 E2B (3.4GB) viaja empaquetado en iOS/macOS pero NO cabe
+        // en un APK (límite práctico ~4GB y compressAssets revienta >2GB):
+        // se excluye del paquete y la app lo baja con "Mejorar IA". El
+        // sembrador Dart lo salta en Android (androidAssetLimitBytes).
+        ignoreAssetsPattern = "!gemma-4-E2B-it-Q4_K_M.gguf"
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

@@ -162,6 +162,11 @@ class MainFlutterWindow: NSWindow {
     if let resources = Bundle.main.resourceURL {
       candidates.append(resources.appendingPathComponent("flutter_assets/").appendingPathComponent(asset))
       candidates.append(resources.appendingPathComponent(lookupKey))
+      // Recursos XL (p.ej. el modelo Gemma 4 de 3.4GB): recurso nativo del
+      // bundle, no asset de Flutter (Android no puede empaquetar >2GB y los
+      // assets de pubspec son globales). Queda en la raíz de Resources.
+      candidates.append(resources.appendingPathComponent(
+        URL(fileURLWithPath: asset).lastPathComponent))
     }
     if let frameworks = Bundle.main.privateFrameworksURL {
       candidates.append(

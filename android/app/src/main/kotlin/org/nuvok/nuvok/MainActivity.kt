@@ -112,8 +112,23 @@ class MainActivity : FlutterActivity() {
                                 ?: throw IllegalArgumentException("bytes requerido")
                             val expectedSha = call.argument<String>("sha256")
                                 ?: throw IllegalArgumentException("sha256 requerido")
-                            copyBundledAsset(asset, dest, expectedBytes, expectedSha)
-                            result.success(true)
+                            // EN SEGUNDO PLANO: los handlers corren en el hilo
+                            // principal; copiar + hashear cientos de MB ahí
+                            // congela la UI del primer arranque (ANR).
+                            Thread {
+                                try {
+                                    copyBundledAsset(
+                                        asset, dest, expectedBytes, expectedSha)
+                                    runOnUiThread { result.success(true) }
+                                } catch (t: Throwable) {
+                                    runOnUiThread {
+                                        result.error(
+                                            "COPY_ASSET_FAILED",
+                                            t.message,
+                                            t.stackTraceToString())
+                                    }
+                                }
+                            }.start()
                         } catch (t: Throwable) {
                             result.error("COPY_ASSET_FAILED", t.message, t.stackTraceToString())
                         }

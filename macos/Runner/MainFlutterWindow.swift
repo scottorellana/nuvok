@@ -17,25 +17,35 @@ class MainFlutterWindow: NSWindow {
         result(FlutterMethodNotImplemented)
         return
       }
-      do {
-        guard let args = call.arguments as? [String: Any],
-              let asset = args["asset"] as? String,
-              let dest = args["dest"] as? String,
-              let bytesNumber = args["bytes"] as? NSNumber,
-              let sha256 = args["sha256"] as? String else {
-          throw BundledAssetError.invalidArguments
-        }
-        try Self.copyBundledAsset(
-          asset: asset,
-          destPath: dest,
-          expectedBytes: bytesNumber.int64Value,
-          expectedSha256: sha256)
-        result(true)
-      } catch {
+      guard let args = call.arguments as? [String: Any],
+            let asset = args["asset"] as? String,
+            let dest = args["dest"] as? String,
+            let bytesNumber = args["bytes"] as? NSNumber,
+            let sha256 = args["sha256"] as? String else {
         result(FlutterError(
           code: "COPY_ASSET_FAILED",
-          message: String(describing: error),
+          message: String(describing: BundledAssetError.invalidArguments),
           details: nil))
+        return
+      }
+      // EN SEGUNDO PLANO: copiar + hashear un modelo de 3.4GB en el hilo
+      // principal congela la ventana en el primer arranque.
+      DispatchQueue.global(qos: .utility).async {
+        do {
+          try Self.copyBundledAsset(
+            asset: asset,
+            destPath: dest,
+            expectedBytes: bytesNumber.int64Value,
+            expectedSha256: sha256)
+          DispatchQueue.main.async { result(true) }
+        } catch {
+          DispatchQueue.main.async {
+            result(FlutterError(
+              code: "COPY_ASSET_FAILED",
+              message: String(describing: error),
+              details: nil))
+          }
+        }
       }
     }
 

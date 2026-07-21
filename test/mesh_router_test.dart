@@ -37,7 +37,7 @@ Future<MeshEnvelope> makeEnvelope({
   Map<String, dynamic> payload = const {'text': 'hola'},
   int? msgId,
 }) async {
-  return MeshEnvelope(
+  return MeshEnvelope.sealed(
     msgId: msgId ?? MeshEnvelope.newMsgId(),
     channelId: channel.id,
     senderId: senderId,
@@ -45,7 +45,8 @@ Future<MeshEnvelope> makeEnvelope({
     type: type,
     hopLimit: hopLimit,
     timestampMs: DateTime.now().millisecondsSinceEpoch,
-    payload: await sealPayload(payload, channel),
+    body: payload,
+    channel: channel,
   );
 }
 

@@ -62,6 +62,67 @@ class MeshEnvelope {
         payload: payload,
       );
 
+  /// Header canónico que viaja LIGADO al ciphertext como AAD del GCM: sin
+  /// esto, un tercero sin la clave podía reescribir remitente/tipo/timestamp
+  /// de un mensaje cifrado en tránsito y el receptor lo mostraba alterado.
+  /// hopLimit queda FUERA a propósito: los relevos lo decrementan y el
+  /// mensaje debe seguir abriendo en el destino.
+  Uint8List get aadBytes {
+    final name = utf8.encode(
+        senderName.length > 40 ? senderName.substring(0, 40) : senderName);
+    final out = ByteData(8 + 4 + 8 + 1 + 8);
+    var o = 0;
+    out.setUint64(o, msgId, Endian.little);
+    o += 8;
+    for (var i = 0; i < 4; i++) {
+      out.setUint8(
+          o++, int.parse(channelId.substring(i * 2, i * 2 + 2), radix: 16));
+    }
+    for (var i = 0; i < 8; i++) {
+      out.setUint8(
+          o++, int.parse(senderId.substring(i * 2, i * 2 + 2), radix: 16));
+    }
+    out.setUint8(o++, type.index);
+    out.setUint64(o, timestampMs, Endian.little);
+    return Uint8List.fromList([...out.buffer.asUint8List(), ...name]);
+  }
+
+  /// Construye un sobre con el cuerpo sellado y el header ligado como AAD —
+  /// la única forma de sellar en producción, para que el binding nunca se
+  /// olvide ni se compute distinto en cada lado.
+  static Future<MeshEnvelope> sealed({
+    required int msgId,
+    required String channelId,
+    required String senderId,
+    required String senderName,
+    required MeshType type,
+    required int hopLimit,
+    required int timestampMs,
+    required Map<String, dynamic> body,
+    required MeshChannel channel,
+  }) async {
+    final header = MeshEnvelope(
+      msgId: msgId,
+      channelId: channelId,
+      senderId: senderId,
+      senderName: senderName,
+      type: type,
+      hopLimit: hopLimit,
+      timestampMs: timestampMs,
+      payload: Uint8List(0),
+    );
+    return MeshEnvelope(
+      msgId: msgId,
+      channelId: channelId,
+      senderId: senderId,
+      senderName: senderName,
+      type: type,
+      hopLimit: hopLimit,
+      timestampMs: timestampMs,
+      payload: await sealPayload(body, channel, aad: header.aadBytes),
+    );
+  }
+
   Uint8List encode() {
     final name = utf8.encode(
         senderName.length > 40 ? senderName.substring(0, 40) : senderName);
@@ -149,21 +210,24 @@ class MeshEnvelope {
 final _aesGcm = AesGcm.with256bits();
 
 /// Seals a JSON payload for [channel]: AES-256-GCM (nonce ‖ ciphertext ‖ mac).
+/// [aad] liga el header del sobre al ciphertext (ver MeshEnvelope.aadBytes).
 /// The EMERGENCY channel is plaintext by design.
-Future<Uint8List> sealPayload(
-    Map<String, dynamic> json, MeshChannel channel) async {
+Future<Uint8List> sealPayload(Map<String, dynamic> json, MeshChannel channel,
+    {Uint8List? aad}) async {
   final clear = utf8.encode(jsonEncode(json));
   if (channel.isEmergency) return Uint8List.fromList(clear);
   final secret = SecretKey(channel.key);
-  final box = await _aesGcm.encrypt(clear, secretKey: secret);
+  final box = await _aesGcm.encrypt(clear,
+      secretKey: secret, aad: aad ?? const []);
   return Uint8List.fromList(
       [...box.nonce, ...box.cipherText, ...box.mac.bytes]);
 }
 
-/// Opens a sealed payload; null when the key doesn't match or data is
-/// corrupt. Emergency payloads are plain JSON.
-Future<Map<String, dynamic>?> openPayload(
-    Uint8List data, MeshChannel channel) async {
+/// Opens a sealed payload; null when the key doesn't match, the header was
+/// tampered (AAD mismatch) or data is corrupt. Emergency payloads are plain
+/// JSON.
+Future<Map<String, dynamic>?> openPayload(Uint8List data, MeshChannel channel,
+    {Uint8List? aad}) async {
   try {
     if (channel.isEmergency) {
       return jsonDecode(utf8.decode(data)) as Map<String, dynamic>;
@@ -175,6 +239,7 @@ Future<Map<String, dynamic>?> openPayload(
     final clear = await _aesGcm.decrypt(
       SecretBox(cipher, nonce: nonce, mac: mac),
       secretKey: SecretKey(channel.key),
+      aad: aad ?? const [],
     );
     return jsonDecode(utf8.decode(clear)) as Map<String, dynamic>;
   } catch (_) {

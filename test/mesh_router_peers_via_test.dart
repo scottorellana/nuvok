@@ -44,7 +44,7 @@ void main() {
     await router.start();
 
     // Un chat del par bb… llega por BLE.
-    final env = MeshEnvelope(
+    final env = await MeshEnvelope.sealed(
       msgId: MeshEnvelope.newMsgId(),
       channelId: canal.id,
       senderId: 'bbbbbbbbbbbbbbbb',
@@ -52,7 +52,8 @@ void main() {
       type: MeshType.chat,
       hopLimit: 3,
       timestampMs: DateTime.now().millisecondsSinceEpoch,
-      payload: await sealPayload(const {'text': 'hola'}, canal),
+      body: const {'text': 'hola'},
+      channel: canal,
     );
     ble.inject(env.encode());
     await Future<void>.delayed(const Duration(milliseconds: 50));

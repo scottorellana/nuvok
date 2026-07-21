@@ -306,7 +306,9 @@ class MeshService {
     int hopLimit = 3,
   }) async {
     final id = identity!;
-    return MeshEnvelope(
+    // MeshEnvelope.sealed liga el header (remitente, tipo, timestamp) al
+    // ciphertext como AAD: alterar el header en tránsito invalida el mensaje.
+    return MeshEnvelope.sealed(
       msgId: MeshEnvelope.newMsgId(),
       channelId: channel.id,
       senderId: id.id,
@@ -314,7 +316,8 @@ class MeshService {
       type: type,
       hopLimit: hopLimit,
       timestampMs: DateTime.now().millisecondsSinceEpoch,
-      payload: await sealPayload(payload, channel),
+      body: payload,
+      channel: channel,
     );
   }
 

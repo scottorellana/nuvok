@@ -254,8 +254,8 @@ class MeshRouter {
 
     final channel = _channelFor(env.channelId);
     if (channel == null) return; // not ours — relayed above, nothing to read
-    final payload = await openPayload(env.payload, channel);
-    if (payload == null) return; // wrong key or corrupt
+    final payload = await openPayload(env.payload, channel, aad: env.aadBytes);
+    if (payload == null) return; // wrong key, tampered header, or corrupt
 
     if (env.type != MeshType.beacon) {
       store.appendMessage(channel.id, {

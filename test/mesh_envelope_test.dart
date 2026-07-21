@@ -99,4 +99,79 @@ void main() {
       expect(opened!['sos'], isTrue);
     });
   });
+
+  group('header autenticado (AAD)', () {
+    Future<MeshEnvelope> sealedEnv(MeshChannel ch) => MeshEnvelope.sealed(
+          msgId: 42,
+          channelId: ch.id,
+          senderId: 'a1b2c3d4e5f60718',
+          senderName: 'Vera',
+          type: MeshType.chat,
+          hopLimit: 3,
+          timestampMs: 1751500000000,
+          body: {'text': 'punto de reunión: el puente'},
+          channel: ch,
+        );
+
+    test('sobre sellado abre con su propio AAD', () async {
+      final ch = MeshChannel.create('Familia');
+      final env = await sealedEnv(ch);
+      final opened = await openPayload(env.payload, ch, aad: env.aadBytes);
+      expect(opened, isNotNull);
+      expect(opened!['text'], contains('puente'));
+    });
+
+    test('alterar el remitente en tránsito invalida el mensaje', () async {
+      // Sin AAD, un tercero SIN la clave podía reescribir senderName/senderId
+      // del header (viajan fuera del GCM) y el receptor mostraba el payload
+      // íntegro como si viniera de otra persona. El AAD liga header y
+      // ciphertext: cualquier alteración rompe la verificación.
+      final ch = MeshChannel.create('Familia');
+      final env = await sealedEnv(ch);
+      final tampered = MeshEnvelope.decode(env.encode())!;
+      final imposter = MeshEnvelope(
+        msgId: tampered.msgId,
+        channelId: tampered.channelId,
+        senderId: 'ffffffffffffffff', // suplantación
+        senderName: 'Impostor',
+        type: tampered.type,
+        hopLimit: tampered.hopLimit,
+        timestampMs: tampered.timestampMs,
+        payload: tampered.payload,
+      );
+      expect(
+          await openPayload(imposter.payload, ch, aad: imposter.aadBytes),
+          isNull);
+    });
+
+    test('alterar el timestamp también invalida', () async {
+      final ch = MeshChannel.create('Familia');
+      final env = await sealedEnv(ch);
+      final replayed = env
+          .withHop(env.hopLimit); // copia
+      final shifted = MeshEnvelope(
+        msgId: replayed.msgId,
+        channelId: replayed.channelId,
+        senderId: replayed.senderId,
+        senderName: replayed.senderName,
+        type: replayed.type,
+        hopLimit: replayed.hopLimit,
+        timestampMs: replayed.timestampMs + 86400000, // +1 día
+        payload: replayed.payload,
+      );
+      expect(
+          await openPayload(shifted.payload, ch, aad: shifted.aadBytes), isNull);
+    });
+
+    test('decrementar hopLimit en el relevo NO invalida (excluido del AAD)',
+        () async {
+      final ch = MeshChannel.create('Familia');
+      final env = await sealedEnv(ch);
+      final relayed = env.withHop(env.hopLimit - 1);
+      final opened =
+          await openPayload(relayed.payload, ch, aad: relayed.aadBytes);
+      expect(opened, isNotNull,
+          reason: 'el relevo multi-salto debe poder bajar hopLimit');
+    });
+  });
 }

@@ -165,7 +165,7 @@ void main() {
   test('posición entrante alimenta el PositionStore', () async {
     final ch = MeshChannel.create('Familia');
     await service.joinChannel(ch);
-    final env = MeshEnvelope(
+    final env = await MeshEnvelope.sealed(
       msgId: MeshEnvelope.newMsgId(),
       channelId: ch.id,
       senderId: 'cccccccccccccccc',
@@ -173,7 +173,8 @@ void main() {
       type: MeshType.position,
       hopLimit: 3,
       timestampMs: DateTime.now().millisecondsSinceEpoch,
-      payload: await sealPayload({'lat': 15.51, 'lon': -88.02}, ch),
+      body: {'lat': 15.51, 'lon': -88.02},
+      channel: ch,
     );
     transport.inject(env.encode());
     await Future<void>.delayed(const Duration(milliseconds: 100));
@@ -197,7 +198,7 @@ void main() {
         reason: 'un chat sin confirmar debe reenviarse');
 
     // Llega el ACK de un peer → entregado.
-    final ack = MeshEnvelope(
+    final ack = await MeshEnvelope.sealed(
       msgId: MeshEnvelope.newMsgId(),
       channelId: ch.id,
       senderId: 'cccccccccccccccc',
@@ -205,7 +206,8 @@ void main() {
       type: MeshType.ack,
       hopLimit: 1,
       timestampMs: DateTime.now().millisecondsSinceEpoch,
-      payload: await sealPayload({'ack': chatEnv.msgId}, ch),
+      body: {'ack': chatEnv.msgId},
+      channel: ch,
     );
     transport.inject(ack.encode());
     await Future<void>.delayed(const Duration(milliseconds: 50));

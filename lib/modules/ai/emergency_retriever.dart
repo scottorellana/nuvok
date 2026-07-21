@@ -70,6 +70,20 @@ class EmergencyRetriever {
 
   /// System prompt for emergency mode: actionable numbered steps, scene
   /// safety first, citations required, always close with seeking real help.
+  /// Contexto de emergencia para APPEND al prompt de persona (Vera/Norte) —
+  /// NO reemplaza la persona. Solo añade la línea del entorno (si hay) y las
+  /// fuentes; los pasos numerados y la seguridad de la escena ya los define
+  /// la persona del especialista.
+  static String buildEmergencyContext(List<RetrievedSource> sources,
+      {String replyLang = 'es', String? mode}) {
+    final modeLine = (mode == null || mode.isEmpty)
+        ? ''
+        : 'El usuario declaró el entorno: $mode. Prioriza técnicas de ESE '
+            'entorno.\n';
+    return '$modeLine'
+        '${LibraryRetriever.buildSourcesBlock(sources, replyLang: replyLang)}';
+  }
+
   static String buildEmergencySystemPrompt(List<RetrievedSource> sources,
       {String replyLang = 'es', String? mode}) {
     final grounded =

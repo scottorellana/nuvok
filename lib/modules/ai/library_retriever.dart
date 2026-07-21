@@ -201,25 +201,22 @@ class LibraryRetriever {
   static String languageReminder(String replyLang) =>
       _replyReminders[replyLang] ?? _replyReminders['es']!;
 
-  /// Builds the system prompt that grounds the model in the retrieved
-  /// sources and requires citations. [replyLang] pins the answer language:
-  /// the sources are often English Wikipedia, and without an explicit pin a
-  /// small model drifts into the sources' language.
-  static String buildGroundedSystemPrompt(List<RetrievedSource> sources,
+  /// Bloque de fuentes para APPEND al prompt de persona del especialista —
+  /// NO reemplaza la persona (eso volvía genéricos a Vera/Bruno/Sabio). Da las
+  /// fuentes + la regla de citar y no inventar cifras + el pin de idioma.
+  /// [replyLang] fija el idioma: las fuentes suelen venir en inglés y sin
+  /// anclaje un modelo chico deriva al idioma de la fuente.
+  static String buildSourcesBlock(List<RetrievedSource> sources,
       {String replyLang = 'es'}) {
     final langName = langNames[replyLang] ?? 'español';
     final buffer = StringBuffer()
       ..writeln(
-          'Eres el asistente de Nuvok. Responde SOLO con base en las '
-          'FUENTES de la biblioteca offline que se listan abajo. Cita cada '
-          'afirmación con su número entre corchetes, por ejemplo [1]. Si las '
-          'fuentes no contienen la respuesta, dilo claramente y no inventes. '
-          'Para temas médicos o de emergencia, recuerda al usuario buscar '
-          'ayuda profesional cuando sea posible. NUNCA cambies ni inventes '
-          'cifras (tiempos, dosis, cantidades): usa EXACTAMENTE las de las '
-          'fuentes — un número equivocado puede ser peligroso. Las fuentes '
-          'pueden estar en otro idioma: TRADUCE y responde SIEMPRE en '
-          '$langName.\n')
+          'Apóyate en estas FUENTES de la biblioteca offline y cita cada dato '
+          'con su número entre corchetes, por ejemplo [1]. NUNCA cambies ni '
+          'inventes cifras (tiempos, dosis, cantidades): usa EXACTAMENTE las '
+          'de las fuentes — un número equivocado puede ser peligroso. Si algo '
+          'no está en las fuentes, dilo y no inventes. Tradúcelas si están en '
+          'otro idioma y responde SIEMPRE en $langName.\n')
       ..writeln('=== FUENTES ===');
     for (var i = 0; i < sources.length; i++) {
       final s = sources[i];
@@ -235,5 +232,17 @@ class LibraryRetriever {
       // la fuente.
       ..writeln('Recuerda: responde SIEMPRE en $langName.');
     return buffer.toString();
+  }
+
+  /// Prompt autónomo con persona genérica de asistente + fuentes. Se conserva
+  /// para usos donde NO hay una persona de especialista alrededor.
+  static String buildGroundedSystemPrompt(List<RetrievedSource> sources,
+      {String replyLang = 'es'}) {
+    final langName = langNames[replyLang] ?? 'español';
+    return 'Eres el asistente de Nuvok. Responde SOLO con base en las FUENTES '
+        'de la biblioteca offline. Si las fuentes no contienen la respuesta, '
+        'dilo claramente y no inventes. Para temas médicos o de emergencia, '
+        'recuerda buscar ayuda profesional. Responde SIEMPRE en $langName.\n\n'
+        '${buildSourcesBlock(sources, replyLang: replyLang)}';
   }
 }

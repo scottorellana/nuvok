@@ -65,7 +65,9 @@ class AgentCatalog {
       avatar: Icons.self_improvement,
       accent: const Color(0xFF6A1B9A),
       modelClass: ModelClass.general,
-      grounding: GroundingMode.guidesFirst,
+      // Apoyo emocional = prompt puro. Anclarlo a las guías lo convertía en
+      // "MODO EMERGENCIA, pasos numerados", borrando la empatía.
+      grounding: GroundingMode.none,
       temperature: 0.7,
       systemByLang: _psychSys,
       quickChipKeys: const [],

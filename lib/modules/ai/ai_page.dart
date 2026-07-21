@@ -52,6 +52,14 @@ class _AiPageState extends State<AiPage> {
 }
 
 /// Returns the set of installed model file names (e.g. {'qwen3-1.7b...gguf'}).
+/// Ensambla el prompt del especialista: su PERSONA siempre primero, y el
+/// contexto de grounding (fuentes) DESPUÉS. Antes el grounding reemplazaba la
+/// persona y todos los especialistas se volvían el mismo bot genérico de
+/// citas; la persona (Vera médica, Bruno ingeniero, Sabio bibliotecario…) es
+/// lo que los hace especialistas y no debe perderse nunca.
+String composeAgentPrompt(String persona, String groundingBlock) =>
+    groundingBlock.isEmpty ? persona : '$persona\n\n$groundingBlock';
+
 Set<String> _installedModelFileNames() =>
     NuvokLibrary.instance.listModels().map((f) => f.uri.pathSegments.last).toSet();
 
@@ -501,10 +509,11 @@ class _AgentChatState extends State<_AgentChat> {
               await EmergencyRetriever.retrieve(text, lang: lang, mode: mode);
         } catch (_) {}
         if (sources.isNotEmpty) {
-          systemPrompt = EmergencyRetriever.buildEmergencySystemPrompt(
-            sources,
-            replyLang: lang,
-            mode: mode,
+          // La persona (systemPrompt) se conserva; las fuentes se SUMAN.
+          systemPrompt = composeAgentPrompt(
+            systemPrompt,
+            EmergencyRetriever.buildEmergencyContext(sources,
+                replyLang: lang, mode: mode),
           );
         }
       case GroundingMode.library:
@@ -513,9 +522,9 @@ class _AgentChatState extends State<_AgentChat> {
             sources = await LibraryRetriever.retrieve(text);
           } catch (_) {}
           if (sources.isNotEmpty) {
-            systemPrompt = LibraryRetriever.buildGroundedSystemPrompt(
-              sources,
-              replyLang: lang,
+            systemPrompt = composeAgentPrompt(
+              systemPrompt,
+              LibraryRetriever.buildSourcesBlock(sources, replyLang: lang),
             );
           }
         }

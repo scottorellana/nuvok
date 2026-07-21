@@ -129,11 +129,15 @@ class _HomeShellState extends State<HomeShell> {
 
   // Navigation labels are string KEYS resolved through AppStrings at build
   // time, so switching the language relabels the whole shell instantly.
+  // Barra inferior de móvil: máx 5 (4 módulos + "Más"), según Material 3. El
+  // Asistente IA (índice 2) es ahora un módulo estrella, así que va en la
+  // barra; Herramientas baja a "Más" (sigue a un toque). SOS/Comunicación se
+  // queda en la barra por ser crítico.
   static const _mobileDestinationDefs = [
     (0, Icons.emergency_outlined, Icons.emergency, 'emergency'),
+    (2, Icons.psychology_outlined, Icons.psychology, 'assistant'),
     (3, Icons.map_outlined, Icons.map, 'maps'),
     (4, Icons.cell_tower_outlined, Icons.cell_tower, 'comms'),
-    (6, Icons.flashlight_on_outlined, Icons.flashlight_on, 'tools'),
   ];
 
   static const _destinationDefs = [

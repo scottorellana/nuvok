@@ -32,6 +32,21 @@ void main() {
     }
   });
 
+  test('la barra inferior de móvil incluye el Asistente IA', () {
+    final app = _read('lib/app.dart');
+    final defs = app.substring(
+        app.indexOf('_mobileDestinationDefs'),
+        app.indexOf('_destinationDefs'));
+    expect(defs, contains("'assistant'"),
+        reason: 'el Asistente IA debe estar en la barra inferior de móvil');
+    expect(defs, contains("(2,"),
+        reason: 'el Asistente IA es el índice 2 en _pages');
+    // 4 módulos + "Más" = 5 destinos (guía de Material 3).
+    final moduleCount = "'".allMatches(defs).length ~/ 2;
+    expect(moduleCount, lessThanOrEqualTo(4),
+        reason: 'máx 4 módulos en la barra; el 5º es "Más"');
+  });
+
   test('botones críticos visibles tienen acción/tooltip o label auditable', () {
     final files = <String>[
       'lib/app.dart',

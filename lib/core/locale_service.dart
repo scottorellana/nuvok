@@ -666,7 +666,7 @@ class AppStrings {
       'fr': 'Bienvenue sur Nuvok',
     },
     'welcomeBodyIos': {
-      'es': 'Nuvok guarda tu biblioteca de conocimiento offline dentro '
+      'es': 'Nuvok guarda tu biblioteca de conocimiento sin conexión dentro '
           'de la app (visible también en la app Archivos). Desde Depósito '
           'descargas lo que necesites — mapas por país, Wikipedia médica, '
           'guías — y queda disponible sin internet. Todo vive en tu '
@@ -688,9 +688,9 @@ class AppStrings {
           'sur votre appareil ; rien n\'est envoyé à aucun serveur.',
     },
     'welcomeBodyDesktop': {
-      'es': 'Tu biblioteca de conocimiento offline vive en la carpeta '
+      'es': 'Tu biblioteca de conocimiento sin conexión vive en la carpeta '
           'Nuvok de tu usuario. Esta instalación ya trae un paquete '
-          'base offline incluido: mapas, Wikipedia médica, una mini '
+          'base sin conexión incluido: mapas, Wikipedia médica, una mini '
           'Wikipedia y un modelo IA liviano. En el primer arranque se copian '
           'automáticamente a esa carpeta para que funcionen sin internet y '
           'puedas copiarlos a otros dispositivos por USB.\n\nDesde Depósito '
@@ -1324,8 +1324,8 @@ class AppStrings {
       'zh': '停止朗读', 'ja': '読み上げを停止', 'ht': 'Rete lekti a',
     },
     'tqTitle': {
-      'es': 'Timer de torniquete', 'en': 'Tourniquet timer',
-      'pt': 'Timer de torniquete', 'fr': 'Minuteur de garrot',
+      'es': 'Cronómetro de torniquete', 'en': 'Tourniquet timer',
+      'pt': 'Cronômetro de torniquete', 'fr': 'Minuteur de garrot',
       'zh': '止血带计时器', 'ja': '止血帯タイマー', 'ht': 'Kwonomèt tounikè',
     },
     'tqApplied': {
@@ -1344,8 +1344,8 @@ class AppStrings {
       'zh': '右腿 - 小明', 'ja': '右脚 - 田中', 'ht': 'Janm dwat - Jan',
     },
     'tqStart': {
-      'es': 'Iniciar timer', 'en': 'Start timer',
-      'pt': 'Iniciar timer', 'fr': 'Démarrer',
+      'es': 'Iniciar cronómetro', 'en': 'Start timer',
+      'pt': 'Iniciar cronômetro', 'fr': 'Démarrer',
       'zh': '开始计时', 'ja': '計測開始', 'ht': 'Kòmanse',
     },
     'tqEmpty': {

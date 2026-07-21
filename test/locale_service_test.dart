@@ -48,6 +48,33 @@ void main() {
     }
   });
 
+  test('sin Spanglish: ninguna cadena ES contiene palabras inglesas sueltas',
+      () {
+    // Palabras inglesas con equivalente claro en español que NO deben
+    // colarse en una cadena española (leen como "error de inglés y español").
+    const banned = {
+      'timer', 'start', 'stop', 'mode', 'settings', 'download', 'loading',
+      'back', 'next', 'cancel', 'save', 'delete', 'share', 'check', 'update',
+      'offline', 'online', 'standby', 'reset', 'kit', 'help',
+    };
+    final offenders = <String>[];
+    for (final entry in AppStrings.allKeys.entries) {
+      final es = entry.value['es'];
+      if (es == null) continue;
+      // Ignora placeholders {mode}, {n}… (se rellenan en runtime).
+      final clean = es.replaceAll(RegExp(r'\{[^}]*\}'), ' ');
+      final words = clean
+          .toLowerCase()
+          .split(RegExp(r"[^a-záéíóúüñ]+"))
+          .where((w) => w.isNotEmpty);
+      for (final w in words) {
+        if (banned.contains(w)) offenders.add('${entry.key}: "$es"');
+      }
+    }
+    expect(offenders, isEmpty,
+        reason: 'Spanglish en español:\n${offenders.join('\n')}');
+  });
+
   test('los getters existentes siguen funcionando (compatibilidad)', () {
     final es = AppStrings(AppLanguage.es);
     expect(es.emergency, 'Emergencia');

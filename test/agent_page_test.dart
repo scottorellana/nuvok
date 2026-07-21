@@ -7,7 +7,8 @@ import 'package:nuvok/core/nuvok_library.dart';
 import 'package:nuvok/modules/ai/ai_page.dart';
 
 void main() {
-  testWidgets('la pestaña abre con la cuadrícula de los 6 especialistas',
+  testWidgets(
+      'la cuadrícula muestra los 6 especialistas + el chat general (7ª)',
       (tester) async {
     // Sync: el IO real async nunca completa bajo el reloj falso de
     // testWidgets (el await se cuelga hasta el timeout de 10 minutos).
@@ -28,6 +29,12 @@ void main() {
     for (final name in ['Vera', 'Elías', 'Bruno', 'Norte', 'Lía', 'Sabio']) {
       expect(find.text(name), findsOneWidget, reason: 'falta tarjeta $name');
     }
+    // La 7ª tarjeta (chat general) puede quedar bajo el pliegue; se hace
+    // scroll hasta ella dentro de la cuadrícula.
+    await tester.scrollUntilVisible(find.text('Chat general'), 300,
+        scrollable: find.byType(Scrollable).first);
+    expect(find.text('Chat general'), findsOneWidget,
+        reason: 'falta la tarjeta del chat general');
   });
 
   testWidgets(

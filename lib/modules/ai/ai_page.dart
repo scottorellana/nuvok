@@ -14,7 +14,9 @@ import 'agents/agent_spec.dart';
 import 'agents/agent_catalog.dart';
 import 'agents/agent_runtime.dart';
 import 'agents/model_catalog.dart';
+import 'active_model.dart';
 import 'reply_lang.dart';
+import '../depot/depot_page.dart';
 
 class ChatMessage {
   ChatMessage(this.role, this.text, {this.sources = const []});
@@ -303,6 +305,9 @@ class _AgentChatState extends State<_AgentChat> {
   /// mejora cuando el chat corre sobre el fallback ligero.
   AgentStatus? _status;
 
+  /// Archivo .gguf que el motor tiene cargado (modelo activo global).
+  String? _activeFile;
+
   bool get _hasGrounding => widget.agent.grounding != GroundingMode.none;
 
   @override
@@ -342,19 +347,94 @@ class _AgentChatState extends State<_AgentChat> {
   /// load it. If the model is not installed, the chat stays disabled and the
   /// header explains why — the grid is where installs are started.
   Future<void> _prepareModel() async {
+    final freeRam = await AiEngine.freeRamBytes();
+    // Modelo activo GLOBAL: la elección del usuario (o el mejor instalado por
+    // defecto — Gemma 4 sembrado). Lo comparten chat general y especialistas.
+    final active = resolveActiveModel(
+      installed: _installedModelFileNames().toList(),
+      chosen: NuvokLibrary.instance.settings['aiActiveModelFile'] as String?,
+      freeRamBytes: freeRam,
+    );
+    // Estado por-clase, solo para el banner de mejora del especialista.
     final status = AgentRuntime.resolve(
       model: _modelFor(widget.agent),
       installedFileNames: _installedModelFileNames(),
-      freeRamBytes: await AiEngine.freeRamBytes(),
+      freeRamBytes: freeRam,
     );
     if (!mounted) return;
     _status = status;
-    if (status.state == AgentInstallState.ready) {
-      final path =
-          '${NuvokLibrary.instance.modelsDir.path}/${status.effectiveModel.fileName}';
-      await _server.start(path);
+    _activeFile = active;
+    if (active != null) {
+      await _server.start('${NuvokLibrary.instance.modelsDir.path}/$active');
     }
     if (mounted) setState(() => _loadingModel = false);
+  }
+
+  /// Fija el modelo activo global y recarga el motor con él.
+  Future<void> _selectModel(String fileName) async {
+    await NuvokLibrary.instance.saveSetting('aiActiveModelFile', fileName);
+    if (!mounted) return;
+    setState(() {
+      _loadingModel = true;
+      _activeFile = fileName;
+    });
+    await _server.stop();
+    await _prepareModel();
+  }
+
+  /// Hoja inferior para elegir el modelo activo entre los instalados, con
+  /// atajo a Depósito para descargar más.
+  void _openModelPicker() {
+    final installed = _installedModelFileNames().toList()..sort();
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetCtx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
+              child: Text(tr(sheetCtx, 'modelPickTitle'),
+                  style: Theme.of(sheetCtx).textTheme.titleMedium),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 2, 20, 8),
+              child: Text(tr(sheetCtx, 'modelPickSubtitle'),
+                  style: Theme.of(sheetCtx).textTheme.bodySmall),
+            ),
+            for (final f in installed)
+              ListTile(
+                leading: Icon(f == _activeFile
+                    ? Icons.radio_button_checked
+                    : Icons.radio_button_unchecked),
+                title: Text(modelDisplayName(f)),
+                trailing: f == _activeFile
+                    ? Text(tr(sheetCtx, 'modelPickActive'),
+                        style: TextStyle(
+                            color: Theme.of(sheetCtx).colorScheme.primary))
+                    : null,
+                onTap: () {
+                  Navigator.pop(sheetCtx);
+                  if (f != _activeFile) _selectModel(f);
+                },
+              ),
+            const Divider(height: 8),
+            ListTile(
+              leading: const Icon(Icons.download),
+              title: Text(tr(sheetCtx, 'modelPickDownloadMore')),
+              onTap: () {
+                Navigator.pop(sheetCtx);
+                Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder: (_) => const DepotPage(initialTab: 2),
+                ));
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   /// Banner de mejora: visible mientras el chat corre en el modelo ligero.
@@ -566,6 +646,18 @@ class _AgentChatState extends State<_AgentChat> {
             ),
           ],
         ),
+        actions: [
+          if (_activeFile != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: ActionChip(
+                avatar: const Icon(Icons.memory, size: 16),
+                label: Text(modelDisplayName(_activeFile!),
+                    overflow: TextOverflow.ellipsis),
+                onPressed: _openModelPicker,
+              ),
+            ),
+        ],
       ),
       body: Column(
         children: [

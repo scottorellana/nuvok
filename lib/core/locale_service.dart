@@ -1160,6 +1160,29 @@ class AppStrings {
       'pt': 'Trocando de especialista…', 'fr': 'Changement de spécialiste…',
       'zh': '正在切换专家…', 'ja': 'スペシャリストを切り替え中…', 'ht': 'Chanje espesyalis…',
     },
+    'modelPickTitle': {
+      'es': 'Modelo de IA', 'en': 'AI model', 'pt': 'Modelo de IA',
+      'fr': "Modèle d'IA", 'zh': 'AI 模型', 'ja': 'AI モデル', 'ht': 'Modèl AI',
+    },
+    'modelPickSubtitle': {
+      'es': 'Se usa en el chat general y en los especialistas.',
+      'en': 'Used by the general chat and the specialists.',
+      'pt': 'Usado no chat geral e nos especialistas.',
+      'fr': 'Utilisé par le chat général et les spécialistes.',
+      'zh': '用于通用聊天和各专家。',
+      'ja': '汎用チャットと専門家で使用されます。',
+      'ht': 'Itilize nan chat jeneral la ak espesyalis yo.',
+    },
+    'modelPickDownloadMore': {
+      'es': 'Descargar más modelos', 'en': 'Download more models',
+      'pt': 'Baixar mais modelos', 'fr': 'Télécharger plus de modèles',
+      'zh': '下载更多模型', 'ja': 'モデルを追加ダウンロード',
+      'ht': 'Telechaje plis modèl',
+    },
+    'modelPickActive': {
+      'es': 'Activo', 'en': 'Active', 'pt': 'Ativo', 'fr': 'Actif',
+      'zh': '使用中', 'ja': '使用中', 'ht': 'Aktif',
+    },
     'agentAdvancedModel': {
       'es': 'Modelo manual (avanzado)', 'en': 'Manual model (advanced)',
       'pt': 'Modelo manual (avançado)', 'fr': 'Modèle manuel (avancé)',

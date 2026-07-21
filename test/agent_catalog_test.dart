@@ -25,7 +25,8 @@ void main() {
     expect(spec.crisisGuardrails, isFalse);
   });
 
-  test('los 6 agentes existen con rol y system en los 7 idiomas', () {
+  test('los 6 especialistas + el chat general con rol y system en 7 idiomas',
+      () {
     const langs = ['es', 'en', 'pt', 'fr', 'zh', 'ja', 'ht'];
     expect(AgentCatalog.all.map((a) => a.id).toSet(), {
       'medic',
@@ -34,7 +35,10 @@ void main() {
       'survival',
       'translator',
       'librarian',
+      'general',
     });
+    expect(AgentCatalog.generalId, 'general');
+    expect(AgentCatalog.byId('general')!.grounding, GroundingMode.none);
     for (final a in AgentCatalog.all) {
       for (final l in langs) {
         expect(a.roleByLang[l], isNotNull, reason: '${a.id} rol sin $l');
@@ -59,6 +63,24 @@ void main() {
   test('byId encuentra y devuelve null si no existe', () {
     expect(AgentCatalog.byId('medic')?.nameProper, 'Vera');
     expect(AgentCatalog.byId('nope'), isNull);
+  });
+
+  test('Elías: apoyo emocional seguro (no diagnostica, deriva, técnica)', () {
+    final elias = AgentCatalog.byId('psychologist')!;
+    // Límites de seguridad + escalera a ayuda humana, en es y en.
+    expect(elias.system('es'), contains('NO diagnosticas'));
+    expect(elias.system('es'), contains('no sustituyes'));
+    expect(elias.system('es').toLowerCase(), contains('emergencia'));
+    expect(elias.system('es'), contains('4-7-8')); // técnica concreta
+    expect(elias.system('en').toLowerCase(), contains('not a substitute'));
+    expect(elias.system('en').toLowerCase(), contains('crisis line'));
+    expect(elias.system('en'), contains('Do NOT diagnose'));
+  });
+
+  test('el chat general es honesto sobre sus límites (sin internet)', () {
+    final g = AgentCatalog.byId('general')!;
+    expect(g.system('es').toLowerCase(), contains('sin internet'));
+    expect(g.system('en').toLowerCase(), contains('no internet'));
   });
 
   test('el psicólogo activa guardrails de crisis', () {

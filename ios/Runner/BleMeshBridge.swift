@@ -61,8 +61,23 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
                 }
             }
             running = true
-            if central == nil { central = CBCentralManager(delegate: self, queue: nil) }
-            if peripheral == nil { peripheral = CBPeripheralManager(delegate: self, queue: nil) }
+            // Restauración de estado: con estos identificadores, iOS RELANZA
+            // la app en segundo plano cuando aparece actividad BLE del mesh
+            // (aunque el usuario la haya cerrado), y reconecta central/
+            // peripheral al estado guardado. Es el mecanismo de Apple para
+            // que un SOS cercano despierte el teléfono. (No-op en macOS.)
+            if central == nil {
+                central = CBCentralManager(
+                    delegate: self, queue: nil,
+                    options: [CBCentralManagerOptionRestoreIdentifierKey:
+                                "org.nuvok.mesh.central"])
+            }
+            if peripheral == nil {
+                peripheral = CBPeripheralManager(
+                    delegate: self, queue: nil,
+                    options: [CBPeripheralManagerOptionRestoreIdentifierKey:
+                                "org.nuvok.mesh.peripheral"])
+            }
             // Radios spin up asynchronously in the poweredOn callbacks.
             result(true)
         case "stop":
@@ -157,6 +172,20 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
 
 // MARK: - Central role: find and join nearby Nuvoks.
 extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
+    // iOS relanzó la app en segundo plano por actividad BLE: recuperamos los
+    // peripherals que estaban conectados para no perder el enlace del mesh.
+    func centralManager(_ central: CBCentralManager,
+                        willRestoreState dict: [String: Any]) {
+        running = true
+        let restored = dict[CBCentralManagerRestoredStatePeripheralsKey]
+            as? [CBPeripheral] ?? []
+        for p in restored {
+            peripherals[p.identifier.uuidString] = p
+            p.delegate = self
+        }
+        NSLog("PPMESH central restored %d peripherals", restored.count)
+    }
+
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         NSLog("PPMESH central state=%d", central.state.rawValue)
         // Estado del adaptador → {type:'state'} para TransportHealth en Dart.
@@ -228,6 +257,15 @@ extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
 
 // MARK: - Peripheral role: be discoverable and serve the mesh characteristics.
 extension BleMeshBridge: CBPeripheralManagerDelegate {
+    // iOS relanzó la app: reanudamos el rol de anuncio para seguir siendo
+    // descubribles (un teléfono que lanza SOS debe seguir emitiendo aunque
+    // esté en segundo plano).
+    func peripheralManager(_ peripheral: CBPeripheralManager,
+                           willRestoreState dict: [String: Any]) {
+        running = true
+        NSLog("PPMESH peripheral state restored")
+    }
+
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         NSLog("PPMESH peripheral state=%d", peripheral.state.rawValue)
         guard running, peripheral.state == .poweredOn else { return }

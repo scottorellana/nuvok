@@ -128,6 +128,69 @@ class EmergencyGuides {
   /// body hit 1 per occurrence (capped). Empty query → all by priority.
   /// Keywords have MUCH higher weight than body matches.
   /// Ignores common Spanish stopwords like "se", "el", "la", "un", etc.
+  // Lenguaje llano → keywords clínicas que YA existen en las guías. La gente
+  // en pánico no escribe "atragantamiento", escribe "se atoró, está morado".
+  // Cuando la consulta contiene un gatillo, se inyectan sus anclas con peso
+  // alto para que la intención clínica gane a coincidencias incidentales
+  // ("comida", "moto"). Los gatillos van normalizados (sin tildes).
+  static const Map<String, Map<String, List<String>>> _symptomExpansions = {
+    'es': {
+      'no respira': ['no respira', 'rcp', 'paro cardiaco'],
+      'no responde': ['inconsciente', 'rcp'],
+      'no despierta': ['inconsciente', 'rcp'],
+      'no reacciona': ['inconsciente', 'rcp'],
+      'desplomo': ['inconsciente', 'rcp'],
+      'se desmayo': ['inconsciente', 'desmayo'],
+      'tirado': ['inconsciente'],
+      'se ahoga': ['atragantamiento', 'asfixia'],
+      'ahogando': ['atragantamiento', 'asfixia'],
+      'se atoro': ['atragantamiento', 'obstruccion'],
+      'atoro con': ['atragantamiento', 'obstruccion'],
+      'atraganto': ['atragantamiento'],
+      'morado': ['atragantamiento', 'asfixia'],
+      'se puso azul': ['atragantamiento', 'asfixia'],
+      'dispararon': ['herida', 'hemorragia', 'sangre'],
+      'balazo': ['herida', 'hemorragia'],
+      'apuñalaron': ['herida', 'hemorragia'],
+      'puñalada': ['herida', 'hemorragia'],
+      'cuchillada': ['herida', 'hemorragia'],
+      'no para de sangrar': ['hemorragia', 'sangre'],
+      'sale mucha sangre': ['hemorragia', 'sangre'],
+      'se cayo': ['fractura', 'hueso roto'],
+      'se rompio': ['fractura', 'hueso roto'],
+      'quebro': ['fractura', 'hueso roto'],
+      'dolor en el pecho': ['infarto', 'dolor pecho'],
+      'dolor de pecho': ['infarto', 'dolor pecho'],
+      'brazo izquierdo': ['infarto'],
+      'torcio la cara': ['acv', 'derrame'],
+      'habla raro': ['acv', 'derrame'],
+      'convulsiona': ['convulsion'],
+      'se quemo': ['quemadura'],
+      'tomo veneno': ['intoxicacion', 'veneno'],
+      'trago cloro': ['intoxicacion', 'veneno'],
+    },
+    'en': {
+      'not breathing': ['not breathing', 'cpr', 'cardiac arrest'],
+      'unresponsive': ['unconscious', 'cpr'],
+      'wont wake': ['unconscious', 'cpr'],
+      'choking': ['choking', 'airway'],
+      'turning blue': ['choking', 'airway'],
+      'shot': ['wound', 'bleeding'],
+      'stabbed': ['wound', 'bleeding'],
+      'wont stop bleeding': ['bleeding', 'blood'],
+      'broke his': ['fracture', 'broken bone'],
+      'chest pain': ['heart attack', 'chest'],
+      'seizing': ['seizure'],
+      'got burned': ['burn'],
+    },
+  };
+
+  static const _childMarkers = {
+    'nino', 'ninos', 'nina', 'bebe', 'bebes', 'hijo', 'hija', 'lactante',
+    'nene', 'nena', 'criatura', 'child', 'baby', 'infant', 'kid', 'son',
+    'daughter',
+  };
+
   static List<EmergencyGuide> search(List<EmergencyGuide> all, String query) {
     final q = _norm(query);
     if (q.isEmpty) return List.of(all);
@@ -211,6 +274,16 @@ class EmergencyGuides {
         .where((t) => t.length > 1 && !stopwords.contains(t))
         .toList();
     if (terms.isEmpty) return List.of(all);
+
+    // Expansión por síntoma: gatillos en lenguaje llano → anclas clínicas.
+    final lang = all.isNotEmpty ? all.first.lang : 'es';
+    final expansions = _symptomExpansions[lang] ?? const {};
+    final anchors = <String>{};
+    for (final e in expansions.entries) {
+      if (q.contains(_norm(e.key))) anchors.addAll(e.value.map(_norm));
+    }
+    final hasChildMarker = terms.any(_childMarkers.contains);
+
     final scored = <(EmergencyGuide, int)>[];
     for (final g in all) {
       var score = 0;
@@ -234,6 +307,35 @@ class EmergencyGuides {
         } else if (title.contains(t)) {
           score += 10;
         }
+      }
+      // Match de FRASE: una keyword multi-palabra ("no respira", "dolor
+      // pecho") que aparece tal cual en la consulta es señal fuerte que el
+      // split por palabra suelta se perdía.
+      for (final k in g.keywords) {
+        final kn = _norm(k);
+        if (kn.contains(' ') && q.contains(kn)) score += 45;
+      }
+      // Anclas de síntoma: intención clínica que debe ganar al ruido.
+      for (final a in anchors) {
+        for (final k in g.keywords) {
+          final kn = _norm(k);
+          if (kn == a) {
+            score += 80;
+          } else if (kn.contains(a) || a.contains(kn)) {
+            score += 30;
+          }
+        }
+        if (g.id.contains(a.replaceAll(' ', '_')) || a.contains(g.id)) {
+          score += 50;
+        }
+        if (title.contains(a)) score += 25;
+      }
+      // Matiz adulto/niño en RCP y atragantamiento: sin marcador de niño, la
+      // versión de adulto gana; con marcador, la infantil.
+      final isChildGuide = g.id.contains('nino') || g.id.contains('bebe');
+      if (score > 0 && (g.id.startsWith('rcp') || isChildGuide)) {
+        if (hasChildMarker && isChildGuide) score += 60;
+        if (!hasChildMarker && isChildGuide) score -= 40;
       }
       // Body matches are a minor bonus, not primary
       final body = _norm(g.body);

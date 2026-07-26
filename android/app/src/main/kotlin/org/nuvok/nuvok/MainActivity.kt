@@ -93,6 +93,34 @@ class MainActivity : FlutterActivity() {
                 }
             }
 
+        // Malla en segundo plano: Dart enciende/apaga el servicio que mantiene
+        // vivo el proceso para seguir oyendo SOS con la app cerrada.
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "nuvok/mesh_background")
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "isEnabled" ->
+                        result.success(MeshForegroundService.isEnabled(this))
+                    "setEnabled" -> {
+                        val on = call.argument<Boolean>("enabled") ?: true
+                        MeshForegroundService.setEnabled(this, on)
+                        if (on) {
+                            MeshForegroundService.start(this)
+                        } else {
+                            MeshForegroundService.stop(this)
+                        }
+                        result.success(true)
+                    }
+                    // Lo llama Dart al arrancar la malla: si el usuario lo dejó
+                    // activado, el servicio se levanta solo.
+                    "startIfEnabled" -> {
+                        val on = MeshForegroundService.isEnabled(this)
+                        if (on) MeshForegroundService.start(this)
+                        result.success(on)
+                    }
+                    else -> result.notImplemented()
+                }
+            }
+
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "nuvok/ble_mesh")
             .setMethodCallHandler(bleMesh)
 

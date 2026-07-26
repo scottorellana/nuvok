@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nuvok/modules/mesh/lan_discovery.dart';
 
@@ -43,5 +45,24 @@ void main() {
     // Pero si cambia de IP (DHCP), sí vuelve a avisar.
     d.handleResolved(id: 'otro', ip: '192.168.1.20', port: 47777);
     expect(seen, hasLength(2));
+  });
+
+  test('un error asíncrono de Bonjour no mata el descubrimiento', () async {
+    final controller = StreamController<int>();
+    final seen = <int>[];
+    final subscription = listenWithoutFatalErrors<int>(
+      controller.stream,
+      seen.add,
+    );
+
+    controller
+      ..add(1)
+      ..addError(StateError('DefunctConnection'))
+      ..add(2);
+    await Future<void>.delayed(Duration.zero);
+
+    expect(seen, [1, 2]);
+    await subscription.cancel();
+    await controller.close();
   });
 }

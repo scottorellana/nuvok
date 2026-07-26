@@ -38,6 +38,11 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <!-- API 34+ puede exigir tipo explícito si se usa para reproducir audio de alerta. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+    <!-- Malla en segundo plano: la radio BLE sigue escuchando SOS con la app
+         cerrada. Android 14+ exige declarar el tipo del servicio. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"/>
+    <!-- Volver a levantar la malla tras reiniciar el teléfono. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <!-- FLASH/TORCH (si SOS usa linterna por canal nativo). -->
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -78,6 +83,25 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- Mantiene vivo el proceso para que la malla siga oyendo SOS con la
+             app cerrada. connectedDevice: el trabajo real es la radio BLE. -->
+        <service
+            android:name=".MeshForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+
+        <!-- Relevanta la malla tras reiniciar el teléfono (si el usuario la
+             dejó activada). -->
+        <receiver
+            android:name=".BootCompletedReceiver"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

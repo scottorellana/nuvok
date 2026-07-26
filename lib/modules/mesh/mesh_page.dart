@@ -3,6 +3,8 @@
 // button, and position sharing toward the Maps module.
 import 'dart:async';
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -10,6 +12,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import '../../core/locale_service.dart';
 import 'connection_banner.dart';
 import 'mesh_channel.dart';
+import 'mesh_power_controller.dart';
 import 'mesh_envelope.dart';
 import 'mesh_router.dart';
 import 'meeting_point_card.dart';
@@ -485,6 +488,25 @@ class _MeshPageState extends State<MeshPage> {
             },
           ),
         ),
+        // Solo Android: iOS no permite servicios permanentes (allí el
+        // equivalente es la reanudación automática por Bluetooth).
+        if (Platform.isAndroid)
+          Card(
+            child: FutureBuilder<bool>(
+              future: MeshPowerController.instance.backgroundEnabled(),
+              builder: (context, snap) => SwitchListTile(
+                secondary: const Icon(Icons.hearing),
+                title: Text(tr(context, 'bgMeshTitle')),
+                subtitle: Text(tr(context, 'bgMeshSubtitle')),
+                value: snap.data ?? true,
+                onChanged: (v) async {
+                  await MeshPowerController.instance
+                      .setBackgroundEnabled(v);
+                  if (mounted) setState(() {});
+                },
+              ),
+            ),
+          ),
         const SizedBox(height: 8),
         Row(
           children: [

@@ -29,6 +29,13 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
     private var rxCharacteristic: CBMutableCharacteristic?
     private var running = false
 
+    // Política de energía: ciclo de escucha en ms. offMs = 0 → escaneo
+    // continuo (rendimiento o SOS activo). Por defecto equilibrado: nunca
+    // arrancamos a tope sin saber la batería.
+    private var dutyOnMs = 3000
+    private var dutyOffMs = 2000
+    private var dutyTimer: DispatchWorkItem?
+
     // Central role: peripherals we discovered/connected to, by identifier.
     private var peripherals: [String: CBPeripheral] = [:]
     private var peerTx: [String: CBCharacteristic] = [:]
@@ -91,6 +98,14 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
                 disconnect(id: id)
             }
             result(true)
+        case "setPowerMode":
+            // CoreBluetooth no expone "scan mode" como Android: el ahorro se
+            // consigue apagando y reencendiendo el escaneo por temporizador.
+            let args = call.arguments as? [String: Any]
+            dutyOnMs = max(500, (args?["onMs"] as? Int) ?? 3000)
+            dutyOffMs = max(0, (args?["offMs"] as? Int) ?? 2000)
+            applyDutyCycle()
+            result(true)
         case "send":
             let args = call.arguments as? [String: Any]
             let id = args?["id"] as? String ?? ""
@@ -152,6 +167,36 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
         return false
     }
 
+    /// Arranca el escaneo y, si el modo lo pide, programa el ciclo de apagado.
+    private func startScanningWithDuty() {
+        guard running, let c = central, c.state == .poweredOn else { return }
+        c.scanForPeripherals(
+            withServices: [Self.serviceUuid],
+            options: [CBCentralManagerScanOptionAllowDuplicatesKey: false]
+        )
+        applyDutyCycle()
+    }
+
+    /// Ciclo de escucha: apaga el escaneo tras dutyOnMs y lo reenciende tras
+    /// dutyOffMs, para no fundir la batería. offMs = 0 → continuo.
+    private func applyDutyCycle() {
+        dutyTimer?.cancel()
+        dutyTimer = nil
+        guard running, dutyOffMs > 0 else { return } // continuo
+        let work = DispatchWorkItem { [weak self] in
+            guard let self = self, self.running, let c = self.central else { return }
+            c.stopScan()
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + .milliseconds(self.dutyOffMs)
+            ) { [weak self] in
+                self?.startScanningWithDuty()
+            }
+        }
+        dutyTimer = work
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + .milliseconds(dutyOnMs), execute: work)
+    }
+
     private func emit(_ event: [String: Any]) {
         DispatchQueue.main.async { [weak self] in
             self?.sink?(event)
@@ -197,11 +242,8 @@ extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
         default: break
         }
         guard running, central.state == .poweredOn else { return }
-        NSLog("PPMESH central scanning")
-        central.scanForPeripherals(
-            withServices: [Self.serviceUuid],
-            options: [CBCentralManagerScanOptionAllowDuplicatesKey: false]
-        )
+        NSLog("PPMESH central scanning (duty %d/%d ms)", dutyOnMs, dutyOffMs)
+        startScanningWithDuty()
     }
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,

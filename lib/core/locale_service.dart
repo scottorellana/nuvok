@@ -1160,6 +1160,21 @@ class AppStrings {
       'pt': 'Trocando de especialista…', 'fr': 'Changement de spécialiste…',
       'zh': '正在切换专家…', 'ja': 'スペシャリストを切り替え中…', 'ht': 'Chanje espesyalis…',
     },
+    'bgMeshTitle': {
+      'es': 'Escuchar con la app cerrada', 'en': 'Listen with the app closed',
+      'pt': 'Ouvir com o app fechado', 'fr': "Écouter l'app fermée",
+      'zh': '关闭应用后继续接收', 'ja': 'アプリを閉じても受信',
+      'ht': 'Koute ak app la fèmen',
+    },
+    'bgMeshSubtitle': {
+      'es': 'Un SOS cercano te avisa aunque no tengas Nuvok abierta. Ajusta la radio según la batería.',
+      'en': 'A nearby SOS alerts you even with Nuvok closed. Tunes the radio to your battery.',
+      'pt': 'Um SOS próximo avisa mesmo com o Nuvok fechado. Ajusta o rádio à bateria.',
+      'fr': "Un SOS proche vous alerte même Nuvok fermé. Adapte la radio à la batterie.",
+      'zh': '附近的 SOS 即使 Nuvok 已关闭也会提醒你，并根据电量调节射频。',
+      'ja': 'Nuvok を閉じていても近くの SOS を通知。電池残量に応じて無線を調整。',
+      'ht': 'Yon SOS toupre avèti ou menm si Nuvok fèmen. Ajiste radyo a selon batri.',
+    },
     'modelPickTitle': {
       'es': 'Modelo de IA', 'en': 'AI model', 'pt': 'Modelo de IA',
       'fr': "Modèle d'IA", 'zh': 'AI 模型', 'ja': 'AI モデル', 'ht': 'Modèl AI',

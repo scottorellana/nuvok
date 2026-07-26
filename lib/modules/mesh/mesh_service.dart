@@ -20,6 +20,7 @@ import 'lora_transport.dart';
 import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
 import 'mesh_identity.dart';
+import 'mesh_power_controller.dart';
 import 'mesh_router.dart';
 import 'mesh_store.dart';
 import 'mesh_transport.dart';
@@ -161,6 +162,11 @@ class MeshService {
   Future<void> start() async {
     if (running.value || _starting) return;
     _starting = true;
+    // Radio consciente de la batería + servicio de segundo plano (Android):
+    // sin esto la radio escanea a máxima potencia siempre y el SOS de un
+    // vecino solo llega con la app abierta.
+    MeshPowerController.instance.start();
+    unawaited(MeshPowerController.instance.startBackgroundIfEnabled());
     try {
       identity ??= MeshIdentity.load(dirPath);
       final id = identity;
@@ -552,6 +558,7 @@ class MeshService {
   Future<void> startSos({String note = ''}) async {
     sosNote = note;
     sosActive.value = true;
+    MeshPowerController.instance.setSosActive(true);
     await _broadcastSos();
     _sosTimer?.cancel();
     _sosTimer =
@@ -603,6 +610,7 @@ class MeshService {
     _sosTimer?.cancel();
     _sosTimer = null;
     sosActive.value = false;
+    MeshPowerController.instance.setSosActive(false);
     final router = _router;
     if (identity == null || router == null) return;
     await router.broadcast(await _envelope(
@@ -664,6 +672,7 @@ class MeshService {
         // Trigger the SOS alarm for incoming distress signals.
         if (e.envelope.type == MeshType.sos &&
             e.envelope.senderId != identity?.id) {
+          MeshPowerController.instance.boostForIncomingSos();
           SosAlarmController.instance.trigger(
             fromName: e.envelope.senderName,
             note: e.payload['note'] as String?,

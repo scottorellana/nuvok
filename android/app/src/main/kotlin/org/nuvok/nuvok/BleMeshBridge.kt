@@ -67,6 +67,13 @@ class BleMeshBridge(
     private var serverRx: BluetoothGattCharacteristic? = null
     private var advertising = false
     private var scanning = false
+
+    // Política de energía (la fija Dart con setPowerMode). Por defecto
+    // "balanced": nunca arrancamos a máxima potencia sin saber la batería.
+    private var powerMode = "balanced"
+    private var dutyOnMs = 3000
+    private var dutyOffMs = 2000
+    private var dutyRunnable = Runnable {}
     private val peers = ConcurrentHashMap<String, PeerState>()
 
     // Centrals subscribed to our RX characteristic. This is the return path
@@ -139,6 +146,14 @@ class BleMeshBridge(
             "start" -> start(result)
             "stop" -> {
                 stop()
+                result.success(true)
+            }
+            "setPowerMode" -> {
+                applyPowerMode(
+                    call.argument<String>("mode") ?: "balanced",
+                    call.argument<Int>("onMs") ?: 3000,
+                    call.argument<Int>("offMs") ?: 2000,
+                )
                 result.success(true)
             }
             "connect" -> {
@@ -295,14 +310,65 @@ class BleMeshBridge(
         val scanner = adapter.bluetoothLeScanner ?: return
         val filter = ScanFilter.Builder().setServiceUuid(ParcelUuid(SERVICE_UUID)).build()
         val settings = ScanSettings.Builder()
-            .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+            .setScanMode(androidScanMode())
             .build()
         try {
             scanner.startScan(listOf(filter), settings, scanCallback)
             scanning = true
+            scheduleDutyCycle(adapter)
         } catch (_: Throwable) {
             scanning = false
         }
+    }
+
+    /** Modo de escaneo según la política de energía que fija Dart. */
+    private fun androidScanMode(): Int = when (powerMode) {
+        "performance" -> ScanSettings.SCAN_MODE_LOW_LATENCY
+        "balanced" -> ScanSettings.SCAN_MODE_BALANCED
+        else -> ScanSettings.SCAN_MODE_LOW_POWER // saver / critical
+    }
+
+    /**
+     * Ciclo de escucha: apaga la radio [dutyOffMs] y la reenciende, para no
+     * fundir la batería escaneando sin parar. offMs = 0 → escucha continua
+     * (rendimiento o SOS activo).
+     */
+    @SuppressLint("MissingPermission")
+    private fun scheduleDutyCycle(adapter: android.bluetooth.BluetoothAdapter) {
+        main.removeCallbacks(dutyRunnable)
+        if (dutyOffMs <= 0) return // continuo: nada que programar
+        dutyRunnable = Runnable {
+            if (!running) return@Runnable
+            try {
+                if (scanning) {
+                    adapter.bluetoothLeScanner?.stopScan(scanCallback)
+                    scanning = false
+                    // Vuelve a encender tras la pausa.
+                    main.postDelayed({
+                        if (running && !scanning) startScanning(adapter)
+                    }, dutyOffMs.toLong())
+                }
+            } catch (_: Throwable) {}
+        }
+        main.postDelayed(dutyRunnable, dutyOnMs.toLong())
+    }
+
+    /** Aplica un modo de energía nuevo: reinicia el escaneo con los ajustes. */
+    @SuppressLint("MissingPermission")
+    fun applyPowerMode(mode: String, onMs: Int, offMs: Int) {
+        powerMode = mode
+        dutyOnMs = onMs.coerceAtLeast(500)
+        dutyOffMs = offMs.coerceAtLeast(0)
+        val adapter = bluetoothManager?.adapter ?: return
+        if (!running) return
+        try {
+            main.removeCallbacks(dutyRunnable)
+            if (scanning) {
+                adapter.bluetoothLeScanner?.stopScan(scanCallback)
+                scanning = false
+            }
+            startScanning(adapter)
+        } catch (_: Throwable) {}
     }
 
     @SuppressLint("MissingPermission")

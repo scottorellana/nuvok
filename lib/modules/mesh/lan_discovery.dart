@@ -4,7 +4,22 @@
 // peers via Bonjour and then talks plain unicast UDP, which is unrestricted.
 // On Android/desktop it complements the existing multicast (some routers and
 // phone hotspots filter multicast but forward mDNS).
+import 'dart:async';
+
 import 'package:bonsoir/bonsoir.dart';
+
+/// Keeps best-effort transports alive when a platform stream reports an
+/// asynchronous error. iOS Bonjour can emit DefunctConnection after start().
+StreamSubscription<T> listenWithoutFatalErrors<T>(
+  Stream<T> stream,
+  void Function(T event) onData,
+) {
+  return stream.listen(
+    onData,
+    onError: (Object _, StackTrace __) {},
+    cancelOnError: false,
+  );
+}
 
 /// Announces `_Nuvokpad._udp` (TXT: device id) and browses for the same
 /// type. Every foreign resolved service triggers [onPeer] so the transport
@@ -28,10 +43,12 @@ class LanDiscovery {
 
   BonsoirBroadcast? _broadcast;
   BonsoirDiscovery? _discovery;
+  StreamSubscription<BonsoirDiscoveryEvent>? _eventsSub;
   final _known = <String>{}; // "id@ip" already reported
 
   /// Pure resolution logic: filter self and garbage, dedupe, report.
-  void handleResolved({required String id, required String ip, required int port}) {
+  void handleResolved(
+      {required String id, required String ip, required int port}) {
     if (id.isEmpty || ip.isEmpty || port <= 0) return;
     if (id == deviceId) return; // our own announcement echoed back
     if (!_known.add('$id@$ip')) return; // same peer+ip already reported
@@ -55,23 +72,26 @@ class LanDiscovery {
 
       final discovery = BonsoirDiscovery(type: serviceType);
       await discovery.ready;
-      discovery.eventStream?.listen((event) {
-        final s = event.service;
-        if (s == null) return;
-        if (event.type == BonsoirDiscoveryEventType.discoveryServiceFound) {
-          s.resolve(discovery.serviceResolver);
-        } else if (event.type ==
-            BonsoirDiscoveryEventType.discoveryServiceResolved) {
-          final resolved = s;
-          final host =
-              resolved is ResolvedBonsoirService ? (resolved.host ?? '') : '';
-          handleResolved(
-            id: resolved.attributes['id'] ?? '',
-            ip: host,
-            port: resolved.port,
-          );
-        }
-      });
+      final events = discovery.eventStream;
+      if (events != null) {
+        _eventsSub = listenWithoutFatalErrors(events, (event) {
+          final s = event.service;
+          if (s == null) return;
+          if (event.type == BonsoirDiscoveryEventType.discoveryServiceFound) {
+            s.resolve(discovery.serviceResolver);
+          } else if (event.type ==
+              BonsoirDiscoveryEventType.discoveryServiceResolved) {
+            final resolved = s;
+            final host =
+                resolved is ResolvedBonsoirService ? (resolved.host ?? '') : '';
+            handleResolved(
+              id: resolved.attributes['id'] ?? '',
+              ip: host,
+              port: resolved.port,
+            );
+          }
+        });
+      }
       await discovery.start();
       _discovery = discovery;
     } catch (_) {
@@ -82,6 +102,8 @@ class LanDiscovery {
   }
 
   Future<void> stop() async {
+    await _eventsSub?.cancel();
+    _eventsSub = null;
     try {
       await _broadcast?.stop();
     } catch (_) {}

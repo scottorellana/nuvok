@@ -338,14 +338,14 @@ class BleMeshBridge(
         main.removeCallbacks(dutyRunnable)
         if (dutyOffMs <= 0) return // continuo: nada que programar
         dutyRunnable = Runnable {
-            if (!running) return@Runnable
+            if (!radiosWanted) return@Runnable
             try {
                 if (scanning) {
                     adapter.bluetoothLeScanner?.stopScan(scanCallback)
                     scanning = false
                     // Vuelve a encender tras la pausa.
                     main.postDelayed({
-                        if (running && !scanning) startScanning(adapter)
+                        if (radiosWanted && !scanning) startScanning(adapter)
                     }, dutyOffMs.toLong())
                 }
             } catch (_: Throwable) {}
@@ -360,7 +360,7 @@ class BleMeshBridge(
         dutyOnMs = onMs.coerceAtLeast(500)
         dutyOffMs = offMs.coerceAtLeast(0)
         val adapter = bluetoothManager?.adapter ?: return
-        if (!running) return
+        if (!radiosWanted) return
         try {
             main.removeCallbacks(dutyRunnable)
             if (scanning) {

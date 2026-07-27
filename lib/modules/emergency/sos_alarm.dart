@@ -184,20 +184,29 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                       size: 120,
                       color: Colors.white.withValues(alpha: 0.5 + blink * 0.5)),
                   const SizedBox(height: 24),
-                  const Text(
-                    '⚠ SOS RECIBIDO ⚠',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 2,
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    child: Text(
+                      '⚠ SOS RECIBIDO ⚠',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 2,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
                   if (_controller.alarmFromName != null)
-                    Text(
-                      'De: ${_controller.alarmFromName}',
-                      style: const TextStyle(color: Colors.white, fontSize: 22),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        'De: ${_controller.alarmFromName}',
+                        textAlign: TextAlign.center,
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 22),
+                      ),
                     ),
                   if (_controller.alarmNote != null &&
                       _controller.alarmNote!.isNotEmpty)
@@ -241,8 +250,9 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Text(
+                  const Text(
                     'Toca para silenciar la alarma',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 14,

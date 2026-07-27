@@ -7,6 +7,10 @@ import UIKit
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    // AQUÍ, y no más tarde: iOS entrega el estado BLE restaurado durante el
+    // arranque. Si esperamos a que Dart pida "start", la ventana ya pasó y un
+    // SOS cercano nunca despierta el teléfono con la app cerrada.
+    BleMeshBridge.shared.restoreIfAuthorized()
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 

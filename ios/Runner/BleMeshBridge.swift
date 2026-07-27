@@ -43,8 +43,50 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
     // to devices we cannot connect back to).
     private var subscribedCentrals: [String: CBCentral] = [:]
 
+    /// Instancia ÚNICA del puente. Debe serlo porque la restauración de
+    /// estado de iOS obliga a recrear los managers al ARRANCAR la app (ver
+    /// restoreIfAuthorized), mucho antes de que Dart registre su canal: si
+    /// fueran dos instancias distintas, el estado restaurado moriría en una
+    /// que nadie escucha.
+    static let shared = BleMeshBridge()
+
+    /// Recrea los managers BLE con sus identificadores de restauración al
+    /// lanzar la app.
+    ///
+    /// SIN esto la restauración no funciona: Apple entrega el estado
+    /// restaurado durante didFinishLaunchingWithOptions, y nosotros creábamos
+    /// el CBCentralManager recién cuando Dart llamaba a "start" — demasiado
+    /// tarde. Por eso un SOS no despertaba el teléfono con la app cerrada.
+    ///
+    /// Solo si el usuario YA concedió Bluetooth: crear el manager dispara el
+    /// diálogo de permiso, y en el primer arranque eso le corresponde a la
+    /// app, no a un relanzamiento en segundo plano.
+    func restoreIfAuthorized() {
+        if #available(iOS 13.1, macOS 11.0, *) {
+            guard CBManager.authorization == .allowedAlways else { return }
+        }
+        ensureManagers()
+    }
+
+    /// Crea central y peripheral con identificadores de restauración.
+    /// Idempotente: si ya existen, no hace nada.
+    private func ensureManagers() {
+        if central == nil {
+            central = CBCentralManager(
+                delegate: self, queue: nil,
+                options: [CBCentralManagerOptionRestoreIdentifierKey:
+                            "org.nuvok.mesh.central"])
+        }
+        if peripheral == nil {
+            peripheral = CBPeripheralManager(
+                delegate: self, queue: nil,
+                options: [CBPeripheralManagerOptionRestoreIdentifierKey:
+                            "org.nuvok.mesh.peripheral"])
+        }
+    }
+
     static func register(messenger: FlutterBinaryMessenger) {
-        let bridge = BleMeshBridge()
+        let bridge = BleMeshBridge.shared
         let methods = FlutterMethodChannel(name: "nuvok/ble_mesh", binaryMessenger: messenger)
         methods.setMethodCallHandler { call, result in
             bridge.handle(call: call, result: result)
@@ -68,23 +110,11 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
                 }
             }
             running = true
-            // Restauración de estado: con estos identificadores, iOS RELANZA
-            // la app en segundo plano cuando aparece actividad BLE del mesh
-            // (aunque el usuario la haya cerrado), y reconecta central/
-            // peripheral al estado guardado. Es el mecanismo de Apple para
-            // que un SOS cercano despierte el teléfono. (No-op en macOS.)
-            if central == nil {
-                central = CBCentralManager(
-                    delegate: self, queue: nil,
-                    options: [CBCentralManagerOptionRestoreIdentifierKey:
-                                "org.nuvok.mesh.central"])
-            }
-            if peripheral == nil {
-                peripheral = CBPeripheralManager(
-                    delegate: self, queue: nil,
-                    options: [CBPeripheralManagerOptionRestoreIdentifierKey:
-                                "org.nuvok.mesh.peripheral"])
-            }
+            // Normalmente ya existen: se crean al arrancar la app
+            // (restoreIfAuthorized) para que la restauración de estado de iOS
+            // funcione. Aquí solo cubrimos el primer arranque, cuando el
+            // usuario acaba de conceder Bluetooth.
+            ensureManagers()
             // Radios spin up asynchronously in the poweredOn callbacks.
             result(true)
         case "stop":

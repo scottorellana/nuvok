@@ -115,7 +115,13 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
             // funcione. Aquí solo cubrimos el primer arranque, cuando el
             // usuario acaba de conceder Bluetooth.
             ensureManagers()
-            // Radios spin up asynchronously in the poweredOn callbacks.
+            // Si los managers ya existían (creados al lanzar la app para la
+            // restauración de estado), sus callbacks de estado ya ocurrieron
+            // con running=false y NO se repiten: hay que arrancar las radios
+            // a mano. Si acaban de crearse, esto no hace nada y el arranque
+            // ocurre en los callbacks.
+            startScanningIfReady()
+            startAdvertisingIfReady()
             result(true)
         case "stop":
             stopRadios()
@@ -271,7 +277,13 @@ extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
         case .unsupported: emit(["type": "state", "value": "unsupported"])
         default: break
         }
-        guard running, central.state == .poweredOn else { return }
+        startScanningIfReady()
+    }
+
+    /// Arranca el escaneo. Igual que el anuncio: debe poder invocarse desde
+    /// "start", porque el callback de estado ya pasó cuando Dart despierta.
+    func startScanningIfReady() {
+        guard let c = central, running, c.state == .poweredOn else { return }
         NSLog("PPMESH central scanning (duty %d/%d ms)", dutyOnMs, dutyOffMs)
         startScanningWithDuty()
     }
@@ -343,6 +355,16 @@ extension BleMeshBridge: CBPeripheralManagerDelegate {
 
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         NSLog("PPMESH peripheral state=%d", peripheral.state.rawValue)
+        startAdvertisingIfReady()
+    }
+
+    /// Arranca el rol de anuncio. Se llama tanto desde el callback de estado
+    /// como desde "start": los managers se crean al lanzar la app (para la
+    /// restauración), así que cuando Dart pide arrancar el callback de estado
+    /// YA ocurrió y no volverá a dispararse — sin esto el teléfono nunca se
+    /// anuncia por Bluetooth.
+    func startAdvertisingIfReady() {
+        guard let peripheral = peripheral else { return }
         guard running, peripheral.state == .poweredOn else { return }
         NSLog("PPMESH advertising start")
         let tx = CBMutableCharacteristic(

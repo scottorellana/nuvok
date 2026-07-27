@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		SOSSNIF02BUILD0000000000 /* SosSniffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = SOSSNIF01FILE00000000000 /* SosSniffer.swift */; };
 		GEMMAXL02BUILD00000000000 /* gemma-4-E2B-it-Q4_K_M.gguf in Resources */ = {isa = PBXBuildFile; fileRef = GEMMAXL01FILE000000000000 /* gemma-4-E2B-it-Q4_K_M.gguf */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
@@ -56,6 +57,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		SOSSNIF01FILE00000000000 /* SosSniffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SosSniffer.swift; sourceTree = "<group>"; };
 		GEMMAXL01FILE000000000000 /* gemma-4-E2B-it-Q4_K_M.gguf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "gemma-4-E2B-it-Q4_K_M.gguf"; path = "../assets/bundled_library/models_xl/gemma-4-E2B-it-Q4_K_M.gguf"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				BLEIOS01MESH0BRIDGE0FILE0 /* BleMeshBridge.swift */,
 				CMPIOS01COMPASS0BRIDGEFIL /* CompassBridge.swift */,
 				BDLIOS01ASSETS0BRIDGE0FIL /* BundledAssetsBridge.swift */,
+				SOSSNIF01FILE00000000000 /* SosSniffer.swift */,
 				PRIVACY01INFO0FILE0000000 /* PrivacyInfo.xcprivacy */,
 				7884E8672EC3CC0400C636F2 /* SceneDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
@@ -499,6 +502,7 @@
 				BLEIOS02MESH0BRIDGE0BUILD /* BleMeshBridge.swift in Sources */,
 				CMPIOS02COMPASS0BRIDGEBLD /* CompassBridge.swift in Sources */,
 				BDLIOS02ASSETS0BRIDGE0BLD /* BundledAssetsBridge.swift in Sources */,
+				SOSSNIF02BUILD0000000000 /* SosSniffer.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				7884E8682EC3CC0700C636F2 /* SceneDelegate.swift in Sources */,
 			);

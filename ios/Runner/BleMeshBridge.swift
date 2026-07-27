@@ -312,6 +312,9 @@ extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral,
                     didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard characteristic.uuid == Self.rxUuid, let data = characteristic.value else { return }
+        // Detección nativa del SOS: con la app en segundo plano el motor Dart
+        // duerme y nunca procesaría este dato.
+        SosSniffer.inspect(data)
         emit([
             "type": "data",
             "id": peripheral.identifier.uuidString,
@@ -383,6 +386,7 @@ extension BleMeshBridge: CBPeripheralManagerDelegate {
         for request in requests {
             if request.characteristic.uuid == Self.txUuid, let value = request.value {
                 NSLog("PPMESH write-in %d bytes from %@", value.count, request.central.identifier.uuidString)
+                SosSniffer.inspect(value)
                 emit([
                     "type": "data",
                     "id": request.central.identifier.uuidString,

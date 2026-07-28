@@ -10,6 +10,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 
 import 'mesh_channel.dart';
+import 'mesh_diagnostics.dart';
 import 'mesh_envelope.dart';
 import 'mesh_store.dart';
 import 'mesh_transport.dart';
@@ -199,6 +200,7 @@ class MeshRouter {
     for (final t in _transports) {
       try {
         await t.send(bytes);
+        MeshDiagnostics.instance.recordSent(t.name, bytes.length);
       } catch (_) {
         // A transport failing must not take the mesh down.
       }
@@ -227,6 +229,9 @@ class MeshRouter {
   }
 
   Future<void> _handleIncoming(Uint8List datagram, {String? via}) async {
+    if (via != null) {
+      MeshDiagnostics.instance.recordReceived(via, datagram.length);
+    }
     final env = MeshEnvelope.decode(datagram);
     if (env == null) return;
     if (env.senderId == deviceId) return; // our own flood came back

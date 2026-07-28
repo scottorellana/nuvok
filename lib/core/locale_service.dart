@@ -1160,6 +1160,64 @@ class AppStrings {
       'pt': 'Trocando de especialista…', 'fr': 'Changement de spécialiste…',
       'zh': '正在切换专家…', 'ja': 'スペシャリストを切り替え中…', 'ht': 'Chanje espesyalis…',
     },
+    'diagTitle': {
+      'es': 'Diagnóstico de la malla', 'en': 'Mesh diagnostics',
+      'pt': 'Diagnóstico da malha', 'fr': 'Diagnostic du maillage',
+      'zh': '网状网络诊断', 'ja': 'メッシュ診断', 'ht': 'Dyagnostik rezo a',
+    },
+    'diagIntro': {
+      'es': 'Muestra qué vías están activas y si de verdad pasó tráfico por cada una. Copia el reporte si necesitas ayuda.',
+      'en': 'Shows which links are active and whether traffic really flowed through each. Copy the report if you need help.',
+      'pt': 'Mostra quais vias estão ativas e se realmente passou tráfego por cada uma. Copie o relatório se precisar de ajuda.',
+      'fr': "Montre quelles voies sont actives et si du trafic est vraiment passé. Copiez le rapport si besoin d'aide.",
+      'zh': '显示哪些链路处于活动状态以及是否真的有流量通过。需要帮助时可复制报告。',
+      'ja': 'どの経路が有効か、実際に通信が流れたかを表示します。サポートが必要なときはレポートをコピー。',
+      'ht': 'Montre ki chemen ki aktif e si trafik reyèlman pase. Kopye rapò a si ou bezwen èd.',
+    },
+    'diagTransports': {
+      'es': 'Vías', 'en': 'Links', 'pt': 'Vias', 'fr': 'Voies',
+      'zh': '链路', 'ja': '経路', 'ht': 'Chemen',
+    },
+    'diagTraffic': {
+      'es': 'Tráfico real', 'en': 'Actual traffic', 'pt': 'Tráfego real',
+      'fr': 'Trafic réel', 'zh': '实际流量', 'ja': '実際の通信',
+      'ht': 'Trafik reyèl',
+    },
+    'diagEvents': {
+      'es': 'Eventos recientes', 'en': 'Recent events',
+      'pt': 'Eventos recentes', 'fr': 'Événements récents',
+      'zh': '最近事件', 'ja': '最近の出来事', 'ht': 'Evènman resan',
+    },
+    'diagNoTransports': {
+      'es': 'Ninguna vía activa', 'en': 'No active links',
+      'pt': 'Nenhuma via ativa', 'fr': 'Aucune voie active',
+      'zh': '没有活动链路', 'ja': '有効な経路なし', 'ht': 'Pa gen chemen aktif',
+    },
+    'diagNoTraffic': {
+      'es': 'Sin tráfico todavía', 'en': 'No traffic yet',
+      'pt': 'Sem tráfego ainda', 'fr': 'Pas encore de trafic',
+      'zh': '暂无流量', 'ja': 'まだ通信なし', 'ht': 'Poko gen trafik',
+    },
+    'diagNoEvents': {
+      'es': 'Sin eventos', 'en': 'No events', 'pt': 'Sem eventos',
+      'fr': 'Aucun événement', 'zh': '无事件', 'ja': '出来事なし',
+      'ht': 'Pa gen evènman',
+    },
+    'diagCopy': {
+      'es': 'Copiar reporte', 'en': 'Copy report', 'pt': 'Copiar relatório',
+      'fr': 'Copier le rapport', 'zh': '复制报告', 'ja': 'レポートをコピー',
+      'ht': 'Kopye rapò a',
+    },
+    'diagCopied': {
+      'es': 'Reporte copiado', 'en': 'Report copied', 'pt': 'Relatório copiado',
+      'fr': 'Rapport copié', 'zh': '报告已复制', 'ja': 'レポートをコピーしました',
+      'ht': 'Rapò kopye',
+    },
+    'diagClear': {
+      'es': 'Borrar bitácora', 'en': 'Clear log', 'pt': 'Limpar registro',
+      'fr': 'Effacer le journal', 'zh': '清除日志', 'ja': 'ログを消去',
+      'ht': 'Efase jounal la',
+    },
     'bgMeshTitle': {
       'es': 'Escuchar con la app cerrada', 'en': 'Listen with the app closed',
       'pt': 'Ouvir com o app fechado', 'fr': "Écouter l'app fermée",

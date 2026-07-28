@@ -12,6 +12,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import '../../core/locale_service.dart';
 import 'connection_banner.dart';
 import 'mesh_channel.dart';
+import 'mesh_diagnostics_page.dart';
 import 'mesh_power_controller.dart';
 import 'mesh_envelope.dart';
 import 'mesh_router.dart';
@@ -486,6 +487,18 @@ class _MeshPageState extends State<MeshPage> {
               await _service.setLoraEnabled(v);
               if (mounted) setState(() {});
             },
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.monitor_heart_outlined),
+            title: Text(tr(context, 'diagTitle')),
+            subtitle: Text(tr(context, 'diagIntro'),
+                maxLines: 2, overflow: TextOverflow.ellipsis),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
+              builder: (_) => const MeshDiagnosticsPage(),
+            )),
           ),
         ),
         // Solo Android: iOS no permite servicios permanentes (allí el

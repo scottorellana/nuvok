@@ -13,6 +13,7 @@ import 'mesh_channel.dart';
 import 'mesh_diagnostics.dart';
 import 'mesh_envelope.dart';
 import 'mesh_store.dart';
+import 'sos_carry.dart';
 import 'mesh_transport.dart';
 
 class MeshEvent {
@@ -52,6 +53,10 @@ class MeshRouter {
   final _peersVia = <String, Map<String, DateTime>>{};
   final _events = StreamController<MeshEvent>.broadcast();
   final _outbox = <Uint8List>[];
+  /// SOS ajenos que llevamos encima para entregarlos a quien llegue después.
+  final _carry = SosCarry();
+  /// Remitentes ya vistos: distinguir un vecino NUEVO de uno ya conocido.
+  final _knownSenders = <String>{};
   final _subs = <StreamSubscription<Uint8List>>[];
 
   // Flood suppression (Meshtastic-style, scales to ~50 nodes): count copies
@@ -242,7 +247,23 @@ class MeshRouter {
     // signal that the network already repeated this message without us.
     _heardCount[env.msgId] = (_heardCount[env.msgId] ?? 0) + 1;
     notePeer(env.senderId);
+    // Un vecino NUEVO: entregarle los SOS que venimos cargando. Así el
+    // rescatista que pasa diez minutos tarde igual se entera.
+    if (_knownSenders.add(env.senderId)) {
+      final carried = _carry.datagramsToForward();
+      if (carried.isNotEmpty) {
+        MeshDiagnostics.instance
+            .log('vecino nuevo: reenviando ${carried.length} SOS guardado(s)');
+        for (final bytes in carried) {
+          unawaited(_sendAll(bytes));
+        }
+      }
+    }
     if (!_markSeen(env.msgId)) return; // duplicate: counted above, done
+
+    // Guardar/soltar el SOS ajeno (la cancelación del mismo remitente lo
+    // descarta: si ya está a salvo, seguir gritando su SOS es dañino).
+    _carry.offer(env);
 
     // Relay for others: controlled flooding, but deferred by a random jitter
     // so dense meshes don't all shout at once — and cancelled if enough

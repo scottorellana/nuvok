@@ -9,6 +9,7 @@ import '../../core/build_flags.dart';
 import '../../core/nuvok_library.dart';
 import '../update/update_page.dart';
 import 'download_manager.dart';
+import 'app_share_page.dart';
 import 'kiwix_catalog.dart';
 import 'map_catalog.dart';
 import 'starter_pack.dart';
@@ -480,6 +481,18 @@ class _ModelsTabState extends State<_ModelsTab> {
     return ListView(
       padding: const EdgeInsets.all(12),
       children: [
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.share),
+            title: Text(tr(context, 'shareAppTitle')),
+            subtitle: Text(tr(context, 'shareAppIntro'),
+                maxLines: 2, overflow: TextOverflow.ellipsis),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
+              builder: (_) => const AppSharePage(),
+            )),
+          ),
+        ),
         Card(
           color: Theme.of(context).colorScheme.surfaceContainerHighest,
           child: Padding(

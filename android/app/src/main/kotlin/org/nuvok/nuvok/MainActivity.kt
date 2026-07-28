@@ -93,6 +93,17 @@ class MainActivity : FlutterActivity() {
                 }
             }
 
+        // Compartir Nuvok sin internet: la ruta del APK instalado, para
+        // servírselo a un vecino por la red local. En un apagón nadie puede
+        // descargarla; el que ya la tiene es la fuente.
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "nuvok/app_share")
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "apkPath" -> result.success(applicationInfo.sourceDir)
+                    else -> result.notImplemented()
+                }
+            }
+
         // Malla en segundo plano: Dart enciende/apaga el servicio que mantiene
         // vivo el proceso para seguir oyendo SOS con la app cerrada.
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "nuvok/mesh_background")

@@ -1160,6 +1160,36 @@ class AppStrings {
       'pt': 'Trocando de especialista…', 'fr': 'Changement de spécialiste…',
       'zh': '正在切换专家…', 'ja': 'スペシャリストを切り替え中…', 'ht': 'Chanje espesyalis…',
     },
+    'sosAlarmTitle': {
+      'es': '⚠ SOS RECIBIDO ⚠', 'en': '⚠ SOS RECEIVED ⚠',
+      'pt': '⚠ SOS RECEBIDO ⚠', 'fr': '⚠ SOS REÇU ⚠',
+      'zh': '⚠ 收到求救 ⚠', 'ja': '⚠ SOS を受信 ⚠', 'ht': '⚠ SOS RESEVWA ⚠',
+    },
+    'sosAlarmFrom': {
+      'es': 'De:', 'en': 'From:', 'pt': 'De:', 'fr': 'De :',
+      'zh': '来自：', 'ja': '差出人：', 'ht': 'Soti nan:',
+    },
+    'sosAlarmAck': {
+      'es': 'ENTENDIDO', 'en': 'GOT IT', 'pt': 'ENTENDIDO',
+      'fr': 'COMPRIS', 'zh': '知道了', 'ja': '了解', 'ht': 'MWEN KONPRANN',
+    },
+    'sosAlarmSilence': {
+      'es': 'Toca para silenciar la alarma',
+      'en': 'Tap to silence the alarm',
+      'pt': 'Toque para silenciar o alarme',
+      'fr': "Touchez pour couper l'alarme",
+      'zh': '点击静音警报', 'ja': 'タップで警報を消音',
+      'ht': 'Peze pou fèmen alam nan',
+    },
+    'sosAlarmA11y': {
+      'es': 'Alarma SOS activa', 'en': 'SOS alarm active',
+      'pt': 'Alarme SOS ativo', 'fr': 'Alarme SOS active',
+      'zh': 'SOS 警报已启动', 'ja': 'SOS 警報作動中', 'ht': 'Alam SOS aktif',
+    },
+    'sosAlarmNote': {
+      'es': 'Nota', 'en': 'Note', 'pt': 'Nota', 'fr': 'Note',
+      'zh': '备注', 'ja': 'メモ', 'ht': 'Nòt',
+    },
     'diagTitle': {
       'es': 'Diagnóstico de la malla', 'en': 'Mesh diagnostics',
       'pt': 'Diagnóstico da malha', 'fr': 'Diagnostic du maillage',

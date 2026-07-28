@@ -12,6 +12,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
+import '../../core/locale_service.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
@@ -174,9 +176,9 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
           body: SafeArea(
             child: Semantics(
               liveRegion: true,
-              label: 'Alarma SOS activa'
-                  '${_controller.alarmFromName != null ? '. De ${_controller.alarmFromName}' : ''}'
-                  '${_controller.alarmNote != null && _controller.alarmNote!.isNotEmpty ? '. Nota: ${_controller.alarmNote}' : ''}',
+              label: '${tr(context, 'sosAlarmA11y')}'
+                  '${_controller.alarmFromName != null ? '. ${tr(context, 'sosAlarmFrom')} ${_controller.alarmFromName}' : ''}'
+                  '${_controller.alarmNote != null && _controller.alarmNote!.isNotEmpty ? '. ${tr(context, 'sosAlarmNote')}: ${_controller.alarmNote}' : ''}',
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -184,12 +186,12 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                       size: 120,
                       color: Colors.white.withValues(alpha: 0.5 + blink * 0.5)),
                   const SizedBox(height: 24),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Text(
-                      '⚠ SOS RECIBIDO ⚠',
+                      tr(context, 'sosAlarmTitle'),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 32,
                         fontWeight: FontWeight.w900,
@@ -202,7 +204,8 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Text(
-                        'De: ${_controller.alarmFromName}',
+                        '${tr(context, 'sosAlarmFrom')} '
+                        '${_controller.alarmFromName}',
                         textAlign: TextAlign.center,
                         style:
                             const TextStyle(color: Colors.white, fontSize: 22),
@@ -245,15 +248,15 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                           ),
                         ),
                         onPressed: () => _controller.silence(),
-                        child: const Text('ENTENDIDO'),
+                        child: Text(tr(context, 'sosAlarmAck')),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    'Toca para silenciar la alarma',
+                  Text(
+                    tr(context, 'sosAlarmSilence'),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 14,
                     ),

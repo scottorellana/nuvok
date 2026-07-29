@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		SOSSNIF02BUILD0000000000 /* SosSniffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = SOSSNIF01FILE00000000000 /* SosSniffer.swift */; };
-		GEMMAXL02BUILD00000000000 /* gemma-4-E2B-it-Q4_K_M.gguf in Resources */ = {isa = PBXBuildFile; fileRef = GEMMAXL01FILE000000000000 /* gemma-4-E2B-it-Q4_K_M.gguf */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
@@ -58,7 +57,6 @@
 
 /* Begin PBXFileReference section */
 		SOSSNIF01FILE00000000000 /* SosSniffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SosSniffer.swift; sourceTree = "<group>"; };
-		GEMMAXL01FILE000000000000 /* gemma-4-E2B-it-Q4_K_M.gguf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "gemma-4-E2B-it-Q4_K_M.gguf"; path = "../assets/bundled_library/models_xl/gemma-4-E2B-it-Q4_K_M.gguf"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		14F339BC950642C5878DE114 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
@@ -373,7 +371,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
-				GEMMAXL02BUILD00000000000 /* gemma-4-E2B-it-Q4_K_M.gguf in Resources */,
 				46ED264A2FFDBEFC00F407DE /* InfoPlist.strings in Resources */,
 				46ED263E2FFDBEF800F407DE /* InfoPlist.strings in Resources */,
 				46ED263B2FFDBEF800F407DE /* InfoPlist.strings in Resources */,

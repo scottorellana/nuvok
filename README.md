@@ -121,3 +121,10 @@ Ajustes → Créditos y licencias.
 
 El contenido empaquetado (mapas, enciclopedia, modelos) **no es de Nuvok** y
 conserva su licencia original: la GPL cubre el código, no ese material.
+
+### Marca
+
+«Nuvok», su logo y nuvok.org **no** forman parte de la licencia: identifican
+las compilaciones oficiales. Un fork puede usar todo el código bajo la GPL,
+pero debe distribuirse con otro nombre y otro logo. Es la misma regla de
+Firefox o Grafana: el código es libre; la confianza en el nombre, no.

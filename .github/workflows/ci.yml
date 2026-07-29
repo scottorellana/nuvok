@@ -1,0 +1,25 @@
+# CI de Nuvok: los 550+ tests en cada push y PR.
+#
+# Deliberadamente NO compila las plataformas nativas (eso exige llama.cpp,
+# SDKs y firmas): la suite Dart es pura y los tests de contrato nativo leen
+# los fuentes Swift/Kotlin como texto, así que todo corre en un runner Linux.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze lib
+      - run: flutter test

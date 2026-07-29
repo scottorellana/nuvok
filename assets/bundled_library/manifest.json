@@ -1,38 +1,16 @@
 {
-  "version": 1,
-  "description": "Contenido offline incluido en la instalación única de Prepper Pad.",
+  "version": 2,
+  "description": "Contenido offline de Nuvok. 'bundled' distingue lo que viaja DENTRO del instalador de lo que el usuario elige y descarga antes de la emergencia. El instalador se mantiene liviano para poder descargarse del sitio y compartirse entre teléfonos por LAN sin internet.",
   "entries": [
-    {
-      "kind": "maps",
-      "label": "Mapa offline El Salvador",
-      "asset": "assets/bundled_library/maps/el-salvador.pmtiles",
-      "target": "maps/el-salvador.pmtiles",
-      "bytes": 63958126,
-      "sha256": "4362a2798ec79101291853a18ffbc529808eaf03baf2ec1eb296665d3dfb6889"
-    },
-    {
-      "kind": "maps",
-      "label": "Mapa offline Honduras",
-      "asset": "assets/bundled_library/maps/honduras.pmtiles",
-      "target": "maps/honduras.pmtiles",
-      "bytes": 218956874,
-      "sha256": "3c373b6c8b86d1d25add866a83e7df2c1cc22b0801f0f3bf7d8a4d7dc7958ec0"
-    },
-    {
-      "kind": "zim",
-      "label": "Wikipedia médica offline en español",
-      "asset": "assets/bundled_library/zim/wikipedia_es_medicine_maxi_2026-04.zim",
-      "target": "zim/wikipedia_es_medicine_maxi_2026-04.zim",
-      "bytes": 649222973,
-      "sha256": "73b1481d87154048f660b3d99c24de9eab79d84bbccb4e7463544bf250288b9b"
-    },
     {
       "kind": "zim",
       "label": "Wikipedia mini offline",
       "asset": "assets/bundled_library/zim/wikipedia_mini.zim",
       "target": "zim/wikipedia_mini.zim",
       "bytes": 4537782,
-      "sha256": "2811724b72fd34a0728c28b7456d3d6866579019fbbe7ffe28528f3450c252db"
+      "sha256": "2811724b72fd34a0728c28b7456d3d6866579019fbbe7ffe28528f3450c252db",
+      "bundled": true,
+      "note": "Único contenido que viaja dentro: garantiza que la Biblioteca abra con algo utilizable aunque el usuario nunca descargue un paquete."
     },
     {
       "kind": "models",
@@ -40,7 +18,9 @@
       "asset": "assets/bundled_library/models_xl/gemma-4-E2B-it-Q4_K_M.gguf",
       "target": "models/gemma-4-E2B-it-Q4_K_M.gguf",
       "bytes": 3427877696,
-      "sha256": "6c950d754366dd8b372fd17a40497ba5f130a46d833b4c5bccc9f6bb6382ce1e"
+      "sha256": "6c950d754366dd8b372fd17a40497ba5f130a46d833b4c5bccc9f6bb6382ce1e",
+      "bundled": false,
+      "note": "3.2 GB: el 67% del peso viejo del instalador. Android ya lo descargaba porque no cabe en un APK; ahora funciona igual en todas las plataformas."
     },
     {
       "kind": "models",
@@ -48,7 +28,39 @@
       "asset": "assets/bundled_library/models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
       "target": "models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
       "bytes": 491400032,
-      "sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+      "sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+      "bundled": false,
+      "note": "Respaldo para equipos con poca RAM. No tenía sentido empaquetarlo junto al Gemma: quien puede correr el grande nunca lo usa."
+    },
+    {
+      "kind": "zim",
+      "label": "Wikipedia médica offline en español",
+      "asset": "assets/bundled_library/zim/wikipedia_es_medicine_maxi_2026-04.zim",
+      "target": "zim/wikipedia_es_medicine_maxi_2026-04.zim",
+      "bytes": 649222973,
+      "sha256": "73b1481d87154048f660b3d99c24de9eab79d84bbccb4e7463544bf250288b9b",
+      "bundled": false,
+      "note": "Solo en español: empaquetarla obligaba a los otros seis idiomas a cargar 619 MB que no pueden leer."
+    },
+    {
+      "kind": "maps",
+      "label": "Mapa offline El Salvador",
+      "asset": "assets/bundled_library/maps/el-salvador.pmtiles",
+      "target": "maps/el-salvador.pmtiles",
+      "bytes": 63958126,
+      "sha256": "4362a2798ec79101291853a18ffbc529808eaf03baf2ec1eb296665d3dfb6889",
+      "bundled": false,
+      "note": "Los mapas se eligen por región desde Depósito: quien compra en otro país no debería cargar con estos."
+    },
+    {
+      "kind": "maps",
+      "label": "Mapa offline Honduras",
+      "asset": "assets/bundled_library/maps/honduras.pmtiles",
+      "target": "maps/honduras.pmtiles",
+      "bytes": 218956874,
+      "sha256": "3c373b6c8b86d1d25add866a83e7df2c1cc22b0801f0f3bf7d8a4d7dc7958ec0",
+      "bundled": false,
+      "note": "Ver la nota del mapa de El Salvador."
     }
   ]
 }

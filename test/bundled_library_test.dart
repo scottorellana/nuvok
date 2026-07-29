@@ -60,12 +60,15 @@ void main() {
     final registered = assetManifest.listAssets().toSet();
 
     expect(registered, contains(BundledLibraryManifest.assetPath));
-    for (final entry in manifest.entries) {
-      // models_xl/ NO son assets de Flutter: van como recurso nativo del
-      // bundle en iOS/macOS (Android no puede empaquetar >2GB en el APK y
-      // los assets de pubspec son globales a todas las plataformas).
-      if (entry.assetPath.contains('/models_xl/')) continue;
+    // Solo lo marcado como empaquetado debe existir como asset. Lo demás son
+    // paquetes que se descargan: si aparecieran aquí, estarían inflando el
+    // instalador sin que nadie lo note.
+    for (final entry in manifest.entries.where((e) => e.bundled)) {
       expect(registered, contains(entry.assetPath), reason: entry.assetPath);
+    }
+    for (final entry in manifest.entries.where((e) => !e.bundled)) {
+      expect(registered, isNot(contains(entry.assetPath)),
+          reason: '${entry.label} se descarga; no debe viajar en el paquete');
     }
   });
 
@@ -99,47 +102,60 @@ void main() {
     );
   });
 
-  group('platform seeding scope', () {
-    BundledLibraryEntry entry(String kind, String name) => BundledLibraryEntry(
+  group('qué se siembra al instalar', () {
+    BundledLibraryEntry entry(String kind, String name,
+            {required bool bundled, int bytes = 1}) =>
+        BundledLibraryEntry(
           kind: kind,
           label: name,
           assetPath: 'assets/bundled_library/$kind/$name',
           targetRelativePath: '$kind/$name',
-          bytes: 1,
+          bytes: bytes,
           sha256: '0' * 64,
+          bundled: bundled,
         );
 
-    final all = [
-      entry('maps', 'honduras.pmtiles'),
-      entry('zim', 'wikipedia.zim'),
-      entry('models', 'qwen.gguf'),
-    ];
+    final mini = entry('zim', 'wikipedia_mini.zim', bundled: true);
+    final mapa = entry('maps', 'honduras.pmtiles', bundled: false);
+    final modelo = entry('models', 'gemma.gguf', bundled: false);
+    final all = [mini, mapa, modelo];
 
-    test('iOS seeds only the AI model (not the multi-GB maps/zim)', () {
-      final selected = BundledLibrarySeeder.entriesToSeed(all, isIOS: true);
-      expect(selected.map((e) => e.kind), ['models'],
-          reason: 'iOS: solo el modelo IA, para no duplicar >1GB de mapas/zim');
+    test('solo se siembra lo que viaja dentro del instalador', () {
+      for (final ios in [true, false]) {
+        final selected =
+            BundledLibrarySeeder.entriesToSeed(all, isIOS: ios);
+        expect(selected, equals([mini]),
+            reason: 'iOS=$ios: sembrar un paquete no empaquetado fallaría, '
+                'porque el asset no existe dentro de la app');
+      }
     });
 
-    test('non-iOS platforms seed the whole bundle', () {
-      final selected = BundledLibrarySeeder.entriesToSeed(all, isIOS: false);
-      expect(selected, equals(all),
-          reason: 'macOS: instalación única completa, sin cambios');
+    test('una entrada sin el campo "bundled" no infla el instalador', () {
+      // Por defecto NO se empaqueta: olvidar el campo debe fallar del lado
+      // seguro (la app ofrece descargarlo), no meter gigabytes en silencio.
+      final sinCampo = BundledLibraryEntry.fromJson({
+        'kind': 'models',
+        'label': 'Modelo nuevo',
+        'asset': 'assets/bundled_library/models/nuevo.gguf',
+        'target': 'models/nuevo.gguf',
+        'bytes': 2000000000,
+        'sha256': '0' * 64,
+      });
+      expect(sinCampo.bundled, isFalse);
+      expect(BundledLibrarySeeder.entriesToSeed([sinCampo], isIOS: false),
+          isEmpty);
     });
 
-    test('Android salta los assets que su APK no puede llevar (>2GB)', () {
-      final big = BundledLibraryEntry(
-        kind: 'models',
-        label: 'Gemma 4 E2B',
-        assetPath: 'assets/bundled_library/models/gemma.gguf',
-        targetRelativePath: 'models/gemma.gguf',
-        bytes: 3427877696, // excluido del APK por build.gradle
-        sha256: '0' * 64,
-      );
-      final selected = BundledLibrarySeeder.entriesToSeed([...all, big],
-          isIOS: false, isAndroid: true);
-      expect(selected, equals(all),
-          reason: 'el asset >2GB no está en el APK; sembrarlo fallaría');
+    test('Android descarta lo que su APK no puede llevar (>2GB)', () {
+      // Red de seguridad: si algo enorme se marcara como empaquetado, el APK
+      // ni siquiera lo contendría y sembrarlo reventaría.
+      final gigante = entry('models', 'gigante.gguf',
+          bundled: true, bytes: 3427877696);
+      final selected = BundledLibrarySeeder.entriesToSeed(
+          [...all, gigante],
+          isIOS: false,
+          isAndroid: true);
+      expect(selected, equals([mini]));
     });
   });
 }

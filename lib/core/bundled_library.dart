@@ -44,6 +44,7 @@ class BundledLibraryEntry {
     required this.targetRelativePath,
     required this.bytes,
     required this.sha256,
+    this.bundled = false,
   }) {
     _validate();
   }
@@ -55,6 +56,14 @@ class BundledLibraryEntry {
   final int bytes;
   final String sha256;
 
+  /// True si este contenido viaja DENTRO del instalador. False = paquete que
+  /// el usuario elige y descarga desde Depósito.
+  ///
+  /// Por defecto false a propósito: si alguien añade una entrada al manifiesto
+  /// y olvida el campo, el resultado seguro es no empaquetarla (la app la
+  /// ofrece como descarga) en vez de inflar el instalador en silencio.
+  final bool bundled;
+
   factory BundledLibraryEntry.fromJson(Map<String, dynamic> json) {
     return BundledLibraryEntry(
       kind: json['kind'] as String? ?? '',
@@ -63,6 +72,7 @@ class BundledLibraryEntry {
       targetRelativePath: json['target'] as String? ?? '',
       bytes: (json['bytes'] as num?)?.toInt() ?? 0,
       sha256: json['sha256'] as String? ?? '',
+      bundled: json['bundled'] as bool? ?? false,
     );
   }
 
@@ -117,26 +127,27 @@ class BundledLibrarySeeder {
   /// revienta con arrays >2GB); el build.gradle los excluye del paquete.
   static const int androidAssetLimitBytes = 2 * 1024 * 1024 * 1024;
 
-  /// Which bundled entries a given platform should seed.
+  /// Qué entradas del manifiesto sembrar en la biblioteca del usuario.
   ///
-  /// iOS seeds ONLY the AI models: every bundled asset already ships inside
-  /// the .app, so copying it into the library doubles storage. On a phone the
-  /// maps (~270MB) + medical ZIM (~650MB) doubling is not worth it yet, but
-  /// the AI models are what power the specialists and must be installed for
-  /// them to run offline. Android seeds everything EXCEPT the assets that its
-  /// APK cannot ship (see [androidAssetLimitBytes]) — those arrive via the
-  /// in-app "Mejorar IA" download. macOS seeds everything. Pure so the
-  /// per-platform choice is unit-testable without touching Platform or IO.
+  /// Solo se puede sembrar lo que viaja dentro del instalador: el resto no
+  /// existe como asset y el copiado fallaría. Lo no empaquetado llega por
+  /// Depósito, que escribe directo en la biblioteca.
+  ///
+  /// El techo del APK de Android se sigue aplicando como red de seguridad:
+  /// aunque hoy nada empaquetado se le acerca, un asset gigante que se colara
+  /// haría fallar el build de Android antes que a nadie más.
+  ///
+  /// Pura, para poder verificar la decisión sin tocar Platform ni disco.
   static List<BundledLibraryEntry> entriesToSeed(
     List<BundledLibraryEntry> all, {
     required bool isIOS,
     bool isAndroid = false,
   }) {
-    if (isIOS) return all.where((e) => e.kind == 'models').toList();
+    final bundled = all.where((e) => e.bundled);
     if (isAndroid) {
-      return all.where((e) => e.bytes <= androidAssetLimitBytes).toList();
+      return bundled.where((e) => e.bytes <= androidAssetLimitBytes).toList();
     }
-    return all;
+    return bundled.toList();
   }
 
   static Future<BundledSeedResult> seed({

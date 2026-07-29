@@ -106,6 +106,9 @@ flutter:
     - assets/emergency_guides/images/
     - assets/emergency_guides/tutorials/
     - assets/bundled_library/manifest.json
-    - assets/bundled_library/maps/
-    - assets/bundled_library/zim/
-    - assets/bundled_library/models/
+    # OJO: se declara el ARCHIVO, no el directorio zim/. Declarar la carpeta
+    # arrastraría también la Wikipedia médica de 619 MB. Lo demás (modelos,
+    # mapas, enciclopedia) NO se empaqueta: son paquetes que el usuario elige
+    # y descarga desde Depósito. Ver manifest.json ("bundled") y el test
+    # bundle_weight_test, que impide que algo pesado vuelva a colarse aquí.
+    - assets/bundled_library/zim/wikipedia_mini.zim

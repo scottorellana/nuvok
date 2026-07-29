@@ -191,9 +191,18 @@ void main() {
       await a.start();
       await b.start();
 
-      // Let discovery/connection settle (both sides need to process discovery,
-      // connect, and subscribe to incoming streams).
-      await Future<void>.delayed(const Duration(milliseconds: 200));
+      // Esperar a que A tenga peer conectado — por CONDICIÓN, no por reloj.
+      // Con una espera fija de 200 ms este test fallaba de forma intermitente:
+      // al correr la suite completa en paralelo, el descubrimiento a veces
+      // tardaba más y send() salía con "no peers connected", descartando el
+      // datagrama. El síntoma parecía un fallo del transporte y no lo era.
+      final deadline = DateTime.now().add(const Duration(seconds: 5));
+      while (a.health.value.peers == 0 && DateTime.now().isBefore(deadline)) {
+        await Future<void>.delayed(const Duration(milliseconds: 10));
+      }
+      expect(a.health.value.peers, greaterThan(0),
+          reason: 'A nunca descubrió a B: el problema es el descubrimiento, '
+              'no el round-trip que este test mide');
 
       final payload = Uint8List.fromList(List.generate(1200, (i) => i & 0xff));
       final completer = Completer<Uint8List>();

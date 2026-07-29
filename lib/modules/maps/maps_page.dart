@@ -1656,68 +1656,6 @@ class _EmptyMapsState extends State<_EmptyMaps> {
   String? _progress;
   bool _downloading = false;
 
-  /// ISO country code (from the device locale) → catalog region id.
-  static const _isoToRegion = <String, String>{
-    'HN': 'honduras',
-    'SV': 'el-salvador',
-    'GT': 'guatemala',
-    'NI': 'nicaragua',
-    'CR': 'costa-rica',
-    'PA': 'panama',
-    'BZ': 'belize',
-    'MX': 'mexico',
-    'US': 'usa',
-    'CA': 'canada',
-    'CU': 'cuba',
-    'DO': 'rep-dominicana',
-    'HT': 'haiti',
-    'PR': 'puerto-rico',
-    'CO': 'colombia',
-    'VE': 'venezuela',
-    'EC': 'ecuador',
-    'PE': 'peru',
-    'BO': 'bolivia',
-    'BR': 'brasil',
-    'CL': 'chile',
-    'AR': 'argentina',
-    'UY': 'uruguay',
-    'PY': 'paraguay',
-    'ES': 'espana',
-    'PT': 'portugal',
-    'FR': 'francia',
-    'GB': 'reino-unido',
-    'IE': 'irlanda',
-    'DE': 'alemania',
-    'IT': 'italia',
-    'NL': 'paises-bajos',
-    'BE': 'belgica',
-    'CH': 'suiza',
-    'AT': 'austria',
-    'PL': 'polonia',
-    'SE': 'suecia',
-    'NO': 'noruega',
-    'GR': 'grecia',
-    'UA': 'ucrania',
-    'MA': 'marruecos',
-    'EG': 'egipto',
-    'NG': 'nigeria',
-    'ZA': 'sudafrica',
-    'KE': 'kenia',
-    'ET': 'etiopia',
-    'CN': 'china',
-    'IN': 'india',
-    'JP': 'japon',
-    'KR': 'corea-sur',
-    'PH': 'filipinas',
-    'ID': 'indonesia',
-    'TH': 'tailandia',
-    'VN': 'vietnam',
-    'TR': 'turquia',
-    'SA': 'arabia-saudita',
-    'AU': 'australia',
-    'NZ': 'nueva-zelanda',
-  };
-
   @override
   void initState() {
     super.initState();
@@ -1731,7 +1669,7 @@ class _EmptyMapsState extends State<_EmptyMaps> {
     final locale = Platform.localeName;
     final cc =
         locale.contains('_') ? locale.split('_').last.toUpperCase() : null;
-    final suggestedId = cc == null ? null : _isoToRegion[cc];
+    final suggestedId = cc == null ? null : suggestedRegionId(cc);
     setState(() {
       _regions = regions;
       _selected = regions.firstWhere(

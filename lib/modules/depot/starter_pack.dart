@@ -138,34 +138,41 @@ class StarterPack {
     final language = lang ?? systemLang();
     final candidates = <StarterCandidate>[];
     for (final item in itemsFor(language)) {
-      CatalogItem? found;
-      for (final q in item.queries) {
-        final results =
-            await KiwixCatalog.search(query: q, lang: language, count: 5);
-        if (results.isNotEmpty) {
-          // Prefer a title that actually contains a query word.
-          found = results.firstWhere(
-            (r) => item.queries
-                .any((q) => r.title.toLowerCase().contains(q.toLowerCase())),
-            orElse: () => results.first,
-          );
-          break;
-        }
-      }
-      // Last resort: try without a language filter so the user still gets
-      // something useful (e.g. English manual when no localized one exists).
-      if (found == null) {
-        for (final q in item.queries) {
-          final results = await KiwixCatalog.search(query: q, count: 5);
-          if (results.isNotEmpty) {
-            found = results.first;
-            break;
-          }
-        }
-      }
-      if (found != null) candidates.add(StarterCandidate(item, found));
+      final c = await _resolveOne(item, language);
+      if (c != null) candidates.add(c);
     }
     return candidates;
+  }
+
+  /// Solo la enciclopedia médica (el primer StarterItem): es la tarjeta de
+  /// "Prepara tu Nuvok" en el primer arranque. Lanza si no hay internet.
+  static Future<StarterCandidate?> resolveFirstAid({String? lang}) async {
+    final language = lang ?? systemLang();
+    return _resolveOne(itemsFor(language).first, language);
+  }
+
+  static Future<StarterCandidate?> _resolveOne(
+      StarterItem item, String language) async {
+    for (final q in item.queries) {
+      final results =
+          await KiwixCatalog.search(query: q, lang: language, count: 5);
+      if (results.isNotEmpty) {
+        // Prefer a title that actually contains a query word.
+        final found = results.firstWhere(
+          (r) => item.queries
+              .any((q) => r.title.toLowerCase().contains(q.toLowerCase())),
+          orElse: () => results.first,
+        );
+        return StarterCandidate(item, found);
+      }
+    }
+    // Last resort: try without a language filter so the user still gets
+    // something useful (e.g. English manual when no localized one exists).
+    for (final q in item.queries) {
+      final results = await KiwixCatalog.search(query: q, count: 5);
+      if (results.isNotEmpty) return StarterCandidate(item, results.first);
+    }
+    return null;
   }
 
   /// True when the library already contains a medical and a survival ZIM,

@@ -1220,6 +1220,77 @@ class AppStrings {
       'ja': 'Copyright © 2026 Scott Orellana.\n\nNuvok は GNU 一般公衆ライセンス第3版のもとで配布されています。同じ条件のもとで、使用・コードの調査・改変・再配布ができます。\n\n本ソフトウェアは一切の保証なしに提供されます。商品性や特定目的への適合性の黙示の保証もありません。\n\nソースコードとライセンス全文: github.com/scottorellana/nuvok',
       'ht': 'Copyright © 2026 Scott Orellana.\n\nNuvok distribye anba Lisans Piblik Jeneral GNU, vèsyon 3. Ou ka sèvi avè l, etidye kòd li, modifye l epi redistribye l anba menm kondisyon yo.\n\nLi bay SAN OKENN GARANTI, menm pa garanti implisit pou komès oswa pou yon rezon patikilye.\n\nKòd sous ak tèks konplè lisans lan: github.com/scottorellana/nuvok',
     },
+    // "Prepara tu Nuvok": el primer arranque del instalador ligero. La app
+    // llega sin IA/mapas/enciclopedia y esta pantalla propone descargarlos.
+    'setupTitle': {
+      'es': 'Prepara tu Nuvok', 'en': 'Set up your Nuvok',
+      'pt': 'Prepare seu Nuvok', 'fr': 'Préparez votre Nuvok',
+      'zh': '准备你的 Nuvok', 'ja': 'Nuvok の準備', 'ht': 'Prepare Nuvok ou',
+    },
+    'setupIntro': {
+      'es': 'Nuvok se instala ligero a propósito: el conocimiento lo eliges tú. Descárgalo ahora que hay internet y quedará disponible para siempre sin conexión. Nada se sube a ningún servidor.',
+      'en': 'Nuvok installs light on purpose: you choose the knowledge. Download it now while you have internet and it stays available offline forever. Nothing is uploaded to any server.',
+      'pt': 'O Nuvok se instala leve de propósito: o conhecimento é você quem escolhe. Baixe agora que há internet e ficará disponível offline para sempre. Nada é enviado a nenhum servidor.',
+      'fr': "Nuvok s'installe léger à dessein : c'est vous qui choisissez le savoir. Téléchargez-le maintenant, tant qu'il y a internet, et il restera disponible hors ligne pour toujours. Rien n'est envoyé à aucun serveur.",
+      'zh': 'Nuvok 刻意保持轻量安装：知识由你来选择。趁现在有网络下载，它将永远离线可用。任何内容都不会上传到服务器。',
+      'ja': 'Nuvok はあえて軽量にインストールされます。知識はあなたが選びます。インターネットがある今ダウンロードすれば、ずっとオフラインで使えます。サーバーには何も送信されません。',
+      'ht': 'Nuvok enstale lejè espre: se ou ki chwazi konesans lan. Telechaje l kounye a pandan gen entènèt, epi l ap rete disponib san koneksyon pou tout tan. Anyen pa monte sou okenn sèvè.',
+    },
+    'setupAiTitle': {
+      'es': 'Asistente de IA', 'en': 'AI assistant', 'pt': 'Assistente de IA',
+      'fr': 'Assistant IA', 'zh': 'AI 助手', 'ja': 'AI アシスタント',
+      'ht': 'Asistan AI',
+    },
+    'setupAiSubtitle': {
+      'es': 'Elegido para tu equipo según su memoria',
+      'en': 'Picked for your device based on its memory',
+      'pt': 'Escolhido para seu aparelho conforme a memória',
+      'fr': "Choisi pour votre appareil selon sa mémoire",
+      'zh': '根据设备内存自动选择', 'ja': '端末のメモリに合わせて自動選択',
+      'ht': 'Chwazi pou aparèy ou dapre memwa li',
+    },
+    'setupWikiTitle': {
+      'es': 'Wikipedia médica', 'en': 'Medical Wikipedia',
+      'pt': 'Wikipédia médica', 'fr': 'Wikipédia médicale',
+      'zh': '医学维基百科', 'ja': '医療ウィキペディア', 'ht': 'Wikipedya medikal',
+    },
+    'setupWikiSearching': {
+      'es': 'Buscando la edición para tu idioma…',
+      'en': 'Finding the edition for your language…',
+      'pt': 'Procurando a edição para seu idioma…',
+      'fr': 'Recherche de l’édition pour votre langue…',
+      'zh': '正在查找你语言的版本…', 'ja': 'あなたの言語の版を探しています…',
+      'ht': 'N ap chèche edisyon pou lang ou…',
+    },
+    'setupWikiOffline': {
+      'es': 'Sin internet ahora. Descárgala luego desde Depósito → Esenciales.',
+      'en': 'No internet right now. Download it later from Depot → Essentials.',
+      'pt': 'Sem internet agora. Baixe depois em Depósito → Essenciais.',
+      'fr': "Pas d'internet pour l'instant. Téléchargez-la plus tard depuis Dépôt → Essentiels.",
+      'zh': '当前没有网络。稍后可在 仓库 → 必备 中下载。',
+      'ja': '現在インターネットがありません。あとで「デポ → 基本」からダウンロードできます。',
+      'ht': 'Pa gen entènèt kounye a. Telechaje l pita nan Depo → Esansyèl.',
+    },
+    'setupMapTitle': {
+      'es': 'Mapa sin conexión', 'en': 'Offline map', 'pt': 'Mapa offline',
+      'fr': 'Carte hors ligne', 'zh': '离线地图', 'ja': 'オフライン地図',
+      'ht': 'Kat san koneksyon',
+    },
+    'setupMapPick': {
+      'es': 'Elegir en Mapas', 'en': 'Choose in Maps',
+      'pt': 'Escolher em Mapas', 'fr': 'Choisir dans Cartes',
+      'zh': '在地图中选择', 'ja': 'マップで選ぶ', 'ht': 'Chwazi nan Kat',
+    },
+    'setupDownloadAll': {
+      'es': 'Descargar todo', 'en': 'Download all', 'pt': 'Baixar tudo',
+      'fr': 'Tout télécharger', 'zh': '全部下载', 'ja': 'すべてダウンロード',
+      'ht': 'Telechaje tout',
+    },
+    'setupSkip': {
+      'es': 'Ahora no', 'en': 'Not now', 'pt': 'Agora não',
+      'fr': 'Pas maintenant', 'zh': '暂不', 'ja': '今はしない',
+      'ht': 'Pa kounye a',
+    },
     'mapAttribution': {
       'es': '© OpenStreetMap · ODbL',
       'en': '© OpenStreetMap · ODbL',

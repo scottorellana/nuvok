@@ -39,6 +39,78 @@ class MapRegion {
       File('${NuvokLibrary.instance.mapsDir.path}/$fileName').existsSync();
 }
 
+/// País del dispositivo (código ISO del locale) → id de región del catálogo.
+/// Vive junto al catálogo porque describe SUS regiones; lo usan la página de
+/// Mapas (estado vacío) y el arranque inicial para sugerir "tu mapa".
+const isoToRegion = <String, String>{
+  'HN': 'honduras',
+  'SV': 'el-salvador',
+  'GT': 'guatemala',
+  'NI': 'nicaragua',
+  'CR': 'costa-rica',
+  'PA': 'panama',
+  'BZ': 'belize',
+  'MX': 'mexico',
+  'US': 'usa',
+  'CA': 'canada',
+  'CU': 'cuba',
+  'DO': 'rep-dominicana',
+  'HT': 'haiti',
+  'PR': 'puerto-rico',
+  'CO': 'colombia',
+  'VE': 'venezuela',
+  'EC': 'ecuador',
+  'PE': 'peru',
+  'BO': 'bolivia',
+  'BR': 'brasil',
+  'CL': 'chile',
+  'AR': 'argentina',
+  'UY': 'uruguay',
+  'PY': 'paraguay',
+  'ES': 'espana',
+  'PT': 'portugal',
+  'FR': 'francia',
+  'GB': 'reino-unido',
+  'IE': 'irlanda',
+  'DE': 'alemania',
+  'IT': 'italia',
+  'NL': 'paises-bajos',
+  'BE': 'belgica',
+  'CH': 'suiza',
+  'AT': 'austria',
+  'PL': 'polonia',
+  'SE': 'suecia',
+  'NO': 'noruega',
+  'GR': 'grecia',
+  'UA': 'ucrania',
+  'MA': 'marruecos',
+  'EG': 'egipto',
+  'NG': 'nigeria',
+  'ZA': 'sudafrica',
+  'KE': 'kenia',
+  'ET': 'etiopia',
+  'CN': 'china',
+  'IN': 'india',
+  'JP': 'japon',
+  'KR': 'corea-sur',
+  'PH': 'filipinas',
+  'ID': 'indonesia',
+  'TH': 'tailandia',
+  'VN': 'vietnam',
+  'TR': 'turquia',
+  'SA': 'arabia-saudita',
+  'AU': 'australia',
+  'NZ': 'nueva-zelanda',
+};
+
+/// Región sugerida para un código de país ISO, o null si el catálogo no
+/// tiene ese país (los locales llegan en mayúsculas o minúsculas según la
+/// plataforma).
+String? suggestedRegionId(String? isoCountry) {
+  if (isoCountry == null || isoCountry.isEmpty) return null;
+  return isoToRegion[isoCountry.toUpperCase()];
+}
+
 class MapCatalog {
   static List<MapRegion>? _cached;
 

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,6 +11,7 @@ import 'core/shell_nav.dart';
 import 'main.dart';
 import 'modules/ai/ai_page.dart';
 import 'modules/depot/depot_page.dart';
+import 'modules/depot/first_run_setup.dart';
 import 'modules/emergency/emergency_page.dart';
 import 'modules/emergency/sos_alarm.dart';
 import 'modules/library/library_page.dart';
@@ -294,37 +294,13 @@ class _HomeShellState extends State<HomeShell> {
   }
 
   void _showWelcome() {
-    final welcomeWidth =
-        (MediaQuery.of(context).size.width - 48).clamp(280.0, 440.0).toDouble();
-    final s = LocaleProvider.of(context);
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(s.t('welcomeTitle')),
-        content: SizedBox(
-          width: welcomeWidth,
-          child: Text(
-              s.t(Platform.isIOS ? 'welcomeBodyIos' : 'welcomeBodyDesktop')),
-        ),
-        actions: [
-          FilledButton.icon(
-            onPressed: () {
-              Navigator.of(context).pop();
-              setState(() {
-                _index = 8; // Depósito
-                _depotInitialTab = 0; // Esenciales
-              });
-            },
-            icon: const Icon(Icons.medical_services, size: 18),
-            label: Text(s.t('viewStarterPack')),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(s.t('explore')),
-          ),
-        ],
-      ),
-    );
+    // El instalador ligero llega sin IA/mapas/enciclopedia: el primer
+    // arranque abre "Prepara tu Nuvok", que propone descargarlos mientras
+    // hay internet. Reemplaza al antiguo diálogo de bienvenida.
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      fullscreenDialog: true,
+      builder: (_) => const FirstRunSetupPage(),
+    ));
   }
 
   @override

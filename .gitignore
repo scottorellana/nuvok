@@ -25,10 +25,17 @@ installer-server/downloads/
 native/work/
 
 # Contenido pesado del canal directo (GBs, >límite de GitHub);
-# se puebla con scripts/build_country.sh / update_bundle_manifest.py
-assets/bundled_library/zim/
+# se puebla con scripts/build_country.sh / update_bundle_manifest.py.
+# zim/ se ignora por CONTENIDO (/*), no por directorio: así la excepción de
+# la Wikipedia mini puede funcionar (git no des-ignora dentro de un
+# directorio excluido).
+assets/bundled_library/zim/*
 assets/bundled_library/maps/
 assets/bundled_library/models/
+assets/bundled_library/models_xl/
+# La Wikipedia mini SÍ se versiona: pubspec la declara como asset del build
+# (4.3 MB); sin ella un clon fresco no compila.
+!assets/bundled_library/zim/wikipedia_mini.zim
 
 # --- Firmas y secretos: NUNCA deben entrar al repositorio ---
 *.jks

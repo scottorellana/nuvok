@@ -1,5 +1,7 @@
 # Nuvok
 
+**Español** · [English](README.en.md)
+
 [![CI](https://github.com/scottorellana/prepper-pad/actions/workflows/ci.yml/badge.svg)](https://github.com/scottorellana/prepper-pad/actions/workflows/ci.yml)
 [![Licencia: GPL v3](https://img.shields.io/badge/licencia-GPL%20v3-blue.svg)](LICENSE)
 [![IA 100% local](https://img.shields.io/badge/IA-100%25%20local-success.svg)](#-ia-local-en-tu-iphone-paso-a-paso)

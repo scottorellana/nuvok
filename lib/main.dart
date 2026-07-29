@@ -8,6 +8,7 @@ import 'app.dart';
 import 'core/build_flags.dart';
 import 'core/bundled_library.dart';
 import 'core/locale_service.dart';
+import 'core/native_licenses.dart';
 import 'core/nuvok_library.dart';
 import 'modules/ai/llama_server.dart';
 import 'modules/mesh/mesh_envelope.dart';
@@ -19,6 +20,10 @@ import 'modules/update/update_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // llama.cpp (MIT) y zstd (BSD) van compilados dentro de libppllm y ambas
+  // licencias obligan a incluir su aviso en cada copia distribuida. Flutter no
+  // las descubre solo (no son paquetes de pub), así que se registran a mano.
+  NativeLicenses.register();
   await NuvokLibrary.init();
   // Language: a saved explicit choice wins; otherwise follow the DEVICE
   // language (this is what makes the app come up in the user's own language

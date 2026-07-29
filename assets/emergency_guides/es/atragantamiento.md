@@ -1,5 +1,5 @@
 ---
-title: Atragantamiento grave — AHA 2025
+title: Atragantamiento grave — protocolo 2025
 keywords: [atragantamiento, asfixia, obstruccion, via aerea, golpes espalda, compresiones abdominales, lactante]
 priority: 1
 ---

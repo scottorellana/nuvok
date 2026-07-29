@@ -36,7 +36,7 @@ category: clima
 - **Cat 4** (130-156 mph): Catastrophic
 - **Cat 5** (157+ mph): Complete destruction
 
-## Example practice: Hurricane
+## Example: Hurricane
 
 **Situation:** A hurricane is forecast within 24 hours and there is still time to prepare the house.
 

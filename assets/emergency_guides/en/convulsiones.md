@@ -51,7 +51,7 @@ priority: 2
 - Very noisy or absent breathing afterwards → open the airway (on the side, chin up); not breathing → CPR.
 - Not waking after 15 minutes → go now.
 
-## Example practice: Seizures (epileptic fit)
+## Example: Seizures (epileptic fit)
 
 **Situation:** A person falls and has shaking movements while a table, glasses, and cables are nearby.
 

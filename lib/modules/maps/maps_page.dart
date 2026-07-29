@@ -1055,6 +1055,28 @@ class _MapsPageState extends State<MapsPage> {
                               ),
                             ),
                           ),
+                        // ATRIBUCIÓN OBLIGATORIA (ODbL): los datos son de
+                        // OpenStreetMap y su licencia exige el crédito donde
+                        // se muestra el mapa, no escondido en otra pantalla.
+                        Positioned(
+                          left: 6,
+                          bottom: 4,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withValues(alpha: 0.45),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 2),
+                              child: Text(
+                                tr(context, 'mapAttribution'),
+                                style: const TextStyle(
+                                    color: Colors.white70, fontSize: 10),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
     );

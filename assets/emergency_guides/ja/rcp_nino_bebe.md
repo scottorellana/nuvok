@@ -1,5 +1,5 @@
 ---
-title: 小児および乳児のCPR — AHA 2025
+title: 小児および乳児のCPR — 2025 プロトコル
 keywords: [cpr, 小児, 乳児, 赤ちゃん, 心停止, 呼吸していない, 溺水, 窒息, AED]
 priority: 1
 ---

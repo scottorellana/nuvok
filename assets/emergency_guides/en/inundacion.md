@@ -38,7 +38,7 @@ category: clima
 - Emergency radio
 - Extra batteries
 
-## Example practice: Flood
+## Example: Flood
 
 **Situation:** Water begins filling the street in front of the house and continues rising.
 

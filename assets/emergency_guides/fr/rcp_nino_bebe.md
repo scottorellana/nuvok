@@ -1,5 +1,5 @@
 ---
-title: RCP chez les enfants et les nourrissons — AHA 2025
+title: RCP chez les enfants et les nourrissons — protocole 2025
 keywords: [rcp, enfant, nourrisson, bebe, arret cardiaque, ne respire pas, noyade, asphyxie, dea]
 priority: 1
 ---

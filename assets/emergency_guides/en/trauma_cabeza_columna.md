@@ -52,7 +52,7 @@ After: a fall from higher than their own height, a car/motorcycle crash, diving 
 
 - More and more sleepy, slower answers → the brain is being compressed: transport immediately, don't wait "to see if it improves".
 
-## Example practice: Head injury and spinal injury
+## Example: Head injury and spinal injury
 
 **Situation:** After a bicycle crash, the person is awake but reports neck pain and dizziness.
 

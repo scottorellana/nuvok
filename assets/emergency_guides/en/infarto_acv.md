@@ -54,7 +54,7 @@ Also: sudden vision loss, violent dizziness with loss of balance, EXPLOSIVE head
 - Loses consciousness, stops breathing → CPR.
 - Stroke symptoms "go away on their own" in minutes → STILL go urgently: it was a warning and the big stroke may come within hours.
 
-## Example practice: Heart attack and stroke (recognize in time)
+## Example: Heart attack and stroke (recognize in time)
 
 **Situation:** A relative develops chest pressure and cold sweat; another person notices slurred speech.
 

@@ -103,6 +103,7 @@ class CuratedModel {
     this.languages = const ['EN'],
     this.tags = const [],
     this.recommended = false,
+    required this.license,
   });
 
   final String name;
@@ -113,6 +114,10 @@ class CuratedModel {
   final List<String> languages;
   final List<String> tags;
   final bool recommended;
+
+  /// Licencia del modelo (identificador de Hugging Face). Se muestra al
+  /// usuario: descargar un modelo es aceptar SU licencia, no la de Nuvok.
+  final String license;
 
   /// Filename extracted from the HuggingFace URL.
   String get fileName => Uri.parse(url).pathSegments.last;
@@ -135,6 +140,7 @@ const curatedModels = <CuratedModel>[
     minRamGb: 2,
     languages: ['EN', 'ES'],
     tags: ['★ Android', 'Ultraligero', 'Gemma'],
+    license: 'gemma',
   ),
   CuratedModel(
     name: 'Gemma 3 1B IT (Q4_K_M)',
@@ -147,6 +153,7 @@ const curatedModels = <CuratedModel>[
     minRamGb: 2,
     languages: ['EN', 'ES', 'JA', 'KO'],
     tags: ['★ Android', 'Gemma'],
+    license: 'gemma',
   ),
   CuratedModel(
     name: 'Gemma 2 2B IT (Q4_K_M)',
@@ -160,6 +167,7 @@ const curatedModels = <CuratedModel>[
     languages: ['EN', 'ES', 'JA', 'KO', 'ZH'],
     tags: ['★ Android', 'Recomendado', 'Gemma'],
     recommended: true,
+    license: 'gemma',
   ),
   CuratedModel(
     name: 'Gemma 3 4B IT (Q3_K_M) — Android',
@@ -173,6 +181,7 @@ const curatedModels = <CuratedModel>[
     minRamGb: 5,
     languages: ['EN', 'ES', 'JA', 'KO'],
     tags: ['★ Android', 'Gemma'],
+    license: 'gemma',
   ),
   CuratedModel(
     name: 'Gemma 3 4B IT (Q4_K_M)',
@@ -185,6 +194,7 @@ const curatedModels = <CuratedModel>[
     minRamGb: 6,
     languages: ['EN', 'ES', 'JA', 'KO'],
     tags: ['Gemma', 'Multimodal'],
+    license: 'gemma',
   ),
 
   // ═══════════════════════════════════════════════════════════
@@ -201,6 +211,7 @@ const curatedModels = <CuratedModel>[
     minRamGb: 1,
     languages: ['EN', 'ES', 'ZH'],
     tags: ['Ultraligero', 'Qwen'],
+    license: 'apache-2.0',
   ),
   CuratedModel(
     name: 'Llama 3.2 1B Instruct (Q4_K_M)',
@@ -212,6 +223,7 @@ const curatedModels = <CuratedModel>[
     minRamGb: 2,
     languages: ['EN', 'ES'],
     tags: ['Tablet', 'Llama'],
+    license: 'llama3.2',
   ),
   CuratedModel(
     name: 'Llama 3.2 3B Instruct (Q4_K_M)',
@@ -224,6 +236,7 @@ const curatedModels = <CuratedModel>[
     minRamGb: 4,
     languages: ['EN', 'ES'],
     tags: ['Rápido', 'Baja RAM', 'Llama'],
+    license: 'llama3.2',
   ),
   CuratedModel(
     name: 'Qwen2.5 7B Instruct (Q4_K_M)',
@@ -235,6 +248,7 @@ const curatedModels = <CuratedModel>[
     minRamGb: 8,
     languages: ['EN', 'ES', 'ZH', 'FR', 'DE'],
     tags: ['Multilingüe', 'Qwen'],
+    license: 'apache-2.0',
   ),
   CuratedModel(
     name: 'Qwen2.5 14B Instruct (Q4_K_M)',
@@ -246,5 +260,6 @@ const curatedModels = <CuratedModel>[
     minRamGb: 16,
     languages: ['EN', 'ES', 'ZH', 'FR', 'DE'],
     tags: ['Alta calidad', 'Qwen'],
+    license: 'apache-2.0',
   ),
 ];

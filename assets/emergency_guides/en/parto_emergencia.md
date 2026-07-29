@@ -58,7 +58,7 @@ Good news: **the vast majority of births go well on their own.** Your job is NOT
 
 Every emergency birth goes to the hospital afterwards (mother + baby + placenta). URGENT if: heavy bleeding, placenta not out within 1 hour, baby not gaining color/tone, breech (bottom first) or an arm/the cord comes first (mother chest-down, hips raised, and GO).
 
-## Example practice: Emergency childbirth (the baby is coming now)
+## Example: Emergency childbirth (the baby is coming now)
 
 **Situation:** A pregnant person has very frequent contractions, strong pressure, and cannot reach the hospital in time.
 

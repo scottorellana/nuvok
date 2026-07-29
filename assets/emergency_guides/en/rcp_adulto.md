@@ -1,5 +1,5 @@
 ---
-title: Adult CPR — AHA 2025
+title: Adult CPR — 2025 protocol
 keywords: [cpr, cardiac arrest, not breathing, gasping, unresponsive, compressions, aed, defibrillator]
 priority: 1
 ---

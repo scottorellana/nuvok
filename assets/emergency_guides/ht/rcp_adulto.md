@@ -1,5 +1,5 @@
 ---
-title: RCP lakay granmoun — AHA 2025
+title: RCP lakay granmoun — pwotokòl 2025
 keywords: [rcp, reyanimasyon, arè kadyak, pa respire, ap pran souf an gaspiyaj, san konesans, konpresyon, dea, defibrilatè]
 priority: 1
 ---

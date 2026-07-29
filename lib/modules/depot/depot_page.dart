@@ -9,6 +9,7 @@ import '../../core/build_flags.dart';
 import '../../core/nuvok_library.dart';
 import '../update/update_page.dart';
 import 'download_manager.dart';
+import '../ai/agents/model_catalog.dart';
 import 'app_share_page.dart';
 import 'kiwix_catalog.dart';
 import 'map_catalog.dart';
@@ -618,6 +619,17 @@ class _ModelCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(model.description, style: theme.textTheme.bodyMedium),
+            const SizedBox(height: 6),
+            // Descargar un modelo es aceptar SU licencia, no la de Nuvok:
+            // hay que decirlo antes de que toque el botón, no después.
+            Text(
+              ModelLicense.requiresNotice(model.license)
+                  ? '${tr(context, 'creditsSoftware')}: ${model.license} — '
+                      '${tr(context, 'modelLicenseNotice')}'
+                  : '${tr(context, 'creditsSoftware')}: ${model.license}',
+              style: theme.textTheme.bodySmall
+                  ?.copyWith(color: theme.colorScheme.outline),
+            ),
             const SizedBox(height: 10),
             Wrap(
               spacing: 6,

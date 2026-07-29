@@ -29,3 +29,14 @@ native/work/
 assets/bundled_library/zim/
 assets/bundled_library/maps/
 assets/bundled_library/models/
+
+# --- Firmas y secretos: NUNCA deben entrar al repositorio ---
+*.jks
+*.keystore
+key.properties
+android/key.properties
+*.p12
+*.mobileprovision
+.env
+# Volcados de memoria/diagnóstico de la JVM (pueden contener secretos en RAM)
+*.hprof

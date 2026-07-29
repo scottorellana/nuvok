@@ -1,5 +1,5 @@
 ---
-title: Étouffement grave — AHA 2025
+title: Étouffement grave — protocole 2025
 keywords: [étouffement, asphyxie, obstruction, voie aérienne, tapes dans le dos, compressions abdominales, nourrisson]
 priority: 1
 ---

@@ -83,7 +83,7 @@ category: supervivencia
 - Clear of water if possible
 - Antenna pointing up
 
-## Example practice: Rescue Signals
+## Example: Rescue Signals
 
 **Situation:** The group is isolated in an open area and may be visible from the air.
 

@@ -45,7 +45,7 @@ Shock means **not enough blood is reaching the organs**. It follows bleeding, la
 - Stops answering your voice → get ready for CPR.
 - Bluish lips, pauses in breathing → arrest is near: don't leave them for a second.
 
-## Example practice: Shock (circulation is failing)
+## Example: Shock (circulation is failing)
 
 **Situation:** After a fall, the person is pale, cold, confused, and breathing fast even without obvious bleeding.
 

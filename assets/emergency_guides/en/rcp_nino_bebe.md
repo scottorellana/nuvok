@@ -1,5 +1,5 @@
 ---
-title: CPR in Children and Infants — AHA 2025
+title: CPR in Children and Infants — 2025 protocol
 keywords: [cpr, child, infant, baby, cardiac arrest, not breathing, drowning, choking, aed]
 priority: 1
 ---

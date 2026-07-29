@@ -51,7 +51,7 @@ Carbon monoxide (embers, engines, heaters in a closed room) has NO smell: suspec
 - Advancing drowsiness, slow or noisy breathing → on their side, be ready for CPR, transport fast.
 - Seizure → guide "Seizures", nothing in the mouth.
 
-## Example practice: Poisoning (swallowed, inhaled or on the skin)
+## Example: Poisoning (swallowed, inhaled or on the skin)
 
 **Situation:** A child may have swallowed cleaning liquid; the container is nearby and still has its label.
 

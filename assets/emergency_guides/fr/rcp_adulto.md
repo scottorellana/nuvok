@@ -1,5 +1,5 @@
 ---
-title: RCP chez l’adulte — AHA 2025
+title: RCP chez l’adulte — protocole 2025
 keywords: [rcp, réanimation, arrêt cardiaque, ne respire pas, halète, inconscient, compressions, dea, défibrillateur]
 priority: 1
 ---

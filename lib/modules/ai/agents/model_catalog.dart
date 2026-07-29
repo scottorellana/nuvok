@@ -7,6 +7,28 @@
 // desktop (more RAM) than on phones, each with a chain of lighter fallbacks
 // down to what any device can run.
 
+
+/// Clasificación de licencias de modelos. Nuvok se VENDE, así que una
+/// licencia de investigación (no comercial) es un bloqueo, no un detalle.
+class ModelLicense {
+  ModelLicense._();
+
+  /// Licencias que prohíben el uso comercial. Nada de esto puede entrar.
+  static const _nonCommercial = {
+    'qwen-research', 'cc-by-nc-4.0', 'cc-by-nc-sa-4.0', 'non-commercial',
+    'research-only',
+  };
+
+  /// Permiten vender, PERO obligan a mostrar avisos o trasladar términos.
+  static const _withNotice = {'gemma', 'llama3.2', 'llama3.1', 'llama3'};
+
+  static bool allowsCommercial(String license) =>
+      !_nonCommercial.contains(license.trim().toLowerCase());
+
+  static bool requiresNotice(String license) =>
+      _withNotice.contains(license.trim().toLowerCase());
+}
+
 class ModelEntry {
   const ModelEntry({
     required this.id,
@@ -14,6 +36,7 @@ class ModelEntry {
     required this.url,
     required this.sizeBytes,
     required this.sha256,
+    required this.license,
     this.liteFallbackId,
   });
 
@@ -26,6 +49,10 @@ class ModelEntry {
   /// binaries are published — the download wiring passes null while it is the
   /// marker so verification stays off for dev/self-hosted builds.
   final String sha256;
+
+  /// Identificador de licencia (el de Hugging Face). Auditable por test:
+  /// ninguna entrada puede tener licencia de uso no comercial.
+  final String license;
 
   /// Next-smaller model to try when this one is not installed or does not fit
   /// RAM. Forms a chain (desktop-3b → 1.5b → 1b → 0.5b) that AgentRuntime
@@ -54,6 +81,7 @@ class ModelCatalog {
       sizeBytes: 5335289664,
       sha256:
           '3f72a20a06f626c78e6c475ae07a64c88b2663149c0f6197b56bf7cf1f37585c',
+      license: 'apache-2.0',
       liteFallbackId: 'general-e2b',
     ),
     // Phone tier: Gemma 4 E2B — diseñado por Google para dispositivos;
@@ -68,19 +96,12 @@ class ModelCatalog {
       sizeBytes: 3427877696,
       sha256:
           '6c950d754366dd8b372fd17a40497ba5f130a46d833b4c5bccc9f6bb6382ce1e',
-      liteFallbackId: 'general-3b',
-    ),
-    // Qwen 3B: sólido y más liviano que E2B; primer respaldo.
-    ModelEntry(
-      id: 'general-3b',
-      fileName: 'qwen2.5-3b-instruct-q4_k_m.gguf',
-      url: 'https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/'
-          'resolve/main/qwen2.5-3b-instruct-q4_k_m.gguf',
-      sizeBytes: 2104932768,
-      sha256:
-          '626b4a6678b86442240e33df819e00132d3ba7dddfe1cdc4fbb18e0a9615c62d',
+      license: 'apache-2.0',
       liteFallbackId: 'general-1.5b',
     ),
+    // NOTA LEGAL: aquí estaba Qwen 2.5 3B. Se retiró porque su licencia
+    // ("Qwen Research License") permite el uso SOLO NO COMERCIAL, y Nuvok se
+    // vende. No volver a añadirlo: el test model_licenses_test lo bloquea.
     // Phone tier: 1.5B is coherent and fits mid-range phones.
     ModelEntry(
       id: 'general-1.5b',
@@ -90,19 +111,13 @@ class ModelCatalog {
       sizeBytes: 1117320736,
       sha256:
           '6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e',
-      liteFallbackId: 'general-1b',
-    ),
-    // 1B fallback: verified coherent as a specialist; last resort before 0.5B.
-    ModelEntry(
-      id: 'general-1b',
-      fileName: 'google_gemma-3-1b-it-Q4_K_M.gguf',
-      url: 'https://huggingface.co/bartowski/google_gemma-3-1b-it-GGUF/'
-          'resolve/main/google_gemma-3-1b-it-Q4_K_M.gguf',
-      sizeBytes: 806058496,
-      sha256:
-          '12bf0fff8815d5f73a3c9b586bd8fee8e7b248c935de70dec367679873d0f29d',
+      license: 'apache-2.0',
       liteFallbackId: 'general-0.5b',
     ),
+    // NOTA LEGAL: aquí estaba Gemma 3 1B. Se retiró de la cadena AUTOMÁTICA
+    // porque los "Gemma Terms of Use" obligan a trasladar sus términos y su
+    // política de uso a cada usuario. Sigue disponible en Depósito, donde el
+    // usuario lo elige y ve su licencia.
     // 0.5B: only as an absolute last resort (incoherent as a specialist).
     // Mismo archivo que viaja empaquetado en la app (SHA idéntico al del
     // manifest de assets/bundled_library).
@@ -114,6 +129,7 @@ class ModelCatalog {
       sizeBytes: 491400032,
       sha256:
           '74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db',
+      license: 'apache-2.0',
     ),
   ];
 

@@ -50,7 +50,7 @@ priority: 3
 - Relentlessly growing pain with a rock-hard calf/forearm → surgical emergency: go immediately.
 - Pallor + sweat + dizziness → internal shock (guide "Shock").
 
-## Example practice: Fractures, sprains and splinting
+## Example: Fractures, sprains and splinting
 
 **Situation:** On a hike, someone falls, has severe ankle pain, and cannot bear weight.
 

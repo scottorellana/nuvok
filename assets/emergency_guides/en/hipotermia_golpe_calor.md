@@ -73,7 +73,7 @@ No snow needed: rain + wind + exhaustion, or a river, is enough.
 - Stops responding or breathing → CPR.
 - Vomits → always onto the side.
 
-## Example practice: Hypothermia and heat stroke
+## Example: Hypothermia and heat stroke
 
 **Situation:** Two neighbors return from a hike: one is shivering in wet clothes and another is very hot and confused.
 

@@ -1,5 +1,5 @@
 ---
-title: RCP en adultos — AHA 2025
+title: RCP en adultos — protocolo 2025
 keywords: [rcp, reanimacion, paro cardiaco, no respira, jadea, inconsciente, compresiones, dea, desfibrilador]
 priority: 1
 ---

@@ -95,7 +95,7 @@ category: supervivencia
 - Small dry sticks
 - Bones with marrow
 
-## Example practice: Shelter and Warmth
+## Example: Shelter and Warmth
 
 **Situation:** A storm catches the group near sunset and clothing is starting to get wet.
 

@@ -1,5 +1,5 @@
 ---
-title: Severe choking — AHA 2025
+title: Severe choking — 2025 protocol
 keywords: [choking, asphyxia, foreign body airway obstruction, back blows, abdominal thrusts, infant]
 priority: 1
 ---

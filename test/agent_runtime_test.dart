@@ -3,7 +3,7 @@ import 'package:nuvok/modules/ai/agents/agent_runtime.dart';
 import 'package:nuvok/modules/ai/agents/model_catalog.dart';
 
 void main() {
-  final big = ModelCatalog.byId('general-3b')!; // 1.93 GB
+  final big = ModelCatalog.byId('general-e2b')!; // 3.4 GB
   final mid = ModelCatalog.byId('general-1.5b')!; // 1.12 GB
   final small = ModelCatalog.byId('general-0.5b')!; // 492 MB
 

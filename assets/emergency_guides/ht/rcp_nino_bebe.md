@@ -1,5 +1,5 @@
 ---
-title: RCP kay timoun ak tibebe — AHA 2025
+title: RCP kay timoun ak tibebe — pwotokòl 2025
 keywords: [rcp, timoun, tibebe, bebe, arè kadyak, pa respire, neye, toufe, dea]
 priority: 1
 ---

@@ -1,5 +1,5 @@
 ---
-title: Toufe grav — AHA 2025
+title: Toufe grav — pwotokòl 2025
 keywords: [toufe, asfiksi, obstriksyon, chemen respiratwa, kou nan do, konpresyon nan vant, tibebe]
 priority: 1
 ---

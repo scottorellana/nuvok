@@ -59,7 +59,7 @@ priority: 3
 - Fast-spreading swelling, whole-body hives, wheezing → treat as anaphylaxis.
 - Fever, pus, growing pain days later → infection: see a doctor.
 
-## Example practice: Bites and stings (snake, dog, scorpion, bee)
+## Example: Bites and stings (snake, dog, scorpion, bee)
 
 **Situation:** On a farm, someone feels sudden pain after a bite or sting and is unsure what animal caused it.
 

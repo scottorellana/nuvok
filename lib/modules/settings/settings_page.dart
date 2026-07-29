@@ -2,6 +2,7 @@
 // Accessible from the nav rail or the welcome dialog.
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'credits_page.dart';
 
 import '../../core/bundled_library.dart';
 import '../../core/locale_service.dart';
@@ -238,6 +239,26 @@ class _AboutStatusCard extends StatelessWidget {
                   ? 'Comprobando mapas, biblioteca y modelo IA incluidos.'
                   : '${summary!.bundleLabel} • ${summary.sizeLabel}',
               style: const TextStyle(color: Color(0xFF8A9070)),
+            ),
+          ),
+          // Material propio: esta tarjeta vive dentro de un contenedor con
+          // fondo, y sin él el efecto de pulsación quedaría invisible.
+          Material(
+            type: MaterialType.transparency,
+            child: ListTile(
+              leading: const Icon(Icons.workspace_premium_outlined,
+                  color: Color(0xFFA8C277)),
+              title: Text(tr(context, 'creditsTitle'),
+                  style: const TextStyle(color: Color(0xFFE8F0D8))),
+              subtitle: Text(tr(context, 'creditsIntro'),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Color(0xFF8A9070))),
+              trailing:
+                  const Icon(Icons.chevron_right, color: Color(0xFF8A9070)),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                builder: (_) => const CreditsPage(),
+              )),
             ),
           ),
           if (!loading && loadedInfo != null)

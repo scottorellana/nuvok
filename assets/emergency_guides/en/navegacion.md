@@ -70,7 +70,7 @@ category: supervivencia
 - Format: DD°MM.mmm' (standard GPS)
 - Always carry paper with coordinates
 
-## Example practice: Land Navigation
+## Example: Land Navigation
 
 **Situation:** You leave the trail and the phone battery is low, but you have a paper map and compass.
 

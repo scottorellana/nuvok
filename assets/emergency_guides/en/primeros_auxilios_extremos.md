@@ -100,7 +100,7 @@ Signs: cold pale sweaty skin, fast pulse, thirst, confusion, weakness.
 
 Based on public AHA 2025 CPR/AED principles, STOP THE BLEED/ACS bleeding control, ATLS 2025 and PHTLS/NAEMT trauma assessment concepts, and IFRC/Red Cross first aid. It does not copy proprietary courses; it translates priorities into layperson-safe actions.
 
-## Example practice: Critical first aid: MARCH/XABCDE algorithm
+## Example: Critical first aid: MARCH/XABCDE algorithm
 
 **Situation:** In a remote area, someone has a serious injury and evacuation will take more than 30 minutes.
 

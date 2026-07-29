@@ -1,5 +1,5 @@
 ---
-title: Engasgo grave — AHA 2025
+title: Engasgo grave — protocolo 2025
 keywords: [engasgo, asfixia, obstrução, via aérea, golpes nas costas, compressões abdominais, lactente]
 priority: 1
 ---

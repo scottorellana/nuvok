@@ -1,5 +1,5 @@
 ---
-title: RCP en niños y lactantes — AHA 2025
+title: RCP en niños y lactantes — protocolo 2025
 keywords: [rcp, nino, lactante, bebe, paro cardiaco, no respira, ahogamiento, asfixia, dea]
 priority: 1
 ---

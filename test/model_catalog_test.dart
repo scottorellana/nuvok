@@ -24,11 +24,10 @@ void main() {
     expect(chain.map((m) => m.id).toList(), [
       'general-e4b',
       'general-e2b',
-      'general-3b',
       'general-1.5b',
-      'general-1b',
       'general-0.5b',
-    ]);
+    ], reason: 'la cadena es 100% Apache 2.0: se retiraron Qwen 3B (licencia '
+        'no comercial) y Gemma 1B (obliga a trasladar términos)');
     // Estrictamente decreciente en tamaño.
     for (var i = 1; i < chain.length; i++) {
       expect(chain[i].sizeBytes, lessThan(chain[i - 1].sizeBytes));

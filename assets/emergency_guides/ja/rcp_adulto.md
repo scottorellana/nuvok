@@ -1,5 +1,5 @@
 ---
-title: 成人のCPR — AHA 2025
+title: 成人のCPR — 2025 プロトコル
 keywords: [CPR, 蘇生, 心停止, 呼吸していない, あえぎ呼吸, 意識不明, 胸骨圧迫, DEA, 除細動器]
 priority: 1
 ---

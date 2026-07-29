@@ -49,6 +49,46 @@ class AuditAllTutorialsTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "exactly 1, 2, 3"):
             auditor.parse_audit_response(raw)
 
+    def test_cli_accepts_explicit_storyboard_snapshot(self):
+        args = auditor.build_parser().parse_args(
+            [
+                "rcp_adulto",
+                "--image-dir",
+                "/tmp/candidates",
+                "--ledger",
+                "/tmp/candidate-qa.json",
+                "--storyboards",
+                "/tmp/resolved-storyboards.json",
+            ]
+        )
+
+        self.assertEqual(args.storyboards, auditor.Path("/tmp/resolved-storyboards.json"))
+        self.assertEqual(args.image_dir, auditor.Path("/tmp/candidates"))
+        self.assertEqual(args.ledger, auditor.Path("/tmp/candidate-qa.json"))
+
+    def test_audit_metadata_binds_hash_and_rubric_version(self):
+        result = {
+            "status": "approved",
+            "panels": [
+                {"number": 1, "pass": True, "note": "ok"},
+                {"number": 2, "pass": True, "note": "ok"},
+                {"number": 3, "pass": True, "note": "ok"},
+            ],
+            "note": "ok",
+            "risks": [],
+        }
+
+        record = auditor.bind_audit_metadata(
+            result,
+            digest="abc123",
+            image=auditor.Path("/tmp/candidate.png"),
+        )
+
+        self.assertEqual(record["sha256"], "abc123")
+        self.assertEqual(record["rubric_version"], auditor.RUBRIC_VERSION)
+        self.assertEqual(record["image"], "/tmp/candidate.png")
+        self.assertIn("reviewed_at", record)
+
     def test_prompt_evaluates_visual_together_with_runtime_caption(self):
         prompt = auditor.prompt_for(
             "agua",

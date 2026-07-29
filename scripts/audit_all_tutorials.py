@@ -18,6 +18,7 @@ DEFAULT_IMAGE_DIR = ROOT / "assets/emergency_guides/tutorials"
 DEFAULT_LEDGER = ROOT / "scripts/guide_tutorial_qa.json"
 PYTHON = Path.home() / ".hermes/hermes-agent/venv/bin/python3"
 VALID_STATUSES = {"approved", "regenerate"}
+RUBRIC_VERSION = "nuvok-photorealistic-safety-v2"
 
 
 def parse_audit_response(raw: str) -> dict[str, object]:
@@ -99,6 +100,27 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def bind_audit_metadata(
+    result: dict[str, object],
+    *,
+    digest: str,
+    image: Path,
+) -> dict[str, object]:
+    record = dict(result)
+    record.update(
+        {
+            "sha256": digest,
+            "image": str(image.relative_to(ROOT))
+            if image.is_relative_to(ROOT)
+            else str(image),
+            "auditor": "gpt-5.5-codex-vision",
+            "rubric_version": RUBRIC_VERSION,
+            "reviewed_at": datetime.now(timezone.utc).isoformat(),
+        }
+    )
+    return record
+
+
 def write_ledger(path: Path, ledger: dict[str, object]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
@@ -126,18 +148,29 @@ def run_audit(image: Path, slug: str, spec: dict[str, object]) -> dict[str, obje
     raise RuntimeError(last_error or "audit failed without output")
 
 
-def main() -> int:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument("slugs", nargs="*", help="Optional exact tutorial slugs")
+    parser.add_argument(
+        "--storyboards",
+        type=Path,
+        default=STORYBOARDS,
+        help="Exact storyboard snapshot whose criteria must be audited",
+    )
     parser.add_argument("--image-dir", type=Path, default=DEFAULT_IMAGE_DIR)
     parser.add_argument("--ledger", type=Path, default=DEFAULT_LEDGER)
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--workers", type=int, default=1)
+    return parser
+
+
+def main() -> int:
+    parser = build_parser()
     args = parser.parse_args()
     if args.workers < 1 or args.workers > 3:
         parser.error("--workers must be between 1 and 3")
 
-    storyboards = json.loads(STORYBOARDS.read_text(encoding="utf-8"))
+    storyboards = json.loads(args.storyboards.read_text(encoding="utf-8"))
     selected = args.slugs or list(storyboards)
     unknown = sorted(set(selected) - set(storyboards))
     if unknown:
@@ -197,16 +230,7 @@ def main() -> int:
                 print(f"  ERROR {exc}", flush=True)
                 failures.append(slug)
                 continue
-            result.update(
-                {
-                    "sha256": digest,
-                    "image": str(image.relative_to(ROOT))
-                    if image.is_relative_to(ROOT)
-                    else str(image),
-                    "auditor": "gpt-5.5-codex-vision",
-                    "reviewed_at": datetime.now(timezone.utc).isoformat(),
-                }
-            )
+            result = bind_audit_metadata(result, digest=digest, image=image)
             ledger[slug] = result
             write_ledger(args.ledger, ledger)
             print(f"  {str(result['status']).upper()}: {result['note']}", flush=True)

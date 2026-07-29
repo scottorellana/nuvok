@@ -8,6 +8,7 @@ import hashlib
 import json
 from pathlib import Path
 import shutil
+import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CANDIDATE_DIR = ROOT / ".hermes/tutorial_candidates"
@@ -108,18 +109,58 @@ def promote(
 
     production_dir.mkdir(parents=True, exist_ok=True)
     for slug in slugs:
-        source = candidate_dir / f"{slug}.png"
         target = production_dir / f"{slug}.png"
-        temporary = target.with_suffix(target.suffix + ".tmp")
-        shutil.copyfile(source, temporary)
-        temporary.replace(target)
+        if target.is_symlink() or (target.exists() and not target.is_file()):
+            raise ValueError(
+                f"{slug}: production target must be a regular file or absent: {target}"
+            )
+    with tempfile.TemporaryDirectory(
+        prefix=".tutorial-promotion-", dir=production_dir
+    ) as transaction_name:
+        transaction_dir = Path(transaction_name)
+        staged: dict[str, Path] = {}
+        for slug in slugs:
+            source = candidate_dir / f"{slug}.png"
+            staged_image = transaction_dir / f"{slug}.png"
+            shutil.copyfile(source, staged_image)
+            staged_digest = sha256(staged_image)
+            expected_digest = approved[slug].get("sha256")
+            if staged_digest != expected_digest:
+                raise ValueError(
+                    f"{slug}: staged SHA-256 mismatch: "
+                    f"ledger={expected_digest!r} actual={staged_digest}"
+                )
+            staged[slug] = staged_image
 
-        entry = approved[slug]
-        entry["image"] = _display_path(target, root)
-        entry["promoted_at"] = datetime.now(timezone.utc).isoformat()
-        production_ledger[slug] = entry
+        next_ledger = dict(production_ledger)
+        promoted_at = datetime.now(timezone.utc).isoformat()
+        for slug in slugs:
+            target = production_dir / f"{slug}.png"
+            entry = approved[slug]
+            entry["image"] = _display_path(target, root)
+            entry["promoted_at"] = promoted_at
+            next_ledger[slug] = entry
 
-    _write_ledger(production_ledger_path, production_ledger)
+        backup_dir = transaction_dir / "backups"
+        backup_dir.mkdir()
+        applied: list[tuple[Path, Path, bool]] = []
+        try:
+            for slug in slugs:
+                target = production_dir / f"{slug}.png"
+                backup = backup_dir / f"{slug}.png"
+                had_original = target.is_file()
+                if had_original:
+                    target.replace(backup)
+                applied.append((target, backup, had_original))
+                staged[slug].replace(target)
+            _write_ledger(production_ledger_path, next_ledger)
+        except Exception:
+            for target, backup, had_original in reversed(applied):
+                if target.exists():
+                    target.unlink()
+                if had_original and backup.exists():
+                    backup.replace(target)
+            raise
     return list(slugs)
 
 

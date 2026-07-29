@@ -68,6 +68,23 @@ class CreditsPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // GPL v3 §5(d) obliga a que la app MUESTRE este aviso, no solo a que
+          // el repositorio lo tenga. Va primero porque habla de Nuvok mismo.
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(tr(context, 'creditsNuvokTitle'),
+                      style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 6),
+                  Text(tr(context, 'creditsNuvokBody')),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
           Card(
             child: Padding(
               padding: const EdgeInsets.all(16),

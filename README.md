@@ -89,7 +89,35 @@ Empaquetado: `./scripts/package_macos.sh` produce `dist/Nuvok.dmg`.
 
 ## Licencia
 
-Apache 2.0. Usa [llama.cpp](https://github.com/ggml-org/llama.cpp) (MIT),
-[zstd](https://github.com/facebook/zstd) (BSD), el catálogo público de
-[Kiwix](https://kiwix.org) y mapas de [Protomaps](https://protomaps.com)
-(ODbL/OpenStreetMap).
+Copyright © 2026 Scott Orellana.
+
+Nuvok es software libre bajo la **[GNU General Public License v3](LICENSE)**.
+Puedes usarlo, estudiar su código, modificarlo y redistribuirlo bajo esos
+mismos términos. Se entrega **sin ninguna garantía**.
+
+Que el código sea abierto es deliberado: una app que promete que nada sale de
+tu dispositivo debe poder demostrarlo. Cualquiera puede auditar el cifrado de
+la malla y verificar que la IA corre local. La GPL además asegura que las
+mejoras de la comunidad vuelvan a la comunidad.
+
+**Vender binarios es compatible con la GPL.** Nuvok se compra en nuvok.org;
+la licencia obliga a entregar el código fuente a quien reciba el binario, no
+a regalar el binario.
+
+Una consecuencia a tener presente: la GPL v3 es **incompatible con la App
+Store de Apple** (sus términos imponen restricciones de uso que la GPL
+prohíbe). Nuvok se distribuye directo desde el sitio, así que no aplica hoy.
+Si algún día quisieras entrar a la App Store, como único titular del
+copyright podrías publicar ahí bajo una licencia propia sin dejar de mantener
+este repositorio en GPL.
+
+Nuvok incorpora trabajo de terceros con sus propias licencias —
+[llama.cpp](https://github.com/ggml-org/llama.cpp) (MIT),
+[zstd](https://github.com/facebook/zstd) (BSD), modelos Apache 2.0, el
+catálogo de [Kiwix](https://kiwix.org) (CC BY-SA) y mapas de
+[Protomaps](https://protomaps.com)/OpenStreetMap (ODbL). Los avisos que esas
+licencias exigen están en [NOTICE.md](NOTICE.md) y dentro de la app, en
+Ajustes → Créditos y licencias.
+
+El contenido empaquetado (mapas, enciclopedia, modelos) **no es de Nuvok** y
+conserva su licencia original: la GPL cubre el código, no ese material.

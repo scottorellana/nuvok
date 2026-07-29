@@ -1,7 +1,13 @@
 # Avisos de terceros — Nuvok
 
 Nuvok incluye y utiliza trabajo de terceros. Este archivo recoge los avisos
-que sus licencias exigen. El código propio de Nuvok se rige por `LICENSE`.
+que sus licencias exigen. El código propio de Nuvok se rige por `LICENSE`
+(**GNU GPL v3**, Copyright © 2026 Scott Orellana).
+
+Todas las dependencias listadas abajo son MIT, BSD, Apache 2.0 o CC BY-SA:
+compatibles con la GPL v3, que es la condición para poder licenciar así el
+conjunto. No hay dependencias con licencia no comercial ni copyleft
+incompatible.
 
 **Importante:** el contenido empaquetado (mapas, enciclopedia, modelos de IA)
 NO es propiedad de Nuvok y conserva su licencia original. Redistribuirlo

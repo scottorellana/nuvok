@@ -1202,6 +1202,24 @@ class AppStrings {
       'pt': 'Licenças de software', 'fr': 'Licences logicielles',
       'zh': '软件许可', 'ja': 'ソフトウェアライセンス', 'ht': 'Lisans lojisyèl',
     },
+    // GPL v3 §5(d): la app debe mostrar el aviso legal en su interfaz —
+    // copyright, ausencia de garantía y derecho a redistribuir. No es
+    // decorativo: sin esto, distribuir Nuvok incumple su propia licencia.
+    'creditsNuvokTitle': {
+      'es': 'Nuvok es software libre', 'en': 'Nuvok is free software',
+      'pt': 'O Nuvok é software livre', 'fr': 'Nuvok est un logiciel libre',
+      'zh': 'Nuvok 是自由软件', 'ja': 'Nuvok はフリーソフトウェアです',
+      'ht': 'Nuvok se lojisyèl lib',
+    },
+    'creditsNuvokBody': {
+      'es': 'Copyright © 2026 Scott Orellana.\n\nNuvok se distribuye bajo la Licencia Pública General de GNU, versión 3. Puedes usarlo, estudiar su código, modificarlo y redistribuirlo bajo esos mismos términos.\n\nSe entrega SIN NINGUNA GARANTÍA, ni siquiera la garantía implícita de comerciabilidad o idoneidad para un fin determinado.\n\nCódigo fuente y texto completo de la licencia: github.com/scottorellana/nuvok',
+      'en': 'Copyright © 2026 Scott Orellana.\n\nNuvok is distributed under the GNU General Public License, version 3. You may use it, study its code, modify it and redistribute it under those same terms.\n\nIt comes with ABSOLUTELY NO WARRANTY, not even the implied warranty of merchantability or fitness for a particular purpose.\n\nSource code and full license text: github.com/scottorellana/nuvok',
+      'pt': 'Copyright © 2026 Scott Orellana.\n\nO Nuvok é distribuído sob a Licença Pública Geral GNU, versão 3. Você pode usá-lo, estudar seu código, modificá-lo e redistribuí-lo nos mesmos termos.\n\nÉ fornecido SEM NENHUMA GARANTIA, nem mesmo a garantia implícita de comercialização ou adequação a um fim específico.\n\nCódigo-fonte e texto completo da licença: github.com/scottorellana/nuvok',
+      'fr': "Copyright © 2026 Scott Orellana.\n\nNuvok est distribué sous la Licence publique générale GNU, version 3. Vous pouvez l'utiliser, étudier son code, le modifier et le redistribuer selon les mêmes termes.\n\nIl est fourni SANS AUCUNE GARANTIE, pas même la garantie implicite de qualité marchande ou d'adéquation à un usage particulier.\n\nCode source et texte complet de la licence : github.com/scottorellana/nuvok",
+      'zh': '版权所有 © 2026 Scott Orellana。\n\nNuvok 依据 GNU 通用公共许可证第 3 版发布。你可以使用、研究、修改并在相同条款下再分发本软件。\n\n本软件不提供任何担保，甚至不包括适销性或特定用途适用性的默示担保。\n\n源代码与许可证全文：github.com/scottorellana/nuvok',
+      'ja': 'Copyright © 2026 Scott Orellana.\n\nNuvok は GNU 一般公衆ライセンス第3版のもとで配布されています。同じ条件のもとで、使用・コードの調査・改変・再配布ができます。\n\n本ソフトウェアは一切の保証なしに提供されます。商品性や特定目的への適合性の黙示の保証もありません。\n\nソースコードとライセンス全文: github.com/scottorellana/nuvok',
+      'ht': 'Copyright © 2026 Scott Orellana.\n\nNuvok distribye anba Lisans Piblik Jeneral GNU, vèsyon 3. Ou ka sèvi avè l, etidye kòd li, modifye l epi redistribye l anba menm kondisyon yo.\n\nLi bay SAN OKENN GARANTI, menm pa garanti implisit pou komès oswa pou yon rezon patikilye.\n\nKòd sous ak tèks konplè lisans lan: github.com/scottorellana/nuvok',
+    },
     'mapAttribution': {
       'es': '© OpenStreetMap · ODbL',
       'en': '© OpenStreetMap · ODbL',

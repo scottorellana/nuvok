@@ -54,7 +54,7 @@ class EmergencyGuideMediaSpec {
   final String safetyNote;
 
   /// Bundled illustration for this guide, when one has been curated
-  /// (`assets/emergency_guides/images/<id>.png`). Null = animation only.
+  /// (`assets/emergency_guides/images/<id>.jpg`). Null = animation only.
   final String? imageAssetPath;
 
   /// Accessibility description of the illustration — a guide the user cannot
@@ -198,7 +198,7 @@ class EmergencyGuideMedia {
             'adentro, anclada con piedras.',
   };
 
-  /// Imágenes de paso adicionales por guía (convención `<id>_2.png`, `_3.png`).
+  /// Imágenes de paso adicionales por guía (convención `<id>_2.jpg`, `_3.jpg`).
   /// Solo se listan las que existen; el lector las pinta tras los pasos
   /// críticos con su alt de accesibilidad.
   static const Map<String, List<String>> _extraAlts = {
@@ -222,7 +222,7 @@ class EmergencyGuideMedia {
     if (alts == null) return const [];
     return [
       for (final (i, alt) in alts.indexed)
-        ('assets/emergency_guides/images/${id}_${i + 2}.png', alt),
+        ('assets/emergency_guides/images/${id}_${i + 2}.jpg', alt),
     ];
   }
 
@@ -238,7 +238,7 @@ class EmergencyGuideMedia {
       scenePrompt: base.scenePrompt,
       videoPrompt: base.videoPrompt,
       safetyNote: base.safetyNote,
-      imageAssetPath: 'assets/emergency_guides/images/$id.png',
+      imageAssetPath: 'assets/emergency_guides/images/$id.jpg',
       imageAltText: alt,
     );
   }

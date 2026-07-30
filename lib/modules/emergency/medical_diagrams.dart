@@ -375,7 +375,7 @@ class _GuideVisualIllustrationState extends State<GuideVisualIllustration>
 
   void _loadImage() {
     final asset = AssetImage(
-      'assets/emergency_guides/images/${widget.guideId}.png',
+      'assets/emergency_guides/images/${widget.guideId}.jpg',
     );
     _imageStream = asset.resolve(const ImageConfiguration());
     _imageStream!.addListener(
@@ -403,7 +403,7 @@ class _GuideVisualIllustrationState extends State<GuideVisualIllustration>
       return ClipRRect(
         borderRadius: BorderRadius.circular(18),
         child: Image.asset(
-          'assets/emergency_guides/images/${widget.guideId}.png',
+          'assets/emergency_guides/images/${widget.guideId}.jpg',
           width: double.infinity,
           height: 200,
           fit: BoxFit.cover,

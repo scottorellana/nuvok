@@ -63,7 +63,7 @@ class EmergencyGuideTutorials {
   static const Map<String, EmergencyGuideTutorial> _tutorials = {
     "desierto_agua": EmergencyGuideTutorial(
       id: "desierto_agua",
-      assetPath: "assets/emergency_guides/tutorials/desierto_agua.png",
+      assetPath: "assets/emergency_guides/tutorials/desierto_agua.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -106,7 +106,7 @@ class EmergencyGuideTutorials {
     ),
     "desierto_calor_refugio": EmergencyGuideTutorial(
       id: "desierto_calor_refugio",
-      assetPath: "assets/emergency_guides/tutorials/desierto_calor_refugio.png",
+      assetPath: "assets/emergency_guides/tutorials/desierto_calor_refugio.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -149,7 +149,7 @@ class EmergencyGuideTutorials {
     ),
     "desierto_peligros": EmergencyGuideTutorial(
       id: "desierto_peligros",
-      assetPath: "assets/emergency_guides/tutorials/desierto_peligros.png",
+      assetPath: "assets/emergency_guides/tutorials/desierto_peligros.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -191,7 +191,7 @@ class EmergencyGuideTutorials {
     ),
     "mar_flotacion": EmergencyGuideTutorial(
       id: "mar_flotacion",
-      assetPath: "assets/emergency_guides/tutorials/mar_flotacion.png",
+      assetPath: "assets/emergency_guides/tutorials/mar_flotacion.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -235,7 +235,7 @@ class EmergencyGuideTutorials {
     ),
     "mar_agua": EmergencyGuideTutorial(
       id: "mar_agua",
-      assetPath: "assets/emergency_guides/tutorials/mar_agua.png",
+      assetPath: "assets/emergency_guides/tutorials/mar_agua.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -277,7 +277,7 @@ class EmergencyGuideTutorials {
     ),
     "mar_peligros": EmergencyGuideTutorial(
       id: "mar_peligros",
-      assetPath: "assets/emergency_guides/tutorials/mar_peligros.png",
+      assetPath: "assets/emergency_guides/tutorials/mar_peligros.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -319,7 +319,7 @@ class EmergencyGuideTutorials {
     ),
     "montana_frio_refugio": EmergencyGuideTutorial(
       id: "montana_frio_refugio",
-      assetPath: "assets/emergency_guides/tutorials/montana_frio_refugio.png",
+      assetPath: "assets/emergency_guides/tutorials/montana_frio_refugio.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -361,7 +361,7 @@ class EmergencyGuideTutorials {
     ),
     "montana_descenso": EmergencyGuideTutorial(
       id: "montana_descenso",
-      assetPath: "assets/emergency_guides/tutorials/montana_descenso.png",
+      assetPath: "assets/emergency_guides/tutorials/montana_descenso.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -403,7 +403,7 @@ class EmergencyGuideTutorials {
     ),
     "montana_peligros": EmergencyGuideTutorial(
       id: "montana_peligros",
-      assetPath: "assets/emergency_guides/tutorials/montana_peligros.png",
+      assetPath: "assets/emergency_guides/tutorials/montana_peligros.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -445,7 +445,7 @@ class EmergencyGuideTutorials {
     ),
     "rio_agua": EmergencyGuideTutorial(
       id: "rio_agua",
-      assetPath: "assets/emergency_guides/tutorials/rio_agua.png",
+      assetPath: "assets/emergency_guides/tutorials/rio_agua.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -488,7 +488,7 @@ class EmergencyGuideTutorials {
     ),
     "rio_crecidas": EmergencyGuideTutorial(
       id: "rio_crecidas",
-      assetPath: "assets/emergency_guides/tutorials/rio_crecidas.png",
+      assetPath: "assets/emergency_guides/tutorials/rio_crecidas.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -530,7 +530,7 @@ class EmergencyGuideTutorials {
     ),
     "rio_viajar": EmergencyGuideTutorial(
       id: "rio_viajar",
-      assetPath: "assets/emergency_guides/tutorials/rio_viajar.png",
+      assetPath: "assets/emergency_guides/tutorials/rio_viajar.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -572,7 +572,7 @@ class EmergencyGuideTutorials {
     ),
     "ciudad_derrumbes": EmergencyGuideTutorial(
       id: "ciudad_derrumbes",
-      assetPath: "assets/emergency_guides/tutorials/ciudad_derrumbes.png",
+      assetPath: "assets/emergency_guides/tutorials/ciudad_derrumbes.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -614,7 +614,7 @@ class EmergencyGuideTutorials {
     ),
     "ciudad_agua_recursos": EmergencyGuideTutorial(
       id: "ciudad_agua_recursos",
-      assetPath: "assets/emergency_guides/tutorials/ciudad_agua_recursos.png",
+      assetPath: "assets/emergency_guides/tutorials/ciudad_agua_recursos.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -656,7 +656,7 @@ class EmergencyGuideTutorials {
     ),
     "ciudad_peligros": EmergencyGuideTutorial(
       id: "ciudad_peligros",
-      assetPath: "assets/emergency_guides/tutorials/ciudad_peligros.png",
+      assetPath: "assets/emergency_guides/tutorials/ciudad_peligros.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -698,7 +698,7 @@ class EmergencyGuideTutorials {
     ),
     "pantano_moverse": EmergencyGuideTutorial(
       id: "pantano_moverse",
-      assetPath: "assets/emergency_guides/tutorials/pantano_moverse.png",
+      assetPath: "assets/emergency_guides/tutorials/pantano_moverse.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -741,7 +741,7 @@ class EmergencyGuideTutorials {
     ),
     "pantano_agua_insectos": EmergencyGuideTutorial(
       id: "pantano_agua_insectos",
-      assetPath: "assets/emergency_guides/tutorials/pantano_agua_insectos.png",
+      assetPath: "assets/emergency_guides/tutorials/pantano_agua_insectos.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -783,7 +783,7 @@ class EmergencyGuideTutorials {
     ),
     "pantano_peligros": EmergencyGuideTutorial(
       id: "pantano_peligros",
-      assetPath: "assets/emergency_guides/tutorials/pantano_peligros.png",
+      assetPath: "assets/emergency_guides/tutorials/pantano_peligros.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -825,7 +825,7 @@ class EmergencyGuideTutorials {
     ),
     "artico_frio_refugio": EmergencyGuideTutorial(
       id: "artico_frio_refugio",
-      assetPath: "assets/emergency_guides/tutorials/artico_frio_refugio.png",
+      assetPath: "assets/emergency_guides/tutorials/artico_frio_refugio.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -867,7 +867,7 @@ class EmergencyGuideTutorials {
     ),
     "artico_agua_comida": EmergencyGuideTutorial(
       id: "artico_agua_comida",
-      assetPath: "assets/emergency_guides/tutorials/artico_agua_comida.png",
+      assetPath: "assets/emergency_guides/tutorials/artico_agua_comida.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -909,7 +909,7 @@ class EmergencyGuideTutorials {
     ),
     "artico_peligros": EmergencyGuideTutorial(
       id: "artico_peligros",
-      assetPath: "assets/emergency_guides/tutorials/artico_peligros.png",
+      assetPath: "assets/emergency_guides/tutorials/artico_peligros.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -951,7 +951,7 @@ class EmergencyGuideTutorials {
     ),
     "incendio_forestal": EmergencyGuideTutorial(
       id: "incendio_forestal",
-      assetPath: "assets/emergency_guides/tutorials/incendio_forestal.png",
+      assetPath: "assets/emergency_guides/tutorials/incendio_forestal.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -993,7 +993,7 @@ class EmergencyGuideTutorials {
     ),
     "tornado": EmergencyGuideTutorial(
       id: "tornado",
-      assetPath: "assets/emergency_guides/tutorials/tornado.png",
+      assetPath: "assets/emergency_guides/tutorials/tornado.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1035,7 +1035,7 @@ class EmergencyGuideTutorials {
     ),
     "tsunami": EmergencyGuideTutorial(
       id: "tsunami",
-      assetPath: "assets/emergency_guides/tutorials/tsunami.png",
+      assetPath: "assets/emergency_guides/tutorials/tsunami.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1077,7 +1077,7 @@ class EmergencyGuideTutorials {
     ),
     "tormenta_invernal": EmergencyGuideTutorial(
       id: "tormenta_invernal",
-      assetPath: "assets/emergency_guides/tutorials/tormenta_invernal.png",
+      assetPath: "assets/emergency_guides/tutorials/tormenta_invernal.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1119,7 +1119,7 @@ class EmergencyGuideTutorials {
     ),
     "sequia": EmergencyGuideTutorial(
       id: "sequia",
-      assetPath: "assets/emergency_guides/tutorials/sequia.png",
+      assetPath: "assets/emergency_guides/tutorials/sequia.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1161,7 +1161,7 @@ class EmergencyGuideTutorials {
     ),
     "recon_primeras_72h": EmergencyGuideTutorial(
       id: "recon_primeras_72h",
-      assetPath: "assets/emergency_guides/tutorials/recon_primeras_72h.png",
+      assetPath: "assets/emergency_guides/tutorials/recon_primeras_72h.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1203,7 +1203,7 @@ class EmergencyGuideTutorials {
     ),
     "recon_agua_comunitaria": EmergencyGuideTutorial(
       id: "recon_agua_comunitaria",
-      assetPath: "assets/emergency_guides/tutorials/recon_agua_comunitaria.png",
+      assetPath: "assets/emergency_guides/tutorials/recon_agua_comunitaria.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1246,7 +1246,7 @@ class EmergencyGuideTutorials {
     "recon_letrinas_saneamiento": EmergencyGuideTutorial(
       id: "recon_letrinas_saneamiento",
       assetPath:
-          "assets/emergency_guides/tutorials/recon_letrinas_saneamiento.png",
+          "assets/emergency_guides/tutorials/recon_letrinas_saneamiento.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1289,7 +1289,7 @@ class EmergencyGuideTutorials {
     "recon_huerto_emergencia": EmergencyGuideTutorial(
       id: "recon_huerto_emergencia",
       assetPath:
-          "assets/emergency_guides/tutorials/recon_huerto_emergencia.png",
+          "assets/emergency_guides/tutorials/recon_huerto_emergencia.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1332,7 +1332,7 @@ class EmergencyGuideTutorials {
     ),
     "recon_energia_solar": EmergencyGuideTutorial(
       id: "recon_energia_solar",
-      assetPath: "assets/emergency_guides/tutorials/recon_energia_solar.png",
+      assetPath: "assets/emergency_guides/tutorials/recon_energia_solar.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1375,7 +1375,7 @@ class EmergencyGuideTutorials {
     "recon_conservar_alimentos": EmergencyGuideTutorial(
       id: "recon_conservar_alimentos",
       assetPath:
-          "assets/emergency_guides/tutorials/recon_conservar_alimentos.png",
+          "assets/emergency_guides/tutorials/recon_conservar_alimentos.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1417,7 +1417,7 @@ class EmergencyGuideTutorials {
     ),
     "recon_organizacion": EmergencyGuideTutorial(
       id: "recon_organizacion",
-      assetPath: "assets/emergency_guides/tutorials/recon_organizacion.png",
+      assetPath: "assets/emergency_guides/tutorials/recon_organizacion.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1459,7 +1459,7 @@ class EmergencyGuideTutorials {
     ),
     "abrigo_refugio": EmergencyGuideTutorial(
       id: "abrigo_refugio",
-      assetPath: "assets/emergency_guides/tutorials/abrigo_refugio.png",
+      assetPath: "assets/emergency_guides/tutorials/abrigo_refugio.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1501,7 +1501,7 @@ class EmergencyGuideTutorials {
     ),
     "agua_survival": EmergencyGuideTutorial(
       id: "agua_survival",
-      assetPath: "assets/emergency_guides/tutorials/agua_survival.png",
+      assetPath: "assets/emergency_guides/tutorials/agua_survival.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1544,7 +1544,7 @@ class EmergencyGuideTutorials {
     "alimentacion_supervivencia": EmergencyGuideTutorial(
       id: "alimentacion_supervivencia",
       assetPath:
-          "assets/emergency_guides/tutorials/alimentacion_supervivencia.png",
+          "assets/emergency_guides/tutorials/alimentacion_supervivencia.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1586,7 +1586,7 @@ class EmergencyGuideTutorials {
     ),
     "atragantamiento": EmergencyGuideTutorial(
       id: "atragantamiento",
-      assetPath: "assets/emergency_guides/tutorials/atragantamiento.png",
+      assetPath: "assets/emergency_guides/tutorials/atragantamiento.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1632,7 +1632,7 @@ class EmergencyGuideTutorials {
     ),
     "balsa_improvisada": EmergencyGuideTutorial(
       id: "balsa_improvisada",
-      assetPath: "assets/emergency_guides/tutorials/balsa_improvisada.png",
+      assetPath: "assets/emergency_guides/tutorials/balsa_improvisada.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1676,7 +1676,7 @@ class EmergencyGuideTutorials {
     ),
     "bosque_agua": EmergencyGuideTutorial(
       id: "bosque_agua",
-      assetPath: "assets/emergency_guides/tutorials/bosque_agua.png",
+      assetPath: "assets/emergency_guides/tutorials/bosque_agua.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1721,7 +1721,7 @@ class EmergencyGuideTutorials {
     ),
     "bosque_orientacion": EmergencyGuideTutorial(
       id: "bosque_orientacion",
-      assetPath: "assets/emergency_guides/tutorials/bosque_orientacion.png",
+      assetPath: "assets/emergency_guides/tutorials/bosque_orientacion.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1765,7 +1765,7 @@ class EmergencyGuideTutorials {
     ),
     "bosque_peligros": EmergencyGuideTutorial(
       id: "bosque_peligros",
-      assetPath: "assets/emergency_guides/tutorials/bosque_peligros.png",
+      assetPath: "assets/emergency_guides/tutorials/bosque_peligros.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1807,7 +1807,7 @@ class EmergencyGuideTutorials {
     ),
     "botiquin": EmergencyGuideTutorial(
       id: "botiquin",
-      assetPath: "assets/emergency_guides/tutorials/botiquin.png",
+      assetPath: "assets/emergency_guides/tutorials/botiquin.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1850,7 +1850,7 @@ class EmergencyGuideTutorials {
     ),
     "convulsiones": EmergencyGuideTutorial(
       id: "convulsiones",
-      assetPath: "assets/emergency_guides/tutorials/convulsiones.png",
+      assetPath: "assets/emergency_guides/tutorials/convulsiones.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1894,7 +1894,7 @@ class EmergencyGuideTutorials {
     ),
     "cruce_rios": EmergencyGuideTutorial(
       id: "cruce_rios",
-      assetPath: "assets/emergency_guides/tutorials/cruce_rios.png",
+      assetPath: "assets/emergency_guides/tutorials/cruce_rios.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1938,7 +1938,7 @@ class EmergencyGuideTutorials {
     "fracturas_inmovilizacion": EmergencyGuideTutorial(
       id: "fracturas_inmovilizacion",
       assetPath:
-          "assets/emergency_guides/tutorials/fracturas_inmovilizacion.png",
+          "assets/emergency_guides/tutorials/fracturas_inmovilizacion.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -1980,7 +1980,7 @@ class EmergencyGuideTutorials {
     ),
     "fuego_supervivencia": EmergencyGuideTutorial(
       id: "fuego_supervivencia",
-      assetPath: "assets/emergency_guides/tutorials/fuego_supervivencia.png",
+      assetPath: "assets/emergency_guides/tutorials/fuego_supervivencia.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2022,7 +2022,7 @@ class EmergencyGuideTutorials {
     ),
     "hemorragia_severa": EmergencyGuideTutorial(
       id: "hemorragia_severa",
-      assetPath: "assets/emergency_guides/tutorials/hemorragia_severa.png",
+      assetPath: "assets/emergency_guides/tutorials/hemorragia_severa.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2067,7 +2067,7 @@ class EmergencyGuideTutorials {
     ),
     "hipotermia_golpe_calor": EmergencyGuideTutorial(
       id: "hipotermia_golpe_calor",
-      assetPath: "assets/emergency_guides/tutorials/hipotermia_golpe_calor.png",
+      assetPath: "assets/emergency_guides/tutorials/hipotermia_golpe_calor.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2111,7 +2111,7 @@ class EmergencyGuideTutorials {
     ),
     "huracan": EmergencyGuideTutorial(
       id: "huracan",
-      assetPath: "assets/emergency_guides/tutorials/huracan.png",
+      assetPath: "assets/emergency_guides/tutorials/huracan.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2154,7 +2154,7 @@ class EmergencyGuideTutorials {
     ),
     "infarto_acv": EmergencyGuideTutorial(
       id: "infarto_acv",
-      assetPath: "assets/emergency_guides/tutorials/infarto_acv.png",
+      assetPath: "assets/emergency_guides/tutorials/infarto_acv.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2196,7 +2196,7 @@ class EmergencyGuideTutorials {
     ),
     "intoxicaciones": EmergencyGuideTutorial(
       id: "intoxicaciones",
-      assetPath: "assets/emergency_guides/tutorials/intoxicaciones.png",
+      assetPath: "assets/emergency_guides/tutorials/intoxicaciones.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2240,7 +2240,7 @@ class EmergencyGuideTutorials {
     ),
     "inundacion": EmergencyGuideTutorial(
       id: "inundacion",
-      assetPath: "assets/emergency_guides/tutorials/inundacion.png",
+      assetPath: "assets/emergency_guides/tutorials/inundacion.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2283,7 +2283,7 @@ class EmergencyGuideTutorials {
     ),
     "mordeduras_picaduras": EmergencyGuideTutorial(
       id: "mordeduras_picaduras",
-      assetPath: "assets/emergency_guides/tutorials/mordeduras_picaduras.png",
+      assetPath: "assets/emergency_guides/tutorials/mordeduras_picaduras.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2325,7 +2325,7 @@ class EmergencyGuideTutorials {
     ),
     "navegacion": EmergencyGuideTutorial(
       id: "navegacion",
-      assetPath: "assets/emergency_guides/tutorials/navegacion.png",
+      assetPath: "assets/emergency_guides/tutorials/navegacion.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2367,7 +2367,7 @@ class EmergencyGuideTutorials {
     ),
     "nudos_supervivencia": EmergencyGuideTutorial(
       id: "nudos_supervivencia",
-      assetPath: "assets/emergency_guides/tutorials/nudos_supervivencia.png",
+      assetPath: "assets/emergency_guides/tutorials/nudos_supervivencia.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2410,7 +2410,7 @@ class EmergencyGuideTutorials {
     ),
     "parto_emergencia": EmergencyGuideTutorial(
       id: "parto_emergencia",
-      assetPath: "assets/emergency_guides/tutorials/parto_emergencia.png",
+      assetPath: "assets/emergency_guides/tutorials/parto_emergencia.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2453,7 +2453,7 @@ class EmergencyGuideTutorials {
     "pesca_trampas_supervivencia": EmergencyGuideTutorial(
       id: "pesca_trampas_supervivencia",
       assetPath:
-          "assets/emergency_guides/tutorials/pesca_trampas_supervivencia.png",
+          "assets/emergency_guides/tutorials/pesca_trampas_supervivencia.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2496,7 +2496,7 @@ class EmergencyGuideTutorials {
     "primeros_auxilios_extremos": EmergencyGuideTutorial(
       id: "primeros_auxilios_extremos",
       assetPath:
-          "assets/emergency_guides/tutorials/primeros_auxilios_extremos.png",
+          "assets/emergency_guides/tutorials/primeros_auxilios_extremos.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2538,7 +2538,7 @@ class EmergencyGuideTutorials {
     ),
     "quemaduras": EmergencyGuideTutorial(
       id: "quemaduras",
-      assetPath: "assets/emergency_guides/tutorials/quemaduras.png",
+      assetPath: "assets/emergency_guides/tutorials/quemaduras.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2580,7 +2580,7 @@ class EmergencyGuideTutorials {
     ),
     "rcp_adulto": EmergencyGuideTutorial(
       id: "rcp_adulto",
-      assetPath: "assets/emergency_guides/tutorials/rcp_adulto.png",
+      assetPath: "assets/emergency_guides/tutorials/rcp_adulto.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2622,7 +2622,7 @@ class EmergencyGuideTutorials {
     ),
     "rcp_nino_bebe": EmergencyGuideTutorial(
       id: "rcp_nino_bebe",
-      assetPath: "assets/emergency_guides/tutorials/rcp_nino_bebe.png",
+      assetPath: "assets/emergency_guides/tutorials/rcp_nino_bebe.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2665,7 +2665,7 @@ class EmergencyGuideTutorials {
     ),
     "refugio_naturaleza": EmergencyGuideTutorial(
       id: "refugio_naturaleza",
-      assetPath: "assets/emergency_guides/tutorials/refugio_naturaleza.png",
+      assetPath: "assets/emergency_guides/tutorials/refugio_naturaleza.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2707,7 +2707,7 @@ class EmergencyGuideTutorials {
     ),
     "senas_rescate": EmergencyGuideTutorial(
       id: "senas_rescate",
-      assetPath: "assets/emergency_guides/tutorials/senas_rescate.png",
+      assetPath: "assets/emergency_guides/tutorials/senas_rescate.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2749,7 +2749,7 @@ class EmergencyGuideTutorials {
     ),
     "shock": EmergencyGuideTutorial(
       id: "shock",
-      assetPath: "assets/emergency_guides/tutorials/shock.png",
+      assetPath: "assets/emergency_guides/tutorials/shock.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2794,7 +2794,7 @@ class EmergencyGuideTutorials {
     ),
     "terremoto": EmergencyGuideTutorial(
       id: "terremoto",
-      assetPath: "assets/emergency_guides/tutorials/terremoto.png",
+      assetPath: "assets/emergency_guides/tutorials/terremoto.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2836,7 +2836,7 @@ class EmergencyGuideTutorials {
     ),
     "trauma_cabeza_columna": EmergencyGuideTutorial(
       id: "trauma_cabeza_columna",
-      assetPath: "assets/emergency_guides/tutorials/trauma_cabeza_columna.png",
+      assetPath: "assets/emergency_guides/tutorials/trauma_cabeza_columna.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,
@@ -2879,7 +2879,7 @@ class EmergencyGuideTutorials {
     ),
     "triaje_multivictima": EmergencyGuideTutorial(
       id: "triaje_multivictima",
-      assetPath: "assets/emergency_guides/tutorials/triaje_multivictima.png",
+      assetPath: "assets/emergency_guides/tutorials/triaje_multivictima.jpg",
       steps: [
         EmergencyGuideTutorialStep(
           number: 1,

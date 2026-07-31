@@ -22,14 +22,7 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: flutter analyze lib
-      # Si algo falla, los nombres de los tests salen como anotaciones del
-      # check (visibles sin descargar logs): la API pública solo muestra
-      # anotaciones, y "7 failed" sin nombres no se puede diagnosticar.
+      # --reporter github: cada test fallido sale como anotación del check,
+      # visible desde la API pública (los logs crudos exigen autenticación).
       - name: Run flutter test
-        shell: bash
-        run: |
-          set -o pipefail
-          flutter test 2>&1 | tee test-output.log || {
-            grep -E '\[E\]' test-output.log | sed 's/^/::error::/' | head -40
-            exit 1
-          }
+        run: flutter test --reporter github

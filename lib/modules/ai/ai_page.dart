@@ -508,6 +508,14 @@ class _AgentChatState extends State<_AgentChat> {
           sources =
               await EmergencyRetriever.retrieve(text, lang: lang, mode: mode);
         } catch (_) {}
+        // Compuerta de relevancia: los retrievers devuelven "lo menos malo"
+        // para cualquier texto. Si las fuentes no tocan la pregunta (pediste
+        // código, una carta, matemáticas), el especialista responde con su
+        // conocimiento pleno en vez de recibir guías ajenas con reglas de
+        // citado que degradan la respuesta.
+        if (!LibraryRetriever.sourcesLookRelevant(text, sources)) {
+          sources = const [];
+        }
         if (sources.isNotEmpty) {
           // La persona (systemPrompt) se conserva; las fuentes se SUMAN.
           systemPrompt = composeAgentPrompt(
@@ -521,6 +529,9 @@ class _AgentChatState extends State<_AgentChat> {
           try {
             sources = await LibraryRetriever.retrieve(text);
           } catch (_) {}
+          if (!LibraryRetriever.sourcesLookRelevant(text, sources)) {
+            sources = const [];
+          }
           if (sources.isNotEmpty) {
             systemPrompt = composeAgentPrompt(
               systemPrompt,

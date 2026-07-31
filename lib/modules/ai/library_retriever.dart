@@ -201,9 +201,46 @@ class LibraryRetriever {
   static String languageReminder(String replyLang) =>
       _replyReminders[replyLang] ?? _replyReminders['es']!;
 
+  /// ¿Las fuentes recuperadas tienen que ver con la pregunta? Los retrievers
+  /// devuelven "lo menos malo" para CUALQUIER texto: pedirle código Python al
+  /// asistente traía guías de hemorragias con reglas de citado, degradando la
+  /// respuesta y quemando contexto. Esta compuerta decide si el bloque de
+  /// fuentes se adjunta o si la IA responde con su conocimiento pleno.
+  static bool sourcesLookRelevant(String query, List<RetrievedSource> sources) {
+    if (sources.isEmpty) return false;
+    final queryWords = _contentWords(query);
+    if (queryWords.isEmpty) return false;
+    // Con pocas palabras de contenido basta 1 coincidencia; con más, 2.
+    final needed = queryWords.length <= 2 ? 1 : 2;
+    for (final s in sources) {
+      final sourceWords = _contentWords('${s.title} ${s.text}');
+      final overlap = queryWords.where(sourceWords.contains).length;
+      if (overlap >= needed) return true;
+    }
+    return false;
+  }
+
+  /// Palabras significativas normalizadas (minúsculas, sin acentos, sin
+  /// stopwords, largo ≥4) — el mismo espíritu del buscador por síntoma.
+  static Set<String> _contentWords(String text) {
+    const accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ü': 'u', 'ñ': 'n'};
+    var t = text.toLowerCase();
+    accents.forEach((k, v) => t = t.replaceAll(k, v));
+    return t
+        .split(RegExp(r'[^a-z0-9]+'))
+        .where((w) => w.length >= 4 && !_stop.contains(w))
+        .toSet();
+  }
+
   /// Bloque de fuentes para APPEND al prompt de persona del especialista —
-  /// NO reemplaza la persona (eso volvía genéricos a Vera/Bruno/Sabio). Da las
-  /// fuentes + la regla de citar y no inventar cifras + el pin de idioma.
+  /// NO reemplaza la persona (eso volvía genéricos a Vera/Bruno/Sabio).
+  ///
+  /// Equilibrio deliberado: las cifras de emergencia (tiempos, dosis,
+  /// cantidades) son sagradas y salen EXACTAS de las fuentes con su cita;
+  /// pero la IA conserva TODO su conocimiento general — si la pregunta va más
+  /// allá del corpus, responde igual y distingue qué no viene de la
+  /// biblioteca. El candado anterior ("responde SOLO con las fuentes")
+  /// anulaba las capacidades del modelo.
   /// [replyLang] fija el idioma: las fuentes suelen venir en inglés y sin
   /// anclaje un modelo chico deriva al idioma de la fuente.
   static String buildSourcesBlock(List<RetrievedSource> sources,
@@ -211,11 +248,13 @@ class LibraryRetriever {
     final langName = langNames[replyLang] ?? 'español';
     final buffer = StringBuffer()
       ..writeln(
-          'Apóyate en estas FUENTES de la biblioteca offline y cita cada dato '
-          'con su número entre corchetes, por ejemplo [1]. NUNCA cambies ni '
-          'inventes cifras (tiempos, dosis, cantidades): usa EXACTAMENTE las '
-          'de las fuentes — un número equivocado puede ser peligroso. Si algo '
-          'no está en las fuentes, dilo y no inventes. Tradúcelas si están en '
+          'Tienes FUENTES de la biblioteca offline para esta pregunta. Cita '
+          'cada dato que tomes de ellas con su número entre corchetes, por '
+          'ejemplo [1]. NUNCA cambies cifras (tiempos, dosis, cantidades): '
+          'usa EXACTAMENTE las de las fuentes — un número equivocado puede '
+          'ser peligroso. Si la pregunta va más allá de las fuentes, '
+          'respóndela igual con tu conocimiento general y deja claro qué '
+          'parte no viene de la biblioteca. Traduce las fuentes si están en '
           'otro idioma y responde SIEMPRE en $langName.\n')
       ..writeln('=== FUENTES ===');
     for (var i = 0; i < sources.length; i++) {
@@ -239,10 +278,14 @@ class LibraryRetriever {
   static String buildGroundedSystemPrompt(List<RetrievedSource> sources,
       {String replyLang = 'es'}) {
     final langName = langNames[replyLang] ?? 'español';
-    return 'Eres el asistente de Nuvok. Responde SOLO con base en las FUENTES '
-        'de la biblioteca offline. Si las fuentes no contienen la respuesta, '
-        'dilo claramente y no inventes. Para temas médicos o de emergencia, '
-        'recuerda buscar ayuda profesional. Responde SIEMPRE en $langName.\n\n'
+    return 'Eres el asistente de Nuvok: una IA completa que corre dentro del '
+        'dispositivo, sin internet. Puedes razonar, explicar, escribir, '
+        'programar, traducir y calcular con todo tu conocimiento. Para '
+        'emergencias tienes además FUENTES de la biblioteca offline: úsalas '
+        'con citas [1] y cifras exactas cuando respondan a la pregunta; '
+        'cuando no, responde con tu conocimiento general y dilo. En temas '
+        'médicos recuerda buscar ayuda profesional cuando sea posible. '
+        'Responde SIEMPRE en $langName.\n\n'
         '${buildSourcesBlock(sources, replyLang: replyLang)}';
   }
 }

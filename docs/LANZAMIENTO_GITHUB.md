@@ -20,11 +20,16 @@ los que solo el dueño de la cuenta puede ejecutar (yo no tengo sesión de
    en Créditos.)
 2. **Hacerlo público**: Settings → General → Danger Zone → Change visibility
    → Make public. Una vez público, se clona e indexa: no hay vuelta real.
-3. **Descripción y topics**: "Conocimiento offline que salva vidas — guías de
-   emergencia, IA local, mapas y malla Bluetooth sin internet. GPL v3."
-   Topics: `offline-first`, `emergency`, `mesh-network`, `flutter`,
-   `llama-cpp`, `first-aid`, `bluetooth`, `open-source`.
-4. **Discussions**: Settings → Features → activar.
+3. **Descripción** (inglés — audiencia global; 152 chars, verificada):
+   "Offline emergency app with 100% on-device AI (llama.cpp), Bluetooth/Wi-Fi
+   mesh SOS & chat, offline maps and Wikipedia. No internet, no servers.
+   GPL-3.0." · **Homepage**: https://nuvok.org · **Topics** (15):
+   `offline-first, emergency, first-aid, survival, local-ai, llm, llama-cpp,
+   mesh-network, bluetooth-le, lora, offline-maps, pmtiles, kiwix, flutter,
+   cross-platform`.
+4. **Discussions**: Settings → Features → activar. **Y en Settings → Code
+   security: activar "Private vulnerability reporting"** — SECURITY.md lo
+   promete y hoy está apagado (verificado por API).
 5. **CLA Assistant**: instalar la GitHub App cla-assistant.io con el texto
    del CLA de CONTRIBUTING.md (un click por PR para quien contribuye).
 6. **Social preview**: Settings → subir una imagen 1280×640 con el logo

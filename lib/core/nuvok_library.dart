@@ -133,6 +133,10 @@ class NuvokLibrary {
 
   Future<void> saveSetting(String key, dynamic value) async {
     settings[key] = value;
+    // El directorio puede no existir todavía (máquina fresca, o ajustes
+    // guardados antes de ensure()): sin esto, writeAsString revienta con
+    // PathNotFoundException en el primer arranque de un entorno limpio.
+    await settingsFile.parent.create(recursive: true);
     await settingsFile.writeAsString(jsonEncode(_settings));
   }
 }

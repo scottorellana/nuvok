@@ -9,10 +9,14 @@ import 'package:nuvok/core/bundled_library.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  // Hashea ~1.3GB de assets reales: bajo la carga de la suite completa
-  // excede el timeout default de 30s y se vuelve flaky. Tiempo holgado.
-  test('bundled library manifest is complete, safe and checksum verified',
-      timeout: const Timeout(Duration(minutes: 3)), () {
+  // NOTA: este test era de la era del instalador gordo — hasheaba 4.5 GB de
+  // modelos/mapas desde disco (archivos gitignorados que solo existen en la
+  // máquina de release) y exigía "build autosuficiente >1GB". Con el
+  // instalador ligero eso es exactamente al revés: SOLO lo marcado 'bundled'
+  // viaja dentro y debe existir en cualquier clon; el resto son descargas y
+  // aquí solo se valida su metadata. En CI (Linux, clon limpio) la versión
+  // vieja moría: los archivos grandes no existen ahí.
+  test('bundled library manifest is complete, safe and checksum verified', () {
     final manifestFile = File('assets/bundled_library/manifest.json');
     expect(manifestFile.existsSync(), isTrue);
 
@@ -21,18 +25,21 @@ void main() {
     );
     expect(manifest.entries, isNotEmpty);
 
-    final byKind = <String, int>{};
-    var totalBytes = 0;
     for (final entry in manifest.entries) {
-      byKind.update(entry.kind, (v) => v + 1, ifAbsent: () => 1);
-      totalBytes += entry.bytes;
-
       expect(entry.assetPath.startsWith('assets/bundled_library/'), isTrue);
       expect(entry.targetRelativePath.startsWith('/'), isFalse);
       expect(entry.targetRelativePath.split('/'), isNot(contains('..')));
       expect(entry.bytes, greaterThan(0));
-      expect(entry.sha256, hasLength(64));
+      expect(entry.sha256, hasLength(64),
+          reason: '${entry.label}: sin checksum no hay verificación posible, '
+              'ni al sembrar ni al descargar');
+    }
 
+    // Lo empaquetado existe en CUALQUIER clon y su checksum es real.
+    final bundled = manifest.entries.where((e) => e.bundled).toList();
+    expect(bundled, isNotEmpty,
+        reason: 'algo debe viajar dentro (la Biblioteca no puede abrir vacía)');
+    for (final entry in bundled) {
       final file = File(entry.assetPath);
       expect(file.existsSync(), isTrue, reason: entry.assetPath);
       expect(file.lengthSync(), entry.bytes, reason: entry.assetPath);
@@ -40,14 +47,10 @@ void main() {
           reason: entry.assetPath);
     }
 
-    expect(byKind['maps'], greaterThanOrEqualTo(1),
-        reason: 'la instalación única debe traer mapas offline');
-    expect(byKind['zim'], greaterThanOrEqualTo(1),
-        reason: 'la instalación única debe traer biblioteca offline');
-    expect(byKind['models'], greaterThanOrEqualTo(1),
-        reason: 'la instalación única debe traer modelo IA offline');
-    expect(totalBytes, greaterThan(1024 * 1024 * 1024),
-        reason: 'este build debe ser autosuficiente, no un shell vacío');
+    // El catálogo descargable cubre lo que la app promete en el primer
+    // arranque: IA, biblioteca y mapas.
+    final kinds = manifest.entries.map((e) => e.kind).toSet();
+    expect(kinds, containsAll(<String>{'models', 'zim', 'maps'}));
   });
 
   test('bundled library assets are registered in Flutter AssetManifest',

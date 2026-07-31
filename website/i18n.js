@@ -7,6 +7,7 @@ const I18N = {
     'nav.offline': 'Sin internet',
     'nav.mesh': 'Malla',
     'nav.pricing': 'Comprar',
+    'nav.code': 'Código',
     'nav.buy': 'Comprar — $99',
 
     // Hero
@@ -77,6 +78,7 @@ const I18N = {
     'nav.offline': 'Offline',
     'nav.mesh': 'Mesh',
     'nav.pricing': 'Buy',
+    'nav.code': 'Code',
     'nav.buy': 'Buy — $99',
 
     'hero.badge': '● Works when everything else fails',

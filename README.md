@@ -56,11 +56,10 @@ instala compilándola tú, con una Mac:
 2. Clona este repositorio y compila el motor de IA (una sola vez):
 
    ```bash
-   git clone https://github.com/ggml-org/llama.cpp ~/development/llama.cpp
-   export LLAMA_DIR=~/development/llama.cpp
-   ./scripts/build_llm_ios.sh      # motor de IA (Metal)
-   ./scripts/build_native_ios.sh   # descompresor de la biblioteca
-   flutter pub get
+   git clone --depth 1 https://github.com/scottorellana/nuvok.git
+   cd nuvok && ./scripts/bootstrap.sh   # deps + llama.cpp + motores
+   ./scripts/build_llm_ios.sh           # motor de IA para iPhone (Metal)
+   ./scripts/build_native_ios.sh        # descompresor de la biblioteca
    ```
 
 3. Conecta tu iPhone y ejecuta `flutter run --release`. Xcode te pedirá
@@ -144,14 +143,18 @@ La app también puede revisar si hay versión nueva cuando detecta internet
 para repartir la app y el contenido ya descargado a los demás dispositivos de
 la casa.
 
-## Desarrollo
+## Desarrollo — desde cero en 3 comandos
 
 ```bash
-./scripts/build_native_macos.sh   # motores nativos (una vez, requiere LLAMA_DIR)
-flutter pub get
-flutter test                      # 550+ tests
+git clone --depth 1 https://github.com/scottorellana/nuvok.git
+cd nuvok && ./scripts/bootstrap.sh
 flutter run -d macos
 ```
+
+`bootstrap.sh` lo hace todo: dependencias, motores nativos (IA local con
+Metal incluida) y la suite de verificación (569 tests). Requisitos: Flutter
+y, en macOS, cmake. En Linux: `flutter run -d linux` (la IA usa un
+`llama-server` del sistema). Android: `flutter build apk` tras el bootstrap.
 
 Guía completa (y el CLA) en [CONTRIBUTING.md](CONTRIBUTING.md) ·
 vulnerabilidades en [SECURITY.md](SECURITY.md).

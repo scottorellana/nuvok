@@ -17,12 +17,17 @@ Dos cosas importantes antes de tu primer PR.
 
 ## Compilar
 
-1. Flutter estable + Xcode o Android SDK según tu plataforma.
-2. `flutter pub get`
-3. Motor de IA nativo: clona [llama.cpp](https://github.com/ggml-org/llama.cpp),
-   exporta `LLAMA_DIR=/ruta/a/llama.cpp` y corre el script de tu plataforma:
-   `scripts/build_llm_macos.sh`, `_ios.sh` o `_android.sh`.
-4. `flutter run`
+```bash
+git clone --depth 1 https://github.com/scottorellana/nuvok.git
+cd nuvok && ./scripts/bootstrap.sh   # deps + motores nativos + suite
+flutter run
+```
+
+Requisitos: Flutter estable, Xcode o Android SDK según tu plataforma, y
+cmake en macOS. Para iPhone, tras el bootstrap corre además
+`scripts/build_llm_ios.sh` y `scripts/build_native_ios.sh` (detalle en el
+README). Si ya tienes un checkout de llama.cpp, expórtalo en `LLAMA_DIR`
+antes del bootstrap y se reutiliza.
 
 El contenido pesado (modelos, mapas, enciclopedia) **no** vive en el repo:
 la app lo descarga desde Depósito. El único contenido versionado es la

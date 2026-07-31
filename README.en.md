@@ -55,11 +55,10 @@ install it by building it yourself, with a Mac:
 2. Clone this repository and build the AI engine (one time only):
 
    ```bash
-   git clone https://github.com/ggml-org/llama.cpp ~/development/llama.cpp
-   export LLAMA_DIR=~/development/llama.cpp
-   ./scripts/build_llm_ios.sh      # AI engine (Metal)
-   ./scripts/build_native_ios.sh   # library decompressor
-   flutter pub get
+   git clone --depth 1 https://github.com/scottorellana/nuvok.git
+   cd nuvok && ./scripts/bootstrap.sh   # deps + llama.cpp + native engines
+   ./scripts/build_llm_ios.sh           # iPhone AI engine (Metal)
+   ./scripts/build_native_ios.sh        # library decompressor
    ```
 
 3. Plug in your iPhone and run `flutter run --release`. Xcode will ask you
@@ -143,14 +142,18 @@ updates itself and never blocks offline use), and
 hand the app and your already-downloaded content to the other devices in
 the house.
 
-## Development
+## Development — from zero in 3 commands
 
 ```bash
-./scripts/build_native_macos.sh   # native engines (once, requires LLAMA_DIR)
-flutter pub get
-flutter test                      # 550+ tests
+git clone --depth 1 https://github.com/scottorellana/nuvok.git
+cd nuvok && ./scripts/bootstrap.sh
 flutter run -d macos
 ```
+
+`bootstrap.sh` does everything: dependencies, native engines (local AI with
+Metal included) and the verification suite (569 tests). Requirements:
+Flutter and, on macOS, cmake. Linux: `flutter run -d linux` (AI uses a
+system `llama-server`). Android: `flutter build apk` after bootstrap.
 
 Full guide (and the CLA) in [CONTRIBUTING.md](CONTRIBUTING.md) ·
 vulnerabilities via [SECURITY.md](SECURITY.md).

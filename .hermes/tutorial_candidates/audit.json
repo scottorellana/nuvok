@@ -1,0 +1,1785 @@
+{
+  "abrigo_refugio": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Dry pine-bough bed is visible, but the site appears exposed in an open clearing rather than clearly wind-protected; it also does not visually match the later shelter location."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Stable compact lean-to frame with low ridgepole and angled branches is clearly visible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Dense overlapping bough cover, entrance, and dry insulated bed are visible; wind direction is not shown but not contradicted."
+      }
+    ],
+    "note": "Photographic realism is acceptable, but panel 1 fails site suitability/continuity with the shelter-building sequence.",
+    "risks": [
+      "Learner may choose an exposed open site instead of wind-protected ground",
+      "Panel sequence appears to show different locations, weakening cause-and-effect continuity"
+    ],
+    "sha256": "8a9f6a04e891b65a34bdcd04e13ef0c404649f8bc84d034a615fbb984413e36e",
+    "image": ".hermes/tutorial_candidates/abrigo_refugio.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:37:23.093906+00:00"
+  },
+  "agua_survival": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clean bottle is held above gravel/streambed and filled from a clear flowing section; no visible mud or streambed contact by the mouth."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "On dry bank/table, cloth is stretched over pot and water is poured through it; pot rim and cloth remain off the ground."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Pot shows vigorous rolling boil with large bubbles and steam on a stable outdoor stove; clean lid is beside it."
+      }
+    ],
+    "note": "All panels clearly support the water collection, cloth filtering, and boiling sequence without visible unsafe contradiction.",
+    "risks": [],
+    "sha256": "66c14b8b602decb1c7ccad4083d4e7c635567872b0087752768d50d5a601e5d6",
+    "image": ".hermes/tutorial_candidates/agua_survival.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:11:24.143451+00:00"
+  },
+  "alimentacion_supervivencia": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Non-cutting hand is too close to the blade path; fingers are not far behind the knife, creating unsafe ambiguity."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Entrails are visibly being placed into a separate open waste bag, with clean fillets remaining on the board."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Fish pieces are visible in a covered pan on a stove, appearing opaque with condensation/steam visible."
+      }
+    ],
+    "note": "Overall image is photograph-like, but panel 1 contradicts the required safe cutting technique.",
+    "risks": [
+      "Panel 1 shows fingers close to the knife path instead of safely behind the blade",
+      "Learner could imitate unsafe hand placement while cutting fish"
+    ],
+    "sha256": "7acab968978bbbe026b4ebdb2651d01611b24daece2ebd4189c3303b352be9ee",
+    "image": ".hermes/tutorial_candidates/alimentacion_supervivencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:37:23.894948+00:00"
+  },
+  "atragantamiento": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Manikin is clearly leaned forward; instructor supports the torso with one arm and places the open heel of the other hand between the shoulder blades for a back blow."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Same upright manikin; instructor is behind with one visible fist on the upper abdomen and the other hand grasping it for an inward-upward thrust."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Same single manikin lies on a firm floor; instructor is at the side with exactly two stacked hands centered on the chest for CPR."
+      }
+    ],
+    "note": "All three panels are photorealistic and visually support the expected choking-response sequence without extra text, arrows, panels, or people.",
+    "risks": [],
+    "sha256": "e1e64e981c95da3a79b79d8c7b842ddca2957a79abd5e9793e852cab381d2a32",
+    "image": ".hermes/tutorial_candidates/atragantamiento.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:20:53.319389+00:00"
+  },
+  "balsa_improvisada": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Shows one adult submerging a sealed jug at the shoreline while another handles a dry log; no raft is present."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Shows two adults on dry shore assembling a rectangular log frame with sealed jugs lashed underneath."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Shows completed raft in shallow still water, one PFD-wearing adult kneeling on it, and a second PFD-wearing adult ashore holding a tether line."
+      }
+    ],
+    "note": "All panels visually support the expected balsa improvisada sequence without extra panels, labels, or unsafe contradictions.",
+    "risks": [],
+    "sha256": "7cb18200e93101a630f01753545a05fa0a7226742c9c170ae0d3fa81c14f6bcf",
+    "image": ".hermes/tutorial_candidates/balsa_improvisada.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:20:57.436649+00:00"
+  },
+  "bosque_agua": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photoreal forest scene shows a person stopped in a shaded gully, hand cupped to ear, facing downhill toward dense green vegetation and a visible flowing stream."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photoreal close view shows collection from a moving stream using a clear bottle held in the current, with no visible disturbance of bottom sediment."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Photoreal scene shows water being poured through clean cloth into a metal pot and a separate metal pot boiling on a stable outdoor stove beside the stream."
+      }
+    ],
+    "note": "All panels visibly support the expected water-finding, collection, prefiltering, and boiling tutorial actions without labels or extra panels.",
+    "risks": [],
+    "sha256": "a41439e8eccf1b0c01bd21dbcd8911af8c7a8a15aa2e87edc828fb59472ef496",
+    "image": ".hermes/tutorial_candidates/bosque_agua.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:20:51.815454+00:00"
+  },
+  "bosque_orientacion": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Hiker is stopped and seated calmly on a dry rock directly beside a visible trail junction; no continuation action or extra people visible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Same junction/rock context is shown with one map, a visible compass, water bottle, headlamp, and phone laid out for checking."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Hiker remains beside the junction with a large bright orange cloth tied high on a tree and a compact low tarp shelter set up before dark."
+      }
+    ],
+    "note": "All panels visually support the requested bosque_orientacion tutorial sequence without unsafe contradictions or extra embedded graphics.",
+    "risks": [],
+    "sha256": "ca7d14e156ffd7557bfcd0044cb6bddaebf6f140dbf1407d7dd579b1d34a3981",
+    "image": ".hermes/tutorial_candidates/bosque_orientacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:21:11.085076+00:00"
+  },
+  "bosque_peligros": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Foot is on fallen log, hiker is looking down beyond it, and hiking pole is probing leaf litter ahead."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Boot and garment are held upside down before use, with a small insect visibly falling away."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Fine tweezers contact the tick close to the skin on the lower leg, with no visible twisting or contradictory action."
+      }
+    ],
+    "note": "All panels visually support the expected forest safety tutorial actions in a realistic documentary style.",
+    "risks": [],
+    "sha256": "6f80b8b7a3f9ccb2d1124abe9620d53a6560f00f6e84b61e695cb634515923ec",
+    "image": ".hermes/tutorial_candidates/bosque_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:37:40.070329+00:00"
+  },
+  "botiquin": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Supplies are visibly laid out in separated groups: gloves, gauze packets, pressure bandage, tape, shears, triangular bandage, splint, and blanket."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Intact sealed gauze packet is clearly compared with a torn stained packet, with an empty blister tray beside the damaged item."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Intact supplies are being packed into separate transparent pouches, with gloves and gauze visibly accessible near the top of the workspace."
+      }
+    ],
+    "note": "All panels support the expected botiquin tutorial actions and appear like real documentary training photographs.",
+    "risks": [],
+    "sha256": "91027230264aa7b275151856a2b561d1165610a4706b81067ab65bfe90edb772",
+    "image": ".hermes/tutorial_candidates/botiquin.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:21:15.701848+00:00"
+  },
+  "convulsiones": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Phone timer is visible on floor, chair is being moved away, and folded sweater supports head without visible limb restraint."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Casualty appears inconsistent with other panels due to different trousers/waist clothing; sequence does not clearly show the same casualty."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Recovery position is shown, but rescuer contact is at back/shoulder and head, not shoulder and hip; rolling technique contact points are unclear/incorrect."
+      }
+    ],
+    "note": "Regenerate due to inconsistent casualty continuity and unsafe/unclear recovery-position technique.",
+    "risks": [
+      "learner may copy incorrect rolling contact points",
+      "same casualty is not visually consistent across panels"
+    ],
+    "sha256": "c83c069418d612a476b74b3d3e993463a30f6d5a20bea3310a5f473045f434fb",
+    "image": ".hermes/tutorial_candidates/convulsiones.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:37:42.083957+00:00"
+  },
+  "cruce_rios": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic-looking scene shows a hiker on the bank beside a shallow straight section with nearby foamy faster water, supporting route selection."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Contradicts 'before entering': both boots are already in the water. Strap release is also not clearly shown; the chest/hip strap state is ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Photographic-looking crossing shows water below the knees with both feet and the pole contacting the riverbed, facing generally upstream/diagonal."
+      }
+    ],
+    "note": "Regenerate because panel 2 does not clearly show the required pre-entry preparation and contradicts the caption timing.",
+    "risks": [
+      "Learner may enter the river before unclipping pack straps",
+      "Chest and hip strap release is visually ambiguous",
+      "Pre-entry pole placement upstream is not clearly isolated before stepping into water"
+    ],
+    "sha256": "afaa8d95de131b2a81a1b8ec06b4eba3a699c2462ba557e938269efdf26bec4c",
+    "image": ".hermes/tutorial_candidates/cruce_rios.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:37:59.996408+00:00"
+  },
+  "fuego_supervivencia": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Separate piles of fluffy tinder, thin kindling, thicker sticks, and larger split wood are clearly visible before ignition."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Sparks enter the tinder, but the contact point does not clearly show the knife back spine scraping the ferro rod; it could be read as using the sharpened edge, creating unsafe ambiguity."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Small flame is contained in a rock ring, thin kindling is being added gradually, larger wood waits nearby, and a cup of water is visibly ready."
+      }
+    ],
+    "note": "Photographic triptych mostly supports the tutorial, but panel 2 fails due to ambiguous ferro-rod scraping technique.",
+    "risks": [
+      "Panel 2 may teach scraping a ferro rod with the knife's cutting edge instead of the spine.",
+      "Knife and rod contact geometry is unclear enough to cause unsafe or incorrect hand/tool placement."
+    ],
+    "sha256": "a3baf526b4e990a476df32a805c8d9452066b9d83d8e022904be6ae4693e80c0",
+    "image": ".hermes/tutorial_candidates/fuego_supervivencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:38:31.167822+00:00"
+  },
+  "fracturas_inmovilizacion": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clearly shows distal finger check beyond a simulated forearm injury with supplies visible; no contradiction."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Shows two padded rigid boards, one on each side of the injured forearm, spanning beyond wrist and elbow."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Arm is in a sling and fingers are being handled, but multiple knots are visibly tied directly over the splinted forearm where the injury would be, contradicting avoiding knots over the injury."
+      }
+    ],
+    "note": "Overall sequence is mostly clear, but panel 3 demonstrates unsafe tie placement.",
+    "risks": [
+      "Knots placed over the injured forearm area could teach pressure directly over a fracture site."
+    ],
+    "sha256": "332f87ccfc3859e05f0f4817c188413176eb0f6c053611181870781147237f0e",
+    "image": ".hermes/tutorial_candidates/fracturas_inmovilizacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:38:23.300776+00:00"
+  },
+  "huracan": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Calm exterior scene shows adults moving patio furniture and fastening metal storm shutters; no visible wind or rain."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Interior windowless room scene shows family members bringing water, first-aid kit, flashlight, radio, and document pouch."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Family shelters low in an interior room away from windows with battery lantern, flashlight, and radio visible."
+      }
+    ],
+    "note": "All panels visually support the hurricane preparedness sequence without unsafe contradictions.",
+    "risks": [],
+    "sha256": "370ba05d3c47efb02ff4241ed92a5baeda99c82a1f0c18c4dcc8c93a85c156ff",
+    "image": ".hermes/tutorial_candidates/huracan.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:22:06.894488+00:00"
+  },
+  "hemorragia_severa": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic mannequin training setup; one mid-thigh simulated wound is exposed at the gauze edge, with thick folded gauze compressed by both stacked gloved hands."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photographic mannequin leg; one continuous gauze strip is being packed into the same wound while one gloved hand maintains pressure over the wound area."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Photographic mannequin thigh; commercial windlass tourniquet is on bare thigh proximal to the wound, not over the wound or a joint, with strap handling and rigid windlass twisting clearly visible."
+      }
+    ],
+    "note": "All three panels visibly support the severe hemorrhage control sequence without extra panels, labels, or unsafe contradiction.",
+    "risks": [],
+    "sha256": "21266479a44e2daeef91079bf9c8f261ee03c33824b563b5290b950307cce5a9",
+    "image": ".hermes/tutorial_candidates/hemorragia_severa.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:21:47.994936+00:00"
+  },
+  "hipotermia_golpe_calor": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Shelter scene clearly shows rescuer removing the casualty's outer jacket while covering the body with a dry blanket."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Same casualty appears dry and wrapped above and below, with cloth-wrapped bottles placed at chest/armpit and groin-region warming points."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Separate hot-weather casualty is shaded, wet-skinned, partially unclothed, with fan, phone call, and wrapped cold packs at neck, armpits, and groin."
+      }
+    ],
+    "note": "All three panels visually support the expected localized tutorial actions without labels, extra panels, or unsafe contradictory technique.",
+    "risks": [],
+    "sha256": "991886639b3551f6264c366f365c9527908b40182505bfc94a697f3096b4852a",
+    "image": ".hermes/tutorial_candidates/hipotermia_golpe_calor.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:12:01.271433+00:00"
+  },
+  "infarto_acv": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Seated man shows facial droop, failed lowered/unsupported arm position, and hand pressed to center chest; rescuer only observes, with no visible medicine or drink."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Rescuer supports him semi-reclined, points to the wall clock, and a phone call interface is visible on the table consistent with speaker calling."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Man is conscious, calm, and still; rescuer loosens collar and observes him, with a closed AED case nearby and not attached."
+      }
+    ],
+    "note": "All three panels clearly support the expected training sequence without visible unsafe contradiction.",
+    "risks": [],
+    "sha256": "c96a6a120ce739033e3a473c8a8667a0f5f125b510e2359fb90546167575fe8a",
+    "image": ".hermes/tutorial_candidates/infarto_acv.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:38:40.002932+00:00"
+  },
+  "inundacion": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Dry electrical panel and floor are visible; adult switches main breaker while family moves supplies/medicines and an emergency kit on the stairs."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Family evacuates on a dry elevated sidewalk with dry footwear and small bags; floodwater is only visible in the lower distant street."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Family is on an upper balcony above floodwater, waving one bright cloth; no nearby power lines or contact with water are visible."
+      }
+    ],
+    "note": "All panels visually support the intended flood-safety sequence and appear photographic without embedded text or labels.",
+    "risks": [],
+    "sha256": "81cdbbde413202e8c3e3dce7ef2fff767b73f930e5cd8f5ba4f986995ce1183d",
+    "image": ".hermes/tutorial_candidates/inundacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:22:23.781160+00:00"
+  },
+  "intoxicaciones": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Open doorway to outdoor air is visible; rescuer guides walking casualty without touching spill and no visible fumes are present."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Original container is tipped over with liquid spilled near the casualty, not upright at a safe distance; phone call/speaker use is not clearly visible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Casualty is not clearly placed in a stable recovery position; legs are extended and container/spill remain close by, creating unsafe ambiguity."
+      }
+    ],
+    "note": "Photorealistic style, but panels 2 and 3 contradict required poisoning response actions.",
+    "risks": [
+      "Tipped chemical container and spill shown near casualty",
+      "No clear speaker call to poison control or emergency services",
+      "Recovery position technique is incomplete or unstable",
+      "Spill remains close to casualty during monitoring"
+    ],
+    "sha256": "1767e88dbafdd20d05eefd2353fbaf12c66ab117cfa999ae9e30a92b3e0af144",
+    "image": ".hermes/tutorial_candidates/intoxicaciones.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:38:45.393533+00:00"
+  },
+  "mordeduras_picaduras": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Casualty is seated still while a rescuer loosens footwear and removes ankle jewelry; no visible snake search."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Bitten leg is padded and splinted in position with broad ties and kept low relative to torso."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Casualty is level on a rigid litter with two rescuers holding it while another person uses a phone for transport call."
+      }
+    ],
+    "note": "All panels visually support the expected emergency training sequence and appear photographic without unsafe contradictions.",
+    "risks": [],
+    "sha256": "b4b1ebf53bdcc3efe6f9ba3a3f8857180f640673f075de477cc9cebfa8921174",
+    "image": ".hermes/tutorial_candidates/mordeduras_picaduras.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:49:57.922915+00:00"
+  },
+  "navegacion": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Magnet is visibly contacting one end of the needle while the other hand holds the opposite end safely."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Needle is laid horizontally across the cork disk near center with balanced overhang; magnet is not present."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Cork and needle float in still water with hands and magnet removed; ordinary compass is nearby for comparison."
+      }
+    ],
+    "note": "All panels appear photorealistic and support the navigation needle-compass tutorial without visible unsafe contradictions.",
+    "risks": [],
+    "sha256": "ca89c0c7e68fd0e6dcf95862bceea2f8a77d718156f7e8d958c858f6020c1f74",
+    "image": ".hermes/tutorial_candidates/navegacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:22:43.103408+00:00"
+  },
+  "nudos_supervivencia": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Shows one small loop with a large open bight and exactly two visible rope ends; no completed knot yet."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Working end is visibly routed through the small loop, around the standing part, and back through with crossings apparent."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Completed bowline is dressed into one compact knot with one large fixed loop and two visible rope ends."
+      }
+    ],
+    "note": "All three panels visually support the bowline sequence without extra labels, panels, or unsafe contradictions.",
+    "risks": [],
+    "sha256": "c5b11c2034a058c12c3e779823876ed7858336231015be120f262b30efd445df",
+    "image": ".hermes/tutorial_candidates/nudos_supervivencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:22:42.657282+00:00"
+  },
+  "parto_emergencia": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic overhead setup shows covered simulator, clean towels/blanket, gloves and phone; gloved hands open a towel with no birth anatomy visible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photographic close view shows synthetic doll head emerging from molded simulator with two gloved hands supporting the head, no blood or pulling indicated."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Photographic view shows delivered newborn training doll dried under a blanket on simulator chest with face uncovered; only two gloved hands adjust blanket."
+      }
+    ],
+    "note": "All panels clearly support the emergency birth training sequence using real photographed simulators and equipment.",
+    "risks": [],
+    "sha256": "b4f8e97f6b8d3f2cff05b1a796e41241ae83d9650b65e85f7160dd15b64725a3",
+    "image": ".hermes/tutorial_candidates/parto_emergencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:22:49.436512+00:00"
+  },
+  "pesca_trampas_supervivencia": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": false,
+        "note": "Blade is cutting toward or very near the bracing hand, with fingers close to the cut line; direction away from the hand is not clear."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Inverted bottle top is centered as a funnel, holes/ties are visible around the seam, and bait is visibly being placed inside."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Trap is anchored beside the bank with cord tied to a stake, but water flow direction is not visibly clear, so the funnel opening cannot be verified as downstream."
+      }
+    ],
+    "note": "Regenerate due to unsafe cutting ambiguity and unclear downstream trap orientation.",
+    "risks": [
+      "learner may cut toward the bracing hand",
+      "bracing fingers are too close to blade path",
+      "downstream direction is not visually established for trap placement"
+    ],
+    "sha256": "3a54967503dd386a0d8fa8a70059392e2e5bc9f08f6ccb1c0572ce27cb836749",
+    "image": ".hermes/tutorial_candidates/pesca_trampas_supervivencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:38:57.914839+00:00"
+  },
+  "primeros_auxilios_extremos": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Realistic training scene shows rescuer paused at curb/edge before approaching manikin, with visible traffic, smoke/fire hazard, and exposed wires on ground."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photographic close-up clearly shows simulated massive limb bleeding on manikin and firm direct pressure with gloved hands over gauze at the wound."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Realistic scene shows airway assessment on a manikin with head supported/aligned, chin/jaw contact, rescuer positioned to look-listen-feel, and only upper chest/neck exposed."
+      }
+    ],
+    "note": "All panels visibly support the localized tutorial actions without unsafe contradictions or illustration artifacts.",
+    "risks": [],
+    "sha256": "e0084c0e9b5b49cc84fec455e5b76d1f0c41ee37eff232cf6f1ec85cf1134905",
+    "image": ".hermes/tutorial_candidates/primeros_auxilios_extremos.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:23:03.886226+00:00"
+  },
+  "quemaduras": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photoreal panel shows forearm away from active heat, stovetop not visibly on, and watch/ring being removed from the burned limb."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photoreal panel shows removed jewelry and a reddened forearm cooled under gentle running tap water, with no ice visible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Photoreal panel shows burn loosely covered with clear plastic film while the casualty is wrapped in a towel/blanket for warmth."
+      }
+    ],
+    "note": "All three panels visually support the expected burn first-aid sequence without visible unsafe contradiction.",
+    "risks": [],
+    "sha256": "2b64f63c7437c650120f4cf312dc2027dd2b977bff80d07507ea987d4f834eed",
+    "image": ".hermes/tutorial_candidates/quemaduras.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:23:05.759802+00:00"
+  },
+  "rcp_adulto": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "One visible hand contacts the manikin shoulder, black phone is visible beside the head, second hand is out of frame, and chest is unobstructed."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Two hands are stacked on the chest, but the fingers are not clearly visibly interlocked; the grip is ambiguous for the required CPR hand position."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "No person touches the manikin; two AED pads are visible in appropriate upper-right and lower-left lateral positions with cables leading to an open yellow AED."
+      }
+    ],
+    "note": "Regenerate because panel 2 does not clearly show interlocked fingers for CPR compressions.",
+    "risks": [
+      "ambiguous CPR hand positioning could teach incorrect compression technique"
+    ],
+    "sha256": "304650b1653258e98219dacc20a511c4611f948dd47afe320ce6d2042ff9884f",
+    "image": ".hermes/tutorial_candidates/rcp_adulto.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:39:06.621918+00:00"
+  },
+  "rcp_nino_bebe": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Index finger visibly presses the center area of the raised manikin sole; other hand is outside frame; speakerphone is visible beside the mat."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Single open adult hand is shown with arched fingers separated from the chest and palm heel positioned over the lower sternum; other hand is not visible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Adult lips appear primarily sealed over the manikin nose/upper face; the manikin mouth is not clearly enclosed in one continuous mouth-and-nose seal, and the supporting hand is at the side/back of the head rather than clearly on the forehead."
+      }
+    ],
+    "note": "Regenerate due to unsafe ambiguity in rescue-breath seal and head support in panel 3.",
+    "risks": [
+      "Panel 3 may teach nose-only ventilation instead of covering both mouth and nose",
+      "Forehead support is not clearly shown for head positioning"
+    ],
+    "sha256": "2a2c34e024637ae05a464863ebf50b7ed0257ddf8fae9b5627faf8df31f1546d",
+    "image": ".hermes/tutorial_candidates/rcp_nino_bebe.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:39:15.171026+00:00"
+  },
+  "refugio_naturaleza": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photoreal panel shows a person on dry flat forest ground looking upward while building only a thick insulated bed of leaves and pine boughs; no ridgepole or shelter frame visible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photoreal panel shows a ridgepole lashed between tree supports with closely spaced ribs leaning against it at roughly shelter-building angle."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Photoreal panel shows dense branches, leaves, and debris layered over the sloped frame in a compact rain-shedding covering."
+      }
+    ],
+    "note": "All panels visually support the expected left-to-right shelter-building sequence without text, arrows, extra panels, or unsafe contradictions.",
+    "risks": [],
+    "sha256": "e56d6a1a38ebd17bcce5edf1b3db9042747e2acd4d6f8a96894d907339c84c20",
+    "image": ".hermes/tutorial_candidates/refugio_naturaleza.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:23:24.492686+00:00"
+  },
+  "shock": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Visible simulated wrist/forearm bleeding is being controlled with a pad and firm hand pressure before repositioning."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Casualty is supine on an insulating mat/blanket with head and body aligned and no visible leg elevation."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Casualty is covered with a dry blanket while rescuer holds a phone and monitors/reassures with hand contact; no food or drink shown."
+      }
+    ],
+    "note": "All panels appear photorealistic and support the shock training sequence without visible unsafe contradictions.",
+    "risks": [],
+    "sha256": "b633d099ae5ed25fe4de8fa190682e4732635187174a8767ad36cabfa5936511",
+    "image": ".hermes/tutorial_candidates/shock.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:23:41.651602+00:00"
+  },
+  "terremoto": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic panel shows a person dropped low beside a sturdy dining table with no visible window hazard nearby."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Person is fully under the table with body below the tabletop and an arm covering head/neck."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Person remains under the table and firmly grips a table leg, clearly supporting the hold-on action."
+      }
+    ],
+    "note": "All panels appear photo-real and visually support the earthquake drop-cover-hold sequence without text or labels.",
+    "risks": [],
+    "sha256": "36c0f544be6a8c3d24505bbe5e122e78da4f2a41e51a1e7a18904776af2ceb56",
+    "image": ".hermes/tutorial_candidates/terremoto.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:23:44.792665+00:00"
+  },
+  "senas_rescate": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Single survivor visibly lays one large high-contrast orange ground signal in an open clearing."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Same survivor visibly has a whistle at the mouth and one hand raised to the ear, supporting whistle blasts and listening."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Same survivor alone holds a signal mirror near the face, uses two raised fingers as a sight, and aims toward one distant helicopter with a visible reflected glint."
+      }
+    ],
+    "note": "All panels clearly support the expected rescue signaling actions with no visible extra people, labels, arrows, or unsafe contradictions.",
+    "risks": [],
+    "sha256": "959bcb2c7f657feaf39e48ab4669b21848d26688f5e5a5bcd11aa7513c46d73f",
+    "image": ".hermes/tutorial_candidates/senas_rescate.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:23:35.186765+00:00"
+  },
+  "trauma_cabeza_columna": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic training scene with simulated casualty lying still and rescuer positioned behind head holding the head/neck without visible traction."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Open gloved hands are placed symmetrically on both sides of the head with ears between fingers, supporting manual in-line stabilization."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Two rolled towels are placed snugly on both sides of the head as lateral supports; no towel or strap crosses the neck, and rescuer appears to monitor the casualty."
+      }
+    ],
+    "note": "All three panels visibly support the expected head/neck stabilization sequence using photographed training equipment.",
+    "risks": [],
+    "sha256": "1c78c5fc704ad5c2555435b5b5d989c68a29e0367be196449c41239387f463a1",
+    "image": ".hermes/tutorial_candidates/trauma_cabeza_columna.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:39:30.657108+00:00"
+  },
+  "triaje_multivictima": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Shows responder in vest directing walking participants into a cone/tape marked safe area; visible green tags on walkers."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Shows responder rapidly checking a non-walker at airway/face and wrist while other casualties await; colored blank tags and timer/stopwatch equipment are visible without prolonged treatment."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Shows responder applying a red blank tag, with other casualties bearing yellow, green, and black tags, plus a visible timer device for reassessment."
+      }
+    ],
+    "note": "All panels visually support the multivictim triage sequence and appear as documentary-style training photography.",
+    "risks": [],
+    "sha256": "238338718eff2fad65aa9f02c5a76ef1a587582336f816f8342de57b166f4c72",
+    "image": ".hermes/tutorial_candidates/triaje_multivictima.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:12:46.216678+00:00"
+  },
+  "desierto_agua": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of a single person digging with a shovel at the eroded outside bend of a dry wash; hands, tool, body position, and soil removal are visible and plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear medium view of a solar still setup with plastic sheeting, rock weights, a center pebble depression, and a collection cup visible beneath; hand placement and construction are plausible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear medium view showing water purification by adding drops from a small bottle into a water container, with boiling equipment also visible; action supports the caption without conflicting text or labels."
+      }
+    ],
+    "note": "All three panels are photorealistic, single-action tutorial views with no extra people, labels, arrows, merged anatomy, or contradictory technique visible.",
+    "risks": [],
+    "sha256": "80e23ccd6bb5a92a3b52e3e87db87bee7a3b5d497bd7780b6e235d16803834cf",
+    "image": ".hermes/tutorial_candidates/desierto_agua.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:24:03.456430+00:00"
+  },
+  "desierto_calor_refugio": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear photoreal medium view of a single person lying still in full shade under a tarp in desert conditions."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear photoreal medium view showing double-roof tarp with visible air gap and the body elevated off the ground on a cot."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear photoreal medium view of one person preparing tinder inside a stone fire ring near sunset, with hands and fire-prep materials visible."
+      }
+    ],
+    "note": "All panels visually support the requested desert heat shelter and evening fire-preparation actions without text, arrows, extra people, or anatomical contradictions.",
+    "risks": [],
+    "sha256": "a54e7b6be3eaad3d4570a6e716529568ad84f1af82e40ff54c19b711d03d69a5",
+    "image": ".hermes/tutorial_candidates/desierto_calor_refugio.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:24:22.665803+00:00"
+  },
+  "mar_flotacion": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear documentary-style medium view of one person floating on back in water with life jacket; hands and body position visible and plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear medium view of one person in HELP posture with knees drawn to chest, arms holding legs, and flotation support visible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear documentary-style view of one person swimming laterally along the shoreline, supporting the caption to swim parallel to the beach."
+      }
+    ],
+    "note": "All three panels visibly support the expected flotation and rip-current actions without extra people, text, arrows, or unsafe anatomical ambiguity.",
+    "risks": [],
+    "sha256": "7bed41e83c77029532cf108c128b55a9adacaf6d62dcaa821abfb095d80a155e",
+    "image": ".hermes/tutorial_candidates/mar_flotacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:24:26.488021+00:00"
+  },
+  "desierto_peligros": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Camp is visibly set on higher ground above a dry wash, with the wash clearly lower in the foreground; no contradictory action or extra people."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Person is clearly shaking an inverted boot while looking at it, with sand falling out; hands and boot placement are visible and plausible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Person is covered up and waiting near a visible rock heading marker while a sandstorm approaches; action supports the caption without extra labels or unsafe contradiction."
+      }
+    ],
+    "note": "All three panels visually support the expected desert safety actions in a photorealistic training-photo style.",
+    "risks": [],
+    "sha256": "cad8286de5179ab63eac169e53eb50aa146f5e2677f1d37c7e66835725e99aa0",
+    "image": ".hermes/tutorial_candidates/desierto_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:24:24.609958+00:00"
+  },
+  "mar_agua": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic medium view clearly shows a tarp rigged as a funnel into a jar with hands, supports, ties, and collection point visible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photographic medium view clearly shows digging in sand behind dune grass with a hand tool and pooled water layer visible in the hole."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Photographic medium view shows the person by the sea refusing a glass with a clear stop gesture, supporting the warning not to drink seawater."
+      }
+    ],
+    "note": "All three panels are photorealistic and visually support the paired tutorial actions without extra labels or unsafe contradictory actions.",
+    "risks": [],
+    "sha256": "d8d1bca1fd93ca50f6a1115709c4d2002792af972acc3bfeca3ee15d5f8c0737",
+    "image": ".hermes/tutorial_candidates/mar_agua.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:24:54.279273+00:00"
+  },
+  "mar_peligros": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic beach view shows a single person pointing toward a calmer darker channel between breaking waves; no extra labels or unsafe contradiction."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "note": "Action reads as ordinary stepping/walking, not clearly shuffling feet along the bottom; upper body is cropped, so full body position is not visible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Treatment is ambiguous: bucket water source and heat are not visibly verifiable, thermos is not being used, and towel contact over the sting could imply rubbing/pressing while rinsing."
+      }
+    ],
+    "note": "Regenerate due unclear shuffle technique and ambiguous jellyfish treatment cause-and-effect.",
+    "risks": [
+      "Learner may walk normally instead of shuffling feet in shallow water.",
+      "Learner may use unverified fresh/cold water or rub/press a jellyfish sting with a towel."
+    ],
+    "sha256": "da82e3b89265011dbcdb4e5ba3c490888ce9365af672d0d687fdb400578130cb",
+    "image": ".hermes/tutorial_candidates/mar_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:39:42.584741+00:00"
+  },
+  "montana_descenso": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Seated hiker in mountain terrain visibly paused and observing with navigation item; posture and equipment are plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Hiker is visibly descending along a rocky ridge with poles, not in a gully; body position and pole placement are plausible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Hiker is kneeling and placing stones on a cairn beside the trail; action and hand placement are clear."
+      }
+    ],
+    "note": "All panels clearly support the expected mountain descent tutorial actions with photorealistic documentary appearance.",
+    "risks": [],
+    "sha256": "da2cbb6fae3ecb589464032068521edf26503b93adb931c61d79c369f1819393",
+    "image": ".hermes/tutorial_candidates/montana_descenso.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:50:36.389829+00:00"
+  },
+  "montana_peligros": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic storm scene shows separated hikers crouched on packs with metal trekking poles set aside; action is clear and not contradicted."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photographic mountain scene shows hiker traveling on a safer ridge/edge route while avoiding the large loaded snow slope; no conflicting action visible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Photographic scene shows symptomatic hiker descending a rocky mountain trail with poles; supports descent as the response."
+      }
+    ],
+    "note": "All three panels visually support the expected localized captions without extra labels, panels, or unsafe contradictions.",
+    "risks": [],
+    "sha256": "73ee68b5b7989bcef48f8e3094e391b778b3874cfc58c2dd9aa72b1ece8ba08f",
+    "image": ".hermes/tutorial_candidates/montana_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:50:43.734032+00:00"
+  },
+  "montana_frio_refugio": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Shows a single person setting a tarp shelter against rock and snow on a windy snowy slope; wind-blocking cause and sheltered position are visible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Shows a single person placing a thick layer of evergreen boughs on snowy ground for insulation; hands and bough placement are visible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Shows a single person in a shelter removing wet clothing before sleeping, with sleeping pad/bag and wet clothes visible nearby."
+      }
+    ],
+    "note": "All panels visually support the localized training captions without extra people, labels, arrows, or contradictory actions.",
+    "risks": [],
+    "sha256": "beed4efba8968268b59992daef3f65ea3a65e2ee59a87723d184d733fba8bb96",
+    "image": ".hermes/tutorial_candidates/montana_frio_refugio.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:24:47.168418+00:00"
+  },
+  "rio_crecidas": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic panel clearly shows a tent camp on high ground above the river with no extra embedded graphics or contradictory action."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photographic panel clearly shows a person placing a wooden marker stick at the water's edge with hands and stick contact visible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Photographic panel shows muddy, fast water below while the visible people move uphill away from the river."
+      }
+    ],
+    "note": "All panels are photorealistic and visually support the expected localized captions without visible unsafe contradiction.",
+    "risks": [],
+    "sha256": "7a2356cb938374e5bea561f9683359aba71f5008ba7154742519b614c59f00f0",
+    "image": ".hermes/tutorial_candidates/rio_crecidas.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:25:22.619360+00:00"
+  },
+  "rio_viajar": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of a lone hiker walking a high bench trail with the river visible below; body, pole use, and terrain relationship are plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Shows canyon constriction with the hiker climbing around on rock beside the river; hands, feet, pack, and trekking pole are visible and anatomically plausible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Shows a lone hiker following a narrow trail down the valley toward the river; terrain and direction support the caption without contradictions."
+      }
+    ],
+    "note": "All three panels are coherent, photorealistic, and match the expected left-to-right tutorial actions.",
+    "risks": [],
+    "sha256": "4c004b79c831d2452978acae20147a5a08155e13e6b1f6cf639f40d2382ec2b7",
+    "image": ".hermes/tutorial_candidates/rio_viajar.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:25:13.430878+00:00"
+  },
+  "ciudad_derrumbes": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Trapped person is visibly under debris, using a small hard object against a metal beam; action supports tapping while conserving voice."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Single rescuer is crouched still with hand to ear in rubble, clearly supporting organized silence/listening without conflicting action."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Rescuer works from the side edge of rubble with tools and is not standing on top of the slab, supporting edge-based removal."
+      }
+    ],
+    "note": "All panels are clear, photorealistic, and visually support the localized captions without unsafe contradiction.",
+    "risks": [],
+    "sha256": "b7dc6524612944669852b02a52486e420d5540ddf5a6de36cf2499ea82243b4f",
+    "image": ".hermes/tutorial_candidates/ciudad_derrumbes.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:25:35.677003+00:00"
+  },
+  "rio_agua": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of collecting water from a visibly fast-flowing river section; no still pool contradiction or extra people."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear settling/filtering setup with cloudy water poured through a cloth filter into a bottle; tools and hands are visible and plausible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Shows both acceptable disinfection options: active boiling on stove and chemical drops into a bottle; no labels or unsafe embedded instructions visible."
+      }
+    ],
+    "note": "All panels visually support the localized tutorial actions without extra panels, text, or obvious anatomical/tool defects.",
+    "risks": [],
+    "sha256": "16eb11cbaa0573618df60cfc90b4f4e6a296a580bfd035c84d4498496d6f86c1",
+    "image": ".hermes/tutorial_candidates/rio_agua.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:25:13.992366+00:00"
+  },
+  "ciudad_agua_recursos": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of a person filling multiple containers from a pressurized tap; hands, faucet, water flow, and containers are visible and plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear medium view of draining a water heater through a lower valve into a basin; tool placement, hands, water flow, and heater are visible and coherent."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear medium view of gloved hands adding liquid from a dosing tool into a water container beside a disinfectant bottle; action supports disinfecting doubtful water."
+      }
+    ],
+    "note": "All three panels visually support the localized captions without extra panels, labels, unsafe contradictions, or visible anatomy/tool defects.",
+    "risks": [],
+    "sha256": "fd15537c515965c850dbc48f245671dea4189e28e3fe463aa9e411ebf94786c9",
+    "image": ".hermes/tutorial_candidates/ciudad_agua_recursos.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:25:35.961725+00:00"
+  },
+  "ciudad_peligros": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Gas shutoff and ventilation are clearly shown with open window, visible gas pipe/valve, gloved hand contact, and no ignition sources or sparks."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Person is visibly kept back from a damaged utility pole and downed/sagging wire hazard in a clear street view; no unsafe contact shown."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "X-shaped structural cracks are visible and the person is carrying sleeping gear out/away, supporting not sleeping inside."
+      }
+    ],
+    "note": "All panels are photorealistic and visually support the paired emergency captions without extra labels or embedded panels.",
+    "risks": [],
+    "sha256": "1fb5f5a35ef39013c00a4ff1747dc666fdb91efaec3efdb0192edcfc40a82af5",
+    "image": ".hermes/tutorial_candidates/ciudad_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:25:41.300308+00:00"
+  },
+  "pantano_agua_insectos": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Rainwater is visibly running from a tarp catchment into a metal cup; single person, clear hands/tools/body position."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Settled sediment jar, cloth filtering into a pot, and active boiling on a stove are all visible and not contradictory."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Single person tends a smoky fire in swamp vegetation; steady smoke source is clear for mosquito deterrence."
+      }
+    ],
+    "note": "All three panels clearly support the expected actions in a photorealistic training-photo style.",
+    "risks": [],
+    "sha256": "aa02883f46a6ae1d4adc473f018f45f908e4d2eb236f50fb356d459e3a262ac8",
+    "image": ".hermes/tutorial_candidates/pantano_agua_insectos.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:26:02.121801+00:00"
+  },
+  "pantano_moverse": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of a person probing muddy water with a pole before stepping; hands, pole tip, feet, and mud response are visible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear view of boots placed on visible roots and grass clumps rather than open mud, with pole support visible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Person appears prone in mud, but the backward-crawling action and direction are not visibly clear; raised torso and planted hands create unsafe ambiguity about technique."
+      }
+    ],
+    "note": "Panels 1 and 2 support the captions; panel 3 does not clearly demonstrate lying flat and crawling backward.",
+    "risks": [
+      "Panel 3 may teach pushing up or struggling in place rather than staying flat and backing out",
+      "Direction of movement in panel 3 is ambiguous"
+    ],
+    "sha256": "a69ac274575bf247405f02ebd67b9cfddb81113b73c676a394691b5723f12c44",
+    "image": ".hermes/tutorial_candidates/pantano_moverse.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:39:50.014324+00:00"
+  },
+  "pantano_peligros": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear documentary-style view of a tent set on dry ground with open water visible at a distance; no conflicting action or extra embedded elements."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Close view shows a leech on skin and a fingernail positioned under it, with no burning or unsafe heat source shown."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Shows washing an arm scratch with water and covering scratches with dressings; medical supplies are visible and the action is clear."
+      }
+    ],
+    "note": "All panels visually support the localized tutorial actions without visible contradictory technique, labels, arrows, or extra panels.",
+    "risks": [],
+    "sha256": "713176d01de15e4086548000a327dba21e730e5a11171339eea1aa1e82e80f7f",
+    "image": ".hermes/tutorial_candidates/pantano_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:26:06.452659+00:00"
+  },
+  "artico_frio_refugio": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of one person at a snow trench with a low covered roof; shovel, hands, trench, and roof relationship are visible and plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear medium view of one person maintaining an open vent hole in the snow roof with a pole; hole and tool contact are visible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear medium view of one person brushing snow from clothing while holding a shovel; supports working carefully without visible overheating."
+      }
+    ],
+    "note": "All three panels are photorealistic, single-person, and visually support the expected shelter actions without extra labels or unsafe ambiguity.",
+    "risks": [],
+    "sha256": "21eb43328d9aa437894467fd7c256c74de4ed0392c5cb9ddbb8f4d420a8d1054",
+    "image": ".hermes/tutorial_candidates/artico_frio_refugio.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:26:10.226594+00:00"
+  },
+  "artico_peligros": {
+    "status": "regenerate",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic medium view clearly contrasts dark clear ice with gray/opaque ice while the person points at the clear area; no extra labels or unsafe ambiguity visible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photographic medium view shows ice picks worn at the neck with the cord crossed and handles spread in both hands; tool placement is visible and plausible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "note": "Wide view does not clearly show the fall-in rescue sequence. The person is already lying/rolling far from the hole, with no visible kicking, sliding out of the water, or clear cause-and-effect from the ice edge."
+      }
+    ],
+    "note": "Regenerate because panel 3 does not clearly demonstrate the required kick-slide-roll self-rescue action.",
+    "risks": [
+      "Panel 3 could teach only lying or rolling on ice without showing how to exit the hole safely",
+      "Panel 3 lacks clear contact with the hole edge, kicking motion, and sliding-out mechanics"
+    ],
+    "sha256": "69053b4c724cc9eaec66169f8e0981ce7fa2c5c8a0967e28fa666f397060147f",
+    "image": ".hermes/tutorial_candidates/artico_peligros.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T02:39:57.532480+00:00"
+  },
+  "artico_agua_comida": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear documentary-style view of snow being added to a pot on a lit stove for melting; no eating shown."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear view of blue ice being chipped and compared with snow in containers, supporting the caption without contradictory action."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear view of high-fat foods and packed rations in cold conditions, supporting fat and increased food intake against cold."
+      }
+    ],
+    "note": "All panels appear photorealistic and visually support the localized tutorial captions without unsafe contradiction.",
+    "risks": [],
+    "sha256": "cd8deb9049c1c41e3a2394ac147c2ba2759af99efdb65f5085feafbef0ca69bd",
+    "image": ".hermes/tutorial_candidates/artico_agua_comida.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:26:18.357124+00:00"
+  },
+  "tsunami": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Person is visibly moving uphill on coastal stairs with emergency bag, supporting immediate evacuation to higher ground after a coastal quake."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Person is clearly traveling on foot uphill along a coastal route, consistent with evacuation toward higher elevation."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Person remains at a high overlook with supplies and checks time while staying away from the flooded coast, supporting the wait-at-elevation instruction."
+      }
+    ],
+    "note": "All panels are photorealistic and visually support the paired tsunami safety captions without visible unsafe technique or contradictory actions.",
+    "risks": [],
+    "sha256": "dbd62a473f5f47c6dde4f5eb582eb8ec2bf35875e56ec5b896633bcde047d44c",
+    "image": ".hermes/tutorial_candidates/tsunami.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:26:46.628381+00:00"
+  },
+  "incendio_forestal": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear photoreal medium view of one adult with compact backpack evacuating along an open road; smoke and faint orange glow are distant with no nearby flames."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear photoreal medium view of one adult moving onto visibly burned/cleared ground; no extra people or conflicting action."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear photoreal medium view of one adult staying low in smoke while holding a visibly wet cloth over nose and mouth."
+      }
+    ],
+    "note": "All panels visually support the expected wildfire safety actions without extra labels, panels, or unsafe contradictions.",
+    "risks": [],
+    "sha256": "0a27202dba86e50df63ffaff22e346bec4f1e4df4798177f509901a763ea9c2e",
+    "image": ".hermes/tutorial_candidates/incendio_forestal.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:26:24.875747+00:00"
+  },
+  "tornado": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Photographic interior ground-floor shelter/storage room is clear; single person and no contradictory action."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Photographic medium view clearly shows one person crouched low with hands covering head and neck; anatomy and contact points are plausible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Photographic sheltered indoor scene with one person waiting beside emergency supplies; no visible contradiction to waiting for another vortex."
+      }
+    ],
+    "note": "All three panels visually support the tornado safety captions without unsafe ambiguity or visible synthetic styling.",
+    "risks": [],
+    "sha256": "d227c0efd0e7960f33d4bcb424af939f706d2f69213c8de36e9068220130fe88",
+    "image": ".hermes/tutorial_candidates/tornado.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:26:35.867033+00:00"
+  },
+  "sequia": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of water containers, measuring cup, and notebook supporting inventory and rationing; no unsafe contradiction or extra instructional graphics."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear medium view of water being poured through a strainer into a bucket with secondary basin below, visibly supporting cascade reuse."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear medium view of roof gutter/downspout directing water into a covered bucket, supporting roof rainwater harvesting."
+      }
+    ],
+    "note": "All three panels visually support the localized drought-preparedness captions without embedded text, extra panels, or contradictory actions.",
+    "risks": [],
+    "sha256": "75ddea116f68ba052a8ce653f886c79e7a38a2fd80e27c54547361d3f54ff96b",
+    "image": ".hermes/tutorial_candidates/sequia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:26:58.465308+00:00"
+  },
+  "recon_primeras_72h": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of a small team counting/assessing people and marking a visible pavement hazard with a cone; anatomy and tool use appear plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Visible water containers and active trench digging support water and latrine setup; shovel placement and body positions are plausible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Team is visibly using a common board with notes and markers for roles/shifts; no readable text or unsafe contradiction."
+      }
+    ],
+    "note": "All panels visually support the localized tutorial actions without obvious unsafe technique, merged anatomy, or embedded labels.",
+    "risks": [],
+    "sha256": "a53c2a216591635a9e94d136bb43180af7239b46a3d68b1f19da144e90a46945",
+    "image": ".hermes/tutorial_candidates/recon_primeras_72h.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:27:07.209360+00:00"
+  },
+  "tormenta_invernal": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear photorealistic medium view of family gathered in one room with bedding, blankets, and emergency supplies; no conflicting action."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear photorealistic outdoor generator setup in snow with cord running away from house; supports keeping generator outside."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear photorealistic view of person staying inside car and signaling with a flashlight through the window."
+      }
+    ],
+    "note": "All panels visibly support the winter storm training captions without extra panels, labels, or unsafe contradictions.",
+    "risks": [],
+    "sha256": "0c26d17f43ed98c0ddb9588265b0d35cadcd229b2bb0d189883cee5ca6d870d4",
+    "image": ".hermes/tutorial_candidates/tormenta_invernal.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:50:59.772459+00:00"
+  },
+  "recon_letrinas_saneamiento": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear photoreal medium view of a person digging a trench on a sloped/downhill hillside; tools, hands, stance, and soil displacement are visible and plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear photoreal view of soil or ash being poured into a latrine opening with bucket and scoop visible; action and cause-effect are unambiguous."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear photoreal tippy-tap handwashing setup with soap at the latrine exit; hands, water flow, hanging container, and foot-operated mechanism are visible."
+      }
+    ],
+    "note": "All panels visibly support the sanitation tutorial actions without extra labels, embedded panels, or unsafe contradictions.",
+    "risks": [],
+    "sha256": "04fbf96604315f225879f8f921d3cda8713faed601313bec43b105c2e9204d92",
+    "image": ".hermes/tutorial_candidates/recon_letrinas_saneamiento.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:27:16.285959+00:00"
+  },
+  "recon_huerto_emergencia": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of a person placing small seeds into prepared soil with seed packet and hand tools visible; anatomy and cause-effect are plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear medium view of planting seeds beside an existing row of seedlings, visually supporting staggered successive planting without requiring the exact two-week interval to be visible."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear medium view of cutting individual leafy greens while leaving the plant crown and other leaves intact; hands, shears, and plant contact are visible and plausible."
+      }
+    ],
+    "note": "All panels appear photorealistic and support the expected tutorial actions without extra labels, arrows, people, or unsafe contradictions.",
+    "risks": [],
+    "sha256": "c6bf8035dcc7d3eea3cca74fde9301ae19c4e156f3805a35cc47aa88eef680e6",
+    "image": ".hermes/tutorial_candidates/recon_huerto_emergencia.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:27:25.184231+00:00"
+  },
+  "recon_agua_comunitaria": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear protected concrete water source with one person filling a bucket; hands, container, flow, and body position are visible and plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Filtering through cloth and measured liquid addition are visible with tools and contact points clear; settling is not visually encoded but not contradicted."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Distribution from tank with measuring jug and logbook is clearly shown; people and tools are plausible and support the caption."
+      }
+    ],
+    "note": "All panels present realistic documentary-style training actions without visible unsafe contradictions or extra embedded labels.",
+    "risks": [],
+    "sha256": "6b76f4f7576af551ed10e194a26e3394848561ffa7cec7bf576da72888162074",
+    "image": ".hermes/tutorial_candidates/recon_agua_comunitaria.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:51:11.434951+00:00"
+  },
+  "recon_energia_solar": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Solar panel is visibly placed in open sun while the battery/power unit is sheltered in a shaded crate; no extra actions or people."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Hands connect a red lead to a red battery terminal with the black terminal separate and visible; polarity match is clear."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Two rugged phone-like devices are visibly connected and charging from the solar setup before any other loads; cause-and-effect is clear."
+      }
+    ],
+    "note": "All three panels clearly support the expected solar charging sequence in photorealistic documentary style.",
+    "risks": [],
+    "sha256": "e68d0f087dddfa62e3a6654bb407804394e7c1b8caa914adf1514958f37c22be",
+    "image": ".hermes/tutorial_candidates/recon_energia_solar.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:27:25.720872+00:00"
+  },
+  "recon_organizacion": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium documentary-style view of a small group inventorying visible tools and supplies with clipboard present; anatomy and object handling appear plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear public cork board scene with people posting and recording information; no readable text or unsafe visual contradiction."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Open distribution scene with supplies visibly handed from a box outdoors; hands and exchange are clear and physically plausible."
+      }
+    ],
+    "note": "All three panels visually support the expected organization tutorial actions without visible text, labels, extra panels, or unsafe contradictions.",
+    "risks": [],
+    "sha256": "acd5a0cd76bf42f3f7bb19c6152f648ff17076a6b727a62e3e96edafe443d629",
+    "image": ".hermes/tutorial_candidates/recon_organizacion.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:27:42.348454+00:00"
+  },
+  "recon_conservar_alimentos": {
+    "status": "approved",
+    "panels": [
+      {
+        "number": 1,
+        "pass": true,
+        "note": "Clear medium view of lean thin meat strips on a cutting board being salted; hands, salt, knife, and cause-effect are visible and plausible."
+      },
+      {
+        "number": 2,
+        "pass": true,
+        "note": "Clear outdoor drying setup with strips on a mesh rack in sun and hands snapping a dried piece; action supports dryness and breakage."
+      },
+      {
+        "number": 3,
+        "pass": true,
+        "note": "Clear view of visibly spoiled food being dumped from a container into a trash bin without tasting; action supports disposal."
+      }
+    ],
+    "note": "All three panels are photorealistic and visually support the localized captions without extra labels or unsafe contradictions.",
+    "risks": [],
+    "sha256": "fdd215ecb70b9034385725a95059635c62fa16e6ae38c3403a3c1ec386ad8962",
+    "image": ".hermes/tutorial_candidates/recon_conservar_alimentos.png",
+    "auditor": "gpt-5.5-codex-vision",
+    "reviewed_at": "2026-07-11T01:27:30.647087+00:00"
+  }
+}

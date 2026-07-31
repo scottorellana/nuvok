@@ -11,6 +11,11 @@ import generate_tutorial_panels as generator
 
 
 class GenerateTutorialPanelsTest(unittest.TestCase):
+    def test_cli_defaults_to_high_quality(self):
+        args = generator.build_parser().parse_args(["test_guide"])
+
+        self.assertEqual(args.quality, "high")
+
     def test_panel_prompt_locks_the_same_cast_across_all_panels(self):
         spec = {
             "panels": ["first action", "second action", "third action"],
@@ -172,6 +177,77 @@ class GenerateTutorialPanelsTest(unittest.TestCase):
                 (generator.PANEL_DIR / "test_guide/panel_1.png").exists()
             )
 
+    def test_generate_panel_uses_atomic_temporary_output(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            panel_dir = Path(tmp) / "panels"
+            spec = {
+                "panels": ["first action", "second action", "third action"],
+                "context": "same scene",
+                "avoid": "defects",
+            }
+            provider_outputs = []
+
+            def fake_run(command, **_kwargs):
+                provider_output = Path(command[3])
+                provider_outputs.append(provider_output)
+                Image.effect_noise((1024, 1536), 100).convert("RGB").save(provider_output)
+                return mock.Mock(returncode=0, stdout="OK", stderr="")
+
+            with mock.patch.object(generator.subprocess, "run", side_effect=fake_run):
+                _index, ok, _message = generator.generate_panel(
+                    "test_guide",
+                    spec,
+                    0,
+                    force=True,
+                    quality="high",
+                    panel_dir=panel_dir,
+                )
+
+            final = panel_dir / "test_guide/panel_1.png"
+            self.assertTrue(ok)
+            self.assertTrue(final.is_file())
+            self.assertTrue(provider_outputs)
+            self.assertNotEqual(provider_outputs[0], final)
+            self.assertFalse(any(path.exists() for path in provider_outputs))
+
+    def test_wrong_provider_dimensions_do_not_replace_existing_panel(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            panel_dir = Path(tmp) / "panels"
+            output = panel_dir / "test_guide/panel_1.png"
+            output.parent.mkdir(parents=True)
+            Image.effect_noise((1024, 1536), 100).convert("RGB").save(output)
+            original = output.read_bytes()
+            spec = {
+                "panels": ["first action", "second action", "third action"],
+                "context": "same scene",
+                "avoid": "defects",
+            }
+
+            def fake_run(command, **_kwargs):
+                Image.effect_noise((864, 1821), 100).convert("RGB").save(Path(command[3]))
+                return mock.Mock(returncode=0, stdout="OK", stderr="")
+
+            with mock.patch.object(generator.subprocess, "run", side_effect=fake_run):
+                _index, ok, _message = generator.generate_panel(
+                    "test_guide",
+                    spec,
+                    0,
+                    force=True,
+                    quality="high",
+                    panel_dir=panel_dir,
+                )
+
+            self.assertFalse(ok)
+            self.assertEqual(output.read_bytes(), original)
+
+    def test_source_validation_rejects_jpeg_disguised_as_png(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            image_path = Path(tmp) / "disguised.png"
+            Image.new("RGB", (1024, 1536), "white").save(image_path, format="JPEG")
+
+            with self.assertRaisesRegex(ValueError, "PNG"):
+                generator.validate_source_panel(image_path)
+
     def test_cli_accepts_explicit_fresh_staging_directories(self):
         args = generator.build_parser().parse_args(
             [
@@ -214,6 +290,46 @@ class GenerateTutorialPanelsTest(unittest.TestCase):
             with Image.open(result) as composed:
                 self.assertEqual(composed.size, (1544, 768))
             self.assertFalse((production_dir / f"{slug}.png").exists())
+
+    def test_compose_rejects_wrong_source_dimensions_without_replacing_candidate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            panel_dir = root / "panels"
+            output_dir = root / "candidates"
+            source_dir = panel_dir / "test_guide"
+            source_dir.mkdir(parents=True)
+            output_dir.mkdir()
+            candidate = output_dir / "test_guide.png"
+            candidate.write_bytes(b"existing-candidate")
+            for index in (1, 2):
+                Image.new("RGB", (1024, 1536), "white").save(
+                    source_dir / f"panel_{index}.png"
+                )
+            Image.new("RGB", (864, 1821), "white").save(source_dir / "panel_3.png")
+
+            with self.assertRaisesRegex(ValueError, "1024x1536"):
+                generator.compose(
+                    "test_guide",
+                    panel_dir=panel_dir,
+                    output_dir=output_dir,
+                )
+
+            self.assertEqual(candidate.read_bytes(), b"existing-candidate")
+
+    def test_generate_slugs_rejects_duplicate_writers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with self.assertRaisesRegex(ValueError, "duplicate tutorial slugs"):
+                generator.generate_slugs(
+                    ["guide", "guide"],
+                    {"guide": {}},
+                    selected_panels=[1],
+                    force=False,
+                    quality="high",
+                    workers=2,
+                    panel_dir=root / "panels",
+                    output_dir=root / "candidates",
+                )
 
     def test_scheduler_keeps_a_global_worker_pool_busy_across_slugs(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import time
 
 from PIL import Image, ImageOps
@@ -20,6 +21,7 @@ DEFAULT_OUT_DIR = ROOT / ".hermes/tutorial_candidates"
 PANEL_DIR = ROOT / ".hermes/tutorial_panels"
 PYTHON = Path.home() / ".hermes/hermes-agent/venv/bin/python3"
 PANEL_SIZE = (512, 768)
+SOURCE_PANEL_SIZE = (1024, 1536)
 DIVIDER = 4
 
 BASE_PROMPT = """Create ONE single vertical portrait photorealistic emergency field-manual training photograph, indistinguishable from a real high-resolution documentary photograph made by a professional safety instructor with a full-frame camera. This must look captured in the physical world, never illustrated or computer-generated. This is one still image, not a sequence: absolutely no triptych, split screen, collage, inset, before-and-after view, repeated pose, multiple exposure, motion trail or ghosting. Show only the one action specified below, frozen sharply with deep focus and physically plausible hand and tool placement. Use real locations, realistic commercially available equipment, and a static training setup with a clearly artificial medical mannequin or simulator when the context requests one. Keep people minimal; frame only the body parts needed to teach the action. Every visible hand, limb and tool must be fully formed and anatomically correct. Neutral documentary lighting, natural skin and material texture, accurate scale and perspective, no dramatic cinema effects.
@@ -107,6 +109,34 @@ def panel_prompt(spec: dict[str, object], index: int) -> str:
     )
 
 
+def validate_source_panel(image: Path) -> tuple[int, int]:
+    try:
+        with Image.open(image) as opened:
+            opened.load()
+            dimensions = opened.size
+            image_format = opened.format
+    except OSError as exc:
+        raise ValueError(f"unreadable source panel: {image}") from exc
+    if image_format != "PNG":
+        raise ValueError(f"source panel must be a real PNG, got {image_format!r}: {image}")
+    if dimensions != SOURCE_PANEL_SIZE:
+        raise ValueError(
+            f"source panel must be {SOURCE_PANEL_SIZE[0]}x{SOURCE_PANEL_SIZE[1]}, "
+            f"got {dimensions[0]}x{dimensions[1]}: {image}"
+        )
+    return dimensions
+
+
+def reusable_source_panel(image: Path) -> bool:
+    if not image.is_file() or image.stat().st_size <= 100_000:
+        return False
+    try:
+        validate_source_panel(image)
+    except ValueError:
+        return False
+    return True
+
+
 def generate_panel(
     slug: str,
     spec: dict[str, object],
@@ -116,16 +146,31 @@ def generate_panel(
     panel_dir: Path = PANEL_DIR,
 ) -> tuple[int, bool, str]:
     output = panel_dir / slug / f"panel_{index + 1}.png"
-    if not force and output.exists() and output.stat().st_size > 100_000:
+    if not force and reusable_source_panel(output):
         return index, True, f"SKIP panel {index + 1}"
     output.parent.mkdir(parents=True, exist_ok=True)
     prompt = panel_prompt(spec, index)
     last_error = ""
     for attempt in range(1, 3):
+        temporary_handle = tempfile.NamedTemporaryFile(
+            prefix=f".panel_{index + 1}.",
+            suffix=".png",
+            dir=output.parent,
+            delete=False,
+        )
+        temporary = Path(temporary_handle.name)
+        temporary_handle.close()
         started = time.monotonic()
         try:
             result = subprocess.run(
-                [str(PYTHON), str(GENERATOR), prompt, str(output), "1024x1536", quality],
+                [
+                    str(PYTHON),
+                    str(GENERATOR),
+                    prompt,
+                    str(temporary),
+                    "1024x1536",
+                    quality,
+                ],
                 capture_output=True,
                 text=True,
                 timeout=360,
@@ -134,9 +179,23 @@ def generate_panel(
             last_error = "timeout after 360s"
         else:
             elapsed = time.monotonic() - started
-            if result.returncode == 0 and output.exists() and output.stat().st_size > 100_000:
-                return index, True, f"OK panel {index + 1} ({output.stat().st_size:,} bytes, {elapsed:.0f}s)"
-            last_error = (result.stderr or result.stdout or "unknown error").strip()[-400:]
+            if result.returncode == 0:
+                try:
+                    validate_source_panel(temporary)
+                    if temporary.stat().st_size <= 100_000:
+                        raise ValueError("generated source panel is unexpectedly small")
+                except (OSError, ValueError) as exc:
+                    last_error = str(exc)
+                else:
+                    temporary.replace(output)
+                    return index, True, (
+                        f"OK panel {index + 1} "
+                        f"({output.stat().st_size:,} bytes, {elapsed:.0f}s)"
+                    )
+            else:
+                last_error = (result.stderr or result.stdout or "unknown error").strip()[-400:]
+        finally:
+            temporary.unlink(missing_ok=True)
         if attempt == 1:
             time.sleep(3)
     return index, False, f"FAIL panel {index + 1}: {last_error}"
@@ -148,10 +207,16 @@ def compose(
     panel_dir: Path = PANEL_DIR,
     output_dir: Path = DEFAULT_OUT_DIR,
 ) -> Path:
+    sources: list[Image.Image] = []
+    for index in range(3):
+        source_path = panel_dir / slug / f"panel_{index + 1}.png"
+        validate_source_panel(source_path)
+        with Image.open(source_path) as opened:
+            sources.append(opened.convert("RGB"))
+
     canvas = Image.new("RGB", (PANEL_SIZE[0] * 3 + DIVIDER * 2, PANEL_SIZE[1]), "#ddd8ca")
     x = 0
-    for index in range(3):
-        source = Image.open(panel_dir / slug / f"panel_{index + 1}.png").convert("RGB")
+    for index, source in enumerate(sources):
         fitted = ImageOps.fit(source, PANEL_SIZE, method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
         canvas.paste(fitted, (x, 0))
         x += PANEL_SIZE[0]
@@ -160,7 +225,25 @@ def compose(
             x += DIVIDER
     output = output_dir / f"{slug}.png"
     output.parent.mkdir(parents=True, exist_ok=True)
-    canvas.save(output, optimize=True)
+    temporary_handle = tempfile.NamedTemporaryFile(
+        prefix=f".{slug}.",
+        suffix=".png",
+        dir=output.parent,
+        delete=False,
+    )
+    temporary = Path(temporary_handle.name)
+    temporary_handle.close()
+    try:
+        canvas.save(temporary, optimize=True)
+        with Image.open(temporary) as opened:
+            opened.load()
+            if opened.format != "PNG":
+                raise ValueError(f"composed tutorial must be PNG, got {opened.format!r}")
+            if opened.size != (1544, 768):
+                raise ValueError(f"invalid composed dimensions: {opened.size}")
+        temporary.replace(output)
+    finally:
+        temporary.unlink(missing_ok=True)
     return output
 
 
@@ -175,6 +258,8 @@ def generate_slugs(
     panel_dir: Path = PANEL_DIR,
     output_dir: Path = DEFAULT_OUT_DIR,
 ) -> list[str]:
+    if len(slugs) != len(set(slugs)):
+        raise ValueError("duplicate tutorial slugs would create concurrent writers")
     results_by_slug: dict[str, list[tuple[int, bool, str]]] = {
         slug: [] for slug in slugs
     }
@@ -222,7 +307,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument("slugs", nargs="+", help="Exact tutorial slugs")
     parser.add_argument("--force", action="store_true")
-    parser.add_argument("--quality", choices=["low", "medium", "high"], default="medium")
+    parser.add_argument("--quality", choices=("low", "medium", "high"), default="high")
     parser.add_argument("--workers", type=int, default=3)
     parser.add_argument(
         "--storyboards",

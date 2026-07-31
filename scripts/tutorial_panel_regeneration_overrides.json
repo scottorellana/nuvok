@@ -1,0 +1,116 @@
+{
+  "abrigo_refugio": {
+    "1": "Select an open dry site with clear sky visible above and no overhead branches; lay a 20–30 cm bed of dry pine boughs.",
+    "2": "Build a low compact lean-to: ridgepole securely seated in a forked support and every angled branch visibly notched or lashed in place."
+  },
+  "agua_survival": {
+    "1": "Hold the clean bottle upright above the streambed while a clearly visible upstream flow enters its open mouth; bottle and hand never touch rocks, gravel, mud or streambed."
+  },
+  "alimentacion_supervivencia": {
+    "1": "On a stable board, brace the fish with curled fingers far behind the blade and cut visibly away from the hand and body.",
+    "2": "Drop entrails directly from the fish into a separate open waste bag positioned away from the board; clean fillets remain isolated on the board."
+  },
+  "botiquin": {
+    "2": "Place one torn stained gauze packet down in a discard area beside an empty blister; keep one intact sealed packet separately in the usable-supplies area."
+  },
+  "convulsiones": {
+    "3": "After movement stops, roll the exact same casualty in unchanged clothing into a stable recovery position, mouth downward, and monitor breathing; phone screen blank and no readable text."
+  },
+  "cruce_rios": {
+    "2": "Before entering, show both hip belt and chest strap visibly unclipped and hanging free; plant a strong pole diagonally into the visibly approaching upstream current."
+  },
+  "fracturas_inmovilizacion": {
+    "2": "Before applying any ties, place two unmistakably rigid padded wooden boards on opposite sides of the unchanged arm, each extending beyond wrist and elbow; do not straighten the arm."
+  },
+  "fuego_supervivencia": {
+    "1": "Sharp freeze-frame with unblurred hands and four clearly separated piles: fluffy tinder, pencil-thin kindling, finger-thick sticks and larger dry wood.",
+    "2": "Close view of the knife's blunt back spine—not its cutting edge—scraping the ferro rod toward the tinder; contact point and stable hands fully visible."
+  },
+  "hemorragia_severa": {
+    "2": "Pack one continuous gauze strip firmly into the simulated wound cavity and press over it with one gloved hand; no tourniquet or tourniquet components anywhere in this panel."
+  },
+  "hipotermia_golpe_calor": {
+    "2": "Same dry casualty fully wrapped above and below; every warm bottle completely enclosed in thick cloth before placement at chest, armpits and groin, with no bottle touching skin."
+  },
+  "infarto_acv": {
+    "3": "Exact same conscious man in unchanged clothing remains calm and still while rescuer loosens his collar and monitors breathing; closed AED rests on the floor nearby, not on his body."
+  },
+  "intoxicaciones": {
+    "1": "From outside the fume area, guide one clearly identifiable walking casualty along a clean route away from the spill and container into outdoor fresh air; do not touch either.",
+    "2": "Same casualty remains awake and seated in fresh air; original container stands far away while rescuer visibly makes a speakerphone emergency/poison-control call on a blank, text-free screen.",
+    "3": "Same casualty in unchanged clothing lies once in a stable recovery position: upper leg bent to prevent rolling, mouth downward; rescuer watches chest movement and checks breathing."
+  },
+  "mordeduras_picaduras": {
+    "3": "Two rescuers keep the casualty level and still on a rigid litter; a third rescuer beside them visibly makes an urgent speakerphone transport call on a blank screen."
+  },
+  "navegacion": {
+    "1": "On a dry tabletop with no bowl, cork or compass present, hold one needle safely by its opposite end and stroke only one end repeatedly in one direction with the same magnet pole.",
+    "2": "Place the magnetized needle horizontally across the center of a dry flat cork disk with equal overhang; magnet completely absent and bowl still untouched."
+  },
+  "pesca_trampas_supervivencia": {
+    "1": "On a stable board, brace the bottle far behind the marked cutting line and move the blade away from the bracing hand; hand, blade and full cut path clearly separated.",
+    "3": "Show the uncapped funnel opening clearly visible and facing a visibly indicated downstream flow; anchor trap beside the calm bank with retrieval cord tied to a stake above water."
+  },
+  "quemaduras": {
+    "1": "One rescuer first switches off the clearly visible heat source and moves the forearm away, then removes watch and ring before swelling; exactly two rescuer hands."
+  },
+  "rcp_adulto": {
+    "2": "Wider shoulder-to-chest crop: exactly two interlocked hands on center of lower-half sternum, both complete straight elbows visible and shoulders vertically above hands; instructor face remains outside frame."
+  },
+  "rcp_nino_bebe": {
+    "2": "Tight overhead-oblique crop: ONLY the heel of one open palm touches the lower-half sternum below the nipple line; all five fingers visibly arched with daylight gap, pointing toward the head; no second hand or abdomen contact.",
+    "3": "Tight side profile: adult lips visibly surround BOTH manikin nose and open mouth in one seal; one hand clearly supports forehead, head neutral to slightly extended, chest only slightly raised."
+  },
+  "senas_rescate": {
+    "3": "Exact same survivor in unchanged clothing holds a signal mirror near the face and sights one helicopter between two extended fingers; bright reflected spot visibly aligned through the finger gap toward the helicopter."
+  },
+  "shock": {
+    "3": "Keep casualty covered with a dry blanket; rescuer kneels beside them, visibly makes a speakerphone emergency call on a blank screen, maintains reassuring eye contact and watches chest movement."
+  },
+  "trauma_cabeza_columna": {
+    "1": "Establish the same simulated casualty, clothing, board and room used in every panel; rescuer behind head holds both sides without traction, rotation or thumb pressure on forehead while making calm eye contact.",
+    "3": "Exact same casualty, clothing, board and room; place two equal rolled towels snugly beside the head as lateral supports while monitoring airway; nothing crosses the neck."
+  },
+  "triaje_multivictima": {
+    "1": "From a safe position, direct all walking people fully inside one visibly bounded safe assembly area; attach one blank green triage tag—not an armband—to each walker."
+  },
+  "montana_peligros": {
+    "1": "During a lightning storm, show three hikers widely separated, each crouched alone on a pack; all metal poles and tools left far away.",
+    "2": "Show the hiker on distant low-angle safe terrain making a wide detour around—not onto or beside—a clearly loaded 30–45° avalanche slope."
+  },
+  "ciudad_peligros": {
+    "1": "Wide view of one person's complete body opening a window and manually closing the gas valve; no flashlight, phone, switch, flame or electrical device anywhere."
+  },
+  "pantano_moverse": {
+    "3": "Person lies flat to distribute weight and crawls backward toward visibly firmer ground, pulling forearms backward while legs trail; pole lies aside and is not used to push forward."
+  },
+  "pantano_peligros": {
+    "2": "Macro close-up: one clean fingernail visibly slides between skin and the leech's mouth attachment point, lifting it gently away; no flame, chemical or squeezing."
+  },
+  "tornado": {
+    "1": "Person crouches fully inside a small windowless interior ground-floor room, well away from the closed doorway and all exterior walls."
+  },
+  "artico_peligros": {
+    "3": "Show the post-exit action only: survivor lies flat on solid ice several body lengths from the hole and rolls sideways away from it, ice picks retained."
+  },
+  "recon_letrinas_saneamiento": {
+    "1": "One complete adult digs one latrine trench on visibly downhill ground, with the water source far uphill in the background; no other people.",
+    "2": "Exactly one complete adult pours one scoop of dry soil or ash directly over the latrine contents after use; no other people, hands or legs."
+  },
+  "recon_agua_comunitaria": {
+    "1": "One complete adult fills one clean bucket from the single protected community source; no cropped or partial people at frame edges.",
+    "2": "One complete adult performs one clearly visible treatment chain on a table: pour settled water through clean cloth into a clean vessel, then add a measured chlorine dose; exactly two attached hands."
+  },
+  "recon_huerto_emergencia": {
+    "1": "Exactly one gardener plants radish and leafy-green seeds in one prepared row; no other people or hands.",
+    "2": "Exactly one gardener plants seeds in one fresh row beside an already sprouted older row, making staggered successive planting visually clear; no transplanting.",
+    "3": "Exactly one gardener cuts only mature outer leaves, with the other hand safely behind the scissors; center growth remains intact."
+  },
+  "recon_energia_solar": {
+    "1": "One unobstructed solar panel fully illuminated by direct sun; connected battery fully shaded under a ventilated cover; no people, body shadows or extra tools.",
+    "3": "Only the designated mesh phones are connected to the charger and visibly charging first; all other devices disconnected and set aside, with no people or unused cables."
+  },
+  "recon_conservar_alimentos": {
+    "3": "Exactly one adult discards suspicious food directly into a waste bin without tasting or bringing it near the face; no other people or hands."
+  }
+}

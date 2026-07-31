@@ -58,8 +58,10 @@ python3 - "$OUT/site/version.json" "$VERSION" \
   "$APK_NAME" "$APK_SHA" "$APK_SIZE" "$DMG_NAME" "$DMG_SHA" "$DMG_SIZE" <<'PYEOF'
 import json, sys
 dest, version, apk_n, apk_sha, apk_sz, dmg_n, dmg_sha, dmg_sz = sys.argv[1:9]
+from datetime import datetime, timezone
 d = json.load(open('website/version.json'))
 d['version'] = version
+d['generatedAt'] = datetime.now(timezone.utc).isoformat()
 d['platforms']['android'].update(
     url=f'https://nuvok.org/api/dl/{apk_n}', sha256=apk_sha, sizeBytes=int(apk_sz))
 d['platforms']['macos'].update(

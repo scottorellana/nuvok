@@ -1,5 +1,65 @@
 // Nuvok — Interactions & Animations
 
+// ══ Configuración de lanzamiento ══
+// Un solo lugar para conectar los servicios externos. Vacío = el sitio
+// degrada con honestidad (botón de compra → lista de espera por correo).
+const NUVOK_CONFIG = {
+  // URL del checkout de Lemon Squeezy (se pega al crear el producto).
+  checkoutUrl: '',
+  // Base del API de la tienda (Worker de Cloudflare, ver store-worker/).
+  apiBase: '/api',
+  // GHL / Hexona (GoHighLevel): pegar el src del iframe del formulario
+  // (Sites → Forms → Integrate) para captar leads en el CRM.
+  ghlFormUrl: '',
+  // GHL: src del script del chat widget (Sites → Chat Widget → Get Code).
+  ghlChatWidgetSrc: '',
+};
+
+// ── Botón de compra: checkout real si existe; si no, lista de espera ──
+function initBuy() {
+  const btn = document.getElementById('buy-btn');
+  if (!btn) return;
+  if (NUVOK_CONFIG.checkoutUrl) {
+    btn.href = NUVOK_CONFIG.checkoutUrl;
+    btn.removeAttribute('data-i18n');
+  } else {
+    // Aún sin tienda: llevar al formulario/correo es honesto, no un 404.
+    btn.href = '#contacto';
+    btn.textContent = 'Muy pronto — avísame';
+  }
+}
+
+// ── CRM (GHL/Hexona): formulario y chat, solo si están configurados ──
+function initGhl() {
+  const slot = document.getElementById('ghl-form-slot');
+  if (slot && NUVOK_CONFIG.ghlFormUrl) {
+    const f = document.createElement('iframe');
+    f.src = NUVOK_CONFIG.ghlFormUrl;
+    f.style.cssText = 'width:100%;min-height:420px;border:none;border-radius:12px;';
+    f.title = 'Formulario de contacto';
+    slot.appendChild(f);
+    const mail = document.getElementById('contact-mail');
+    if (mail) mail.classList.add('ghost');
+  }
+  if (NUVOK_CONFIG.ghlChatWidgetSrc) {
+    const s = document.createElement('script');
+    s.src = NUVOK_CONFIG.ghlChatWidgetSrc;
+    s.defer = true;
+    document.body.appendChild(s);
+  }
+}
+
+// ── Detección del sistema del visitante (usada en /descargas.html) ──
+function detectOS() {
+  const ua = navigator.userAgent;
+  if (/Android/i.test(ua)) return 'android';
+  if (/iPhone|iPad|iPod/i.test(ua)) return 'ios';
+  if (/Macintosh/i.test(ua)) return 'macos';
+  if (/Windows/i.test(ua)) return 'windows';
+  if (/Linux/i.test(ua)) return 'linux';
+  return 'otro';
+}
+
 // ── Gate reveal animations on JS availability ──
 // CSS hides `.js .reveal` (opacity 0). We add the `.js` class to <html> on
 // load so users without JS / offline-first browsers / reduced-motion see the
@@ -154,5 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initMeshAnim();
   initSmoothScroll();
+  initBuy();
+  initGhl();
   // initParallax is janky with CSS animation, skip for now
 });

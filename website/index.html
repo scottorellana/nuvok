@@ -42,8 +42,8 @@
         <a href="#que-hace" data-i18n="nav.what">Qué hace</a>
         <a href="#mesh" data-i18n="nav.mesh">Malla</a>
         <a href="#offline" data-i18n="nav.offline">Sin internet</a>
-        <a href="#descargas" data-i18n="nav.pricing">Descargas</a>
-        <a href="#descargas" class="btn ghost" style="padding:9px 18px;" data-i18n="nav.buy">Descargar</a>
+        <a href="#descargas" data-i18n="nav.pricing">Comprar</a>
+        <a href="#descargas" class="btn ghost" style="padding:9px 18px;" data-i18n="nav.buy">Comprar — $99</a>
       </div>
       <div class="lang-switch">
         <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
@@ -63,10 +63,10 @@
       <h1><span data-i18n="hero.title_pre">El conocimiento que </span><span class="hl" data-i18n="hero.title_hl">salva vidas</span><span data-i18n="hero.title_post">, sin depender de internet.</span></h1>
       <p class="sub" data-i18n="hero.subtitle">Instálalo en tu teléfono en minutos: primeros auxilios paso a paso, mapas con GPS, comunicación entre tu grupo y una biblioteca completa — todo funcionando sin señal, sin datos, sin nube.</p>
       <div class="cta-row">
-        <a href="#descargas" class="btn" data-i18n="hero.cta1">Descargar gratis</a>
+        <a href="#descargas" class="btn" data-i18n="hero.cta1">Comprar — $99 único</a>
         <a href="#que-hace" class="btn ghost" data-i18n="hero.cta2">Ver qué incluye</a>
       </div>
-      <p class="hero-note" data-i18n="hero.note">Sin suscripciones. Sin cuentas. Todo el contenido es tuyo y se copia entre dispositivos.</p>
+      <p class="hero-note" data-i18n="hero.note">Pago único. Sin suscripciones ni cuentas. Código abierto (GPL v3): compilarlo tú mismo es gratis, siempre.</p>
     </div>
     <div class="device-wrap">
       <div class="device">
@@ -204,55 +204,57 @@
 <section id="descargas" class="band">
   <div class="wrap">
     <div class="center">
-      <span class="eyebrow">Descarga gratis · Free download</span>
-      <h2>Instálalo en tu teléfono, de forma segura</h2>
-      <p class="lead">Nuvok trae TODO adentro para funcionar sin internet desde el primer
-      segundo: mapas, biblioteca médica, 67 guías ilustradas en 7 idiomas e IA local.
-      Descárgalo una vez con WiFi — después no necesita nada. Disponible hoy para Android
-      e iPhone; muy pronto en Play Store y App Store.</p>
+      <span class="eyebrow">Pago único · One-time purchase</span>
+      <h2>Un pago. Tuyo para siempre.</h2>
+      <p class="lead">La app se instala ligera y al abrirla eliges tu contenido: el modelo de
+      IA para tu equipo, el mapa de tu país y la enciclopedia médica en tu idioma. Sin
+      suscripciones, sin cuentas — y con el código abierto para que cualquiera lo audite.</p>
     </div>
     <div class="prices">
       <div class="price feature">
-        <span class="tag">ANDROID 8.0+</span>
-        <h3>🤖 Nuvok para Android</h3>
-        <p class="desc">Instalador completo (APK firmado). Todo incluido, sin compras dentro.</p>
-        <div class="amount">1.60<span> GB</span></div>
+        <span class="tag">TODO INCLUIDO</span>
+        <h3>🎒 Nuvok completo</h3>
+        <p class="desc">Binarios oficiales firmados para tus dispositivos, con actualizaciones incluidas.</p>
+        <div class="amount">$99<span> · pago único</span></div>
         <ul>
-          <li>Chat y SOS por Bluetooth/WiFi sin señal</li>
-          <li>67 guías ilustradas en 7 idiomas</li>
-          <li>Mapas offline + IA local incluidos</li>
-          <li style="word-break:break-all;font-size:.72rem">SHA-256 en <a href="/version.json">version.json</a></li>
+          <li>macOS (Apple Silicon) y Android hoy</li>
+          <li>Windows y Linux al completar verificación</li>
+          <li>iPhone incluido cuando salga en App Store</li>
+          <li>Actualizaciones de la versión 1 incluidas</li>
+          <li>Sin límite de dispositivos en tu hogar</li>
+          <li style="word-break:break-all;font-size:.72rem">Checksums SHA-256 publicados con cada versión</li>
         </ul>
-        <a href="/downloads/nuvok-android-v0.5.0.apk" class="btn">Descargar APK v0.5.0</a>
+        <a href="#contacto" id="buy-btn" class="btn">Comprar — $99</a>
       </div>
       <div class="price">
-        <span class="tag">iOS 15+</span>
-        <h3>📱 Nuvok para iPhone</h3>
-        <p class="desc">Instalación directa mientras se aprueba en App Store — sin jailbreak, firmado con tu Apple ID.</p>
-        <div class="amount">beta<span> pública</span></div>
+        <span class="tag">¿YA COMPRASTE?</span>
+        <h3>🔑 Tus descargas</h3>
+        <p class="desc">Con la clave que recibiste por correo descargas los instaladores cuando quieras.</p>
+        <div class="amount">clave<span> de compra</span></div>
         <ul>
-          <li>Mismo chat, SOS, guías, mapas e IA</li>
-          <li>Malla Bluetooth con Android y macOS</li>
-          <li>Instrucciones paso a paso incluidas</li>
+          <li>Enlaces directos y reanudables</li>
+          <li>Verificables con SHA-256</li>
+          <li>Sin crear ninguna cuenta</li>
         </ul>
-        <a href="mailto:hola@nuvok.org?subject=Nuvok%20iPhone%20beta" class="btn ghost" style="width:100%;justify-content:center;">Pedir acceso a la beta</a>
+        <a href="/descargas.html" class="btn ghost" style="width:100%;justify-content:center;">Ir a mis descargas</a>
       </div>
       <div class="price">
-        <h3>🍎 Nuvok para macOS</h3>
-        <p class="desc">Apple Silicon. La misma app completa en tu computadora — y nodo del mesh.</p>
-        <div class="amount">1.56<span> GB</span></div>
+        <span class="tag">GRATIS · GPL v3</span>
+        <h3>🧑‍💻 Compílalo tú</h3>
+        <p class="desc">Nuvok es software libre: el código completo es público y compilarlo no cuesta nada — hoy y siempre.</p>
+        <div class="amount">$0<span> · código abierto</span></div>
         <ul>
-          <li>Mismo chat, guías, mapas e IA</li>
-          <li>Sirve mapas y actualizaciones a tu red local</li>
-          <li>Arrastra a Aplicaciones y listo</li>
-          <li style="word-break:break-all;font-size:.72rem">SHA-256 en <a href="/version.json">version.json</a></li>
+          <li>Código completo, auditable por cualquiera</li>
+          <li>Guía de compilación paso a paso</li>
+          <li>Comprar financia el proyecto; compilar es tu derecho</li>
         </ul>
-        <a href="/downloads/Nuvok-macOS-v0.5.0.dmg" class="btn ghost" style="width:100%;justify-content:center;">Descargar DMG v0.5.0</a>
+        <a href="https://github.com/scottorellana/prepper-pad" id="repo-link" rel="noopener" class="btn ghost" style="width:100%;justify-content:center;">Ver el código en GitHub</a>
       </div>
     </div>
     <p class="hero-note" style="text-align:center;margin-top:18px">Android pedirá permiso para
-    instalar apps de origen desconocido — es normal para apps fuera de la tienda; verifica el
-    SHA-256 si quieres certeza total. · iPhone: acceso beta por correo mientras sale en App Store.</p>
+    instalar apps de origen desconocido — es normal fuera de la tienda; el SHA-256 te da
+    certeza total. · La compra la procesa Lemon Squeezy (impuestos y factura incluidos);
+    nosotros nunca vemos tu tarjeta.</p>
   </div>
 </section>
 
@@ -263,8 +265,13 @@
       <span class="eyebrow">Comunidad</span>
       <h2>Prepara a tu gente antes de necesitarlo</h2>
       <p class="lead" style="margin:0 auto 26px;">Cada teléfono con Nuvok es un nodo más de la red
-      de tu familia y tu barrio. Compártelo — en emergencia, más nodos = más alcance.</p>
-      <a href="mailto:hola@nuvok.org?subject=Nuvok" class="btn">Escríbenos — hola@nuvok.org</a>
+      de tu familia y tu barrio. Déjanos tu correo para avisarte del lanzamiento y las
+      actualizaciones importantes.</p>
+      <!-- Formulario del CRM (GHL/Hexona): app.js lo inserta aquí cuando
+           NUVOK_CONFIG.ghlFormUrl tiene el embed. Sin configurar, se muestra
+           el correo de siempre. -->
+      <div id="ghl-form-slot" style="max-width:560px;margin:0 auto 18px;"></div>
+      <a href="mailto:hola@nuvok.org?subject=Nuvok" id="contact-mail" class="btn">Escríbenos — hola@nuvok.org</a>
     </div>
   </div>
 </section>
@@ -281,7 +288,12 @@
       </div>
       <div data-i18n="footer.copy">© 2026 Nuvok · Conocimiento offline que salva vidas</div>
     </div>
-    <p class="disclaimer" data-i18n="footer.disclaimer">Las guías de primeros auxilios son material educativo y no sustituyen la atención médica profesional ni un curso presencial certificado; busca ayuda médica siempre que sea posible. El radio LoRa es un accesorio en desarrollo; su disponibilidad, alcance y compatibilidad finales se confirmarán en el lanzamiento. Datos de mapa © OpenStreetMap contributors.</p>
+    <p style="margin:10px 0 0;font-size:.85rem;">
+      <a href="https://github.com/scottorellana/prepper-pad" rel="noopener">Código fuente (GPL v3)</a> ·
+      <a href="/descargas.html">Mis descargas</a> ·
+      <a href="mailto:hola@nuvok.org">hola@nuvok.org</a>
+    </p>
+    <p class="disclaimer" data-i18n="footer.disclaimer">Las guías de primeros auxilios son material educativo y no sustituyen la atención médica profesional ni un curso presencial certificado; busca ayuda médica siempre que sea posible. El radio LoRa es un accesorio en desarrollo; su disponibilidad, alcance y compatibilidad finales se confirmarán en el lanzamiento. Datos de mapa © OpenStreetMap contributors. Nuvok es software libre bajo GPL v3; «Nuvok» y su logo identifican las compilaciones oficiales.</p>
   </div>
 </footer>
 

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mis descargas — Nuvok</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="icons/favicon-32.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <a href="/" class="logo">
+      <img src="icons/favicon-32.png" srcset="icons/icon-192.png 2x" width="28" height="28"
+           alt="" class="logo-mark-img" /> Nuvok
+    </a>
+  </div>
+</nav>
+
+<main id="main" role="main" style="padding-top:96px;">
+<section class="band">
+  <div class="wrap" style="max-width:720px;">
+    <div class="center">
+      <span class="eyebrow">Compradores · Buyers</span>
+      <h2>Tus descargas</h2>
+      <p class="lead">Pega la clave que recibiste por correo al comprar. Sin cuentas ni
+      contraseñas: la clave es tu acceso. <span style="opacity:.7">Paste the key from your
+      purchase email.</span></p>
+    </div>
+
+    <form id="key-form" class="box" style="padding:26px;">
+      <label for="key" style="display:block;margin-bottom:8px;font-weight:600;">Clave de compra</label>
+      <input id="key" name="key" type="text" autocomplete="off" spellcheck="false"
+             placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+             style="width:100%;padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:inherit;font-size:1rem;" />
+      <button type="submit" class="btn" style="margin-top:14px;width:100%;justify-content:center;">Ver mis descargas</button>
+      <p id="status" class="hero-note" style="margin-top:12px;min-height:1.4em;" role="status" aria-live="polite"></p>
+    </form>
+
+    <div id="files"></div>
+
+    <p class="hero-note" style="margin-top:22px;">¿Perdiste la clave o algo no funciona?
+    Escríbenos a <a href="mailto:hola@nuvok.org?subject=Descargas%20Nuvok">hola@nuvok.org</a>
+    con el correo de tu compra. · ¿Aún no compraste? <a href="/#descargas">Compra aquí</a> o
+    <a href="https://github.com/scottorellana/prepper-pad" rel="noopener">compílalo gratis (GPL)</a>.</p>
+  </div>
+</section>
+</main>
+
+<script src="app.js"></script>
+<script>
+// Pide al Worker la lista de instaladores para esta clave y resalta el del
+// sistema del visitante. Si el API aún no está desplegado, lo dice con
+// honestidad en vez de fallar en silencio.
+const OS_LABEL = {
+  macos: '🍎 macOS', android: '🤖 Android', windows: '🪟 Windows',
+  linux: '🐧 Linux', ios: '📱 iPhone', otro: 'Otro',
+};
+
+document.getElementById('key-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const key = document.getElementById('key').value.trim();
+  const status = document.getElementById('status');
+  const files = document.getElementById('files');
+  files.innerHTML = '';
+  if (!key) { status.textContent = 'Pega tu clave primero.'; return; }
+  status.textContent = 'Verificando…';
+  try {
+    const r = await fetch(`${NUVOK_CONFIG.apiBase}/downloads?key=${encodeURIComponent(key)}`);
+    // 403/429 vienen del Worker (clave mala / límite). Un 404 significa que
+    // el API no está montado (p. ej. sitio local sin Worker): eso NO es culpa
+    // de la clave del comprador y cae al mensaje honesto del catch.
+    if (r.status === 403) {
+      status.textContent = 'Clave no válida o revocada. Revisa el correo de tu compra o escríbenos.';
+      return;
+    }
+    if (r.status === 429) {
+      status.textContent = 'Límite mensual de descargas alcanzado. Escríbenos a hola@nuvok.org y lo resolvemos.';
+      return;
+    }
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const data = await r.json();
+    status.textContent = '';
+    const mine = detectOS();
+    const list = document.createElement('div');
+    list.className = 'prices';
+    for (const f of data.files) {
+      const isMine = f.os === mine;
+      const card = document.createElement('div');
+      card.className = 'price' + (isMine ? ' feature' : '');
+      card.innerHTML = `
+        ${isMine ? '<span class="tag">PARA TU EQUIPO</span>' : ''}
+        <h3>${OS_LABEL[f.os] || f.os}</h3>
+        <p class="desc">${f.name} · ${(f.bytes / 1048576).toFixed(0)} MB</p>
+        <ul><li style="word-break:break-all;font-size:.72rem">SHA-256: ${f.sha256}</li></ul>
+        <a class="btn${isMine ? '' : ' ghost'}" style="width:100%;justify-content:center;"
+           href="${NUVOK_CONFIG.apiBase}/dl/${encodeURIComponent(f.name)}?key=${encodeURIComponent(key)}">Descargar</a>`;
+      list.appendChild(card);
+    }
+    files.appendChild(list);
+  } catch (_) {
+    status.textContent = 'El sistema de entrega todavía no está en línea. Si ya compraste, ' +
+        'escríbenos a hola@nuvok.org y te mandamos los enlaces a mano.';
+  }
+});
+</script>
+</body>
+</html>

@@ -6,8 +6,8 @@ const I18N = {
     'nav.what': 'Qué hace',
     'nav.offline': 'Sin internet',
     'nav.mesh': 'Malla',
-    'nav.pricing': 'Descargas',
-    'nav.buy': 'Descargar',
+    'nav.pricing': 'Comprar',
+    'nav.buy': 'Comprar — $99',
 
     // Hero
     'hero.badge': '● Funciona cuando todo lo demás falla',
@@ -15,9 +15,9 @@ const I18N = {
     'hero.title_hl': 'salva vidas',
     'hero.title_post': ', sin depender de internet.',
     'hero.subtitle': 'Instálalo en tu teléfono en minutos: primeros auxilios paso a paso, mapas con GPS, comunicación entre tu grupo y una biblioteca completa — todo funcionando sin señal, sin datos, sin nube.',
-    'hero.cta1': 'Descargar gratis',
+    'hero.cta1': 'Comprar — $99 único',
     'hero.cta2': 'Ver qué incluye',
-    'hero.note': 'Sin suscripciones. Sin cuentas. Todo el contenido es tuyo y se copia entre dispositivos.',
+    'hero.note': 'Pago único. Sin suscripciones ni cuentas. Código abierto (GPL v3): compilarlo tú mismo es gratis, siempre.',
     'hero.status': '◉ Sin conexión · 100%',
 
     // Modules
@@ -76,17 +76,17 @@ const I18N = {
     'nav.what': 'What it does',
     'nav.offline': 'Offline',
     'nav.mesh': 'Mesh',
-    'nav.pricing': 'Downloads',
-    'nav.buy': 'Download',
+    'nav.pricing': 'Buy',
+    'nav.buy': 'Buy — $99',
 
     'hero.badge': '● Works when everything else fails',
     'hero.title_pre': 'Knowledge that ',
     'hero.title_hl': 'saves lives',
     'hero.title_post': ', without internet.',
     'hero.subtitle': 'Install it on your phone in minutes: step-by-step first aid, offline GPS maps, group communication and a full knowledge library — all working without signal, without data, without the cloud.',
-    'hero.cta1': 'Download free',
+    'hero.cta1': 'Buy — one-time $99',
     'hero.cta2': 'See what\'s included',
-    'hero.note': 'No subscriptions. No accounts. All content is yours and copies between devices.',
+    'hero.note': 'One-time payment. No subscriptions, no accounts. Open source (GPL v3): building it yourself is free, forever.',
     'hero.status': '◉ Offline · 100%',
 
     'modules.eyebrow': 'All in one device',

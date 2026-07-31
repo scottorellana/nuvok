@@ -1,0 +1,30 @@
+# nuvok-store — el Worker del muro de descarga (spec 2026-07-29).
+#
+# Desplegar (cuando el DNS de nuvok.org apunte a Cloudflare):
+#   1. wrangler d1 create nuvok-purchases   → pegar database_id abajo
+#   2. wrangler d1 execute nuvok-purchases --file=schema.sql --remote
+#   3. wrangler r2 bucket create nuvok-releases
+#   4. Subir binarios + releases.json al bucket (formato en src/index.js)
+#   5. wrangler secret put LS_SIGNING_SECRET   (del webhook en Lemon Squeezy)
+#      Opcional CRM: wrangler secret put GHL_TOKEN / GHL_LOCATION_ID
+#   6. wrangler deploy
+#   7. En Lemon Squeezy: webhook → https://nuvok.org/webhook/lemonsqueezy
+name = "nuvok-store"
+main = "src/index.js"
+compatibility_date = "2026-07-01"
+
+# Rutas bajo el dominio (el sitio estático vive en Pages; el Worker atiende
+# solo el API y el webhook).
+routes = [
+  { pattern = "nuvok.org/api/*", zone_name = "nuvok.org" },
+  { pattern = "nuvok.org/webhook/*", zone_name = "nuvok.org" },
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "nuvok-purchases"
+database_id = "PEGAR_TRAS_CREAR"
+
+[[r2_buckets]]
+binding = "RELEASES"
+bucket_name = "nuvok-releases"

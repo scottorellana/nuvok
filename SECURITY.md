@@ -7,6 +7,8 @@ para que cualquiera pueda auditar lo que sigue.
 ## Reportar una vulnerabilidad
 
 - **Canal privado:** GitHub → *Security* → *Report a vulnerability*.
+- **Respaldo por correo:** hola@nuvok.org (si el canal de GitHub no está
+  disponible).
 - No publiques detalles explotables en un issue público.
 - Compromiso: primera respuesta en 7 días y corrección coordinada antes de
   divulgar. Se acredita el hallazgo a quien lo reporta, si lo desea.

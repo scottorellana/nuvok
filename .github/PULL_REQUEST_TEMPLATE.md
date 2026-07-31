@@ -8,7 +8,7 @@
 
 **CLA**
 
-- [ ] Acepto el CLA descrito en [CONTRIBUTING.md](../CONTRIBUTING.md):
+- [ ] Acepto el CLA descrito en [CONTRIBUTING.md](https://github.com/scottorellana/nuvok/blob/main/CONTRIBUTING.md):
       concedo a Scott Orellana el derecho de relicenciar esta contribución;
       mi código queda siempre publicado también bajo GPL v3 en este
       repositorio.

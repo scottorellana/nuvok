@@ -47,3 +47,11 @@ android/key.properties
 .env
 # Volcados de memoria/diagnóstico de la JVM (pueden contener secretos en RAM)
 *.hprof
+
+# --- Workspace del pipeline de imágenes (Hermes/Codex): intermedios de GBs
+# que NO deben volver a entrar al repo (se purgan de la historia) ---
+.hermes/tutorial_panels/
+.hermes/tutorial_candidates/*.png
+.hermes/tutorial_full_regeneration/
+.hermes/tutorial_regeneration_*/
+.hermes/iphone-crashlogs/

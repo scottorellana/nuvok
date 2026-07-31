@@ -9,6 +9,7 @@
 // Secrets: LS_SIGNING_SECRET; opcionales GHL_TOKEN + GHL_LOCATION_ID para
 // volcar cada comprador al CRM (GoHighLevel/Hexona) con su etiqueta.
 import {
+  MONTHLY_DOWNLOAD_LIMIT,
   downloadPolicy,
   monthKey,
   parseLsEvent,
@@ -71,18 +72,31 @@ async function upsertGhlContact(env, email) {
 }
 
 async function handleWebhook(request, env, ctx) {
+  // Tope ANTES de leer: sin esto, cualquier anónimo puede hacer bufferizar
+  // cuerpos gigantes antes siquiera de validar la firma. Un webhook real de
+  // Lemon Squeezy pesa unos pocos KB.
+  const len = Number(request.headers.get('content-length') ?? 0);
+  if (!len || len > 100_000) {
+    return new Response('payload too large', { status: 413 });
+  }
   const raw = await request.text();
   const ok = await verifyLsSignature(
       raw, request.headers.get('X-Signature'), env.LS_SIGNING_SECRET);
   if (!ok) return new Response('bad signature', { status: 401 });
 
-  const event = parseLsEvent(JSON.parse(raw));
+  let event;
+  try {
+    event = parseLsEvent(JSON.parse(raw));
+  } catch (_) {
+    return new Response('bad json', { status: 400 });
+  }
   if (!event) return new Response('ignored', { status: 200 });
 
   if (event.type === 'order_created') {
     const key = crypto.randomUUID();
-    // Idempotente: Lemon Squeezy reintenta webhooks y un pedido no puede
-    // generar dos claves.
+    // Idempotente (LS reintenta webhooks), y sin resucitar reembolsos: si la
+    // fila ya existe — incluso como 'revoked' por un webhook fuera de orden —
+    // no se toca.
     await env.DB.prepare(
         `INSERT INTO purchases (order_id, email, key, status, created_at)
          VALUES (?, ?, ?, 'active', datetime('now'))
@@ -90,9 +104,15 @@ async function handleWebhook(request, env, ctx) {
         .bind(event.orderId, event.email, key).run();
     ctx.waitUntil(upsertGhlContact(env, event.email));
   } else if (event.type === 'order_refunded') {
+    // Upsert, no UPDATE: los webhooks pueden llegar fuera de orden y un
+    // reembolso que aterriza ANTES que su alta debe quedar registrado — si
+    // solo actualizáramos, el alta posterior dejaría la clave activa y el
+    // reembolso se perdería para siempre.
     await env.DB.prepare(
-        `UPDATE purchases SET status = 'revoked' WHERE order_id = ?`)
-        .bind(event.orderId).run();
+        `INSERT INTO purchases (order_id, email, key, status, created_at)
+         VALUES (?, ?, ?, 'revoked', datetime('now'))
+         ON CONFLICT(order_id) DO UPDATE SET status = 'revoked'`)
+        .bind(event.orderId, event.email, crypto.randomUUID()).run();
   }
   return new Response('ok', { status: 200 });
 }
@@ -126,24 +146,43 @@ async function handleDownload(request, url, env, fileName) {
   if (!file) return new Response('not found', { status: 404 });
 
   // Reanudación: honrar "Range: bytes=N-" (son cientos de MB y las redes
-  // donde se vende Nuvok se caen). Una reanudación no cuenta como descarga
-  // nueva para el límite mensual.
+  // donde se vende Nuvok se caen).
+  //
+  // El contador se incrementa en TODA petición, con o sin Range. La versión
+  // anterior solo cobraba offset==0, y eso rompía el muro entero: bastaba
+  // `Range: bytes=1-` para descargar el 99.99% del archivo sin gastar nunca
+  // el límite mensual — una clave filtrada servía descargas infinitas. Una
+  // reanudación legítima cuesta una descarga; con 25/mes a un hogar real le
+  // sobra, y el header lo elige el cliente, así que no puede decidir si paga.
   const rangeHeader = request.headers.get('Range');
   const m = rangeHeader?.match(/^bytes=(\d+)-$/);
   const offset = m ? Number(m[1]) : 0;
+
+  // Cobro ATÓMICO en un solo statement, antes de tocar R2. La versión
+  // leer-calcular-escribir tenía una carrera clásica: N descargas paralelas
+  // leían el mismo contador y escribían N veces "contador+1" — N descargas
+  // al precio de una. Aquí la condición y el incremento viajan juntos: si no
+  // hay fila devuelta, no hay descarga.
+  const claimed = await env.DB.prepare(
+      `UPDATE purchases
+       SET month_dl_count = CASE WHEN month = ?1 THEN month_dl_count + 1 ELSE 1 END,
+           month = ?1
+       WHERE key = ?2 AND status = 'active'
+         AND (month IS NOT ?1 OR month_dl_count < ?3)
+       RETURNING month_dl_count`)
+      .bind(nowMonth, key, MONTHLY_DOWNLOAD_LIMIT).first();
+  if (!claimed) return deny(policy.allow ? 'limit' : policy.reason);
+
   const obj = await env.RELEASES.get(
       file.name, offset > 0 ? { range: { offset } } : undefined);
   if (!obj) return new Response('not found', { status: 404 });
 
-  if (offset === 0) {
-    await env.DB.prepare(
-        `UPDATE purchases SET month = ?, month_dl_count = ? WHERE key = ?`)
-        .bind(nowMonth, (effective.month_dl_count ?? 0) + 1, key).run();
-  }
-
+  // El nombre viene de NUESTRO releases.json, pero un manifiesto es un dato,
+  // no código: comillas o CRLF en un nombre no deben poder tocar el header.
+  const safeName = file.name.replace(/[^\w.\-]/g, '_');
   const headers = {
     'content-type': 'application/octet-stream',
-    'content-disposition': `attachment; filename="${file.name}"`,
+    'content-disposition': `attachment; filename="${safeName}"`,
     'accept-ranges': 'bytes',
   };
   if (offset > 0) {
@@ -157,17 +196,30 @@ async function handleDownload(request, url, env, fileName) {
 
 export default {
   async fetch(request, env, ctx) {
-    const url = new URL(request.url);
-    if (request.method === 'POST' && url.pathname === '/webhook/lemonsqueezy') {
-      return handleWebhook(request, env, ctx);
+    // Nada de 500 con stack ante entradas raras: dos de las rutas son
+    // anónimas y un %-encoding inválido o un manifiesto corrupto no deben
+    // filtrar internals ni ensuciar métricas de error.
+    try {
+      const url = new URL(request.url);
+      if (request.method === 'POST' && url.pathname === '/webhook/lemonsqueezy') {
+        return await handleWebhook(request, env, ctx);
+      }
+      if (request.method === 'GET' && url.pathname === '/api/downloads') {
+        return await handleList(url, env);
+      }
+      const dl = url.pathname.match(/^\/api\/dl\/([^/]+)$/);
+      if (request.method === 'GET' && dl) {
+        let fileName;
+        try {
+          fileName = decodeURIComponent(dl[1]);
+        } catch (_) {
+          return new Response('not found', { status: 404 });
+        }
+        return await handleDownload(request, url, env, fileName);
+      }
+      return new Response('nuvok-store', { status: 200 });
+    } catch (_) {
+      return new Response('internal error', { status: 500 });
     }
-    if (request.method === 'GET' && url.pathname === '/api/downloads') {
-      return handleList(url, env);
-    }
-    const dl = url.pathname.match(/^\/api\/dl\/([^/]+)$/);
-    if (request.method === 'GET' && dl) {
-      return handleDownload(request, url, env, decodeURIComponent(dl[1]));
-    }
-    return new Response('nuvok-store', { status: 200 });
   },
 };

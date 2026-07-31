@@ -55,3 +55,8 @@ android/key.properties
 .hermes/tutorial_full_regeneration/
 .hermes/tutorial_regeneration_*/
 .hermes/iphone-crashlogs/
+# Exploración de logos (33 MB): la app solo usa assets/brand/nuvok/
+assets/nuvok_logos_*/
+assets/nuvok_wordmarks_gpt2/
+assets/nuvok_final_logo_proposals/
+assets/nuvok_logo_proposals.html

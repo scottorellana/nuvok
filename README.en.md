@@ -2,7 +2,7 @@
 
 [Español](README.md) · **English**
 
-[![CI](https://github.com/scottorellana/prepper-pad/actions/workflows/ci.yml/badge.svg)](https://github.com/scottorellana/prepper-pad/actions/workflows/ci.yml)
+[![CI](https://github.com/scottorellana/nuvok/actions/workflows/ci.yml/badge.svg)](https://github.com/scottorellana/nuvok/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](LICENSE)
 [![AI 100% on-device](https://img.shields.io/badge/AI-100%25%20on--device-success.svg)](#-local-ai-on-your-iphone-step-by-step)
 

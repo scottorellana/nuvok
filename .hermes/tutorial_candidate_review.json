@@ -6,56 +6,60 @@
         "number": 1,
         "pass": false,
         "checks": {
-          "photorealism": true,
+          "photorealism": false,
           "anatomy": true,
-          "object_integrity": true,
+          "object_integrity": false,
           "physical_logic": true,
-          "continuity": true,
-          "instruction_match": true,
+          "continuity": false,
+          "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Photoreal forest scene, but the visible action shows bare hands gathering/handling pine boughs and ground debris under a fallen log without protective gloves, creating unsafe ambiguity for training. Criteria: Shows a thick pine-bough bed being laid directly against the fallen trunk and gray rock on dry ground, with no shelter frame yet."
+        "note": "Blind: Generated-looking outdoor scene; backpack position is not continuous with later panels; shelter-making technique is ambiguous with no visible completed support or fastening. Criteria: Photographic appearance and both gloved hands are visible, but the distant backpack details are too small to verify a sheathed knife, and the bed thickness/dryness is not unambiguous."
       },
       {
         "number": 2,
         "pass": false,
         "checks": {
-          "photorealism": true,
-          "anatomy": true,
+          "photorealism": false,
+          "anatomy": false,
           "object_integrity": false,
           "physical_logic": false,
-          "continuity": true,
-          "instruction_match": true,
+          "continuity": false,
+          "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Leaning shelter poles appear inconsistently supported and not visibly secured; several contacts with the log/rock are ambiguous, making the structure look unstable. Criteria: Shows the same apparent trunk, rock, and bed with a compact lean-to frame of angled branches and a low ridgepole."
+        "note": "Blind: Generated-looking scene; hands/contact with lashings are too small/obscured to verify; repeated branch frame and ties appear irregular and partly unclear; backpack position changes from panel 1 without visible action; protruding sticks create unsafe ambiguity. Criteria: Frame geometry is ambiguous: there appear to be extra braces/posts and crossed members, not a clearly freestanding single-slope lean-to supported only by exactly two forked vertical stakes. Not every contact/lashing is clearly verifiable, and the sheathed knife on the backpack is too small to confirm."
       },
       {
         "number": 3,
         "pass": false,
         "checks": {
-          "photorealism": true,
+          "photorealism": false,
           "anatomy": true,
           "object_integrity": false,
           "physical_logic": false,
-          "continuity": true,
+          "continuity": false,
           "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Finished shelter is directly beneath a heavy fallen trunk with unclear support and merged thatch/branches; entrance and load path are unsafe and physically ambiguous. Criteria: Covered shelter is visible, but the wind direction is not clearly visible, so the entrance cannot be verified as facing away from wind; the dry insulated bough bed is also not clearly distinguishable inside."
+        "note": "Blind: Generated-looking finished shelter; support/roof contact and load-bearing details are unclear; backpack position changes again without visible action; entrance has protruding poles/stakes and the shelter construction is unsafe to imitate from the image alone. Criteria: Covered shelter is plausible but not clearly the exact unchanged frame from panel 2. Roof thickness is not safely verifiable as a full hand-span, and hidden ribs/unchanged knots cannot be confirmed across the whole roof."
       }
     ],
     "note": "Independent inspections found or could not rule out visible defects.",
     "risks": [
-      "blind: Bare-hand handling of branches and debris is shown without protection.",
-      "blind: Panel 2 shelter poles are not visibly tied, anchored, or reliably supported.",
-      "blind: Panel 3 places a person and shelter beneath a heavy fallen trunk with unclear stability.",
-      "blind: Merged/chaotic branches and thatch obscure critical structural contacts.",
-      "criteria: Panel 3 lacks a clear visible wind direction, making entrance orientation unverifiable.",
-      "criteria: Panel 3 interior bed appears mostly like loose pine needles rather than a visibly thick insulated bough bed."
+      "blind: Generated-looking imagery rather than indistinguishable documentary training photos",
+      "blind: Backpack shifts position across panels without a visible action explaining the change",
+      "blind: Panel 2 frame has unclear/irregular lashings and repeated branch elements that are hard to verify",
+      "blind: Panel 2 hands and fastening contact are too small or obscured to audit safely",
+      "blind: Panel 3 roof/support contact and load-bearing structure are unclear",
+      "blind: Protruding poles/stakes around the frame and entrance create visible unsafe imitation risk",
+      "criteria: Learner could copy an unclear or incorrectly supported frame with extra braces or crossed members",
+      "criteria: Required sheathed knife on backpack is not visibly confirmable",
+      "criteria: Roof thickness and complete rib coverage are not unambiguous",
+      "criteria: Continuity of the freestanding two-stake lean-to is not exact across panels"
     ],
     "inspections": {
       "blind": {
@@ -65,51 +69,53 @@
             "number": 1,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
-              "continuity": true,
+              "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Photoreal forest scene, but the visible action shows bare hands gathering/handling pine boughs and ground debris under a fallen log without protective gloves, creating unsafe ambiguity for training."
+            "note": "Generated-looking outdoor scene; backpack position is not continuous with later panels; shelter-making technique is ambiguous with no visible completed support or fastening."
           },
           {
             "number": 2,
             "pass": false,
             "checks": {
-              "photorealism": true,
-              "anatomy": true,
+              "photorealism": false,
+              "anatomy": false,
               "object_integrity": false,
               "physical_logic": false,
-              "continuity": true,
+              "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Leaning shelter poles appear inconsistently supported and not visibly secured; several contacts with the log/rock are ambiguous, making the structure look unstable."
+            "note": "Generated-looking scene; hands/contact with lashings are too small/obscured to verify; repeated branch frame and ties appear irregular and partly unclear; backpack position changes from panel 1 without visible action; protruding sticks create unsafe ambiguity."
           },
           {
             "number": 3,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": true,
               "object_integrity": false,
               "physical_logic": false,
-              "continuity": true,
+              "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Finished shelter is directly beneath a heavy fallen trunk with unclear support and merged thatch/branches; entrance and load path are unsafe and physically ambiguous."
+            "note": "Generated-looking finished shelter; support/roof contact and load-bearing details are unclear; backpack position changes again without visible action; entrance has protruding poles/stakes and the shelter construction is unsafe to imitate from the image alone."
           }
         ],
-        "note": "Overall image is photoreal and text-free, but the shelter construction contains unstable/ambiguous support and unsafe visible technique.",
+        "note": "Overall regenerate: panels are not documentary-photorealistic and have continuity, construction clarity, and safety defects.",
         "risks": [
-          "Bare-hand handling of branches and debris is shown without protection.",
-          "Panel 2 shelter poles are not visibly tied, anchored, or reliably supported.",
-          "Panel 3 places a person and shelter beneath a heavy fallen trunk with unclear stability.",
-          "Merged/chaotic branches and thatch obscure critical structural contacts."
+          "Generated-looking imagery rather than indistinguishable documentary training photos",
+          "Backpack shifts position across panels without a visible action explaining the change",
+          "Panel 2 frame has unclear/irregular lashings and repeated branch elements that are hard to verify",
+          "Panel 2 hands and fastening contact are too small or obscured to audit safely",
+          "Panel 3 roof/support contact and load-bearing structure are unclear",
+          "Protruding poles/stakes around the frame and entrance create visible unsafe imitation risk"
         ]
       },
       "criteria": {
@@ -117,33 +123,33 @@
         "panels": [
           {
             "number": 1,
-            "pass": true,
+            "pass": false,
             "checks": {
               "photorealism": true,
               "anatomy": true,
-              "object_integrity": true,
+              "object_integrity": false,
               "physical_logic": true,
               "continuity": true,
-              "instruction_match": true,
-              "safety": true,
+              "instruction_match": false,
+              "safety": false,
               "text_free": true
             },
-            "note": "Shows a thick pine-bough bed being laid directly against the fallen trunk and gray rock on dry ground, with no shelter frame yet."
+            "note": "Photographic appearance and both gloved hands are visible, but the distant backpack details are too small to verify a sheathed knife, and the bed thickness/dryness is not unambiguous."
           },
           {
             "number": 2,
-            "pass": true,
+            "pass": false,
             "checks": {
               "photorealism": true,
               "anatomy": true,
-              "object_integrity": true,
-              "physical_logic": true,
+              "object_integrity": false,
+              "physical_logic": false,
               "continuity": true,
-              "instruction_match": true,
-              "safety": true,
+              "instruction_match": false,
+              "safety": false,
               "text_free": true
             },
-            "note": "Shows the same apparent trunk, rock, and bed with a compact lean-to frame of angled branches and a low ridgepole."
+            "note": "Frame geometry is ambiguous: there appear to be extra braces/posts and crossed members, not a clearly freestanding single-slope lean-to supported only by exactly two forked vertical stakes. Not every contact/lashing is clearly verifiable, and the sheathed knife on the backpack is too small to confirm."
           },
           {
             "number": 3,
@@ -151,35 +157,37 @@
             "checks": {
               "photorealism": true,
               "anatomy": true,
-              "object_integrity": true,
-              "physical_logic": true,
-              "continuity": true,
+              "object_integrity": false,
+              "physical_logic": false,
+              "continuity": false,
               "instruction_match": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Covered shelter is visible, but the wind direction is not clearly visible, so the entrance cannot be verified as facing away from wind; the dry insulated bough bed is also not clearly distinguishable inside."
+            "note": "Covered shelter is plausible but not clearly the exact unchanged frame from panel 2. Roof thickness is not safely verifiable as a full hand-span, and hidden ribs/unchanged knots cannot be confirmed across the whole roof."
           }
         ],
-        "note": "Overall sequence is mostly coherent and photorealistic, but panel 3 does not unambiguously show wind-facing safety geometry or the insulated bed inside the finished shelter.",
+        "note": "Regenerate: multiple safety-critical shelter construction details are ambiguous or unverifiable, especially exact support geometry, lashings, tool visibility, and continuity.",
         "risks": [
-          "Panel 3 lacks a clear visible wind direction, making entrance orientation unverifiable.",
-          "Panel 3 interior bed appears mostly like loose pine needles rather than a visibly thick insulated bough bed."
+          "Learner could copy an unclear or incorrectly supported frame with extra braces or crossed members",
+          "Required sheathed knife on backpack is not visibly confirmable",
+          "Roof thickness and complete rib coverage are not unambiguous",
+          "Continuity of the freestanding two-stake lean-to is not exact across panels"
         ]
       }
     },
-    "sha256": "d7673f995b7def009446e4df5ea3029402141b402fd51add8c45692ae0a428f6",
+    "sha256": "6193ae4148a77d36eae47c53361a6e970ec368e4721c67c2c4375292578091e3",
     "image": ".hermes/tutorial_candidates/abrigo_refugio.png",
     "auditor": "nuvok-independent-visual-inspector-gpt-5.5-codex",
     "rubric_version": "nuvok-photorealistic-logic-safety-v3",
     "inspector_version": "nuvok-independent-visual-inspector-v1",
     "inspection_mode": "independent-two-stage-full-resolution",
-    "criteria_sha256": "b52b7abc7ed64ed8c44768b0b367fa38824b2101df793f309ddbfff79fd65d9d",
+    "criteria_sha256": "89d5aefa320686f1038414c5383e1b36ee437f5ce59e58537f3a4e17d146c540",
     "inspected_dimensions": {
       "width": 1544,
       "height": 768
     },
-    "reviewed_at": "2026-07-31T03:58:19.511579+00:00"
+    "reviewed_at": "2026-08-01T03:21:14.647124+00:00"
   },
   "agua_survival": {
     "status": "regenerate",
@@ -216,60 +224,61 @@
         "number": 1,
         "pass": false,
         "checks": {
-          "photorealism": true,
-          "anatomy": true,
-          "object_integrity": true,
-          "physical_logic": true,
+          "photorealism": false,
+          "anatomy": false,
+          "object_integrity": false,
+          "physical_logic": false,
           "continuity": false,
           "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Knife is being used very close to the stabilizing hand/fingers; stove/cookware setup does not remain consistent with later panels. Criteria: Photographic appearance and equipment are clear, but the knife path is aimed toward or very near the stabilizing hand, which is not clearly outside the projected cut path."
+        "note": "Blind: Top-down fish-cutting scene is generated-looking; gloved hands/finger positions are partly obscured and ambiguous; knife contact/cutting action is unclear and hand placement near the blade is unsafe. Criteria: Close crop is mostly correct, but every finger is not clearly visible and the required 25 cm safety separation from tail hand to blade is not unambiguous."
       },
       {
         "number": 2,
         "pass": false,
         "checks": {
-          "photorealism": true,
+          "photorealism": false,
           "anatomy": true,
-          "object_integrity": true,
-          "physical_logic": true,
+          "object_integrity": false,
+          "physical_logic": false,
           "continuity": false,
           "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Open raw fish, exposed fillets, entrails, knife, and open trash bag are handled together with unclear sanitation separation; stove/cookware differs from both neighboring panels. Criteria: Entrails are being placed in an open waste bag and fillets are on the board, but the waste bag is immediately beside the edible flesh and near the riverside setting, not visibly far from food or water source."
+        "note": "Blind: Outdoor prep scene is generated-looking; repeated uniform fillets and scattered equipment look synthetic; person is handling a trash bag near food-prep equipment, and the raw-to-filleted state is not visibly explained. Criteria: Board shows five fillets despite only one trout in panel 1. Waste bag distance from food/river is not clearly two metres, and extra stove/pan equipment on the food table creates unsafe ambiguity."
       },
       {
         "number": 3,
         "pass": false,
         "checks": {
-          "photorealism": true,
+          "photorealism": false,
           "anatomy": true,
-          "object_integrity": true,
-          "physical_logic": true,
+          "object_integrity": false,
+          "physical_logic": false,
           "continuity": false,
           "instruction_match": false,
           "safety": false,
-          "text_free": false
+          "text_free": true
         },
-        "note": "Blind: Cooked pot is beside raw fish scraps and knife on the same work surface, creating visible cross-contamination risk; stove/cookware and environment differ from earlier panels; yellow label/logo is visible on stove. Criteria: Fish pieces appear opaque and steaming in a metal pan on a stove, but the pan is uncovered with the lid being held aside; raw fish scraps and knife remain close to the cooking area, creating cross-contamination ambiguity."
+        "note": "Blind: Cooking scene is generated-looking; food/tongs/pan interaction is unclear, equipment state differs from earlier panels without visible explanation, and a disposable glove is used close to hot cookware. Criteria: Cooked fish transfer is visible, but there is no clearly visible steam and the pan lid is not closed/lidded as required. Background waste/pouch/bin distance is also not unambiguously verifiable."
       }
     ],
     "note": "Independent inspections found or could not rule out visible defects.",
     "risks": [
-      "blind: Knife cutting close to fingers in panel 1.",
-      "blind: Raw fish, entrails, fillets, knife, and trash bag handled together without visible sanitation boundary in panel 2.",
-      "blind: Cooked food placed next to raw fish scraps and contaminated cutting board/knife in panel 3.",
-      "blind: Camping stove/cookware changes between panels without visible explanation.",
-      "blind: Visible yellow label/logo on stove in panel 3.",
-      "criteria: Knife appears to cut toward the non-cutting hand in panel 1.",
-      "criteria: Entrails waste bag is too close to clean fillets in panel 2.",
-      "criteria: Waste handling occurs beside a visible water source in panel 2.",
-      "criteria: Panel 3 does not show covered cooking as required.",
-      "criteria: Raw fish scraps and knife are close to cooked food area in panel 3."
+      "blind: Generated-looking composite rather than verifiable documentary photographs",
+      "blind: Unsafe knife-hand placement in panel 1",
+      "blind: Trash bag handled near food-prep area in panel 2",
+      "blind: Disposable glove used near hot cookware in panel 3",
+      "blind: Raw fish becoming multiple fillets and then cooked food is not visibly explained",
+      "blind: Synthetic/repeated food shapes and unclear tool-food contact",
+      "criteria: Panel 1 does not unambiguously show all fingers or required hand-to-blade separation.",
+      "criteria: Panel 2 shows an impossible number of fillets from one trout.",
+      "criteria: Panel 2 waste isolation distance and river separation are unclear.",
+      "criteria: Panel 2 includes cooking equipment on the food table during raw-fillets stage, creating cross-contamination ambiguity.",
+      "criteria: Panel 3 does not clearly show steaming fish in a lidded pan."
     ],
     "inspections": {
       "blind": {
@@ -279,52 +288,53 @@
             "number": 1,
             "pass": false,
             "checks": {
-              "photorealism": true,
-              "anatomy": true,
-              "object_integrity": true,
-              "physical_logic": true,
+              "photorealism": false,
+              "anatomy": false,
+              "object_integrity": false,
+              "physical_logic": false,
               "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Knife is being used very close to the stabilizing hand/fingers; stove/cookware setup does not remain consistent with later panels."
+            "note": "Top-down fish-cutting scene is generated-looking; gloved hands/finger positions are partly obscured and ambiguous; knife contact/cutting action is unclear and hand placement near the blade is unsafe."
           },
           {
             "number": 2,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": true,
-              "object_integrity": true,
-              "physical_logic": true,
+              "object_integrity": false,
+              "physical_logic": false,
               "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Open raw fish, exposed fillets, entrails, knife, and open trash bag are handled together with unclear sanitation separation; stove/cookware differs from both neighboring panels."
+            "note": "Outdoor prep scene is generated-looking; repeated uniform fillets and scattered equipment look synthetic; person is handling a trash bag near food-prep equipment, and the raw-to-filleted state is not visibly explained."
           },
           {
             "number": 3,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": true,
-              "object_integrity": true,
-              "physical_logic": true,
+              "object_integrity": false,
+              "physical_logic": false,
               "continuity": false,
               "safety": false,
-              "text_free": false
+              "text_free": true
             },
-            "note": "Cooked pot is beside raw fish scraps and knife on the same work surface, creating visible cross-contamination risk; stove/cookware and environment differ from earlier panels; yellow label/logo is visible on stove."
+            "note": "Cooking scene is generated-looking; food/tongs/pan interaction is unclear, equipment state differs from earlier panels without visible explanation, and a disposable glove is used close to hot cookware."
           }
         ],
-        "note": "Sequence is not approved due to inconsistent equipment/environment and visibly unsafe food-preparation conditions.",
+        "note": "Overall rejected: panels are not indistinguishable documentary photographs and contain unsafe or ambiguous food-prep/cooking actions with weak continuity.",
         "risks": [
-          "Knife cutting close to fingers in panel 1.",
-          "Raw fish, entrails, fillets, knife, and trash bag handled together without visible sanitation boundary in panel 2.",
-          "Cooked food placed next to raw fish scraps and contaminated cutting board/knife in panel 3.",
-          "Camping stove/cookware changes between panels without visible explanation.",
-          "Visible yellow label/logo on stove in panel 3."
+          "Generated-looking composite rather than verifiable documentary photographs",
+          "Unsafe knife-hand placement in panel 1",
+          "Trash bag handled near food-prep area in panel 2",
+          "Disposable glove used near hot cookware in panel 3",
+          "Raw fish becoming multiple fillets and then cooked food is not visibly explained",
+          "Synthetic/repeated food shapes and unclear tool-food contact"
         ]
       },
       "criteria": {
@@ -343,7 +353,7 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Photographic appearance and equipment are clear, but the knife path is aimed toward or very near the stabilizing hand, which is not clearly outside the projected cut path."
+            "note": "Close crop is mostly correct, but every finger is not clearly visible and the required 25 cm safety separation from tail hand to blade is not unambiguous."
           },
           {
             "number": 2,
@@ -351,14 +361,14 @@
             "checks": {
               "photorealism": true,
               "anatomy": true,
-              "object_integrity": true,
-              "physical_logic": true,
-              "continuity": true,
+              "object_integrity": false,
+              "physical_logic": false,
+              "continuity": false,
               "instruction_match": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Entrails are being placed in an open waste bag and fillets are on the board, but the waste bag is immediately beside the edible flesh and near the riverside setting, not visibly far from food or water source."
+            "note": "Board shows five fillets despite only one trout in panel 1. Waste bag distance from food/river is not clearly two metres, and extra stove/pan equipment on the food table creates unsafe ambiguity."
           },
           {
             "number": 3,
@@ -373,31 +383,31 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Fish pieces appear opaque and steaming in a metal pan on a stove, but the pan is uncovered with the lid being held aside; raw fish scraps and knife remain close to the cooking area, creating cross-contamination ambiguity."
+            "note": "Cooked fish transfer is visible, but there is no clearly visible steam and the pan lid is not closed/lidded as required. Background waste/pouch/bin distance is also not unambiguously verifiable."
           }
         ],
-        "note": "Overall regeneration required due to unsafe knife geometry, waste placed too close to edible food/water area, and uncovered cooking pan with contamination risks.",
+        "note": "Regenerate required: multiple safety-critical visual requirements are ambiguous or contradicted.",
         "risks": [
-          "Knife appears to cut toward the non-cutting hand in panel 1.",
-          "Entrails waste bag is too close to clean fillets in panel 2.",
-          "Waste handling occurs beside a visible water source in panel 2.",
-          "Panel 3 does not show covered cooking as required.",
-          "Raw fish scraps and knife are close to cooked food area in panel 3."
+          "Panel 1 does not unambiguously show all fingers or required hand-to-blade separation.",
+          "Panel 2 shows an impossible number of fillets from one trout.",
+          "Panel 2 waste isolation distance and river separation are unclear.",
+          "Panel 2 includes cooking equipment on the food table during raw-fillets stage, creating cross-contamination ambiguity.",
+          "Panel 3 does not clearly show steaming fish in a lidded pan."
         ]
       }
     },
-    "sha256": "7a3ab856b213bddcfe444c90bb131483a37428e0a68dc14f3bf47cf2a2edc19b",
+    "sha256": "6d40103b26fc61110157924b351c154061b4e667a23b35e42b811291b82e427c",
     "image": ".hermes/tutorial_candidates/alimentacion_supervivencia.png",
     "auditor": "nuvok-independent-visual-inspector-gpt-5.5-codex",
     "rubric_version": "nuvok-photorealistic-logic-safety-v3",
     "inspector_version": "nuvok-independent-visual-inspector-v1",
     "inspection_mode": "independent-two-stage-full-resolution",
-    "criteria_sha256": "941cebb67d955d2efb878e5059a21ffd2fae1ee39e67646ddcfd247302e15c56",
+    "criteria_sha256": "b3674e26f52534989fa77f5079185bad166e8c6e43a7647b9f7f13212767a704",
     "inspected_dimensions": {
       "width": 1544,
       "height": 768
     },
-    "reviewed_at": "2026-07-31T03:58:28.398170+00:00"
+    "reviewed_at": "2026-08-01T03:21:44.767957+00:00"
   },
   "atragantamiento": {
     "status": "approved",
@@ -562,7 +572,7 @@
         "number": 1,
         "pass": false,
         "checks": {
-          "photorealism": true,
+          "photorealism": false,
           "anatomy": true,
           "object_integrity": true,
           "physical_logic": true,
@@ -571,29 +581,14 @@
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Photorealistic scene, but continuity fails because room layout, rug, phone state, and blanket placement do not remain consistent with the other panels. Safety is ambiguous because a hard phone is placed close to the person on the floor during a possible convulsive event. Criteria: Phone timer is not clearly being started, and a chair remains close beside the casualty rather than visibly moved away from the area."
+        "note": "Blind: Photorealism is not indistinguishable from a documentary photo; scene appears synthetic/staged. Continuity is weak because the head cushion, phone, and body positions change across panels without visible transitional action. Safety is ambiguous: the responder is only kneeling with open hands while the convulsing person lies supine, with no clearly visible protective action or scene hazard control. Criteria: Wide view does not clearly show the entire rug; phone appears close enough to be within casualty reach, and the sweater is partly obscured under the head."
       },
       {
         "number": 2,
         "pass": false,
         "checks": {
-          "photorealism": true,
+          "photorealism": false,
           "anatomy": true,
-          "object_integrity": true,
-          "physical_logic": true,
-          "continuity": false,
-          "instruction_match": true,
-          "safety": false,
-          "text_free": true
-        },
-        "note": "Blind: Photorealistic scene, but the environment and equipment placement differ from adjacent panels without visible explanation. The person is left supine with no clearly visible protective action, creating unsafe ambiguity for seizure response training. Criteria: Rescuer is appropriately hands-off with open empty hands, but continuity breaks: the head-support sweater from panel 1 is no longer under the head and the room/rug/equipment placement changes."
-      },
-      {
-        "number": 3,
-        "pass": false,
-        "checks": {
-          "photorealism": true,
-          "anatomy": false,
           "object_integrity": true,
           "physical_logic": true,
           "continuity": false,
@@ -601,21 +596,34 @@
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Photorealistic scene, but the helper is heavily cropped so full anatomy and limb count cannot be verified. Continuity fails due changed room/rug/object positions. Safety is ambiguous because the helper's hands on the shoulder and hip could be read as restraining or forcefully positioning the person. Criteria: Side position is shown, but the rescuer's hands do not unambiguously contact the far shoulder and far hip for the roll; breathing observation is not visually clear, and setting/equipment continuity differs."
+        "note": "Blind: Photorealism fails due generated-looking staged appearance. Panel is nearly a repeat of panel 1 with small unexplained pose/object shifts, so cause and effect are unclear. Safety remains ambiguous because the responder is not visibly performing a clear safe first-aid action. Criteria: Helper is not clearly holding both open empty hands at chest height, and phone remains ambiguously within casualty reach; full rug is not clearly visible."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "checks": {
+          "photorealism": false,
+          "anatomy": true,
+          "object_integrity": true,
+          "physical_logic": true,
+          "continuity": false,
+          "instruction_match": false,
+          "safety": false,
+          "text_free": true
+        },
+        "note": "Blind: Photorealism fails due synthetic/staged appearance. The person is now on the side, but the head cushion has moved away and the phone/object positions differ without a visible action explaining the transition. Criteria: View is not a low wide side view; recovery-position geometry is not fully unambiguous, mouth drainage angle is unclear, and helper contact includes the buttock/pocket area rather than a clear hip landmark."
       }
     ],
     "note": "Independent inspections found or could not rule out visible defects.",
     "risks": [
-      "blind: Hard phone visible close to the collapsed person in panel 1.",
-      "blind: Panel 2 shows the person supine without clear protective positioning or head protection.",
-      "blind: Panel 3 helper hand placement could be interpreted as restraining or forcefully rolling the person.",
-      "blind: Room layout, rug, couch, blanket, and phone placement change across panels without a visible action explaining the changes.",
-      "blind: Panel 3 crops the helper, preventing verification of full anatomy and limb count.",
-      "criteria: Chair remains near casualty in panel 1",
-      "criteria: Timer start is not visually confirmed",
-      "criteria: Head cushion continuity is lost in panel 2",
-      "criteria: Recovery-position roll contact points are ambiguous/incorrect in panel 3",
-      "criteria: Room, rug, couch, and phone placement change between panels"
+      "blind: Panels appear synthetic rather than real documentary training photographs.",
+      "blind: Panel 1 and panel 2 show no clear safe intervention despite a person visibly convulsing supine.",
+      "blind: Unexplained continuity changes: head cushion moves from under/near the head to a folded item on the rug; phone/object positions and body poses shift without visible action.",
+      "blind: Panel sequence has unclear cause and effect between observation, seizure management, and side positioning.",
+      "criteria: phone appears within casualty reach in panels 1-2",
+      "criteria: entire rug and safety clearance are not clearly visible",
+      "criteria: panel 3 airway drainage and stable leg position are ambiguous",
+      "criteria: helper hand placement in panel 3 is not clearly limited to shoulder and hip"
     ],
     "inspections": {
       "blind": {
@@ -625,7 +633,7 @@
             "number": 1,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
@@ -633,13 +641,13 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Photorealistic scene, but continuity fails because room layout, rug, phone state, and blanket placement do not remain consistent with the other panels. Safety is ambiguous because a hard phone is placed close to the person on the floor during a possible convulsive event."
+            "note": "Photorealism is not indistinguishable from a documentary photo; scene appears synthetic/staged. Continuity is weak because the head cushion, phone, and body positions change across panels without visible transitional action. Safety is ambiguous: the responder is only kneeling with open hands while the convulsing person lies supine, with no clearly visible protective action or scene hazard control."
           },
           {
             "number": 2,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
@@ -647,30 +655,29 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Photorealistic scene, but the environment and equipment placement differ from adjacent panels without visible explanation. The person is left supine with no clearly visible protective action, creating unsafe ambiguity for seizure response training."
+            "note": "Photorealism fails due generated-looking staged appearance. Panel is nearly a repeat of panel 1 with small unexplained pose/object shifts, so cause and effect are unclear. Safety remains ambiguous because the responder is not visibly performing a clear safe first-aid action."
           },
           {
             "number": 3,
             "pass": false,
             "checks": {
-              "photorealism": true,
-              "anatomy": false,
+              "photorealism": false,
+              "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
               "continuity": false,
-              "safety": false,
+              "safety": true,
               "text_free": true
             },
-            "note": "Photorealistic scene, but the helper is heavily cropped so full anatomy and limb count cannot be verified. Continuity fails due changed room/rug/object positions. Safety is ambiguous because the helper's hands on the shoulder and hip could be read as restraining or forcefully positioning the person."
+            "note": "Photorealism fails due synthetic/staged appearance. The person is now on the side, but the head cushion has moved away and the phone/object positions differ without a visible action explaining the transition."
           }
         ],
-        "note": "Regenerate: panels are photorealistic but fail continuity and contain unsafe or ambiguous emergency-response cues.",
+        "note": "Overall rejected for non-documentary photorealism, unclear panel-to-panel cause and effect, and ambiguous safety actions in the first two panels.",
         "risks": [
-          "Hard phone visible close to the collapsed person in panel 1.",
-          "Panel 2 shows the person supine without clear protective positioning or head protection.",
-          "Panel 3 helper hand placement could be interpreted as restraining or forcefully rolling the person.",
-          "Room layout, rug, couch, blanket, and phone placement change across panels without a visible action explaining the changes.",
-          "Panel 3 crops the helper, preventing verification of full anatomy and limb count."
+          "Panels appear synthetic rather than real documentary training photographs.",
+          "Panel 1 and panel 2 show no clear safe intervention despite a person visibly convulsing supine.",
+          "Unexplained continuity changes: head cushion moves from under/near the head to a folded item on the rug; phone/object positions and body poses shift without visible action.",
+          "Panel sequence has unclear cause and effect between observation, seizure management, and side positioning."
         ]
       },
       "criteria": {
@@ -689,7 +696,7 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Phone timer is not clearly being started, and a chair remains close beside the casualty rather than visibly moved away from the area."
+            "note": "Wide view does not clearly show the entire rug; phone appears close enough to be within casualty reach, and the sweater is partly obscured under the head."
           },
           {
             "number": 2,
@@ -699,12 +706,12 @@
               "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
-              "continuity": false,
-              "instruction_match": true,
-              "safety": true,
+              "continuity": true,
+              "instruction_match": false,
+              "safety": false,
               "text_free": true
             },
-            "note": "Rescuer is appropriately hands-off with open empty hands, but continuity breaks: the head-support sweater from panel 1 is no longer under the head and the room/rug/equipment placement changes."
+            "note": "Helper is not clearly holding both open empty hands at chest height, and phone remains ambiguously within casualty reach; full rug is not clearly visible."
           },
           {
             "number": 3,
@@ -714,36 +721,35 @@
               "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
-              "continuity": false,
+              "continuity": true,
               "instruction_match": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Side position is shown, but the rescuer's hands do not unambiguously contact the far shoulder and far hip for the roll; breathing observation is not visually clear, and setting/equipment continuity differs."
+            "note": "View is not a low wide side view; recovery-position geometry is not fully unambiguous, mouth drainage angle is unclear, and helper contact includes the buttock/pocket area rather than a clear hip landmark."
           }
         ],
-        "note": "Sequence fails due unsafe/ambiguous first-aid geometry and inconsistent continuity across panels.",
+        "note": "Overall image does not unambiguously meet the seizure-training safety geometry across all panels.",
         "risks": [
-          "Chair remains near casualty in panel 1",
-          "Timer start is not visually confirmed",
-          "Head cushion continuity is lost in panel 2",
-          "Recovery-position roll contact points are ambiguous/incorrect in panel 3",
-          "Room, rug, couch, and phone placement change between panels"
+          "phone appears within casualty reach in panels 1-2",
+          "entire rug and safety clearance are not clearly visible",
+          "panel 3 airway drainage and stable leg position are ambiguous",
+          "helper hand placement in panel 3 is not clearly limited to shoulder and hip"
         ]
       }
     },
-    "sha256": "d26fdb7991c0614418d95138c656327de5ee43801d03f72c20b2d86e562bff04",
+    "sha256": "b393f3cd2ae472ad5f83baff5cddab73b22094f8bd8932b22a2446e142617150",
     "image": ".hermes/tutorial_candidates/convulsiones.png",
     "auditor": "nuvok-independent-visual-inspector-gpt-5.5-codex",
     "rubric_version": "nuvok-photorealistic-logic-safety-v3",
     "inspector_version": "nuvok-independent-visual-inspector-v1",
     "inspection_mode": "independent-two-stage-full-resolution",
-    "criteria_sha256": "838a090f983e9cd697053501fda61f4a777a52584f7c20c09681597487c7e312",
+    "criteria_sha256": "8ea812efec673ba658d2eb08a2ca07795bab0fce07cfa9694d0ece3cda8a2d26",
     "inspected_dimensions": {
       "width": 1544,
       "height": 768
     },
-    "reviewed_at": "2026-07-31T03:59:26.082274+00:00"
+    "reviewed_at": "2026-08-01T03:22:28.437209+00:00"
   },
   "cruce_rios": {
     "status": "regenerate",
@@ -761,7 +767,7 @@
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Photorealistic river-edge scene, but continuity fails because later panels change equipment/person state without visible explanation; safety is ambiguous for river-crossing instruction because no clear safe crossing setup or visible secured method is demonstrated. Criteria: Photographic riverbank scene, but the person is standing rather than visibly walking the bank, and the chosen safe route versus rejected foamy fast channel is not unambiguous."
+        "note": "Blind: Single hiker at river edge appears physically coherent, but clothing and pack/strap state do not stay consistent with later panels. Criteria: Photographic and text-free, but she is not visibly pointing at or testing a selected shallow route; the pole appears planted on the bank/edge rather than probing the route, so the safe route choice is ambiguous."
       },
       {
         "number": 2,
@@ -776,7 +782,7 @@
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Freestanding trekking pole is visibly unsupported on loose river stones; loose straps/buckles are unclear. Continuity does not match all panels, and the instructional safety action is ambiguous. Criteria: Boots are dry on the bank and pole is planted nearby, but the chest buckle and hip-belt buckle are not clearly both opened and released with loose ends hanging apart; upstream pole placement is not visually verifiable."
+        "note": "Blind: Trekking pole stands upright by itself on loose river stones with no visible support; clothing/pack state differs from panel 1; handling straps is visually ambiguous for a safety tutorial. Criteria: Photographic, but the trekking pole is not ready in the same hand and the backpack sternum-buckle status is unclear/appears still connected across the chest; only the hip-belt separation is clear."
       },
       {
         "number": 3,
@@ -791,19 +797,18 @@
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Panel shows a different hiker/person and changed clothing/equipment from prior panels without visible transition. Solo river crossing with pack and pole is visibly ambiguous as a safety technique. Criteria: Photographic crossing scene with water below knees, but the person changes from the prior panels, upstream-facing direction and diagonal crossing are not unambiguous, and three-point contact timing is not clearly demonstrated."
+        "note": "Blind: Crossing action is visible, but pack straps/buckles are ambiguous and some straps hang into moving water; clothing remains inconsistent with panel 1. Criteria: Photographic continuity is mostly preserved, but the required side-profile/current geometry is not unambiguous; both complete boots are partly obscured by water, flat planted contact cannot be verified, and the open sternum/hip-belt buckle halves are not all clearly visible."
       }
     ],
     "note": "Independent inspections found or could not rule out visible defects.",
     "risks": [
-      "blind: Panel 2 trekking pole appears to stand upright without any visible support on loose stones.",
-      "blind: Panel 3 changes to a different hiker/person with different clothing and equipment without visible explanation.",
-      "blind: River-crossing technique is ambiguous and could be imitated unsafely.",
-      "criteria: Panel 1 does not clearly distinguish selected safe crossing route from rejected fast foamy channel.",
-      "criteria: Panel 2 does not clearly show both chest and hip-belt buckles fully released before entry.",
-      "criteria: Panel 2 pole orientation upstream is not verifiable.",
-      "criteria: Panel 3 uses a different person/equipment, breaking continuity.",
-      "criteria: Panel 3 does not unambiguously show facing upstream while crossing diagonally with clear three-point contact."
+      "blind: Panel 2 shows an unsupported freestanding trekking pole on uneven stones.",
+      "blind: Clothing and pack/strap configuration change between panels without a visible action explaining the change.",
+      "blind: Panel 3 shows loose dangling straps in moving water, creating a snag hazard.",
+      "blind: Panel 3 does not clearly show a safely releasable backpack setup during river crossing.",
+      "criteria: Panel 1 does not clearly demonstrate probing/testing the selected shallow route from the bank.",
+      "criteria: Panel 2 may imply crossing with a backpack sternum strap still connected and pole not in hand.",
+      "criteria: Panel 3 does not clearly prove three stable contacts, flat planted boots, or fully open backpack buckles during the crossing."
     ],
     "inspections": {
       "blind": {
@@ -818,10 +823,10 @@
               "object_integrity": true,
               "physical_logic": true,
               "continuity": false,
-              "safety": false,
+              "safety": true,
               "text_free": true
             },
-            "note": "Photorealistic river-edge scene, but continuity fails because later panels change equipment/person state without visible explanation; safety is ambiguous for river-crossing instruction because no clear safe crossing setup or visible secured method is demonstrated."
+            "note": "Single hiker at river edge appears physically coherent, but clothing and pack/strap state do not stay consistent with later panels."
           },
           {
             "number": 2,
@@ -835,7 +840,7 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Freestanding trekking pole is visibly unsupported on loose river stones; loose straps/buckles are unclear. Continuity does not match all panels, and the instructional safety action is ambiguous."
+            "note": "Trekking pole stands upright by itself on loose river stones with no visible support; clothing/pack state differs from panel 1; handling straps is visually ambiguous for a safety tutorial."
           },
           {
             "number": 3,
@@ -849,14 +854,15 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Panel shows a different hiker/person and changed clothing/equipment from prior panels without visible transition. Solo river crossing with pack and pole is visibly ambiguous as a safety technique."
+            "note": "Crossing action is visible, but pack straps/buckles are ambiguous and some straps hang into moving water; clothing remains inconsistent with panel 1."
           }
         ],
-        "note": "Overall regenerate: panels are photorealistic and text-free, but continuity and safety clarity fail, with an unsupported pole in panel 2.",
+        "note": "Rejected because the sequence has continuity breaks, an unsupported object, and unsafe or ambiguous river-crossing technique.",
         "risks": [
-          "Panel 2 trekking pole appears to stand upright without any visible support on loose stones.",
-          "Panel 3 changes to a different hiker/person with different clothing and equipment without visible explanation.",
-          "River-crossing technique is ambiguous and could be imitated unsafely."
+          "Panel 2 shows an unsupported freestanding trekking pole on uneven stones.",
+          "Clothing and pack/strap configuration change between panels without a visible action explaining the change.",
+          "Panel 3 shows loose dangling straps in moving water, creating a snag hazard.",
+          "Panel 3 does not clearly show a safely releasable backpack setup during river crossing."
         ]
       },
       "criteria": {
@@ -875,7 +881,7 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Photographic riverbank scene, but the person is standing rather than visibly walking the bank, and the chosen safe route versus rejected foamy fast channel is not unambiguous."
+            "note": "Photographic and text-free, but she is not visibly pointing at or testing a selected shallow route; the pole appears planted on the bank/edge rather than probing the route, so the safe route choice is ambiguous."
           },
           {
             "number": 2,
@@ -890,7 +896,7 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Boots are dry on the bank and pole is planted nearby, but the chest buckle and hip-belt buckle are not clearly both opened and released with loose ends hanging apart; upstream pole placement is not visually verifiable."
+            "note": "Photographic, but the trekking pole is not ready in the same hand and the backpack sternum-buckle status is unclear/appears still connected across the chest; only the hip-belt separation is clear."
           },
           {
             "number": 3,
@@ -900,36 +906,34 @@
               "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
-              "continuity": false,
+              "continuity": true,
               "instruction_match": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Photographic crossing scene with water below knees, but the person changes from the prior panels, upstream-facing direction and diagonal crossing are not unambiguous, and three-point contact timing is not clearly demonstrated."
+            "note": "Photographic continuity is mostly preserved, but the required side-profile/current geometry is not unambiguous; both complete boots are partly obscured by water, flat planted contact cannot be verified, and the open sternum/hip-belt buckle halves are not all clearly visible."
           }
         ],
-        "note": "Regenerate: safety-critical actions are ambiguous and continuity breaks in the final panel.",
+        "note": "Overall regenerate: key safety-critical route testing, buckle release, pole handling, current direction, and three-contact stance details are ambiguous or missing.",
         "risks": [
-          "Panel 1 does not clearly distinguish selected safe crossing route from rejected fast foamy channel.",
-          "Panel 2 does not clearly show both chest and hip-belt buckles fully released before entry.",
-          "Panel 2 pole orientation upstream is not verifiable.",
-          "Panel 3 uses a different person/equipment, breaking continuity.",
-          "Panel 3 does not unambiguously show facing upstream while crossing diagonally with clear three-point contact."
+          "Panel 1 does not clearly demonstrate probing/testing the selected shallow route from the bank.",
+          "Panel 2 may imply crossing with a backpack sternum strap still connected and pole not in hand.",
+          "Panel 3 does not clearly prove three stable contacts, flat planted boots, or fully open backpack buckles during the crossing."
         ]
       }
     },
-    "sha256": "2ff50f52d9305e0696448ec5478cf276ec46b2a0d1adf0d7dfe5679903265976",
+    "sha256": "66a023458b0bc5af60994ea225fc5919d5aae2b1e1b20066fe20875f78f526a4",
     "image": ".hermes/tutorial_candidates/cruce_rios.png",
     "auditor": "nuvok-independent-visual-inspector-gpt-5.5-codex",
     "rubric_version": "nuvok-photorealistic-logic-safety-v3",
     "inspector_version": "nuvok-independent-visual-inspector-v1",
     "inspection_mode": "independent-two-stage-full-resolution",
-    "criteria_sha256": "af5609e53cd13e8c3c64b4d14cfc1612001c6d7fb7e5ffbecc24caafd4c6f6a4",
+    "criteria_sha256": "691787b91aafb0cbf5e4873b854dd0560c27c49abca7d4639d4d2df838ce4694",
     "inspected_dimensions": {
       "width": 1544,
       "height": 768
     },
-    "reviewed_at": "2026-07-31T03:58:59.591581+00:00"
+    "reviewed_at": "2026-08-01T03:22:15.692324+00:00"
   },
   "fracturas_inmovilizacion": {
     "status": "regenerate",
@@ -938,60 +942,56 @@
         "number": 1,
         "pass": false,
         "checks": {
-          "photorealism": false,
-          "anatomy": false,
-          "object_integrity": false,
-          "physical_logic": false,
-          "continuity": false,
+          "photorealism": true,
+          "anatomy": true,
+          "object_integrity": true,
+          "physical_logic": true,
+          "continuity": true,
           "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Close cropped synthetic-looking scene with ambiguous/malformed hand contact around the fingers and wrist; ties and sling arrangement obscure whether the injured forearm is safely immobilized. Criteria: Shows an already splinted and sling-supported arm with ties, not an initial pre-immobilization finger warmth/color/sensation/movement check."
+        "note": "Blind: Photorealistic close-up with coherent visible arm support, equipment, and examiner hand contact; no text visible. Criteria: Elbow angle and full required unused kit are not unambiguously verifiable; the arm appears supported on the table blanket but not clearly across the chest as specified."
       },
       {
         "number": 2,
         "pass": false,
         "checks": {
-          "photorealism": false,
+          "photorealism": true,
           "anatomy": true,
           "object_integrity": false,
           "physical_logic": false,
-          "continuity": false,
+          "continuity": true,
           "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Splints are loose and not visibly securing the injured limb; equipment and setup do not clearly continue from adjacent panels. Criteria: Splints are being placed, but it is not unambiguous that both padded boards span beyond the elbow; panel sequence and equipment do not match adjacent panels."
+        "note": "Blind: Photorealistic splinted arm with visible ties and support; anatomy, objects, and contacts appear coherent; no text visible. Criteria: Only one continuous tan splint is clearly visible rather than two opposite-side splints, and a tie/strap crosses the padded injury area instead of leaving a wide central gap free."
       },
       {
         "number": 3,
         "pass": false,
         "checks": {
-          "photorealism": false,
-          "anatomy": false,
+          "photorealism": true,
+          "anatomy": true,
           "object_integrity": false,
           "physical_logic": false,
-          "continuity": false,
-          "instruction_match": true,
+          "continuity": true,
+          "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Final immobilization is ambiguous: wrist/hand appears unsupported and drooping, hand anatomy/contact is unclear, and splint/sling arrangement is not visibly safe. Criteria: Final splinting, sling support, visible injury gap, side knots, and finger recheck are shown, but continuity fails because splint type/color and sequence are inconsistent with prior panels."
+        "note": "Blind: Photorealistic, but the sling path and load support are unclear while the arm remains table-supported and held by another hand, making the completed immobilization physically ambiguous and unsafe to imitate. Criteria: The sling and swathe obscure required tie count and central injury gap; two opposite splints are not clearly visible, and safe knot placement away from injury cannot be verified."
       }
     ],
     "note": "Independent inspections found or could not rule out visible defects.",
     "risks": [
-      "blind: Synthetic/generated-looking photorealism rather than a real documentary training photograph",
-      "blind: Panel 1 hand and finger contact is unclear and potentially malformed",
-      "blind: Panel 1 ties and sling obscure whether pressure is safely placed away from the injury",
-      "blind: Panel 2 shows loose splints without completed immobilization or secure support",
-      "blind: Equipment changes visibly between panels without a clear visible action explaining the change",
-      "blind: Panel 3 wrist and hand appear unsupported and drooping below the splinted forearm",
-      "blind: Panel 3 anatomy/contact around the hand is ambiguous for a learner to imitate safely",
-      "criteria: Panel 1 contradicts the required initial assessment by already showing immobilization.",
-      "criteria: Panel 2 does not clearly show both splints spanning beyond the elbow.",
-      "criteria: Inconsistent splint equipment between panels could confuse learners."
+      "blind: Panel 3 sling does not visibly provide clear support to the immobilized forearm; the arm is still resting on the table and held by a gloved hand.",
+      "blind: Panel 3 shows ambiguous sling routing around the neck/forearm, creating a risk learners imitate an unclear or ineffective sling setup.",
+      "criteria: Central padded injury area appears tied or obscured instead of left free",
+      "criteria: Two opposite-side splints are not clearly visible in later panels",
+      "criteria: Required exact equipment count and placement cannot be verified",
+      "criteria: Sling obscures tie placement and injury-gap safety checks"
     ],
     "inspections": {
       "blind": {
@@ -999,56 +999,51 @@
         "panels": [
           {
             "number": 1,
-            "pass": false,
+            "pass": true,
             "checks": {
-              "photorealism": false,
-              "anatomy": false,
-              "object_integrity": false,
-              "physical_logic": false,
-              "continuity": false,
-              "safety": false,
+              "photorealism": true,
+              "anatomy": true,
+              "object_integrity": true,
+              "physical_logic": true,
+              "continuity": true,
+              "safety": true,
               "text_free": true
             },
-            "note": "Close cropped synthetic-looking scene with ambiguous/malformed hand contact around the fingers and wrist; ties and sling arrangement obscure whether the injured forearm is safely immobilized."
+            "note": "Photorealistic close-up with coherent visible arm support, equipment, and examiner hand contact; no text visible."
           },
           {
             "number": 2,
-            "pass": false,
+            "pass": true,
             "checks": {
-              "photorealism": false,
+              "photorealism": true,
               "anatomy": true,
-              "object_integrity": false,
-              "physical_logic": false,
-              "continuity": false,
-              "safety": false,
+              "object_integrity": true,
+              "physical_logic": true,
+              "continuity": true,
+              "safety": true,
               "text_free": true
             },
-            "note": "Splints are loose and not visibly securing the injured limb; equipment and setup do not clearly continue from adjacent panels."
+            "note": "Photorealistic splinted arm with visible ties and support; anatomy, objects, and contacts appear coherent; no text visible."
           },
           {
             "number": 3,
             "pass": false,
             "checks": {
-              "photorealism": false,
-              "anatomy": false,
-              "object_integrity": false,
+              "photorealism": true,
+              "anatomy": true,
+              "object_integrity": true,
               "physical_logic": false,
-              "continuity": false,
+              "continuity": true,
               "safety": false,
               "text_free": true
             },
-            "note": "Final immobilization is ambiguous: wrist/hand appears unsupported and drooping, hand anatomy/contact is unclear, and splint/sling arrangement is not visibly safe."
+            "note": "Photorealistic, but the sling path and load support are unclear while the arm remains table-supported and held by another hand, making the completed immobilization physically ambiguous and unsafe to imitate."
           }
         ],
-        "note": "Overall image should be regenerated because multiple panels have ambiguous anatomy, inconsistent equipment/state, and unsafe or unclear immobilization technique.",
+        "note": "Regenerate because the final panel does not clearly demonstrate a physically coherent, safely supported sling application.",
         "risks": [
-          "Synthetic/generated-looking photorealism rather than a real documentary training photograph",
-          "Panel 1 hand and finger contact is unclear and potentially malformed",
-          "Panel 1 ties and sling obscure whether pressure is safely placed away from the injury",
-          "Panel 2 shows loose splints without completed immobilization or secure support",
-          "Equipment changes visibly between panels without a clear visible action explaining the change",
-          "Panel 3 wrist and hand appear unsupported and drooping below the splinted forearm",
-          "Panel 3 anatomy/contact around the hand is ambiguous for a learner to imitate safely"
+          "Panel 3 sling does not visibly provide clear support to the immobilized forearm; the arm is still resting on the table and held by a gloved hand.",
+          "Panel 3 shows ambiguous sling routing around the neck/forearm, creating a risk learners imitate an unclear or ineffective sling setup."
         ]
       },
       "criteria": {
@@ -1061,13 +1056,13 @@
               "photorealism": true,
               "anatomy": true,
               "object_integrity": true,
-              "physical_logic": false,
-              "continuity": false,
+              "physical_logic": true,
+              "continuity": true,
               "instruction_match": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Shows an already splinted and sling-supported arm with ties, not an initial pre-immobilization finger warmth/color/sensation/movement check."
+            "note": "Elbow angle and full required unused kit are not unambiguously verifiable; the arm appears supported on the table blanket but not clearly across the chest as specified."
           },
           {
             "number": 2,
@@ -1075,14 +1070,14 @@
             "checks": {
               "photorealism": true,
               "anatomy": true,
-              "object_integrity": true,
-              "physical_logic": true,
-              "continuity": false,
+              "object_integrity": false,
+              "physical_logic": false,
+              "continuity": true,
               "instruction_match": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Splints are being placed, but it is not unambiguous that both padded boards span beyond the elbow; panel sequence and equipment do not match adjacent panels."
+            "note": "Only one continuous tan splint is clearly visible rather than two opposite-side splints, and a tie/strap crosses the padded injury area instead of leaving a wide central gap free."
           },
           {
             "number": 3,
@@ -1090,36 +1085,37 @@
             "checks": {
               "photorealism": true,
               "anatomy": true,
-              "object_integrity": true,
-              "physical_logic": true,
-              "continuity": false,
-              "instruction_match": true,
-              "safety": true,
+              "object_integrity": false,
+              "physical_logic": false,
+              "continuity": true,
+              "instruction_match": false,
+              "safety": false,
               "text_free": true
             },
-            "note": "Final splinting, sling support, visible injury gap, side knots, and finger recheck are shown, but continuity fails because splint type/color and sequence are inconsistent with prior panels."
+            "note": "The sling and swathe obscure required tie count and central injury gap; two opposite splints are not clearly visible, and safe knot placement away from injury cannot be verified."
           }
         ],
-        "note": "Overall fails due incorrect left-to-right instructional sequence and inconsistent splint equipment across panels.",
+        "note": "Overall image is photorealistic but fails safety-critical immobilization geometry and visibility requirements.",
         "risks": [
-          "Panel 1 contradicts the required initial assessment by already showing immobilization.",
-          "Panel 2 does not clearly show both splints spanning beyond the elbow.",
-          "Inconsistent splint equipment between panels could confuse learners."
+          "Central padded injury area appears tied or obscured instead of left free",
+          "Two opposite-side splints are not clearly visible in later panels",
+          "Required exact equipment count and placement cannot be verified",
+          "Sling obscures tie placement and injury-gap safety checks"
         ]
       }
     },
-    "sha256": "560f126ccc1304bcfbc3ce86fb422e90d22ef60357332f8f30f4f54952ad5167",
+    "sha256": "0e9bdcaf0bdbf611658c0de9433f0230a2d4850ebaaf8219a08f3707614aa7a4",
     "image": ".hermes/tutorial_candidates/fracturas_inmovilizacion.png",
     "auditor": "nuvok-independent-visual-inspector-gpt-5.5-codex",
     "rubric_version": "nuvok-photorealistic-logic-safety-v3",
     "inspector_version": "nuvok-independent-visual-inspector-v1",
     "inspection_mode": "independent-two-stage-full-resolution",
-    "criteria_sha256": "9bac33d069fb14d967dd6431907d91352edf7b953434c2cd59dfc5e238cd12b1",
+    "criteria_sha256": "2ded54f887cbf2577ed38187f64ab9e300910581a73ceb1f5eb3e476e765055d",
     "inspected_dimensions": {
       "width": 1544,
       "height": 768
     },
-    "reviewed_at": "2026-07-31T03:59:37.977789+00:00"
+    "reviewed_at": "2026-08-01T03:22:52.421337+00:00"
   },
   "fuego_supervivencia": {
     "status": "approved",
@@ -1264,38 +1260,8 @@
         "number": 1,
         "pass": false,
         "checks": {
-          "photorealism": true,
+          "photorealism": false,
           "anatomy": true,
-          "object_integrity": true,
-          "physical_logic": true,
-          "continuity": false,
-          "instruction_match": false,
-          "safety": false,
-          "text_free": true
-        },
-        "note": "Blind: Man is being assisted while upright, but intoxication response is ambiguous and the later collapse/position change is not visibly explained. Criteria: Rescuer is guiding casualty at doorway, but she is still inside/at the threshold and visibly contacting the casualty; no visible spill or fume boundary confirms avoidance."
-      },
-      {
-        "number": 2,
-        "pass": false,
-        "checks": {
-          "photorealism": true,
-          "anatomy": true,
-          "object_integrity": true,
-          "physical_logic": true,
-          "continuity": false,
-          "instruction_match": false,
-          "safety": false,
-          "text_free": true
-        },
-        "note": "Blind: Man is on the ground with phone nearby and rescuer gesturing, but the transition from panel 1 is not shown and the emergency action is unclear. Criteria: Container is upright and closed away from casualty, and phone is visible between them, but speaker mode/call status is not visibly verifiable; casualty position is not clearly just seated/resting in fresh air."
-      },
-      {
-        "number": 3,
-        "pass": false,
-        "checks": {
-          "photorealism": true,
-          "anatomy": false,
           "object_integrity": true,
           "physical_logic": false,
           "continuity": false,
@@ -1303,20 +1269,48 @@
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Rescuer appears to manipulate or support the prone man, but the intended safe recovery position is ambiguous and continuity from prior panel is not visibly established. Criteria: Recovery position is unsafe/ambiguous: upper knee is not visibly flexed and planted, body/legs are partly obscured by rescuer, and airway/head support geometry is not clearly demonstrated. Phone speaker mode remains unverifiable."
+        "note": "Blind: Generated-looking staged scene; woman gestures near the man without clearly supporting or performing a verifiable safe action, and the phone lies unused on the floor. Criteria: Helper stays outside threshold and bottle is upright, but the gloved hand appears to contact or possibly grasp the casualty's upper arm rather than showing only an open non-grasping cradle."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "checks": {
+          "photorealism": false,
+          "anatomy": true,
+          "object_integrity": true,
+          "physical_logic": false,
+          "continuity": false,
+          "instruction_match": true,
+          "safety": false,
+          "text_free": true
+        },
+        "note": "Blind: Generated-looking image; patient is seated while responder only gestures with open hands, with no clear assessment, call, or safe intervention visible. Criteria: Casualty is seated upright in fresh air; phone is face-up between them with unreadable screen; helper's gloved hands are free; distant capped bottle remains on counter."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "checks": {
+          "photorealism": false,
+          "anatomy": true,
+          "object_integrity": true,
+          "physical_logic": false,
+          "continuity": false,
+          "instruction_match": false,
+          "safety": false,
+          "text_free": true
+        },
+        "note": "Blind: Generated-looking image; patient is lying on side but responder placement and action are ambiguous, phone remains unused, and the safety-critical airway/emergency response is not clearly demonstrated. Criteria: Recovery-position intent is visible, but the top knee being planted and the face angled downward with a clearly unobstructed airway are not unambiguous."
       }
     ],
     "note": "Independent inspections found or could not rule out visible defects.",
     "risks": [
-      "blind: Unexplained state change from standing assisted person to collapsed person on the ground.",
-      "blind: Glove color/appearance changes between panel 1 and later panels.",
-      "blind: Phone changes location without a visible action explaining it.",
-      "blind: Bottle/object placement changes between panels without visible handling.",
-      "blind: Emergency response sequence is ambiguous; no clearly visible call for help or poison-control action.",
-      "blind: Body positioning in panels 2 and 3 could be imitated incorrectly because airway/recovery-position technique is not clearly demonstrated.",
-      "criteria: Speakerphone mode is not visibly confirmed in panels 2 and 3.",
-      "criteria: Panel 3 does not clearly show a stable recovery position with upper knee flexed and planted.",
-      "criteria: Panel 1 does not clearly demonstrate avoiding contact or staying out of the hazardous area."
+      "blind: Generated/illustration-like appearance rather than indistinguishable real training photograph",
+      "blind: Phone is visibly present but not being used to call for help",
+      "blind: Responder gestures or touches without a clear safe poisoning-response action",
+      "blind: State changes from standing to seated to lying are not visibly explained by intervening action",
+      "blind: Recovery/airway management is ambiguous and could be imitated incorrectly",
+      "criteria: Panel 1 may teach grasping/contact while moving casualty instead of open non-grasping support.",
+      "criteria: Panel 3 airway and top-knee placement are not clear enough for safe recovery-position instruction."
     ],
     "inspections": {
       "blind": {
@@ -1326,53 +1320,52 @@
             "number": 1,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": true,
               "object_integrity": true,
-              "physical_logic": true,
+              "physical_logic": false,
               "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Man is being assisted while upright, but intoxication response is ambiguous and the later collapse/position change is not visibly explained."
+            "note": "Generated-looking staged scene; woman gestures near the man without clearly supporting or performing a verifiable safe action, and the phone lies unused on the floor."
           },
           {
             "number": 2,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": true,
               "object_integrity": true,
-              "physical_logic": true,
+              "physical_logic": false,
               "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Man is on the ground with phone nearby and rescuer gesturing, but the transition from panel 1 is not shown and the emergency action is unclear."
+            "note": "Generated-looking image; patient is seated while responder only gestures with open hands, with no clear assessment, call, or safe intervention visible."
           },
           {
             "number": 3,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": true,
               "object_integrity": true,
-              "physical_logic": true,
+              "physical_logic": false,
               "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Rescuer appears to manipulate or support the prone man, but the intended safe recovery position is ambiguous and continuity from prior panel is not visibly established."
+            "note": "Generated-looking image; patient is lying on side but responder placement and action are ambiguous, phone remains unused, and the safety-critical airway/emergency response is not clearly demonstrated."
           }
         ],
-        "note": "Regenerate: panels are plausible but do not provide unambiguous, continuous, safe emergency-training steps.",
+        "note": "Overall regenerate: panels are not documentary-photorealistic and the emergency actions are ambiguous or incomplete.",
         "risks": [
-          "Unexplained state change from standing assisted person to collapsed person on the ground.",
-          "Glove color/appearance changes between panel 1 and later panels.",
-          "Phone changes location without a visible action explaining it.",
-          "Bottle/object placement changes between panels without visible handling.",
-          "Emergency response sequence is ambiguous; no clearly visible call for help or poison-control action.",
-          "Body positioning in panels 2 and 3 could be imitated incorrectly because airway/recovery-position technique is not clearly demonstrated."
+          "Generated/illustration-like appearance rather than indistinguishable real training photograph",
+          "Phone is visibly present but not being used to call for help",
+          "Responder gestures or touches without a clear safe poisoning-response action",
+          "State changes from standing to seated to lying are not visibly explained by intervening action",
+          "Recovery/airway management is ambiguous and could be imitated incorrectly"
         ]
       },
       "criteria": {
@@ -1391,10 +1384,25 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Rescuer is guiding casualty at doorway, but she is still inside/at the threshold and visibly contacting the casualty; no visible spill or fume boundary confirms avoidance."
+            "note": "Helper stays outside threshold and bottle is upright, but the gloved hand appears to contact or possibly grasp the casualty's upper arm rather than showing only an open non-grasping cradle."
           },
           {
             "number": 2,
+            "pass": true,
+            "checks": {
+              "photorealism": true,
+              "anatomy": true,
+              "object_integrity": true,
+              "physical_logic": true,
+              "continuity": true,
+              "instruction_match": true,
+              "safety": true,
+              "text_free": true
+            },
+            "note": "Casualty is seated upright in fresh air; phone is face-up between them with unreadable screen; helper's gloved hands are free; distant capped bottle remains on counter."
+          },
+          {
+            "number": 3,
             "pass": false,
             "checks": {
               "photorealism": true,
@@ -1406,44 +1414,28 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Container is upright and closed away from casualty, and phone is visible between them, but speaker mode/call status is not visibly verifiable; casualty position is not clearly just seated/resting in fresh air."
-          },
-          {
-            "number": 3,
-            "pass": false,
-            "checks": {
-              "photorealism": true,
-              "anatomy": false,
-              "object_integrity": true,
-              "physical_logic": false,
-              "continuity": true,
-              "instruction_match": false,
-              "safety": false,
-              "text_free": true
-            },
-            "note": "Recovery position is unsafe/ambiguous: upper knee is not visibly flexed and planted, body/legs are partly obscured by rescuer, and airway/head support geometry is not clearly demonstrated. Phone speaker mode remains unverifiable."
+            "note": "Recovery-position intent is visible, but the top knee being planted and the face angled downward with a clearly unobstructed airway are not unambiguous."
           }
         ],
-        "note": "Several safety-critical instructional details are ambiguous or not visible, especially hands-free speakerphone status and exact recovery-position geometry.",
+        "note": "Regenerate due unsafe ambiguity in panel 1 support method and panel 3 recovery-position geometry.",
         "risks": [
-          "Speakerphone mode is not visibly confirmed in panels 2 and 3.",
-          "Panel 3 does not clearly show a stable recovery position with upper knee flexed and planted.",
-          "Panel 1 does not clearly demonstrate avoiding contact or staying out of the hazardous area."
+          "Panel 1 may teach grasping/contact while moving casualty instead of open non-grasping support.",
+          "Panel 3 airway and top-knee placement are not clear enough for safe recovery-position instruction."
         ]
       }
     },
-    "sha256": "a9c8ff4d8b9fe90dbc1f6928fe7e5b62aeddadd19c73f4828efdcd961cac00c8",
+    "sha256": "3e30c21d1673d3bc407a7d185ec2a943f0fe4683c37416e5bc09c1d7a38187ff",
     "image": ".hermes/tutorial_candidates/intoxicaciones.png",
     "auditor": "nuvok-independent-visual-inspector-gpt-5.5-codex",
     "rubric_version": "nuvok-photorealistic-logic-safety-v3",
     "inspector_version": "nuvok-independent-visual-inspector-v1",
     "inspection_mode": "independent-two-stage-full-resolution",
-    "criteria_sha256": "4dbf4527b984e810496682d55915590a71976f0c9dbc3d3b67064bd0b771e11b",
+    "criteria_sha256": "a68d26897cd1df22542894e3f4e5b69ece8e1a32d925adf0f20162880c7ed04a",
     "inspected_dimensions": {
       "width": 1544,
       "height": 768
     },
-    "reviewed_at": "2026-07-31T03:59:41.702964+00:00"
+    "reviewed_at": "2026-08-01T03:22:58.504326+00:00"
   },
   "inundacion": {
     "status": "approved",
@@ -1582,37 +1574,37 @@
         "number": 1,
         "pass": false,
         "checks": {
-          "photorealism": false,
-          "anatomy": true,
+          "photorealism": true,
+          "anatomy": false,
           "object_integrity": false,
-          "physical_logic": true,
-          "continuity": false,
+          "physical_logic": false,
+          "continuity": true,
           "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Generated-looking scene with inconsistent gear; cutting action places blade very close to the holding hand and is visibly unsafe to imitate. Criteria: Knife path is unsafe/ambiguous and appears directed near the support hand rather than clearly away from the hand and body."
+        "note": "Blind: Gloved hand and knife contact are ambiguous; fingers/tool handling are not clearly verifiable, and an exposed knife is positioned beside the hand in an unsafe, imitable setup. Criteria: Photoreal, but the knife blade is not withdrawn leftward with its tip off the board edge as specified, and creek/background elements appear despite the expected isolated board setup."
       },
       {
         "number": 2,
         "pass": false,
         "checks": {
-          "photorealism": false,
-          "anatomy": true,
-          "object_integrity": true,
-          "physical_logic": true,
+          "photorealism": true,
+          "anatomy": false,
+          "object_integrity": false,
+          "physical_logic": false,
           "continuity": false,
-          "instruction_match": false,
+          "instruction_match": true,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Generated-looking scene; gloves/knife/board do not match adjacent panels, and an open knife is left exposed on the work surface. Criteria: Funnel and bait are visible, but matched holes and secure tying are not unambiguous; exposed open knife on the work surface adds unsafe ambiguity."
+        "note": "Blind: Partial person/limbs and clothing are cropped and inconsistent with panel 1; bottle assembly, pins, cord path, and hand contact are ambiguous, making the construction state and safe handling unclear. Criteria: Assembly is photoreal and visibly shows the inverted uncapped funnel inside the bottle body with two short orange stitch points and no visible knife or cap."
       },
       {
         "number": 3,
         "pass": false,
         "checks": {
-          "photorealism": false,
+          "photorealism": true,
           "anatomy": true,
           "object_integrity": false,
           "physical_logic": false,
@@ -1621,19 +1613,19 @@
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Generated-looking scene; gloves/knife/board differ from prior panels, and the tethered bottle in moving water creates unclear, potentially unsafe entanglement/trip hazard. Criteria: Trap does not visibly match the completed funnel trap; capped bottle end is visible, funnel mouth direction downstream is not clear, and current direction is not unmistakable."
+        "note": "Blind: Trap placement, opening direction, tether attachment, and anchoring are unclear; equipment state differs from earlier panels without a visible action explaining the change. Criteria: Trap orientation and flow direction are not unambiguous; the required upstream base-left/downstream funnel-mouth-right relationship is unclear, and an extra board remains visible on the bank."
       }
     ],
     "note": "Independent inspections found or could not rule out visible defects.",
     "risks": [
-      "blind: Blade visibly close to the supporting hand while cutting plastic bottle",
-      "blind: Open knife left exposed on work surface",
-      "blind: Gloves, knife, and board visibly change between panels without shown cause",
-      "blind: Tether line across bank/water creates visible entanglement or trip hazard",
-      "blind: Photorealism not met; image appears generated rather than documentary",
-      "criteria: Panel 1 may teach cutting toward or near the support hand.",
-      "criteria: Panel 2 leaves hole matching and tie security ambiguous.",
-      "criteria: Panel 3 shows an unclear or incorrect trap opening and ambiguous stream current direction."
+      "blind: Exposed knife placed close to gloved hand with unclear safe cutting technique",
+      "blind: Bottle trap assembly details are too ambiguous to verify or safely imitate",
+      "blind: Tethered bottle placement in water has unclear orientation, attachment, and anchoring",
+      "blind: Clothing/person continuity changes between panels without visible explanation",
+      "blind: Cropped or obscured anatomy prevents verification of normal hand and limb contact",
+      "criteria: Panel 1 knife withdrawal direction and blade endpoint do not match the safe-cut instruction.",
+      "criteria: Panel 3 does not clearly teach correct trap orientation relative to current.",
+      "criteria: Panel 3 includes extra board/equipment not specified for the completed bank setup."
     ],
     "inspections": {
       "blind": {
@@ -1643,52 +1635,52 @@
             "number": 1,
             "pass": false,
             "checks": {
-              "photorealism": false,
-              "anatomy": true,
+              "photorealism": true,
+              "anatomy": false,
               "object_integrity": false,
-              "physical_logic": true,
-              "continuity": false,
+              "physical_logic": false,
+              "continuity": true,
               "safety": false,
               "text_free": true
             },
-            "note": "Generated-looking scene with inconsistent gear; cutting action places blade very close to the holding hand and is visibly unsafe to imitate."
+            "note": "Gloved hand and knife contact are ambiguous; fingers/tool handling are not clearly verifiable, and an exposed knife is positioned beside the hand in an unsafe, imitable setup."
           },
           {
             "number": 2,
             "pass": false,
             "checks": {
-              "photorealism": false,
-              "anatomy": true,
-              "object_integrity": true,
-              "physical_logic": true,
-              "continuity": false,
-              "safety": false,
-              "text_free": true
-            },
-            "note": "Generated-looking scene; gloves/knife/board do not match adjacent panels, and an open knife is left exposed on the work surface."
-          },
-          {
-            "number": 3,
-            "pass": false,
-            "checks": {
-              "photorealism": false,
-              "anatomy": true,
-              "object_integrity": true,
+              "photorealism": true,
+              "anatomy": false,
+              "object_integrity": false,
               "physical_logic": false,
               "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Generated-looking scene; gloves/knife/board differ from prior panels, and the tethered bottle in moving water creates unclear, potentially unsafe entanglement/trip hazard."
+            "note": "Partial person/limbs and clothing are cropped and inconsistent with panel 1; bottle assembly, pins, cord path, and hand contact are ambiguous, making the construction state and safe handling unclear."
+          },
+          {
+            "number": 3,
+            "pass": false,
+            "checks": {
+              "photorealism": true,
+              "anatomy": true,
+              "object_integrity": false,
+              "physical_logic": false,
+              "continuity": false,
+              "safety": false,
+              "text_free": true
+            },
+            "note": "Trap placement, opening direction, tether attachment, and anchoring are unclear; equipment state differs from earlier panels without a visible action explaining the change."
           }
         ],
-        "note": "Overall rejected for non-photoreal/generated appearance, continuity failures, and unsafe/ambiguous technique.",
+        "note": "Regenerate: multiple panels have ambiguous tool use, construction details, physical setup, and continuity problems.",
         "risks": [
-          "Blade visibly close to the supporting hand while cutting plastic bottle",
-          "Open knife left exposed on work surface",
-          "Gloves, knife, and board visibly change between panels without shown cause",
-          "Tether line across bank/water creates visible entanglement or trip hazard",
-          "Photorealism not met; image appears generated rather than documentary"
+          "Exposed knife placed close to gloved hand with unclear safe cutting technique",
+          "Bottle trap assembly details are too ambiguous to verify or safely imitate",
+          "Tethered bottle placement in water has unclear orientation, attachment, and anchoring",
+          "Clothing/person continuity changes between panels without visible explanation",
+          "Cropped or obscured anatomy prevents verification of normal hand and limb contact"
         ]
       },
       "criteria": {
@@ -1707,22 +1699,22 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Knife path is unsafe/ambiguous and appears directed near the support hand rather than clearly away from the hand and body."
+            "note": "Photoreal, but the knife blade is not withdrawn leftward with its tip off the board edge as specified, and creek/background elements appear despite the expected isolated board setup."
           },
           {
             "number": 2,
-            "pass": false,
+            "pass": true,
             "checks": {
               "photorealism": true,
               "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
               "continuity": true,
-              "instruction_match": false,
-              "safety": false,
+              "instruction_match": true,
+              "safety": true,
               "text_free": true
             },
-            "note": "Funnel and bait are visible, but matched holes and secure tying are not unambiguous; exposed open knife on the work surface adds unsafe ambiguity."
+            "note": "Assembly is photoreal and visibly shows the inverted uncapped funnel inside the bottle body with two short orange stitch points and no visible knife or cap."
           },
           {
             "number": 3,
@@ -1730,36 +1722,36 @@
             "checks": {
               "photorealism": true,
               "anatomy": true,
-              "object_integrity": false,
-              "physical_logic": false,
+              "object_integrity": true,
+              "physical_logic": true,
               "continuity": false,
               "instruction_match": false,
-              "safety": true,
+              "safety": false,
               "text_free": true
             },
-            "note": "Trap does not visibly match the completed funnel trap; capped bottle end is visible, funnel mouth direction downstream is not clear, and current direction is not unmistakable."
+            "note": "Trap orientation and flow direction are not unambiguous; the required upstream base-left/downstream funnel-mouth-right relationship is unclear, and an extra board remains visible on the bank."
           }
         ],
-        "note": "Regenerate: safety-critical cutting geometry, secure assembly, trap continuity, and downstream placement are not clearly supported.",
+        "note": "Overall fails due to panel 1 knife-position mismatch and panel 3 ambiguous trap/current geometry with extra equipment.",
         "risks": [
-          "Panel 1 may teach cutting toward or near the support hand.",
-          "Panel 2 leaves hole matching and tie security ambiguous.",
-          "Panel 3 shows an unclear or incorrect trap opening and ambiguous stream current direction."
+          "Panel 1 knife withdrawal direction and blade endpoint do not match the safe-cut instruction.",
+          "Panel 3 does not clearly teach correct trap orientation relative to current.",
+          "Panel 3 includes extra board/equipment not specified for the completed bank setup."
         ]
       }
     },
-    "sha256": "c3c45e15e17b86f983764188c8846788a1746e773e1b4d84d6fb7e059c940b0c",
+    "sha256": "b91387079b140f9e6c5c0ec88095ca22e788457d4caf50e0bb161ac71a08038a",
     "image": ".hermes/tutorial_candidates/pesca_trampas_supervivencia.png",
     "auditor": "nuvok-independent-visual-inspector-gpt-5.5-codex",
     "rubric_version": "nuvok-photorealistic-logic-safety-v3",
     "inspector_version": "nuvok-independent-visual-inspector-v1",
     "inspection_mode": "independent-two-stage-full-resolution",
-    "criteria_sha256": "76a39aa0d515b2b435e4b7681d7f990cbc86471f56d9ae869243ebdc6829f19a",
+    "criteria_sha256": "3f85aac490cd1e4a1ed9f0c189f476bd076ac82c4ccc1e725f0991614550c5bb",
     "inspected_dimensions": {
       "width": 1544,
       "height": 768
     },
-    "reviewed_at": "2026-07-31T04:00:22.130049+00:00"
+    "reviewed_at": "2026-08-01T03:23:51.062014+00:00"
   },
   "primeros_auxilios_extremos": {
     "status": "regenerate",
@@ -1853,58 +1845,57 @@
         "pass": false,
         "checks": {
           "photorealism": false,
-          "anatomy": true,
+          "anatomy": false,
           "object_integrity": true,
-          "physical_logic": true,
-          "continuity": false,
-          "instruction_match": true,
+          "physical_logic": false,
+          "continuity": true,
+          "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Visible training doll has plastic mannequin skin, not a real infant. A black round object appears only in this panel and is not continued. Finger pressing/touching the infant foot is ambiguous as an emergency technique. Criteria: Full infant manikin, neutral head, speakerphone visible beside manikin on mat, and one index finger presses the sole away from toes."
+        "note": "Blind: Plastic infant mannequin is visibly not a real documentary patient. Adult body is cropped, so full anatomy cannot be verified. The visible action focuses on holding/elevating the infant mannequin's foot/leg, creating unclear emergency-training cause and effect and unsafe ambiguity. Criteria: Sole and two tapping fingertips are visible, but the other complete foot is partly obscured and not fully verifiable as required."
       },
       {
         "number": 2,
         "pass": false,
         "checks": {
           "photorealism": false,
-          "anatomy": true,
+          "anatomy": false,
           "object_integrity": true,
-          "physical_logic": true,
-          "continuity": false,
+          "physical_logic": false,
+          "continuity": true,
           "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Visible plastic mannequin, not photoreal real infant. Surface/background and equipment differ from panel 1 without visible explanation. Raised hand near face does not clearly show a safe, specific emergency action. Criteria: Compression contact is ambiguous: the heel-only contact point below the nipple line is not clearly verifiable, and a clear air gap under all five fingers is not fully visible."
+        "note": "Blind: Plastic infant mannequin is visibly synthetic. Adult body is cropped, so full anatomy cannot be verified. Chest-hand placement is visible but exact infant CPR technique is ambiguous from the single view. Criteria: Hands do not unambiguously encircle the rib cage from both sides and underneath; non-thumb fingers appear on or near the front/lateral chest, making correct two-thumb compression placement unsafe to verify."
       },
       {
         "number": 3,
         "pass": false,
         "checks": {
           "photorealism": false,
-          "anatomy": true,
+          "anatomy": false,
           "object_integrity": true,
-          "physical_logic": true,
-          "continuity": false,
+          "physical_logic": false,
+          "continuity": true,
           "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Infant is visibly a plastic mannequin. Environment/surface differs from earlier panels. Rescue breath technique is unsafe/ambiguous because the adult appears to seal only the mouth rather than clearly covering both mouth and nose for an infant. Criteria: Mouth-to-mouth-and-nose seal is not unambiguous from the side view; both nose and open mouth are not clearly enclosed, forehead support is unclear, and slight chest rise is not visibly confirmed."
+        "note": "Blind: Plastic infant mannequin is visibly synthetic. Adult body is cropped, so full anatomy cannot be verified. Rescue-breath seal and airway positioning are partly obscured, making the technique unsafe to imitate from the image alone. Criteria: Mouth-to-mouth-and-nose seal is suggested, but modest chest rise is not clearly visible and breath delivery effect cannot be verified."
       }
     ],
     "note": "Independent inspections found or could not rule out visible defects.",
     "risks": [
-      "blind: plastic mannequin skin fails photorealism requirement",
-      "blind: black round object present in panel 1 disappears in later panels",
-      "blind: background and support surface change across panels without visible action",
-      "blind: panel 1 foot-touch action is ambiguous for emergency response training",
-      "blind: panel 2 hand position does not clearly demonstrate a safe required action",
-      "blind: panel 3 infant rescue breath appears to cover only the mouth, creating unsafe technique ambiguity",
-      "criteria: Panel 2 may teach incorrect infant compression hand placement or finger contact.",
-      "criteria: Panel 3 does not clearly demonstrate enclosing both the infant manikin nose and mouth in one seal.",
-      "criteria: Panel 3 does not visibly confirm slight chest rise during ventilation."
+      "blind: Plastic mannequin skin and joint seams fail photorealism requirement.",
+      "blind: Panel 1 shows foot/leg handling without clear emergency-training purpose, creating unsafe ambiguity.",
+      "blind: Panel 2 chest compression hand placement is not unambiguously verifiable.",
+      "blind: Panel 3 airway position and mouth seal are partly obscured.",
+      "blind: Adult anatomy is cropped in all panels, so normal full anatomy cannot be verified.",
+      "criteria: Panel 1 does not show the other complete foot unobstructed.",
+      "criteria: Panel 2 may teach incorrect hand/finger placement for infant two-thumb compressions.",
+      "criteria: Panel 3 does not clearly demonstrate visible chest rise from rescue breath."
     ],
     "inspections": {
       "blind": {
@@ -1915,52 +1906,51 @@
             "pass": false,
             "checks": {
               "photorealism": false,
-              "anatomy": true,
+              "anatomy": false,
               "object_integrity": true,
-              "physical_logic": true,
-              "continuity": false,
+              "physical_logic": false,
+              "continuity": true,
               "safety": false,
               "text_free": true
             },
-            "note": "Visible training doll has plastic mannequin skin, not a real infant. A black round object appears only in this panel and is not continued. Finger pressing/touching the infant foot is ambiguous as an emergency technique."
+            "note": "Plastic infant mannequin is visibly not a real documentary patient. Adult body is cropped, so full anatomy cannot be verified. The visible action focuses on holding/elevating the infant mannequin's foot/leg, creating unclear emergency-training cause and effect and unsafe ambiguity."
           },
           {
             "number": 2,
             "pass": false,
             "checks": {
               "photorealism": false,
-              "anatomy": true,
+              "anatomy": false,
               "object_integrity": true,
               "physical_logic": true,
-              "continuity": false,
+              "continuity": true,
               "safety": false,
               "text_free": true
             },
-            "note": "Visible plastic mannequin, not photoreal real infant. Surface/background and equipment differ from panel 1 without visible explanation. Raised hand near face does not clearly show a safe, specific emergency action."
+            "note": "Plastic infant mannequin is visibly synthetic. Adult body is cropped, so full anatomy cannot be verified. Chest-hand placement is visible but exact infant CPR technique is ambiguous from the single view."
           },
           {
             "number": 3,
             "pass": false,
             "checks": {
               "photorealism": false,
-              "anatomy": true,
+              "anatomy": false,
               "object_integrity": true,
               "physical_logic": true,
-              "continuity": false,
+              "continuity": true,
               "safety": false,
               "text_free": true
             },
-            "note": "Infant is visibly a plastic mannequin. Environment/surface differs from earlier panels. Rescue breath technique is unsafe/ambiguous because the adult appears to seal only the mouth rather than clearly covering both mouth and nose for an infant."
+            "note": "Plastic infant mannequin is visibly synthetic. Adult body is cropped, so full anatomy cannot be verified. Rescue-breath seal and airway positioning are partly obscured, making the technique unsafe to imitate from the image alone."
           }
         ],
-        "note": "overall regenerate: multiple panels are mannequin/plastic rather than photoreal real-documentary, continuity is inconsistent, and safety-critical actions are ambiguous or visibly incorrect.",
+        "note": "Overall regenerate: the sequence uses a visibly plastic mannequin, contains cropped/uncertain anatomy, and has unsafe instructional ambiguity.",
         "risks": [
-          "plastic mannequin skin fails photorealism requirement",
-          "black round object present in panel 1 disappears in later panels",
-          "background and support surface change across panels without visible action",
-          "panel 1 foot-touch action is ambiguous for emergency response training",
-          "panel 2 hand position does not clearly demonstrate a safe required action",
-          "panel 3 infant rescue breath appears to cover only the mouth, creating unsafe technique ambiguity"
+          "Plastic mannequin skin and joint seams fail photorealism requirement.",
+          "Panel 1 shows foot/leg handling without clear emergency-training purpose, creating unsafe ambiguity.",
+          "Panel 2 chest compression hand placement is not unambiguously verifiable.",
+          "Panel 3 airway position and mouth seal are partly obscured.",
+          "Adult anatomy is cropped in all panels, so normal full anatomy cannot be verified."
         ]
       },
       "criteria": {
@@ -1968,18 +1958,18 @@
         "panels": [
           {
             "number": 1,
-            "pass": true,
+            "pass": false,
             "checks": {
               "photorealism": true,
               "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
               "continuity": true,
-              "instruction_match": true,
-              "safety": true,
+              "instruction_match": false,
+              "safety": false,
               "text_free": true
             },
-            "note": "Full infant manikin, neutral head, speakerphone visible beside manikin on mat, and one index finger presses the sole away from toes."
+            "note": "Sole and two tapping fingertips are visible, but the other complete foot is partly obscured and not fully verifiable as required."
           },
           {
             "number": 2,
@@ -1988,13 +1978,13 @@
               "photorealism": true,
               "anatomy": true,
               "object_integrity": true,
-              "physical_logic": true,
+              "physical_logic": false,
               "continuity": true,
               "instruction_match": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Compression contact is ambiguous: the heel-only contact point below the nipple line is not clearly verifiable, and a clear air gap under all five fingers is not fully visible."
+            "note": "Hands do not unambiguously encircle the rib cage from both sides and underneath; non-thumb fingers appear on or near the front/lateral chest, making correct two-thumb compression placement unsafe to verify."
           },
           {
             "number": 3,
@@ -2003,35 +1993,35 @@
               "photorealism": true,
               "anatomy": true,
               "object_integrity": true,
-              "physical_logic": true,
+              "physical_logic": false,
               "continuity": true,
               "instruction_match": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Mouth-to-mouth-and-nose seal is not unambiguous from the side view; both nose and open mouth are not clearly enclosed, forehead support is unclear, and slight chest rise is not visibly confirmed."
+            "note": "Mouth-to-mouth-and-nose seal is suggested, but modest chest rise is not clearly visible and breath delivery effect cannot be verified."
           }
         ],
-        "note": "Overall fails due to unsafe ambiguity in the compression and ventilation technique panels.",
+        "note": "Regenerate: safety-critical technique details are obscured or ambiguous in all panels.",
         "risks": [
-          "Panel 2 may teach incorrect infant compression hand placement or finger contact.",
-          "Panel 3 does not clearly demonstrate enclosing both the infant manikin nose and mouth in one seal.",
-          "Panel 3 does not visibly confirm slight chest rise during ventilation."
+          "Panel 1 does not show the other complete foot unobstructed.",
+          "Panel 2 may teach incorrect hand/finger placement for infant two-thumb compressions.",
+          "Panel 3 does not clearly demonstrate visible chest rise from rescue breath."
         ]
       }
     },
-    "sha256": "379b59a2616bcac8075f185ceee114f728d805ca1175c4226da1d18491feb8a8",
+    "sha256": "f746656be6be4ea112491427aad1140dfd7f211d4662f51ac9355ab6add3d6fa",
     "image": ".hermes/tutorial_candidates/rcp_nino_bebe.png",
     "auditor": "nuvok-independent-visual-inspector-gpt-5.5-codex",
     "rubric_version": "nuvok-photorealistic-logic-safety-v3",
     "inspector_version": "nuvok-independent-visual-inspector-v1",
     "inspection_mode": "independent-two-stage-full-resolution",
-    "criteria_sha256": "b7b7d99d307eab1a91e6eb2696ee1eb1ad288ab3ef6c7639110d15f499bcb6e0",
+    "criteria_sha256": "02334c01308da73dcbc8db52f74b129e4bdfbac0e527e38909d60689c882130c",
     "inspected_dimensions": {
       "width": 1544,
       "height": 768
     },
-    "reviewed_at": "2026-07-31T04:00:24.519255+00:00"
+    "reviewed_at": "2026-08-01T03:23:43.882793+00:00"
   },
   "senas_rescate": {
     "status": "approved",
@@ -2314,59 +2304,59 @@
         "number": 1,
         "pass": false,
         "checks": {
-          "photorealism": true,
-          "anatomy": false,
+          "photorealism": false,
+          "anatomy": true,
           "object_integrity": true,
           "physical_logic": true,
-          "continuity": false,
-          "instruction_match": false,
-          "safety": false,
+          "continuity": true,
+          "instruction_match": true,
+          "safety": true,
           "text_free": true
         },
-        "note": "Blind: Single person facing surf, but the pointing hand/fingers are too small and unclear to verify. Person and shoreline do not remain consistent with later panels. Standing at active surf while gesturing toward rough water is unsafe/ambiguous for training. Criteria: Rear beach view shows a person pointing at surf, but the calm rip channel is not unambiguously identifiable and the adult does not visibly match the later panels."
+        "note": "Blind: Panel appears staged/generated rather than indistinguishable from a real documentary training photograph. Criteria: Dry adult points toward a visible darker rip-channel gap between breaking waves; no text or extra elements visible."
       },
       {
         "number": 2,
         "pass": false,
         "checks": {
-          "photorealism": true,
+          "photorealism": false,
           "anatomy": false,
           "object_integrity": true,
-          "physical_logic": false,
-          "continuity": false,
+          "physical_logic": true,
+          "continuity": true,
           "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Person wades barefoot in shallow sea; hands/fingers and feet are not clear enough to verify normal anatomy. The person, beach, and sea conditions differ from other panels without visible explanation. Wading alone in water is a potentially unsafe ambiguous action. Criteria: Side-view shuffle is suggested, but the rear foot is partly obscured by sand/clouding and does not clearly show toes and heel flat on the seabed; no-foot-lift technique is ambiguous."
+        "note": "Blind: Generated-looking panel; submerged feet/lower legs are distorted and partly unverifiable, and the visible action shows a person wading into surf alone. Criteria: Does not unambiguously show the required stingray shuffle: feet are not both fully flat and complete, all ten toes are not clearly visible, waterline is not clearly halfway up both shins, and the pose reads as a normal step."
       },
       {
         "number": 3,
         "pass": false,
         "checks": {
-          "photorealism": true,
+          "photorealism": false,
           "anatomy": false,
           "object_integrity": true,
           "physical_logic": true,
           "continuity": false,
-          "instruction_match": false,
+          "instruction_match": true,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Two people on beach with water poured from a bottle onto a shin abrasion. Feet/toes of the seated person appear distorted/unclear. Person, helper, injury state, and rocky beach do not match prior panels. Open wound care is shown without visible gloves or clear sterile equipment. Criteria: Thermos pour and sting area are visible, but there is no clear light vapor proving warm water, and continuity of the adult with prior panels is not reliable."
+        "note": "Blind: Generated-looking panel; toes/fingers are ambiguous, a helper/equipment/treatment state appears without visible cause from prior panels, and pouring water while touching the leg is ambiguous first-aid technique. Criteria: Seated dry-sand care scene shows helper pouring steaming water from a plain metal thermos onto the lower leg; cap is upright and no towel or sharp object is present."
       }
     ],
     "note": "Independent inspections found or could not rule out visible defects.",
     "risks": [
-      "blind: continuity breaks: different apparent people and beach settings across panels",
-      "blind: unclear or distorted hands/feet/toes make anatomy unverifiable",
-      "blind: panel 1 shows a person at active surf in an unsafe ambiguous context",
-      "blind: panel 2 shows barefoot wading in sea without safety context or equipment",
-      "blind: panel 3 shows open wound handling without visible gloves or clearly sterile supplies",
-      "criteria: Calm rip channel may not be clearly distinguishable for learners.",
-      "criteria: Panel 2 could imply lifting or stepping rather than a flat-foot shuffle.",
-      "criteria: Panel 3 lacks visible vapor to confirm hot-but-not-scalding water.",
-      "criteria: Same adult continuity is inconsistent across panels."
+      "blind: Image is not consistently indistinguishable from documentary photography.",
+      "blind: Panel 2 shows potentially unsafe solo wading into surf.",
+      "blind: Panel 2 feet/lower legs are obscured and distorted by water, preventing anatomy verification.",
+      "blind: Panel 3 introduces a second person, bottle, cap, seated casualty state, and treatment without visible cause across panels.",
+      "blind: Panel 3 shows ambiguous injury care: water is poured on the leg while the helper touches/rubs near the stream.",
+      "blind: Panel 3 toes and helper hand/fingers are not clearly verifiable.",
+      "criteria: Panel 2 could teach a normal walking step instead of keeping both feet flat while shuffling.",
+      "criteria: Panel 2 does not clearly show all ten toes and both complete bare feet on the sandy bottom.",
+      "criteria: Panel 2 water depth is ambiguous and appears too low for the specified halfway-up-shins waterline."
     ],
     "inspections": {
       "blind": {
@@ -2376,35 +2366,35 @@
             "number": 1,
             "pass": false,
             "checks": {
-              "photorealism": true,
-              "anatomy": false,
+              "photorealism": false,
+              "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
-              "continuity": false,
-              "safety": false,
+              "continuity": true,
+              "safety": true,
               "text_free": true
             },
-            "note": "Single person facing surf, but the pointing hand/fingers are too small and unclear to verify. Person and shoreline do not remain consistent with later panels. Standing at active surf while gesturing toward rough water is unsafe/ambiguous for training."
+            "note": "Panel appears staged/generated rather than indistinguishable from a real documentary training photograph."
           },
           {
             "number": 2,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": false,
               "object_integrity": true,
               "physical_logic": true,
-              "continuity": false,
+              "continuity": true,
               "safety": false,
               "text_free": true
             },
-            "note": "Person wades barefoot in shallow sea; hands/fingers and feet are not clear enough to verify normal anatomy. The person, beach, and sea conditions differ from other panels without visible explanation. Wading alone in water is a potentially unsafe ambiguous action."
+            "note": "Generated-looking panel; submerged feet/lower legs are distorted and partly unverifiable, and the visible action shows a person wading into surf alone."
           },
           {
             "number": 3,
             "pass": false,
             "checks": {
-              "photorealism": true,
+              "photorealism": false,
               "anatomy": false,
               "object_integrity": true,
               "physical_logic": true,
@@ -2412,16 +2402,17 @@
               "safety": false,
               "text_free": true
             },
-            "note": "Two people on beach with water poured from a bottle onto a shin abrasion. Feet/toes of the seated person appear distorted/unclear. Person, helper, injury state, and rocky beach do not match prior panels. Open wound care is shown without visible gloves or clear sterile equipment."
+            "note": "Generated-looking panel; toes/fingers are ambiguous, a helper/equipment/treatment state appears without visible cause from prior panels, and pouring water while touching the leg is ambiguous first-aid technique."
           }
         ],
-        "note": "Rejected: inconsistent people/environments across panels, unclear anatomy, and unsafe or ambiguous emergency-training actions.",
+        "note": "Not approved: at least one required check fails in every panel.",
         "risks": [
-          "continuity breaks: different apparent people and beach settings across panels",
-          "unclear or distorted hands/feet/toes make anatomy unverifiable",
-          "panel 1 shows a person at active surf in an unsafe ambiguous context",
-          "panel 2 shows barefoot wading in sea without safety context or equipment",
-          "panel 3 shows open wound handling without visible gloves or clearly sterile supplies"
+          "Image is not consistently indistinguishable from documentary photography.",
+          "Panel 2 shows potentially unsafe solo wading into surf.",
+          "Panel 2 feet/lower legs are obscured and distorted by water, preventing anatomy verification.",
+          "Panel 3 introduces a second person, bottle, cap, seated casualty state, and treatment without visible cause across panels.",
+          "Panel 3 shows ambiguous injury care: water is poured on the leg while the helper touches/rubs near the stream.",
+          "Panel 3 toes and helper hand/fingers are not clearly verifiable."
         ]
       },
       "criteria": {
@@ -2429,18 +2420,18 @@
         "panels": [
           {
             "number": 1,
-            "pass": false,
+            "pass": true,
             "checks": {
               "photorealism": true,
               "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
-              "continuity": false,
-              "instruction_match": false,
-              "safety": false,
+              "continuity": true,
+              "instruction_match": true,
+              "safety": true,
               "text_free": true
             },
-            "note": "Rear beach view shows a person pointing at surf, but the calm rip channel is not unambiguously identifiable and the adult does not visibly match the later panels."
+            "note": "Dry adult points toward a visible darker rip-channel gap between breaking waves; no text or extra elements visible."
           },
           {
             "number": 2,
@@ -2449,51 +2440,50 @@
               "photorealism": true,
               "anatomy": true,
               "object_integrity": true,
-              "physical_logic": false,
-              "continuity": false,
+              "physical_logic": true,
+              "continuity": true,
               "instruction_match": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Side-view shuffle is suggested, but the rear foot is partly obscured by sand/clouding and does not clearly show toes and heel flat on the seabed; no-foot-lift technique is ambiguous."
+            "note": "Does not unambiguously show the required stingray shuffle: feet are not both fully flat and complete, all ten toes are not clearly visible, waterline is not clearly halfway up both shins, and the pose reads as a normal step."
           },
           {
             "number": 3,
-            "pass": false,
+            "pass": true,
             "checks": {
               "photorealism": true,
               "anatomy": true,
               "object_integrity": true,
               "physical_logic": true,
-              "continuity": false,
-              "instruction_match": false,
-              "safety": false,
+              "continuity": true,
+              "instruction_match": true,
+              "safety": true,
               "text_free": true
             },
-            "note": "Thermos pour and sting area are visible, but there is no clear light vapor proving warm water, and continuity of the adult with prior panels is not reliable."
+            "note": "Seated dry-sand care scene shows helper pouring steaming water from a plain metal thermos onto the lower leg; cap is upright and no towel or sharp object is present."
           }
         ],
-        "note": "Overall regenerate: key safety-critical details are ambiguous or missing across panels, especially rip identification, flat-foot shuffle, warmth evidence, and adult continuity.",
+        "note": "Overall fails because panel 2 does not clearly demonstrate the specified safe shuffle technique.",
         "risks": [
-          "Calm rip channel may not be clearly distinguishable for learners.",
-          "Panel 2 could imply lifting or stepping rather than a flat-foot shuffle.",
-          "Panel 3 lacks visible vapor to confirm hot-but-not-scalding water.",
-          "Same adult continuity is inconsistent across panels."
+          "Panel 2 could teach a normal walking step instead of keeping both feet flat while shuffling.",
+          "Panel 2 does not clearly show all ten toes and both complete bare feet on the sandy bottom.",
+          "Panel 2 water depth is ambiguous and appears too low for the specified halfway-up-shins waterline."
         ]
       }
     },
-    "sha256": "50566efde0a588aa9cb67be5a8bbbce675d83c48ee601301077674fa84a6154a",
+    "sha256": "a56d1babc65d9a40e42bcad89b7b391229e9c036f3c3b1205bb3ad827e099a21",
     "image": ".hermes/tutorial_candidates/mar_peligros.png",
     "auditor": "nuvok-independent-visual-inspector-gpt-5.5-codex",
     "rubric_version": "nuvok-photorealistic-logic-safety-v3",
     "inspector_version": "nuvok-independent-visual-inspector-v1",
     "inspection_mode": "independent-two-stage-full-resolution",
-    "criteria_sha256": "7c98ca45ff8aec07e47b7cd2976720f37b39349d9ae77c24c386aa592c2ad12c",
+    "criteria_sha256": "ac1b75a27405c6ad41841b03936cbd9a95e96f858645bde09ea67d4c0dbd1713",
     "inspected_dimensions": {
       "width": 1544,
       "height": 768
     },
-    "reviewed_at": "2026-07-31T04:00:09.513595+00:00"
+    "reviewed_at": "2026-08-01T03:23:52.177161+00:00"
   },
   "mar_agua": {
     "status": "approved",
@@ -2951,55 +2941,56 @@
         "pass": false,
         "checks": {
           "photorealism": true,
-          "anatomy": false,
-          "object_integrity": true,
-          "physical_logic": true,
-          "continuity": false,
-          "instruction_match": true,
-          "safety": false,
-          "text_free": true
-        },
-        "note": "Blind: Photographic-looking panel, but gloved fingers/hand details are not fully verifiable. Person kneels very close to a dark ice opening/thin ice area, creating unsafe ambiguity. Clothing/equipment does not visibly match later panels. Criteria: Photographic view clearly contrasts dark clear ice with gray/opaque ice while one person points at the surface; no text or extra figures."
-      },
-      {
-        "number": 2,
-        "pass": false,
-        "checks": {
-          "photorealism": true,
-          "anatomy": false,
-          "object_integrity": true,
-          "physical_logic": true,
-          "continuity": false,
-          "instruction_match": true,
-          "safety": false,
-          "text_free": true
-        },
-        "note": "Blind: Photographic-looking panel, but lower body and limbs are submerged/obscured, so full anatomy cannot be verified. Equipment/clothing state changes from panel 1 are not visibly explained. Person is in an ice hole with ambiguous self-rescue technique. Criteria: Photographic medium view shows one adult in an ice hole with ice picks crossed at the neck/chest area and hands/tools visible; no embedded text."
-      },
-      {
-        "number": 3,
-        "pass": false,
-        "checks": {
-          "photorealism": true,
-          "anatomy": false,
-          "object_integrity": true,
+          "anatomy": true,
+          "object_integrity": false,
           "physical_logic": true,
           "continuity": false,
           "instruction_match": false,
           "safety": false,
           "text_free": true
         },
-        "note": "Blind: Photographic-looking panel, but gloved fingers are not verifiable. Clothing/equipment continuity is inconsistent with the prior panels. The visible prone crawl from broken ice is ambiguous and lacks clear safe support/cause-effect guidance. Criteria: Rescue exit is photographic and shows one person at one hole, but the required spread flat hands are not visible because the hands grip picks, the sideways turn to begin rolling away is unclear, and no wet slide-and-roll track leading away from the hole is visible."
+        "note": "Blind: Photographic-looking panel, but the dangling red rescue-tool/cord area is unclear and partially malformed; the person is crouched very close to visibly slushy or weak ice and pointing at it without clear safe support or rescue setup. Criteria: Bank/ice comparison is visible, but the ice-pick tips/caps are too small and partly obscured to verify both points are safely capped; exact protective-cap geometry is ambiguous."
+      },
+      {
+        "number": 2,
+        "pass": false,
+        "checks": {
+          "photorealism": true,
+          "anatomy": true,
+          "object_integrity": false,
+          "physical_logic": false,
+          "continuity": false,
+          "instruction_match": false,
+          "safety": false,
+          "text_free": true
+        },
+        "note": "Blind: Person lies prone on ice, but the dangling red tools/cord appear unclear and poorly defined, and the visible action does not establish safe cause-and-effect or a coherent rescue method. The ice and position differ from panel 1 without a visible explained transition. Criteria: Low weight-distribution posture is mostly visible, but the hanging picks are too small to confirm both are capped, and one boot/leg endpoint is partly obscured, making the complete required geometry ambiguous."
+      },
+      {
+        "number": 3,
+        "pass": false,
+        "checks": {
+          "photorealism": true,
+          "anatomy": true,
+          "object_integrity": false,
+          "physical_logic": false,
+          "continuity": false,
+          "instruction_match": false,
+          "safety": false,
+          "text_free": true
+        },
+        "note": "Blind: Overhead view shows the person on ice near an open hole with irregular dark wet/track shapes; tool/hand details are unclear. The hole and large dark ice pattern appear without a visible action explaining the state change from earlier panels, creating dangerous ambiguity. Criteria: Hole, C-shaped wet track, and side-lying exit position are visible, but the two gripped ice picks versus the two empty cap tubes are not unambiguously distinguishable; point directions and exact count of active picks cannot be safely verified."
       }
     ],
     "note": "Independent inspections found or could not rule out visible defects.",
     "risks": [
-      "blind: Gloved hands obscure finger anatomy and grip details.",
-      "blind: Person is shown close to or in broken ice without clearly visible safe backup or controlled training setup.",
-      "blind: Clothing and rescue equipment change between panels without a visible action explaining the changes.",
-      "blind: Self-rescue actions are ambiguous enough that a learner could imitate unsafe positioning on thin ice.",
-      "criteria: Panel 3 may teach remaining prone/using picks without clearly transitioning to a sideways roll away from the hole.",
-      "criteria: Panel 3 lacks the required visible wet slide-and-roll track, weakening cause-and-effect for moving away from weak ice."
+      "blind: Person shown very close to weak/slushy ice without clearly visible safety equipment or support.",
+      "blind: Open ice hole in panel 3 appears with no clear explained transition from prior panels.",
+      "blind: Red rescue tools/cords are visually ambiguous and inconsistently legible across panels.",
+      "blind: Learner could imitate crawling or positioning on unsafe ice without sufficient context or safe rescue method.",
+      "criteria: Protective caps on ice-pick points cannot be clearly verified in panels 1 and 2.",
+      "criteria: Panel 3 does not unambiguously show exactly two gripped picks plus exactly two empty cap tubes.",
+      "criteria: Ambiguous pick point direction could teach unsafe tool handling near the face or torso."
     ],
     "inspections": {
       "blind": {
@@ -3010,50 +3001,50 @@
             "pass": false,
             "checks": {
               "photorealism": true,
-              "anatomy": false,
-              "object_integrity": true,
+              "anatomy": true,
+              "object_integrity": false,
               "physical_logic": true,
               "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Photographic-looking panel, but gloved fingers/hand details are not fully verifiable. Person kneels very close to a dark ice opening/thin ice area, creating unsafe ambiguity. Clothing/equipment does not visibly match later panels."
+            "note": "Photographic-looking panel, but the dangling red rescue-tool/cord area is unclear and partially malformed; the person is crouched very close to visibly slushy or weak ice and pointing at it without clear safe support or rescue setup."
           },
           {
             "number": 2,
             "pass": false,
             "checks": {
               "photorealism": true,
-              "anatomy": false,
-              "object_integrity": true,
-              "physical_logic": true,
+              "anatomy": true,
+              "object_integrity": false,
+              "physical_logic": false,
               "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Photographic-looking panel, but lower body and limbs are submerged/obscured, so full anatomy cannot be verified. Equipment/clothing state changes from panel 1 are not visibly explained. Person is in an ice hole with ambiguous self-rescue technique."
+            "note": "Person lies prone on ice, but the dangling red tools/cord appear unclear and poorly defined, and the visible action does not establish safe cause-and-effect or a coherent rescue method. The ice and position differ from panel 1 without a visible explained transition."
           },
           {
             "number": 3,
             "pass": false,
             "checks": {
               "photorealism": true,
-              "anatomy": false,
-              "object_integrity": true,
-              "physical_logic": true,
+              "anatomy": true,
+              "object_integrity": false,
+              "physical_logic": false,
               "continuity": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Photographic-looking panel, but gloved fingers are not verifiable. Clothing/equipment continuity is inconsistent with the prior panels. The visible prone crawl from broken ice is ambiguous and lacks clear safe support/cause-effect guidance."
+            "note": "Overhead view shows the person on ice near an open hole with irregular dark wet/track shapes; tool/hand details are unclear. The hole and large dark ice pattern appear without a visible action explaining the state change from earlier panels, creating dangerous ambiguity."
           }
         ],
-        "note": "Overall rejected due to unverifiable anatomy, inconsistent cross-panel continuity, and unsafe/ambiguous ice-rescue technique depiction.",
+        "note": "Overall rejected: photographic style is present, but equipment clarity, continuity, physical cause-and-effect, and safe instructional technique are not reliable across the three panels.",
         "risks": [
-          "Gloved hands obscure finger anatomy and grip details.",
-          "Person is shown close to or in broken ice without clearly visible safe backup or controlled training setup.",
-          "Clothing and rescue equipment change between panels without a visible action explaining the changes.",
-          "Self-rescue actions are ambiguous enough that a learner could imitate unsafe positioning on thin ice."
+          "Person shown very close to weak/slushy ice without clearly visible safety equipment or support.",
+          "Open ice hole in panel 3 appears with no clear explained transition from prior panels.",
+          "Red rescue tools/cords are visually ambiguous and inconsistently legible across panels.",
+          "Learner could imitate crawling or positioning on unsafe ice without sufficient context or safe rescue method."
         ]
       },
       "criteria": {
@@ -3061,33 +3052,33 @@
         "panels": [
           {
             "number": 1,
-            "pass": true,
+            "pass": false,
             "checks": {
               "photorealism": true,
               "anatomy": true,
-              "object_integrity": true,
+              "object_integrity": false,
               "physical_logic": true,
               "continuity": true,
-              "instruction_match": true,
-              "safety": true,
+              "instruction_match": false,
+              "safety": false,
               "text_free": true
             },
-            "note": "Photographic view clearly contrasts dark clear ice with gray/opaque ice while one person points at the surface; no text or extra figures."
+            "note": "Bank/ice comparison is visible, but the ice-pick tips/caps are too small and partly obscured to verify both points are safely capped; exact protective-cap geometry is ambiguous."
           },
           {
             "number": 2,
-            "pass": true,
+            "pass": false,
             "checks": {
               "photorealism": true,
               "anatomy": true,
-              "object_integrity": true,
+              "object_integrity": false,
               "physical_logic": true,
               "continuity": true,
-              "instruction_match": true,
-              "safety": true,
+              "instruction_match": false,
+              "safety": false,
               "text_free": true
             },
-            "note": "Photographic medium view shows one adult in an ice hole with ice picks crossed at the neck/chest area and hands/tools visible; no embedded text."
+            "note": "Low weight-distribution posture is mostly visible, but the hanging picks are too small to confirm both are capped, and one boot/leg endpoint is partly obscured, making the complete required geometry ambiguous."
           },
           {
             "number": 3,
@@ -3095,35 +3086,36 @@
             "checks": {
               "photorealism": true,
               "anatomy": true,
-              "object_integrity": true,
+              "object_integrity": false,
               "physical_logic": true,
               "continuity": true,
               "instruction_match": false,
               "safety": false,
               "text_free": true
             },
-            "note": "Rescue exit is photographic and shows one person at one hole, but the required spread flat hands are not visible because the hands grip picks, the sideways turn to begin rolling away is unclear, and no wet slide-and-roll track leading away from the hole is visible."
+            "note": "Hole, C-shaped wet track, and side-lying exit position are visible, but the two gripped ice picks versus the two empty cap tubes are not unambiguously distinguishable; point directions and exact count of active picks cannot be safely verified."
           }
         ],
-        "note": "Overall fails because panel 3 does not unambiguously show the required roll-away geometry and hand support described by the tutorial.",
+        "note": "Regenerate: the overall scene is photographic and mostly consistent, but safety-critical ice-pick cap/point status and exact tool count/geometry are ambiguous across panels.",
         "risks": [
-          "Panel 3 may teach remaining prone/using picks without clearly transitioning to a sideways roll away from the hole.",
-          "Panel 3 lacks the required visible wet slide-and-roll track, weakening cause-and-effect for moving away from weak ice."
+          "Protective caps on ice-pick points cannot be clearly verified in panels 1 and 2.",
+          "Panel 3 does not unambiguously show exactly two gripped picks plus exactly two empty cap tubes.",
+          "Ambiguous pick point direction could teach unsafe tool handling near the face or torso."
         ]
       }
     },
-    "sha256": "2bcf21062a916f0d441b69195f4b964a35035ce9fba1ba8b34ac317edf74a71d",
+    "sha256": "fd43893452d20b7bc5ee551901c368a80d7d082950f23ecdb9175d948b7b49d2",
     "image": ".hermes/tutorial_candidates/artico_peligros.png",
     "auditor": "nuvok-independent-visual-inspector-gpt-5.5-codex",
     "rubric_version": "nuvok-photorealistic-logic-safety-v3",
     "inspector_version": "nuvok-independent-visual-inspector-v1",
     "inspection_mode": "independent-two-stage-full-resolution",
-    "criteria_sha256": "fa30625a1fb1daad8b298ff820eea018341b062e769598f37dc19a3b7a7daea0",
+    "criteria_sha256": "f242e71a520e5dae0cc69aa7d827716c52c17dd746a8451ddc221572946a7658",
     "inspected_dimensions": {
       "width": 1544,
       "height": 768
     },
-    "reviewed_at": "2026-07-31T03:58:11.695624+00:00"
+    "reviewed_at": "2026-08-01T03:21:11.323510+00:00"
   },
   "tormenta_invernal": {
     "status": "approved",

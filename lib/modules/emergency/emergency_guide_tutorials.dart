@@ -2639,17 +2639,14 @@ class EmergencyGuideTutorials {
         EmergencyGuideTutorialStep(
           number: 2,
           captions: {
-            "es": "Comprime con dos pulgares lado a lado rodeando el tórax",
+            "es": "Comprime con la base de una mano en el centro del pecho",
             "en":
-                "Compress with two thumbs side by side while encircling the chest",
-            "pt":
-                "Comprima com dois polegares lado a lado envolvendo o tórax",
-            "fr":
-                "Comprimez avec les deux pouces côte à côte en encerclant le thorax",
-            "zh": "双手环抱胸廓，用并排的双拇指按压胸骨",
-            "ja": "胸郭を両手で囲み、並べた両母指で胸骨を圧迫する",
-            "ht":
-                "Antoure tòks la ak de men epi konprime ak de gwo pous kòtakòt",
+                "Compress with the heel of one hand at the center of the chest",
+            "pt": "Comprima com a base de uma mão no centro do peito",
+            "fr": "Comprimez avec le talon d’une main au centre de la poitrine",
+            "zh": "用一只手的掌根按压胸部中央",
+            "ja": "片手の手掌基部で胸の中央を圧迫する",
+            "ht": "Konprime sant pwatrin lan ak baz yon sèl men",
           },
         ),
         EmergencyGuideTutorialStep(

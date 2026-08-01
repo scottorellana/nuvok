@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Si usas o estudias Nuvok, puedes citarlo así / If you use or study Nuvok, cite it as below."
+title: "Nuvok: offline emergency app with on-device AI and Bluetooth/Wi-Fi mesh"
+type: software
+authors:
+  - family-names: Orellana
+    given-names: Scott
+repository-code: "https://github.com/scottorellana/nuvok"
+url: "https://nuvok.org"
+license: GPL-3.0
+keywords:
+  - offline-first
+  - emergency
+  - first-aid
+  - local-ai
+  - llama-cpp
+  - mesh-network
+  - flutter

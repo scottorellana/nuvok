@@ -11,6 +11,15 @@ import generate_tutorial_panels as generator
 
 
 class GenerateTutorialPanelsTest(unittest.TestCase):
+    def test_parse_args_accepts_immutable_storyboard_snapshot(self):
+        snapshot = Path("/tmp/round3-storyboards.json")
+
+        args = generator.parse_args(
+            ["cruce_rios", "--storyboards", str(snapshot)]
+        )
+
+        self.assertEqual(args.storyboards, snapshot)
+
     def test_cli_defaults_to_high_quality(self):
         args = generator.build_parser().parse_args(["test_guide"])
 
@@ -209,6 +218,196 @@ class GenerateTutorialPanelsTest(unittest.TestCase):
             self.assertTrue(provider_outputs)
             self.assertNotEqual(provider_outputs[0], final)
             self.assertFalse(any(path.exists() for path in provider_outputs))
+
+    def test_generate_panel_passes_reference_image_and_continuity_lock_to_provider(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            panel_dir = Path(tmp) / "panels"
+            source_dir = panel_dir / "test_guide"
+            source_dir.mkdir(parents=True)
+            reference = source_dir / "panel_1.png"
+            Image.effect_noise((1024, 1536), 100).convert("RGB").save(reference)
+            commands = []
+            spec = {
+                "panels": ["first action", "second action", "third action"],
+                "context": "same scene",
+                "avoid": "defects",
+            }
+
+            def fake_run(command, **_kwargs):
+                commands.append(command)
+                Image.effect_noise((1024, 1536), 100).convert("RGB").save(
+                    Path(command[3])
+                )
+                return mock.Mock(returncode=0, stdout="OK", stderr="")
+
+            with mock.patch.object(generator.subprocess, "run", side_effect=fake_run):
+                _index, ok, _message = generator.generate_panel(
+                    "test_guide",
+                    spec,
+                    1,
+                    force=True,
+                    quality="high",
+                    panel_dir=panel_dir,
+                    reference=reference,
+                )
+
+            self.assertTrue(ok)
+            self.assertEqual(commands[0][6], str(reference))
+            self.assertIn("provided reference image", commands[0][2])
+            self.assertIn("same identity, face, hair, clothing", commands[0][2])
+
+    def test_reference_continuity_generates_panels_in_order_with_previous_panel(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            panel_dir = root / "panels"
+            output_dir = root / "candidates"
+            calls = []
+
+            def fake_generate(
+                slug,
+                _spec,
+                index,
+                _force,
+                _quality,
+                explicit_panel_dir,
+                reference=None,
+            ):
+                output = explicit_panel_dir / slug / f"panel_{index + 1}.png"
+                output.parent.mkdir(parents=True, exist_ok=True)
+                Image.effect_noise((1024, 1536), 100).convert("RGB").save(output)
+                calls.append((index + 1, reference))
+                return index, True, f"OK {slug} panel {index + 1}"
+
+            with mock.patch.object(generator, "generate_panel", side_effect=fake_generate):
+                failed = generator.generate_slugs(
+                    ["guide"],
+                    {"guide": {}},
+                    selected_panels=[1, 2, 3],
+                    force=True,
+                    quality="high",
+                    workers=3,
+                    panel_dir=panel_dir,
+                    output_dir=output_dir,
+                    reference_continuity=True,
+                )
+
+            source_dir = panel_dir / "guide"
+            self.assertEqual(failed, [])
+            self.assertEqual(
+                calls,
+                [
+                    (1, None),
+                    (2, source_dir / "panel_1.png"),
+                    (3, source_dir / "panel_2.png"),
+                ],
+            )
+            self.assertTrue((output_dir / "guide.png").is_file())
+
+    def test_reference_continuity_selective_panel_three_preserves_panels_one_and_two(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            panel_dir = root / "panels"
+            output_dir = root / "candidates"
+            source_dir = panel_dir / "guide"
+            source_dir.mkdir(parents=True)
+            for number in (1, 2, 3):
+                Image.effect_noise((1024, 1536), 100 + number).convert("RGB").save(
+                    source_dir / f"panel_{number}.png"
+                )
+            preserved = {
+                number: (source_dir / f"panel_{number}.png").read_bytes()
+                for number in (1, 2)
+            }
+            calls = []
+
+            def fake_generate(
+                slug,
+                _spec,
+                index,
+                _force,
+                _quality,
+                explicit_panel_dir,
+                reference=None,
+            ):
+                calls.append((index + 1, reference))
+                Image.effect_noise((1024, 1536), 100).convert("RGB").save(
+                    explicit_panel_dir / slug / f"panel_{index + 1}.png"
+                )
+                return index, True, f"OK {slug} panel {index + 1}"
+
+            with mock.patch.object(generator, "generate_panel", side_effect=fake_generate):
+                failed = generator.generate_slugs(
+                    ["guide"],
+                    {"guide": {}},
+                    selected_panels=[3],
+                    force=True,
+                    quality="high",
+                    workers=3,
+                    panel_dir=panel_dir,
+                    output_dir=output_dir,
+                    reference_continuity=True,
+                )
+
+            self.assertEqual(failed, [])
+            self.assertEqual(calls, [(3, source_dir / "panel_2.png")])
+            for number in (1, 2):
+                self.assertEqual(
+                    (source_dir / f"panel_{number}.png").read_bytes(),
+                    preserved[number],
+                )
+
+    def test_reference_continuity_selective_panel_one_uses_preserved_panel_two(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            panel_dir = root / "panels"
+            output_dir = root / "candidates"
+            source_dir = panel_dir / "guide"
+            source_dir.mkdir(parents=True)
+            for number in (1, 2, 3):
+                Image.effect_noise((1024, 1536), 110 + number).convert("RGB").save(
+                    source_dir / f"panel_{number}.png"
+                )
+            preserved = {
+                number: (source_dir / f"panel_{number}.png").read_bytes()
+                for number in (2, 3)
+            }
+            calls = []
+
+            def fake_generate(
+                slug,
+                _spec,
+                index,
+                _force,
+                _quality,
+                explicit_panel_dir,
+                reference=None,
+            ):
+                calls.append((index + 1, reference))
+                Image.effect_noise((1024, 1536), 120).convert("RGB").save(
+                    explicit_panel_dir / slug / f"panel_{index + 1}.png"
+                )
+                return index, True, f"OK {slug} panel {index + 1}"
+
+            with mock.patch.object(generator, "generate_panel", side_effect=fake_generate):
+                failed = generator.generate_slugs(
+                    ["guide"],
+                    {"guide": {}},
+                    selected_panels=[1],
+                    force=True,
+                    quality="high",
+                    workers=3,
+                    panel_dir=panel_dir,
+                    output_dir=output_dir,
+                    reference_continuity=True,
+                )
+
+            self.assertEqual(failed, [])
+            self.assertEqual(calls, [(1, source_dir / "panel_2.png")])
+            for number in (2, 3):
+                self.assertEqual(
+                    (source_dir / f"panel_{number}.png").read_bytes(),
+                    preserved[number],
+                )
 
     def test_wrong_provider_dimensions_do_not_replace_existing_panel(self):
         with tempfile.TemporaryDirectory() as tmp:

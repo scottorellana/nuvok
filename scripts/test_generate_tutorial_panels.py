@@ -409,6 +409,60 @@ class GenerateTutorialPanelsTest(unittest.TestCase):
                     preserved[number],
                 )
 
+    def test_reference_continuity_panels_one_and_two_use_preserved_panel_three(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            panel_dir = root / "panels"
+            output_dir = root / "candidates"
+            source_dir = panel_dir / "guide"
+            source_dir.mkdir(parents=True)
+            for number in (1, 2, 3):
+                Image.effect_noise((1024, 1536), 130 + number).convert("RGB").save(
+                    source_dir / f"panel_{number}.png"
+                )
+            preserved_panel_three = (source_dir / "panel_3.png").read_bytes()
+            calls = []
+
+            def fake_generate(
+                slug,
+                _spec,
+                index,
+                _force,
+                _quality,
+                explicit_panel_dir,
+                reference=None,
+            ):
+                calls.append((index + 1, reference))
+                Image.effect_noise((1024, 1536), 140 + index).convert("RGB").save(
+                    explicit_panel_dir / slug / f"panel_{index + 1}.png"
+                )
+                return index, True, f"OK {slug} panel {index + 1}"
+
+            with mock.patch.object(generator, "generate_panel", side_effect=fake_generate):
+                failed = generator.generate_slugs(
+                    ["guide"],
+                    {"guide": {}},
+                    selected_panels=[1, 2],
+                    force=True,
+                    quality="high",
+                    workers=3,
+                    panel_dir=panel_dir,
+                    output_dir=output_dir,
+                    reference_continuity=True,
+                )
+
+            self.assertEqual(failed, [])
+            self.assertEqual(
+                calls,
+                [
+                    (1, source_dir / "panel_3.png"),
+                    (2, source_dir / "panel_1.png"),
+                ],
+            )
+            self.assertEqual(
+                (source_dir / "panel_3.png").read_bytes(), preserved_panel_three
+            )
+
     def test_wrong_provider_dimensions_do_not_replace_existing_panel(self):
         with tempfile.TemporaryDirectory() as tmp:
             panel_dir = Path(tmp) / "panels"

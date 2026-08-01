@@ -284,6 +284,7 @@ def generate_slugs(
     results_by_slug: dict[str, list[tuple[int, bool, str]]] = {
         slug: [] for slug in slugs
     }
+    selected_panel_set = set(selected_panels)
     with ThreadPoolExecutor(max_workers=max(1, min(workers, 3))) as pool:
         if reference_continuity:
             def generate_sequence(slug: str) -> list[tuple[int, bool, str]]:
@@ -292,8 +293,19 @@ def generate_slugs(
                     reference = None
                     if panel_number > 1:
                         reference = panel_dir / slug / f"panel_{panel_number - 1}.png"
-                    elif 2 not in selected_panels:
-                        reference = panel_dir / slug / "panel_2.png"
+                    else:
+                        next_preserved = next(
+                            (
+                                candidate
+                                for candidate in range(2, 4)
+                                if candidate not in selected_panel_set
+                            ),
+                            None,
+                        )
+                        if next_preserved is not None:
+                            reference = (
+                                panel_dir / slug / f"panel_{next_preserved}.png"
+                            )
                     if reference is not None and not reusable_source_panel(reference):
                         sequence.append(
                             (

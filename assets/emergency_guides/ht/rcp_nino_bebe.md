@@ -35,7 +35,7 @@ Fè konpresyon a **100–120 pa minit**, pèmèt pwatrin nan elaji nèt epi limi
 
 ### Tibebe ki pi piti pase 1 ane
 
-- Konprime estènòm nan ak **baz pla yon men** oswa ak teknik **2 pous ak men toutotou tòks la**.
+- Konprime estènòm nan ak **de gwo pous kòtakòt pandan toude men yo antoure tòks la**, oswa ak **baz pla yon men**.
 - Si ou pa kapab antoure tòks la, itilize baz yon men.
 - Pwofondè: omwen yon tyè pwatrin lan, apeprè **4 cm**.
 - Ansyen teknik de dwèt la **pa rekòmande ankò pou RCP tibebe nan AHA 2025**.
@@ -84,7 +84,7 @@ Kontni revize selon **AHA 2025 Guidelines for CPR and ECC**, enkli chanjman tekn
 
 **Sitiyasyon:** Yon bebe 8 mwa vin mou epi san repons apre yon epizòd toufe; li pa respire nòmalman.
 
-**Fè:** 1. Rele fò pou mande èd epi mande pou yo rele ijans sou opalè. 2. Mete li sou yon sifas fèm. 3. Konprime nan sant pwatrin lan ak baz yon men, anviwon 4 cm pwofondè, a 100–120 pa minit. 4. Poukont ou: 30:2; ak de sekouris ki antrene: 15:2. 5. Apre 2 minit, si pèsonn pa rele, rele ou menm epi retounen imedyatman.
+**Fè:** 1. Rele fò pou mande èd epi mande pou yo rele ijans sou opalè. 2. Mete li sou yon sifas fèm. 3. Antoure tòks la ak toude men epi konprime sant pwatrin lan ak de gwo pous kòtakòt, anviwon 4 cm pwofondè, a 100–120 pa minit. 4. Poukont ou: 30:2; ak de sekouris ki antrene: 15:2. 5. Apre 2 minit, si pèsonn pa rele, rele ou menm epi retounen imedyatman.
 
 **Evite:** Pa souke bebe a, pa konprime sou vant lan ni sou kòt yo, pa entèwonp plis pase 10 segonn, pa konsidere yon bebe ki frèt oswa vyolèt kòm pèdi: kontinye.
 

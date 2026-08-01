@@ -35,7 +35,7 @@ Perform compressions at **100–120 per minute**, allow complete recoil, and lim
 
 ### Infant younger than 1 year
 
-- Compress the sternum with the **heel of one hand** or with the **2-thumb, hands-encircling-the-chest technique**.
+- Compress the sternum with **two thumbs side by side while both hands encircle the chest**, or with the **heel of one hand**.
 - If you cannot encircle the chest, use the heel of one hand.
 - Depth: at least one third of the chest, approximately **4 cm**.
 - The old two-finger technique **is no longer recommended for infant CPR in AHA 2025**.
@@ -84,7 +84,7 @@ Content reviewed according to the **AHA 2025 Guidelines for CPR and ECC**, inclu
 
 **Situation:** A 8-month-old baby becomes limp and unresponsive after a choking episode; they are not breathing normally.
 
-**Do:** 1. Shout for help and ask someone to call emergency services on speaker. 2. Place them on a firm surface. 3. Compress in the center of the chest with the heel of one hand, about 4 cm deep, at 100–120 per minute. 4. Alone: 30:2; with two trained rescuers: 15:2. 5. After 2 minutes, if no one has called, call yourself and return immediately.
+**Do:** 1. Shout for help and ask someone to call emergency services on speaker. 2. Place them on a firm surface. 3. Encircle the chest with both hands and compress in the center with two thumbs side by side, about 4 cm deep, at 100–120 per minute. 4. Alone: 30:2; with two trained rescuers: 15:2. 5. After 2 minutes, if no one has called, call yourself and return immediately.
 
 **Avoid:** Do not shake the baby, do not compress over the abdomen or ribs, do not interrupt for more than 10 seconds, do not give up on a cold or blue baby: continue.
 

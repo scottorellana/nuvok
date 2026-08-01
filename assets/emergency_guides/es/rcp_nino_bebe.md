@@ -35,7 +35,7 @@ Realiza compresiones a **100–120 por minuto**, permite la expansión completa 
 
 ### Lactante menor de 1 año
 
-- Comprime el esternón con la **base de una mano** o con la técnica de **2 pulgares y manos alrededor del tórax**.
+- Comprime el esternón con **dos pulgares lado a lado mientras ambas manos rodean el tórax**, o con la **base de una mano**.
 - Si no puedes rodear el tórax, usa la base de una mano.
 - Profundidad: al menos un tercio del pecho, aproximadamente **4 cm**.
 - La antigua técnica de dos dedos **ya no se recomienda para la RCP de lactantes en AHA 2025**.
@@ -84,7 +84,7 @@ Contenido revisado según **AHA 2025 Guidelines for CPR and ECC**, incluido el c
 
 **Situación:** Un bebé de 8 meses queda flácido y sin respuesta tras un episodio de ahogo; no respira con normalidad.
 
-**Haz:** 1. Grita por ayuda y pide llamar a emergencias con altavoz. 2. Apóyalo sobre una superficie firme. 3. Comprime en el centro del pecho con la base de una mano, unos 4 cm de profundidad, a 100–120 por minuto. 4. Solo: 30:2; con dos rescatistas entrenados: 15:2. 5. Tras 2 minutos, si nadie ha llamado, llama tú y vuelve de inmediato.
+**Haz:** 1. Grita por ayuda y pide llamar a emergencias con altavoz. 2. Apóyalo sobre una superficie firme. 3. Rodea el tórax con ambas manos y comprime en el centro del pecho con dos pulgares lado a lado, unos 4 cm de profundidad, a 100–120 por minuto. 4. Solo: 30:2; con dos rescatistas entrenados: 15:2. 5. Tras 2 minutos, si nadie ha llamado, llama tú y vuelve de inmediato.
 
 **Evita:** No sacudas al bebé, no comprimas sobre el abdomen ni las costillas, no interrumpas más de 10 segundos, no des por perdido a un bebé frío o morado: continúa.
 

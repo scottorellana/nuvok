@@ -35,7 +35,7 @@ Effectue des compressions à **100–120 par minute**, permets une expansion com
 
 ### Nourrisson de moins de 1 an
 
-- Comprime le sternum avec le **talon d’une main** ou avec la technique des **2 pouces et mains autour du thorax**.
+- Comprime le sternum avec **deux pouces côte à côte pendant que les deux mains entourent le thorax**, ou avec le **talon d’une main**.
 - Si tu ne peux pas entourer le thorax, utilise la base d’une main.
 - Profondeur : au moins un tiers du thorax, environ **4 cm**.
 - L’ancienne technique à deux doigts **n’est plus recommandée pour la RCP des nourrissons dans l’AHA 2025**.
@@ -84,7 +84,7 @@ Contenu révisé selon les **AHA 2025 Guidelines for CPR and ECC**, y compris le
 
 **Situation :** Un bébé de 8 mois devient flasque et sans réponse après un épisode d’étouffement ; il ne respire pas normalement.
 
-**Fais :** 1. Crie pour demander de l’aide et demande d’appeler les urgences en haut-parleur. 2. Place-le sur une surface ferme. 3. Comprime au centre du thorax avec la base d’une main, à environ 4 cm de profondeur, à 100–120 par minute. 4. Seul : 30:2 ; avec deux sauveteurs entraînés : 15:2. 5. Après 2 minutes, si personne n’a appelé, appelle toi-même et reviens immédiatement.
+**Fais :** 1. Crie pour demander de l’aide et demande d’appeler les urgences en haut-parleur. 2. Place-le sur une surface ferme. 3. Entoure le thorax avec les deux mains et comprime au centre avec deux pouces côte à côte, à environ 4 cm de profondeur, à 100–120 par minute. 4. Seul : 30:2 ; avec deux sauveteurs entraînés : 15:2. 5. Après 2 minutes, si personne n’a appelé, appelle toi-même et reviens immédiatement.
 
 **Évite :** Ne secoue pas le bébé, ne comprime pas sur l’abdomen ni les côtes, n’interromps pas plus de 10 secondes, ne considère pas comme perdu un bébé froid ou bleuâtre : continue.
 

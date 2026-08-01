@@ -2639,13 +2639,17 @@ class EmergencyGuideTutorials {
         EmergencyGuideTutorialStep(
           number: 2,
           captions: {
-            "es": "Comprime con la base de una mano en el esternón",
-            "en": "Compress with the heel of one hand on the sternum",
-            "pt": "Comprima com a base de uma mão sobre o esterno",
-            "fr": "Comprimez avec le talon d’une main sur le sternum",
-            "zh": "用一只手的掌根按压胸骨",
-            "ja": "片手の手の付け根で胸骨を圧迫する",
-            "ht": "Konprime ak baz yon men sou estènòm nan",
+            "es": "Comprime con dos pulgares lado a lado rodeando el tórax",
+            "en":
+                "Compress with two thumbs side by side while encircling the chest",
+            "pt":
+                "Comprima com dois polegares lado a lado envolvendo o tórax",
+            "fr":
+                "Comprimez avec les deux pouces côte à côte en encerclant le thorax",
+            "zh": "双手环抱胸廓，用并排的双拇指按压胸骨",
+            "ja": "胸郭を両手で囲み、並べた両母指で胸骨を圧迫する",
+            "ht":
+                "Antoure tòks la ak de men epi konprime ak de gwo pous kòtakòt",
           },
         ),
         EmergencyGuideTutorialStep(

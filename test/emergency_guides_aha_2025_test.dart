@@ -46,13 +46,13 @@ void main() {
 
     test('pediatric CPR preserves ratios, depths, and 2025 infant technique', () {
       const updatedInfantTechnique = {
-        'es': 'base de una mano',
-        'en': 'heel of one hand',
-        'pt': 'base de uma mão',
-        'fr': 'talon d’une main',
-        'zh': '单手掌根',
-        'ja': '片手の手掌基部',
-        'ht': 'baz pla yon men',
+        'es': 'dos pulgares lado a lado',
+        'en': 'two thumbs side by side',
+        'pt': 'dois polegares lado a lado',
+        'fr': 'deux pouces côte à côte',
+        'zh': '并排的双拇指',
+        'ja': '並べた両母指',
+        'ht': 'de gwo pous kòtakòt',
       };
 
       for (final language in _languages) {

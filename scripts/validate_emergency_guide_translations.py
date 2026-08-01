@@ -11,7 +11,15 @@ from typing import Any
 from translate_emergency_guides import GUIDES_DIR, LANGUAGE_NAMES, validate_translation
 
 
-_INFANT_TECHNIQUE = {
+_INFANT_CPR_TECHNIQUE = {
+    "en": "two thumbs side by side",
+    "fr": "deux pouces côte à côte",
+    "ht": "de gwo pous kòtakòt",
+    "ja": "並べた両母指",
+    "pt": "dois polegares lado a lado",
+    "zh": "并排的双拇指",
+}
+_INFANT_CHOKING_TECHNIQUE = {
     "en": "heel of one hand",
     "fr": "talon d’une main",
     "ht": "baz pla yon men",
@@ -63,10 +71,10 @@ def validate_runtime_contract(slug: str, text: str, language: str) -> list[str]:
             "15:2",
             "4 cm",
             "5 cm",
-            _INFANT_TECHNIQUE[language],
+            _INFANT_CPR_TECHNIQUE[language],
         ]
     elif slug == "atragantamiento":
-        required = [_BACK_BLOWS[language], _INFANT_TECHNIQUE[language]]
+        required = [_BACK_BLOWS[language], _INFANT_CHOKING_TECHNIQUE[language]]
     lowered = text.lower()
     for token in required:
         if token.lower() not in lowered:

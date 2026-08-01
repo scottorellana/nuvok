@@ -35,7 +35,7 @@ Realize compressões a **100–120 por minuto**, permita a expansão completa e 
 
 ### Lactente menor de 1 ano
 
-- Comprima o esterno com a **base de uma mão** ou com a técnica de **2 polegares e mãos ao redor do tórax**.
+- Comprima o esterno com **dois polegares lado a lado enquanto as duas mãos envolvem o tórax**, ou com a **base de uma mão**.
 - Se não conseguir envolver o tórax, use a base de uma mão.
 - Profundidade: pelo menos um terço do tórax, aproximadamente **4 cm**.
 - A antiga técnica de dois dedos **já não é recomendada para a RCP de lactentes na AHA 2025**.
@@ -84,7 +84,7 @@ Conteúdo revisado segundo **AHA 2025 Guidelines for CPR and ECC**, incluindo a 
 
 **Situação:** Um bebê de 8 meses fica flácido e sem resposta após um episódio de engasgo; não respira normalmente.
 
-**Faça:** 1. Grite por ajuda e peça para ligar para emergências em viva-voz. 2. Apoie-o sobre uma superfície firme. 3. Comprima no centro do tórax com a base de uma mão, cerca de 4 cm de profundidade, a 100–120 por minuto. 4. Sozinho: 30:2; com dois socorristas treinados: 15:2. 5. Após 2 minutos, se ninguém tiver ligado, ligue você e volte imediatamente.
+**Faça:** 1. Grite por ajuda e peça para ligar para emergências em viva-voz. 2. Apoie-o sobre uma superfície firme. 3. Envolva o tórax com as duas mãos e comprima no centro com dois polegares lado a lado, cerca de 4 cm de profundidade, a 100–120 por minuto. 4. Sozinho: 30:2; com dois socorristas treinados: 15:2. 5. Após 2 minutos, se ninguém tiver ligado, ligue você e volte imediatamente.
 
 **Evite:** Não sacuda o bebê, não comprima sobre o abdômen nem as costelas, não interrompa por mais de 10 segundos, não considere perdido um bebê frio ou roxo: continue.
 

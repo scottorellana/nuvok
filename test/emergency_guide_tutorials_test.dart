@@ -73,9 +73,11 @@ void main() {
     final bleeding = EmergencyGuideTutorials.forGuide('hemorragia_severa')!;
 
     expect(
-        infant.steps[1].captionEs.toLowerCase(), contains('base de una mano'));
+        infant.steps[1].captionEs.toLowerCase(), contains('dos pulgares'));
+    expect(infant.steps[1].captionEs.toLowerCase(), contains('rodeando el tórax'));
     expect(
-        infant.steps[1].captionEn.toLowerCase(), contains('heel of one hand'));
+        infant.steps[1].captionEn.toLowerCase(), contains('two thumbs'));
+    expect(infant.steps[1].captionEn.toLowerCase(), contains('encircling the chest'));
     expect(
         infant.steps[1].captionEs.toLowerCase(), isNot(contains('dos dedos')));
     expect(infant.steps[1].captionEn.toLowerCase(),

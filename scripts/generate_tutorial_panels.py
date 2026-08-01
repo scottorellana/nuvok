@@ -33,6 +33,10 @@ Only action to show: {action}
 
 Do not show earlier or later steps. No words, letters, captions, labels, logos, icons, arrows, numbers or watermarks. No gore. No CGI, 3D render, vector art, drawing, painting, comic, infographic, plastic-looking human skin or synthetic scenery. Avoid: {avoid}."""
 
+REFERENCE_CONTINUITY_PROMPT = """
+
+A reference photograph from the immediately preceding panel is provided. Use the provided reference image only as a strict continuity identity lock. Preserve exactly the same identity, face, hair, clothing, footwear, protective equipment, carried gear, mannequin or simulator, location, weather, lighting and material colors visible in that reference. Change only the body pose and object placement required by this panel's action. Do not copy the prior action, do not combine actions, and do not reproduce the reference as an inset, collage, split screen or background picture."""
+
 
 def regeneration_groups_from_ledger(
     ledger: dict[str, object],
@@ -99,14 +103,22 @@ def apply_panel_feedback(
     return updated
 
 
-def panel_prompt(spec: dict[str, object], index: int) -> str:
+def panel_prompt(
+    spec: dict[str, object],
+    index: int,
+    *,
+    has_reference: bool = False,
+) -> str:
     panels = spec["panels"]
     assert isinstance(panels, list) and len(panels) == 3
-    return BASE_PROMPT.format(
+    prompt = BASE_PROMPT.format(
         context=spec["context"],
         action=panels[index],
         avoid=spec["avoid"],
     )
+    if has_reference:
+        prompt += REFERENCE_CONTINUITY_PROMPT
+    return prompt
 
 
 def validate_source_panel(image: Path) -> tuple[int, int]:
@@ -144,12 +156,17 @@ def generate_panel(
     force: bool,
     quality: str,
     panel_dir: Path = PANEL_DIR,
+    reference: Path | None = None,
 ) -> tuple[int, bool, str]:
     output = panel_dir / slug / f"panel_{index + 1}.png"
     if not force and reusable_source_panel(output):
         return index, True, f"SKIP panel {index + 1}"
+    if reference is not None:
+        validate_source_panel(reference)
+        if reference.stat().st_size <= 100_000:
+            raise ValueError(f"reference panel is unexpectedly small: {reference}")
     output.parent.mkdir(parents=True, exist_ok=True)
-    prompt = panel_prompt(spec, index)
+    prompt = panel_prompt(spec, index, has_reference=reference is not None)
     last_error = ""
     for attempt in range(1, 3):
         temporary_handle = tempfile.NamedTemporaryFile(
@@ -162,15 +179,18 @@ def generate_panel(
         temporary_handle.close()
         started = time.monotonic()
         try:
+            command = [
+                str(PYTHON),
+                str(GENERATOR),
+                prompt,
+                str(temporary),
+                "1024x1536",
+                quality,
+            ]
+            if reference is not None:
+                command.append(str(reference))
             result = subprocess.run(
-                [
-                    str(PYTHON),
-                    str(GENERATOR),
-                    prompt,
-                    str(temporary),
-                    "1024x1536",
-                    quality,
-                ],
+                command,
                 capture_output=True,
                 text=True,
                 timeout=360,
@@ -257,6 +277,7 @@ def generate_slugs(
     workers: int,
     panel_dir: Path = PANEL_DIR,
     output_dir: Path = DEFAULT_OUT_DIR,
+    reference_continuity: bool = False,
 ) -> list[str]:
     if len(slugs) != len(set(slugs)):
         raise ValueError("duplicate tutorial slugs would create concurrent writers")
@@ -264,24 +285,68 @@ def generate_slugs(
         slug: [] for slug in slugs
     }
     with ThreadPoolExecutor(max_workers=max(1, min(workers, 3))) as pool:
-        futures = {
-            pool.submit(
-                generate_panel,
-                slug,
-                data[slug],
-                index - 1,
-                force,
-                quality,
-                panel_dir,
-            ): slug
-            for slug in slugs
-            for index in selected_panels
-        }
-        for future in as_completed(futures):
-            slug = futures[future]
-            result = future.result()
-            results_by_slug[slug].append(result)
-            print(f"[{slug}] {result[2]}", flush=True)
+        if reference_continuity:
+            def generate_sequence(slug: str) -> list[tuple[int, bool, str]]:
+                sequence: list[tuple[int, bool, str]] = []
+                for panel_number in selected_panels:
+                    reference = None
+                    if panel_number > 1:
+                        reference = panel_dir / slug / f"panel_{panel_number - 1}.png"
+                    elif 2 not in selected_panels:
+                        reference = panel_dir / slug / "panel_2.png"
+                    if reference is not None and not reusable_source_panel(reference):
+                        sequence.append(
+                            (
+                                panel_number - 1,
+                                False,
+                                f"FAIL panel {panel_number}: invalid or missing "
+                                f"continuity reference {reference}",
+                            )
+                        )
+                        break
+                    result = generate_panel(
+                        slug,
+                        data[slug],
+                        panel_number - 1,
+                        force,
+                        quality,
+                        panel_dir,
+                        reference,
+                    )
+                    sequence.append(result)
+                    if not result[1]:
+                        break
+                return sequence
+
+            futures = {
+                pool.submit(generate_sequence, slug): slug
+                for slug in slugs
+            }
+            for future in as_completed(futures):
+                slug = futures[future]
+                results = future.result()
+                results_by_slug[slug].extend(results)
+                for result in results:
+                    print(f"[{slug}] {result[2]}", flush=True)
+        else:
+            futures = {
+                pool.submit(
+                    generate_panel,
+                    slug,
+                    data[slug],
+                    index - 1,
+                    force,
+                    quality,
+                    panel_dir,
+                ): slug
+                for slug in slugs
+                for index in selected_panels
+            }
+            for future in as_completed(futures):
+                slug = futures[future]
+                result = future.result()
+                results_by_slug[slug].append(result)
+                print(f"[{slug}] {result[2]}", flush=True)
 
     failed: list[str] = []
     for slug in slugs:
@@ -335,12 +400,24 @@ def build_parser() -> argparse.ArgumentParser:
         default=[1, 2, 3],
         help="One-based panels to regenerate; existing others are reused",
     )
+    parser.add_argument(
+        "--reference-continuity",
+        action="store_true",
+        help=(
+            "Generate each tutorial sequentially and feed the immediately "
+            "preceding panel to the provider as a visual continuity reference"
+        ),
+    )
     return parser
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    return build_parser().parse_args(argv)
 
 
 def main() -> int:
     parser = build_parser()
-    args = parser.parse_args()
+    args = parse_args()
 
     data = json.loads(args.storyboards.read_text(encoding="utf-8"))
     unknown = sorted(set(args.slugs) - set(data))
@@ -362,6 +439,7 @@ def main() -> int:
         workers=args.workers,
         panel_dir=args.panel_dir,
         output_dir=args.output_dir,
+        reference_continuity=args.reference_continuity,
     )
 
     print(f"Done: {len(args.slugs) - len(failed)}/{len(args.slugs)} composed; {len(failed)} failed")

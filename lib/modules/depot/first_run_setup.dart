@@ -11,6 +11,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 
 import '../../core/locale_service.dart';
+import '../../core/disk_space.dart';
 import '../../core/nuvok_library.dart';
 import '../../core/shell_nav.dart';
 import '../ai/active_model.dart';
@@ -31,6 +32,7 @@ class FirstRunSetupPage extends StatefulWidget {
     this.enqueue,
     this.onGoMaps,
     this.onGoDownloads,
+    this.freeDisk,
   });
 
   /// Costuras inyectables: los tests pasan fakes; la app usa los reales
@@ -43,6 +45,9 @@ class FirstRunSetupPage extends StatefulWidget {
   final VoidCallback? onGoMaps;
   final VoidCallback? onGoDownloads;
 
+  /// Bytes libres en disco; null = no medible (la app no bloquea nada).
+  final Future<int?> Function()? freeDisk;
+
   @override
   State<FirstRunSetupPage> createState() => _FirstRunSetupPageState();
 }
@@ -52,6 +57,7 @@ class _FirstRunSetupPageState extends State<FirstRunSetupPage> {
   StarterCandidate? _wiki;
   bool _wikiLoading = true;
   MapRegion? _region;
+  int? _freeBytes;
 
   bool get _isDesktop =>
       widget.isDesktop ??
@@ -89,10 +95,31 @@ class _FirstRunSetupPageState extends State<FirstRunSetupPage> {
       // Sin internet: la tarjeta lo dice y el botón descarga lo que se pueda.
       if (mounted) setState(() { _wiki = null; _wikiLoading = false; });
     }
+    // El disco se mide al FINAL: ya se conoce el tamaño total real (modelo +
+    // wiki) y ninguna medición lenta retrasa lo que el usuario quiere ver.
+    // Todo el camino tolera fallos: no poder medir nunca impide prepararse.
+    int? disk;
+    try {
+      disk = await (widget.freeDisk ?? _measureDisk)();
+    } catch (_) {
+      disk = null;
+    }
+    if (mounted) setState(() => _freeBytes = disk);
   }
+
+  Future<int?> _measureDisk() =>
+      freeSpaceBytes(NuvokLibrary.instance.root.path);
 
   int get _totalBytes =>
       (_model?.sizeBytes ?? 0) + (_wiki?.result.sizeBytes ?? 0);
+
+  /// Veredicto de espacio para lo que está a punto de descargarse. Null
+  /// mientras aún no se midió (o si la plataforma no sabe medir).
+  SpaceVerdict? get _space {
+    final free = _freeBytes;
+    if (free == null || _totalBytes == 0) return null;
+    return checkSpaceFor(needBytes: _totalBytes, freeBytes: free);
+  }
 
   void _realEnqueue(StarterDownloadRequest r) {
     DownloadManager.instance.enqueue(
@@ -177,9 +204,28 @@ class _FirstRunSetupPageState extends State<FirstRunSetupPage> {
               ),
             ),
           ),
+          // Aviso de espacio ANTES de gastar datos móviles y 40 minutos.
+          if (_space != null && (!_space!.fits || _space!.tight))
+            Card(
+              color: _space!.fits
+                  ? Theme.of(context).colorScheme.surfaceContainerHighest
+                  : Theme.of(context).colorScheme.errorContainer,
+              child: ListTile(
+                leading: Icon(_space!.fits
+                    ? Icons.warning_amber_outlined
+                    : Icons.sd_card_alert_outlined),
+                title: Text(_space!.fits
+                    ? tr(context, 'setupTightSpace')
+                    : tr(context, 'setupNoSpace')
+                        .replaceAll('{n}', _space!.shortfallText)),
+              ),
+            ),
           const SizedBox(height: 16),
           FilledButton.icon(
-            onPressed: model == null ? null : _downloadAll,
+            // Sin espacio el botón se apaga: dejar intentarlo sería mentirle
+            // a alguien que cree estar preparándose para una emergencia.
+            onPressed:
+                model == null || _space?.fits == false ? null : _downloadAll,
             icon: const Icon(Icons.download),
             label: Text(
                 '${tr(context, 'setupDownloadAll')} (${humanSize(_totalBytes)})'),

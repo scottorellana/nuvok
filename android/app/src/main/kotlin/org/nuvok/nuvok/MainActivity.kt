@@ -172,6 +172,22 @@ class MainActivity : FlutterActivity() {
                             result.error("COPY_ASSET_FAILED", t.message, t.stackTraceToString())
                         }
                     }
+                    // Espacio libre real del volumen donde vive la biblioteca.
+                    // Nuvok ofrece descargas de hasta 3.4GB: sin esto la app
+                    // dejaba correr 40 minutos de descarga para morir sin
+                    // espacio. StatFs sobre la ruta que pasa Dart.
+                    "freeSpace" -> {
+                        try {
+                            val path = call.argument<String>("path")
+                                ?: throw IllegalArgumentException("path requerido")
+                            val stat = android.os.StatFs(path)
+                            result.success(stat.availableBytes)
+                        } catch (t: Throwable) {
+                            // Espacio desconocido NO bloquea: Dart lo trata
+                            // como "no se pudo medir" y deja pasar.
+                            result.success(null)
+                        }
+                    }
                     else -> result.notImplemented()
                 }
             }

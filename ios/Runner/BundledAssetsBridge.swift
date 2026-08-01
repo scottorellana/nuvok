@@ -13,6 +13,21 @@ enum BundledAssetsBridge {
     let channel = FlutterMethodChannel(
       name: "nuvok/bundled_assets", binaryMessenger: messenger)
     channel.setMethodCallHandler { call, result in
+      // Espacio libre real del volumen de la biblioteca. Nuvok ofrece
+      // descargas de hasta 3.4GB: sin esto la app dejaba correr 40 minutos
+      // para morir sin espacio. Devolver nil = "no se pudo medir", y Dart
+      // deja pasar la descarga en vez de bloquearla.
+      if call.method == "freeSpace" {
+        guard let args = call.arguments as? [String: Any],
+              let path = args["path"] as? String else {
+          result(nil)
+          return
+        }
+        let values = try? URL(fileURLWithPath: path)
+          .resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
+        result(values?.volumeAvailableCapacityForImportantUsage)
+        return
+      }
       guard call.method == "copyAsset" else {
         result(FlutterMethodNotImplemented)
         return

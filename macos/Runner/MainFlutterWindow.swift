@@ -13,6 +13,19 @@ class MainFlutterWindow: NSWindow {
       name: "nuvok/bundled_assets",
       binaryMessenger: flutterViewController.engine.binaryMessenger)
     channel.setMethodCallHandler { call, result in
+      // Espacio libre real del volumen de la biblioteca (espejo de iOS y
+      // Android). nil = no se pudo medir; Dart deja pasar la descarga.
+      if call.method == "freeSpace" {
+        guard let args = call.arguments as? [String: Any],
+              let path = args["path"] as? String else {
+          result(nil)
+          return
+        }
+        let values = try? URL(fileURLWithPath: path)
+          .resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
+        result(values?.volumeAvailableCapacityForImportantUsage)
+        return
+      }
       guard call.method == "copyAsset" else {
         result(FlutterMethodNotImplemented)
         return

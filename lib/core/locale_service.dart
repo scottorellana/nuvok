@@ -1281,6 +1281,26 @@ class AppStrings {
       'pt': 'Escolher em Mapas', 'fr': 'Choisir dans Cartes',
       'zh': '在地图中选择', 'ja': 'マップで選ぶ', 'ht': 'Chwazi nan Kat',
     },
+    // Espacio en disco: una descarga de 3.4 GB que muere al 90% quema datos
+    // móviles y deja a la persona creyendo que ya está preparada.
+    'setupNoSpace': {
+      'es': 'No hay espacio suficiente. Libera {n} y vuelve a intentarlo.',
+      'en': 'Not enough space. Free up {n} and try again.',
+      'pt': 'Espaço insuficiente. Libere {n} e tente de novo.',
+      'fr': "Espace insuffisant. Libérez {n} et réessayez.",
+      'zh': '空间不足。请释放 {n} 后重试。',
+      'ja': '空き容量が足りません。{n} を空けてからもう一度お試しください。',
+      'ht': 'Pa gen ase espas. Libere {n} epi eseye ankò.',
+    },
+    'setupTightSpace': {
+      'es': 'Cabe, pero tu equipo quedará casi lleno.',
+      'en': 'It fits, but your device will be nearly full.',
+      'pt': 'Cabe, mas seu aparelho ficará quase cheio.',
+      'fr': "Ça tient, mais votre appareil sera presque plein.",
+      'zh': '空间够用，但设备将几乎占满。',
+      'ja': '入りますが、端末の空き容量がほぼなくなります。',
+      'ht': 'Li antre, men aparèy ou ap prèske plen.',
+    },
     'setupDownloadAll': {
       'es': 'Descargar todo', 'en': 'Download all', 'pt': 'Baixar tudo',
       'fr': 'Tout télécharger', 'zh': '全部下载', 'ja': 'すべてダウンロード',

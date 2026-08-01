@@ -158,7 +158,9 @@ class _EmergencyPageState extends State<EmergencyPage> {
     final compactBar = MediaQuery.of(context).size.width < 560;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Guías de Emergencia'),
+        // Detectado en QA visual: estaba fijo en español y los usuarios de
+        // los otros 6 idiomas veían 'Guías de Emergencia' siempre.
+        title: Text(tr(context, 'egPageTitle')),
         actions: [
           if (compactBar)
             IconButton(

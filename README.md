@@ -20,6 +20,15 @@ días sin internet: Nuvok existe para el momento en que la red desaparece.
 | 📡 Comunicación | Malla Bluetooth/WiFi sin internet: chat cifrado, SOS que se reenvía solo, posiciones del grupo |
 | 📦 Depósito | Donde eliges y descargas tu contenido (el único lugar que usa internet) |
 
+<p align="center">
+  <img src=".github/media/emergencia.png" width="49%" alt="Guías de Emergencia: modo emergencia, buscador por síntoma y accesos rápidos de RCP, atragantamiento y sangrado" />
+  <img src=".github/media/mapas.png" width="49%" alt="Mapas offline a nivel de calle (San Pedro Sula) con datos de OpenStreetMap" />
+</p>
+<p align="center">
+  <img src=".github/media/especialistas.png" width="49%" alt="Seis especialistas de IA locales: médica, apoyo psicológico, ingeniero, supervivencia, traductora y bibliotecario" />
+  <img src=".github/media/asistente.png" width="49%" alt="Vera responde una pregunta de RCP con la guía offline — funciona incluso sin modelo cargado" />
+</p>
+
 ---
 
 ## Instalar Nuvok

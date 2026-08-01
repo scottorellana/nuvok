@@ -20,6 +20,15 @@ days without internet: Nuvok exists for the moment the network disappears.
 | 📡 Communication | Bluetooth/WiFi mesh with no internet: encrypted chat, an SOS that relays itself, group positions |
 | 📦 Depot | Where you pick and download your content (the only place that uses internet) |
 
+<p align="center">
+  <img src=".github/media/emergencia.png" width="49%" alt="Emergency guides: emergency mode, symptom search and quick access to CPR, choking and bleeding" />
+  <img src=".github/media/mapas.png" width="49%" alt="Street-level offline maps (San Pedro Sula) with OpenStreetMap data" />
+</p>
+<p align="center">
+  <img src=".github/media/especialistas.png" width="49%" alt="Six on-device AI specialists: medic, psychological support, engineer, survival, translator and librarian" />
+  <img src=".github/media/asistente.png" width="49%" alt="Vera answers a CPR question from the offline guide — works even with no model loaded" />
+</p>
+
 ---
 
 ## Install Nuvok

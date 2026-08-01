@@ -1950,6 +1950,11 @@ class AppStrings {
       'pt': 'Perigos mortais em {mode}?', 'fr': 'Dangers mortels en {mode} ?',
       'zh': '{mode}有哪些致命危险？', 'ja': '{mode}の致命的な危険は？', 'ht': 'Danje mòtèl nan {mode}?',
     },
+    'egPageTitle': {
+      'es': 'Guías de Emergencia', 'en': 'Emergency Guides',
+      'pt': 'Guias de Emergência', 'fr': "Guides d'urgence",
+      'zh': '急救指南', 'ja': '緊急ガイド', 'ht': 'Gid Ijans',
+    },
     'callEmergency': {
       'es': 'LLAMAR', 'en': 'CALL', 'pt': 'LIGAR', 'fr': 'APPELER',
       'zh': '拨打', 'ja': '発信', 'ht': 'RELE',

@@ -2,6 +2,8 @@
 
 **Español** · [English](README.en.md)
 
+<p align="center"><img src=".github/media/nuvok-demo.gif" width="720" alt="Nuvok demo" /></p>
+
 [![CI](https://github.com/scottorellana/nuvok/actions/workflows/ci.yml/badge.svg)](https://github.com/scottorellana/nuvok/actions/workflows/ci.yml)
 [![Licencia: GPL v3](https://img.shields.io/badge/licencia-GPL%20v3-blue.svg)](LICENSE)
 [![IA 100% local](https://img.shields.io/badge/IA-100%25%20local-success.svg)](#-ia-local-en-tu-iphone-paso-a-paso)

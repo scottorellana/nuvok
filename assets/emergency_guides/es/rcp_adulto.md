@@ -18,7 +18,7 @@ Los jadeos aislados o boqueadas **no son respiración normal**. Si la persona no
 2. **Comprueba respuesta y respiración.** Toca los hombros, habla fuerte y observa si respira normalmente durante no más de 10 segundos.
 3. **Llama y consigue un DEA.** Si tienes teléfono, llama en altavoz mientras empiezas. Señala a otra persona para llamar y traer un desfibrilador externo automático (DEA). Si estás completamente solo y sin teléfono, ve por ayuda y un DEA, y vuelve de inmediato.
 4. **Ponla boca arriba sobre una superficie firme y plana.** Descubre el pecho.
-5. **Inicia compresiones.** Coloca el talón de una mano en el centro del pecho, sobre la mitad inferior del esternón; la otra mano encima, dedos entrelazados y brazos rectos.
+5. **Inicia compresiones.** Coloca el talón de una mano en el centro del pecho, sobre la mitad inferior del esternón; la otra mano encima, dedos entrelazados y brazos rectos. Comprime fuerte y rápido: 100–120 por minuto, 5–6 cm de profundidad.
 
 ## Compresiones de alta calidad
 

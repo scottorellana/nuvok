@@ -16,24 +16,78 @@ import '../../core/nuvok_colors.dart';
 
 /// Extrae los pasos numerados accionables del markdown de una guía.
 /// Compartida por CriticalStepsCard (visual) y GuideVoice (lectura en voz
-/// alta manos libres).
+/// alta manos libres) — o sea, es lo que alguien LEE y OYE mientras intenta
+/// salvar una vida.
+///
+/// Dos reglas nacidas de un fallo real y peligroso:
+///
+/// 1. SOLO LA PRIMERA SECUENCIA. Antes se barrían todas las líneas numeradas
+///    del documento y se renumeraban juntas: en atragantamiento, los pasos
+///    3-6 salían de la sección "Lactante menor de 1 año" ("gíralo boca
+///    arriba", "presiones bajo la línea de los pezones") y se le mostraban a
+///    quien atendía a un ADULTO consciente. En RCP, los pasos del DEA se
+///    presentaban como pasos de RCP.
+///
+/// 2. UN PASO LARGO SE ACORTA, NO SE DESCARTA. El filtro de 120 caracteres
+///    tiraba justamente las instrucciones que salvan, por ser las más
+///    detalladas: "Inicia compresiones. Coloca el talón de una mano en el
+///    centro del pecho…" (167) y "5 compresiones abdominales: puño justo por
+///    encima del ombligo…" (158). La tarjeta de RCP llegó a no decir nunca
+///    que había que comprimir el pecho.
 List<String> extractCriticalSteps(String body) {
   final steps = <String>[];
+  var started = false;
   for (final line in body.split('\n')) {
     final trimmed = line.trim();
+    // Un encabezado tras haber recogido pasos cierra la secuencia: lo que
+    // sigue es otro protocolo (otra edad, otra variante, el DEA…).
+    if (trimmed.startsWith('#') && started) break;
     final match = RegExp(r'^\d+\.\s*(.+)$').firstMatch(trimmed);
-    if (match != null) {
-      var text = match.group(1)!;
-      text =
-          text.replaceAllMapped(RegExp(r'\*\*(.+?)\*\*'), (m) => m.group(1)!);
-      text = text.split(RegExp(r'\s+[—–-]\s')).first.trim();
-      text = text.replaceAll('|', '').trim();
-      if (text.isNotEmpty && text.length > 3 && text.length < 120) {
-        steps.add(text);
-      }
-    }
+    if (match == null) continue;
+    var text = match.group(1)!;
+    text = text.replaceAllMapped(RegExp(r'\*\*(.+?)\*\*'), (m) => m.group(1)!);
+    text = text.split(RegExp(r'\s+[—–-]\s')).first.trim();
+    text = text.replaceAll('|', '').trim();
+    if (text.isEmpty || text.length <= 3) continue;
+    steps.add(_condense(text));
+    started = true;
   }
   return steps;
+}
+
+/// Oraciones que contienen una cifra clínica: ritmo, profundidad, tiempo,
+/// número de repeticiones. Nunca deben perderse en el recorte — son las que
+/// separan una maniobra eficaz de una inútil.
+final _hasCriticalNumber = RegExp(r'\d');
+
+/// Recorta un paso largo a lo esencial sin perderlo. Prioridad: la primera
+/// oración (qué hacer) y las oraciones CON CIFRAS (cómo de fuerte, cuántas
+/// veces, cuánto tiempo). El detalle descriptivo cede el sitio.
+String _condense(String text, {int max = 118}) {
+  if (text.length <= max) return text;
+  final parts = text.split(RegExp(r'(?<=\.)\s+'));
+  final keep = <String>[parts.first];
+  var len = parts.first.length;
+  // Segunda pasada: meter las oraciones con cifras aunque no sean contiguas.
+  for (final p in parts.skip(1)) {
+    if (!_hasCriticalNumber.hasMatch(p)) continue;
+    if (len + p.length + 1 > max) continue;
+    keep.add(p);
+    len += p.length + 1;
+  }
+  if (keep.length > 1 || keep.first.length <= max) {
+    return keep.join(' ').trim();
+  }
+  // Una sola oración larguísima: cortar por palabras antes que truncar a
+  // media palabra, y marcar la continuación.
+  final words = text.split(' ');
+  final out = StringBuffer();
+  for (final w in words) {
+    if (out.length + w.length + 1 > max - 1) break;
+    if (out.isNotEmpty) out.write(' ');
+    out.write(w);
+  }
+  return '${out.toString().trim()}…';
 }
 
 class CriticalStepsCard extends StatelessWidget {

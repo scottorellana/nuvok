@@ -18,7 +18,7 @@ Les halètements isolés ou les gasps **ne sont pas une respiration normale**. S
 2. **Vérifie la réponse et la respiration.** Touche les épaules, parle fort et observe si la personne respire normalement pendant pas plus de 10 secondes.
 3. **Appelle et procure-toi un DAE.** Si tu as un téléphone, appelle en haut-parleur pendant que tu commences. Désigne une autre personne pour appeler et apporter un défibrillateur externe automatisé (DAE). Si tu es complètement seul et sans téléphone, va chercher de l’aide et un DAE, puis reviens immédiatement.
 4. **Place-la sur le dos sur une surface ferme et plane.** Découvre la poitrine.
-5. **Commence les compressions.** Place le talon d’une main au centre de la poitrine, sur la moitié inférieure du sternum ; l’autre main par-dessus, doigts entrelacés et bras tendus.
+5. **Commence les compressions.** Place le talon d’une main au centre de la poitrine, sur la moitié inférieure du sternum ; l’autre main par-dessus, doigts entrelacés et bras tendus. Comprime fort et vite : 100–120 par minute, 5–6 cm de profondeur.
 
 ## Compressions de haute qualité
 

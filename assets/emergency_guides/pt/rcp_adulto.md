@@ -18,7 +18,7 @@ Ofegadas isoladas ou gasps **não são respiração normal**. Se a pessoa não r
 2. **Verifique resposta e respiração.** Toque os ombros, fale alto e observe se respira normalmente por não mais de 10 segundos.
 3. **Ligue e consiga um DEA.** Se tiver telefone, ligue no viva-voz enquanto começa. Aponte para outra pessoa para ligar e trazer um desfibrilador externo automático (DEA). Se estiver completamente sozinho e sem telefone, vá buscar ajuda e um DEA, e volte imediatamente.
 4. **Coloque-a de barriga para cima sobre uma superfície firme e plana.** Descubra o peito.
-5. **Inicie compressões.** Coloque a base de uma mão no centro do peito, sobre a metade inferior do esterno; a outra mão por cima, dedos entrelaçados e braços retos.
+5. **Inicie compressões.** Coloque a base de uma mão no centro do peito, sobre a metade inferior do esterno; a outra mão por cima, dedos entrelaçados e braços retos. Comprima forte e rápido: 100–120 por minuto, 5–6 cm de profundidade.
 
 ## Compressões de alta qualidade
 

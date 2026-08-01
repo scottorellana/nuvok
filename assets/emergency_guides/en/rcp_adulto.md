@@ -18,7 +18,7 @@ Isolated gasps are **not normal breathing**. If the person is unresponsive and i
 2. **Check responsiveness and breathing.** Tap the shoulders, shout, and look for normal breathing for no more than 10 seconds.
 3. **Call and get an AED.** If you have a phone, call on speaker while you begin. Direct another person to call and bring an automated external defibrillator (AED). If you are completely alone without a phone, leave to call and get an AED, then return immediately.
 4. **Place the person face up on a firm, flat surface.** Expose the chest.
-5. **Start compressions.** Put the heel of one hand in the center of the chest on the lower half of the sternum; place the other hand on top, interlock the fingers, and keep the arms straight.
+5. **Start compressions.** Put the heel of one hand in the center of the chest on the lower half of the sternum; place the other hand on top, interlock the fingers, and keep the arms straight. Push hard and fast: 100–120 per minute, 5–6 cm deep.
 
 ## High-quality compressions
 

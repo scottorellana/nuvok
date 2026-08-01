@@ -18,7 +18,7 @@ Souf an gaspiyaj izole oswa bouch k ap chèche lè **pa respirasyon nòmal**. Si
 2. **Verifye repons ak respirasyon.** Manyen zepòl yo, pale fò epi obsève si li respire nòmalman pandan pa plis pase 10 segonn.
 3. **Rele epi jwenn yon DEA.** Si ou gen telefòn, rele sou opalè pandan w ap kòmanse. Lonje dwèt sou yon lòt moun pou rele epi pote yon defibrilatè ekstèn otomatik (DEA). Si ou nèt poukont ou epi san telefòn, ale chèche èd ak yon DEA, epi retounen imedyatman.
 4. **Mete li kouche sou do sou yon sifas fèm ak plat.** Dekouvri pwatrin lan.
-5. **Kòmanse konpresyon.** Mete talon yon men nan sant pwatrin lan, sou mwatye enferyè estènòm nan; lòt men an anlè, dwèt yo kwaze epi bra yo dwat.
+5. **Kòmanse konpresyon.** Mete talon yon men nan sant pwatrin lan, sou mwatye enferyè estènòm nan; lòt men an anlè, dwèt yo kwaze epi bra yo dwat. Peze fò e vit: 100–120 pa minit, 5–6 cm fon.
 
 ## Konpresyon kalite siperyè
 

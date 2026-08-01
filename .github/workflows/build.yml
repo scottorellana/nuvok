@@ -1,6 +1,11 @@
-# Builds Prepper Pad installers for every supported platform.
-# macOS is the verified platform; the rest compile here and await
-# verification on real hardware (see README "Estado por plataforma").
+# Compila Nuvok en TODAS las plataformas y sube los resultados como
+# ARTIFACTS de CI (visibles para el mantenedor, con expiración) — la prueba
+# pública de que el código compila en los 5 sistemas.
+#
+# Deliberadamente NO publica GitHub Releases: los binarios oficiales se
+# venden en nuvok.org (muro de descarga, spec 2026-07-29). Un Release
+# público regalaría exactamente lo que financia el proyecto. Quien quiera
+# Nuvok gratis, compila desde el código (GPL) — README, 3 comandos.
 name: build
 on:
   push:
@@ -15,22 +20,25 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - name: Build native engines
+      - name: Build native engines (zstd + llama.cpp embebido via FFI)
         run: |
           brew install cmake
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp "$HOME/llama.cpp"
+          export LLAMA_DIR="$HOME/llama.cpp"
           ./scripts/build_native_macos.sh
+          ./scripts/build_llm_macos.sh
       - run: flutter pub get
       - run: flutter test
       - name: Package DMG
         run: ./scripts/package_macos.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: PrepperPad-macos
-          path: dist/PrepperPad.dmg
+          name: Nuvok-macos
+          path: dist/Nuvok.dmg
 
   linux:
     strategy:
-      fail-fast: false   # x64 must publish even if arm64 (experimental) fails
+      fail-fast: false   # x64 debe terminar aunque arm64 (experimental) falle
       matrix:
         include:
           - runner: ubuntu-24.04
@@ -38,7 +46,6 @@ jobs:
           - runner: ubuntu-24.04-arm   # Raspberry Pi / ARM64
             arch: arm64
     runs-on: ${{ matrix.runner }}
-    # arm64 Flutter tooling is less proven; don't let it fail the release.
     continue-on-error: ${{ matrix.arch == 'arm64' }}
     steps:
       - uses: actions/checkout@v4
@@ -47,8 +54,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ninja-build libgtk-3-dev cmake clang git \
             curl unzip xz-utils libzstd1 liblzma5 zstd
-      # subosito/flutter-action can't resolve an arm64 SDK, so install Flutter
-      # from git directly — works on any architecture.
+      # subosito/flutter-action no resuelve SDK arm64; Flutter desde git
+      # funciona en cualquier arquitectura.
       - name: Install Flutter (git)
         run: |
           git clone --depth 1 -b stable https://github.com/flutter/flutter.git "$HOME/flutter"
@@ -64,24 +71,22 @@ jobs:
       - run: flutter build linux --release
       - name: Assemble bundle
         run: |
-          OUT=dist/prepper-pad-linux-${{ matrix.arch }}
+          OUT=dist/nuvok-linux-${{ matrix.arch }}
           mkdir -p "$OUT"
           cp -r build/linux/*/release/bundle/* "$OUT/"
           mkdir -p "$OUT/bin"
           cp llama.cpp/build/bin/llama-server "$OUT/bin/"
-          tar -C dist -czf dist/prepper-pad-linux-${{ matrix.arch }}.tar.gz \
-            "prepper-pad-linux-${{ matrix.arch }}"
+          tar -C dist -czf dist/nuvok-linux-${{ matrix.arch }}.tar.gz \
+            "nuvok-linux-${{ matrix.arch }}"
       - uses: actions/upload-artifact@v4
         with:
-          name: PrepperPad-linux-${{ matrix.arch }}
+          name: Nuvok-linux-${{ matrix.arch }}
           path: dist/*.tar.gz
 
   windows:
-    # Pinned to 2022: windows-latest ships VS 2026 whose MSVC turns the
-    # deprecated <experimental/coroutine> header (used by
-    # flutter_inappwebview_windows) into a hard error, and a newer CMake that
-    # trips CMP0175 in the native build. windows-2022's toolchain builds both,
-    # verified green — so it's a required platform now.
+    # Fijado a 2022: windows-latest trae VS 2026 cuyo MSVC convierte el
+    # header obsoleto <experimental/coroutine> (flutter_inappwebview_windows)
+    # en error duro, y un CMake nuevo que dispara CMP0175 en el build nativo.
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
@@ -101,45 +106,44 @@ jobs:
       - name: Assemble bundle
         shell: bash
         run: |
-          OUT=dist/prepper-pad-windows-x64
+          OUT=dist/nuvok-windows-x64
           mkdir -p "$OUT/bin"
           cp -r build/windows/x64/runner/Release/* "$OUT/"
           cp llama.cpp/build/bin/Release/llama-server.exe "$OUT/bin/" || \
             cp llama.cpp/build/bin/llama-server.exe "$OUT/bin/"
           cp "$VCPKG_INSTALLATION_ROOT"/installed/x64-windows/bin/zstd.dll "$OUT/libzstd.dll"
           cp "$VCPKG_INSTALLATION_ROOT"/installed/x64-windows/bin/liblzma.dll "$OUT/liblzma.dll"
-          7z a dist/prepper-pad-windows-x64.zip "./$OUT/*"
+          7z a dist/nuvok-windows-x64.zip "./$OUT/*"
 
-      - name: Create MSI installer
+      - name: Create installer (Inno Setup)
         shell: pwsh
         run: |
-          # Download and install Inno Setup
           choco install innosetup -y --no-progress
-          # Generate Inno Setup script
+          $version = (Select-String -Path pubspec.yaml -Pattern '^version:\s*([0-9.]+)').Matches[0].Groups[1].Value
           @"
           [Setup]
-          AppName=Prepper Pad
-          AppVersion=0.2.0
-          AppPublisher=Prepper Pad
-          AppPublisherURL=https://prepperpad.app
-          DefaultDirName={pf}\Prepper Pad
-          DefaultGroupName=Prepper Pad
+          AppName=Nuvok
+          AppVersion=$version
+          AppPublisher=Nuvok
+          AppPublisherURL=https://nuvok.org
+          DefaultDirName={pf}\Nuvok
+          DefaultGroupName=Nuvok
           UninstallDisplayIcon={app}\prepper_pad.exe
           Compression=lzma2
           SolidCompression=yes
           OutputDir=dist
-          OutputBaseFilename=PrepperPad-Setup
+          OutputBaseFilename=Nuvok-Setup
           ArchitecturesAllowed=x64
           ArchitecturesInstallIn64BitMode=x64
           DisableProgramGroupPage=yes
           PrivilegesRequired=lowest
 
           [Files]
-          Source: "dist\prepper-pad-windows-x64\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs
+          Source: "dist\nuvok-windows-x64\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs
 
           [Icons]
-          Name: "{group}\Prepper Pad"; Filename: "{app}\prepper_pad.exe"
-          Name: "{userdesktop}\Prepper Pad"; Filename: "{app}\prepper_pad.exe"; Tasks: desktopicon
+          Name: "{group}\Nuvok"; Filename: "{app}\prepper_pad.exe"
+          Name: "{userdesktop}\Nuvok"; Filename: "{app}\prepper_pad.exe"; Tasks: desktopicon
 
           [Tasks]
           Name: "desktopicon"; Description: "Create a desktop icon"; GroupDescription: "Additional icons:"
@@ -148,7 +152,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: PrepperPad-windows
+          name: Nuvok-windows
           path: |
             dist/*.zip
             dist/*.exe
@@ -164,9 +168,9 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      # The ZIM reader decompresses clusters with zstd via FFI; Android ships
-      # no usable system libzstd, so we build it per ABI and bundle it in
-      # jniLibs (DynamicLibrary.open('libzstd.so') finds it automatically).
+      # El lector ZIM descomprime con zstd por FFI; Android no trae libzstd
+      # utilizable, así que se compila por ABI y va en jniLibs. libppllm (IA)
+      # ya viene commiteado en jniLibs para arm64/x86_64.
       - name: Build libzstd for Android ABIs
         run: |
           git clone --depth 1 --branch v1.5.7 https://github.com/facebook/zstd
@@ -181,32 +185,16 @@ jobs:
             cp zstd/out/$ABI/lib/libzstd.so android/app/src/main/jniLibs/$ABI/
           done
       - run: flutter pub get
-      # Note: the AI module requires a llama-server binary per ABI; on Android
-      # the chat module is disabled until the JNI build lands (see README).
+      # Sin secrets de firma en CI el APK sale con firma debug: sirve como
+      # verificación de build, NO como binario de distribución (ese se firma
+      # localmente con el keystore de release y se vende en nuvok.org).
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v4
         with:
-          name: PrepperPad-android
+          name: Nuvok-android
           path: build/app/outputs/flutter-apk/app-release.apk
 
-  release:
-    needs: [macos, linux, windows, android]
-    # Publish whatever built, even if an experimental platform (Windows/arm64)
-    # failed. Only the verified platforms are required to reach this job.
-    if: ${{ always() && startsWith(github.ref, 'refs/tags/v') }}
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-      - uses: softprops/action-gh-release@v2
-        with:
-          fail_on_unmatched_files: false
-          files: |
-            artifacts/**/PrepperPad.dmg
-            artifacts/**/*.tar.gz
-            artifacts/**/*.zip
-            artifacts/**/*.exe
-            artifacts/**/*.apk
+  # El job 'release' que publicaba los binarios en GitHub Releases se eliminó
+  # a propósito (2026-08-01): regalaba en la pestaña Releases exactamente lo
+  # que nuvok.org vende para financiar el proyecto. Los artifacts de arriba
+  # cumplen la verificación multiplataforma sin regalar el producto.

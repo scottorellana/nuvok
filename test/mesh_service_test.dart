@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nuvok/modules/mesh/mesh_channel.dart';
 import 'package:nuvok/modules/mesh/mesh_envelope.dart';
+import 'package:nuvok/modules/mesh/sos_auth.dart';
 import 'package:nuvok/modules/mesh/mesh_identity.dart';
 import 'package:nuvok/modules/mesh/mesh_router.dart';
 import 'package:nuvok/modules/mesh/mesh_service.dart';
@@ -242,7 +243,10 @@ void main() {
         const Duration(seconds: 60));
   });
 
-  test('SOS entrante queda marcado y sosCancel lo limpia', () async {
+  test('SOS entrante queda marcado y su PROPIA cancelación lo limpia',
+      () async {
+    // La víctima se guarda el secreto y publica solo su huella.
+    final secret = newSosSecret();
     final sos = MeshEnvelope(
       msgId: MeshEnvelope.newMsgId(),
       channelId: MeshChannel.emergency.id,
@@ -251,9 +255,12 @@ void main() {
       type: MeshType.sos,
       hopLimit: 5,
       timestampMs: DateTime.now().millisecondsSinceEpoch,
-      payload: await sealPayload(
-          {'lat': 15.49, 'lon': -88.01, 'note': 'atrapada'},
-          MeshChannel.emergency),
+      payload: await sealPayload({
+        'lat': 15.49,
+        'lon': -88.01,
+        'note': 'atrapada',
+        sosCommitmentKey: sosCommitmentFor(secret),
+      }, MeshChannel.emergency),
     );
     transport.inject(sos.encode());
     await Future<void>.delayed(const Duration(milliseconds: 100));
@@ -262,7 +269,10 @@ void main() {
     expect(peer!.isSos, isTrue);
     expect(peer.sosNote, 'atrapada');
 
-    final cancel = MeshEnvelope(
+    // Un tercero que OYÓ el SOS reemite una cancelación con el senderId de la
+    // víctima. Es un datagrama de ~45 bytes y no necesita ninguna clave: el
+    // canal de emergencia va en claro a propósito. Esto NO puede callarla.
+    final falsa = MeshEnvelope(
       msgId: MeshEnvelope.newMsgId(),
       channelId: MeshChannel.emergency.id,
       senderId: 'dddddddddddddddd',
@@ -272,9 +282,47 @@ void main() {
       timestampMs: DateTime.now().millisecondsSinceEpoch,
       payload: await sealPayload({'ok': true}, MeshChannel.emergency),
     );
+    transport.inject(falsa.encode());
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+    peer = PositionStore.instance.peers.value['dddddddddddddddd'];
+    expect(peer!.isSos, isTrue,
+        reason: 'un tercero acaba de borrar del mapa a una persona que sigue '
+            'pidiendo auxilio');
+
+    // Reenviar la huella como si fuera el secreto tampoco cuela.
+    final astuta = MeshEnvelope(
+      msgId: MeshEnvelope.newMsgId(),
+      channelId: MeshChannel.emergency.id,
+      senderId: 'dddddddddddddddd',
+      senderName: 'Vecina',
+      type: MeshType.sosCancel,
+      hopLimit: 5,
+      timestampMs: DateTime.now().millisecondsSinceEpoch,
+      payload: await sealPayload(
+          {'ok': true, sosSecretKey: sosCommitmentFor(secret)},
+          MeshChannel.emergency),
+    );
+    transport.inject(astuta.encode());
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+    expect(PositionStore.instance.peers.value['dddddddddddddddd']!.isSos,
+        isTrue);
+
+    // La verdadera: la víctima revela su secreto.
+    final cancel = MeshEnvelope(
+      msgId: MeshEnvelope.newMsgId(),
+      channelId: MeshChannel.emergency.id,
+      senderId: 'dddddddddddddddd',
+      senderName: 'Vecina',
+      type: MeshType.sosCancel,
+      hopLimit: 5,
+      timestampMs: DateTime.now().millisecondsSinceEpoch,
+      payload: await sealPayload(
+          {'ok': true, sosSecretKey: secret}, MeshChannel.emergency),
+    );
     transport.inject(cancel.encode());
     await Future<void>.delayed(const Duration(milliseconds: 100));
     peer = PositionStore.instance.peers.value['dddddddddddddddd'];
-    expect(peer!.isSos, isFalse);
+    expect(peer!.isSos, isFalse,
+        reason: 'quien pidió auxilio SÍ puede decir que ya está a salvo');
   });
 }

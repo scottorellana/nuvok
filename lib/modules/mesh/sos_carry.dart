@@ -16,6 +16,7 @@
 import 'dart:typed_data';
 
 import 'mesh_envelope.dart';
+import 'sos_auth.dart';
 
 class CarriedMessage {
   CarriedMessage({
@@ -53,15 +54,33 @@ class SosCarry {
     return List.unmodifiable(_carried);
   }
 
+  /// Huellas de los SOS que hemos oído. Sin esto, cualquiera que oyera un SOS
+  /// podía reemitir un `sosCancel` con el senderId de la víctima y hacer que
+  /// soltáramos su mensaje — y para una persona que ya quedó fuera de rango,
+  /// ese borrado es irreversible: el rescatista que pase después no lo recibe.
+  final SosCommitments commitments = SosCommitments();
+
   /// Ofrece un sobre ajeno recién oído. Decide solo si vale la pena llevarlo.
   void offer(MeshEnvelope env) {
-    // Una cancelación no se lleva: se usa para DEJAR de llevar.
+    // Una cancelación no se lleva: se usa para DEJAR de llevar. Pero solo si
+    // la firmó quien lanzó el SOS.
     if (env.type == MeshType.sosCancel) {
+      final secret = emergencyStringField(env.payload, sosSecretKey);
+      if (!commitments.accepts(env.senderId, secret)) return;
       _carried.removeWhere(
           (m) => m.type == MeshType.sos && m.senderId == env.senderId);
+      // La huella NO se olvida aquí. El mismo sobre sigue camino hacia la
+      // alarma y el mapa, que vuelven a validarlo: consumirla en el primero
+      // que la mira dejaba sin verificar a los siguientes, y una cancelación
+      // legítima terminaba rechazada. Guardarla es barato (una entrada por
+      // persona que ha pedido auxilio) y un SOS nuevo la renueva.
       return;
     }
     if (env.type != MeshType.sos) return;
+    // Recordar la huella ANTES del filtro de duplicados: la primera copia que
+    // llega es la que la trae, y las repeticiones cada 60 s la renuevan.
+    commitments.remember(
+        env.senderId, emergencyStringField(env.payload, sosCommitmentKey));
     if (_carried.any((m) => m.msgId == env.msgId)) return;
 
     _carried.add(CarriedMessage(

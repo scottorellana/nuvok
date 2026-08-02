@@ -1,14 +1,27 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nuvok/modules/mesh/mesh_envelope.dart';
+import 'package:nuvok/modules/mesh/sos_auth.dart';
 import 'package:nuvok/modules/mesh/sos_carry.dart';
 
 void main() {
   var now = DateTime(2026, 7, 27, 12, 0);
   late SosCarry carry;
 
-  MeshEnvelope env(MeshType type, {int? msgId, String sender = 'aaaa1111bbbb2222'}) =>
+  /// Secreto de la vecina cuyo SOS llevamos encima. Solo ella lo conoce.
+  late String secret;
+
+  /// El payload del canal de emergencia va en claro por diseño: quien lanza el
+  /// SOS publica la HUELLA de su secreto, y para cancelar revela el secreto.
+  Uint8List plain(Map<String, Object?> json) =>
+      Uint8List.fromList(utf8.encode(jsonEncode(json)));
+
+  MeshEnvelope env(MeshType type,
+          {int? msgId,
+          String sender = 'aaaa1111bbbb2222',
+          Map<String, Object?>? payload}) =>
       MeshEnvelope(
         msgId: msgId ?? MeshEnvelope.newMsgId(),
         channelId: 'abcd1234',
@@ -17,11 +30,17 @@ void main() {
         type: type,
         hopLimit: 3,
         timestampMs: now.millisecondsSinceEpoch,
-        payload: Uint8List.fromList([1, 2, 3]),
+        payload: plain(payload ??
+            switch (type) {
+              MeshType.sos => {sosCommitmentKey: sosCommitmentFor(secret)},
+              MeshType.sosCancel => {sosSecretKey: secret},
+              _ => const {},
+            }),
       );
 
   setUp(() {
     now = DateTime(2026, 7, 27, 12, 0);
+    secret = newSosSecret();
     carry = SosCarry(clock: () => now);
   });
 
@@ -56,6 +75,28 @@ void main() {
 
       expect(carry.pending.where((p) => p.type == MeshType.sos), isEmpty,
           reason: 'si ya está a salvo, seguir gritando su SOS es dañino');
+    });
+
+    test('una cancelación SIN el secreto no suelta el SOS de nadie', () {
+      // El ataque: un tercero oye el SOS, ve el senderId en claro en la
+      // cabecera y reemite un sosCancel con él. Para quien ya salió del rango
+      // de la víctima este borrado sería irreversible: el rescatista que pase
+      // después no recibiría nada.
+      carry.offer(env(MeshType.sos, sender: 'aaaa1111bbbb2222'));
+      carry.offer(env(MeshType.sosCancel,
+          sender: 'aaaa1111bbbb2222', payload: {'ok': true}));
+
+      expect(carry.pending.where((p) => p.type == MeshType.sos).length, 1,
+          reason: 'un desconocido acaba de hacer que dejemos de llevar el '
+              'grito de auxilio de una persona real');
+    });
+
+    test('reenviar la huella como si fuera el secreto tampoco cuela', () {
+      carry.offer(env(MeshType.sos, sender: 'aaaa1111bbbb2222'));
+      carry.offer(env(MeshType.sosCancel,
+          sender: 'aaaa1111bbbb2222',
+          payload: {sosSecretKey: sosCommitmentFor(secret)}));
+      expect(carry.pending.where((p) => p.type == MeshType.sos).length, 1);
     });
 
     test('el sosCancel de OTRO remitente no toca el SOS ajeno', () {

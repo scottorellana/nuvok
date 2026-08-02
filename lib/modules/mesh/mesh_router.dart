@@ -14,6 +14,7 @@ import 'mesh_diagnostics.dart';
 import 'mesh_envelope.dart';
 import 'relay_policy.dart';
 import 'mesh_store.dart';
+import 'sos_auth.dart';
 import 'sos_carry.dart';
 import 'mesh_transport.dart';
 
@@ -56,6 +57,10 @@ class MeshRouter {
   final _outbox = <Uint8List>[];
   /// SOS ajenos que llevamos encima para entregarlos a quien llegue después.
   final _carry = SosCarry();
+
+  /// Huellas de los SOS oídos, para decidir qué cancelaciones son legítimas.
+  /// Las alimenta el propio store-and-forward al ver pasar cada SOS.
+  SosCommitments get sosCommitments => _carry.commitments;
   /// Remitentes ya vistos: distinguir un vecino NUEVO de uno ya conocido.
   final _knownSenders = <String>{};
   final _subs = <StreamSubscription<Uint8List>>[];

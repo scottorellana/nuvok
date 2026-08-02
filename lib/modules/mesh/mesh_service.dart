@@ -19,6 +19,7 @@ import 'lora_ble_uart.dart';
 import 'lora_transport.dart';
 import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
+import 'sos_auth.dart';
 import 'sos_receipt.dart';
 import 'mesh_identity.dart';
 import 'mesh_power_controller.dart';
@@ -572,8 +573,14 @@ class MeshService {
   /// SOS: broadcast position+note on the open emergency channel now and
   /// every minute until cancelled. Reaches every Nuvok in range,
   /// authenticated or not.
+  /// Secreto del SOS en curso. Solo su huella viaja por el aire; revelarlo es
+  /// lo único que autoriza a apagar este SOS. Vive en memoria porque el SOS
+  /// tampoco sobrevive a un reinicio de la app.
+  String? _sosSecret;
+
   Future<void> startSos({String note = ''}) async {
     sosNote = note;
+    _sosSecret = newSosSecret();
     sosActive.value = true;
     MeshPowerController.instance.setSosActive(true);
     await _broadcastSos();
@@ -615,6 +622,8 @@ class MeshService {
       MeshType.sos,
       {
         'note': sosNote ?? '',
+        // Huella del secreto: quien no lo tenga no puede apagar este SOS.
+        if (_sosSecret != null) sosCommitmentKey: sosCommitmentFor(_sosSecret!),
         if (fix.isOk) 'lat': fix.position!.latitude,
         if (fix.isOk) 'lon': fix.position!.longitude,
         if (fix.isOk) 'acc': fix.position!.accuracy,
@@ -637,8 +646,12 @@ class MeshService {
     MeshPowerController.instance.setSosActive(false);
     final router = _router;
     if (identity == null || router == null) return;
+    final secret = _sosSecret;
+    _sosSecret = null;
     await router.broadcast(await _envelope(
-        MeshChannel.emergency, MeshType.sosCancel, {'ok': true},
+        MeshChannel.emergency,
+        MeshType.sosCancel,
+        {'ok': true, if (secret != null) sosSecretKey: secret},
         hopLimit: 5));
   }
 
@@ -710,6 +723,18 @@ class MeshService {
         }
         break;
       case MeshType.sosCancel:
+        // Verificar que quien cancela es quien pidió auxilio. El canal de
+        // emergencia va en claro y el senderId viaja a la vista: sin esto,
+        // cualquiera que oyera un SOS podía reemitir una cancelación con el
+        // senderId de la víctima y callar su alarma en todos los teléfonos
+        // de la zona, borrarla del mapa y descartarla del store-and-forward.
+        // La víctima seguiría emitiendo cada 60 s creyendo que grita.
+        final secret =
+            emergencyStringField(e.envelope.payload, sosSecretKey);
+        if (!(_router?.sosCommitments.accepts(e.envelope.senderId, secret) ??
+            false)) {
+          break;
+        }
         PositionStore.instance.clearSos(e.envelope.senderId);
         // Quitar SOLO a quien canceló. Antes se comparaba por senderName y se
         // llamaba a silence(): dos vecinos llamados igual se confundían, y

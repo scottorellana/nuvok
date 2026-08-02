@@ -10,10 +10,14 @@
 // phase. On platforms without native support, it falls back to a
 // full-screen blinking red overlay with SystemSound.alert.
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
 import '../../core/locale_service.dart';
+import '../tools/whistle.dart' show CustomAudioSource;
+import 'alarm_tone.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
@@ -78,18 +82,23 @@ class SosAlarmController extends ChangeNotifier {
     _escalationTimer?.cancel();
     _escalationTimer = null;
     _stopNativeAlarm();
+    unawaited(_stopTone());
     notifyListeners();
   }
 
-  /// Loops system sounds every 800ms to create a continuous alarm.
+  /// Alarma AUDIBLE en bucle + vibración de refuerzo.
+  ///
+  /// Antes solo vibraba: un teléfono boca abajo sobre una cama, en un
+  /// bolsillo o en otra habitación no despierta a nadie con vibración, así
+  /// que el SOS de un vecino se perdía en silencio pese a que la app
+  /// prometía una "alarma fuerte y persistente".
   void _startSoundLoop() {
-    // Try native alarm first (works in background on Android).
+    // Alarma nativa primero (sigue sonando en segundo plano en Android).
     _startNativeAlarm();
+    unawaited(_startTone());
 
-    // Fallback: loop haptic feedback (only works while app is foreground).
-    // On real deployment, the native foreground service plays a dedicated
-    // alarm tone via AudioManager. HapticFeedback.heavyImpact is the
-    // strongest built-in feedback available.
+    // La vibración se mantiene como refuerzo (sordera, ruido extremo, o si
+    // el audio falla en alguna plataforma).
     _soundTimer?.cancel();
     _soundTimer = Timer.periodic(const Duration(milliseconds: 800), (_) {
       try {
@@ -101,6 +110,45 @@ class SosAlarmController extends ChangeNotifier {
         _soundTimer = null;
       }
     });
+  }
+
+  /// Tono sintetizado en bucle con just_audio (mismo camino probado del
+  /// silbato). Si el audio falla, la vibración y el overlay siguen activos:
+  /// una alarma nunca debe depender de una sola vía.
+  ///
+  /// PEREZOSO a propósito: crear el AudioPlayer en el constructor del
+  /// singleton arrancaba timers de la plataforma en CUALQUIER test que
+  /// importara este archivo, aunque nunca sonara una alarma.
+  AudioPlayer? _alarmPlayer;
+
+  /// Permite apagar el tono (tests, o un usuario que solo quiera vibración
+  /// por convivencia). La vibración y el overlay siguen activos: una alarma
+  /// nunca debe depender de una sola vía.
+  ///
+  /// Apagado por defecto BAJO PRUEBAS: just_audio lanza
+  /// MissingPluginException desde un gap asíncrono que ningún try/catch local
+  /// puede atrapar, y eso hacía fallar tests ajenos a la alarma. El runner de
+  /// flutter_test define FLUTTER_TEST=true; en la app real no existe.
+  static bool audioEnabled =
+      Platform.environment['FLUTTER_TEST'] != 'true';
+
+  Future<void> _startTone() async {
+    if (!audioEnabled) return;
+    try {
+      final player = _alarmPlayer ??= AudioPlayer();
+      await player.setLoopMode(LoopMode.one);
+      await player.setAudioSource(CustomAudioSource(buildAlarmWav()));
+      await player.setVolume(1.0);
+      await player.play();
+    } catch (_) {
+      // Plataforma sin audio o entorno de test: la vibración cubre.
+    }
+  }
+
+  Future<void> _stopTone() async {
+    try {
+      await _alarmPlayer?.stop();
+    } catch (_) {}
   }
 
   /// Escalation: after 30 seconds without acknowledgement, increase
@@ -179,7 +227,17 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
               label: '${tr(context, 'sosAlarmA11y')}'
                   '${_controller.alarmFromName != null ? '. ${tr(context, 'sosAlarmFrom')} ${_controller.alarmFromName}' : ''}'
                   '${_controller.alarmNote != null && _controller.alarmNote!.isNotEmpty ? '. ${tr(context, 'sosAlarmNote')}: ${_controller.alarmNote}' : ''}',
-              child: Column(
+              // Scrollable y centrada: con el texto del sistema en grande
+              // (personas mayores, visión reducida — quienes MÁS usan una app
+              // de emergencia) el contenido desbordaba 410 px y el botón de
+              // silenciar quedaba fuera de pantalla: la alarma sonaba sin
+              // forma de callarla.
+              child: LayoutBuilder(
+                builder: (context, constraints) => SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: constraints.maxHeight),
+                    child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.warning_rounded,
@@ -261,7 +319,10 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                       fontSize: 14,
                     ),
                   ),
-                ],
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

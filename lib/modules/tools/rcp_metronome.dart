@@ -2,7 +2,11 @@
 // for cardiopulmonary resuscitation. Works offline, loud enough
 // for noisy environments.
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+
+import '../../core/locale_service.dart';
+import '../../core/screen_awake.dart';
 import 'package:flutter/services.dart';
 
 import '../../core/nuvok_colors.dart';
@@ -60,7 +64,12 @@ class RcpMetronomeController extends ChangeNotifier {
         _breathCueTicks--;
       }
 
-      // Haptic + visual feedback for each compression
+      // Sonido + vibración + visual. Antes SOLO vibraba: con las manos
+      // comprimiendo un pecho no se mira la pantalla, y la vibración se
+      // pierde entre el propio movimiento — el ritmo hay que OÍRLO.
+      try {
+        SystemSound.play(SystemSoundType.click);
+      } catch (_) {}
       try {
         HapticFeedback.mediumImpact();
       } catch (_) {}
@@ -92,8 +101,30 @@ class RcpMetronomeController extends ChangeNotifier {
 }
 
 /// Full-screen RCP metronome UI
-class RcpMetronomePage extends StatelessWidget {
+class RcpMetronomePage extends StatefulWidget {
   const RcpMetronomePage({super.key});
+
+  @override
+  State<RcpMetronomePage> createState() => _RcpMetronomePageState();
+}
+
+class _RcpMetronomePageState extends State<RcpMetronomePage> {
+  @override
+  void initState() {
+    super.initState();
+    // Arranca SOLO: quien abre esta pantalla ya tiene las manos sobre un
+    // pecho. Obligarle a buscar y tocar PLAY cuesta segundos que importan.
+    RcpMetronomeController.instance.play();
+    // Y la pantalla no puede dormirse a mitad de una reanimación.
+    unawaited(ScreenAwake.acquire('rcp-metronome'));
+  }
+
+  @override
+  void dispose() {
+    RcpMetronomeController.instance.stop();
+    unawaited(ScreenAwake.release('rcp-metronome'));
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +142,19 @@ class RcpMetronomePage extends StatelessWidget {
                   : NuvokColors.background,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: const Text('RCP Metrónomo'),
+            title: Text(tr(context, 'rcpMetroTitle')),
             foregroundColor: Colors.white,
           ),
+          // Scrollable: con el texto del sistema en grande esta pantalla
+          // desbordaba y los botones PLAY/parar quedaban fuera — durante una
+          // reanimación, sin poder detener ni reiniciar el conteo.
           body: SafeArea(
-            child: Column(
+            child: LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Column(
               children: [
                 // BPM selector
                 Padding(
@@ -178,7 +217,10 @@ class RcpMetronomePage extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                 ),
-                Text(ctrl.showBreathCue ? 'PAUSA BREVE' : 'COMPRESIONES',
+                Text(
+                    ctrl.showBreathCue
+                        ? tr(context, 'rcpMetroBreathe')
+                        : tr(context, 'rcpMetroCompressions'),
                     style:
                         const TextStyle(color: Colors.white70, fontSize: 20)),
 
@@ -193,7 +235,7 @@ class RcpMetronomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    'Ciclo ${ctrl.cycleCount + 1} • ${ctrl._sinceLastBreath}/30',
+                    '${tr(context, 'rcpMetroCycle')} ${ctrl.cycleCount + 1} • ${ctrl._sinceLastBreath}/30',
                     style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
@@ -208,12 +250,12 @@ class RcpMetronomePage extends StatelessWidget {
                       color: NuvokColors.info,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.air, color: Colors.white),
-                        SizedBox(width: 8),
-                        Text('2 RESPIRACIONES',
+                        const Icon(Icons.air, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(tr(context, 'rcpMetroTwoBreaths'),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -233,7 +275,7 @@ class RcpMetronomePage extends StatelessWidget {
                       Semantics(
                         button: true,
                         enabled: true,
-                        label: 'Reiniciar contador de compresiones',
+                        label: tr(context, 'rcpMetroReset'),
                         child: FloatingActionButton(
                           heroTag: 'reset',
                           backgroundColor: NuvokColors.cardElevated,
@@ -246,8 +288,8 @@ class RcpMetronomePage extends StatelessWidget {
                         button: true,
                         enabled: true,
                         label: isPlaying
-                            ? 'Detener metrónomo RCP'
-                            : 'Iniciar metrónomo RCP',
+                            ? tr(context, 'rcpMetroStop')
+                            : tr(context, 'rcpMetroStart'),
                         child: FloatingActionButton.large(
                           heroTag: 'play',
                           backgroundColor: isPlaying
@@ -267,10 +309,10 @@ class RcpMetronomePage extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Text(
                     ctrl.showBreathCue
-                        ? 'Da 2 respiraciones y vuelve rápido a compresiones. No pauses más de 10 segundos.'
+                        ? tr(context, 'rcpMetroBreathHint')
                         : isPlaying
-                            ? 'Presiona firmemente 5-6cm en el centro del pecho'
-                            : 'Toca PLAY para iniciar el ritmo de compresiones',
+                            ? tr(context, 'rcpMetroPressHint')
+                            : tr(context, 'rcpMetroPressHint'),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.7),
@@ -278,6 +320,10 @@ class RcpMetronomePage extends StatelessWidget {
                   ),
                 ),
               ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         );

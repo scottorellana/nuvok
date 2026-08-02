@@ -1285,6 +1285,67 @@ class AppStrings {
     // móviles y deja a la persona creyendo que ya está preparada.
     // Acuse de recibo del SOS: saber si alguien te oyó decide si te quedas
     // donde estás o gastas tus últimas fuerzas buscando ayuda.
+    // Metrónomo de RCP: estaba 100% en español duro en una app de 7 idiomas,
+    // en la herramienta que marca el ritmo mientras alguien reanima.
+    'rcpMetroTitle': {
+      'es': 'Metrónomo RCP', 'en': 'CPR Metronome',
+      'pt': 'Metrônomo RCP', 'fr': 'Métronome RCP',
+      'zh': '心肺复苏节拍器', 'ja': 'CPR メトロノーム', 'ht': 'Metwonòm RCP',
+    },
+    'rcpMetroCompressions': {
+      'es': 'COMPRESIONES', 'en': 'COMPRESSIONS', 'pt': 'COMPRESSÕES',
+      'fr': 'COMPRESSIONS', 'zh': '按压', 'ja': '圧迫', 'ht': 'KONPRESYON',
+    },
+    'rcpMetroBreathe': {
+      'es': 'PAUSA BREVE', 'en': 'SHORT PAUSE', 'pt': 'PAUSA BREVE',
+      'fr': 'PAUSE BRÈVE', 'zh': '短暂停顿', 'ja': '短い休止',
+      'ht': 'TI PoZ',
+    },
+    'rcpMetroBreathHint': {
+      'es': 'Da 2 respiraciones y vuelve rápido a compresiones. No pauses más de 10 segundos.',
+      'en': 'Give 2 breaths and return to compressions fast. Never pause more than 10 seconds.',
+      'pt': 'Dê 2 ventilações e volte rápido às compressões. Não pause mais de 10 segundos.',
+      'fr': 'Donne 2 insufflations et reviens vite aux compressions. Ne dépasse jamais 10 secondes de pause.',
+      'zh': '给予2次人工呼吸后立即恢复按压。停顿不要超过10秒。',
+      'ja': '2回人工呼吸をして、すぐに圧迫へ戻る。中断は10秒を超えない。',
+      'ht': 'Bay 2 souf epi retounen vit nan konpresyon. Pa poze plis pase 10 segond.',
+    },
+    'rcpMetroPressHint': {
+      'es': 'Presiona firmemente 5-6 cm en el centro del pecho',
+      'en': 'Push firmly 5-6 cm in the center of the chest',
+      'pt': 'Comprima firmemente 5-6 cm no centro do peito',
+      'fr': 'Appuie fermement de 5-6 cm au centre de la poitrine',
+      'zh': '在胸部中央用力按压5-6厘米',
+      'ja': '胸の中央を5〜6cm しっかり圧迫する',
+      'ht': 'Peze fò 5-6 cm nan sant pwatrin lan',
+    },
+    'rcpMetroCycle': {
+      'es': 'Ciclo', 'en': 'Cycle', 'pt': 'Ciclo', 'fr': 'Cycle',
+      'zh': '周期', 'ja': 'サイクル', 'ht': 'Sik',
+    },
+    'rcpMetroTwoBreaths': {
+      'es': '2 RESPIRACIONES', 'en': '2 BREATHS', 'pt': '2 VENTILAÇÕES',
+      'fr': '2 INSUFFLATIONS', 'zh': '2次人工呼吸', 'ja': '人工呼吸2回',
+      'ht': '2 SOUF',
+    },
+    'rcpMetroReset': {
+      'es': 'Reiniciar contador de compresiones',
+      'en': 'Reset compression counter',
+      'pt': 'Reiniciar contador de compressões',
+      'fr': 'Réinitialiser le compteur de compressions',
+      'zh': '重置按压计数', 'ja': '圧迫カウントをリセット',
+      'ht': 'Remete kontè konpresyon an',
+    },
+    'rcpMetroStop': {
+      'es': 'Detener metrónomo RCP', 'en': 'Stop CPR metronome',
+      'pt': 'Parar metrônomo RCP', 'fr': 'Arrêter le métronome RCP',
+      'zh': '停止节拍器', 'ja': 'メトロノームを停止', 'ht': 'Kanpe metwonòm nan',
+    },
+    'rcpMetroStart': {
+      'es': 'Iniciar metrónomo RCP', 'en': 'Start CPR metronome',
+      'pt': 'Iniciar metrônomo RCP', 'fr': 'Démarrer le métronome RCP',
+      'zh': '开始节拍器', 'ja': 'メトロノームを開始', 'ht': 'Kòmanse metwonòm nan',
+    },
     'sosHeardNobody': {
       'es': 'Aún nadie ha confirmado. Sigue emitiendo.',
       'en': 'Nobody has confirmed yet. Still broadcasting.',

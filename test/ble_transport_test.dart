@@ -218,6 +218,35 @@ void main() {
       expect(got, payload);
     });
 
+    // Regresión del test flaky: reproduce de forma DETERMINISTA la carrera que
+    // solo aparecía con la suite completa saturando la máquina. Si el anuncio
+    // de descubrimiento se emitiera por reloj sobre un broadcast, arrancar un
+    // lado tarde lo dejaría sordo para siempre.
+    test('el lado que arranca tarde igual descubre al otro', () async {
+      final linkA = _FakeBleLink(available: true);
+      final linkB = _FakeBleLink(available: true);
+      linkA.wireTo(linkB);
+
+      final a = BleTransport(link: linkA);
+      final b = BleTransport(link: linkB);
+      await a.start();
+      // B se despierta mucho después del anuncio: esto es lo que le pasaba
+      // bajo carga a un proceso al que el planificador no le daba CPU.
+      await Future<void>.delayed(const Duration(milliseconds: 120));
+      await b.start();
+
+      final deadline = DateTime.now().add(const Duration(seconds: 5));
+      while (b.health.value.peers == 0 && DateTime.now().isBefore(deadline)) {
+        await Future<void>.delayed(const Duration(milliseconds: 10));
+      }
+      expect(b.health.value.peers, greaterThan(0),
+          reason: 'un anuncio emitido antes de suscribirse se pierde para '
+              'siempre en un broadcast: debe encolarse hasta que haya oyente');
+
+      await a.stop();
+      await b.stop();
+    });
+
     test('unavailable adapter → transport is a no-op', () async {
       final t = BleTransport(link: _FakeBleLink(available: false));
       expect(t.available, isFalse);
@@ -301,7 +330,9 @@ class _FakeBleLink implements BleLink {
 
   final bool available;
 
-  final _disc = StreamController<BlePeer>.broadcast();
+  late final StreamController<BlePeer> _disc =
+      StreamController<BlePeer>.broadcast(onListen: _flush);
+  final _pending = <BlePeer>[];
   // Shared channel: both sides write to / read from the same controller
   // keyed by the writer's identity. The other side listens on its peer's key.
   final _channels = <String, StreamController<List<int>>>{};
@@ -313,11 +344,35 @@ class _FakeBleLink implements BleLink {
   void wireTo(_FakeBleLink other) {
     _other = other;
     other._other = this;
-    // Schedule discovery after a small delay so both transports have
-    // fully completed start() (including listener registration).
-    Future.delayed(const Duration(milliseconds: 10), () {
-      _disc.add(_FakePeer('peer-from-${other.hashCode}'));
-      other._disc.add(_FakePeer('peer-from-$hashCode'));
+    // El anuncio se ENCOLA, no se emite por reloj.
+    //
+    // Antes esto era un Future.delayed(10ms) confiando en que para entonces
+    // ambos transportes ya se habrían suscrito. _disc es un broadcast: un
+    // evento emitido sin suscriptores se pierde para siempre. Con la suite
+    // completa saturando los 12 núcleos, los 10 ms de reloj a veces pasaban
+    // antes de que el segundo start() registrara su listener; ese lado no
+    // descubría nunca al otro y el round-trip fallaba con un mensaje que
+    // culpaba al transporte. Encolar y vaciar en onListen no depende del
+    // reloj: el peer aparece cuando hay quien lo escuche, tarde o temprano.
+    _announce(_FakePeer('peer-from-${other.hashCode}'));
+    other._announce(_FakePeer('peer-from-$hashCode'));
+  }
+
+  void _announce(BlePeer peer) {
+    _pending.add(peer);
+    if (_disc.hasListener) _flush();
+  }
+
+  void _flush() {
+    if (_pending.isEmpty) return;
+    final peers = List<BlePeer>.of(_pending);
+    _pending.clear();
+    // Microtask: emitir dentro de onListen de forma síncrona no llega al
+    // suscriptor que todavía se está registrando.
+    scheduleMicrotask(() {
+      for (final p in peers) {
+        if (!_disc.isClosed) _disc.add(p);
+      }
     });
   }
 

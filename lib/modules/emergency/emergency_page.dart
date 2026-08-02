@@ -244,19 +244,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                           textStyle: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w800),
                         ),
-                        onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => DecisionTreePage(
-                              openGuide: (ctx, id) {
-                                final g =
-                                    _all.where((g) => g.id == id).firstOrNull;
-                                if (g == null) return;
-                                Navigator.of(ctx).push(MaterialPageRoute(
-                                    builder: (_) => _GuideReader(guide: g)));
-                              },
-                            ),
-                          ),
-                        ),
+                        onPressed: () => _openDecisionTree(context),
                         icon: const Icon(Icons.quiz),
                         label: Text(tr(context, 'dtTitle')),
                       ),
@@ -676,6 +664,23 @@ class _EmergencyPageState extends State<EmergencyPage> {
     return Icons.phone;
   }
 
+  /// Árbol de decisión estilo 911: una pregunta por pantalla hasta llegar al
+  /// procedimiento. Es la salida de quien no sabe qué le pasa al herido.
+  void _openDecisionTree(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => DecisionTreePage(
+          openGuide: (ctx, id) {
+            final g = _all.where((g) => g.id == id).firstOrNull;
+            if (g == null) return;
+            Navigator.of(ctx).push(
+                MaterialPageRoute<void>(builder: (_) => _GuideReader(guide: g)));
+          },
+        ),
+      ),
+    );
+  }
+
   /// Full-screen panic mode: giant buttons for the most common emergencies,
   /// high contrast, accessible with trembling hands.
   Widget _buildPanicMode(BuildContext context) {
@@ -742,6 +747,9 @@ class _EmergencyPageState extends State<EmergencyPage> {
       ),
       body: Column(
         children: [
+          // Si la red celular sigue viva, la llamada real gana a cualquier
+          // guía. Va primero, fijo y a lo ancho: nadie lo puede fallar.
+          EmergencyCallButton(countryOverride: _selectedCountry),
           _PanicActionBar(
               lang: _lang, onShowPhones: _showEmergencyNumbersSheet),
           Expanded(
@@ -758,6 +766,9 @@ class _EmergencyPageState extends State<EmergencyPage> {
                     guides: _all,
                     lang: _lang,
                   ),
+                // Las seis celdas de arriba asumen que ya sabes qué pasa.
+                // Muchas veces no se sabe: aquí el árbol de decisión pregunta.
+                _PanicUnknownButton(lang: _lang, onOpen: _openDecisionTree),
               ],
             ),
           ),
@@ -790,11 +801,20 @@ class _EmergencyPageState extends State<EmergencyPage> {
                         fontSize: 22, fontWeight: FontWeight.bold)),
                 minVerticalPadding: 14,
                 onTap: () {
+                  // Marcar, no copiar: copiar deja al usuario con un número
+                  // en el portapapeles y el trabajo a medias.
+                  final nav = Navigator.of(context);
+                  dialEmergencyNumber(context, s.number);
+                  nav.pop();
+                },
+                onLongPress: () {
                   final number = s.number.replaceAll(RegExp(r'[^0-9+]'), '');
                   Clipboard.setData(ClipboardData(text: number));
-                  Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Número copiado: $number')),
+                    SnackBar(
+                        content: Text(_lang == 'es'
+                            ? 'Número copiado: $number'
+                            : 'Number copied: $number')),
                   );
                 },
               ),
@@ -815,11 +835,23 @@ class _GuideReader extends StatelessWidget {
     final media = EmergencyGuideMedia.forGuide(id);
     final widgets = <Widget>[];
 
+    // Critical steps card — the most useful visual element in the reader.
+    // Shows numbered action steps extracted from the guide's markdown body,
+    // plus "what NOT to do" warnings.
+    //
+    // Va ANTES de la foto: una hero full-width mide ~300px en un teléfono y
+    // empujaba los pasos bajo el pliegue. Quien abre esto en una emergencia
+    // lee lo primero que ve y actúa; primero QUÉ HACER, después cómo se ve.
+    widgets.add(CriticalStepsCard(
+      title: guide.title,
+      body: guide.body,
+    ));
+
     // Hero image — full-width, no card wrapper, no developer metadata.
     if (media.imageAssetPath != null) {
       widgets.add(
         Padding(
-          padding: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.only(top: 12, bottom: 16),
           child: Semantics(
             label: media.imageAltText,
             image: true,
@@ -835,14 +867,6 @@ class _GuideReader extends StatelessWidget {
         ),
       );
     }
-
-    // Critical steps card — the most useful visual element in the reader.
-    // Shows numbered action steps extracted from the guide's markdown body,
-    // plus "what NOT to do" warnings. Replaces the old generic vector animation.
-    widgets.add(CriticalStepsCard(
-      title: guide.title,
-      body: guide.body,
-    ));
 
     final tutorial = EmergencyGuideTutorials.forGuide(id);
     if (tutorial != null) {
@@ -1349,6 +1373,59 @@ class _PanicButton {
   final String label;
   final Color color;
   final List<String> ids; // guide ids to try in order
+}
+
+/// Séptima celda del modo pánico. Las otras seis exigen un diagnóstico que
+/// el usuario a menudo no tiene ("está tirado y no sé qué le pasa"): esta
+/// lleva al árbol de decisión, que pregunta en vez de asumir. Se dibuja con
+/// borde en vez de relleno para que no compita con las seis rojas.
+class _PanicUnknownButton extends StatelessWidget {
+  const _PanicUnknownButton({required this.lang, required this.onOpen});
+
+  final String lang;
+  final void Function(BuildContext) onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    final label = lang == 'es' ? 'NO SÉ\nQUÉ PASA' : "I DON'T KNOW\nWHAT'S WRONG";
+    return Semantics(
+      button: true,
+      label: label.replaceAll('\n', ' '),
+      child: Material(
+        color: NuvokColors.card,
+        borderRadius: BorderRadius.circular(20),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () => onOpen(context),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: NuvokColors.white, width: 2),
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.help_outline,
+                    size: 56, color: NuvokColors.white),
+                const SizedBox(height: 8),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: NuvokColors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                    height: 1.1,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _PanicButtonWidget extends StatelessWidget {

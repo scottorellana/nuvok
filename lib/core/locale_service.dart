@@ -1114,6 +1114,38 @@ class AppStrings {
       'pt': 'Fontes da biblioteca:', 'fr': 'Sources de la bibliothèque :',
       'zh': '图书馆来源：', 'ja': 'ライブラリの出典：', 'ht': 'Sous bibliyotèk:',
     },
+    // Procedencia de la respuesta: el usuario tiene que poder distinguir de
+    // un vistazo una guía revisada de lo que el modelo recordó solo.
+    'aiVerified': {
+      'es': 'Basado en guías verificadas',
+      'en': 'Based on verified guides',
+      'pt': 'Baseado em guias verificados',
+      'fr': 'Basé sur des guides vérifiés',
+      'zh': '基于已核实的指南', 'ja': '検証済みガイドに基づく',
+      'ht': 'Baze sou gid verifye',
+    },
+    'aiGenerated': {
+      'es': 'Generado por IA · sin fuente. Verifica antes de actuar',
+      'en': 'AI-generated · no source. Verify before acting',
+      'pt': 'Gerado por IA · sem fonte. Verifique antes de agir',
+      'fr': 'Généré par IA · sans source. Vérifiez avant d\'agir',
+      'zh': 'AI 生成 · 无来源。行动前请核实',
+      'ja': 'AI生成 · 出典なし。行動する前に確認を',
+      'ht': 'IA jenere · san sous. Verifye anvan ou aji',
+    },
+    'aiMedicalWarning': {
+      'es': 'Esto no reemplaza atención médica. Si hay riesgo de vida, llama '
+          'a emergencias.',
+      'en': 'This does not replace medical care. If life is at risk, call '
+          'emergency services.',
+      'pt': 'Isto não substitui atendimento médico. Se houver risco de vida, '
+          'ligue para a emergência.',
+      'fr': 'Ceci ne remplace pas un avis médical. En cas de danger vital, '
+          'appelez les secours.',
+      'zh': '这不能替代医疗救治。如有生命危险，请拨打急救电话。',
+      'ja': 'これは医療の代わりにはなりません。命に関わる場合は救急に連絡を。',
+      'ht': 'Sa pa ranplase swen medikal. Si lavi an danje, rele sekou.',
+    },
     // ── Especialistas (agentes locales) ──
     'agentsTitle': {
       'es': 'Especialistas', 'en': 'Specialists', 'pt': 'Especialistas',

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import '../../core/nuvok_colors.dart';
 import '../../core/nuvok_library.dart';
 import '../emergency/survival_mode.dart';
 import 'emergency_retriever.dart';
@@ -15,6 +16,7 @@ import 'agents/agent_catalog.dart';
 import 'agents/agent_runtime.dart';
 import 'agents/model_catalog.dart';
 import 'active_model.dart';
+import 'ai_trust.dart';
 import 'reply_lang.dart';
 import '../depot/depot_page.dart';
 
@@ -702,7 +704,16 @@ class _AgentChatState extends State<_AgentChat> {
                     controller: _scroll,
                     padding: const EdgeInsets.all(16),
                     itemCount: _messages.length,
-                    itemBuilder: (context, i) => _Bubble(message: _messages[i]),
+                    itemBuilder: (context, i) => _Bubble(
+                      message: _messages[i],
+                      // El especialista médico avisa siempre; los demás solo
+                      // cuando la conversación pisa terreno clínico.
+                      alwaysMedical: agentIsAlwaysMedical(agent.id),
+                      // La pregunta cuenta tanto como la respuesta: "¿cuánto
+                      // ibuprofeno le doy?" ya merece el aviso aunque el
+                      // modelo conteste con evasivas.
+                      askedText: i > 0 ? _messages[i - 1].text : '',
+                    ),
                   ),
           ),
           if (agent.quickChipKeys.isNotEmpty && !_generating)
@@ -902,13 +913,32 @@ class AiEmptyState extends StatelessWidget {
 }
 
 class _Bubble extends StatelessWidget {
-  const _Bubble({required this.message});
+  const _Bubble({
+    required this.message,
+    this.alwaysMedical = false,
+    this.askedText = '',
+  });
   final ChatMessage message;
+
+  /// El especialista médico: todo lo que dice es terreno clínico.
+  final bool alwaysMedical;
+
+  /// Lo que preguntó el usuario justo antes de esta respuesta.
+  final String askedText;
 
   @override
   Widget build(BuildContext context) {
     final isUser = message.role == 'user';
     final scheme = Theme.of(context).colorScheme;
+    final trust = trustOf(hasSources: message.sources.isNotEmpty);
+    // Un modelo de 2-4 GB en un teléfono alucina. Cuando lo hace sobre una
+    // dosis o sobre mover a alguien con la columna lesionada, el daño es
+    // real: hay que poder ver de un vistazo de dónde salió la respuesta.
+    final warnMedical = !isUser &&
+        message.text.isNotEmpty &&
+        (alwaysMedical ||
+            touchesMedical(message.text) ||
+            touchesMedical(askedText));
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Column(
@@ -927,6 +957,66 @@ class _Bubble extends StatelessWidget {
             ),
             child: SelectableText(message.text.isEmpty ? '…' : message.text),
           ),
+          // Procedencia. Solo en respuestas ya escritas: mientras el modelo
+          // teclea todavía no se sabe si acabará citando una guía.
+          if (!isUser && message.text.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(left: 4, bottom: 2),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    trust == AnswerTrust.grounded
+                        ? Icons.verified_outlined
+                        : Icons.auto_awesome_outlined,
+                    size: 14,
+                    color: trust == AnswerTrust.grounded
+                        ? NuvokColors.safe
+                        : scheme.outline,
+                  ),
+                  const SizedBox(width: 4),
+                  Flexible(
+                    child: Text(
+                      tr(
+                          context,
+                          trust == AnswerTrust.grounded
+                              ? 'aiVerified'
+                              : 'aiGenerated'),
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            color: trust == AnswerTrust.grounded
+                                ? NuvokColors.safe
+                                : scheme.outline,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          if (warnMedical)
+            Container(
+              constraints: const BoxConstraints(maxWidth: 640),
+              margin: const EdgeInsets.only(bottom: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              decoration: BoxDecoration(
+                color: NuvokColors.caution.withValues(alpha: 0.18),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                    color: NuvokColors.caution.withValues(alpha: 0.6)),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(Icons.medical_information_outlined, size: 16),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      tr(context, 'aiMedicalWarning'),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           if (message.sources.isNotEmpty)
             Container(
               constraints: const BoxConstraints(maxWidth: 640),
@@ -968,3 +1058,18 @@ class _Bubble extends StatelessWidget {
     );
   }
 }
+
+/// Costura de pruebas: la burbuja es privada, pero el sello de procedencia y
+/// el aviso médico son justo lo que hay que verificar que el usuario VE, no
+/// solo que la lógica pura decide bien.
+@visibleForTesting
+Widget debugBubbleForTest({
+  required ChatMessage message,
+  required String agentId,
+  String askedText = '',
+}) =>
+    _Bubble(
+      message: message,
+      alwaysMedical: agentIsAlwaysMedical(agentId),
+      askedText: askedText,
+    );

@@ -19,6 +19,14 @@ Una persona puede morir desangrada en **menos de 5 minutos**. Detener el sangrad
 | Gotea poco, coagula solo | ⚠️ Menor | Lavar y vendar |
 | Moretón sin salida de sangre | ✅ Interno | Observar shock |
 
+## Actúa ahora
+
+1. **Presiona con todo tu peso** sobre el punto que sangra, con gasa o trapo limpio. Mínimo 10 minutos sin levantar a mirar.
+2. **Si empapa, pon otro trapo ENCIMA** y sigue presionando. Nunca quites el de abajo.
+3. **Si es brazo o pierna y no cede**, coloca un torniquete 5-8 cm por encima de la herida, nunca sobre una articulación.
+4. **Aprieta hasta que el sangrado PARE** y anota la hora. No lo aflojes: eso se hace en el hospital.
+5. **Si es cuello, axila o ingle**, empaqueta la herida: mete gasa hasta el fondo con los dedos y presiona encima.
+
 ## Qué NO hacer
 
 | ❌ Error | ✅ Correcto |

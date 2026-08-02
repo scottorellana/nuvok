@@ -19,6 +19,14 @@ Uma pessoa pode morrer por perda de sangue em **menos de 5 minutos**. Deter o sa
 | Goteja pouco, coagula sozinho | ⚠️ Menor | Lavar e enfaixar |
 | Hematoma sem saída de sangue | ✅ Interno | Observar choque |
 
+## Aja agora
+
+1. **Pressione com todo o seu peso** sobre o ponto que sangra, com gaze ou pano limpo. No mínimo 10 minutos sem levantar para olhar.
+2. **Se encharcar, ponha outro pano POR CIMA** e continue pressionando. Nunca tire o de baixo.
+3. **Se for braço ou perna e não parar**, coloque um torniquete 5-8 cm acima do ferimento, nunca sobre uma articulação.
+4. **Aperte até o sangramento PARAR** e anote a hora. Não afrouxe: isso é feito no hospital.
+5. **Se for pescoço, axila ou virilha**, tampone o ferimento: empurre gaze até o fundo com os dedos e pressione por cima.
+
 ## O que NÃO fazer
 
 | ❌ Erro | ✅ Correto |

@@ -19,6 +19,14 @@ A person can bleed to death in **less than 5 minutes**. Stopping the bleeding is
 | Drips a little, clots on its own | ⚠️ Minor | Wash and bandage |
 | Bruise with no blood coming out | ✅ Internal | Watch for shock |
 
+## Act now
+
+1. **Press with your whole body weight** on the bleeding point with gauze or a clean cloth. At least 10 minutes without lifting to look.
+2. **If it soaks through, add another cloth ON TOP** and keep pressing. Never remove the bottom one.
+3. **If it is an arm or leg and it does not stop**, apply a tourniquet 5-8 cm above the wound, never over a joint.
+4. **Tighten until the bleeding STOPS** and write down the time. Do not loosen it: that happens at the hospital.
+5. **If it is the neck, armpit or groin**, pack the wound: push gauze deep in with your fingers and press on top.
+
 ## What NOT to do
 
 | ❌ Mistake | ✅ Correct |

@@ -65,6 +65,35 @@ void main() {
     }
   });
 
+  group('Hemorragia severa: acciones, no solo prohibiciones', () {
+    for (final lang in ['es', 'en']) {
+      test('[$lang] el primer paso es presionar la herida', () {
+        final steps = extractCriticalSteps(_guide(lang, 'hemorragia_severa'));
+        expect(steps, isNotEmpty);
+        expect(steps.first.toLowerCase(),
+            matches(RegExp(lang == 'es' ? r'presiona' : r'press')),
+            reason: 'los pasos que detienen la muerte vivían en un diagrama '
+                'ASCII invisible para el extractor: la tarjeta solo mostraba '
+                'prohibiciones. Pasos: $steps');
+      });
+
+      test('[$lang] el torniquete lleva su distancia exacta', () {
+        final texto =
+            extractCriticalSteps(_guide(lang, 'hemorragia_severa')).join(' ');
+        expect(texto, contains('5-8'),
+            reason: 'un torniquete mal colocado no detiene la hemorragia');
+      });
+    }
+
+    test('los 7 idiomas tienen la sección accionable', () {
+      for (final lang in ['es', 'en', 'pt', 'fr', 'zh', 'ja', 'ht']) {
+        final steps = extractCriticalSteps(_guide(lang, 'hemorragia_severa'));
+        expect(steps.length, greaterThanOrEqualTo(4),
+            reason: '$lang quedó sin pasos accionables: $steps');
+      }
+    });
+  });
+
   group('regla general del extractor', () {
     test('un paso largo se acorta, nunca se descarta', () {
       const body = '''

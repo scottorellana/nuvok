@@ -19,6 +19,14 @@ Une personne peut mourir vidée de son sang en **moins de 5 minutes**. Arrêter 
 | Goutte peu, coagule seul | ⚠️ Mineur | Laver et panser |
 | Ecchymose sans sortie de sang | ✅ Interne | Surveiller le choc |
 
+## Agis maintenant
+
+1. **Appuie de tout ton poids** sur le point qui saigne, avec une compresse ou un tissu propre. Au moins 10 minutes sans soulever pour regarder.
+2. **Si ça traverse, mets un autre tissu PAR-DESSUS** et continue d’appuyer. N’enlève jamais celui du dessous.
+3. **Si c’est un bras ou une jambe et que ça ne s’arrête pas**, pose un garrot 5-8 cm au-dessus de la plaie, jamais sur une articulation.
+4. **Serre jusqu’à ce que le saignement S’ARRÊTE** et note l’heure. Ne le desserre pas : cela se fait à l’hôpital.
+5. **Si c’est le cou, l’aisselle ou l’aine**, tamponne la plaie : enfonce la compresse au fond avec les doigts et appuie dessus.
+
 ## Ce qu’il ne faut PAS faire
 
 | ❌ Erreur | ✅ Correct |

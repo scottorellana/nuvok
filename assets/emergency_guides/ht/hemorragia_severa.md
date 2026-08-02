@@ -19,6 +19,14 @@ Yon moun ka mouri paske li pèdi san nan **mwens pase 5 minit**. Sispann senyen 
 | Li degoute piti, li kaye pou kont li | ⚠️ Minè | Lave epi bande |
 | Ble san san pa soti | ✅ Entèn | Obsève chòk |
 
+## Aji kounye a
+
+1. **Peze ak tout pwa kò ou** sou kote k ap senyen an, ak gaz oswa yon twal pwòp. Omwen 10 minit san leve pou gade.
+2. **Si li tranpe, mete yon lòt twal ANWO** epi kontinye peze. Pa janm retire sa ki anba a.
+3. **Si se bra oswa janm epi li pa kanpe**, mete yon tounikè 5-8 cm anwo blesi a, pa janm sou yon jwenti.
+4. **Sere jiskaske san an KANPE** epi ekri lè a. Pa lache l: sa fèt lopital.
+5. **Si se kou, anba bra oswa lenn**, plen blesi a: pouse gaz jouk nan fon ak dwèt ou epi peze anwo.
+
 ## Sa pou PA fè
 
 | ❌ Erè | ✅ Kòrèk |

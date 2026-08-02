@@ -79,6 +79,48 @@ void main() {
           LibraryRetriever.sourcesLookRelevant('HEMORRAGIA SEVERA', fuentes),
           isTrue);
     });
+
+    // Chino y japonés no separan palabras con espacios: la tokenización
+    // latina devolvía CERO tokens y la compuerta descartaba SIEMPRE las
+    // guías. Los usuarios de esos idiomas perdían el grounding completo.
+    test('chino: las guías del dominio SÍ entran', () {
+      final zh = [
+        RetrievedSource(
+          title: '严重出血',
+          book: 'Nuvok 指南',
+          path: 'A/x',
+          text: '直接压迫伤口十分钟不要松手。止血带绑在伤口上方5-8厘米处。',
+        ),
+      ];
+      expect(LibraryRetriever.sourcesLookRelevant('如何止住严重出血', zh), isTrue,
+          reason: 'la pregunta comparte "严重出血" con la fuente');
+    });
+
+    test('japonés: las guías del dominio SÍ entran', () {
+      final ja = [
+        RetrievedSource(
+          title: '重度の出血',
+          book: 'Nuvok ガイド',
+          path: 'A/x',
+          text: '傷口を十分間直接圧迫し続けます。止血帯は傷の5〜8cm上に巻きます。',
+        ),
+      ];
+      expect(LibraryRetriever.sourcesLookRelevant('出血を止めるには', ja), isTrue);
+    });
+
+    test('CJK ajeno al tema sigue quedando fuera', () {
+      final zh = [
+        RetrievedSource(
+          title: '严重出血',
+          book: 'Nuvok 指南',
+          path: 'A/x',
+          text: '直接压迫伤口十分钟不要松手。',
+        ),
+      ];
+      expect(
+          LibraryRetriever.sourcesLookRelevant('用python写一个排序函数', zh), isFalse,
+          reason: 'una pregunta de programación no debe arrastrar guías');
+    });
   });
 
   group('Sabio: bibliotecario estricto con salida honesta', () {

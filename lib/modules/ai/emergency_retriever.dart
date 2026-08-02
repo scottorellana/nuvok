@@ -10,13 +10,31 @@ class EmergencyRetriever {
   /// Reordena hits: las guías del entorno ACTIVO del usuario primero — si
   /// está en el desierto, "encontrar agua" debe responder desierto, no
   /// bosque. Puro y testeable.
+  /// El modo de supervivencia dice DÓNDE estás, no QUÉ le pasa a la persona.
+  ///
+  /// Antes reordenaba en duro — todas las guías del modo delante — y eso
+  /// rompía el triaje: con el modo bosque activo, "no respira" devolvía
+  /// primero la guía de incendio forestal, porque el incendio pertenece al
+  /// modo y la RCP no. Ahora el entorno solo DESEMPATA entre guías de
+  /// urgencia comparable: una guía vital (priority 1-2) nunca cede su sitio.
   static List<EmergencyGuide> boostByMode(
       List<EmergencyGuide> hits, String? mode) {
     if (mode == null || mode.isEmpty) return hits;
-    return [
-      ...hits.where((g) => g.modes.contains(mode)),
-      ...hits.where((g) => !g.modes.contains(mode)),
-    ];
+    const vital = 2; // priority 1-2 = riesgo de muerte inmediato
+    final indexed = hits.indexed.toList();
+    // Orden estable: primero lo vital (respetando el orden del buscador),
+    // luego lo del modo, luego el resto.
+    int rank((int, EmergencyGuide) e) {
+      final g = e.$2;
+      if (g.priority <= vital) return 0;
+      return g.modes.contains(mode) ? 1 : 2;
+    }
+
+    indexed.sort((a, b) {
+      final r = rank(a).compareTo(rank(b));
+      return r != 0 ? r : a.$1.compareTo(b.$1);
+    });
+    return indexed.map((e) => e.$2).toList();
   }
 
   /// Guides first — EN EL IDIOMA DE LA APP, con bonus del modo de

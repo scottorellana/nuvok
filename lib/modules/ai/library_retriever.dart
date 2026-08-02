@@ -220,16 +220,38 @@ class LibraryRetriever {
     return false;
   }
 
+  /// Chino, japonés y coreano no separan palabras con espacios: la
+  /// tokenización latina devolvía CERO tokens para "如何止住严重出血" y la
+  /// compuerta descartaba SIEMPRE las guías, dejando a esos idiomas sin
+  /// grounding. Se indexan bigramas de caracteres, que es la técnica estándar
+  /// de recuperación CJK sin diccionario.
+  ///
+  /// El HIRAGANA queda fuera a propósito: en japonés es gramática (partículas,
+  /// terminaciones), no contenido. Incluirlo generaba bigramas de ruido
+  /// ("には", "める") que inflaban el denominador y hacían fallar la compuerta
+  /// aunque la palabra clave — en kanji — coincidiera exactamente.
+  static final _cjk = RegExp(
+      r'[\u30A0-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uAC00-\uD7AF]');
+
   /// Palabras significativas normalizadas (minúsculas, sin acentos, sin
-  /// stopwords, largo ≥4) — el mismo espíritu del buscador por síntoma.
+  /// stopwords, largo ≥4) más bigramas CJK — el mismo espíritu del buscador
+  /// por síntoma, extendido a las escrituras sin espacios.
   static Set<String> _contentWords(String text) {
     const accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ü': 'u', 'ñ': 'n'};
     var t = text.toLowerCase();
     accents.forEach((k, v) => t = t.replaceAll(k, v));
-    return t
+    final words = t
         .split(RegExp(r'[^a-z0-9]+'))
         .where((w) => w.length >= 4 && !_stop.contains(w))
         .toSet();
+    // Bigramas de caracteres CJK contiguos.
+    final chars = text.split('');
+    for (var i = 0; i + 1 < chars.length; i++) {
+      if (_cjk.hasMatch(chars[i]) && _cjk.hasMatch(chars[i + 1])) {
+        words.add('${chars[i]}${chars[i + 1]}');
+      }
+    }
+    return words;
   }
 
   /// Bloque de fuentes para APPEND al prompt de persona del especialista —

@@ -10,6 +10,7 @@ import 'core/bundled_library.dart';
 import 'core/locale_service.dart';
 import 'core/native_licenses.dart';
 import 'core/nuvok_library.dart';
+import 'modules/depot/download_manager.dart';
 import 'modules/ai/llama_server.dart';
 import 'modules/mesh/mesh_envelope.dart';
 import 'modules/mesh/mesh_notifications.dart';
@@ -38,6 +39,17 @@ Future<void> main() async {
   // left the user staring at a white screen for the whole copy. The UI
   // modules list whatever exists and pick up new content as it lands.
   unawaited(BundledLibrarySeeder.seed());
+  // Retomar lo que quedó a medias. Bajar un modelo de 2 GB con la pantalla
+  // apagada termina casi siempre con el sistema matando la app: la cola vivía
+  // solo en memoria y esos gigabytes quedaban huérfanos en disco mientras el
+  // usuario veía la descarga "sin empezar" y la relanzaba desde cero.
+  for (final dir in [
+    NuvokLibrary.instance.modelsDir,
+    NuvokLibrary.instance.zimDir,
+    NuvokLibrary.instance.mapsDir,
+  ]) {
+    DownloadManager.instance.restoreQueue(dir);
+  }
   // Local notifications so an incoming SOS/chat reaches the user with the app
   // in the background. Non-blocking; no-ops where unsupported.
   unawaited(MeshNotifications.instance.init());

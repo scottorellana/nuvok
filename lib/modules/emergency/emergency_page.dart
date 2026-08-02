@@ -1402,13 +1402,17 @@ class _PanicButtonWidget extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(button.icon, size: 56, color: NuvokColors.white),
+                // Contraste según el fondo: blanco fijo sobre el naranja de
+                // 'caution' daba 1.87:1 — ilegible bajo sol o con la pantalla
+                // atenuada al mínimo, que es justo cuando se usa el pánico.
+                Icon(button.icon,
+                    size: 56, color: NuvokColors.onColor(button.color)),
                 const SizedBox(height: 8),
                 Text(
                   button.label,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: NuvokColors.white,
+                  style: TextStyle(
+                    color: NuvokColors.onColor(button.color),
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
                     height: 1.1,

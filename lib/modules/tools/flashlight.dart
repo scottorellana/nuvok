@@ -11,6 +11,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
+import '../../core/screen_awake.dart';
 import 'package:torch_light/torch_light.dart';
 
 import '../../core/nuvok_colors.dart';
@@ -81,6 +83,13 @@ class FlashlightController extends ChangeNotifier {
     _sosTimer?.cancel();
     _sosTimer = null;
     _mode = newMode;
+    // La pantalla no puede dormirse mientras alumbras un derrumbe o emites
+    // SOS Morse: el sistema la apagaba a los 30 s y la luz moría con ella.
+    if (newMode == FlashlightMode.off) {
+      unawaited(ScreenAwake.release('flashlight'));
+    } else {
+      unawaited(ScreenAwake.acquire('flashlight'));
+    }
     if (newMode != FlashlightMode.sos) {
       _screenFallback = false;
     }

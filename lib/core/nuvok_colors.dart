@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 /// Central visual tokens for Nuvok's emergency dark theme.
@@ -23,4 +25,22 @@ abstract final class NuvokColors {
 
   static const white = Color(0xFFFFFFFF);
   static const black = Color(0xFF000000);
+
+  /// Color de texto/icono legible sobre [background].
+  ///
+  /// Los botones del modo pánico usaban blanco fijo: sobre `caution`
+  /// (naranja) eso da 1.87:1 — ilegible bajo sol directo o con la pantalla
+  /// atenuada al mínimo para ahorrar batería, que es justo cuando se usan.
+  /// Negro sobre naranja da 11.2:1.
+  static Color onColor(Color background) {
+    // Luminancia relativa WCAG.
+    double ch(double v) => v <= 0.03928
+        ? v / 12.92
+        : math.pow((v + 0.055) / 1.055, 2.4).toDouble();
+    final l = 0.2126 * ch(background.r) +
+        0.7152 * ch(background.g) +
+        0.0722 * ch(background.b);
+    // Punto de corte donde el negro empieza a contrastar mejor que el blanco.
+    return l > 0.18 ? black : white;
+  }
 }

@@ -6,6 +6,8 @@ import 'dart:async';
 
 import 'package:battery_plus/battery_plus.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/screen_awake.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 
 import '../../core/locale_service.dart';
@@ -37,6 +39,10 @@ class _SosBeaconPageState extends State<SosBeaconPage> {
     super.initState();
     // SOS del mesh activo (beacon cada 60 s con posición).
     MeshService.instance.startSos(note: 'BALIZA');
+    // La baliza debe emitir durante HORAS. Si la pantalla se duerme, iOS y
+    // Android suspenden el isolate de Dart y la emisión se detiene sin que
+    // nadie se entere: la persona cree que está pidiendo auxilio y no.
+    unawaited(ScreenAwake.acquire('sos-beacon'));
     _dim();
     _tick();
     // Sondeo lento: leer batería también gasta batería.
@@ -75,6 +81,7 @@ class _SosBeaconPageState extends State<SosBeaconPage> {
   @override
   void dispose() {
     _poll?.cancel();
+    unawaited(ScreenAwake.release('sos-beacon'));
     final prev = _prevBrightness;
     if (prev != null) {
       unawaited(ScreenBrightness()

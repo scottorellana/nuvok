@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'mesh_channel.dart';
 import 'mesh_diagnostics.dart';
 import 'mesh_envelope.dart';
+import 'relay_policy.dart';
 import 'mesh_store.dart';
 import 'sos_carry.dart';
 import 'mesh_transport.dart';
@@ -63,7 +64,13 @@ class MeshRouter {
   // heard per msgId and schedule the relay after a random jitter. If the
   // network already repeated the message enough times while we waited, our
   // relay adds nothing but airtime — cancel it.
-  final _heardCount = <int, int>{};
+  /// Repeticiones DISTINTAS oídas por mensaje, identificadas por los saltos
+  /// que le quedaban. Antes era un contador de datagramas: las
+  /// tres radios de la app y las tres rutas de lan_transport entregaban la
+  /// misma copia, el nodo creía que la red ya había repetido el mensaje y
+  /// cancelaba su relevo — el SOS moría en el primer salto justo en la
+  /// configuración normal de la app.
+  final _heardCount = RelayHeardCounter();
   final _pendingRelays = <int, Timer>{};
 
   /// Test hook: overrides the relay jitter (production: random per type).
@@ -80,9 +87,6 @@ class MeshRouter {
         ? Duration(milliseconds: 20 + r.nextInt(60))
         : Duration(milliseconds: 50 + r.nextInt(250));
   }
-
-  static int _suppressThreshold(MeshType type) =>
-      type == MeshType.sos ? 3 : 2;
 
   Stream<MeshEvent> get events => _events.stream;
   int get outboxCount => _outbox.length;
@@ -220,7 +224,7 @@ class MeshRouter {
       // Evict the heard-count alongside the dedup entry so both stay bounded.
       final evicted = _seenQueue.removeFirst();
       _seen.remove(evicted);
-      _heardCount.remove(evicted);
+      _heardCount.forget(evicted);
     }
     return true;
   }
@@ -243,9 +247,9 @@ class MeshRouter {
     if (via != null) {
       (_peersVia[via] ??= <String, DateTime>{})[env.senderId] = DateTime.now();
     }
-    // Count every copy heard — including duplicates, which is exactly the
-    // signal that the network already repeated this message without us.
-    _heardCount[env.msgId] = (_heardCount[env.msgId] ?? 0) + 1;
+    // Un relevo real llega con MENOS saltos; los ecos de un mismo envío
+    // llegan todos con el mismo hopLimit.
+    _heardCount.heard(msgId: env.msgId, hopLimit: env.hopLimit);
     notePeer(env.senderId);
     // Un vecino NUEVO: entregarle los SOS que venimos cargando. Así el
     // rescatista que pasa diez minutos tarde igual se entera.
@@ -272,7 +276,11 @@ class MeshRouter {
       final relayBytes = env.withHop(env.hopLimit - 1).encode();
       _pendingRelays[env.msgId] = Timer(_relayJitter(env.type), () {
         _pendingRelays.remove(env.msgId);
-        if ((_heardCount[env.msgId] ?? 0) < _suppressThreshold(env.type)) {
+        if (shouldRelay(
+            heard: _heardCount.countFor(env.msgId),
+            type: env.type == MeshType.sos
+                ? RelayType.sos
+                : RelayType.normal)) {
           _sendAll(relayBytes);
         }
       });

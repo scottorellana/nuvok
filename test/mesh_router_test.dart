@@ -162,14 +162,19 @@ void main() {
     expect(relayed.single.hopLimit, 1);
   });
 
-  test('supresión: oír 2+ copias durante el jitter cancela el relevo',
+  test('supresión: 2 REPETIDORES distintos durante el jitter cancelan el relevo',
       () async {
     router.debugRelayJitter = (_) => const Duration(milliseconds: 60);
     final env =
         await makeEnvelope(channel: familia, senderId: otherId, hopLimit: 2);
     transport.inject(env.encode());
     await Future<void>.delayed(const Duration(milliseconds: 10));
-    transport.inject(env.encode()); // otro nodo ya lo relevó
+    // Dos RELEVOS reales: cada salto decrementa hopLimit, así que llegan con
+    // 1 y 0 saltos restantes. Antes bastaba reinyectar la copia idéntica del
+    // emisor, y por eso las tres radios de la app (BLE + multicast + WiFi
+    // Direct) se suprimían entre sí y el mensaje moría en el primer salto.
+    transport.inject(env.withHop(1).encode());
+    transport.inject(env.withHop(0).encode());
     await Future<void>.delayed(const Duration(milliseconds: 120));
     expect(
         transport.sent

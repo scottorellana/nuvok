@@ -19,6 +19,7 @@ import 'lora_ble_uart.dart';
 import 'lora_transport.dart';
 import 'mesh_channel.dart';
 import 'mesh_envelope.dart';
+import 'sos_receipt.dart';
 import 'mesh_identity.dart';
 import 'mesh_power_controller.dart';
 import 'mesh_router.dart';
@@ -69,6 +70,12 @@ class MeshService {
 
   final ValueNotifier<bool> running = ValueNotifier(false);
   final ValueNotifier<bool> sosActive = ValueNotifier(false);
+
+  /// Cuántos vecinos DISTINTOS han confirmado haber recibido mi SOS activo.
+  /// 0 = nadie lo ha acusado todavía; la UI no debe fingir lo contrario.
+  final ValueNotifier<int> sosHeardBy = ValueNotifier(0);
+  final SosReceipts sosReceipts = SosReceipts();
+  int? _lastSosMsgId;
   final ValueNotifier<bool> sharingPosition = ValueNotifier(false);
   final ValueNotifier<int> peerCount = ValueNotifier(0);
   final ValueNotifier<int> queuedCount = ValueNotifier(0);
@@ -593,7 +600,7 @@ class MeshService {
     final router = _router;
     if (identity == null || router == null || !sosActive.value) return;
     final fix = await LocationService.current();
-    await router.broadcast(await _envelope(
+    final env = await _envelope(
       MeshChannel.emergency,
       MeshType.sos,
       {
@@ -603,13 +610,20 @@ class MeshService {
         if (fix.isOk) 'acc': fix.position!.accuracy,
       },
       hopLimit: 5, // let an SOS travel as far as the mesh reaches
-    ));
+    );
+    _lastSosMsgId = env.msgId;
+    sosReceipts.registerSent('${env.senderId}:${env.msgId}');
+    await router.broadcast(env);
   }
 
   Future<void> cancelSos() async {
     _sosTimer?.cancel();
     _sosTimer = null;
     sosActive.value = false;
+    sosHeardBy.value = 0;
+    final last = _lastSosMsgId;
+    if (last != null) sosReceipts.clear('${identity?.id}:$last');
+    _lastSosMsgId = null;
     MeshPowerController.instance.setSosActive(false);
     final router = _router;
     if (identity == null || router == null) return;
@@ -672,6 +686,11 @@ class MeshService {
         // Trigger the SOS alarm for incoming distress signals.
         if (e.envelope.type == MeshType.sos &&
             e.envelope.senderId != identity?.id) {
+          // Confirmar al emisor que su SOS FUE OÍDO. Sin esto, quien pide
+          // auxilio no sabe si quedarse donde está o gastar sus últimas
+          // fuerzas caminando a buscar ayuda. El ACK cruza el relevo
+          // (hopLimit 3) porque el SOS también se relevó.
+          _sendAck(e, hopLimit: sosAckHopLimit);
           MeshPowerController.instance.boostForIncomingSos();
           SosAlarmController.instance.trigger(
             fromName: e.envelope.senderName,
@@ -712,6 +731,15 @@ class MeshService {
       case MeshType.ack:
         // Mark the original message as delivered.
         final ackedId = (e.payload['ack'] as num?)?.toInt();
+        if (ackedId != null) {
+          // ¿Confirma alguno de MIS SOS? Se cuenta por vecino distinto.
+          sosReceipts.onAck(
+            ackedMsgId: '${identity?.id}:$ackedId',
+            fromPeer: e.envelope.senderId,
+          );
+          sosHeardBy.value =
+              sosReceipts.confirmationsFor('${identity?.id}:$_lastSosMsgId');
+        }
         if (ackedId != null && _pendingAcks.containsKey(ackedId)) {
           _pendingAcks.remove(ackedId);
           _confirmedAcks.add(ackedId);
@@ -732,7 +760,7 @@ class MeshService {
   }
 
   /// Sends an ACK for a received chat message, confirming delivery.
-  Future<void> _sendAck(MeshEvent original) async {
+  Future<void> _sendAck(MeshEvent original, {int hopLimit = 1}) async {
     final router = _router;
     final id = identity;
     if (id == null || router == null) return;
@@ -741,7 +769,7 @@ class MeshService {
       original.channel,
       MeshType.ack,
       {'ack': original.envelope.msgId},
-      hopLimit: 1, // ACKs don't need to travel far
+      hopLimit: hopLimit, // 1 para chat (vecino directo); más para SOS
     );
     await router.sendNow(ackEnv);
   }

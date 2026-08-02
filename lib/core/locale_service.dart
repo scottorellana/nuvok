@@ -1283,6 +1283,35 @@ class AppStrings {
     },
     // Espacio en disco: una descarga de 3.4 GB que muere al 90% quema datos
     // móviles y deja a la persona creyendo que ya está preparada.
+    // Acuse de recibo del SOS: saber si alguien te oyó decide si te quedas
+    // donde estás o gastas tus últimas fuerzas buscando ayuda.
+    'sosHeardNobody': {
+      'es': 'Aún nadie ha confirmado. Sigue emitiendo.',
+      'en': 'Nobody has confirmed yet. Still broadcasting.',
+      'pt': 'Ninguém confirmou ainda. Continua transmitindo.',
+      'fr': "Personne n'a encore confirmé. Toujours en émission.",
+      'zh': '还没有人确认。持续发送中。',
+      'ja': 'まだ誰も確認していません。送信を続けています。',
+      'ht': 'Pèsonn poko konfime. L ap kontinye voye.',
+    },
+    'sosHeardOne': {
+      'es': '✓ 1 persona recibió tu SOS',
+      'en': '✓ 1 person received your SOS',
+      'pt': '✓ 1 pessoa recebeu seu SOS',
+      'fr': '✓ 1 personne a reçu ton SOS',
+      'zh': '✓ 1 人收到了你的求救',
+      'ja': '✓ 1人があなたのSOSを受信',
+      'ht': '✓ 1 moun resevwa SOS ou',
+    },
+    'sosHeardMany': {
+      'es': '✓ {n} personas recibieron tu SOS',
+      'en': '✓ {n} people received your SOS',
+      'pt': '✓ {n} pessoas receberam seu SOS',
+      'fr': '✓ {n} personnes ont reçu ton SOS',
+      'zh': '✓ {n} 人收到了你的求救',
+      'ja': '✓ {n}人があなたのSOSを受信',
+      'ht': '✓ {n} moun resevwa SOS ou',
+    },
     'setupNoSpace': {
       'es': 'No hay espacio suficiente. Libera {n} y vuelve a intentarlo.',
       'en': 'Not enough space. Free up {n} and try again.',

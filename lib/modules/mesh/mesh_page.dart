@@ -392,6 +392,42 @@ class _MeshPageState extends State<MeshPage> {
                       ),
                     ],
                   ),
+                  // ¿Alguien me oyó? Sin esta línea, quien pide auxilio no
+                  // sabe si quedarse donde está o caminar a buscar ayuda.
+                  const SizedBox(height: 10),
+                  ValueListenableBuilder<int>(
+                    valueListenable: _service.sosHeardBy,
+                    builder: (context, heard, _) => Row(
+                      children: [
+                        Icon(
+                          heard > 0 ? Icons.check_circle : Icons.podcasts,
+                          color: heard > 0
+                              ? Colors.greenAccent.shade100
+                              : Colors.white70,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            heard == 0
+                                ? tr(context, 'sosHeardNobody')
+                                : heard == 1
+                                    ? tr(context, 'sosHeardOne')
+                                    : tr(context, 'sosHeardMany')
+                                        .replaceAll('{n}', '$heard'),
+                            style: TextStyle(
+                              color: heard > 0
+                                  ? Colors.greenAccent.shade100
+                                  : Colors.white70,
+                              fontWeight: heard > 0
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   FilledButton.icon(
                     style: FilledButton.styleFrom(

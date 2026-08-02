@@ -1130,6 +1130,164 @@ class AppStrings {
       'ja': 'ローカルAIも該当ガイドもありません。緊急タブを開いて検索してください。',
       'ht': 'Pa gen IA lokal ni gid ki matche. Ouvri tab Ijans lan epi chèche la.',
     },
+    // Cabecera de la tarjeta PASOS CRÍTICOS. Antes el idioma se adivinaba con
+    // dos palabras ("¿el cuerpo contiene ' Qué '?"), así que 64 de 67 guías en
+    // pt/fr/zh/ja/ht se etiquetaban como español: una guía japonesa se abría
+    // con "PASOS CRÍTICOS" y "NO HAGAS:" encima del texto en japonés.
+    // Modo pánico: la rejilla de botones gigantes que alguien toca con las
+    // manos temblando. Estaba en es/en con un ternario, así que con la app
+    // en japonés los seis botones de triaje salían en inglés. Traducido y
+    // revisado por hablantes nativos con criterio de emergencia: el revisor
+    // francés encontró que 'CRISE CARDIAQUE' borraba el ictus, y quien ve una
+    // cara caída no habría reconocido su botón.
+    'panicTitle': {
+      'es': '🚨 EMERGENCIA — toca lo que pasa',
+      'en': '🚨 EMERGENCY — tap what\'s wrong',
+      'pt': '🚨 EMERGÊNCIA — toque no que aconteceu',
+      'fr': '🚨 URGENCE — touchez le problème', 'zh': '🚨 紧急 — 点一下发生了什么',
+      'ja': '🚨 緊急 — 状況をタップ', 'ht': '🚨 IJANS — peze sa k pase a'
+    },
+    'panicExit': {
+      'es': 'Salir', 'en': 'Exit', 'pt': 'Sair', 'fr': 'Quitter',
+      'zh': '退出', 'ja': '戻る', 'ht': 'Soti'
+    },
+    'panicNotBreathing': {
+      'es': 'NO RESPIRA\n(RCP)', 'en': 'NOT BREATHING\n(CPR)',
+      'pt': 'NÃO RESPIRA\n(RCP)', 'fr': 'NE RESPIRE PAS\n(RCP)',
+      'zh': '没呼吸了\n心肺复苏', 'ja': '息がない\n(心肺蘇生)',
+      'ht': 'LI PA RESPIRE\n(CPR)'
+    },
+    'panicChoking': {
+      'es': 'ATRAGANTADO', 'en': 'CHOKING', 'pt': 'ENGASGADO',
+      'fr': 'S\'ÉTOUFFE', 'zh': '噎住了', 'ja': 'のどに\n詰まった',
+      'ht': 'L AP TOUFE'
+    },
+    'panicBleeding': {
+      'es': 'SANGRADO\nFUERTE', 'en': 'SEVERE\nBLEEDING',
+      'pt': 'SANGRANDO\nMUITO', 'fr': 'SAIGNE\nBEAUCOUP', 'zh': '流血\n止不住',
+      'ja': '血が\n止まらない', 'ht': 'SAN AP KOULE\nANPIL'
+    },
+    'panicBurn': {
+      'es': 'QUEMADURA', 'en': 'BURN', 'pt': 'QUEIMADURA', 'fr': 'BRÛLURE',
+      'zh': '烧烫伤', 'ja': 'やけど', 'ht': 'LI BOULE'
+    },
+    'panicFracture': {
+      'es': 'FRACTURA\n/ GOLPE', 'en': 'FRACTURE\n/ INJURY',
+      'pt': 'FRATURA\n/ PANCADA', 'fr': 'FRACTURE\n/ BLESSURE',
+      'zh': '骨折\n摔伤', 'ja': '骨折\n/ 打撲', 'ht': 'ZO KASE\n/ BLESE'
+    },
+    'panicHeart': {
+      'es': 'INFARTO\n/ DERRAME', 'en': 'HEART\nATTACK',
+      'pt': 'INFARTO\n/ DERRAME', 'fr': 'INFARCTUS\n/ AVC', 'zh': '心梗\n中风',
+      'ja': '心臓発作\n/ 脳卒中', 'ht': 'KRIZ KÈ\n/ KONJESYON'
+    },
+    'panicUnknown': {
+      'es': 'NO SÉ\nQUÉ PASA', 'en': 'I DON\'T KNOW\nWHAT\'S WRONG',
+      'pt': 'NÃO SEI\nO QUE É', 'fr': 'JE NE\nSAIS PAS', 'zh': '不知道\n怎么了',
+      'ja': 'わからない', 'ht': 'M PA KONN\nSA K PASE'
+    },
+    'panicBarCpr': {
+      'es': 'RCP', 'en': 'CPR', 'pt': 'RCP', 'fr': 'RCP', 'zh': '心肺复苏',
+      'ja': '心肺蘇生', 'ht': 'CPR'
+    },
+    'panicBarLight': {
+      'es': 'Linterna', 'en': 'Light', 'pt': 'Lanterna', 'fr': 'Lampe',
+      'zh': '手电筒', 'ja': 'ライト', 'ht': 'Flach'
+    },
+    'panicBarPhones': {
+      'es': 'Teléfonos', 'en': 'Phones', 'pt': 'Telefones',
+      'fr': 'Numéros', 'zh': '电话', 'ja': '電話番号', 'ht': 'Telefòn'
+    },
+    'panicBarMap': {
+      'es': 'Mapa', 'en': 'Map', 'pt': 'Mapa', 'fr': 'Carte', 'zh': '地图',
+      'ja': '地図', 'ht': 'Kat'
+    },
+    'emergencyModeCta': {
+      'es': 'MODO EMERGENCIA', 'en': 'EMERGENCY MODE',
+      'pt': 'MODO EMERGÊNCIA', 'fr': 'MODE URGENCE', 'zh': '紧急模式',
+      'ja': '緊急モード', 'ht': 'MÒD IJANS'
+    },
+    'sosDialogTitle': {
+      'es': '¿Activar SOS?', 'en': 'Activate SOS?', 'pt': 'Ativar SOS?',
+      'fr': 'Activer le SOS ?', 'zh': '确定启动 SOS 吗？', 'ja': 'SOSを発信しますか？',
+      'ht': 'Aktive SOS?'
+    },
+    'sosDialogNoteLabel': {
+      'es': 'Nota opcional', 'en': 'Optional note', 'pt': 'Nota opcional',
+      'fr': 'Note facultative', 'zh': '备注（可选）', 'ja': 'メモ（任意）',
+      'ht': 'Nòt (si w vle)'
+    },
+    'sosDialogNoteHint': {
+      'es': '¿Qué pasa?', 'en': 'What is happening?', 'pt': 'O que houve?',
+      'fr': 'Que se passe-t-il ?', 'zh': '什么情况？', 'ja': 'どうしましたか？',
+      'ht': 'Kisa k rive?'
+    },
+    'sosDialogCancel': {
+      'es': 'Cancelar', 'en': 'Cancel', 'pt': 'Cancelar', 'fr': 'Annuler',
+      'zh': '取消', 'ja': 'キャンセル', 'ht': 'Anile'
+    },
+    'sosDialogConfirm': {
+      'es': 'ACTIVAR SOS', 'en': 'ACTIVATE SOS', 'pt': 'ATIVAR SOS',
+      'fr': 'ACTIVER LE SOS', 'zh': '启动 SOS', 'ja': 'SOSを発信',
+      'ht': 'AKTIVE SOS'
+    },
+    'sosActivated': {
+      'es': 'SOS activado', 'en': 'SOS activated', 'pt': 'SOS ativado',
+      'fr': 'SOS activé', 'zh': 'SOS 已启动', 'ja': 'SOSを発信しました',
+      'ht': 'SOS la aktive'
+    },
+    'numberCopied': {
+      'es': 'Número copiado', 'en': 'Number copied',
+      'pt': 'Número copiado', 'fr': 'Numéro copié', 'zh': '号码已复制',
+      'ja': '番号をコピーしました', 'ht': 'Nimewo a kopye'
+    },
+    // Rótulos de la pantalla de emergencia que seguían con el ternario es/en.
+    'egQuickAccess': {
+      'es': 'Acceso rápido:', 'en': 'Quick access:',
+      'pt': 'Acesso rápido:', 'fr': 'Accès rapide :', 'zh': '快速访问：',
+      'ja': 'クイックアクセス：', 'ht': 'Aksè rapid:'
+    },
+    'egEmergencyPhones': {
+      'es': 'Teléfonos de emergencia', 'en': 'Emergency numbers',
+      'pt': 'Telefones de emergência', 'fr': 'Numéros d\'urgence',
+      'zh': '紧急电话', 'ja': '緊急連絡先', 'ht': 'Telefòn ijans'
+    },
+    'egSelectCountry': {
+      'es': 'Selecciona tu país', 'en': 'Select your country',
+      'pt': 'Selecione o seu país', 'fr': 'Sélectionnez votre pays',
+      'zh': '选择你的国家', 'ja': '国を選択', 'ht': 'Chwazi peyi ou'
+    },
+    'egCall': {
+      'es': 'Llamar', 'en': 'Call', 'pt': 'Ligar', 'fr': 'Appeler',
+      'zh': '拨打', 'ja': '発信', 'ht': 'Rele'
+    },
+    'egSearchHint': {
+      'es': '¿Qué está pasando? (ej: no respira, sangrado…)',
+      'en': 'What is happening? (e.g. not breathing…)',
+      'pt': 'O que está acontecendo? (ex: não respira, sangramento…)',
+      'fr': 'Que se passe-t-il ? (ex : ne respire pas, saignement…)',
+      'zh': '发生了什么？（例如：没呼吸、流血…）', 'ja': 'どうしましたか？（例：息がない、出血…）',
+      'ht': 'Kisa k ap pase? (egz: li pa respire, san…)'
+    },
+    'criticalSteps': {
+      'es': 'PASOS CRÍTICOS', 'en': 'CRITICAL STEPS',
+      'pt': 'PASSOS CRÍTICOS', 'fr': 'ÉTAPES CRITIQUES',
+      'zh': '关键步骤', 'ja': '重要な手順', 'ht': 'ETAP KRITIK',
+    },
+    'criticalStepsDont': {
+      'es': 'NO HAGAS:', 'en': 'DO NOT:', 'pt': 'NÃO FAÇA:',
+      'fr': 'NE PAS FAIRE :', 'zh': '切勿：', 'ja': 'してはいけないこと：',
+      'ht': 'PA FÈ:',
+    },
+    'criticalStepsReadFull': {
+      'es': 'Lee la guía completa abajo para los pasos detallados.',
+      'en': 'Read the full guide below for detailed steps.',
+      'pt': 'Leia o guia completo abaixo para os passos detalhados.',
+      'fr': 'Lisez le guide complet ci-dessous pour les étapes détaillées.',
+      'zh': '请阅读下方完整指南了解详细步骤。',
+      'ja': '詳しい手順は下の完全なガイドをお読みください。',
+      'ht': 'Li gid konplè a anba a pou etap detaye yo.',
+    },
     'aiSources': {
       'es': 'Fuentes de la biblioteca:', 'en': 'Library sources:',
       'pt': 'Fontes da biblioteca:', 'fr': 'Sources de la bibliothèque :',

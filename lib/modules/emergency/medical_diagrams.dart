@@ -5,6 +5,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+import '../../core/locale_service.dart';
 import '../../core/nuvok_colors.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -110,17 +111,27 @@ String _condense(String text, {int max = 118}) {
 }
 
 class CriticalStepsCard extends StatelessWidget {
-  const CriticalStepsCard({super.key, required this.title, required this.body});
+  const CriticalStepsCard({
+    super.key,
+    required this.title,
+    required this.body,
+    this.lang,
+  });
 
   final String title;
   final String body;
+
+  /// Idioma de la guía. Quien construye la tarjeta YA lo sabe (guide.lang):
+  /// adivinarlo buscando ' Qué ' o ' the ' en el cuerpo etiquetaba como
+  /// español 64 de las 67 guías en pt/fr/zh/ja/ht, y la tarjeta se abría con
+  /// la cabecera y las contraindicaciones en español encima de un texto que
+  /// el usuario había elegido leer en su idioma.
+  final String? lang;
 
   @override
   Widget build(BuildContext context) {
     final steps = _extractSteps(body);
     final warnings = _extractWarnings(body);
-    final lang = _detectLang(title, body);
-    final es = lang == 'es';
 
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
@@ -144,7 +155,7 @@ class CriticalStepsCard extends StatelessWidget {
                 const Icon(Icons.flash_on, color: NuvokColors.white, size: 22),
                 const SizedBox(width: 8),
                 Text(
-                  es ? 'PASOS CRÍTICOS' : 'CRITICAL STEPS',
+                  _t(context, 'criticalSteps'),
                   style: const TextStyle(
                     color: NuvokColors.white,
                     fontWeight: FontWeight.w900,
@@ -159,9 +170,7 @@ class CriticalStepsCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16),
               child: Text(
-                es
-                    ? 'Lee la guía completa abajo para los pasos detallados.'
-                    : 'Read the full guide below for detailed steps.',
+                _t(context, 'criticalStepsReadFull'),
                 style: TextStyle(color: Theme.of(context).hintColor),
               ),
             )
@@ -196,7 +205,7 @@ class CriticalStepsCard extends StatelessWidget {
                               color: NuvokColors.emergency, size: 18),
                           const SizedBox(width: 6),
                           Text(
-                            es ? 'NO HAGAS:' : 'DO NOT:',
+                            _t(context, 'criticalStepsDont'),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
@@ -316,16 +325,12 @@ class CriticalStepsCard extends StatelessWidget {
     return [text];
   }
 
-  String _detectLang(String title, String body) {
-    // Heuristic: if body contains common Spanish words, it's Spanish.
-    if (body.contains(' Qué ') ||
-        body.contains(' Qué ')) {
-      return 'es';
-    }
-    if (body.contains(' the ') || body.contains(' and ')) {
-      return 'en';
-    }
-    return 'es';
+  /// Rótulo en el idioma de la GUÍA, no en el de la app: si alguien abre la
+  /// versión japonesa, la tarjeta que la encabeza tiene que ir en japonés.
+  String _t(BuildContext context, String key) {
+    final l = lang;
+    if (l == null) return tr(context, key);
+    return AppStrings(AppLanguage.fromCode(l)).t(key);
   }
 }
 

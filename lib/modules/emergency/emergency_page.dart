@@ -164,7 +164,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
         actions: [
           if (compactBar)
             IconButton(
-              tooltip: 'MODO EMERGENCIA',
+              tooltip: tr(context, 'emergencyModeCta'),
               onPressed: () => setState(() => _emergencyMode = true),
               icon: const Icon(Icons.warning, color: NuvokColors.emergency),
             )
@@ -172,7 +172,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
             FilledButton.icon(
               onPressed: () => setState(() => _emergencyMode = true),
               icon: const Icon(Icons.warning, size: 18),
-              label: const Text('MODO EMERGENCIA'),
+              label: Text(tr(context, 'emergencyModeCta')),
               style: FilledButton.styleFrom(
                   backgroundColor: NuvokColors.emergencyDark),
             ),
@@ -220,9 +220,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                         style: const TextStyle(fontSize: 18),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.search),
-                          hintText: _lang == 'es'
-                              ? '¿Qué está pasando? (ej: no respira, sangrado…)'
-                              : 'What is happening? (e.g. not breathing…)',
+                          hintText: tr(context, 'egSearchHint'),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12)),
                         ),
@@ -466,7 +464,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          _lang == 'es' ? 'MODO EMERGENCIA' : 'EMERGENCY MODE',
+                          tr(context, 'emergencyModeCta'),
                           style: const TextStyle(
                             color: NuvokColors.white,
                             fontSize: 22,
@@ -523,7 +521,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
           Padding(
             padding: const EdgeInsets.only(right: 4),
             child: Text(
-              _lang == 'es' ? 'Acceso rápido:' : 'Quick access:',
+              tr(context, 'egQuickAccess'),
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
             ),
           ),
@@ -560,7 +558,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
     return ExpansionTile(
       leading: const Icon(Icons.phone_in_talk, color: NuvokColors.emergency),
       title: Text(
-        _lang == 'es' ? 'Teléfonos de emergencia' : 'Emergency numbers',
+        tr(context, 'egEmergencyPhones'),
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: Text('${current.flag} ${current.countryName}'),
@@ -571,7 +569,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
           child: DropdownButton<String>(
             value: _selectedCountry,
             hint: Text(
-                _lang == 'es' ? 'Selecciona tu país' : 'Select your country'),
+                tr(context, 'egSelectCountry')),
             isExpanded: true,
             items: [
               for (final c in countries)
@@ -622,7 +620,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                       IconButton(
                         icon: const Icon(Icons.phone, size: 20),
                         color: NuvokColors.safe,
-                        tooltip: _lang == 'es' ? 'Llamar' : 'Call',
+                        tooltip: tr(context, 'egCall'),
                         onPressed: () {
                           // Copy number to clipboard — the app can't dial
                           // directly on all platforms, but the user can paste.
@@ -684,41 +682,40 @@ class _EmergencyPageState extends State<EmergencyPage> {
   /// Full-screen panic mode: giant buttons for the most common emergencies,
   /// high contrast, accessible with trembling hands.
   Widget _buildPanicMode(BuildContext context) {
-    final es = _lang == 'es';
     final entries = <_PanicButton>[
       _PanicButton(
         icon: Icons.monitor_heart,
-        label: es ? 'NO RESPIRA\n(RCP)' : 'NOT BREATHING\n(CPR)',
+        label: tr(context, 'panicNotBreathing'),
         color: NuvokColors.emergencyDark,
         ids: ['rcp_adulto', 'rcp_nino_bebe'],
       ),
       _PanicButton(
         icon: Icons.air,
-        label: es ? 'ATRAGANTADO' : 'CHOKING',
+        label: tr(context, 'panicChoking'),
         color: NuvokColors.caution,
         ids: ['atragantamiento'],
       ),
       _PanicButton(
         icon: Icons.water_drop,
-        label: es ? 'SANGRADO\nFUERTE' : 'SEVERE\nBLEEDING',
+        label: tr(context, 'panicBleeding'),
         color: NuvokColors.emergency,
         ids: ['hemorragia_severa'],
       ),
       _PanicButton(
         icon: Icons.local_fire_department,
-        label: es ? 'QUEMADURA' : 'BURN',
+        label: tr(context, 'panicBurn'),
         color: const Color(0xFFD84315),
         ids: ['quemaduras'],
       ),
       _PanicButton(
         icon: Icons.personal_injury,
-        label: es ? 'FRACTURA\n/ GOLPE' : 'FRACTURE\n/ INJURY',
+        label: tr(context, 'panicFracture'),
         color: Colors.brown,
         ids: ['fracturas_inmovilizacion', 'trauma_cabeza_columna'],
       ),
       _PanicButton(
         icon: Icons.favorite,
-        label: es ? 'INFARTO\n/ DERRAME' : 'HEART\nATTACK',
+        label: tr(context, 'panicHeart'),
         color: NuvokColors.emergencyDeep,
         ids: ['infarto_acv'],
       ),
@@ -729,9 +726,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
       appBar: AppBar(
         backgroundColor: NuvokColors.black,
         title: Text(
-          es
-              ? '🚨 EMERGENCIA — toca lo que pasa'
-              : '🚨 EMERGENCY — tap what\'s wrong',
+          tr(context, 'panicTitle'),
           style: const TextStyle(
               color: NuvokColors.white,
               fontWeight: FontWeight.bold,
@@ -741,7 +736,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
           IconButton(
             icon: const Icon(Icons.close, color: NuvokColors.white),
             onPressed: () => setState(() => _emergencyMode = false),
-            tooltip: es ? 'Salir' : 'Exit',
+            tooltip: tr(context, 'panicExit'),
           ),
         ],
       ),
@@ -788,7 +783,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           children: [
             Text(
-                _lang == 'es' ? 'Teléfonos de emergencia' : 'Emergency numbers',
+                tr(context, 'egEmergencyPhones'),
                 style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),
             for (final s in current.services)
@@ -845,6 +840,8 @@ class _GuideReader extends StatelessWidget {
     widgets.add(CriticalStepsCard(
       title: guide.title,
       body: guide.body,
+      // La guía sabe su idioma; la tarjeta no tiene por qué adivinarlo.
+      lang: guide.lang,
     ));
 
     // Hero image — full-width, no card wrapper, no developer metadata.
@@ -1220,27 +1217,27 @@ class _PanicActionBar extends StatelessWidget {
               ),
               _PanicActionButton(
                 icon: Icons.monitor_heart,
-                label: _es ? 'RCP' : 'CPR',
+                label: tr(context, 'panicBarCpr'),
                 color: NuvokColors.emergency,
                 onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
                     builder: (_) => const RcpMetronomePage())),
               ),
               _PanicActionButton(
                 icon: Icons.flashlight_on,
-                label: _es ? 'Linterna' : 'Light',
+                label: tr(context, 'panicBarLight'),
                 color: NuvokColors.caution,
                 onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
                     builder: (_) => const FlashlightScreen())),
               ),
               _PanicActionButton(
                 icon: Icons.phone_in_talk,
-                label: _es ? 'Teléfonos' : 'Phones',
+                label: tr(context, 'panicBarPhones'),
                 color: NuvokColors.safe,
                 onTap: onShowPhones,
               ),
               _PanicActionButton(
                 icon: Icons.map,
-                label: _es ? 'Mapa' : 'Map',
+                label: tr(context, 'panicBarMap'),
                 color: NuvokColors.olive,
                 onTap: () => Navigator.of(context).push(
                     MaterialPageRoute<void>(builder: (_) => const MapsPage())),
@@ -1265,7 +1262,7 @@ class _PanicActionBar extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         icon: const Icon(Icons.sos, color: NuvokColors.emergency, size: 44),
-        title: Text(_es ? '¿Activar SOS?' : 'Activate SOS?'),
+        title: Text(tr(context, 'sosDialogTitle')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -1276,8 +1273,8 @@ class _PanicActionBar extends StatelessWidget {
             TextField(
               controller: noteCtrl,
               decoration: InputDecoration(
-                labelText: _es ? 'Nota opcional' : 'Optional note',
-                hintText: _es ? '¿Qué pasa?' : 'What is happening?',
+                labelText: tr(context, 'sosDialogNoteLabel'),
+                hintText: tr(context, 'sosDialogNoteHint'),
               ),
             ),
           ],
@@ -1285,13 +1282,13 @@ class _PanicActionBar extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text(_es ? 'Cancelar' : 'Cancel'),
+            child: Text(tr(context, 'sosDialogCancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
                 backgroundColor: NuvokColors.emergencyDark),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('ACTIVAR SOS'),
+            child: Text(tr(context, 'sosDialogConfirm')),
           ),
         ],
       ),
@@ -1300,7 +1297,7 @@ class _PanicActionBar extends StatelessWidget {
       await service.startSos(note: noteCtrl.text.trim());
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(_es ? 'SOS activado' : 'SOS activated')),
+          SnackBar(content: Text(tr(context, 'sosActivated'))),
         );
       }
     }
@@ -1387,7 +1384,7 @@ class _PanicUnknownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final label = lang == 'es' ? 'NO SÉ\nQUÉ PASA' : "I DON'T KNOW\nWHAT'S WRONG";
+    final label = tr(context, 'panicUnknown');
     return Semantics(
       button: true,
       label: label.replaceAll('\n', ' '),

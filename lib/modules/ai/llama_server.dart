@@ -5,6 +5,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
+
 import 'package:flutter/foundation.dart';
 
 enum LlamaStatus { stopped, starting, running, error }
@@ -46,6 +48,8 @@ class LlamaServer extends ChangeNotifier {
     return null;
   }
 
+  static const _memChannel = MethodChannel('nuvok/bundled_assets');
+
   /// Rough free-memory estimate used to warn before loading a big model.
   static Future<int?> freeRamBytes() async {
     try {
@@ -63,12 +67,21 @@ class LlamaServer extends ChangeNotifier {
             pages('Pages purgeable');
         return free * int.parse(pageSize);
       }
-      if (Platform.isLinux) {
+      // Android TAMBIÉN es Linux y tiene /proc/meminfo, pero Platform.isLinux
+      // es false ahí. Sin esta rama, freeRamBytes() devolvía null en todos los
+      // teléfonos Android y el guardián de RAM daba por bueno cualquier
+      // modelo: la tarjeta decía "Listo" para un .gguf de 4 GB en un teléfono
+      // de 3 GB y la app moría al cargarlo, sin explicación.
+      if (Platform.isLinux || Platform.isAndroid) {
         final meminfo = await File('/proc/meminfo').readAsString();
-        final kb = int.tryParse(
-            RegExp(r'MemAvailable:\s+(\d+) kB').firstMatch(meminfo)?.group(1) ??
-                '');
-        return kb == null ? null : kb * 1024;
+        return parseMemAvailable(meminfo);
+      }
+      if (Platform.isIOS) {
+        // iOS no expone /proc. os_proc_available_memory() da lo que este
+        // proceso puede pedir antes de que jetsam lo mate, que es justo el
+        // límite que importa.
+        final bytes = await _memChannel.invokeMethod<int>('freeRam');
+        return bytes == null || bytes <= 0 ? null : bytes;
       }
     } catch (_) {}
     return null;
@@ -224,4 +237,29 @@ class LlamaServer extends ChangeNotifier {
       client.close();
     }
   }
+}
+
+
+/// Memoria realmente disponible según /proc/meminfo, en bytes.
+///
+/// MemAvailable —no MemFree— es la cifra correcta: incluye la caché que el
+/// kernel puede soltar bajo presión. MemFree en un teléfono en uso es casi
+/// siempre pequeña y haría rechazar modelos que sí caben.
+int? parseMemAvailable(String meminfo) {
+  final m = RegExp(r'MemAvailable:\s+(\d+)\s*kB').firstMatch(meminfo);
+  if (m != null) {
+    final kb = int.tryParse(m.group(1)!);
+    if (kb != null) return kb * 1024;
+  }
+  // Kernels viejos (< 3.14) no traen MemAvailable. Aproximar con
+  // MemFree + Cached es mejor que rendirse y dar por bueno cualquier modelo.
+  int? field(String name) {
+    final f = RegExp('$name:\\s+(\\d+)\\s*kB').firstMatch(meminfo);
+    return f == null ? null : int.tryParse(f.group(1)!);
+  }
+
+  final free = field('MemFree');
+  if (free == null) return null;
+  final cached = field('Cached') ?? 0;
+  return (free + cached) * 1024;
 }

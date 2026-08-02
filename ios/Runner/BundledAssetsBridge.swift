@@ -1,6 +1,7 @@
 import CryptoKit
 import Flutter
 import Foundation
+import os
 
 /// iOS side of the `nuvok/bundled_assets` channel — mirror of the macOS
 /// implementation in MainFlutterWindow.swift. Streams a bundled asset (e.g.
@@ -26,6 +27,20 @@ enum BundledAssetsBridge {
         let values = try? URL(fileURLWithPath: path)
           .resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
         result(values?.volumeAvailableCapacityForImportantUsage)
+        return
+      }
+      // Memoria que ESTE proceso puede pedir todavía antes de que jetsam lo
+      // mate. Es el límite que decide si un modelo de IA cabe: iOS no expone
+      // /proc/meminfo, así que sin esto el guardián de RAM daba por bueno
+      // cualquier .gguf y la app moría al cargarlo, sin explicación.
+      //
+      // La memoria libre del SISTEMA no serviría aquí: iOS no la reparte así.
+      if call.method == "freeRam" {
+        if #available(iOS 13.0, *) {
+          result(Int(os_proc_available_memory()))
+        } else {
+          result(nil)
+        }
         return
       }
       guard call.method == "copyAsset" else {

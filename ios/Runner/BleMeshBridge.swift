@@ -105,6 +105,13 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
                 NSLog("PPMESH start requested, authorization=%d", CBManager.authorization.rawValue)
                 if CBManager.authorization == .denied || CBManager.authorization == .restricted {
                     NSLog("PPMESH bluetooth DENIED — radios not started")
+                    // DECIRLO. Antes se devolvía false en silencio: como los
+                    // managers no se crean, centralManagerDidUpdateState nunca
+                    // corre y el estado 'unauthorized' no se emitía nunca. La
+                    // malla mostraba "buscando pares" para siempre y el usuario
+                    // no tenía forma de saber que su Bluetooth estaba denegado
+                    // ni que la malla estaba muerta.
+                    emitState("unauthorized")
                     result(false)
                     return
                 }
@@ -239,9 +246,25 @@ class BleMeshBridge: NSObject, FlutterStreamHandler {
         }
     }
 
+    /// Último estado del adaptador. Se guarda porque el estado puede quedar
+    /// decidido ANTES de que Dart se suscriba al canal de eventos: un evento
+    /// emitido sin oyente se pierde, y el transporte se quedaba mostrando
+    /// "buscando" para siempre en vez de "sin permiso".
+    private var lastState: String?
+
+    private func emitState(_ value: String) {
+        lastState = value
+        emit(["type": "state", "value": value])
+    }
+
     // MARK: FlutterStreamHandler
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         sink = events
+        // Reemitir lo que ya sabíamos: quien se suscribe tarde tiene el mismo
+        // derecho a enterarse de que el Bluetooth está denegado.
+        if let value = lastState {
+            emit(["type": "state", "value": value])
+        }
         return nil
     }
 
@@ -271,10 +294,10 @@ extension BleMeshBridge: CBCentralManagerDelegate, CBPeripheralDelegate {
         NSLog("PPMESH central state=%d", central.state.rawValue)
         // Estado del adaptador → {type:'state'} para TransportHealth en Dart.
         switch central.state {
-        case .poweredOn: emit(["type": "state", "value": "on"])
-        case .poweredOff: emit(["type": "state", "value": "off"])
-        case .unauthorized: emit(["type": "state", "value": "unauthorized"])
-        case .unsupported: emit(["type": "state", "value": "unsupported"])
+        case .poweredOn: emitState("on")
+        case .poweredOff: emitState("off")
+        case .unauthorized: emitState("unauthorized")
+        case .unsupported: emitState("unsupported")
         default: break
         }
         startScanningIfReady()

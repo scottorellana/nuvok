@@ -297,6 +297,28 @@ void main() {
       await t.stop();
     });
 
+    test('sin permiso, el transporte NO cuenta como vía disponible', () async {
+      // El indicador de preparación pregunta esto para decir si el equipo
+      // está listo. Si un transporte sin permiso contara como disponible,
+      // la app diría "listo" con la malla muerta — que es justo lo que hacía
+      // en iOS, donde el estado 'unauthorized' no se emitía nunca.
+      final link = _FakeBleLink(available: true);
+      final t = BleTransport(link: link);
+      await t.start();
+
+      link.stateCtrl.add('unauthorized');
+      await Future<void>.delayed(Duration.zero);
+
+      expect(
+          t.health.value.state == TransportState.searching ||
+              t.health.value.state == TransportState.connected,
+          isFalse,
+          reason: 'con el Bluetooth denegado la malla no busca nada');
+      expect(t.health.value.hint, 'bluetooth_permission',
+          reason: 'sin pista, el usuario no sabe QUÉ arreglar');
+      await t.stop();
+    });
+
     test('adaptador ausente → salud unavailable con hint', () async {
       final t = BleTransport(link: _FakeBleLink(available: false));
       await t.start();

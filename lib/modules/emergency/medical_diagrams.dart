@@ -48,11 +48,30 @@ List<String> extractCriticalSteps(String body) {
     text = text.replaceAllMapped(RegExp(r'\*\*(.+?)\*\*'), (m) => m.group(1)!);
     text = text.split(RegExp(r'\s+[—–-]\s')).first.trim();
     text = text.replaceAll('|', '').trim();
-    if (text.isEmpty || text.length <= 3) continue;
+    if (text.isEmpty || _tooShortToBeAStep(text)) continue;
     steps.add(_condense(text));
     started = true;
   }
   return steps;
+}
+
+/// Escrituras donde un solo signo ya es una palabra: han, kana y hangul.
+final _cjkScript =
+    RegExp(r'[\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uAC00-\uD7AF]');
+
+/// ¿Es esto basura de formato en vez de una instrucción?
+///
+/// El listón de 3 caracteres se escribió mirando español e inglés, donde lo
+/// que mide 3 es "a." o "1)". En chino y japonés una instrucción CLÍNICA
+/// COMPLETA cabe en dos signos — 冷却 (enfriar), 覆盖 (cubrir) — y el mismo
+/// filtro que limpia basura latina borraba pasos que salvan: sobre los assets
+/// reales, un usuario chino veía 3 pasos de terremoto en vez de 5.
+///
+/// La basura de formato sigue siendo latina incluso dentro de un documento
+/// CJK, así que el filtro conserva todo su valor donde de verdad hace falta.
+bool _tooShortToBeAStep(String text) {
+  if (_cjkScript.hasMatch(text)) return false;
+  return text.length <= 3;
 }
 
 /// Oraciones que contienen una cifra clínica: ritmo, profundidad, tiempo,
@@ -292,9 +311,8 @@ class CriticalStepsCard extends StatelessWidget {
         .trim();
     // Keep only the short action, not the trailing explanation.
     text = text.split(RegExp(r'\s+[—–-]\s')).first.trim();
-    if (text.isEmpty || text.length <= 2 || text.length >= 100) {
-      return const [];
-    }
+    if (text.isEmpty || text.length >= 100) return const [];
+    if (_tooShortToBeAStep(text)) return const [];
     return [text];
   }
 

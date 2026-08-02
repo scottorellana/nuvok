@@ -94,6 +94,16 @@ class MeshService {
 
   bool get hasIdentity => (identity ??= MeshIdentity.load(dirPath)) != null;
 
+  /// ¿Queda alguna vía por la que este equipo pueda alcanzar a otro?
+  ///
+  /// Basta UNA: en escritorio no hay BLE pero sí LAN, y en un teléfono con el
+  /// wifi caído queda el Bluetooth. Buscar sin encontrar todavía (searching)
+  /// cuenta como disponible — la radio está viva y es lo que se puede
+  /// diagnosticar; que no haya nadie cerca no es un fallo del equipo.
+  bool get anyTransportAvailable => transportHealths.value.any((h) =>
+      h.state == TransportState.searching ||
+      h.state == TransportState.connected);
+
   /// Boot the mesh with zero setup: mint an automatic identity on first run,
   /// then start. Called at app launch so EVERY Nuvok is discoverable
   /// from the moment it opens — nobody is invisible for not having configured

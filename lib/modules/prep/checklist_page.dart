@@ -8,6 +8,9 @@
 import 'package:flutter/material.dart';
 
 import 'checklist.dart';
+import '../../core/shell_nav.dart';
+import 'readiness.dart';
+import 'readiness_card.dart';
 import '../../core/locale_service.dart';
 
 class ChecklistPage extends StatefulWidget {
@@ -18,6 +21,26 @@ class ChecklistPage extends StatefulWidget {
 }
 
 class _ChecklistPageState extends State<ChecklistPage> {
+  /// Lleva al usuario a donde puede resolver lo que le falta. Un diagnóstico
+  /// que solo da malas noticias y ninguna salida es peor que no darlo: quien
+  /// lee "sin mapas no sabrás dónde estás" necesita el botón, no el susto.
+  void _openFor(BuildContext context, ReadinessArea area) {
+    switch (area) {
+      case ReadinessArea.ai:
+        ShellNav.goDepot(tab: ShellNav.depotTabModels);
+      case ReadinessArea.maps:
+        ShellNav.goDepot(tab: ShellNav.depotTabMaps);
+      case ReadinessArea.library:
+        ShellNav.goDepot(tab: ShellNav.depotTabLibrary);
+      case ReadinessArea.mesh:
+        // Comunicación: ahí se ve por qué la radio no está viva (Bluetooth
+        // apagado, permiso denegado) y se arregla.
+        ShellNav.go(ShellNav.comms);
+      case ReadinessArea.battery:
+        ShellNav.go(ShellNav.tools);
+    }
+  }
+
   final _progress = ChecklistProgress.instance;
 
   @override
@@ -98,6 +121,12 @@ class _ChecklistPageState extends State<ChecklistPage> {
               ),
             ),
           ),
+
+          const SizedBox(height: 8),
+          // El estado del EQUIPO, junto al de la despensa: de nada sirve tener
+          // agua para tres días si el día del apagón descubres que nunca
+          // descargaste el modelo ni los mapas de tu ciudad.
+          ReadinessCard(onFix: (area) => _openFor(context, area)),
 
           // Expiry alerts
           if (expired.isNotEmpty || expiring.isNotEmpty) ...[

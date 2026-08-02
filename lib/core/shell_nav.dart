@@ -17,10 +17,21 @@ class ShellNav {
 
   /// Module indexes as wired in HomeShell._pages.
   static const int maps = 3;
+  static const int comms = 4;
+  static const int tools = 6;
   static const int depot = 8;
+
+  /// Pestañas del Depósito, en el orden en que las pinta DepotPage.
+  static const int depotTabLibrary = 1;
+  static const int depotTabModels = 2;
+  static const int depotTabMaps = 3;
 
   static void goDepot({int tab = 0}) =>
       request.value = ShellNavRequest(depot, depotTab: tab);
 
   static void goMaps() => request.value = const ShellNavRequest(maps);
+
+  /// Salto genérico a un módulo del shell.
+  static void go(int moduleIndex) =>
+      request.value = ShellNavRequest(moduleIndex);
 }

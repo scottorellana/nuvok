@@ -11,6 +11,7 @@ void main() {
     bool meshIdentity = true,
     bool meshRadioAvailable = true,
     int batteryLevel = 90,
+    bool locationGranted = true,
   }) =>
       assessReadiness(
         aiModels: aiModels,
@@ -19,6 +20,7 @@ void main() {
         meshIdentity: meshIdentity,
         meshRadioAvailable: meshRadioAvailable,
         batteryLevel: batteryLevel,
+        locationGranted: locationGranted,
       );
 
   test('con todo instalado, listo', () {
@@ -26,6 +28,14 @@ void main() {
     expect(r.level, ReadinessLevel.ready);
     expect(r.score, 100);
     expect(r.missing, isEmpty);
+  });
+
+  test('sin permiso de ubicación NO está listo: te oyen sin saber dónde', () {
+    final r = report(locationGranted: false);
+    expect(r.level, ReadinessLevel.notReady,
+        reason: 'un SOS sin coordenadas es un grito sin dirección, y nadie '
+            'pide ese permiso hasta el día que hace falta');
+    expect(r.missing.single.area, ReadinessArea.location);
   });
 
   test('sin malla NO está listo, por mucho que tenga lo demás', () {
@@ -62,7 +72,7 @@ void main() {
     final areas = report().items.map((i) => i.area).toSet();
     expect(areas.length, report().items.length, reason: 'áreas duplicadas');
     expect(areas, isNot(contains(null)));
-    expect(report().items, hasLength(5));
+    expect(report().items, hasLength(6));
   });
 
   test('el marcador refleja cuánto falta, no solo si falta algo', () {
@@ -71,9 +81,10 @@ void main() {
         offlineMaps: 0,
         libraryFiles: 0,
         meshRadioAvailable: false,
-        batteryLevel: 5);
+        batteryLevel: 5,
+        locationGranted: false);
     expect(vacio.score, 0);
     expect(vacio.level, ReadinessLevel.notReady);
-    expect(report(aiModels: 0, offlineMaps: 0).score, 60);
+    expect(report(aiModels: 0, offlineMaps: 0).score, 67);
   });
 }

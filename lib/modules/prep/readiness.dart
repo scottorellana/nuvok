@@ -24,6 +24,11 @@ enum ReadinessArea {
 
   /// Batería: en un apagón es literalmente el recurso que se agota.
   battery,
+
+  /// Permiso de ubicación. Sin él el SOS sale sin coordenadas: te oyen pero
+  /// no saben dónde estás, y nadie pide ese permiso hasta el día que hace
+  /// falta — es decir, tarde.
+  location,
 }
 
 class ReadinessItem {
@@ -74,12 +79,17 @@ ReadinessReport assessReadiness({
   required bool meshIdentity,
   required bool meshRadioAvailable,
   required int batteryLevel,
+  required bool locationGranted,
 }) {
   return ReadinessReport([
     // La malla es lo único que no tiene sustituto: sin ella estás solo,
     // por muchas guías que tengas.
     ReadinessItem(ReadinessArea.mesh,
         ok: meshIdentity && meshRadioAvailable, essential: true),
+    // Esencial junto con la malla: de nada sirve que te oigan si el SOS sale
+    // sin un solo dato de dónde estás.
+    ReadinessItem(ReadinessArea.location,
+        ok: locationGranted, essential: true),
     ReadinessItem(ReadinessArea.ai, ok: aiModels > 0, essential: false),
     ReadinessItem(ReadinessArea.maps, ok: offlineMaps > 0, essential: false),
     ReadinessItem(ReadinessArea.library,

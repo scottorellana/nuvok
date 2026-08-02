@@ -379,18 +379,39 @@ class _MeshPageState extends State<MeshPage> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.sos, color: Colors.white, size: 32),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          tr(context, 'sosActiveDesc'),
-                          style: const TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                  // El cartel decía "difundiendo tu posición" también cuando
+                  // el SOS salía sin coordenadas: la persona se quedaba quieta
+                  // esperando a que la encontraran con un dato que nunca salió.
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _service.sosHasPosition,
+                    builder: (context, hasFix, _) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(hasFix ? Icons.sos : Icons.location_off,
+                                color: Colors.white, size: 32),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                tr(context,
+                                    hasFix ? 'sosActiveDesc' : 'sosActiveNoFix'),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        if (!hasFix) ...[
+                          const SizedBox(height: 6),
+                          Text(
+                            tr(context, 'sosNoFixHint'),
+                            style: const TextStyle(color: Colors.white70),
+                          ),
+                        ],
+                      ],
+                    ),
                   ),
                   // ¿Alguien me oyó? Sin esta línea, quien pide auxilio no
                   // sabe si quedarse donde está o caminar a buscar ayuda.

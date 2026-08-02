@@ -72,6 +72,16 @@ class MeshService {
   final ValueNotifier<bool> running = ValueNotifier(false);
   final ValueNotifier<bool> sosActive = ValueNotifier(false);
 
+  /// ¿El SOS que estamos emitiendo lleva coordenadas?
+  ///
+  /// Con el permiso de ubicación denegado, el GPS apagado o sin fijar bajo
+  /// techo, el SOS sale igual —un grito sin coordenadas vale más que ningún
+  /// grito— pero SIN lat/lon: en el receptor nunca se convierte en un punto
+  /// del mapa. La UI decía "difundiendo tu posición" en los dos casos, así que
+  /// la persona se quedaba quieta esperando a que la encontraran con un dato
+  /// que nunca salió. Esto es lo que le permite enterarse.
+  final ValueNotifier<bool> sosHasPosition = ValueNotifier(false);
+
   /// Cuántos vecinos DISTINTOS han confirmado haber recibido mi SOS activo.
   /// 0 = nadie lo ha acusado todavía; la UI no debe fingir lo contrario.
   final ValueNotifier<int> sosHeardBy = ValueNotifier(0);
@@ -617,6 +627,7 @@ class MeshService {
     final router = _router;
     if (identity == null || router == null || !sosActive.value) return;
     final fix = await LocationService.current();
+    sosHasPosition.value = fix.isOk;
     final env = await _envelope(
       MeshChannel.emergency,
       MeshType.sos,
@@ -635,11 +646,16 @@ class MeshService {
     await router.broadcast(env);
   }
 
+  /// Fuerza un ciclo de emisión sin esperar al temporizador de 60 s.
+  @visibleForTesting
+  Future<void> debugBroadcastSosNow() => _broadcastSos();
+
   Future<void> cancelSos() async {
     _sosTimer?.cancel();
     _sosTimer = null;
     sosActive.value = false;
     sosHeardBy.value = 0;
+    sosHasPosition.value = false;
     final last = _lastSosMsgId;
     if (last != null) sosReceipts.clear('${identity?.id}:$last');
     _lastSosMsgId = null;

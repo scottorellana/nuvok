@@ -764,6 +764,27 @@ class AppStrings {
       'ht': 'Tchate, pataje pozisyon ou epi voye SOS ant aparèy toupre SANS entènèt '
           '(menm rezo WiFi oswa hotspot). Ki jan ou vle lòt moun wè ou?',
     },
+    // Cuando el SOS sale SIN coordenadas (permiso denegado, GPS apagado, sin
+    // fijar bajo techo). Decir "difundiendo tu posición" en ese caso hacía
+    // que la persona se quedara quieta esperando un dato que nunca salió.
+    'sosActiveNoFix': {
+      'es': 'SOS ACTIVO — pero SIN tu ubicación. Te oyen, no saben dónde estás.',
+      'en': 'SOS ACTIVE — but WITHOUT your location. They hear you, they do not know where you are.',
+      'pt': 'SOS ATIVO — mas SEM a sua localização. Ouvem-no, não sabem onde está.',
+      'fr': "SOS ACTIF — mais SANS votre position. On vous entend, on ne sait pas où vous êtes.",
+      'zh': 'SOS激活 — 但没有你的位置。他们听得到你，却不知道你在哪里。',
+      'ja': 'SOS作動中 — ただし位置情報なし。声は届いても居場所は伝わりません。',
+      'ht': 'SOS AKTIF — men SAN kote ou ye. Yo tande ou, yo pa konnen kote ou ye.',
+    },
+    'sosNoFixHint': {
+      'es': 'Activa la ubicación y no te muevas: en cuanto el GPS fije, tu posición sale sola.',
+      'en': 'Turn on location and stay put: as soon as the GPS locks, your position goes out on its own.',
+      'pt': 'Ative a localização e fique parado: assim que o GPS fixar, a sua posição sai sozinha.',
+      'fr': "Activez la localisation et ne bougez pas : dès que le GPS accroche, votre position part toute seule.",
+      'zh': '打开定位并原地不动：GPS一旦定位，你的位置会自动发出。',
+      'ja': '位置情報をオンにして動かないでください。GPSが測位でき次第、位置は自動で送信されます。',
+      'ht': 'Limen lokalizasyon an epi pa deplase: kou GPS la jwenn ou, pozisyon ou pati pou kont li.',
+    },
     'sosActiveDesc': {
       'es': 'SOS ACTIVO — difundiendo tu posición cada minuto a todos los dispositivos al alcance.',
       'en': 'SOS ACTIVE — broadcasting your position every minute to all devices in range.',

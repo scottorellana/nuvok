@@ -36,6 +36,10 @@ class _ChecklistPageState extends State<ChecklistPage> {
         // Comunicación: ahí se ve por qué la radio no está viva (Bluetooth
         // apagado, permiso denegado) y se arregla.
         ShellNav.go(ShellNav.comms);
+      case ReadinessArea.location:
+        // Comunicación: es donde se enciende el compartir posición y donde el
+        // sistema acaba pidiendo el permiso de ubicación.
+        ShellNav.go(ShellNav.comms);
       case ReadinessArea.battery:
         ShellNav.go(ShellNav.tools);
     }

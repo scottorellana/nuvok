@@ -2,6 +2,7 @@
 // error states so the map UI can guide the user (services off, permission
 // denied) instead of failing silently. Works fully offline — GPS needs no
 // internet, only the device's own location hardware.
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 enum LocationStatus {
@@ -63,8 +64,41 @@ class LocationService {
     }
   }
 
+  /// ¿Tenemos ya el permiso, sin PEDIRLO?
+  ///
+  /// El indicador de preparación pregunta esto en frío: sacar el diálogo del
+  /// sistema mientras alguien mira su lista de preparación sería justo el tipo
+  /// de interrupción que enseña a decir "no" por reflejo — y ese "no" es el
+  /// que luego deja el SOS sin coordenadas.
+  static Future<bool> hasPermission() async {
+    final override = debugHasPermission;
+    if (override != null) return override();
+    try {
+      if (!await Geolocator.isLocationServiceEnabled()) return false;
+      final p = await Geolocator.checkPermission();
+      return p == LocationPermission.always ||
+          p == LocationPermission.whileInUse;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  @visibleForTesting
+  static Future<bool> Function()? debugHasPermission;
+
+  /// Costura de pruebas: permite simular permiso denegado o un GPS que no
+  /// fija, que son los casos donde el SOS sale sin coordenadas.
+  @visibleForTesting
+  static Future<LocationResult> Function()? debugCurrent;
+
   /// One-shot high-accuracy fix.
   static Future<LocationResult> current() async {
+    final override = debugCurrent;
+    if (override != null) return override();
+    return _current();
+  }
+
+  static Future<LocationResult> _current() async {
     final status = await ensurePermission();
     if (status != LocationStatus.ok) return LocationResult(status);
     try {
@@ -102,3 +136,19 @@ class LocationService {
     return Geolocator.bearingBetween(lat1, lon1, lat2, lon2);
   }
 }
+
+/// Posición sintética para pruebas: construir un Position real exige una
+/// docena de campos que no aportan nada al caso bajo prueba.
+@visibleForTesting
+Position debugPosition({required double lat, required double lon}) => Position(
+      latitude: lat,
+      longitude: lon,
+      timestamp: DateTime.fromMillisecondsSinceEpoch(0),
+      accuracy: 5,
+      altitude: 0,
+      altitudeAccuracy: 0,
+      heading: 0,
+      headingAccuracy: 0,
+      speed: 0,
+      speedAccuracy: 0,
+    );

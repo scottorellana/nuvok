@@ -3,11 +3,14 @@
 //
 // Lee el inventario real de la biblioteca y la malla; la decisión vive en
 // readiness.dart, que es lógica pura y testeable.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../core/locale_service.dart';
 import '../../core/nuvok_colors.dart';
 import '../../core/nuvok_library.dart';
+import '../maps/location_service.dart';
 import '../mesh/mesh_service.dart';
 import '../tools/battery_saver.dart';
 import 'readiness.dart';
@@ -26,18 +29,23 @@ class ReadinessCard extends StatefulWidget {
 class _ReadinessCardState extends State<ReadinessCard> {
   ReadinessReport? _report;
 
+  /// Último valor conocido del permiso de ubicación; null = aún sin saber.
+  bool? _locationGranted;
+
   @override
   void initState() {
     super.initState();
     _assess();
-    BatterySaverController.instance.addListener(_assess);
+    BatterySaverController.instance.addListener(_onBattery);
   }
 
   @override
   void dispose() {
-    BatterySaverController.instance.removeListener(_assess);
+    BatterySaverController.instance.removeListener(_onBattery);
     super.dispose();
   }
+
+  void _onBattery() => _assess();
 
   void _assess() {
     // TODO el inventario va dentro del try, incluido llegar al singleton:
@@ -45,7 +53,7 @@ class _ReadinessCardState extends State<ReadinessCard> {
     // en initState no tumba la tarjeta, tumba la pantalla de Preparación
     // entera. Un diagnóstico que se cae es peor que no tener diagnóstico.
     var ai = 0, maps = 0, books = 0;
-    var identity = false, radio = false, battery = -1;
+    var identity = false, radio = false, battery = -1, location = false;
     try {
       final lib = NuvokLibrary.instance;
       ai = lib.listModels().length;
@@ -66,6 +74,18 @@ class _ReadinessCardState extends State<ReadinessCard> {
       battery = BatterySaverController.instance.batteryLevel;
     } catch (_) {}
 
+    // El permiso se consulta a la plataforma y eso es asíncrono. La tarjeta
+    // NO espera a ese dato para pintarse: si el canal nativo tarda o no
+    // responde, un diagnóstico invisible no diagnostica nada. Mientras no se
+    // sepa se asume concedido — misma política que la batería desconocida:
+    // callar antes que acusar de algo que no hemos comprobado.
+    location = _locationGranted ?? true;
+    unawaited(LocationService.hasPermission().then((granted) {
+      if (!mounted || granted == _locationGranted) return;
+      _locationGranted = granted;
+      _assess();
+    }).catchError((_) {}));
+
     final report = assessReadiness(
       aiModels: ai,
       offlineMaps: maps,
@@ -73,6 +93,7 @@ class _ReadinessCardState extends State<ReadinessCard> {
       meshIdentity: identity,
       meshRadioAvailable: radio,
       batteryLevel: battery,
+      locationGranted: location,
     );
     if (mounted) setState(() => _report = report);
   }
@@ -190,6 +211,12 @@ class _MissingRow extends StatelessWidget {
             es
                 ? 'Sin biblioteca: solo tendrás las guías de emergencia'
                 : 'No library: only the emergency guides',
+          ),
+        ReadinessArea.location => (
+            Icons.location_off,
+            es
+                ? 'Sin permiso de ubicación: tu SOS sale sin decir dónde estás'
+                : 'No location permission: your SOS goes out without saying where you are',
           ),
         ReadinessArea.battery => (
             Icons.battery_alert,

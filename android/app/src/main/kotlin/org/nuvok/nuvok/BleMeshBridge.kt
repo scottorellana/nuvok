@@ -71,6 +71,16 @@ class BleMeshBridge(
     // Política de energía (la fija Dart con setPowerMode). Por defecto
     // "balanced": nunca arrancamos a máxima potencia sin saber la batería.
     private var powerMode = "balanced"
+
+    // Ajustes del ANUNCIO, que los decide Dart (advertisePlanFor).
+    //
+    // Antes estaban clavados en LOW_LATENCY + TX_MEDIUM: el teléfono anunciaba
+    // cada ~100 ms aunque la batería estuviera al 5%, y a la vez anunciaba con
+    // potencia media justo cuando había un SOS y lo que hacía falta era
+    // alcance. Peor todavía, applyPowerMode solo reiniciaba el escaneo, así
+    // que el anuncio se quedaba con los ajustes del arranque para siempre.
+    private var advertiseModeName = "balanced"
+    private var advertiseTxPowerName = "medium"
     private var dutyOnMs = 3000
     private var dutyOffMs = 2000
     private var dutyRunnable = Runnable {}
@@ -153,6 +163,8 @@ class BleMeshBridge(
                     call.argument<String>("mode") ?: "balanced",
                     call.argument<Int>("onMs") ?: 3000,
                     call.argument<Int>("offMs") ?: 2000,
+                    call.argument<String>("advertiseMode") ?: "balanced",
+                    call.argument<String>("advertiseTxPower") ?: "medium",
                 )
                 result.success(true)
             }
@@ -288,8 +300,8 @@ class BleMeshBridge(
         if (advertising) return
         val advertiser = adapter.bluetoothLeAdvertiser ?: return
         val settings = AdvertiseSettings.Builder()
-            .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
-            .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_MEDIUM)
+            .setAdvertiseMode(androidAdvertiseMode())
+            .setTxPowerLevel(androidTxPower())
             .setConnectable(true)
             .build()
         val data = AdvertiseData.Builder()
@@ -328,6 +340,34 @@ class BleMeshBridge(
         else -> ScanSettings.SCAN_MODE_LOW_POWER // saver / critical
     }
 
+    /** Frecuencia del anuncio según el plan que fija Dart. */
+    private fun androidAdvertiseMode(): Int = when (advertiseModeName) {
+        "lowLatency" -> AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY
+        "lowPower" -> AdvertiseSettings.ADVERTISE_MODE_LOW_POWER
+        else -> AdvertiseSettings.ADVERTISE_MODE_BALANCED
+    }
+
+    /** Potencia de transmisión del anuncio: alcance a cambio de batería. */
+    private fun androidTxPower(): Int = when (advertiseTxPowerName) {
+        "high" -> AdvertiseSettings.ADVERTISE_TX_POWER_HIGH
+        "low" -> AdvertiseSettings.ADVERTISE_TX_POWER_LOW
+        else -> AdvertiseSettings.ADVERTISE_TX_POWER_MEDIUM
+    }
+
+    /**
+     * Reanuncia con los ajustes nuevos. Android no deja cambiar un anuncio en
+     * marcha: hay que pararlo y volver a arrancarlo.
+     */
+    @SuppressLint("MissingPermission")
+    private fun restartAdvertising(adapter: android.bluetooth.BluetoothAdapter) {
+        if (!advertising) return
+        try {
+            adapter.bluetoothLeAdvertiser?.stopAdvertising(advertiseCallback)
+        } catch (_: Throwable) {}
+        advertising = false
+        startAdvertising(adapter)
+    }
+
     /**
      * Ciclo de escucha: apaga la radio [dutyOffMs] y la reenciende, para no
      * fundir la batería escaneando sin parar. offMs = 0 → escucha continua
@@ -355,10 +395,20 @@ class BleMeshBridge(
 
     /** Aplica un modo de energía nuevo: reinicia el escaneo con los ajustes. */
     @SuppressLint("MissingPermission")
-    fun applyPowerMode(mode: String, onMs: Int, offMs: Int) {
+    fun applyPowerMode(
+        mode: String,
+        onMs: Int,
+        offMs: Int,
+        advertiseMode: String = "balanced",
+        advertiseTxPower: String = "medium",
+    ) {
         powerMode = mode
         dutyOnMs = onMs.coerceAtLeast(500)
         dutyOffMs = offMs.coerceAtLeast(0)
+        val advChanged =
+            advertiseMode != advertiseModeName || advertiseTxPower != advertiseTxPowerName
+        advertiseModeName = advertiseMode
+        advertiseTxPowerName = advertiseTxPower
         val adapter = bluetoothManager?.adapter ?: return
         if (!radiosWanted) return
         try {
@@ -368,6 +418,8 @@ class BleMeshBridge(
                 scanning = false
             }
             startScanning(adapter)
+            // Solo si cambió: reanunciar corta el descubrimiento un instante.
+            if (advChanged) restartAdvertising(adapter)
         } catch (_: Throwable) {}
     }
 

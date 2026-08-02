@@ -76,11 +76,16 @@ class MeshPowerController {
   }
 
   Future<void> _push(PowerMode mode, DutyCycle duty) async {
+    // El anuncio viaja con el escaneo: son las dos mitades de la misma radio
+    // y antes solo una obedecía la política.
+    final adv = advertisePlanFor(mode, sosActive: _sosActive);
     try {
       await _ble.invokeMethod<bool>('setPowerMode', {
         'mode': mode.name,
         'onMs': duty.onMs,
         'offMs': duty.offMs,
+        'advertiseMode': adv.modeName,
+        'advertiseTxPower': adv.txPowerName,
       });
     } on MissingPluginException {
       // Plataforma sin puente BLE (tests, escritorio): la malla sigue por LAN.

@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nuvok/modules/mesh/power_policy.dart';
 
 void main() {
+  _advertisePlanTests();
   group('resolvePowerMode — franjas de batería', () {
     test('cargando o batería alta → rendimiento (escucha continua)', () {
       expect(resolvePowerMode(batteryLevel: 80, charging: false),
@@ -71,6 +72,55 @@ void main() {
         expect(dutyCycleFor(m).onMs, greaterThan(0),
             reason: '$m dejaría la radio sorda');
       }
+    });
+  });
+}
+
+/// El ANUNCIO (advertising) es la otra mitad de la radio y se le había
+/// olvidado la política: en Android estaba clavado en ADVERTISE_MODE_LOW_LATENCY
+/// con potencia media, sin importar si la batería estaba al 5% o si había un
+/// SOS en curso. Dos errores en direcciones opuestas: fundía la batería
+/// agonizando, y anunciaba flojo justo cuando alguien pedía auxilio.
+void _advertisePlanTests() {
+  group('plan de anuncio BLE', () {
+    test('con la batería agonizando el anuncio también se frena', () {
+      final p = advertisePlanFor(PowerMode.critical, sosActive: false);
+      expect(p.mode, AdvertiseRate.lowPower,
+          reason: 'anunciar cada 100ms al 5% de batería la funde');
+      expect(p.txPower, AdvertiseTxPower.low);
+    });
+
+    test('en ahorro baja, sin llegar al mínimo del modo crítico', () {
+      final p = advertisePlanFor(PowerMode.saver, sosActive: false);
+      expect(p.mode, AdvertiseRate.lowPower);
+    });
+
+    test('el equilibrio por defecto no va a máxima frecuencia', () {
+      final p = advertisePlanFor(PowerMode.balanced, sosActive: false);
+      expect(p.mode, AdvertiseRate.balanced);
+    });
+
+    test('con SOS activo manda el alcance, no la batería', () {
+      for (final m in PowerMode.values) {
+        final p = advertisePlanFor(m, sosActive: true);
+        expect(p.mode, AdvertiseRate.lowLatency,
+            reason: 'quien pide auxilio quiere que lo encuentren YA ($m)');
+        expect(p.txPower, AdvertiseTxPower.high,
+            reason: 'potencia media recorta el alcance justo cuando importa');
+      }
+    });
+
+    test('el plan viaja al canal como texto estable', () {
+      // Kotlin/Swift traducen estas cadenas: si cambian, el nativo deja de
+      // entenderlas en silencio y vuelve al valor por defecto.
+      expect(advertisePlanFor(PowerMode.critical, sosActive: false).modeName,
+          'lowPower');
+      expect(advertisePlanFor(PowerMode.balanced, sosActive: false).modeName,
+          'balanced');
+      expect(advertisePlanFor(PowerMode.balanced, sosActive: true).modeName,
+          'lowLatency');
+      expect(advertisePlanFor(PowerMode.balanced, sosActive: true).txPowerName,
+          'high');
     });
   });
 }

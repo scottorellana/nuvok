@@ -69,3 +69,47 @@ DutyCycle dutyCycleFor(PowerMode mode) => switch (mode) {
       PowerMode.saver => const DutyCycle(onMs: 2000, offMs: 8000),
       PowerMode.critical => const DutyCycle(onMs: 1000, offMs: 15000),
     };
+
+/// Frecuencia del ANUNCIO BLE. Anunciar es lo que hace que otros te
+/// descubran; cuanto más seguido, antes te encuentran y más batería cuesta.
+enum AdvertiseRate { lowLatency, balanced, lowPower }
+
+/// Potencia de transmisión del anuncio: alcance a cambio de batería.
+enum AdvertiseTxPower { high, medium, low }
+
+/// Ajustes de radio para anunciarse.
+class AdvertisePlan {
+  const AdvertisePlan(this.mode, this.txPower);
+  final AdvertiseRate mode;
+  final AdvertiseTxPower txPower;
+
+  /// Nombres estables que cruzan el MethodChannel hacia Kotlin/Swift.
+  String get modeName => mode.name;
+  String get txPowerName => txPower.name;
+}
+
+/// Cómo debe anunciarse la radio.
+///
+/// El escaneo ya seguía la política; el anuncio se había quedado clavado en
+/// máxima frecuencia y potencia media, pasara lo que pasara. Eso fallaba en
+/// las dos direcciones: fundía una batería agonizando anunciando cada 100 ms,
+/// y a la vez anunciaba flojo justo cuando alguien pedía auxilio.
+///
+/// Con SOS activo manda el alcance sobre la batería, igual que en
+/// [resolvePowerMode]: un teléfono que cuida la carga y se pierde el rescate
+/// no sirve de nada.
+AdvertisePlan advertisePlanFor(PowerMode mode, {required bool sosActive}) {
+  if (sosActive) {
+    return const AdvertisePlan(AdvertiseRate.lowLatency, AdvertiseTxPower.high);
+  }
+  return switch (mode) {
+    PowerMode.performance =>
+      const AdvertisePlan(AdvertiseRate.lowLatency, AdvertiseTxPower.medium),
+    PowerMode.balanced =>
+      const AdvertisePlan(AdvertiseRate.balanced, AdvertiseTxPower.medium),
+    PowerMode.saver =>
+      const AdvertisePlan(AdvertiseRate.lowPower, AdvertiseTxPower.low),
+    PowerMode.critical =>
+      const AdvertisePlan(AdvertiseRate.lowPower, AdvertiseTxPower.low),
+  };
+}

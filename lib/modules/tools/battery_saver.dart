@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 
 import '../../core/nuvok_library.dart';
+import '../ai/ai_engine.dart';
+import 'battery_policy.dart';
 import '../ai/llama_server.dart';
 import '../mesh/mesh_service.dart';
 import '../../core/locale_service.dart';
@@ -103,16 +105,49 @@ class BatterySaverController extends ChangeNotifier {
         _batteryState = (await _battery.batteryState).name;
       } catch (_) {}
       notifyListeners();
+      await _autoEnableIfCritical();
     } catch (_) {
       // Desktop VM or unsupported platform — leave level unknown (-1)
       // rather than lying with a fake number.
     }
   }
 
+  /// Con la batería crítica el ahorro se aplica SOLO. Antes había que
+  /// encontrarlo y tocarlo: alguien con 6% de batería, a oscuras y asustado,
+  /// no navega menús — y el teléfono es su único recurso.
+  ///
+  /// Se respeta al usuario: si lo apagó a mano, no se vuelve a encender.
+  bool _userTurnedOff = false;
+  bool _autoEnabled = false;
+
+  /// True cuando el ahorro se encendió solo (la UI lo explica en vez de
+  /// dejar que parezca que la app hace cosas sin permiso).
+  bool get autoEnabled => _autoEnabled;
+
+  Future<void> _autoEnableIfCritical() async {
+    if (!shouldAutoEnableSaver(
+      level: _batteryLevel,
+      charging: isCharging,
+      alreadyOn: _enabled,
+      userTurnedOff: _userTurnedOff,
+    )) {
+      return;
+    }
+    _enabled = true;
+    _autoEnabled = true;
+    notifyListeners();
+    await _activate();
+    notifyListeners();
+  }
+
   /// Master switch. Turning it on applies every enabled measure; turning it
   /// off reverts ALL of them to exactly how they were before.
   Future<void> toggle() async {
     _enabled = !_enabled;
+    // Apagarlo a mano es una decisión de la persona: la app no vuelve a
+    // encenderlo sola aunque la batería siga crítica.
+    _userTurnedOff = !_enabled;
+    _autoEnabled = false;
     notifyListeners(); // reflect the switch immediately
     if (_enabled) {
       await _activate();
@@ -178,13 +213,19 @@ class BatterySaverController extends ChangeNotifier {
     }
   }
 
-  // ── Local AI server (llama.cpp) ───────────────────────────────────────
+  // ── IA local (llama.cpp) ──────────────────────────────────────────────
+  // Se habla con AiEngine, NO con LlamaServer: en iOS/Android/macOS el motor
+  // corre embebido por FFI y LlamaServer está siempre parado. Preguntarle a
+  // LlamaServer hacía que "Pausar IA" fuera un control decorativo justo en
+  // los dispositivos donde la IA más batería consume — el usuario creía
+  // haber apagado el mayor consumidor y no había apagado nada.
   Future<void> _stopAi() async {
-    if (LlamaServer.instance.status == LlamaStatus.running ||
-        LlamaServer.instance.status == LlamaStatus.starting) {
-      _aiModelToRestore = LlamaServer.instance.modelPath;
+    final engine = AiEngine.instance;
+    if (engine.status == LlamaStatus.running ||
+        engine.status == LlamaStatus.starting) {
+      _aiModelToRestore = engine.modelPath;
       try {
-        await LlamaServer.instance.stop();
+        await engine.stop();
       } catch (_) {}
     }
   }
@@ -194,7 +235,7 @@ class BatterySaverController extends ChangeNotifier {
     _aiModelToRestore = null;
     if (model != null) {
       try {
-        await LlamaServer.instance.start(model);
+        await AiEngine.instance.start(model);
       } catch (_) {}
     }
   }

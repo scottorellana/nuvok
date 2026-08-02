@@ -693,6 +693,7 @@ class MeshService {
           _sendAck(e, hopLimit: sosAckHopLimit);
           MeshPowerController.instance.boostForIncomingSos();
           SosAlarmController.instance.trigger(
+            id: e.envelope.senderId,
             fromName: e.envelope.senderName,
             note: e.payload['note'] as String?,
           );
@@ -700,11 +701,10 @@ class MeshService {
         break;
       case MeshType.sosCancel:
         PositionStore.instance.clearSos(e.envelope.senderId);
-        // Silence the alarm if it was from this sender.
-        if (SosAlarmController.instance.alarmFromName ==
-            e.envelope.senderName) {
-          SosAlarmController.instance.silence();
-        }
+        // Quitar SOLO a quien canceló. Antes se comparaba por senderName y se
+        // llamaba a silence(): dos vecinos llamados igual se confundían, y
+        // cancelar el de uno callaba el de todos los demás.
+        SosAlarmController.instance.dismiss(e.envelope.senderId);
         break;
       case MeshType.chat:
         // Send an ACK back so the sender knows the message was delivered.

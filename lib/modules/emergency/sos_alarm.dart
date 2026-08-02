@@ -23,31 +23,55 @@ import 'package:flutter/services.dart';
 
 const _alarmChannel = MethodChannel('nuvok/sos_alarm');
 
+/// Una persona pidiendo auxilio. La nota es lo que dice DÓNDE buscarla.
+class SosAlert {
+  const SosAlert({required this.id, this.fromName, this.note});
+
+  /// senderId de la malla. Es lo único único: dos vecinos pueden llamarse
+  /// igual, y deduplicar por nombre borraría a una persona real.
+  final String id;
+  final String? fromName;
+  final String? note;
+}
+
 /// Controls the SOS alarm lifecycle.
 class SosAlarmController extends ChangeNotifier {
   SosAlarmController._();
   static final SosAlarmController instance = SosAlarmController._();
 
-  bool _alarming = false;
-  bool get alarming => _alarming;
+  /// TODOS los que están pidiendo auxilio ahora mismo, en orden de llegada.
+  ///
+  /// Antes esto era un solo par (nombre, nota) y el segundo SOS sobrescribía
+  /// al primero. Un terremoto no manda un SOS: manda varios a la vez, y el
+  /// vecino que escribió "estoy bajo el escombro del garaje" desaparecía de
+  /// la pantalla sin que nadie lo hubiera leído.
+  final List<SosAlert> _alerts = [];
+  List<SosAlert> get alerts => List.unmodifiable(_alerts);
 
-  String? _alarmFromName;
-  String? get alarmFromName => _alarmFromName;
+  bool get alarming => _alerts.isNotEmpty;
 
-  String? _alarmNote;
-  String? get alarmNote => _alarmNote;
+  /// Compatibilidad: el primero en pedir auxilio.
+  String? get alarmFromName => _alerts.isEmpty ? null : _alerts.first.fromName;
+  String? get alarmNote => _alerts.isEmpty ? null : _alerts.first.note;
 
   Timer? _soundTimer;
   Timer? _escalationTimer;
 
-  /// Triggers the alarm. Repeated triggers update the info but don't
-  /// restart the sound loop (so multiple SOS from the same peer don't
-  /// stutter).
-  void trigger({String? fromName, String? note}) {
-    final wasAlarming = _alarming;
-    _alarming = true;
-    _alarmFromName = fromName;
-    _alarmNote = note;
+  /// Añade a quien pide auxilio. Si ese mismo peer repite su SOS se actualiza
+  /// su nota (la más reciente es la que vale) sin reiniciar el sonido, para
+  /// que la baliza que reemite cada minuto no haga tartamudear la alarma.
+  void trigger({String? id, String? fromName, String? note}) {
+    final wasAlarming = alarming;
+    // Sin id (llamadas antiguas o par sin identidad) el nombre es lo mejor
+    // que hay; el pánico es peor que una alerta duplicada.
+    final key = id ?? fromName ?? '?';
+    final at = _alerts.indexWhere((a) => a.id == key);
+    final alert = SosAlert(id: key, fromName: fromName, note: note);
+    if (at >= 0) {
+      _alerts[at] = alert;
+    } else {
+      _alerts.add(alert);
+    }
     notifyListeners();
 
     // Announce the SOS to screen readers so a visually-impaired user knows
@@ -72,11 +96,24 @@ class SosAlarmController extends ChangeNotifier {
     }
   }
 
+  /// Quita a UNA persona de la lista (su SOS se canceló, o el usuario ya la
+  /// atendió). Mientras quede alguien pidiendo auxilio la alarma sigue: callar
+  /// a los demás porque uno apareció es exactamente el fallo que esto arregla.
+  void dismiss(String id) {
+    _alerts.removeWhere((a) => a.id == id);
+    if (_alerts.isEmpty) {
+      silenceAll();
+    } else {
+      notifyListeners();
+    }
+  }
+
   /// Silences the alarm. Called when the user taps "Entendido".
-  void silence() {
-    _alarming = false;
-    _alarmFromName = null;
-    _alarmNote = null;
+  void silence() => silenceAll();
+
+  /// Calla todo y vacía la lista.
+  void silenceAll() {
+    _alerts.clear();
     _soundTimer?.cancel();
     _soundTimer = null;
     _escalationTimer?.cancel();
@@ -156,16 +193,20 @@ class SosAlarmController extends ChangeNotifier {
   void _startEscalation() {
     _escalationTimer?.cancel();
     _escalationTimer = Timer(const Duration(seconds: 30), () {
-      if (_alarming) {
+      if (alarming) {
         _escalateNative();
       }
     });
   }
 
+  /// La notificación nativa lleva a quien pidió auxilio primero y, si hay
+  /// más, cuántos son: en la pantalla de bloqueo no cabe la lista entera.
   void _startNativeAlarm() {
+    final extra = _alerts.length - 1;
     _alarmChannel.invokeMethod('start', {
-      'name': _alarmFromName ?? '',
-      'note': _alarmNote ?? '',
+      'name': alarmFromName ?? '',
+      'note': alarmNote ?? '',
+      'others': extra > 0 ? extra : 0,
     }).catchError((_) {});
   }
 
@@ -207,6 +248,50 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
   void dispose() {
     _blinkCtrl.dispose();
     super.dispose();
+  }
+
+  /// Una persona: quién es, su nota, y un botón para atenderla sin callar a
+  /// los demás.
+  Widget _alertBlock(BuildContext context, SosAlert a) {
+    final note = a.note;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      child: Column(
+        children: [
+          if (a.fromName != null)
+            Text(
+              '${tr(context, 'sosAlarmFrom')} ${a.fromName}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700),
+            ),
+          if (note != null && note.isNotEmpty)
+            Container(
+              margin: const EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.black26,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                note,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            ),
+          // Solo cuando hay más de uno: con una sola persona el botón grande
+          // de abajo ya hace esto, y dos botones confunden.
+          if (_controller.alerts.length > 1)
+            TextButton(
+              onPressed: () => _controller.dismiss(a.id),
+              child: Text(
+                tr(context, 'sosAlarmAck'),
+                style: const TextStyle(color: Colors.white70, fontSize: 15),
+              ),
+            ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -258,33 +343,9 @@ class _SosAlarmOverlayState extends State<SosAlarmOverlay>
                     ),
                   ),
                   const SizedBox(height: 16),
-                  if (_controller.alarmFromName != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: Text(
-                        '${tr(context, 'sosAlarmFrom')} '
-                        '${_controller.alarmFromName}',
-                        textAlign: TextAlign.center,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 22),
-                      ),
-                    ),
-                  if (_controller.alarmNote != null &&
-                      _controller.alarmNote!.isNotEmpty)
-                    Container(
-                      margin: const EdgeInsets.all(24),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.black26,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        _controller.alarmNote!,
-                        textAlign: TextAlign.center,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    ),
+                  // TODOS los que piden auxilio, uno debajo de otro. Cada uno
+                  // con su nota: es lo que dice dónde buscar a esa persona.
+                  for (final a in _controller.alerts) _alertBlock(context, a),
                   const SizedBox(height: 40),
                   SizedBox(
                     width: 280,

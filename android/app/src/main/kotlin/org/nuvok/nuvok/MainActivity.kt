@@ -141,6 +141,15 @@ class MainActivity : FlutterActivity() {
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "nuvok/bundled_assets")
             .setMethodCallHandler { call, result ->
                 when (call.method) {
+                    // Dónde ha extraído Android nuestras librerías nativas.
+                    // ggml compila una variante de CPU por nivel de ISA y las
+                    // carga en runtime, pero deduce la carpeta leyendo
+                    // /proc/self/exe — que aquí es /system/bin/app_process64,
+                    // no la app. Sin esta ruta no encontraría ninguna variante
+                    // y se quedaría sin backend de CPU: no habría IA.
+                    "nativeLibraryDir" -> {
+                        result.success(applicationInfo.nativeLibraryDir)
+                    }
                     "copyAsset" -> {
                         try {
                             val asset = call.argument<String>("asset")

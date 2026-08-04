@@ -18,9 +18,20 @@ command -v cmake >/dev/null || { echo "cmake no encontrado"; exit 1; }
 [ -n "$NDK" ] && [ -d "$NDK" ] || { echo "NDK no encontrado"; exit 1; }
 echo "NDK: $NDK"
 
+# Variantes de ISA que viajan en el APK. Cubren desde un Cortex-A53 sin
+# producto escalar (gama baja, todavía muy vivo donde se va la luz) hasta i8mm.
+# Las armv9.* se descartan a propósito: aportan poco sobre armv8.6 para
+# inferencia Q4_K y son 4 MB cada una. Un teléfono ARMv9 cae en armv8.6, que es
+# lo mejor que hay disponible — el despacho elige el mayor que soporta.
+KEEP_VARIANTS="android_armv8.0_1 android_armv8.2_1 android_armv8.2_2 android_armv8.6_1 x64 sse42 haswell"
+
 build_abi() {
   local abi="$1"
   local build="$WORK/ppllm-android-$abi"
+  # Variantes también en x86_64 aunque solo sea el emulador: así el camino de
+  # carga dinámica que se prueba ahí es EL MISMO que corre en un teléfono. Un
+  # emulador que ejercita otro código no prueba nada.
+  local variants=ON
   rm -rf "$build"
   cmake -S "$REPO_DIR/native/pp_llm" -B "$build" \
     -DCMAKE_TOOLCHAIN_FILE="$NDK/build/cmake/android.toolchain.cmake" \
@@ -28,45 +39,50 @@ build_abi() {
     -DANDROID_PLATFORM="android-$MIN_API" \
     -DCMAKE_BUILD_TYPE=Release \
     -DGGML_OPENMP=OFF \
+    -DPPLLM_CPU_VARIANTS=$variants \
     -DLLAMA_DIR="$LLAMA_DIR" >/dev/null
   cmake --build "$build" --config Release -j"$(sysctl -n hw.ncpu)" >/dev/null
+
+  # Con variantes de CPU el motor ya no es un .so único: hay libggml-base,
+  # libllama, libppllm y una librería de CPU por nivel de ISA. Todas tienen que
+  # viajar en jniLibs; Android las extrae juntas y ggml elige la mejor al
+  # arrancar (ver ppllm_set_backend_dir).
   mkdir -p "$JNI/$abi"
-  cp "$build/libppllm.so" "$JNI/$abi/libppllm.so"
-  echo "listo: $JNI/$abi/libppllm.so ($(du -h "$JNI/$abi/libppllm.so" | cut -f1))"
+  rm -f "$JNI/$abi"/libggml*.so "$JNI/$abi/libllama.so" "$JNI/$abi/libppllm.so"
+  local n=0
+  while IFS= read -r so; do
+    cp "$so" "$JNI/$abi/$(basename "$so")"
+    n=$((n + 1))
+  done < <(find "$build" -maxdepth 2 -name "lib*.so" -type f)
+
+  # Tirar las variantes que no viajan (ver KEEP_VARIANTS).
+  if [ "$variants" = "ON" ]; then
+    for so in "$JNI/$abi"/libggml-cpu-*.so; do
+      local name
+      name=$(basename "$so" .so); name=${name#libggml-cpu-}
+      case " $KEEP_VARIANTS " in
+        *" $name "*) ;;
+        *) rm -f "$so" ;;
+      esac
+    done
+    # Sin backend de CPU no hay inferencia posible: fallar aquí y no en el
+    # teléfono de alguien.
+    ls "$JNI/$abi"/libggml-cpu*.so >/dev/null 2>&1 || {
+      echo "ERROR: no quedó ninguna variante de CPU para $abi"; exit 1; }
+  fi
+  [ -f "$JNI/$abi/libppllm.so" ] || { echo "ERROR: falta libppllm.so"; exit 1; }
+
+  # Quitar la información de depuración: son decenas de MB por librería que
+  # viajarían en el teléfono de cada usuario sin servir para nada.
+  local strip
+  strip=$(ls "$NDK"/toolchains/llvm/prebuilt/*/bin/llvm-strip 2>/dev/null | head -1)
+  if [ -n "$strip" ]; then
+    for so in "$JNI/$abi"/lib*.so; do "$strip" --strip-unneeded "$so" 2>/dev/null || true; done
+  fi
+
+  echo "listo: $JNI/$abi/ — $n librerías ($(du -sh "$JNI/$abi" | cut -f1))"
+  ls "$JNI/$abi" | sed 's/^/    /'
 }
 
 build_abi arm64-v8a
 build_abi x86_64
-
-# ─────────────────────────────────────────────────────────────────────────────
-# PENDIENTE (necesita un Android físico para validarse): el .so que se envía va
-# sin instrucciones de producto escalar.
-#
-# Verificado sobre el binario versionado, no en teoría:
-#   llvm-objdump -d jniLibs/arm64-v8a/libppllm.so
-#     sdot 0 · smmla 0 · udot 0 · usdot 0 · fmla 1859
-#
-# Este script no pasa ningún -march, así que __ARM_FEATURE_DOTPROD no se define
-# y ggml compila el camino de respaldo: emula el producto escalar con
-# vmull_s8 + vpaddlq en vez de una sola instrucción sdot. Y ese es exactamente
-# el kernel que usa Gemma 4 (ggml_vec_dot_q4_K_q8_K). Como en Android la IA
-# corre en CPU pura (nGpuLayers = 0), TODOS los tokens de TODOS los teléfonos
-# pasan por ahí. Se paga en ciclos, o sea en batería, que en un apagón es la
-# linterna y el SOS.
-#
-# NO se arregla con -march=armv8.2-a+dotprod: eso mataría con SIGILL a los
-# teléfonos armv8.0 (Cortex-A53), que son justo los de gama baja del público de
-# Nuvok. La vía correcta es el despacho en runtime de llama.cpp:
-#
-#   -DBUILD_SHARED_LIBS=ON -DGGML_BACKEND_DL=ON -DGGML_CPU_ALL_VARIANTS=ON
-#
-# que compila las variantes android_armv8.0_1 / armv8.2_1 (DOTPROD) /
-# armv8.6_1 (MATMUL_INT8) … y elige la mejor al arrancar
-# (llama.cpp ggml/src/CMakeLists.txt, sección Android).
-#
-# Por qué no está activado ya: obliga a abandonar el .so único y estático que
-# empaqueta Nuvok (native/pp_llm/CMakeLists.txt:17 fija BUILD_SHARED_LIBS OFF)
-# y a distribuir libggml, libllama y cada variante de CPU por separado. Si esa
-# carga dinámica falla en algún dispositivo, la IA no arranca en NINGÚN
-# Android. No se cambia sin un teléfono real donde comprobar que carga, que
-# elige la variante correcta y que responde.

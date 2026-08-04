@@ -13,6 +13,8 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:ffi/ffi.dart';
 
 typedef _TokenCbNative = Void Function(Pointer<Utf8>, Pointer<Void>);
@@ -35,6 +37,8 @@ typedef _StrFreeNative = Void Function(Pointer<Utf8>);
 typedef _StrFreeDart = void Function(Pointer<Utf8>);
 typedef _LastErrNative = Pointer<Utf8> Function();
 typedef _LastErrDart = Pointer<Utf8> Function();
+typedef _BackendDirNative = Void Function(Pointer<Utf8>);
+typedef _BackendDirDart = void Function(Pointer<Utf8>);
 
 class _PpLlmBindings {
   _PpLlmBindings(DynamicLibrary lib)
@@ -49,7 +53,9 @@ class _PpLlmBindings {
         stringFree = lib
             .lookupFunction<_StrFreeNative, _StrFreeDart>('ppllm_string_free'),
         lastError = lib
-            .lookupFunction<_LastErrNative, _LastErrDart>('ppllm_last_error');
+            .lookupFunction<_LastErrNative, _LastErrDart>('ppllm_last_error'),
+        setBackendDir = lib.lookupFunction<_BackendDirNative, _BackendDirDart>(
+            'ppllm_set_backend_dir');
 
   final _LoadDart load;
   final _TemplateDart applyTemplate;
@@ -58,6 +64,7 @@ class _PpLlmBindings {
   final _BusyDart busy;
   final _HandleDart free;
   final _StrFreeDart stringFree;
+  final _BackendDirDart setBackendDir;
   final _LastErrDart lastError;
 
   /// Locates libppllm for the current platform. [override] lets tools and
@@ -99,6 +106,28 @@ class FfiLlamaEngine {
 
   static String? _libOverride;
 
+  static const _platform = MethodChannel('nuvok/bundled_assets');
+  static String? _cachedBackendDir;
+
+  /// Carpeta de librerías nativas de la app (solo Android la necesita).
+  /// Se cachea: es constante durante toda la vida del proceso.
+  static Future<String?> _nativeLibraryDir() async {
+    if (!Platform.isAndroid) return null;
+    if (_cachedBackendDir != null) return _cachedBackendDir;
+    try {
+      return _cachedBackendDir =
+          await _platform.invokeMethod<String>('nativeLibraryDir');
+    } catch (_) {
+      // Sin ruta, ggml prueba sus rutas por defecto. Peor, pero no fatal:
+      // mejor intentarlo que no cargar el modelo.
+      return null;
+    }
+  }
+
+  /// Costura de pruebas para la ruta de backends de Android.
+  @visibleForTesting
+  static Future<String?> debugNativeLibraryDir() => _nativeLibraryDir();
+
   /// Tools/tests: point FFI at an explicit dylib path before [load].
   static void debugSetLibraryPath(String path) => _libOverride = path;
 
@@ -107,10 +136,21 @@ class FfiLlamaEngine {
   static Future<FfiLlamaEngine> load(String modelPath,
       {int nCtx = 4096, int nGpuLayers = 99}) async {
     final lib = _libOverride;
+    // Dónde viven las librerías nativas. Solo importa en Android, que es donde
+    // el motor se compila con una variante de CPU por nivel de ISA y ggml las
+    // carga en runtime: por su cuenta deduce la ruta leyendo /proc/self/exe,
+    // que en Android apunta a /system/bin/app_process64 y no a la app. Sin
+    // esto no encontraría NINGUNA variante y se quedaría sin backend de CPU.
+    final backendDir = await _nativeLibraryDir();
     // The heavy load happens in a worker isolate; handles are plain
     // addresses, so they cross isolates safely.
     final addr = await Isolate.run(() {
       final b = _PpLlmBindings(_PpLlmBindings.openLibrary(override: lib));
+      if (backendDir != null) {
+        final d = backendDir.toNativeUtf8();
+        b.setBackendDir(d);
+        malloc.free(d);
+      }
       final p = modelPath.toNativeUtf8();
       final h = b.load(p, nCtx, nGpuLayers);
       malloc.free(p);
@@ -201,3 +241,8 @@ extension on Pointer<Char> {
     return i;
   }
 }
+
+/// Atajo de pruebas: la clase es larga y el test solo necesita esta ruta.
+@visibleForTesting
+Future<String?> debugNativeLibraryDirForTest() =>
+    FfiLlamaEngine.debugNativeLibraryDir();

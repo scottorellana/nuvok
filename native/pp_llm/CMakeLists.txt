@@ -12,9 +12,30 @@ if(NOT DEFINED LLAMA_DIR)
   message(FATAL_ERROR "Pass -DLLAMA_DIR=/path/to/llama.cpp")
 endif()
 
-# llama.cpp as static pieces we absorb into our single dylib. Metal shaders
-# are embedded into the binary (no .metallib file to lose at runtime).
-set(BUILD_SHARED_LIBS OFF)
+# Variantes de CPU con despacho en runtime (Android).
+#
+# Sin esto, el .so se compila para el ARM base: sin __ARM_FEATURE_DOTPROD, ggml
+# emula el producto escalar con vmull_s8+vpaddlq en vez de una instrucción
+# `sdot`, y ese es el kernel de Q4_K que usan TODOS los tokens en Android (allí
+# la IA corre en CPU pura). Compilar con -march=armv8.2 no vale: mataría con
+# SIGILL a los Cortex-A53, que son los teléfonos de gama baja del público de
+# Nuvok. GGML_CPU_ALL_VARIANTS compila una librería por nivel de ISA y elige la
+# mejor al arrancar, así que el viejo sigue funcionando y el nuevo va rápido.
+#
+# El precio es abandonar el .so único: con GGML_BACKEND_DL, ggml/llama pasan a
+# ser librerías compartidas y cada variante de CPU es su propio .so.
+option(PPLLM_CPU_VARIANTS "Compilar variantes de CPU con despacho en runtime" OFF)
+
+if(PPLLM_CPU_VARIANTS)
+  set(BUILD_SHARED_LIBS ON)
+  set(GGML_BACKEND_DL ON CACHE BOOL "" FORCE)
+  set(GGML_CPU_ALL_VARIANTS ON CACHE BOOL "" FORCE)
+  set(GGML_NATIVE OFF CACHE BOOL "" FORCE)
+else()
+  # llama.cpp as static pieces we absorb into our single dylib. Metal shaders
+  # are embedded into the binary (no .metallib file to lose at runtime).
+  set(BUILD_SHARED_LIBS OFF)
+endif()
 set(LLAMA_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(LLAMA_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(LLAMA_BUILD_SERVER OFF CACHE BOOL "" FORCE)

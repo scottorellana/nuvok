@@ -26,6 +26,18 @@ typedef void (*ppllm_token_cb)(const char * piece /* malloc'd, NULL = done */,
                                void * user);
 
 // Loads a GGUF model. n_gpu_layers: 99 = full Metal/GPU offload, 0 = CPU.
+// Le dice a ggml en qué carpeta buscar sus backends antes de cargar nada.
+//
+// Solo hace falta donde el motor se compila con variantes de CPU y carga
+// dinámica (Android): ahí ggml, por su cuenta, deduce la ruta leyendo
+// /proc/self/exe — que en Android apunta a /system/bin/app_process64, NO a las
+// librerías de la app. Sin esta llamada no encontraría ninguna variante y se
+// quedaría sin backend de CPU.
+//
+// Idempotente y sin efecto donde el motor va enlazado estáticamente.
+// Debe llamarse ANTES del primer ppllm_load.
+PPLLM_API void ppllm_set_backend_dir(const char * dir);
+
 // Returns an opaque handle, or NULL (see ppllm_last_error).
 PPLLM_API void * ppllm_load(const char * model_path,
                             int32_t n_ctx,

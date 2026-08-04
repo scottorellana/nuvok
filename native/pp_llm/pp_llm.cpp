@@ -21,6 +21,7 @@
 #endif
 
 #include "llama.h"
+#include "ggml-backend.h"
 
 namespace {
 
@@ -54,6 +55,20 @@ void ensure_backend() {
 } // namespace
 
 extern "C" {
+
+void ppllm_set_backend_dir(const char * dir) {
+    // ggml solo expone esta ruta cuando se compiló con GGML_BACKEND_DL; en la
+    // build estática no hay nada que cargar y la llamada sobra.
+#ifdef GGML_BACKEND_DL
+    if (dir && *dir) {
+        ggml_backend_load_all_from_path(dir);
+    } else {
+        ggml_backend_load_all();
+    }
+#else
+    (void) dir;
+#endif
+}
 
 void * ppllm_load(const char * model_path, int32_t n_ctx, int32_t n_gpu_layers) {
     ensure_backend();

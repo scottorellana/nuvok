@@ -24,6 +24,7 @@ void main() {
     expect(chain.map((m) => m.id).toList(), [
       'general-e4b',
       'general-e2b',
+      'general-e2b-qat',
       'general-1.5b',
       'general-0.5b',
     ], reason: 'la cadena es 100% Apache 2.0: se retiraron Qwen 3B (licencia '

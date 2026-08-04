@@ -97,6 +97,37 @@ class ModelCatalog {
       sha256:
           '6c950d754366dd8b372fd17a40497ba5f130a46d833b4c5bccc9f6bb6382ce1e',
       license: 'apache-2.0',
+      liteFallbackId: 'general-e2b-qat',
+    ),
+    // EL ESCALÓN QUE RESCATA AL TELÉFONO DE 4 GB: el mismo Gemma 4 E2B, pero con pesos
+    // entrenados para 4 bits (QAT) y requantizado por Unsloth con un mix que sí
+    // toca las tablas de embeddings — que son el 59% del modelo y lo que hace
+    // que la cuantización normal no adelgace nada.
+    //
+    // 2,62 GB frente a 3,43 GB: 0,81 GB menos, y con calidad de 4 bits reales,
+    // no de 2. Eso baja el umbral de RAM libre que exige el guardián (tamaño /
+    // 0,8) de 4,29 GB a 3,28 GB, que es justo la diferencia entre un teléfono
+    // de 4 GB usando el modelo bueno o cayendo a qwen-0.5b.
+    //
+    // Va DEBAJO del E2B normal para que la cadena siga siendo estrictamente
+    // decreciente en tamaño (es una cadena de respaldo: cada peldaño tiene que
+    // pedir menos que el anterior) y para que quien ya tenga el E2B descargado
+    // lo siga usando en vez de bajarse 2,6 GB otra vez.
+    //
+    // Verificado antes de ponerlo aquí, porque el QAT oficial de Google no
+    // carga (assert de vocabulario): descargado, comprobado el tamaño exacto y
+    // el SHA-256, cargado en libppllm a n_ctx 4096, y contrastado contra el
+    // Q4_K_M actual en cuatro preguntas médicas (RCP, atragantamiento,
+    // torniquete, quemadura). Respuestas equivalentes.
+    ModelEntry(
+      id: 'general-e2b-qat',
+      fileName: 'gemma-4-E2B-it-qat-UD-Q4_K_XL.gguf',
+      url: 'https://huggingface.co/unsloth/gemma-4-E2B-it-qat-GGUF/'
+          'resolve/main/gemma-4-E2B-it-qat-UD-Q4_K_XL.gguf',
+      sizeBytes: 2620370976,
+      sha256:
+          'e531007218dfab990486a5de7676a6932d6ea8dea233d1f698d7c21cf8a16889',
+      license: 'apache-2.0',
       liteFallbackId: 'general-1.5b',
     ),
     // NOTA LEGAL: aquí estaba Qwen 2.5 3B. Se retiró porque su licencia

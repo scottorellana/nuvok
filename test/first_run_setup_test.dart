@@ -101,7 +101,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(got, hasLength(1), reason: 'solo el modelo: la wiki no resolvió');
-    expect(got.single.fileName, 'gemma-4-E2B-it-Q4_K_M.gguf');
+    expect(got.single.fileName, contains('gemma-4-E2B'),
+        reason: 'el escalón exacto depende de la RAM medida; lo que importa '
+            'es que proponga el especialista de móvil');
   });
 
   testWidgets('el mapa salta al flujo de Mapas y cierra la página',

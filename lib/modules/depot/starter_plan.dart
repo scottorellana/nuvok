@@ -13,6 +13,14 @@ import '../ai/agents/model_catalog.dart';
 /// haría descargar gigas que luego no se pueden usar.
 const double starterRamSafety = 0.8;
 
+/// Tope de tamaño cuando NO se pudo medir la RAM libre.
+///
+/// 1,5 GB cabe holgado en cualquier teléfono que arranque la app, así que la
+/// descarga no se tira a la basura. Es una apuesta conservadora a propósito:
+/// quien tenga más RAM puede subir de modelo desde Depósito en cuanto la app
+/// mida su equipo; quien tenga menos no habría podido usar nada mayor.
+const int unknownRamMaxBytes = 1500 * 1024 * 1024;
+
 /// Qué modelo proponer para descargar en el primer arranque.
 ///
 /// Camina la cadena de la plataforma (escritorio arranca en E4B, teléfono en
@@ -29,7 +37,18 @@ ModelEntry resolveStarterModel({
   final chain = ModelCatalog.chainFrom(
       ModelCatalog.resolveClass(ModelClass.general, isDesktop: isDesktop));
   if (freeRamBytes == null) {
-    return chain.length > 1 ? chain[1] : chain.first;
+    // Sin medición, proponer por TAMAÑO, no por posición en la cadena.
+    //
+    // Antes esto devolvía chain[1] ("un escalón bajo el de la plataforma"),
+    // que dejó de significar lo que decía en cuanto la cadena cambió: al
+    // entrar el E2B-QAT por delante del E2B normal, ese "escalón abajo" pasó
+    // a ser un modelo MÁS grande que el punto de partida. Y proponer gigas de
+    // más a ciegas es la peor forma de gastar la única conexión que quizá
+    // tenga esa persona.
+    for (final m in chain) {
+      if (m.sizeBytes <= unknownRamMaxBytes) return m;
+    }
+    return chain.last;
   }
   for (final m in chain) {
     if (m.sizeBytes <= freeRamBytes * starterRamSafety) return m;

@@ -37,6 +37,12 @@ y de radio cercana (BLE / WiFi LAN).
   por **SHA-256** contra el manifiesto antes de instalarse.
 - La IA corre **dentro del dispositivo** (llama.cpp embebido por FFI): las
   consultas nunca salen del equipo.
+- **Las fuentes que se inyectan al modelo son una barrera de seguridad, no un
+  extra de calidad.** Medido: sin fuentes, el modelo recomienda hielo sobre una
+  quemadura y aflojar un torniquete en campo — las dos cosas hacen daño. Con la
+  guía de Nuvok delante, el mismo modelo responde correctamente. Cualquier
+  cambio que impida que las fuentes lleguen al prompt es un fallo de seguridad.
+  Detalle y forma de reproducirlo en [docs/IA_SEGURIDAD.md](docs/IA_SEGURIDAD.md).
 
 ### Lo que la malla NO promete
 

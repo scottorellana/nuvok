@@ -138,6 +138,20 @@ guarda y se reenvía a quien aparezca después — sin que nadie tenga señal.
 Los detalles y límites honestos del cifrado están en
 [SECURITY.md](SECURITY.md).
 
+## ¿Qué tan de fiar es la IA?
+
+Poco, si responde sola — y eso lo medimos en vez de suponerlo. Un modelo de
+pocos miles de millones de parámetros recomienda, con total aplomo, poner hielo
+sobre una quemadura y aflojar un torniquete en campo. Las dos cosas hacen daño.
+
+Por eso Nuvok no le deja responder solo: le pone delante sus guías de
+emergencia, y con ellas el mismo modelo contesta bien. Cuando no hay fuente que
+inyectar, la respuesta sale marcada como generada sin respaldo, y en terreno
+clínico aparece el aviso de que esto no reemplaza atención médica.
+
+Las medidas, el caso que ya nos falló una vez y cómo reproducirlo están en
+[docs/IA_SEGURIDAD.md](docs/IA_SEGURIDAD.md).
+
 ## ¿Comprar o compilar?
 
 Las dos opciones son legítimas:

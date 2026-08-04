@@ -138,6 +138,20 @@ gets stored, and is re-sent to whoever shows up later — with nobody having
 signal. The honest details and limits of the encryption are in
 [SECURITY.md](SECURITY.md).
 
+## How much can you trust the AI?
+
+Not much on its own — and we measured that instead of assuming it. A model of a
+few billion parameters will confidently tell you to put ice on a burn and to
+loosen a tourniquet in the field. Both cause harm.
+
+So Nuvok never lets it answer alone: it puts its own emergency guides in front
+of the model, and with those the same model answers correctly. When there is no
+source to inject, the answer is labelled as generated without backing, and on
+clinical ground a notice appears saying this does not replace medical care.
+
+The measurements, the case that already bit us once, and how to reproduce it
+are in [docs/IA_SEGURIDAD.md](docs/IA_SEGURIDAD.md).
+
 ## Buy or build?
 
 Both paths are legitimate:

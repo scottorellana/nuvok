@@ -37,3 +37,36 @@ build_abi() {
 
 build_abi arm64-v8a
 build_abi x86_64
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PENDIENTE (necesita un Android físico para validarse): el .so que se envía va
+# sin instrucciones de producto escalar.
+#
+# Verificado sobre el binario versionado, no en teoría:
+#   llvm-objdump -d jniLibs/arm64-v8a/libppllm.so
+#     sdot 0 · smmla 0 · udot 0 · usdot 0 · fmla 1859
+#
+# Este script no pasa ningún -march, así que __ARM_FEATURE_DOTPROD no se define
+# y ggml compila el camino de respaldo: emula el producto escalar con
+# vmull_s8 + vpaddlq en vez de una sola instrucción sdot. Y ese es exactamente
+# el kernel que usa Gemma 4 (ggml_vec_dot_q4_K_q8_K). Como en Android la IA
+# corre en CPU pura (nGpuLayers = 0), TODOS los tokens de TODOS los teléfonos
+# pasan por ahí. Se paga en ciclos, o sea en batería, que en un apagón es la
+# linterna y el SOS.
+#
+# NO se arregla con -march=armv8.2-a+dotprod: eso mataría con SIGILL a los
+# teléfonos armv8.0 (Cortex-A53), que son justo los de gama baja del público de
+# Nuvok. La vía correcta es el despacho en runtime de llama.cpp:
+#
+#   -DBUILD_SHARED_LIBS=ON -DGGML_BACKEND_DL=ON -DGGML_CPU_ALL_VARIANTS=ON
+#
+# que compila las variantes android_armv8.0_1 / armv8.2_1 (DOTPROD) /
+# armv8.6_1 (MATMUL_INT8) … y elige la mejor al arrancar
+# (llama.cpp ggml/src/CMakeLists.txt, sección Android).
+#
+# Por qué no está activado ya: obliga a abandonar el .so único y estático que
+# empaqueta Nuvok (native/pp_llm/CMakeLists.txt:17 fija BUILD_SHARED_LIBS OFF)
+# y a distribuir libggml, libllama y cada variante de CPU por separado. Si esa
+# carga dinámica falla en algún dispositivo, la IA no arranca en NINGÚN
+# Android. No se cambia sin un teléfono real donde comprobar que carga, que
+# elige la variante correcta y que responde.

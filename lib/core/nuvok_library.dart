@@ -78,23 +78,70 @@ class NuvokLibrary {
   Directory get notesDir => Directory('${root.path}/notes');
   File get settingsFile => File('${root.path}/.settings.json');
 
-  bool get existedBefore => root.existsSync();
-
-  Future<void> ensure() async {
-    for (final d in [root, zimDir, mapsDir, modelsDir, notesDir]) {
-      if (!d.existsSync()) await d.create(recursive: true);
+  bool get existedBefore {
+    try {
+      return root.existsSync();
+    } catch (_) {
+      return false;
     }
   }
 
+  /// ¿Se pudo preparar la biblioteca en disco?
+  ///
+  /// false = la app funciona igual (guías empaquetadas, brújula, linterna,
+  /// malla, SOS), pero no podrá guardar descargas ni notas. Quien lo consulte
+  /// puede decírselo al usuario ANTES de que empiece a bajar dos gigas.
+  bool get storageUsable => _storageUsable;
+  bool _storageUsable = false;
+
+  /// Prepara las carpetas de la biblioteca. NUNCA lanza.
+  ///
+  /// El almacenamiento externo no siempre está listo al arrancar: tras un
+  /// reinicio y antes del primer desbloqueo Android lo mantiene cifrado — y en
+  /// un apagón el teléfono se reinicia solo, por batería, que es justo cuando
+  /// alguien abre Nuvok. También pasa con la SD fuera o el volumen en solo
+  /// lectura.
+  ///
+  /// Esto lanzaba y la excepción subía hasta main(), ANTES de runApp: pantalla
+  /// negra. Medido en un Android real con el APK release:
+  ///   FileSystemException: Exists failed … (OS Error: Permission denied)
+  ///     #1 NuvokLibrary.ensure   #2 main
+  ///
+  /// Una app de emergencias arranca aunque no pueda escribir. Cada carpeta se
+  /// intenta por separado: que falle una no puede dejar sin las demás.
+  Future<void> ensure() async {
+    var ok = false;
+    for (final d in [root, zimDir, mapsDir, modelsDir, notesDir]) {
+      try {
+        if (!d.existsSync()) await d.create(recursive: true);
+        if (identical(d, root) || d.path == root.path) ok = true;
+      } catch (_) {
+        // Sin sitio donde escribir. Se sigue: las guías van dentro de la app.
+      }
+    }
+    try {
+      _storageUsable = root.existsSync();
+    } catch (_) {
+      _storageUsable = false;
+    }
+    if (ok && !_storageUsable) _storageUsable = false;
+  }
+
   List<File> _listByExtension(Directory dir, String ext) {
-    if (!dir.existsSync()) return [];
-    final files = dir
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.toLowerCase().endsWith(ext))
-        .toList();
-    files.sort((a, b) => a.path.compareTo(b.path));
-    return files;
+    try {
+      if (!dir.existsSync()) return [];
+      final files = dir
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.toLowerCase().endsWith(ext))
+          .toList();
+      files.sort((a, b) => a.path.compareTo(b.path));
+      return files;
+    } catch (_) {
+      // Volumen desmontado o sin permiso: no hay contenido que ofrecer, pero
+      // eso no puede tumbar la pantalla que lo pregunta.
+      return const [];
+    }
   }
 
   List<File> listZims() => _listByExtension(zimDir, '.zim');

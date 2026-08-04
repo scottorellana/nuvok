@@ -25,39 +25,64 @@ Future<void> main() async {
   // licencias obligan a incluir su aviso en cada copia distribuida. Flutter no
   // las descubre solo (no son paquetes de pub), así que se registran a mano.
   NativeLicenses.register();
-  await NuvokLibrary.init();
+  // Nada entre aquí y runApp puede tumbar el arranque. Nuvok se abre en
+  // emergencias: sus guías, su brújula, su linterna y su SOS viven dentro de
+  // la app y no dependen del almacenamiento externo, que tras un reinicio (o
+  // con la SD fuera) puede no estar disponible todavía.
+  try {
+    await NuvokLibrary.init();
+  } catch (e) {
+    debugPrint('NuvokLibrary.init falló: $e');
+  }
   // Language: a saved explicit choice wins; otherwise follow the DEVICE
   // language (this is what makes the app come up in the user's own language
   // the very first time). Must run after NuvokLibrary.init (prefs live in
   // the library root) and before runApp (first frame already localized).
   LocaleService.instance
       .init(deviceLocale: PlatformDispatcher.instance.locale);
-  final firstRun = !NuvokLibrary.instance.existedBefore;
-  await NuvokLibrary.instance.ensure();
+  var firstRun = false;
+  try {
+    firstRun = !NuvokLibrary.instance.existedBefore;
+    await NuvokLibrary.instance.ensure();
+  } catch (e) {
+    debugPrint('No se pudo preparar la biblioteca: $e');
+  }
   // Seed the bundled starter library WITHOUT blocking the first frame: the
   // bundle can be gigabytes (tablet single-install), and awaiting it here
   // left the user staring at a white screen for the whole copy. The UI
   // modules list whatever exists and pick up new content as it lands.
-  unawaited(BundledLibrarySeeder.seed());
+  unawaited(() async {
+    try {
+      await BundledLibrarySeeder.seed();
+    } catch (e) {
+      debugPrint('sembrado de la biblioteca falló: $e');
+    }
+  }());
   // Retomar lo que quedó a medias. Bajar un modelo de 2 GB con la pantalla
   // apagada termina casi siempre con el sistema matando la app: la cola vivía
   // solo en memoria y esos gigabytes quedaban huérfanos en disco mientras el
   // usuario veía la descarga "sin empezar" y la relanzaba desde cero.
-  for (final dir in [
-    NuvokLibrary.instance.modelsDir,
-    NuvokLibrary.instance.zimDir,
-    NuvokLibrary.instance.mapsDir,
-  ]) {
-    DownloadManager.instance.restoreQueue(dir);
+  try {
+    for (final dir in [
+      NuvokLibrary.instance.modelsDir,
+      NuvokLibrary.instance.zimDir,
+      NuvokLibrary.instance.mapsDir,
+    ]) {
+      DownloadManager.instance.restoreQueue(dir);
+    }
+  } catch (e) {
+    debugPrint('No se pudo retomar la cola de descargas: $e');
   }
   // Local notifications so an incoming SOS/chat reaches the user with the app
   // in the background. Non-blocking; no-ops where unsupported.
-  unawaited(MeshNotifications.instance.init());
+  unawaited(MeshNotifications.instance.init().catchError((Object e) =>
+      debugPrint('arranque en segundo plano falló: $e')));
   // Start the mesh at boot with an automatic identity: every Nuvok is
   // discoverable from the moment it opens, so in an emergency nobody is
   // invisible for not having configured anything. Non-blocking; the radios
   // self-degrade where hardware/permission is missing.
-  unawaited(MeshService.instance.ensureStartedAuto());
+  unawaited(MeshService.instance.ensureStartedAuto().catchError((Object e) =>
+      debugPrint('arranque en segundo plano falló: $e')));
   // Start reading the real battery early so the level is ready when the user
   // opens Herramientas — non-blocking, failures are swallowed inside.
   BatterySaverController.instance.init();

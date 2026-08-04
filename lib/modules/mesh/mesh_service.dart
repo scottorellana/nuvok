@@ -120,7 +120,16 @@ class MeshService {
   /// from the moment it opens — nobody is invisible for not having configured
   /// anything. The user can still rename the device later in Comunicación.
   Future<void> ensureStartedAuto() async {
-    identity ??= MeshIdentity.ensureAuto(dirPath);
+    // Sin almacenamiento no hay identidad persistente, pero eso no puede
+    // impedir que la app arranque: tras un reinicio (o con la SD fuera) el
+    // volumen puede no estar listo, y es justo cuando alguien abre Nuvok.
+    // La malla se reintenta al volver a primer plano (onAppResumed).
+    try {
+      identity ??= MeshIdentity.ensureAuto(dirPath);
+    } catch (e) {
+      if (kDebugMode) debugPrint('malla sin identidad persistente: $e');
+      return;
+    }
     await start();
   }
 

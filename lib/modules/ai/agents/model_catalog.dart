@@ -133,6 +133,14 @@ class ModelCatalog {
     // NOTA LEGAL: aquí estaba Qwen 2.5 3B. Se retiró porque su licencia
     // ("Qwen Research License") permite el uso SOLO NO COMERCIAL, y Nuvok se
     // vende. No volver a añadirlo: el test model_licenses_test lo bloquea.
+    // EVALUADO Y DESCARTADO: Qwen3-1.7B (unsloth, Apache 2.0, 1,107 GB — casi
+    // el mismo peso que este y dos generaciones más nuevo). Descargado y
+    // probado sobre libppllm con la plantilla de chat real del modelo: emite
+    // <think> y se queda razonando; en 90 tokens no llega ni a empezar la
+    // respuesta. En un teléfono eso es alguien preguntando "¿qué hago si no
+    // respira?" y viendo un monólogo interno mientras se le va la batería.
+    // Volver a mirarlo solo si pp_llm aprende a desactivar el modo de
+    // razonamiento (enable_thinking=false) Y se verifica en un teléfono real.
     // Phone tier: 1.5B is coherent and fits mid-range phones.
     ModelEntry(
       id: 'general-1.5b',

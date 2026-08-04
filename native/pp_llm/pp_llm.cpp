@@ -76,6 +76,16 @@ void * ppllm_load(const char * model_path, int32_t n_ctx, int32_t n_gpu_layers) 
     llama_context_params cparams = llama_context_default_params();
     cparams.n_ctx = n_ctx > 0 ? (uint32_t) n_ctx : 4096;
     cparams.n_batch = 512;
+    // Caché SWA del tamaño que hace falta, no del tamaño del contexto.
+    //
+    // llama_context_default_params() trae swa_full = true, mientras que las
+    // propias herramientas de llama.cpp usan false. Gemma 4 alterna capas de
+    // atención deslizante (ventana 512) con capas completas en patrón 4:1; con
+    // swa_full la caché de las capas deslizantes se reserva a n_ctx entero en
+    // vez de a la ventana, que es memoria pagada y nunca usada. Ponerlo en
+    // false es lo que hace que subir el contexto de 2048 a 4096 cueste ~1% del
+    // modelo en vez del doble.
+    cparams.swa_full = false;
     h->ctx = llama_init_from_model(h->model, cparams);
     if (!h->ctx) {
         g_last_error = "no se pudo crear el contexto de inferencia";
@@ -179,12 +189,24 @@ int32_t ppllm_generate(void * handle, const char * prompt, int32_t max_tokens,
             return;
         }
 
-        // Keep room to answer: if the chat outgrew the context, drop the
-        // oldest tokens (the app resends full history every turn anyway).
+        // Keep room to answer: if the chat outgrew the context, drop tokens
+        // from the MIDDLE.
+        //
+        // Esto borraba desde el principio (`erase(begin, end - budget)`), que
+        // se lleva por delante el BOS y el system prompt entero — donde vive
+        // la persona del especialista y, en el caso del médico, la regla
+        // "NUNCA cambies cifras (tiempos, dosis, cantidades)". Desaparecía en
+        // silencio y justo en las conversaciones largas.
+        //
+        // La app ya entrega un historial que cabe (prompt_budget.dart), así
+        // que esto es la red de seguridad para cualquier otro llamador: se
+        // conserva la CABEZA (system prompt) y la COLA (turnos recientes), y
+        // se suelta lo de en medio, que es la conversación vieja.
         const int32_t budget = h->n_ctx - (max_tokens > 0 ? max_tokens : 256) - 8;
         if ((int32_t) tokens.size() > budget && budget > 0) {
-            tokens.erase(tokens.begin(),
-                         tokens.end() - budget);
+            const int32_t head = budget / 3;   // system prompt
+            const int32_t tail = budget - head; // lo reciente
+            tokens.erase(tokens.begin() + head, tokens.end() - tail);
         }
 
         // Fresh run: clear whatever a previous generation left in the cache.

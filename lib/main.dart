@@ -11,7 +11,7 @@ import 'core/locale_service.dart';
 import 'core/native_licenses.dart';
 import 'core/nuvok_library.dart';
 import 'modules/depot/download_manager.dart';
-import 'modules/ai/llama_server.dart';
+import 'modules/ai/ai_engine.dart';
 import 'modules/mesh/mesh_envelope.dart';
 import 'modules/mesh/mesh_notifications.dart';
 import 'modules/mesh/mesh_router.dart';
@@ -124,10 +124,21 @@ class _AppLifecycleCleanupState extends State<AppLifecycleCleanup>
     // Fire-and-forget cleanup: dispose() is synchronous, so we can't await.
     // These calls initiate native process teardown; they don't need to complete
     // before the widget is gone.
-    LlamaServer.instance.stop();
+    //
+    // AiEngine, NO LlamaServer: en iOS/Android/macOS el motor corre EN PROCESO
+    // por FFI y LlamaServer está siempre parado, así que pararlo no liberaba
+    // nada y el modelo de 3,4 GB se quedaba residente. AiEngine.stop() delega
+    // en LlamaServer donde ese sí es el motor real (Windows/Linux), así que
+    // esto cubre las cinco plataformas. Mismo fallo que ya se corrigió en
+    // battery_saver.dart y que aquí había quedado vivo.
+    _unloadTimer?.cancel();
+    AiEngine.instance.stop();
     MeshService.instance.stop();
     super.dispose();
   }
+
+  /// Cuenta atrás para soltar el modelo de IA tras irse a segundo plano.
+  Timer? _unloadTimer;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -135,14 +146,34 @@ class _AppLifecycleCleanupState extends State<AppLifecycleCleanup>
     MeshNotifications.instance.appInForeground =
         state == AppLifecycleState.resumed;
     if (state == AppLifecycleState.resumed) {
+      // Volvió: cancelar la descarga pendiente. Mirar una notificación y
+      // volver no puede costar recargar 3,4 GB.
+      _unloadTimer?.cancel();
+      _unloadTimer = null;
       // Re-establish mesh presence when app comes to foreground
       MeshService.instance.onAppResumed();
+      return;
+    }
+    // Fuera de pantalla: soltar el modelo tras un margen corto. Un .gguf
+    // residente mientras el usuario usa la linterna o la cámara es el
+    // candidato número uno a que iOS mate Nuvok — y ahí los buffers del
+    // modelo quedan fijados por Metal, así que el sistema no puede
+    // reclamarlos por su cuenta. La malla y el SOS siguen vivos: esto solo
+    // suelta la IA, que se recarga sola al abrir un chat.
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
+      _unloadTimer?.cancel();
+      _unloadTimer = Timer(backgroundUnloadDelay, () {
+        _unloadTimer = null;
+        AiEngine.instance.stop();
+      });
     }
   }
 
   @override
   Future<AppExitResponse> didRequestAppExit() async {
-    await LlamaServer.instance.stop();
+    _unloadTimer?.cancel();
+    await AiEngine.instance.stop();
     await MeshService.instance.stop();
     return AppExitResponse.exit;
   }

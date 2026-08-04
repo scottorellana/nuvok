@@ -133,23 +133,38 @@ class ModelCatalog {
     // NOTA LEGAL: aquí estaba Qwen 2.5 3B. Se retiró porque su licencia
     // ("Qwen Research License") permite el uso SOLO NO COMERCIAL, y Nuvok se
     // vende. No volver a añadirlo: el test model_licenses_test lo bloquea.
-    // EVALUADO Y DESCARTADO: Qwen3-1.7B (unsloth, Apache 2.0, 1,107 GB — casi
-    // el mismo peso que este y dos generaciones más nuevo). Descargado y
-    // probado sobre libppllm con la plantilla de chat real del modelo: emite
-    // <think> y se queda razonando; en 90 tokens no llega ni a empezar la
-    // respuesta. En un teléfono eso es alguien preguntando "¿qué hago si no
-    // respira?" y viendo un monólogo interno mientras se le va la batería.
-    // Volver a mirarlo solo si pp_llm aprende a desactivar el modo de
-    // razonamiento (enable_thinking=false) Y se verifica en un teléfono real.
-    // Phone tier: 1.5B is coherent and fits mid-range phones.
+    // Escalón de respaldo: el que acaban usando los teléfonos más modestos, o
+    // sea la gente que más necesita que esto funcione.
+    //
+    // Aquí estaba qwen2.5-1.5b y se cambió por datos, no por moda. Probados
+    // los dos sobre libppllm con la plantilla real de cada uno:
+    //
+    //   "¿Cuánta profundidad deben tener las compresiones de RCP?"
+    //     qwen2.5-1.5b → "Las compresiones de Resumen de Contenido (RCP)…
+    //                     al menos 3-5 puntos principales" (no sabe qué es RCP)
+    //     Qwen3-1.7B   → "aproximadamente 5 cm"  ✓
+    //
+    //   "Un niño de 3 años se atraganta y no puede toser. ¿Qué hago primero?"
+    //     qwen2.5-1.5b → "intenta calmarlo… puedes intentar hacerle toser con
+    //                     un bocadillo o un jugo"  ← PELIGROSO: dar comida o
+    //                     bebida a quien se atraganta es la contraindicación
+    //                     número uno
+    //     Qwen3-1.7B   → "Lleva a un médico" (pobre, pero no hace daño)
+    //
+    // Con las guías inyectadas los dos responden bien, pero el respaldo también
+    // contesta preguntas fuera del alcance de las guías, y ahí el viejo hacía
+    // daño. Pesa además 10 MB MENOS.
+    //
+    // Necesita que pp_llm desactive el modo de razonamiento (apply_chatml_no_think):
+    // sin eso Qwen3 emite <think> y no llega a responder.
     ModelEntry(
       id: 'general-1.5b',
-      fileName: 'qwen2.5-1.5b-instruct-q4_k_m.gguf',
-      url: 'https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/'
-          'resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf',
-      sizeBytes: 1117320736,
+      fileName: 'Qwen3-1.7B-Q4_K_M.gguf',
+      url: 'https://huggingface.co/unsloth/Qwen3-1.7B-GGUF/'
+          'resolve/main/Qwen3-1.7B-Q4_K_M.gguf',
+      sizeBytes: 1107409472,
       sha256:
-          '6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e',
+          'b139949c5bd74937ad8ed8c8cf3d9ffb1e99c866c823204dc42c0d91fa181897',
       license: 'apache-2.0',
       liteFallbackId: 'general-0.5b',
     ),

@@ -71,6 +71,8 @@ String modelDisplayName(String fileName) {
   const chainNames = {
     'gemma-4-E4B-it-Q4_K_M.gguf': 'Gemma 4 E4B (especialista)',
     'gemma-4-E2B-it-Q4_K_M.gguf': 'Gemma 4 E2B (especialista)',
+    'gemma-4-E2B-it-qat-UD-Q4_K_XL.gguf': 'Gemma 4 E2B QAT (especialista)',
+    'Qwen3-1.7B-Q4_K_M.gguf': 'Qwen 3 1.7B',
     'qwen2.5-3b-instruct-q4_k_m.gguf': 'Qwen 2.5 3B',
     'qwen2.5-1.5b-instruct-q4_k_m.gguf': 'Qwen 2.5 1.5B',
     'google_gemma-3-1b-it-Q4_K_M.gguf': 'Gemma 3 1B',

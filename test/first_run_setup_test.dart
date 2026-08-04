@@ -61,8 +61,9 @@ void main() {
           onGoMaps: () {},
         ));
 
-    // Con 2 GB libres el 1.5B es lo que cabe; el nombre visible lo dice.
-    expect(find.textContaining('Qwen 2.5 1.5B'), findsOneWidget);
+    // Con 2 GB libres el escalón de respaldo es lo que cabe; el nombre
+    // visible lo dice (no un .gguf crudo).
+    expect(find.textContaining('Qwen 3'), findsOneWidget);
     // La Wikipedia resuelta y el mapa del país del dispositivo.
     expect(find.textContaining('Wikipedia Médica (español)'), findsOneWidget);
     expect(find.textContaining('Honduras'), findsOneWidget);
@@ -72,7 +73,7 @@ void main() {
 
     expect(got, hasLength(2));
     expect(got.first.relativeDir, 'models');
-    expect(got.first.fileName, 'qwen2.5-1.5b-instruct-q4_k_m.gguf');
+    expect(got.first.fileName, 'Qwen3-1.7B-Q4_K_M.gguf');
     expect(got.last.relativeDir, 'zim');
     expect(got.last.fileName, 'wikipedia_es_medicine.zim');
     expect(wentToDownloads, isTrue,

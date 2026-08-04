@@ -139,6 +139,39 @@ static char * apply_gemma4_template(const char ** roles,
     return res;
 }
 
+// Qwen3 y compañía razonan en voz alta antes de responder: emiten
+// <think>…</think> y solo después contestan. Verificado con Qwen3-1.7B sobre
+// este mismo motor: en 90 tokens no llegaba ni a empezar la respuesta. En un
+// teléfono eso es alguien preguntando "¿qué hago si no respira?" y viendo un
+// monólogo interno mientras se le va la batería.
+//
+// La plantilla oficial de Qwen desactiva ese modo con enable_thinking=false,
+// que NO se puede pasar por la API C de llama_chat_apply_template. Lo que hace
+// esa plantilla es dejar el bloque de razonamiento YA CERRADO y vacío, de modo
+// que el modelo continúa directamente con la respuesta. Es lo que replicamos.
+static bool template_has_thinking(const char * tmpl) {
+    return tmpl && (strstr(tmpl, "enable_thinking") != nullptr ||
+                    strstr(tmpl, "<think>") != nullptr);
+}
+
+static char * apply_chatml_no_think(const char ** roles,
+                                    const char ** contents, int32_t n_msgs) {
+    std::string out;
+    for (int32_t i = 0; i < n_msgs; i++) {
+        out += "<|im_start|>";
+        out += roles[i];
+        out += "\n";
+        out += contents[i];
+        out += "<|im_end|>\n";
+    }
+    // Bloque de razonamiento abierto y cerrado en el acto: el modelo ve que ya
+    // "pensó" y pasa a responder.
+    out += "<|im_start|>assistant\n<think>\n\n</think>\n\n";
+    char * res = (char *) malloc(out.size() + 1);
+    memcpy(res, out.c_str(), out.size() + 1);
+    return res;
+}
+
 char * ppllm_apply_template(void * handle, const char ** roles,
                             const char ** contents, int32_t n_msgs) {
     auto * h = (PpLlm *) handle;
@@ -157,6 +190,9 @@ char * ppllm_apply_template(void * handle, const char ** roles,
     if (!tmpl) tmpl = "chatml";
     if (strstr(tmpl, "<|turn>") != nullptr) {
         return apply_gemma4_template(roles, contents, n_msgs);
+    }
+    if (template_has_thinking(tmpl)) {
+        return apply_chatml_no_think(roles, contents, n_msgs);
     }
 
     std::vector<char> buf(total * 2 + 256);

@@ -40,7 +40,7 @@ class CreditsPage extends StatelessWidget {
       detail: 'Modelo de IA que corre dentro del dispositivo.',
     ),
     _Credit(
-      title: 'Qwen 2.5 (Alibaba Cloud)',
+      title: 'Qwen 3 / Qwen 2.5 (Alibaba Cloud)',
       license: 'Apache 2.0',
       detail: 'Modelo de IA de respaldo, incluido en la instalación.',
     ),
